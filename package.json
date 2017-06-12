@@ -20,6 +20,9 @@
     "express": "^4.15.3"
   },
   "devDependencies": {
+    "gulp-jshint": "^2.0.4",
+    "gulp-nodemon": "^2.2.1",
+    "jshint": "^2.9.4",
     "mocha": "^3.4.2",
     "supertest": "^3.0.0"
   }
