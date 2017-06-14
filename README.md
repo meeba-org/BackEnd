@@ -20,5 +20,7 @@ The FrontEnd app is based on [react-slingshot boilerplate](https://github.com/co
 
 ## Development
 1. **Run dev environment**: `npm start` - startup scripts will be started and the app will be served on locahost:3000 by default
-2. **Build production bundle**: `npm run build` - a bundle will be created under /dist
-3. **Run FrontEnd tests**: `npm run test-fe` - will run jest tests
+2. **Run FrontEnd tests**: `npm run test-fe` - will run jest tests
+
+## Production
+3. **Build production bundle**: `npm run build` - a bundle will be created under /dist
