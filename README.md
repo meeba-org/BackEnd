@@ -12,7 +12,8 @@ BackEnd application for meeba
 The IDE of choice is [WebStorm](https://www.jetbrains.com/webstorm/).
 
 ## Development
-1. Run `gulp develop` from the command line (from the source code directory).
+1. Run `npm install -g gulp`
+2. Run `gulp develop` from the command line (from the source code directory).
 
 # FrontEnd
 FrontEnd application for meeba
