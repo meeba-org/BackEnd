@@ -2,7 +2,7 @@
   "name": "meeba-web",
   "version": "1.0.0",
   "description": "BackEnd & FrontEnd of meeba - Time Tracking",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "preinstall": "node tools/nodeVersionCheck.js",
     "start-message": "babel-node tools/startMessage.js",
@@ -46,7 +46,21 @@
     "react-router-redux": "4.0.8",
     "react-tap-event-plugin": "2.0.1",
     "redux": "3.6.0",
-    "redux-thunk": "2.1.0"
+    "redux-thunk": "2.1.0",
+
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "connect-flash": "*",
+    "cookie-parser": "^1.4.3",
+    "express-handlebars": "*",
+    "express-messages": "*",
+    "express-session": "*",
+    "express-validator": "*",
+    "mongodb": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-http": "*",
+    "passport-local": "*"
   },
   "devDependencies": {
     "gulp-jshint": "^2.0.4",
