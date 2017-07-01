@@ -12,7 +12,7 @@ function ensureAuthenticated(req, res, next){
   }
   else{
     //req.flash('error_msg', 'You are not logged in');
-    res.redirect('/api/v1/employees/login');
+    res.redirect('/api/v1/users/login');
   }
 }
 

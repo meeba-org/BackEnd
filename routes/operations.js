@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
   });
 });
 
-// Get logged-in Employee operations
+// Get logged-in User operations
 router.get('/', (req, res) => {
   var uid = req.user.uid;
   Operation.getOperationsByUid(uid, (err, operations) => {
@@ -37,7 +37,7 @@ router.get('/', (req, res) => {
   });
 });
 
-// Get specific Employee operations
+// Get specific User operations
 router.get('/:uid', (req, res) => {
   var uid = req.params.uid;
   Operation.getOperationsByUid(uid, (err, operations) => {

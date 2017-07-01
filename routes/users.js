@@ -3,14 +3,14 @@ const router = express.Router();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-const Employee = require('../models/employee');
+const User = require('../models/user');
 
 // Login
 router.get('/login', (req, res) => {
   res.render('login');
 });
 
-// Register Employee
+// Register User
 router.get('/register', (req, res) => {
   res.render('register');
 });
@@ -41,7 +41,7 @@ router.post('/register', (req, res) => {
   }
   else{
     // Passed
-    const newEmployee = new Employee({
+    const newUser = new User({
       uid: uid,
       first_name: first_name,
       last_name: last_name,
@@ -49,12 +49,12 @@ router.post('/register', (req, res) => {
       password: password
     });
 
-    Employee.createEmployee(newEmployee, (err, employee) => {
+    User.createUser(newUser, (err, user) => {
       if (err) throw err;
-      //console.log(employee);
+      //console.log(user);
     });
 
-    req.flash('success_msg', 'Employee is registered and can now login');
+    req.flash('success_msg', 'User is registered and can now login');
 
     res.redirect('/api/v1');
   }
@@ -62,23 +62,23 @@ router.post('/register', (req, res) => {
 
 // Define Auth Strategy
 passport.use(new LocalStrategy({
-      usernameField: 'uid',
-      passwordField: 'password'
-    },
-    (uid, password, done) => {
-      Employee.getEmployeeByUid(uid, (err, employee) => {
-        if (err) throw err;
-        if (!employee){
-          return done(null, false, {message: 'Unknown Employee'});
-        }
+    usernameField: 'uid',
+    passwordField: 'password'
+  },
+  (uid, password, done) => {
+    User.getUserByUid(uid, (err, user) => {
+      if (err) throw err;
+      if (!user){
+        return done(null, false, {message: 'Unknown User'});
+      }
 
-        Employee.comparePassword(password, employee.password, (err, isMatch) => {
-          if (err) throw err;
-          if (!isMatch) {
-            return done(null, false, {message: 'Invalid password'});
-          }
-          return done(null, employee);
-        });
+      User.comparePassword(password, user.password, (err, isMatch) => {
+        if (err) throw err;
+        if (!isMatch) {
+          return done(null, false, {message: 'Invalid password'});
+        }
+        return done(null, user);
+      });
     });
   }
 ));
@@ -88,29 +88,29 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  Employee.findById(id, (err, user) => {
+  User.findById(id, (err, user) => {
     done(err, user);
   });
 });
 
 router.post('/login',
-  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/api/v1/employees/login', failureFlash: true}),
+  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/api/v1/users/login', failureFlash: true}),
   (req, res) => {
     res.redirect('/');
-});
+  });
 
 router.get('/logout', (req, res) => {
   req.logout();
 
   req.flash('success_msg', 'You are logged out');
 
-  res.redirect('/api/v1/employees/login');
+  res.redirect('/api/v1/users/login');
 });
 
 router.get('/:id', (req, res) => {
-  Employee.getEmployeeByUid(req.params.id, (err, employee) => {
+  User.getUserByUid(req.params.id, (err, user) => {
     if (err) throw err;
-    res.json(employee);
+    res.json(user);
   });
 });
 

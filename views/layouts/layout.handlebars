@@ -10,12 +10,12 @@
     <div class="header clearfix">
       <nav>
         <ul class="nav nav-pills pull-right">
-          {{#if employee}}
+          {{#if user}}
             <li role="presentation"><a href="/">Operations</a></li>
-            <li role="presentation"><a href="/api/v1/employees/register">Register an Employee</a></li>
-            <li role="presentation"><a href="/api/v1/employees/logout">Logout</a></li>
+            <li role="presentation"><a href="/api/v1/users/register">Register an User</a></li>
+            <li role="presentation"><a href="/api/v1/users/logout">Logout</a></li>
           {{else}}
-            <!--<li role="presentation"><a href="/api/v1/employees/login">Login</a></li>-->
+            <!--<li role="presentation"><a href="/api/v1/users/login">Login</a></li>-->
           {{/if}}
         </ul>
       </nav>

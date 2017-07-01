@@ -21,7 +21,7 @@ const db = mongoose.connection;
 
 // Routes
 const routes = require('./routes/index');
-const employees = require('./routes/employees');
+const users = require('./routes/users');
 const groups = require('./routes/groups');
 const operations = require('./routes/operations');
 
@@ -80,7 +80,7 @@ app.use((req,res,next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
-  res.locals.employee = req.user || null;
+  res.locals.user = req.user || null;
   next();
 });
 
@@ -89,7 +89,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/', routes);
-app.use('/api/v1/employees', employees);
+app.use('/api/v1/users', users);
 app.use('/api/v1/groups', groups);
 app.use('/api/v1/operations', operations);
 
