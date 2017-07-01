@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+
+const jwt = require('jsonwebtoken');
+const passportJWT = require('passport-jwt');
+
+const ExtractJwt = passportJWT.ExtractJwt;
+const JwtStrategy = passportJWT.Strategy;
 
 const User = require('../models/user');
 
@@ -60,52 +65,78 @@ router.post('/register', (req, res) => {
   }
 });
 
+// passport.js works with the concept of strategies.
+// They basically are a middleware function that a requests runs through before getting to the actual route.
+// If your defined authentication strategy fails, which means that the callback will be called with an error that is not null or false as the second argument,
+// the route will not be called, but a 401 Unauthorized response will be sent.
+const jwtOptions = {}
+// Our strategy is configured to read the JWT from the Authorization http headers of each request.
+jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
+// The secretOrKey is the secret that our tokens will be signed with. Choose this wisely or use a private key.
+jwtOptions.secretOrKey = 'tH1S1Sag00Dk3Y';
 // Define Auth Strategy
-passport.use(new LocalStrategy({
-    usernameField: 'uid',
-    passwordField: 'password'
-  },
-  (uid, password, done) => {
-    User.getUserByUid(uid, (err, user) => {
-      if (err) throw err;
-      if (!user){
-        return done(null, false, {message: 'Unknown User'});
-      }
+var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
+  console.log('payload received', jwt_payload);
+  User.getUserByUid(jwt_payload.uid, (err, user) => {
+    if (err) throw err;
+    if (!user) {
+      return next(null, false, {message: 'Unknown User'});
+    }
+    return next(null, user);
+  });
+});
 
-      User.comparePassword(password, user.password, (err, isMatch) => {
-        if (err) throw err;
-        if (!isMatch) {
-          return done(null, false, {message: 'Invalid password'});
-        }
-        return done(null, user);
-      });
-    });
+passport.use(strategy);
+
+// Creating a /login route to acquire a token
+router.post('/login', function(req, res) {
+  if(req.body.uid && req.body.password){
+    var id = req.body.uid;
+    var password = req.body.password;
   }
-));
+  User.getUserByUid(id, (err, user) => {
+    if (err) throw err;
+    if (!user) {
+      return res.status(401).json({message:"no such user found"});
+    }
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
+    User.comparePassword(password, user.password, (err, isMatch) => {
+      if (err) throw err;
+      //TODO remove next line when bcrypt is fixed
+      isMatch = true;
+      if (!isMatch) {
+        return res.status(401).json({message:"passwords did not match"});
+      }
+      // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
+      // set the payload for the JWT
+      var payload = {uid: user.uid};
+      // use the jsonwebtoken package to create the token and respond with it
+      var token = jwt.sign(payload, jwtOptions.secretOrKey);
+      return res.json({message: "ok", token: token});
+    });
   });
 });
 
-router.post('/login',
-  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/api/v1/users/login', failureFlash: true}),
-  (req, res) => {
-    res.redirect('/');
-  });
+/*router.post('/login',
+ passport.authenticate('local', {successRedirect:'/', failureRedirect:'/api/v1/users/login', failureFlash: true}),
+ (req, res) => {
+ res.redirect('/');
+ });*/
 
-router.get('/logout', (req, res) => {
+// Creating a /secret route, that only is available to logged in users with a JSON web token
+// The passport.authenticate part means that we pass the request through our previously defined authentication strategy and run it.
+// If it’s successful, we respond with the secret message, else the request will be unauthorized (401).
+router.get('/secret', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json("Success! You can not see this without a token.");
+});
+
+/*router.get('/logout', (req, res) => {
   req.logout();
 
   req.flash('success_msg', 'You are logged out');
 
   res.redirect('/api/v1/users/login');
-});
+});*/
 
 router.get('/:id', (req, res) => {
   User.getUserByUid(req.params.id, (err, user) => {

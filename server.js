@@ -10,14 +10,11 @@ const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const mongo = require('mongodb');
 const mongoose = require('mongoose');
 
 // Connect to mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/meebadb');
-const db = mongoose.connection;
+mongoose.connect('mongodb://admin:admin12@ds139242.mlab.com:39242/heroku_9mpwf6zf');
 
 // Routes
 const routes = require('./routes/index');
@@ -30,12 +27,19 @@ const app = express();
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({defaultLayout:'layout'}));
+app.engine('handlebars', exphbs({
+  defaultLayout:'layout'
+}));
 app.set('view engine', 'handlebars');
 
 // Body Parser Middleware
+// parse application/json
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
+// parse application/x-www-form-urlencoded
+// for easier testing with Postman or plain HTML forms
+app.use(bodyParser.urlencoded({
+  extended:true
+}));
 
 // Cookie Parser Middleware
 app.use(cookieParser());
@@ -52,7 +56,7 @@ app.use(session({
 
 // Passport Init
 app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.session());
 
 // Express Validator
 app.use(expressValidator({
