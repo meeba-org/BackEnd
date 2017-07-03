@@ -23,10 +23,12 @@ const UserSchema = mongoose.Schema({
     type: String,
     //required: true
   },
-  /*project_ids: {
-   type: [String]
-   },
-   roles: {
+  role: {
+    type: String,
+    required: true
+  },
+  /*
+   project_ids: {
    type: [String]
    },
    created: {
@@ -41,13 +43,15 @@ const UserSchema = mongoose.Schema({
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
-module.exports.createUser = (newUser, callback) => {
-  bcrypt.genSalt(10, (err, salt) => {
+module.exports.create = (newUser, callback) => {
+  //TODO remove next line when bcrypt is fixed
+  newUser.save(callback);
+  /*bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(newUser.password, salt, null, (err, hash) => {
       newUser.password = hash;
       newUser.save(callback);
     });
-  });
+  });*/
 };
 
 module.exports.getUserByUid = (uid, callback) => {
@@ -55,9 +59,9 @@ module.exports.getUserByUid = (uid, callback) => {
   User.findOne(query, callback);
 };
 
-/*module.exports.getEmployeeById = (id, callback) => {
- Employee.findById(id, callback);
- };*/
+module.exports.getUserById = (id, callback) => {
+ User.findById(id, callback);
+};
 
 module.exports.comparePassword = (candidatePassword, hash, callback) => {
   bcrypt.compare(candidatePassword, hash, (err, isMatch) => {

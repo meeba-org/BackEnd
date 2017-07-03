@@ -25,7 +25,7 @@ const OperationSchema = mongoose.Schema({
 const Operation = module.exports = mongoose.model('Operation', OperationSchema);
 
 // Create Operation
-module.exports.createOperation = (operation, callback) => {
+module.exports.create = (operation, callback) => {
   Operation.create(operation, callback);
 };
 
@@ -35,6 +35,8 @@ module.exports.getOperationsByUid = (uid, callback, limit) => {
   Operation.find(query, callback).limit(limit);
 };
 
+// Get Status by Uid
 module.exports.getStatusByUid = (uid, callback) => {
-  Operation.find(callback).limit(1).sort({$natural:-1});
+  const query = {uid: uid};
+  Operation.find(query, callback).limit(1).sort({$natural:-1});
 }

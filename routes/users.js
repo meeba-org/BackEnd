@@ -10,15 +10,6 @@ const JwtStrategy = passportJWT.Strategy;
 
 const User = require('../models/user');
 
-// Login
-router.get('/login', (req, res) => {
-  res.render('login');
-});
-
-// Register User
-router.get('/register', (req, res) => {
-  res.render('register');
-});
 
 router.post('/register', (req, res) => {
   const uid = req.body.uid;
@@ -27,11 +18,13 @@ router.post('/register', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const password2 = req.body.password2;
+  const role = req.body.role;
 
   // Validation
   req.checkBody('uid', 'id is required').notEmpty();
   req.checkBody('first_name', 'First name is required').notEmpty();
   req.checkBody('last_name', 'Last name is required').notEmpty();
+  req.checkBody('role', 'Role is required').notEmpty();
   req.checkBody('email', 'Email is required').notEmpty();
   req.checkBody('email', 'Email is not valid').isEmail();
   req.checkBody('password', 'Password is required').notEmpty();
@@ -40,9 +33,7 @@ router.post('/register', (req, res) => {
   const errors = req.validationErrors();
 
   if (errors){
-    res.render('register',{
-      errors: errors
-    });
+    return res.status(400).json({message: errors});
   }
   else{
     // Passed
@@ -51,17 +42,16 @@ router.post('/register', (req, res) => {
       first_name: first_name,
       last_name: last_name,
       email: email,
-      password: password
+      password: password,
+      role: role
     });
 
-    User.createUser(newUser, (err, user) => {
+    User.create(newUser, (err, user) => {
       if (err) throw err;
       //console.log(user);
     });
 
-    req.flash('success_msg', 'User is registered and can now login');
-
-    res.redirect('/api/v1');
+    return res.status(200).json({message: "User is registered and can now login"});
   }
 });
 
@@ -112,7 +102,7 @@ router.post('/login', function(req, res) {
       var payload = {uid: user.uid};
       // use the jsonwebtoken package to create the token and respond with it
       var token = jwt.sign(payload, jwtOptions.secretOrKey);
-      return res.json({message: "ok", token: token});
+      return res.status(200).json(token);
     });
   });
 });
