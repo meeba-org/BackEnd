@@ -63,6 +63,11 @@ module.exports.getUserById = (id, callback) => {
  User.findById(id, callback);
 };
 
+// Return a promise
+module.exports.getAll = () => {
+  return User.find().exec();
+};
+
 module.exports.comparePassword = (candidatePassword, hash, callback) => {
   bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
     if (err) throw err;

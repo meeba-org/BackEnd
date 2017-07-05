@@ -128,6 +128,12 @@ router.get('/secret', passport.authenticate('jwt', { session: false }), (req, re
   res.redirect('/api/v1/users/login');
 });*/
 
+router.get('/', (req, res) => {
+  User.getAll()
+    .then((users) => res.json(users))
+    .catch((err) => res.status(500).json(err))
+});
+
 router.get('/:id', (req, res) => {
   User.getUserByUid(req.params.id, (err, user) => {
     if (err) throw err;

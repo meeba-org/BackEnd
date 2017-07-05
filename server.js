@@ -88,8 +88,12 @@ app.use((req,res,next) => {
   next();
 });
 
-app.get('/', (req, res) => {
-  res.redirect('/api/v1/');
+// app.get('/', (req, res) => {
+//   res.redirect('/api/v1/');
+// });
+
+app.get('/login', (req, res) => {
+  res.render('login');
 });
 
 app.use('/api/v1/', routes);
