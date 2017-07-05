@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 
 // Connect to mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://admin:admin12@ds139242.mlab.com:39242/heroku_9mpwf6zf');
+mongoose.connect('mongodb://admin:admin12@ds139242.mlab.com:39242/heroku_9mpwf6zf', {useMongoClient: true});
 
 // Routes
 const routes = require('./routes/index');
