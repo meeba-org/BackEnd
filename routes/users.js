@@ -67,7 +67,7 @@ jwtOptions.secretOrKey = 'tH1S1Sag00Dk3Y';
 // Define Auth Strategy
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
   console.log('payload received', jwt_payload);
-  User.getUserByUid(jwt_payload.uid, (err, user) => {
+  User.getByUid(jwt_payload.uid, (err, user) => {
     if (err) throw err;
     if (!user) {
       return next(null, false, {message: 'Unknown User'});
@@ -84,7 +84,7 @@ router.post('/login', function(req, res) {
     var id = req.body.uid;
     var password = req.body.password;
   }
-  User.getUserByUid(id, (err, user) => {
+  User.getByUid(id, (err, user) => {
     if (err) throw err;
     if (!user) {
       return res.status(401).json({message:"no such user found"});
@@ -106,12 +106,6 @@ router.post('/login', function(req, res) {
     });
   });
 });
-
-/*router.post('/login',
- passport.authenticate('local', {successRedirect:'/', failureRedirect:'/api/v1/users/login', failureFlash: true}),
- (req, res) => {
- res.redirect('/');
- });*/
 
 // Creating a /secret route, that only is available to logged in users with a JSON web token
 // The passport.authenticate part means that we pass the request through our previously defined authentication strategy and run it.
@@ -135,9 +129,11 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  User.getUserByUid(req.params.id, (err, user) => {
-    if (err) throw err;
-    res.json(user);
+  User.getByUid(req.params.id, (err, user) => {
+    if (err || !user) {
+      return res.status(404).json({message: 'User was not found'});
+    }
+    return res.status(200).json(user);
   });
 });
 

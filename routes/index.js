@@ -3,6 +3,10 @@ const router = express.Router();
 
 // Get Homepage
 router.get('/', (req, res) => {
+  res.json('Hi this is Meeba!');
+});
+
+/*router.get('/', ensureAuthenticated, (req, res) => {
   res.render('index');
 });
 
@@ -18,6 +22,6 @@ function ensureAuthenticated(req, res, next){
     //req.flash('error_msg', 'You are not logged in');
     res.redirect('/api/v1/users/login');
   }
-}
+}*/
 
 module.exports = router;

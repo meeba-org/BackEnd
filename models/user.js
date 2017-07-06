@@ -54,12 +54,12 @@ module.exports.create = (newUser, callback) => {
   });*/
 };
 
-module.exports.getUserByUid = (uid, callback) => {
+module.exports.getByUid = (uid, callback) => {
   const query = {uid: uid};
   User.findOne(query, callback);
 };
 
-module.exports.getUserById = (id, callback) => {
+module.exports.getById = (id, callback) => {
  User.findById(id, callback);
 };
 
