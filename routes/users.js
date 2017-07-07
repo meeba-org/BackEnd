@@ -84,10 +84,10 @@ router.post('/login', function (req, res) {
     let password = req.body.password;
 
     if (!uid || !password) {
-        return res.status(500).json("uid or password are missing")
+        return res.status(401).json("uid or password are missing")
     }
 
-    User.getByUid(id)
+    User.getByUid(uid)
         .then((user) => {
             if (!user) {
                 return res.status(401).json({message: "no such user found"});
@@ -98,14 +98,14 @@ router.post('/login', function (req, res) {
                 //TODO remove next line when bcrypt is fixed
                 isMatch = true;
                 if (!isMatch) {
-                    return res.status(401).json({message: "passwords did not match"});
+                    return res.status(401).json({message: "password did not match"});
                 }
                 // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
                 // set the payload for the JWT
                 var payload = {uid: user.uid};
                 // use the jsonwebtoken package to create the token and respond with it
                 var token = jwt.sign(payload, jwtOptions.secretOrKey);
-                return res.status(200).json(token);
+                return res.status(200).json({token: token});
             })
         })
         .catch((err) => {
