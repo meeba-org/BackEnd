@@ -6,7 +6,7 @@ describe("Sanity tests", function () {
 		it('respond with 200', function (done) {
 			request(app)
 				.get('/')
-				.expect('Content-Type', /text\/html/)
+				.expect('Content-Type', /application\/json/)
 				.expect(200, done);
 		});
 	});

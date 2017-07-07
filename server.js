@@ -96,7 +96,7 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
-app.use('/api/v1/', routes);
+app.use('/', routes);
 app.use('/api/v1/users', users);
 app.use('/api/v1/groups', groups);
 app.use('/api/v1/operations', operations);
