@@ -2,7 +2,7 @@
  * Created by Chen on 07/07/2017.
  */
 
-module.export = {
+module.exports = {
     ClockOut: "clock-out",
     ClockIn: "clock-in"
 }

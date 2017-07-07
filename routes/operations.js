@@ -6,14 +6,27 @@ const OperationTypes = require("../models/operationTypes");
 
 // Clock-in / Clock-out
 router.post('/', (req, res) => {
-  var operation = {
-    uid: req.body.uid,
-    type: req.body.type
-  }
-  Operation.create(operation, (err, operation) => {
-    if (err) throw err;
-    return res.status(200).json({message: "Operation was recorded successfully", operation: operation});
-  });
+    let uid = req.body.uid;
+    let type = req.body.type;
+
+    if (!uid || !type)
+        return res.status(500).json("uid or type are missing");
+
+    var operation = {
+        uid: uid,
+        type: type
+    };
+
+    Operation.createOperation(operation)
+        .then((operation) => {
+            let isClockedIn = operation.type === OperationTypes.ClockIn;
+            let lastLoggedInTime = operation.created;
+
+            return res.status(200).json({isClockedIn: isClockedIn, lastLoggedInTime: lastLoggedInTime});
+        })
+        .catch((err) => {
+            return res.status(500).json(err);
+        });
 });
 
 // Get User status & operations

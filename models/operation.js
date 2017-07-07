@@ -25,8 +25,8 @@ const OperationSchema = mongoose.Schema({
 const Operation = module.exports = mongoose.model('Operation', OperationSchema);
 
 // Create Operation
-module.exports.create = (operation, callback) => {
-  Operation.create(operation, callback);
+module.exports.createOperation = (operation) => {
+  return Operation.create(operation);
 };
 
 // Get Operations by Uid
