@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Operation = require('../models/operation');
+const OperationTypes = require("../models/operationTypes");
 
 // Clock-in / Clock-out
 router.post('/', (req, res) => {
@@ -21,12 +22,14 @@ router.get('/:uid', (req, res) => {
   Operation.getOperationsByUid(uid, (err, operations) => {
     if (err) throw err;
     if (!operations || operations.length == 0){
-      return res.status(401).json({message: "No operation found"});
+      return res.status(200).json({isClockedIn: false, lastLoggedInTime: null}); // No operations found --> status is clock-out
     }
     Operation.getStatusByUid(uid, (err, status) => {
       if (err) throw err;
-      var type = status[0].type;
-      return res.status(200).json({status: type, operations: operations});
+      let isClockedIn = status[0].type === OperationTypes.ClockIn;
+      let lastLoggedInTime = status[0].created;
+
+      return res.status(200).json({isClockedIn: isClockedIn, lastLoggedInTime: lastLoggedInTime});
     });
   });
 });
