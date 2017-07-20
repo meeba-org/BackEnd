@@ -1,23 +1,60 @@
 'use strict';
 
 import React from "react";
-import CSSModules from 'react-css-modules';
-import styles from "../styles/SideBar.scss";
+import PropTypes from 'prop-types';
+import { withStyles, createStyleSheet } from 'material-ui/styles';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
+
+const styleSheet = createStyleSheet('SideBar', theme => ({
+    listFull: {
+        width: 'auto',
+        flex: 'initial',
+    },
+}));
 
 class SideBar extends React.Component {
-    // static propTypes = {
-    //     name: PropTypes.object.isRequired
-    // }
 
     render() {
+        const classes = this.props.classes;
+
         return (
-            <div id="sideBar">
-                <h1>תפריט</h1>
-                <h4>עובדים</h4>
-            </div>
-        );
+            <div>
+                <List className={classes.listFull} disablePadding>
+                    <div>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <KeyboardArrowLeft />
+                            </ListItemIcon>
+                            <ListItemText primary="מצב משמרת"/>
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <KeyboardArrowLeft />
+                            </ListItemIcon>
+                            <ListItemText primary="דוח חודשי"/>
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <KeyboardArrowLeft />
+                            </ListItemIcon>
+                            <ListItemText primary="דוח יומי"/>
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <KeyboardArrowLeft />
+                            </ListItemIcon>
+                            <ListItemText primary="ייצוא לאקסל"/>
+                        </ListItem>
+                    </div>
+                </List>
+            </div>        );
     }
 }
 
-export default CSSModules(SideBar, styles);
+SideBar.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styleSheet)(SideBar);
 

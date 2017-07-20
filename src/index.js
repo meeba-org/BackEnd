@@ -3,9 +3,8 @@ import {render} from "react-dom";
 import React from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import createMuiTheme from 'material-ui/styles/theme';
-//import Content from "./components/Content";
-
 import injectTapEventPlugin from "react-tap-event-plugin";
+import Root from "./Root";
 import App from "./components/App";
 
 // Needed for onTouchTap

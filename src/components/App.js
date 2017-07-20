@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import StarIcon from 'material-ui-icons/Star';
 import AppBar from "./AppBar";
-
+import SideBar from "./SideBar";
 
 const styleSheet = createStyleSheet('App', theme => ({
     root: {
@@ -29,39 +26,6 @@ class App extends React.Component {
     render() {
         const classes = this.props.classes;
 
-        const menuItems = (
-            <div>
-                <List className={classes.listFull} disablePadding>
-                    <div>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <StarIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="מצב משמרת"/>
-                        </ListItem>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <StarIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="דוח חודשי"/>
-                        </ListItem>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <StarIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="דוח יומי"/>
-                        </ListItem>
-                        <ListItem button>
-                            <ListItemIcon>
-                                <StarIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="ייצוא לאקסל"/>
-                        </ListItem>
-                    </div>
-                </List>
-            </div>
-        );
-
         return (
             <div className={classes.root}>
                 <Grid container gutter={0}>
@@ -69,12 +33,10 @@ class App extends React.Component {
                         <AppBar />
                     </Grid>
                     <Grid item xs={3}>
-                        {menuItems}
+                        <SideBar />
                     </Grid>
                     <Grid item xs={9}>
-                        <Paper>
-                            <h3>תוכן</h3>
-                        </Paper>
+                        <h3>תוכן</h3>
                     </Grid>
                 </Grid>
             </div>
@@ -87,3 +49,4 @@ App.propTypes = {
 };
 
 export default withStyles(styleSheet)(App);
+
