@@ -17,7 +17,7 @@ const muiTheme = createMuiTheme({
 
 render(
     <MuiThemeProvider theme={muiTheme}>
-        <App />
+        <Root />
     </MuiThemeProvider>,
     document.getElementById('react-app')
 );

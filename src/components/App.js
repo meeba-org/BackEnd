@@ -37,6 +37,7 @@ class App extends React.Component {
                     </Grid>
                     <Grid item xs={9}>
                         <h3>תוכן</h3>
+                        {this.props.children}
                     </Grid>
                 </Grid>
             </div>

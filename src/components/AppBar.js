@@ -12,7 +12,6 @@ import MenuIcon from 'material-ui-icons/Menu';
 
 const styleSheet = createStyleSheet('MeebaAppBar', {
     root: {
-        marginTop: 30,
         width: '100%',
     },
     flex: {

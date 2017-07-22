@@ -44,6 +44,12 @@ class SideBar extends React.Component {
                             <ListItemIcon>
                                 <KeyboardArrowLeft />
                             </ListItemIcon>
+                            <ListItemText primary="עובדים"/>
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <KeyboardArrowLeft />
+                            </ListItemIcon>
                             <ListItemText primary="ייצוא לאקסל"/>
                         </ListItem>
                     </div>
