@@ -6,6 +6,8 @@ import App from "./components/App";
 import {combineReducers, createStore} from "redux";
 import reducers from "./reducers/reducers";
 import {syncHistoryWithStore, routerReducer} from "react-router-redux";
+import Status from "./components/Status";
+import Employees from "./components/Employees";
 
 export default class Root extends React.Component {
     configureStore() {
@@ -37,6 +39,8 @@ export default class Root extends React.Component {
                 <Router history={history}>
                     <Route path="/" component={App}>
                         <Route path="/login" component={Login}/>
+                        <Route path="/status" component={Status}/>
+                        <Route path="/employees" component={Employees}/>
                     </Route>
                 </Router>
             </Provider>

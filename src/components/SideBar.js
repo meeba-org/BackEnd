@@ -22,7 +22,7 @@ class SideBar extends React.Component {
             <div>
                 <List className={classes.listFull} disablePadding>
                     <div>
-                        <ListItem button>
+                        <ListItem linkButton component="a" href="/status">
                             <ListItemIcon>
                                 <KeyboardArrowLeft />
                             </ListItemIcon>
@@ -40,7 +40,7 @@ class SideBar extends React.Component {
                             </ListItemIcon>
                             <ListItemText primary="דוח יומי"/>
                         </ListItem>
-                        <ListItem button>
+                        <ListItem linkButton component="a" href="/employees">
                             <ListItemIcon>
                                 <KeyboardArrowLeft />
                             </ListItemIcon>
