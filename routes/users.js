@@ -9,7 +9,7 @@ const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
 
 const User = require('../models/user');
-
+const userController = require('../controllers/userController');
 
 router.post('/register', (req, res) => {
     const uid = req.body.uid;
@@ -106,7 +106,7 @@ router.post('/login', function (req, res) {
                 // use the jsonwebtoken package to create the token and respond with it
                 var token = jwt.sign(payload, jwtOptions.secretOrKey);
                 return res.status(200).json({token: token});
-            })
+            });
         })
         .catch((err) => {
             return res.status(500).json(err);
@@ -120,27 +120,12 @@ router.get('/secret', passport.authenticate('jwt', {session: false}), (req, res)
     res.json("Success! You can not see this without a token.");
 });
 
-/*router.get('/logout', (req, res) => {
- req.logout();
-
- req.flash('success_msg', 'You are logged out');
-
- res.redirect('/api/v1/users/login');
- });*/
-
 router.get('/', (req, res) => {
-    User.getAll()
-        .then((users) => res.json(users))
-        .catch((err) => res.status(500).json(err))
+    userController.getAll(req, res);
 });
 
-router.get('/:id', (req, res) => {
-    User.getByUid(req.params.id, (err, user) => {
-        if (err || !user) {
-            return res.status(404).json({message: 'User was not found'});
-        }
-        return res.status(200).json(user);
-    });
+router.get('/:uid', (req, res) => {
+    userController.getOne(req, res);
 });
 
 module.exports = router;

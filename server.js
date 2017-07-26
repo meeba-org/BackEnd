@@ -88,16 +88,12 @@ app.use((req,res,next) => {
   next();
 });
 
-// app.get('/', (req, res) => {
-//   res.redirect('/api/v1/');
-// });
-
 app.get('/login', (req, res) => {
   res.render('login');
 });
 
 app.use('/', routes);
-app.use('/api/v1/users', users);
+app.use('/api/users', users);
 app.use('/api/v1/groups', groups);
 app.use('/api/v1/operations', operations);
 
