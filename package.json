@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/meeba-org/meeba-web#readme",
   "dependencies": {
+    "axios": "0.16.2",
     "bcryptjs": "*",
     "body-parser": "*",
     "connect-flash": "*",
@@ -63,6 +64,7 @@
     "react-router-redux": "4.0.8",
     "react-tap-event-plugin": "2.0.1",
     "redux": "3.6.0",
+    "redux-axios-middleware": "4.0.0",
     "redux-thunk": "2.1.0"
   },
   "devDependencies": {
