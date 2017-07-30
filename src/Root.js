@@ -9,6 +9,7 @@ import EmployeesContainer from "./components/EmployeesContainer";
 import {syncHistoryWithStore} from "react-router-redux";
 
 export default class Root extends React.Component {
+
     render() {
 
         const store = createStore();

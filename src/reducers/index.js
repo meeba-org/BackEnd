@@ -1,2 +1,24 @@
-// Set up your root reducer here...
- export reducers from './reducers'
+import * as types from '../actions/actionTypes';
+import {combineReducers} from 'redux';
+import {routerReducer} from "react-router-redux";
+
+
+function dataReducer(state = {isLoading: false, data: [], error: false}, action = null) {
+    switch (action.type) {
+        case types.REQ_DATA:
+            return Object.assign({}, state, {isLoading: true, error: false});
+        case types.RECV_DATA:
+            return Object.assign({}, state, {isLoading: false, data: action.data, error: false });
+        case types.RECV_ERROR:
+            return Object.assign({}, state, {isLoading: false, data: action.data, error: true});
+        default:
+            return state;
+    }
+}
+
+const rootReducer = combineReducers({
+    routing: routerReducer,
+    data: dataReducer
+});
+
+export default rootReducer;

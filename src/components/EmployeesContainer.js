@@ -1,39 +1,35 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Employees from "./Employees";
-import axios from "axios";
+import {fetchEmployees} from "../actions/actions";
 
 class EmployeesContainer extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            employees: []
-        };
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3000/api/users')
-            .then(res => this.setState({ employees: res.data.users }))
-            .catch(err => console.log(err));
+        this.props.fetchEmployees();
     }
 
     render() {
         return (
             <div>
-                <Employees employees={this.state.employees || []}/>
+                <Employees employees={this.props.employees || []}/>
             </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    return {employees: state.employees};
+    return {
+        employees: state.data.data.users
+    };
 }
 
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch) {
     return {
-
+        fetchEmployees: () => {dispatch(fetchEmployees())}
     };
 }
 

@@ -1,21 +1,7 @@
-import {createStore, compose, applyMiddleware, combineReducers} from 'redux';
+import {createStore, compose, applyMiddleware} from 'redux';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunk from 'redux-thunk';
-import axiosMiddleware from 'redux-axios-middleware';
-import axios from 'axios';
-import {routerReducer} from "react-router-redux";
-import reducers from '../reducers/reducers';
-
-const rootReducer = combineReducers({
-    ...reducers,
-    routing: routerReducer
-});
-
-const axiosClient = axios.create({ //all axios can be used, shown in axios documentation
-    baseURL: 'http://localhost:3000', // todo move baseUrl to config
-    responseType: 'json',
-});
-
+import rootReducer from '../reducers';
 
 function configureStoreProd(initialState) {
     const middlewares = [
@@ -27,7 +13,7 @@ function configureStoreProd(initialState) {
     ];
 
     return createStore(rootReducer, initialState, compose(
-        applyMiddleware(...middlewares)
+        applyMiddleware(...middlewares),
         )
     );
 }
@@ -38,7 +24,6 @@ function configureStoreDev(initialState) {
 
         // Redux middleware that spits an error on you when you try to mutate your state either inside a dispatch or between dispatches.
         reduxImmutableStateInvariant(),
-        axiosMiddleware(axiosClient),
 
         // thunk middleware can also accept an extra argument to be passed to each thunk action
         // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
@@ -54,7 +39,7 @@ function configureStoreDev(initialState) {
     if (module.hot) {
         // Enable Webpack hot module replacement for reducers
         module.hot.accept('../reducers', () => {
-            const nextReducer = require('../reducers/reducers').default; // eslint-disable-line global-require
+            const nextReducer = require('../reducers').default; // eslint-disable-line global-require
             store.replaceReducer(nextReducer);
         });
     }
