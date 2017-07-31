@@ -1,3 +1,5 @@
+$margin: 12px;
+$containerHeight: 450px;
 body {
     color: rgba(0, 0, 0, 0.87);
     font-size: 16px;
@@ -6,24 +8,21 @@ body {
     line-height: 24px;
 
     background: rgba(128, 128, 128, 0.19);
-    height: 500px;
+    margin: $margin $margin $margin $margin;
 }
 
 #appBar-container {
-    margin: 10px;
+    margin-bottom: $margin;
 }
 #sideBar-container{
-    margin: 10px;
-    height: 100%;
-    max-width: 200px;
+    margin: 0 0 0 $margin;
 }
 
 #main-container {
-    margin: 10px;
-    height: 100%;
-    padding: 10px 10px 10px 10px;
 
-    h2 {
-        margin: 0 0 20px 0;
+    .card-content {
+        overflow-y: scroll;
+        max-height: $containerHeight;
     }
 }
+
