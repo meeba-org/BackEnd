@@ -1,25 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import CSSModules from "react-css-modules";
+import styles from "../styles/App.scss";
 import Grid from 'material-ui/Grid';
 import AppBar from "./AppBar";
 import SideBar from "./SideBar";
-
-const styleSheet = createStyleSheet('App', theme => ({
-    root: {
-        flexGrow: 1,
-        height: '500px'
-    },
-    paper: {
-        padding: 0,
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    },
-    listFull: {
-        width: 'auto',
-        flex: 'initial',
-    },
-}));
+import {Paper} from "material-ui";
 
 class App extends React.Component {
 
@@ -27,16 +13,22 @@ class App extends React.Component {
         const classes = this.props.classes;
 
         return (
-            <div className={classes.root}>
+            <div>
                 <Grid container gutter={0}>
                     <Grid item xs={12}>
-                        <AppBar />
+                        <div id="appBar-container">
+                            <AppBar />
+                        </div>
                     </Grid>
                     <Grid item xs={3}>
-                        <SideBar />
+                        <Paper id="sideBar-container">
+                            <SideBar />
+                        </Paper>
                     </Grid>
                     <Grid item xs={9}>
-                        {this.props.children}
+                        <Paper id="main-container">
+                            {this.props.children}
+                        </Paper>
                     </Grid>
                 </Grid>
             </div>
@@ -48,5 +40,5 @@ App.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styleSheet)(App);
+export default CSSModules(App, styles);
 

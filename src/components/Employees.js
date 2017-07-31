@@ -4,13 +4,15 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import CSSModules from "react-css-modules";
+import styles from "../styles/Employees.scss";
 
 class Employees extends Component {
     render() {
         let {employees} = this.props;
         return (
-            <div>
-                <div><h1>Employees Window</h1></div>
+            <div id="employees" className="font-style">
+                <div><h2 id="header">עובדים</h2></div>
 
                 {employees && employees.map((employee) =>
                     <div key={employee._id}>
@@ -30,5 +32,5 @@ Employees.propTypes = {
     employees: PropTypes.array.isRequired,
 };
 
-export default Employees;
+export default CSSModules(Employees, styles);
 

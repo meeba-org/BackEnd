@@ -1,0 +1,29 @@
+body {
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    line-height: 24px;
+
+    background: rgba(128, 128, 128, 0.19);
+    height: 500px;
+}
+
+#appBar-container {
+    margin: 10px;
+}
+#sideBar-container{
+    margin: 10px;
+    height: 100%;
+    max-width: 200px;
+}
+
+#main-container {
+    margin: 10px;
+    height: 100%;
+    padding: 10px 10px 10px 10px;
+
+    h2 {
+        margin: 0 0 20px 0;
+    }
+}
