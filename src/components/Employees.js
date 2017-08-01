@@ -13,14 +13,14 @@ class Employees extends Component {
     render() {
         let {employees} = this.props;
         return (
-            <Card>
+            <Card id="employees">
                 <CardHeader title="עובדים"/>
 
                 <CardContent className="card-content">
                     {employees && employees.map((employee) =>
-                        <div key={employee._id}>
-                            <span>תז: {employee.uid}</span>
-                            <span>שם: {employee.first_name + ' ' + employee.last_name}</span>
+                        <div key={employee._id} className="employee-row">
+                            <div className="cell">{employee.first_name + ' ' + employee.last_name}</div>
+                            <div className="cell">{employee.uid}</div>
                         </div>
                     )}
                     {(!employees || employees.length === 0) &&

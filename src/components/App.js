@@ -10,8 +10,6 @@ import {Paper} from "material-ui";
 class App extends React.Component {
 
     render() {
-        const classes = this.props.classes;
-
         return (
             <div>
                 <Grid container gutter={0}>

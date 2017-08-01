@@ -1,5 +1,17 @@
 #employees {
-    #header {
-        border-bottom: 1px solid #eee;
+    .employee-row{
+
+        .cell {
+            border: 1px solid transparent;
+            margin-left: 10px;
+            min-width: 140px;
+            display: inline-block;
+
+            &:hover {
+                border: 1px solid #eee;
+            }
+
+        }
+
     }
 }
