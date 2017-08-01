@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Employees from "./Employees";
 import {fetchEmployees} from "../actions/actions";
@@ -21,6 +22,11 @@ class EmployeesContainer extends React.Component {
     }
 }
 
+EmployeesContainer.propTypes = {
+    fetchEmployees: PropTypes.func.isRequired,
+    employees: PropTypes.array.isRequired,
+};
+
 function mapStateToProps(state) {
     return {
         employees: state.data.data.users
@@ -29,7 +35,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchEmployees: () => {dispatch(fetchEmployees())}
+        fetchEmployees: () => {dispatch(fetchEmployees());}
     };
 }
 

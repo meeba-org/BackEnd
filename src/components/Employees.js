@@ -18,7 +18,7 @@ class Employees extends Component {
 
                 <CardContent className="card-content">
                     {employees && employees.map((employee) =>
-                        <div key={employee._id} className="employee-row">
+                        <div key={employee._id}>
                             <div className="cell">{employee.first_name + ' ' + employee.last_name}</div>
                             <div className="cell">{employee.uid}</div>
                         </div>

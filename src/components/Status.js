@@ -3,7 +3,6 @@
  */
 
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 
 class Status extends Component {
     render() {

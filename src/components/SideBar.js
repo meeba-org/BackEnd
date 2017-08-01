@@ -2,17 +2,9 @@
 
 import React from "react";
 import PropTypes from 'prop-types';
-import { withStyles, createStyleSheet } from 'material-ui/styles';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import { browserHistory } from 'react-router';
-
-const styleSheet = createStyleSheet('SideBar', theme => ({
-    listFull: {
-        width: 'auto',
-        flex: 'initial',
-    },
-}));
 
 class SideBar extends React.Component {
 
@@ -21,11 +13,9 @@ class SideBar extends React.Component {
     }
 
     render() {
-        const classes = this.props.classes;
-
         return (
             <div>
-                <List className={classes.listFull} disablePadding>
+                <List>
                     <div>
                         <ListItem button onTouchTap={() => this._handleTouchTap("/status")}>
                             <ListItemIcon>
@@ -67,5 +57,5 @@ SideBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styleSheet)(SideBar);
+export default SideBar;
 

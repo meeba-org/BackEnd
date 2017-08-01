@@ -35,7 +35,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    classes: PropTypes.object.isRequired,
+    children: PropTypes.object.isRequired,
 };
 
 export default CSSModules(App, styles);

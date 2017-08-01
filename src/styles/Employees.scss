@@ -1,6 +1,4 @@
 #employees {
-    .employee-row{
-
         .cell {
             border: 1px solid transparent;
             margin-left: 10px;
@@ -10,8 +8,5 @@
             &:hover {
                 border: 1px solid #eee;
             }
-
         }
-
-    }
 }
