@@ -8,6 +8,7 @@ import CSSModules from "react-css-modules";
 import styles from "../styles/Employees.scss";
 import {Card} from "material-ui";
 import {CardContent, CardHeader} from "../../node_modules/material-ui/Card/index";
+import TextInput from "./TextInput";
 
 class Employees extends Component {
     render() {
@@ -19,8 +20,8 @@ class Employees extends Component {
                 <CardContent className="card-content">
                     {employees && employees.map((employee) =>
                         <div key={employee._id}>
-                            <div className="cell">{employee.first_name + ' ' + employee.last_name}</div>
-                            <div className="cell">{employee.uid}</div>
+                            <TextInput className="cell" text={employee.first_name + ' ' + employee.last_name} handleChange={() => console.log("name")}/>
+                            <TextInput className="cell" text={employee.uid} handleChange={() => console.log("uid")}/>
                         </div>
                     )}
                     {(!employees || employees.length === 0) &&
