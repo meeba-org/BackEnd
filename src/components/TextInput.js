@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Field} from "redux-form";
 
 class TextInput extends Component {
     render() {
-        let {className, text, handleChange} = this.props;
+        let {className, text, name} = this.props;
+        console.log("value: " + text);
 
         return (
-            <input type="text" className={className} defaultValue={text} onChange={(e) => {handleChange(e)}} />
+            <Field name={name} component="input" type="text" className={className} value={text} />
         );
     }
 }
@@ -14,7 +16,6 @@ class TextInput extends Component {
 TextInput.propTypes = {
     className: PropTypes.string,
     text: PropTypes.string,
-    handleChange: PropTypes.func,
 };
 
 export default TextInput;

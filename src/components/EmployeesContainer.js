@@ -13,10 +13,14 @@ class EmployeesContainer extends React.Component {
         this.props.fetchEmployees();
     }
 
+    submit(values) {
+        console.log(values);
+    }
+
     render() {
         return (
             <div>
-                <Employees employees={this.props.employees || []}/>
+                <Employees employees={this.props.employees || []} handleSubmit={this.submit} />
             </div>
         );
     }
@@ -24,7 +28,6 @@ class EmployeesContainer extends React.Component {
 
 EmployeesContainer.propTypes = {
     fetchEmployees: PropTypes.func.isRequired,
-    employees: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {

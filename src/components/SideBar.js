@@ -54,7 +54,6 @@ class SideBar extends React.Component {
 }
 
 SideBar.propTypes = {
-    classes: PropTypes.object.isRequired,
 };
 
 export default SideBar;

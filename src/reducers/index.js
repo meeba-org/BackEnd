@@ -1,6 +1,7 @@
 import * as types from '../actions/actionTypes';
 import {combineReducers} from 'redux';
 import {routerReducer} from "react-router-redux";
+import { reducer as formReducer } from 'redux-form';
 
 
 function dataReducer(state = {isLoading: false, data: [], error: false}, action = null) {
@@ -18,6 +19,7 @@ function dataReducer(state = {isLoading: false, data: [], error: false}, action 
 
 const rootReducer = combineReducers({
     routing: routerReducer,
+    form: formReducer,
     data: dataReducer
 });
 
