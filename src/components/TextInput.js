@@ -1,21 +1,26 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Field} from "redux-form";
 
-class TextInput extends Component {
-    render() {
-        let {className, text, name} = this.props;
-        console.log("value: " + text);
 
-        return (
-            <Field name={name} component="input" type="text" className={className} value={text} />
-        );
-    }
+let InputComponent = props => {
+    return (
+        <input  type={props.type} {...props.input} value={props.inputValue} className={props.className} />
+    )
 }
+
+let TextInput = (props) => {
+    console.log("value: " + props.inputValue);
+    return (
+        <div>
+            <Field name={props.name} component={InputComponent} type="text" {...props}/>
+        </div>
+    );
+};
 
 TextInput.propTypes = {
     className: PropTypes.string,
-    text: PropTypes.string,
+    inputValue: PropTypes.string,
 };
 
 export default TextInput;

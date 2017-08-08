@@ -9,7 +9,7 @@ function requestData() {
 function receiveData(json) {
     return{
         type: types.RECV_DATA,
-        data: json
+        employees: json
     };
 }
 
@@ -30,7 +30,7 @@ export function fetchEmployees() {
             responseType: 'json'
         })
             .then(function(response) {
-                dispatch(receiveData(response.data));
+                dispatch(receiveData(response.data.users));
             })
             .catch(function(response){
                 dispatch(receiveError(response.data));

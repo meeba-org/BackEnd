@@ -1,7 +1,8 @@
 import * as types from '../actions/actionTypes';
 import {combineReducers} from 'redux';
 import {routerReducer} from "react-router-redux";
-import { reducer as formReducer } from 'redux-form';
+// import { reducer as formReducer } from 'redux-form';
+import { reducer as formReducer } from 'redux-form/immutable';
 
 
 function dataReducer(state = {isLoading: false, data: [], error: false}, action = null) {
@@ -9,7 +10,10 @@ function dataReducer(state = {isLoading: false, data: [], error: false}, action 
         case types.REQ_DATA:
             return Object.assign({}, state, {isLoading: true, error: false});
         case types.RECV_DATA:
-            return Object.assign({}, state, {isLoading: false, data: action.data, error: false });
+            return {
+                ...state,
+                employees: action.employees
+            };
         case types.RECV_ERROR:
             return Object.assign({}, state, {isLoading: false, data: action.data, error: true});
         default:

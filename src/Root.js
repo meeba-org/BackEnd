@@ -5,8 +5,8 @@ import Login from "./components/Login";
 import App from "./components/App";
 import Status from "./components/Status";
 import createStore from "./store/configureStore";
-import EmployeesContainer from "./components/EmployeesContainer";
 import {syncHistoryWithStore} from "react-router-redux";
+import EmployeesContainer from "./components/EmployeesContainer";
 
 export default class Root extends React.Component {
 

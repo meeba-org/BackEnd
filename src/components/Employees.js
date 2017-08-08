@@ -8,43 +8,44 @@ import CSSModules from "react-css-modules";
 import styles from "../styles/Employees.scss";
 import {Card} from "material-ui";
 import {CardContent, CardHeader} from "../../node_modules/material-ui/Card/index";
-import TextInput from "./TextInput";
-import { reduxForm } from 'redux-form';
+import {Field} from 'redux-form';
 
-let Employees = (props) => {
-    const {employees, handleSubmit} = props;
+const renderField = ({ input, inputValue, label, type, className, meta: { touched, error } }) =>
+    <div>
+        <label>
+            {label}
+        </label>
+        <div>
+            <input {...input} type={type} placeholder={label} value={inputValue} className={className} />
+            {touched && error && <span>{error}</span>}
+        </div>
+    </div>;
 
-    return (
-        <Card id="employees">
-            <CardHeader title="עובדים"/>
+class Employees extends React.Component {
+    render()
+    {
+        const {employees} = this.props;
 
-            <CardContent className="card-content">
-                <form onSubmit={handleSubmit}>
-                    {employees && employees.map((employee) =>
-                        <div key={employee._id}>
-                            <TextInput name={"name" + employee._id} className="cell" text={employee.first_name + ' ' + employee.last_name} />
-                            <TextInput name={"uid" + employee._id} className="cell" text={employee.uid} />
+        return (
+            <Card id="employees">
+                <CardHeader title="עובדים"/>
+
+                <CardContent className="card-content">
+
+                    {employees && employees.map((employee, index) =>
+                        <div key={index}>
+                            <Field name="employeeFirstName" type="text" component={renderField} className="cell" inputValue={employee.first_name} />
+                            <Field name="employeeUid" type="text" component={renderField} className="cell" inputValue={employee.uid} />
                         </div>
                     )}
-                    {(!employees || employees.length === 0) &&
-                    <h2>No employees have been fetched</h2>
-                    }
-                </form>
-            </CardContent>
-        </Card>
-    );
-};
 
-Employees.propTypes = {
-    employees: PropTypes.array.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-};
+                </CardContent>
+            </Card>
+        );
+    }
+}
 
-// create new, "configured" function
-const createReduxForm = reduxForm({ form: 'employees', enableReinitialize : true});
 
-// evaluate it for ContactForm component
-Employees = createReduxForm( Employees );
 
 export default CSSModules(Employees, styles);
 
