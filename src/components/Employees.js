@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from "../styles/Employees.scss";
 import {Card} from "material-ui";
@@ -24,15 +24,15 @@ const renderField = ({ input, inputValue, label, type, className, meta: { touche
 class Employees extends React.Component {
     render()
     {
-        const {employees} = this.props;
-
+        const {employees, fields} = this.props;
+        console.log('fields: ' + fields.length + ', employees: ' + employees.length);
         return (
             <Card id="employees">
                 <CardHeader title="עובדים"/>
 
                 <CardContent className="card-content">
 
-                    {employees && employees.map((employee, index) =>
+                    {fields && fields.map((employee, index) =>
                         <div key={index}>
                             <Field name="employeeFirstName" type="text" component={renderField} className="cell" inputValue={employee.first_name} />
                             <Field name="employeeUid" type="text" component={renderField} className="cell" inputValue={employee.uid} />

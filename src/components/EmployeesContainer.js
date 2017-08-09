@@ -3,7 +3,28 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Employees from "./Employees";
 import {fetchEmployees} from "../actions/actions";
-import {FieldArray, reduxForm} from "redux-form";
+import {Field, FieldArray, reduxForm} from "redux-form";
+
+const renderField = ({ input, inputValue, label, type, className, meta: { touched, error } }) =>
+    <div>
+        <label>
+            {label}
+        </label>
+        <div>
+            <input {...input} type={type} placeholder={label} value={inputValue} className={className} />
+            {touched && error && <span>{error}</span>}
+        </div>
+    </div>;
+
+const renderMembers = ({ employees, meta: { error, submitFailed } }) =>
+    <div>
+        {employees.map((employee, index) =>
+            <div key={index}>
+                <Field name="employees.first_name" type="text" component={renderField} className="cell" inputValue={employee.first_name} />
+                <Field name="employees.uid" type="text" component={renderField} className="cell" inputValue={employee.uid} />
+            </div>
+        )}
+    </div>;
 
 class EmployeesContainer extends React.Component {
     constructor(props) {
@@ -18,12 +39,8 @@ class EmployeesContainer extends React.Component {
         return (
             <div>
                 {this.props.employees && this.props.employees.length > 0 &&
-                    <FieldArray name="employees" employees={this.props.employees} component={Employees}/>
+                    <FieldArray name="employees" employees={this.props.employees} component={renderMembers}/>
                 }
-                {/*{(!this.state.employees || this.state.employees.length === 0) &&*/}
-                {/*<h2>No employees have been fetched</h2>*/}
-                {/*}*/}
-                {/*<Employees employees={this.props.employees || []} handleSubmit={this.submit} />*/}
             </div>
         );
     }
@@ -33,9 +50,12 @@ EmployeesContainer.propTypes = {
     fetchEmployees: PropTypes.func.isRequired,
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
     return {
-        employees: state.data.employees
+        employees: state.data.employees,
+        initialValues: {
+            employees: state.data.employees
+        }
     };
 }
 
@@ -48,6 +68,6 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps, mapDispatchToProps
 )(reduxForm({
-    form: 'employees',
+    form: 'employeesForm',
     enableReinitialize: true,
-})(EmployeesContainer));
+}, mapStateToProps)(EmployeesContainer));
