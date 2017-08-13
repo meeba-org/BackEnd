@@ -2,7 +2,7 @@ import * as types from '../actions/actionTypes';
 import {combineReducers} from 'redux';
 import {routerReducer} from "react-router-redux";
 // import { reducer as formReducer } from 'redux-form';
-import { reducer as formReducer } from 'redux-form/immutable';
+import { reducer as formReducer } from 'redux-form';
 
 
 function dataReducer(state = {isLoading: false, data: [], error: false}, action = null) {

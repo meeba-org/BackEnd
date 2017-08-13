@@ -3,29 +3,36 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from "../styles/Employees.scss";
 import {Card} from "material-ui";
 import {CardContent, CardHeader} from "../../node_modules/material-ui/Card/index";
 import {Field} from 'redux-form';
+import PropTypes from 'prop-types';
 
-const renderField = ({ input, inputValue, label, type, className, meta: { touched, error } }) =>
+const renderField = ({ input, label, type, className, meta: { touched, error } }) =>
     <div>
         <label>
             {label}
         </label>
         <div>
-            <input {...input} type={type} placeholder={label} value={inputValue} className={className} />
+            <input {...input} type={type} placeholder={label} className={className} />
             {touched && error && <span>{error}</span>}
         </div>
     </div>;
 
+renderField.propTypes = {
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
+    label: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    className: PropTypes.string.isRequired,
+};
+
 class Employees extends React.Component {
     render()
     {
-        const {employees, fields} = this.props;
-        console.log('fields: ' + fields.length + ', employees: ' + employees.length);
+        const {fields} = this.props;
         return (
             <Card id="employees">
                 <CardHeader title="עובדים"/>
@@ -34,8 +41,8 @@ class Employees extends React.Component {
 
                     {fields && fields.map((employee, index) =>
                         <div key={index}>
-                            <Field name="employeeFirstName" type="text" component={renderField} className="cell" inputValue={employee.first_name} />
-                            <Field name="employeeUid" type="text" component={renderField} className="cell" inputValue={employee.uid} />
+                            <Field name={`${employee}.first_name`} type="text" component={renderField} className="cell" />
+                            <Field name={`${employee}.uid`} type="text" component={renderField} className="cell" />
                         </div>
                     )}
 
@@ -45,7 +52,9 @@ class Employees extends React.Component {
     }
 }
 
-
+Employees.propTypes = {
+    fields: PropTypes.object.isRequired,
+}
 
 export default CSSModules(Employees, styles);
 
