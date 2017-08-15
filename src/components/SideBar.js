@@ -1,7 +1,6 @@
 'use strict';
 
 import React from "react";
-import PropTypes from 'prop-types';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import { browserHistory } from 'react-router';

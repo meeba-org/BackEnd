@@ -9,12 +9,12 @@ function dataReducer(state = {isLoading: false, data: [], error: false}, action 
     switch (action.type) {
         case types.REQ_DATA:
             return Object.assign({}, state, {isLoading: true, error: false});
-        case types.RECV_DATA:
+        case types.RECEIVE_EMPLOYEES_SUCCESS:
             return {
                 ...state,
                 employees: action.employees
             };
-        case types.RECV_ERROR:
+        case types.RECEIVE_EMPLOYEES_ERROR:
             return Object.assign({}, state, {isLoading: false, data: action.data, error: true});
         default:
             return state;
