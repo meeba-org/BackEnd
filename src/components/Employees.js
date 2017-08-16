@@ -14,24 +14,10 @@ class Employees extends React.Component {
 
     constructor(props) {
         super(props);
-        this.updateEmployee = this.updateEmployee.bind(this);
-        this.updateStore = this.updateStore.bind(this);
     }
 
-    updateEmployee(val, id){
-        let index = parseInt(id);
-        let {Employees} = this.state;
-        let updatedEmployees = [
-            ...Employees.filter((elem, idx) => idx < index),
-            Object.assign({}, Employees[index], {first_name: val.first_name, uid: val.uid}),
-            ...Employees.filter((elem, idx) => idx > index),
-        ];
-        this.setState({Employees: updatedEmployees });
-        this.updateStore(updatedEmployees);
-    }
-
-    updateStore(localState){
-        this.props.input.onChange(localState);
+    onDelete(fields, index) {
+        fields.remove(index);
     }
 
     render()
@@ -45,12 +31,9 @@ class Employees extends React.Component {
 
                     <div>
                     {fields && fields.map((employeeIndex, index) =>
-                        <div>
-                            <Employee {...fields.get(index)} name={employeeIndex} key={fields.get(index)._id} />
-                            <button  onClick={() => fields.remove(fields.get(index)._id)}>מחק</button>
-                        </div>
+                        <Employee {...fields.get(index)} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} />
                         )}
-                        <button  onClick={() => fields.push({})}>הוסף</button>
+                        {/*<button  onClick={() => fields.push({})}>הוסף</button>*/}
                     </div>
 
                 </CardContent>
