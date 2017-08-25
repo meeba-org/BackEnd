@@ -43,7 +43,6 @@
     "connect-flash": "*",
     "cookie-parser": "^1.4.3",
     "express": "4.15.4",
-    "express-handlebars": "*",
     "express-messages": "*",
     "express-session": "*",
     "express-validator": "*",

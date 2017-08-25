@@ -3,56 +3,45 @@ const bcrypt = require('bcryptjs');
 
 // User Schema
 const UserSchema = mongoose.Schema({
-  uid: {
-    type: String,
-    index: true,
-    required: true
-  },
-  first_name: {
-    type: String,
-    required: true
-  },
-  last_name: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String
-  },
-  password: {
-    type: String,
-    //required: true
-  },
-  role: {
-    type: String,
-    required: true
-  },
-  /*
-   project_ids: {
-   type: [String]
-   },
-   created: {
-   type: Date,
-   default: Date.now
-   },
-   updated: {
-   type: Date,
-   default: Date.now
-   }*/
+    uid: {
+        type: String,
+        index: true,
+        required: true
+    },
+    first_name: {
+        type: String,
+        required: true
+    },
+    last_name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String
+    },
+    password: {
+        type: String,
+        //required: true
+    },
+    role: {
+        type: String,
+        required: true
+    },
+    /*
+     project_ids: {
+     type: [String]
+     },
+     created: {
+     type: Date,
+     default: Date.now
+     },
+     updated: {
+     type: Date,
+     default: Date.now
+     }*/
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
-
-module.exports.create = (newUser, callback) => {
-  //TODO remove next line when bcrypt is fixed
-  newUser.save(callback);
-  /*bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(newUser.password, salt, null, (err, hash) => {
-      newUser.password = hash;
-      newUser.save(callback);
-    });
-  });*/
-};
 
 module.exports.getByUid = (uid) => {
   const query = {uid: uid};
@@ -69,9 +58,16 @@ module.exports.getAll = () => {
 };
 
 // Return a promise
-module.exports.saveAll = (users) => {
-    console.log(users)
-  return User.find().exec();
+module.exports.create = (user) => {
+    let newUser = new User();
+    newUser.uid = user.uid;
+    newUser.first_name = user.first_name;
+    newUser.last_name = user.last_name;
+    newUser.email = user.email;
+    newUser.password = user.password;
+    newUser.role = user.role;
+
+  return newUser.save();
 };
 
 module.exports.comparePassword = (candidatePassword, hash, callback) => {

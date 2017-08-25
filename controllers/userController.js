@@ -2,7 +2,6 @@
 const User = require('../models/user');
 const passport = require('passport');
 
-
 //GET /users/{id} operationId
 const getOne = (req, res) => {
     var uid = req.params.uid;
@@ -25,9 +24,9 @@ const getAll = (req, res, next) => {
 };
 
 //GET /users operationId
-const saveAll = (req, res, next) => {
-    User.saveAll(req.body.users)
-        .then((users) => res.status(200).json({users: users}))
+const create = (req, res, next) => {
+    User.create(req.body)
+        .then((user) => res.status(200).json({user: user}))
         .catch((err) => res.status(500).json({message: err}));
 };
 
@@ -91,6 +90,13 @@ const delUser = (req, res) => {
         .catch((err) => res.status(400).json({message: err}))
 }
 
-
 // Exports all the functions to perform on the db
-module.exports = {getAll, save, saveAll, getOne, update, delUser};
+module.exports = {
+    getAll,
+    create,
+    getOne,
+    save,
+    update,
+    delUser
+};
+

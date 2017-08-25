@@ -5,7 +5,6 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const exphbs = require('express-handlebars');
 const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const session = require('express-session');
@@ -25,22 +24,17 @@ const operations = require('./routes/operations');
 // Init App
 const app = express();
 
+// Support webpack-dev-server
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3001");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
-// View Engine
-app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({
-  defaultLayout:'layout'
-}));
-app.set('view engine', 'handlebars');
-
 // Body Parser Middleware
 // parse application/json
 app.use(bodyParser.json());
+app.use(expressValidator());
 // parse application/x-www-form-urlencoded
 // for easier testing with Postman or plain HTML forms
 app.use(bodyParser.urlencoded({
@@ -63,24 +57,6 @@ app.use(session({
 // Passport Init
 app.use(passport.initialize());
 //app.use(passport.session());
-
-// Express Validator
-app.use(expressValidator({
-  errorFormatter: (param, msg, value) => {
-    var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
-
-    while(namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
-    }
-    return {
-      param : formParam,
-      msg   : msg,
-      value : value
-    };
-  }
-}));
 
 // Connect Flash
 app.use(flash());
