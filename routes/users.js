@@ -124,21 +124,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    req.checkBody('uid', 'uid is required').notEmpty();
-    req.checkBody('first_name', 'First name is required').notEmpty();
-    req.checkBody('last_name', 'Last name is required').notEmpty();
-    req.checkBody('email', 'Email is not valid').isEmail();
-    req.checkBody('password', 'Password is required').notEmpty();
-    req.checkBody('role', 'Role is required').notEmpty();
     userController.create(req, res);
-
-    req.getValidationResult().then(function(result) {
-        if (!result.isEmpty()) {
-            res.status(400).send('There have been validation errors: ' + util.inspect(result.array()));
-            return;
-        }
-    });
-
 });
 
 router.get('/:uid', (req, res) => {

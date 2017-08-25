@@ -25,9 +25,21 @@ const getAll = (req, res, next) => {
 
 //GET /users operationId
 const create = (req, res, next) => {
-    User.create(req.body)
-        .then((user) => res.status(200).json({user: user}))
-        .catch((err) => res.status(500).json({message: err}));
+    req.checkBody('uid', 'uid is required').notEmpty();
+    req.checkBody('first_name', 'First name is required').notEmpty();
+    req.checkBody('last_name', 'Last name is required').notEmpty();
+    req.checkBody('email', 'Email is not valid').isEmail();
+    req.checkBody('password', 'Password is required').notEmpty();
+    req.checkBody('role', 'Role is required').notEmpty();
+
+    req.getValidationResult()
+        .then(function (result) {
+            result.throw();
+            User.create(req.body)
+                .then((user) => res.status(200).json({user: user}))
+                .catch((err) => res.status(500).json({message: err}));
+        })
+        .catch((err) => res.status(400).json({message: err.array()}));
 };
 
 //POST /users operationId
