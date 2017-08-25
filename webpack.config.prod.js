@@ -17,7 +17,7 @@ export default {
     extensions: ['*', '.js', '.jsx', '.json']
   },
   devtool: 'source-map', // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
-  entry: path.resolve(__dirname, 'src/index'),
+  entry: path.resolve(__dirname, 'public/index'),
   target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -36,8 +36,8 @@ export default {
 
     // Generate HTML file that contains references to generated bundles. See here for how this works: https://github.com/ampedandwired/html-webpack-plugin#basic-usage
     new HtmlWebpackPlugin({
-      template: 'src/index.ejs',
-      favicon: 'src/favicon.ico',
+      template: 'public/index.ejs',
+      favicon: 'public/favicon.ico',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
