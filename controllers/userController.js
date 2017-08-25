@@ -24,6 +24,13 @@ const getAll = (req, res, next) => {
         .catch((err) => res.status(500).json({message: err}));
 };
 
+//GET /users operationId
+const saveAll = (req, res, next) => {
+    User.saveAll(req.body.users)
+        .then((users) => res.status(200).json({users: users}))
+        .catch((err) => res.status(500).json({message: err}));
+};
+
 //POST /users operationId
 const save = (req, res) => {
     // Validation
@@ -86,4 +93,4 @@ const delUser = (req, res) => {
 
 
 // Exports all the functions to perform on the db
-module.exports = {getAll, save, getOne, update, delUser};
+module.exports = {getAll, save, saveAll, getOne, update, delUser};

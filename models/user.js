@@ -68,6 +68,12 @@ module.exports.getAll = () => {
   return User.find().exec();
 };
 
+// Return a promise
+module.exports.saveAll = (users) => {
+    console.log(users)
+  return User.find().exec();
+};
+
 module.exports.comparePassword = (candidatePassword, hash, callback) => {
   bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
     if (err) throw err;

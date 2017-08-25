@@ -16,7 +16,20 @@ class Employees extends React.Component {
         super(props);
     }
 
+    onCreate(fields) {
+        let newEmployee = {};
+        fields.push(newEmployee);
+        this.props.onCreate(newEmployee);
+    }
+
+    onUpdate(fields, index) {
+        let employeeToUpdate = fields.get(index);
+        this.props.onUpdate(employeeToUpdate);
+    }
+
     onDelete(fields, index) {
+        let employeeToDelete = fields.get(index);
+        this.props.onDelete(employeeToDelete);
         fields.remove(index);
     }
 
@@ -30,10 +43,11 @@ class Employees extends React.Component {
                 <CardContent className="card-content">
 
                     <div>
-                    {fields && fields.map((employeeIndex, index) =>
-                        <Employee {...fields.get(index)} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} />
+                        <button  onClick={() => this.onCreate(fields)}>הוסף</button>
+
+                        {fields && fields.map((employeeIndex, index) =>
+                        <Employee {...fields.get(index)} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={() => this.onUpdate(fields, index)}/>
                         )}
-                        {/*<button  onClick={() => fields.push({})}>הוסף</button>*/}
                     </div>
 
                 </CardContent>
@@ -44,6 +58,9 @@ class Employees extends React.Component {
 
 Employees.propTypes = {
     fields: PropTypes.object.isRequired,
+    onCreate: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
 };
 
 export default CSSModules(Employees, styles);

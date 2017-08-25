@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Employees from "./Employees";
-import {fetchEmployees} from "../actions/actions";
+import {createEmployee, deleteEmployee, fetchEmployees, updateEmployee} from "../actions/actions";
 import {FieldArray, reduxForm} from "redux-form";
 
 class EmployeesContainer extends React.Component {
@@ -11,10 +11,11 @@ class EmployeesContainer extends React.Component {
     }
 
     render() {
+        const {deleteEmployee} = this.props;
         return (
             <form>
                 {this.props.employees && this.props.employees.length > 0 &&
-                    <FieldArray name="employees" component={Employees}/>
+                    <FieldArray name="employees" component={Employees} onDelete={deleteEmployee}  onUpdate={updateEmployee} onCreate={createEmployee}/>
                 }
             </form>
         );
@@ -22,7 +23,11 @@ class EmployeesContainer extends React.Component {
 }
 
 EmployeesContainer.propTypes = {
+    employees: PropTypes.array.isRequired,
     fetchEmployees: PropTypes.func.isRequired,
+    createEmployee: PropTypes.func.isRequired,
+    updateEmployee: PropTypes.func.isRequired,
+    deleteEmployee: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -36,7 +41,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchEmployees: () => {dispatch(fetchEmployees());}
+        fetchEmployees: () => {dispatch(fetchEmployees());},
+        createEmployee: (employees) => {dispatch(createEmployee(employees));},
+        updateEmployee: (employees) => {dispatch(updateEmployee(employees));},
+        deleteEmployee: (employees) => {dispatch(deleteEmployee(employees));},
     };
 }
 

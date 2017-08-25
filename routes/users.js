@@ -124,6 +124,10 @@ router.get('/', (req, res) => {
     userController.getAll(req, res);
 });
 
+router.post('/', (req, res) => {
+    userController.saveAll(req, res);
+});
+
 router.get('/:uid', (req, res) => {
     userController.getOne(req, res);
 });

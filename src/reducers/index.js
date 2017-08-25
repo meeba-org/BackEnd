@@ -7,7 +7,7 @@ import { reducer as formReducer } from 'redux-form';
 
 function dataReducer(state = {isLoading: false, data: [], error: false}, action = null) {
     switch (action.type) {
-        case types.REQ_DATA:
+        case types.REQUEST_EMPLOYEES:
             return Object.assign({}, state, {isLoading: true, error: false});
         case types.RECEIVE_EMPLOYEES_SUCCESS:
             return {
