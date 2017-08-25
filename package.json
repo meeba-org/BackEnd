@@ -122,6 +122,7 @@
     "webpack": "~3",
     "webpack-bundle-analyzer": "2.1.1",
     "webpack-dev-middleware": "1.9.0",
+    "webpack-dev-server": "^2.7.1",
     "webpack-hot-middleware": "2.17.1",
     "webpack-md5-hash": "0.0.5"
   },
@@ -132,7 +133,10 @@
     }
   },
   "babel": {
-    "presets": ["react", "stage-1"],
+    "presets": [
+      "react",
+      "stage-1"
+    ],
     "env": {
       "development": {
         "presets": [
@@ -151,7 +155,11 @@
             }
           ]
         ],
-        "plugins": ["react-hot-loader/babel", "transform-react-constant-elements", "transform-react-remove-prop-types"]
+        "plugins": [
+          "react-hot-loader/babel",
+          "transform-react-constant-elements",
+          "transform-react-remove-prop-types"
+        ]
       },
       "test": {
         "presets": [
