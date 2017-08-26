@@ -3,10 +3,6 @@
     "version": "1.0.0",
     "description": "BackEnd & FrontEnd of meeba - Time Tracking",
     "main": "server.js",
-    "engines": {
-        "node": "6.1.0",
-        "npm": "^3"
-    },
     "scripts": {
         "preinstall": "node tools/nodeVersionCheck.js",
         "start-message": "babel-node tools/startMessage.js",
