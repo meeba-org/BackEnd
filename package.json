@@ -4,7 +4,7 @@
     "description": "BackEnd & FrontEnd of meeba - Time Tracking",
     "main": "server.js",
     "engines": {
-        "node": "^6",
+        "node": "6.1.0",
         "npm": "^3"
     },
     "scripts": {
