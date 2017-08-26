@@ -7,8 +7,8 @@ const util = require('util');
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
 
-const User = require('../models/user');
-const userController = require('../controllers/userController');
+const User = require('./userModel');
+const userController = require('./usersController');
 
 router.post('/register', (req, res) => {
     const uid = req.body.uid;

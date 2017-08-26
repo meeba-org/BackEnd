@@ -1,5 +1,5 @@
 'use strict';
-const User = require('../models/user');
+const User = require('./userModel');
 
 //GET /users/{uid} user
 const getByUid = (req, res) => {

@@ -17,7 +17,7 @@ mongoose.connect('mongodb://admin:admin12@ds139242.mlab.com:39242/heroku_9mpwf6z
 
 // Routes
 const routes = require('./routes/index');
-const users = require('./routes/users');
+const users = require('./users/usersRoutes');
 const groups = require('./routes/groups');
 const operations = require('./routes/operations');
 

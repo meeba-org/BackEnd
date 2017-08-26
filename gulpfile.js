@@ -13,8 +13,9 @@ gulp.task('lint', function () {
 gulp.task('develop', function () {
     var stream = nodemon({ script: 'server.js'
         , ext: 'html js'
+        , quiet: 'true'
         , ignore: ['ignored.js']
-        , tasks: ['lint'] })
+        , tasks: ['lint'] });
 
     stream
         .on('restart', function () {
