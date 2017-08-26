@@ -45,10 +45,9 @@ function deleteEmployeeStart() {
     return {type: DELETE_EMPLOYEE_START};
 }
 
-function deleteEmployeeSuccess(json) {
+function deleteEmployeeSuccess(response) {
     return {
         type: DELETE_EMPLOYEE_SUCCESS,
-        employees: json
     };
 }
 
@@ -63,12 +62,10 @@ export function deleteEmployee(employee) {
     return function (dispatch) {
         dispatch(deleteEmployeeStart());
         return axios({
-            url: 'http://localhost:3000/api/user/' + employee._id,
-            timeout: 20000,
+            url: 'http://localhost:3000/api/users/' + employee.uid,
             method: 'delete',
-            responseType: 'json'
         }).then(function (response) {
-            dispatch(deleteEmployeeSuccess(response.data.users));
+            dispatch(deleteEmployeeSuccess(response));
         }).catch(function (response) {
             dispatch(deleteEmployeeError(response.data));
         });
@@ -97,7 +94,7 @@ export function updateEmployee(employee) {
     return function (dispatch) {
         dispatch(updateEmployeeStart());
         return axios({
-            url: 'http://localhost:3000/api/user',
+            url: 'http://localhost:3000/api/users',
             timeout: 20000,
             method: 'put',
             data: {user: employee},
@@ -114,10 +111,9 @@ function createEmployeeStart() {
     return {type: CREATE_EMPLOYEE_START};
 }
 
-function createEmployeeSuccess(json) {
+function createEmployeeSuccess(response) {
     return {
         type: CREATE_EMPLOYEE_SUCCESS,
-        employees: json
     };
 }
 
@@ -130,17 +126,26 @@ function createEmployeeError(json) {
 
 export function createEmployee(employee) {
     return function (dispatch) {
-        dispatch(createEmployeeStart());
-        return axios({
-            url: 'http://localhost:3000/api/user/' + employee._id,
-            timeout: 20000,
-            method: 'post',
-            data: {user: employee},
-            responseType: 'json'
-        }).then(function (response) {
-            dispatch(createEmployeeSuccess(response.data.users));
+        // dispatch(createEmployeeStart());
+        return axios.post(
+            'http://localhost:3000/api/users',
+            employee,
+            {
+                'Content-Type': 'application/json'
+            }
+        )
+        // return axios({
+        //     url: 'http://localhost:3000/api/users',
+        //     timeout: 20000,
+        //     method: 'post',
+        //     data: employee,
+        //     headers:{
+        //         'Content-Type': 'application/json'
+        //     }
+        .then(function (response) {
+            // dispatch(createEmployeeSuccess(response));
         }).catch(function (response) {
-            dispatch(createEmployeeError(response.data));
+            // dispatch(createEmployeeError(response.data));
         });
     };
 }

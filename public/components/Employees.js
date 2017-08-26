@@ -17,7 +17,14 @@ class Employees extends React.Component {
     }
 
     onCreate(fields) {
-        let newEmployee = {};
+        let newEmployee = {
+            uid: 73,
+            first_name: "test",
+            last_name: "last",
+            email: "chenop@gmail.com",
+            password: "1234",
+            role: "manager",
+        };
         fields.push(newEmployee);
         this.props.onCreate(newEmployee);
     }
@@ -29,8 +36,8 @@ class Employees extends React.Component {
 
     onDelete(fields, index) {
         let employeeToDelete = fields.get(index);
-        this.props.onDelete(employeeToDelete);
         fields.remove(index);
+        this.props.onDelete(employeeToDelete);
     }
 
     render()

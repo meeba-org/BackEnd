@@ -8,7 +8,7 @@
         "start-message": "babel-node tools/startMessage.js",
         "start-server": "gulp develop",
         "prestart": "npm-run-all --parallel start-message",
-        "start": "npm-run-all --parallel open:src lint:watch start-server",
+        "start": "npm-run-all --parallel open:src lint:watch",
         "open:src": "babel-node tools/srcServer.js",
         "open:dist": "babel-node tools/distServer.js",
         "lint": "esw webpack.config.* src tools --color",

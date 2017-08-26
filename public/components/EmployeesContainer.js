@@ -11,7 +11,7 @@ class EmployeesContainer extends React.Component {
     }
 
     render() {
-        const {deleteEmployee} = this.props;
+        const {deleteEmployee, updateEmployee, createEmployee} = this.props;
         return (
             <form>
                 {this.props.employees && this.props.employees.length > 0 &&
@@ -42,9 +42,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchEmployees: () => {dispatch(fetchEmployees());},
-        createEmployee: (employees) => {dispatch(createEmployee(employees));},
-        updateEmployee: (employees) => {dispatch(updateEmployee(employees));},
-        deleteEmployee: (employees) => {dispatch(deleteEmployee(employees));},
+        createEmployee: (employee) => {dispatch(createEmployee(employee));},
+        updateEmployee: (employee) => {dispatch(updateEmployee(employee));},
+        deleteEmployee: (employee) => {dispatch(deleteEmployee(employee));},
     };
 }
 
