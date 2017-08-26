@@ -1,30 +1,36 @@
 'use strict';
 const User = require('../models/user');
-const passport = require('passport');
 
-//GET /users/{id} operationId
-const getOne = (req, res) => {
-    var uid = req.params.uid;
-    User.getByUid(uid)
-        .then((user) => {
-            if (user) {
-                res.status(200).json(user);
-            }
-            return Promise.reject("User with uid " + uid + " does not exist");
+//GET /users/{uid} user
+const getByUid = (req, res) => {
+    req.checkParams('uid', 'uid is required').notEmpty();
+
+    req.getValidationResult()
+        .then(function (result) {
+            result.throw();
+
+            const uid = req.params.uid;
+
+            User.getByUid(uid)
+                .then((user) => {
+                    if (user)
+                        return res.status(200).json(user);
+                    return Promise.reject("User with uid " + uid + " does not exist");
+                })
+                .catch((err) => res.status(500).json({message: err}));
         })
-        .catch((err) => res.status(404).json({message: err}))
+        .catch((err) => res.status(400).json({message: err.array()}));
 };
 
-
-//GET /users operationId
-const getAll = (req, res, next) => {
+//GET /users users
+const getAll = (req, res) => {
     User.getAll()
         .then((users) => res.status(200).json({users: users}))
         .catch((err) => res.status(500).json({message: err}));
 };
 
-//GET /users operationId
-const create = (req, res, next) => {
+//POST /users user
+const create = (req, res) => {
     req.checkBody('uid', 'uid is required').notEmpty();
     req.checkBody('first_name', 'First name is required').notEmpty();
     req.checkBody('last_name', 'Last name is required').notEmpty();
@@ -42,72 +48,52 @@ const create = (req, res, next) => {
         .catch((err) => res.status(400).json({message: err.array()}));
 };
 
-//POST /users operationId
-const save = (req, res) => {
-    // Validation
-    // TODO add good validations
-    req.checkBody('email', 'Email is not valid').isEmail();
-    req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-
-    const errors = req.validationErrors();
-
-    if (errors) {
-        // email not valid
-        // passwords do not match
-        return res.status(400).json({message: JSON.stringify(errors)});
-    }
-    else {
-        // Passed
-        const newUser = new User({
-            uid: req.body.uid,
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            email: req.body.email,
-            password: req.body.password,
-            role: req.body.role
-        });
-
-        User.getByUid(newUser.uid)
-            .then((user) => {
-                if (user){
-                    return res.status(400).json({message: 'User with uid ' + req.body.uid + ' already exists'});
-                }
-            });
-
-        User.create(newUser)
-            .then((users) => res.status(200).json({success: 1, description: 'User is registered and can now login'})
-                .catch((err) => res.status(400).json({message: err})));
-    }
-}
-
-//PUT /users/{id} operationId
+//PUT /users user
 const update = (req, res) => {
-    let uid = req.swagger.params.uid.value;
-    let user = req.body;
-    User.update(uid, user)
-        .then((user) => {
-            if (user) {
-                res.status(200).json({success: 1, description: 'User updated'});
-            }
-            return Promise.reject("User with uid " + uid + " does not exist");
-        })
-        .catch((err) => res.status(400).json({message: err}))
-}
+    req.checkBody('_id', '_id is required').notEmpty();
+    req.checkBody('uid', 'uid is required').notEmpty();
+    req.checkBody('first_name', 'First name is required').notEmpty();
+    req.checkBody('last_name', 'Last name is required').notEmpty();
+    req.checkBody('email', 'Email is not valid').isEmail();
+    req.checkBody('password', 'Password is required').notEmpty();
+    req.checkBody('role', 'Role is required').notEmpty();
 
-//DELETE /users/{id} operationId
+    req.getValidationResult()
+        .then(function (result) {
+            result.throw();
+            User.update(req.body)
+                .then((user) => res.status(200).json({user: user}))
+                .catch((err) => res.status(500).json({message: err}));
+        })
+        .catch((err) => res.status(400).json({message: err.array()}));
+};
+
+//DELETE /users/{id} userUid
 const delUser = (req, res) => {
-    let uid = req.swagger.params.uid.value;
-    User.delete(uid)
-        .then(() => res.status(200).json({success: 1, description: 'User deleted'}))
-        .catch((err) => res.status(400).json({message: err}))
-}
+    req.checkParams('uid', 'int uid is required').notEmpty().isInt();
+
+    return req.getValidationResult()
+        .then(function (result) {
+            result.throw();
+
+            const uid = req.params.uid;
+
+            return User.delUser(uid)
+                .then(() => {
+                    return res.status(204).send();
+                })
+                .catch((err) => {
+                    return res.status(500).json({message: err});
+                });
+        })
+        .catch((err) => res.status(400).json({message: err.array()}));
+};
 
 // Exports all the functions to perform on the db
 module.exports = {
     getAll,
+    getByUid,
     create,
-    getOne,
-    save,
     update,
     delUser
 };

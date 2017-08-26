@@ -123,12 +123,21 @@ router.get('/', (req, res) => {
     userController.getAll(req, res);
 });
 
+router.get('/:uid', (req, res) => {
+    userController.getByUid(req, res);
+});
+
 router.post('/', (req, res) => {
     userController.create(req, res);
 });
 
-router.get('/:uid', (req, res) => {
-    userController.getOne(req, res);
+router.put('/', (req, res) => {
+    userController.update(req, res);
 });
+
+router.delete('/:uid', (req, res) => {
+    userController.delUser(req, res);
+});
+
 
 module.exports = router;
