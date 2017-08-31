@@ -90,14 +90,18 @@ function updateEmployeeError(json) {
     };
 }
 
-export function updateEmployee(employee) {
+export function updateEmployee(fields, index, propName, value) {
     return function (dispatch) {
         dispatch(updateEmployeeStart());
+        let employee = {
+            ...fields.get(index),
+            uid: value,
+        };
         return axios({
             url: 'http://localhost:3000/api/users',
             timeout: 20000,
             method: 'put',
-            data: {user: employee},
+            data: employee,
             responseType: 'json'
         }).then(function (response) {
             dispatch(updateEmployeeSuccess(response.data.users));
@@ -126,13 +130,10 @@ function createEmployeeError(json) {
 
 export function createEmployee(employee) {
     return function (dispatch) {
-        // dispatch(createEmployeeStart());
+        dispatch(createEmployeeStart());
         return axios.post(
             'http://localhost:3000/api/users',
             employee,
-            {
-                'Content-Type': 'application/json'
-            }
         )
         // return axios({
         //     url: 'http://localhost:3000/api/users',
@@ -143,9 +144,9 @@ export function createEmployee(employee) {
         //         'Content-Type': 'application/json'
         //     }
         .then(function (response) {
-            // dispatch(createEmployeeSuccess(response));
+            dispatch(createEmployeeSuccess(response));
         }).catch(function (response) {
-            // dispatch(createEmployeeError(response.data));
+            dispatch(createEmployeeError(response.data));
         });
     };
 }

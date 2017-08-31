@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Employees from "./Employees";
 import {createEmployee, deleteEmployee, fetchEmployees, updateEmployee} from "../actions/actions";
-import {FieldArray, reduxForm} from "redux-form";
+import {FieldArray, formValueSelector, reduxForm} from "redux-form";
 
 class EmployeesContainer extends React.Component {
     componentDidMount() {
@@ -11,9 +11,9 @@ class EmployeesContainer extends React.Component {
     }
 
     render() {
-        const {deleteEmployee, updateEmployee, createEmployee} = this.props;
+        const {handleSubmit, deleteEmployee, updateEmployee, createEmployee} = this.props;
         return (
-            <form>
+            <form onSubmit={handleSubmit}>
                 {this.props.employees && this.props.employees.length > 0 &&
                     <FieldArray name="employees" component={Employees} onDelete={deleteEmployee}  onUpdate={updateEmployee} onCreate={createEmployee}/>
                 }
@@ -30,9 +30,12 @@ EmployeesContainer.propTypes = {
     deleteEmployee: PropTypes.func.isRequired,
 };
 
+const selector = formValueSelector('employeesForm');
+
 function mapStateToProps(state) {
     return {
         employees: state.data.employees, // TODO need both???
+        values: selector(state, 'uid', 'first_name'),
         initialValues: {
             employees: state.data.employees
         }
@@ -43,10 +46,11 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchEmployees: () => {dispatch(fetchEmployees());},
         createEmployee: (employee) => {dispatch(createEmployee(employee));},
-        updateEmployee: (employee) => {dispatch(updateEmployee(employee));},
+        updateEmployee: (fields, index, propName, value) => {dispatch(updateEmployee(fields, index, propName, value));},
         deleteEmployee: (employee) => {dispatch(deleteEmployee(employee));},
     };
 }
+
 
 export default connect(
     mapStateToProps, mapDispatchToProps
@@ -54,3 +58,5 @@ export default connect(
     form: 'employeesForm',
     enableReinitialize: true,
 })(EmployeesContainer));
+
+

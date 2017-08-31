@@ -29,9 +29,9 @@ class Employees extends React.Component {
         this.props.onCreate(newEmployee);
     }
 
-    onUpdate(fields, index) {
-        let employeeToUpdate = fields.get(index);
-        this.props.onUpdate(employeeToUpdate);
+    onUpdate(fields, index, name, value) {
+
+        this.props.onUpdate(fields, index, name, value);
     }
 
     onDelete(fields, index) {
@@ -53,7 +53,7 @@ class Employees extends React.Component {
                         <button  onClick={() => this.onCreate(fields)}>הוסף</button>
 
                         {fields && fields.map((employeeIndex, index) =>
-                        <Employee {...fields.get(index)} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={() => this.onUpdate(fields, index)}/>
+                        <Employee {...fields.get(index)} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={(name, value) => this.onUpdate(fields, index, name, value)}/>
                         )}
                     </div>
 
