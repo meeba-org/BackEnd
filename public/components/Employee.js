@@ -33,18 +33,32 @@ Employee.propTypes = {
 
 
 class TextInput extends React.Component {
-    onChange(e) {
-        const {input} = this.props;
-        e.preventDefault();
+    onUpdate(e) {
+        e.preventDefault(); // I must have it - without that no re-render in UI...
+        const {input, onUpdate} = this.props;
+        let newValue = e.target.value;
+        let fieldName = this.extractFieldName(input.name);
 
-        input.onChange(e.target.value);
+        input.onChange(newValue);
+        onUpdate(fieldName, newValue);
+    }
+
+    extractFieldName(name) {
+        if (!name && name.length <= 1)
+            return null;
+
+        let res = name.split(".");
+        if (!res && res.length <= 1)
+            return null;
+
+        return res[res.length - 1];
     }
 
     render() {
         const { input, label, type, className, onUpdate, meta: { touched, error } } = this.props;
         return (
             <div>
-                <input {...input} type={type} placeholder={label} className={className} onChange={(e) => {input.onChange(e.target.value); onUpdate(input.name, e.target.value);}}/>
+                <input {...input} type={type} placeholder={label} className={className} onChange={(e) => this.onUpdate(e) }/>
                 {touched && error && <span>{error}</span>}
             </div>
         )

@@ -30,7 +30,6 @@ class Employees extends React.Component {
     }
 
     onUpdate(fields, index, name, value) {
-
         this.props.onUpdate(fields, index, name, value);
     }
 

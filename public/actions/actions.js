@@ -95,7 +95,7 @@ export function updateEmployee(fields, index, propName, value) {
         dispatch(updateEmployeeStart());
         let employee = {
             ...fields.get(index),
-            uid: value,
+            [propName]: value,
         };
         return axios({
             url: 'http://localhost:3000/api/users',
