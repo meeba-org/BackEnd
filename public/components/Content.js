@@ -4,8 +4,7 @@ import styles from "../styles/Content.scss";
 import EmployeesContainer from "./EmployeesContainer";
 
 class Content extends React.Component {
-    submit(values) {
-        console.log(values);
+    submit() {
     }
 
     render() {

@@ -48,7 +48,7 @@ function deleteEmployeeStart() {
     return {type: DELETE_EMPLOYEE_START};
 }
 
-function deleteEmployeeSuccess(response) {
+function deleteEmployeeSuccess() {
     return {
         type: DELETE_EMPLOYEE_SUCCESS,
     };
@@ -114,7 +114,7 @@ function createEmployeeStart() {
     return {type: CREATE_EMPLOYEE_START};
 }
 
-function createEmployeeSuccess(response) {
+function createEmployeeSuccess() {
     return {
         type: CREATE_EMPLOYEE_SUCCESS,
     };
