@@ -38,7 +38,7 @@ class Employee extends React.Component {
 }
 
 Employee.propTypes = {
-    input: PropTypes.object().isRequired,
+    input: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
 };
