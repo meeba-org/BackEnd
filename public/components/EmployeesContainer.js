@@ -35,8 +35,7 @@ const selector = formValueSelector('employeesForm');
 
 function mapStateToProps(state) {
     return {
-        employees: state.data.employees, // TODO need both???
-        values: selector(state, 'uid', 'first_name'),
+        employees: state.data.employees, // TODO dont know how to init that without hose two... :-(
         initialValues: {
             employees: state.data.employees
         }
