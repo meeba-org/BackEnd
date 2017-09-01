@@ -8,11 +8,11 @@ import styles from "../styles/Employees.scss";
 import {CardContent, CardHeader} from "../../node_modules/material-ui/Card/index";
 import PropTypes from 'prop-types';
 import Employee from "./Employee";
-import {Button, Card, Divider, IconButton} from "material-ui";
+import {Button, Card, Divider} from "material-ui";
 import {Field} from "redux-form";
 import AddIcon from 'material-ui-icons/Add';
 
-class Employees extends React.Component {
+class EmployeesList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -25,7 +25,7 @@ class Employees extends React.Component {
             last_name: "last",
             email: "chenop@gmail.com",
             password: "1234",
-            role: "manager",
+            role: "employee",
         };
         fields.push(newEmployee);
         this.props.onCreate(newEmployee);
@@ -65,12 +65,12 @@ class Employees extends React.Component {
     }
 }
 
-Employees.propTypes = {
+EmployeesList.propTypes = {
     fields: PropTypes.object.isRequired,
     onCreate: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
 };
 
-export default CSSModules(Employees, styles);
+export default CSSModules(EmployeesList, styles);
 

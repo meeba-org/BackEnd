@@ -22,10 +22,10 @@ class Employee extends React.Component {
         return (
             <div>
                 <Grid container spacing={24}>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                         <TextInput value={input.value.first_name} name="first_name" type="text" onUpdate={(name, value) => this.onUpdate(name, value)} />
                     </Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={2}>
                         <TextInput value={input.value.uid} name="uid" type="text" onUpdate={(name, value) => this.onUpdate(name, value)} />
                     </Grid>
                     <Grid item xs={12} sm={2}>

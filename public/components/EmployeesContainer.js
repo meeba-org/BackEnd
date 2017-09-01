@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import Employees from "./Employees";
+import EmployeesList from "./EmployeesList";
 import {createEmployee, deleteEmployee, fetchEmployees, updateEmployee} from "../actions/actions";
 import {FieldArray, reduxForm} from "redux-form";
 
@@ -15,7 +15,7 @@ class EmployeesContainer extends React.Component {
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 {this.props.employees && this.props.employees.length > 0 &&
-                    <FieldArray name="employees" component={Employees} onDelete={deleteEmployee}  onUpdate={updateEmployee} onCreate={createEmployee}/>
+                    <FieldArray name="employees" component={EmployeesList} onDelete={deleteEmployee} onUpdate={updateEmployee} onCreate={createEmployee}/>
                 }
             </form>
         );
