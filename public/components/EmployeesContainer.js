@@ -31,8 +31,6 @@ EmployeesContainer.propTypes = {
     deleteEmployee: PropTypes.func.isRequired,
 };
 
-const selector = formValueSelector('employeesForm');
-
 function mapStateToProps(state) {
     return {
         employees: state.data.employees, // TODO dont know how to init that without hose two... :-(
