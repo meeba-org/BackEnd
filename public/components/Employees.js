@@ -9,6 +9,7 @@ import {CardContent, CardHeader} from "../../node_modules/material-ui/Card/index
 import PropTypes from 'prop-types';
 import Employee from "./Employee";
 import {Card} from "material-ui";
+import {Field} from "redux-form";
 
 class Employees extends React.Component {
 
@@ -29,8 +30,8 @@ class Employees extends React.Component {
         this.props.onCreate(newEmployee);
     }
 
-    onUpdate(fields, index, name, value) {
-        this.props.onUpdate(fields, index, name, value);
+    onUpdate(employee) {
+        this.props.onUpdate(employee);
     }
 
     onDelete(fields, index) {
@@ -52,7 +53,7 @@ class Employees extends React.Component {
                         <button  onClick={() => this.onCreate(fields)}>הוסף</button>
 
                         {fields && fields.map((employeeIndex, index) =>
-                        <Employee {...fields.get(index)} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={(name, value) => this.onUpdate(fields, index, name, value)}/>
+                            <Field component={Employee} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={(employee) => this.onUpdate(employee)}/>
                         )}
                     </div>
 

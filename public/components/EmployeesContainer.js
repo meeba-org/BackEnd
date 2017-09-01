@@ -13,7 +13,7 @@ class EmployeesContainer extends React.Component {
     render() {
         const {handleSubmit, deleteEmployee, updateEmployee, createEmployee} = this.props;
         return (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(() => {})}>
                 {this.props.employees && this.props.employees.length > 0 &&
                     <FieldArray name="employees" component={Employees} onDelete={deleteEmployee}  onUpdate={updateEmployee} onCreate={createEmployee}/>
                 }
@@ -46,7 +46,7 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchEmployees: () => {dispatch(fetchEmployees());},
         createEmployee: (employee) => {dispatch(createEmployee(employee));},
-        updateEmployee: (fields, index, propName, value) => {dispatch(updateEmployee(fields, index, propName, value));},
+        updateEmployee: (employee) => {dispatch(updateEmployee(employee));},
         deleteEmployee: (employee) => {dispatch(deleteEmployee(employee));},
     };
 }

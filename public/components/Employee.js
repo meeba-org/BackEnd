@@ -1,19 +1,30 @@
 import React from 'react';
-import {Field} from 'redux-form';
 import PropTypes from 'prop-types';
 import {Grid} from "material-ui";
 
 class Employee extends React.Component {
+    onUpdate(propName, value) {
+        let {input, onUpdate} = this.props;
+
+        let employee = {
+            ...input.value,
+            [propName]: value,
+        };
+
+        input.onChange(employee);
+        onUpdate(employee);
+    }
+
     render() {
-        let {name, onDelete, onUpdate} = this.props;
+        let {input, onDelete} = this.props;
         return (
             <div>
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={5}>
-                        <Field name={`${name}.first_name`} type="text" component={TextInput} className="cell" onUpdate={onUpdate} />
+                        <TextInput value={input.value.first_name} name='first_name' type="text" className="cell" onUpdate={(name, value) => this.onUpdate(name, value)} />
                     </Grid>
                     <Grid item xs={12} sm={5}>
-                        <Field name={`${name}.uid`} type="text" component={TextInput} className="cell" onUpdate={onUpdate} />
+                        <TextInput value={input.value.uid} name='uid' type="text" className="cell" onUpdate={(name, value) => this.onUpdate(name, value)} />
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <button  onClick={onDelete}>מחק</button>
@@ -26,7 +37,6 @@ class Employee extends React.Component {
 }
 
 Employee.propTypes = {
-    name: PropTypes.string.isRequired,
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
 };
@@ -34,43 +44,27 @@ Employee.propTypes = {
 
 class TextInput extends React.Component {
     onUpdate(e) {
-        e.preventDefault(); // I must have it - without that no re-render in UI...
-        const {input, onUpdate} = this.props;
+        const {onUpdate, name} = this.props;
         let newValue = e.target.value;
-        let fieldName = this.extractFieldName(input.name);
 
-        input.onChange(newValue);
-        onUpdate(fieldName, newValue);
-    }
-
-    extractFieldName(name) {
-        if (!name && name.length <= 1)
-            return null;
-
-        let res = name.split(".");
-        if (!res && res.length <= 1)
-            return null;
-
-        return res[res.length - 1];
+        onUpdate(name, newValue);
     }
 
     render() {
-        const { input, label, type, className, onUpdate, meta: { touched, error } } = this.props;
+        const { value, label, type, className} = this.props;
         return (
             <div>
-                <input {...input} type={type} placeholder={label} className={className} onChange={(e) => this.onUpdate(e) }/>
-                {touched && error && <span>{error}</span>}
+                <input value={value} type={type} placeholder={label} className={className} onChange={(e) => this.onUpdate(e) }/>
             </div>
         )
     }
 }
 
 TextInput.propTypes = {
-    input: PropTypes.object.isRequired,
-    meta: PropTypes.object.isRequired,
     type: PropTypes.string.isRequired,
     label: PropTypes.string,
     className: PropTypes.string.isRequired,
 };
 
 export default Employee;
+

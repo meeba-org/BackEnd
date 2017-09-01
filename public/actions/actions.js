@@ -1,4 +1,7 @@
 import axios from 'axios';
+import {arrayPop, arrayPush} from 'redux-form';
+
+
 import {
     RECEIVE_EMPLOYEES_ERROR, RECEIVE_EMPLOYEES_SUCCESS, REQUEST_EMPLOYEES,
     DELETE_EMPLOYEE_START, DELETE_EMPLOYEE_SUCCESS, DELETE_EMPLOYEE_ERROR,
@@ -90,13 +93,9 @@ function updateEmployeeError(json) {
     };
 }
 
-export function updateEmployee(fields, index, propName, value) {
+export function updateEmployee(employee) {
     return function (dispatch) {
         dispatch(updateEmployeeStart());
-        let employee = {
-            ...fields.get(index),
-            [propName]: value,
-        };
         return axios({
             url: 'http://localhost:3000/api/users',
             timeout: 20000,
@@ -128,23 +127,18 @@ function createEmployeeError(json) {
     };
 }
 
+function dispatchUpdateNewEmployeesInForm(dispatch, newEmployee) {
+    dispatch(arrayPop('employeesForm', 'employees'));
+    dispatch(arrayPush('employeesForm', 'employees', newEmployee));
+}
+
 export function createEmployee(employee) {
     return function (dispatch) {
         dispatch(createEmployeeStart());
-        return axios.post(
-            'http://localhost:3000/api/users',
-            employee,
-        )
-        // return axios({
-        //     url: 'http://localhost:3000/api/users',
-        //     timeout: 20000,
-        //     method: 'post',
-        //     data: employee,
-        //     headers:{
-        //         'Content-Type': 'application/json'
-        //     }
+        return axios.post('http://localhost:3000/api/users', employee)
         .then(function (response) {
             dispatch(createEmployeeSuccess(response));
+            dispatchUpdateNewEmployeesInForm(dispatch, response.data.user);
         }).catch(function (response) {
             dispatch(createEmployeeError(response.data));
         });
