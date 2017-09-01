@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Input} from "material-ui";
 
 class TextInput extends React.Component {
     onUpdate(e) {
@@ -10,10 +11,10 @@ class TextInput extends React.Component {
     }
 
     render() {
-        const { value, label, type, className} = this.props;
+        const { value, label, type} = this.props;
         return (
             <div>
-                <input value={value} type={type} placeholder={label} className={className} onChange={(e) => this.onUpdate(e)}/>
+                <Input value={value} type={type} placeholder={label} onChange={(e) => this.onUpdate(e)} />
             </div>
         );
     }

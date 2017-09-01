@@ -8,8 +8,9 @@ import styles from "../styles/Employees.scss";
 import {CardContent, CardHeader} from "../../node_modules/material-ui/Card/index";
 import PropTypes from 'prop-types';
 import Employee from "./Employee";
-import {Card} from "material-ui";
+import {Button, Card, Divider, IconButton} from "material-ui";
 import {Field} from "redux-form";
+import AddIcon from 'material-ui-icons/Add';
 
 class Employees extends React.Component {
 
@@ -50,7 +51,8 @@ class Employees extends React.Component {
                 <CardContent className="card-content">
 
                     <div>
-                        <button  onClick={() => this.onCreate(fields)}>הוסף</button>
+                        <Button className="add-button" dense raised color="primary" onClick={() => this.onCreate(fields)}><AddIcon /></Button>
+                        <Divider className="divider" />
 
                         {fields && fields.map((employeeIndex, index) =>
                             <Field component={Employee} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={(employee) => this.onUpdate(employee)}/>

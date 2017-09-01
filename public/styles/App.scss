@@ -23,6 +23,14 @@ body {
     .card-content {
         overflow-y: scroll;
         max-height: $containerHeight;
+
+        .add-button {
+            margin-bottom: 15px;
+        }
+
+        .divider {
+            margin-bottom: 30px;
+        }
     }
 }
 

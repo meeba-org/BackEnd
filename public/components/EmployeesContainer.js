@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Employees from "./Employees";
 import {createEmployee, deleteEmployee, fetchEmployees, updateEmployee} from "../actions/actions";
-import {FieldArray, formValueSelector, reduxForm} from "redux-form";
+import {FieldArray, reduxForm} from "redux-form";
 
 class EmployeesContainer extends React.Component {
     componentDidMount() {
