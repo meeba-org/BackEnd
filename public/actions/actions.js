@@ -144,3 +144,33 @@ export function createEmployee(employee) {
         });
     };
 }
+
+function handleLoginStart() {
+    return {type: CREATE_EMPLOYEE_START};
+}
+
+function handleLoginSuccess() {
+    return {
+        type: CREATE_EMPLOYEE_SUCCESS,
+    };
+}
+
+function handleLoginError(json) {
+    return {
+        type: CREATE_EMPLOYEE_ERROR,
+        data: json
+    };
+}
+
+export function handleLogin(values) {
+    return function (dispatch) {
+        dispatch(handleLoginStart());
+        return axios.post('http://localhost:3000/login', values)
+        .then(function (response) {
+            dispatch(handleLoginSuccess(response));
+        }).catch(function (response) {
+            dispatch(handleLoginError(response.data));
+        });
+    };
+}
+

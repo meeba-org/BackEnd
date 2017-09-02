@@ -3,38 +3,35 @@
  */
 
 import React, {Component} from 'react';
-import {Button, Divider, Grid, Paper, TextField} from "material-ui";
-import {Field, formValueSelector, reduxForm} from "redux-form";
+import {Button, Divider, Grid, Paper} from "material-ui";
+import {Field, reduxForm} from "redux-form";
 import {connect} from "react-redux";
-import PropTypes from 'prop-types';
 import ArrowBackIcon from 'material-ui-icons/ArrowBack';
+import {renderTextField} from './MaterialUIWrappers';
+import PropTypes from 'prop-types';
 
 class Login extends Component {
-    onSubmit() {
-        let {username, password} = this.props;
-
-        console.log(username);
-        console.log(password);
-    }
-
     render() {
-        let {handleSubmit} = this.props;
+        let {handleSubmit, handleChange} = this.props;
         return (
             <div>
                 <Grid container gutter={0}>
                     <Grid item xs={12}>
                         <Paper id="main-container">
                             <h1>Login Window</h1>
-                            <Divider />
+                            <Divider/>
                             <div>
-                                <form onSubmit={handleSubmit(this.onSubmit)}>
+                                <form onSubmit={handleSubmit}>
                                     <Grid item xs={12}>
-                                        <Field component={TextField} label="שם משתמש או אימייל" name="username" />
+                                        <Field component={renderTextField} onChange={handleChange}
+                                               label="שם משתמש או אימייל" name="username"/>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <Field component={TextField} label="סיסמא" type="password" name="password" />
+                                        <Field component={renderTextField} onChange={handleChange}
+                                               label="סיסמא"
+                                               type="password" name="password"/>
                                     </Grid>
-                                    <Button dense raised color="primary" onClick={() => handleSubmit}><ArrowBackIcon />היכנס</Button>
+                                    <Button dense raised color="primary" type="submit"><ArrowBackIcon/>היכנס</Button>
                                 </form>
                             </div>
                         </Paper>
@@ -46,22 +43,13 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-    handleSubmit: PropTypes.func
+    handleSubmit: PropTypes.func.isRequired,
+    handleChange: PropTypes.func,
 };
 Login.defaultProps = {};
 
-
-const selector = formValueSelector('loginForm')
-
-function mapStateToProps(state) {
-    return {
-        username: selector(state, 'username'),
-        password: selector(state, 'password'),
-    };
-}
-
 export default connect(
-    mapStateToProps
+    // mapStateToProps
 )(reduxForm({
     form: 'loginForm',
 })(Login));
