@@ -7,7 +7,7 @@ import {Button, Divider, Grid, Paper} from "material-ui";
 import {Field, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import ArrowBackIcon from 'material-ui-icons/ArrowBack';
-import {renderTextField} from '../MaterialUIWrappers';
+import {renderTextField} from '../material-ui-wrappers';
 import PropTypes from 'prop-types';
 
 class Login extends Component {
