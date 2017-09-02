@@ -6,7 +6,7 @@ import App from "./components/App";
 import Status from "./components/Status";
 import createStore from "./store/configureStore";
 import {syncHistoryWithStore} from "react-router-redux";
-import EmployeesContainer from "./components/EmployeesContainer";
+import EmployeesContainer from "./components/employees/EmployeesContainer";
 
 export default class Root extends React.Component {
 
@@ -18,8 +18,8 @@ export default class Root extends React.Component {
         return (
             <Provider store={store}>
                 <Router history={history}>
+                    <Route path="/login" component={Login}/>
                     <Route path="/" component={App}>
-                        <Route path="/login" component={Login}/>
                         <Route path="/status" component={Status}/>
                         <Route path="/employees" component={EmployeesContainer}/>
                     </Route>

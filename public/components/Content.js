@@ -1,7 +1,7 @@
 import React from "react";
 import CSSModules from "react-css-modules";
 import styles from "../styles/Content.scss";
-import EmployeesContainer from "./EmployeesContainer";
+import EmployeesContainer from "./employees/EmployeesContainer";
 
 class Content extends React.Component {
     submit() {

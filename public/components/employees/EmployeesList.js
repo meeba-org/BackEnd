@@ -4,8 +4,8 @@
 
 import React from 'react';
 import CSSModules from "react-css-modules";
-import styles from "../styles/Employees.scss";
-import {CardContent, CardHeader} from "../../node_modules/material-ui/Card/index";
+import styles from "../../styles/Employees.scss";
+import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
 import PropTypes from 'prop-types';
 import Employee from "./Employee";
 import {Button, Card, Divider} from "material-ui";

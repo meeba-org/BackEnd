@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Grid, IconButton} from "material-ui";
-import TextInput from "./TextInput";
+import TextInput from "../TextInput";
 import DeleteIcon from 'material-ui-icons/Delete';
 
 class Employee extends React.Component {
