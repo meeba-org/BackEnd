@@ -6,15 +6,15 @@ const UserSchema = mongoose.Schema({
     uid: {
         type: String,
         index: true,
-        required: true
+        // required: true
     },
     first_name: {
         type: String,
-        required: true
+        // required: true
     },
     last_name: {
         type: String,
-        required: true
+        // required: true
     },
     email: {
         type: String
@@ -25,20 +25,8 @@ const UserSchema = mongoose.Schema({
     },
     role: {
         type: String,
-        required: true
+        // required: true
     },
-    /*
-     project_ids: {
-     type: [String]
-     },
-     created: {
-     type: Date,
-     default: Date.now
-     },
-     updated: {
-     type: Date,
-     default: Date.now
-     }*/
 });
 
 function createUserInstance(user) {

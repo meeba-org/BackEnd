@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Grid, IconButton} from "material-ui";
-import TextInput from "../TextInput";
+import {Grid, IconButton, Input} from "material-ui";
 import DeleteIcon from 'material-ui-icons/Delete';
 
 class Employee extends React.Component {
-    onUpdate(propName, value) {
-        let {input, onUpdate} = this.props;
+    onUpdate(e, name) {
+        let {input,  onUpdate} = this.props;
 
         let employee = {
             ...input.value,
-            [propName]: value,
+            [name]: e.target.value,
         };
 
         input.onChange(employee);
@@ -23,10 +22,10 @@ class Employee extends React.Component {
             <div>
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={3}>
-                        <TextInput value={input.value.first_name} name="first_name" type="text" onUpdate={(name, value) => this.onUpdate(name, value)} />
+                        <Input value={input.value.first_name} placeholder="שם" onChange={(e) => this.onUpdate(e, "first_name")} />
                     </Grid>
                     <Grid item xs={12} sm={2}>
-                        <TextInput value={input.value.uid} name="uid" type="text" onUpdate={(name, value) => this.onUpdate(name, value)} />
+                        <Input value={input.value.uid} placeholder="ת.ז." onChange={(e) => this.onUpdate(e, "uid")} />
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <IconButton onClick={onDelete}><DeleteIcon /></IconButton>

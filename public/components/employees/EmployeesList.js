@@ -20,12 +20,6 @@ class EmployeesList extends React.Component {
 
     onCreate(fields) {
         let newEmployee = {
-            uid: 73,
-            first_name: "test",
-            last_name: "last",
-            email: "chenop@gmail.com",
-            password: "1234",
-            role: "employee",
         };
         fields.push(newEmployee);
         this.props.onCreate(newEmployee);

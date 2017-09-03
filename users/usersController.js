@@ -31,12 +31,12 @@ const getAll = (req, res) => {
 
 //POST /users user
 const create = (req, res) => {
-    req.checkBody('uid', 'uid is required').notEmpty();
-    req.checkBody('first_name', 'First name is required').notEmpty();
-    req.checkBody('last_name', 'Last name is required').notEmpty();
-    req.checkBody('email', 'Email is not valid').isEmail();
-    req.checkBody('password', 'Password is required').notEmpty();
-    req.checkBody('role', 'Role is required').notEmpty();
+    // req.checkBody('uid', 'uid is required').notEmpty();
+    // req.checkBody('first_name', 'First name is required').notEmpty();
+    // req.checkBody('last_name', 'Last name is required').notEmpty();
+    // req.checkBody('email', 'Email is not valid').isEmail();
+    // req.checkBody('password', 'Password is required').notEmpty();
+    // req.checkBody('role', 'Role is required').notEmpty();
 
     req.getValidationResult()
         .then(function (result) {
@@ -50,13 +50,13 @@ const create = (req, res) => {
 
 //PUT /users user
 const update = (req, res) => {
-    req.checkBody('_id', '_id is required').notEmpty();
-    req.checkBody('uid', 'uid is required').notEmpty();
-    req.checkBody('first_name', 'First name is required').notEmpty();
-    req.checkBody('last_name', 'Last name is required').notEmpty();
-    req.checkBody('email', 'Email is not valid').isEmail();
-    req.checkBody('password', 'Password is required').notEmpty();
-    req.checkBody('role', 'Role is required').notEmpty();
+    // req.checkBody('_id', '_id is required').notEmpty();
+    // req.checkBody('uid', 'uid is required').notEmpty();
+    // req.checkBody('first_name', 'First name is required').notEmpty();
+    // req.checkBody('last_name', 'Last name is required').notEmpty();
+    // req.checkBody('email', 'Email is not valid').isEmail();
+    // req.checkBody('password', 'Password is required').notEmpty();
+    // req.checkBody('role', 'Role is required').notEmpty();
 
     req.getValidationResult()
         .then(function (result) {
