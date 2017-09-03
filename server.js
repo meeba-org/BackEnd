@@ -7,8 +7,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const flash = require('connect-flash');
-const session = require('express-session');
-const passport = require('passport');
+const ejwt = require('express-jwt');
 const mongoose = require('mongoose');
 
 // Connect to mongoose
@@ -48,28 +47,8 @@ app.use(cookieParser());
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Express Session
-app.use(session({
-  secret: 'secret',
-  saveUninitialized: true,
-  resave: true
-}));
-
-// Passport Init
-app.use(passport.initialize());
-//app.use(passport.session());
-
 // Connect Flash
 app.use(flash());
-
-// Global Vars
-app.use((req,res,next) => {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  res.locals.user = req.user || null;
-  next();
-});
 
 app.get('/login', (req, res) => {
   res.render('login');
