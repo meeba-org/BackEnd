@@ -6,7 +6,8 @@ import {
     RECEIVE_EMPLOYEES_ERROR, RECEIVE_EMPLOYEES_SUCCESS, REQUEST_EMPLOYEES,
     DELETE_EMPLOYEE_START, DELETE_EMPLOYEE_SUCCESS, DELETE_EMPLOYEE_ERROR,
     CREATE_EMPLOYEE_ERROR, CREATE_EMPLOYEE_SUCCESS, CREATE_EMPLOYEE_START,
-    UPDATE_EMPLOYEE_START, UPDATE_EMPLOYEE_SUCCESS, UPDATE_EMPLOYEE_ERROR
+    UPDATE_EMPLOYEE_START, UPDATE_EMPLOYEE_SUCCESS, UPDATE_EMPLOYEE_ERROR,
+    RESET_TOKEN, ME_FROM_TOKEN_FAILURE, ME_FROM_TOKEN_SUCCESS, ME_FROM_TOKEN
 } from "./actionTypes";
 
 
@@ -174,3 +175,32 @@ export function handleLogin(values) {
     };
 }
 
+export function meFromToken(tokenFromStorage) {
+    //check if the token is still valid, if so, get me from the server
+    const request = axios.get(`${ROOT_URL}/authenticate?token=${tokenFromStorage}`);
+
+    return {
+        type: ME_FROM_TOKEN,
+        payload: request
+    };
+}
+
+export function meFromTokenSuccess(currentUser) {
+    return {
+        type: ME_FROM_TOKEN_SUCCESS,
+        payload: currentUser
+    };
+}
+
+export function meFromTokenFailure(error) {
+    return {
+        type: ME_FROM_TOKEN_FAILURE,
+        payload: error
+    };
+}
+
+export function resetToken() {//used for logout
+    return {
+        type: RESET_TOKEN
+    };
+}

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('../config');
-const UserModel = require("../users/userModel");
+const UserModel = require("../models/userModel");
 
 // Get Homepage
 router.get('/', (req, res) => {
@@ -56,7 +56,7 @@ router.post('/login', function (req, res) {
                 }
 
                 // use the jsonwebtoken package to create the token and respond with it
-                let token = jwt.sign(user, config.secret);
+                let token = jwt.sign(user.toObject(), config.secret);
                 return res.status(200).json({user, token});
             });
         })
@@ -65,4 +65,49 @@ router.post('/login', function (req, res) {
         });
 });
 
+function extractTokenFromRequest(req) {
+    const authorization = req.headers['authorization'];
+    if (authorization) {
+        let parts = authorization.split(' ');
+
+        if (parts.length == 2) {
+            var scheme = parts[0],
+                token = parts[1];
+
+            if (/^Bearer$/i.test(scheme)) {
+                return token;
+            }
+        }
+    }
+    return req.body.token || req.query.token || req.headers['x-access-token'] || null;
+}
+
+//get current user from token
+router.get('/authenticate', function(req, res) {
+
+    // check header or url parameters or post parameters for token
+    var token = extractTokenFromRequest(req);
+    if (!token) {
+        return res.status(401).json({message: '[authenticate] - Must pass token'});
+    }
+
+    // decode token
+    // Use process.env.JWT_SECRET instead of config.secret
+    jwt.verify(token, config.secret, function (err, user) {
+        if (err)
+            return res.status(401).json({message: '[authenticate] - Token is not valid'});
+
+        //return user using the id from w/in JWTToken
+        UserModel.getById(user._id)
+            .then((user) => {
+                user = UserModel.getCleanUser(user.toObject()); //dont pass password and stuff
+
+                //note: you can renew token by creating new token(i.e. refresh it) w/ new expiration time at this point, but I'm passing the old token back.
+                // var token = utils.generateToken(user);
+
+                res.status(200).json({user, token});
+            })
+            .catch(() => res.status(401).json({message: '[authenticate] - User was not found'}));
+    });
+});
 module.exports = router;

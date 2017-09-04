@@ -17,16 +17,6 @@ class App extends React.Component {
                         </div>
                     </Grid>
                     {this.props.children}
-                    {/*<Grid item xs={3}>*/}
-                        {/*<Paper id="sideBar-container">*/}
-                            {/*<SideBar />*/}
-                        {/*</Paper>*/}
-                    {/*</Grid>*/}
-                    {/*<Grid item xs={9}>*/}
-                        {/*<Paper id="main-container">*/}
-                            {/*{this.props.children}*/}
-                        {/*</Paper>*/}
-                    {/*</Grid>*/}
                 </Grid>
             </div>
         );

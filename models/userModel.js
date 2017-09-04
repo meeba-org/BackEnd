@@ -46,8 +46,8 @@ module.exports.getByUid = (uid) => {
     return User.findOne({uid: uid});
 };
 
-module.exports.getById = (id, callback) => {
-    User.findById(id, callback);
+module.exports.getById = (id) => {
+    return User.findById(id).exec();
 };
 
 // Return a promise
@@ -79,4 +79,9 @@ module.exports.comparePassword = (candidatePassword, hash, callback) => {
         if (err) throw err;
         callback(null, isMatch);
     });
+};
+
+module.exports.getCleanUser = (user) => {
+    delete user.password;
+    return user;
 };
