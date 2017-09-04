@@ -1,8 +1,10 @@
 'use strict';
-const User = require('./userModel');
+const UserModel = require('../users/userModel');
+const express = require('express');
+const router = express.Router();
 
 //GET /users/{uid} user
-const getByUid = (req, res) => {
+router.get('/:uid', (req, res) => {
     req.checkParams('uid', 'uid is required').notEmpty();
 
     req.getValidationResult()
@@ -11,7 +13,7 @@ const getByUid = (req, res) => {
 
             const uid = req.params.uid;
 
-            User.getByUid(uid)
+            UserModel.getByUid(uid)
                 .then((user) => {
                     if (user)
                         return res.status(200).json(user);
@@ -20,17 +22,17 @@ const getByUid = (req, res) => {
                 .catch((err) => res.status(500).json({message: err}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
-};
+});
 
 //GET /users users
-const getAll = (req, res) => {
-    User.getAll()
+router.get('/', (req, res) => {
+    UserModel.getAll()
         .then((users) => res.status(200).json({users: users}))
         .catch((err) => res.status(500).json({message: err}));
-};
+});
 
 //POST /users user
-const create = (req, res) => {
+router.post('/', (req, res) => {
     // req.checkBody('uid', 'uid is required').notEmpty();
     // req.checkBody('first_name', 'First name is required').notEmpty();
     // req.checkBody('last_name', 'Last name is required').notEmpty();
@@ -41,15 +43,15 @@ const create = (req, res) => {
     req.getValidationResult()
         .then(function (result) {
             result.throw();
-            User.create(req.body)
+            UserModel.create(req.body)
                 .then((user) => res.status(200).json({user: user}))
                 .catch((err) => res.status(500).json({message: err}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
-};
+});
 
 //PUT /users user
-const update = (req, res) => {
+router.put('/', (req, res) => {
     // req.checkBody('_id', '_id is required').notEmpty();
     // req.checkBody('uid', 'uid is required').notEmpty();
     // req.checkBody('first_name', 'First name is required').notEmpty();
@@ -61,15 +63,15 @@ const update = (req, res) => {
     req.getValidationResult()
         .then(function (result) {
             result.throw();
-            User.update(req.body)
+            UserModel.update(req.body)
                 .then((user) => res.status(200).json({user: user}))
                 .catch((err) => res.status(500).json({message: err}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
-};
+});
 
 //DELETE /users/{id} userUid
-const delUser = (req, res) => {
+router.delete('/:uid', (req, res) => {
     req.checkParams('uid', 'int uid is required').notEmpty().isInt();
 
     return req.getValidationResult()
@@ -78,7 +80,7 @@ const delUser = (req, res) => {
 
             const uid = req.params.uid;
 
-            return User.delUser(uid)
+            return UserModel.delUser(uid)
                 .then(() => {
                     return res.status(204).send();
                 })
@@ -87,14 +89,6 @@ const delUser = (req, res) => {
                 });
         })
         .catch((err) => res.status(400).json({message: err.array()}));
-};
+});
 
-// Exports all the functions to perform on the db
-module.exports = {
-    getAll,
-    getByUid,
-    create,
-    update,
-    delUser
-};
-
+module.exports = router;

@@ -1,28 +1,26 @@
 /**
- * Created by ilanrackover on 12/06/2017.
- */
-var gulp = require('gulp')
+* Created by ilanrackover on 12/06/2017.
+*/
+const gulp = require('gulp')
     , nodemon = require('gulp-nodemon')
-    , jshint = require('gulp-jshint')
+    , jshint = require('gulp-jshint');
 
 gulp.task('lint', function () {
     gulp.src('./**/*.js')
-        .pipe(jshint())
-})
+        .pipe(jshint());
+});
 
 gulp.task('develop', function () {
-    var stream = nodemon({ script: 'server.js'
+    const stream = nodemon({
+        script: 'server.js'
         , ext: 'html js'
         , quiet: 'true'
         , ignore: ['public']
-        , tasks: ['lint'] });
+        , tasks: ['lint']
+    });
 
-    stream
-        .on('restart', function () {
-            console.log('restarted!')
-        })
-        .on('crash', function() {
-            console.error('Application has crashed!\n')
-            stream.emit('restart', 10)  // restart the server in 10 seconds
-        })
-})
+    stream.on('crash', function () {
+        console.error('Application has crashed!\n');
+        stream.emit('restart');  // restart the server in 10 seconds
+    });
+});

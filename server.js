@@ -6,19 +6,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
-const flash = require('connect-flash');
-const ejwt = require('express-jwt');
 const mongoose = require('mongoose');
 
 // Connect to mongoose
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://admin:admin12@ds139242.mlab.com:39242/heroku_9mpwf6zf', {useMongoClient: true});
-
-// Routes
-const routes = require('./routes/index');
-const users = require('./users/usersRoutes');
-const groups = require('./routes/groups');
-const operations = require('./routes/operations');
 
 // Init App
 const app = express();
@@ -47,18 +39,8 @@ app.use(cookieParser());
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Connect Flash
-app.use(flash());
-
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-
-app.use('/', routes);
-app.use('/api/users', users);
-app.use('/api/v1/groups', groups);
-app.use('/api/v1/operations', operations);
-
+// Set Controllers
+app.use('/', require('./controllers'));
 
 //------------------------------------------------------------------//
 // Set Port
@@ -70,5 +52,3 @@ app.listen(app.get('port'), () => {
 });
 
 module.exports = app;
-
-//testing
