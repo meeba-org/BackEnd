@@ -4,7 +4,13 @@ import React from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import createMuiTheme from 'material-ui/styles/theme';
 import injectTapEventPlugin from "react-tap-event-plugin";
-import Root from "./Root";
+import routes from "./routes";
+
+import {Provider} from "react-redux";
+import {browserHistory, Router} from "react-router";
+import createStore from "./store/configureStore";
+import {syncHistoryWithStore} from "react-router-redux";
+
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -14,9 +20,14 @@ const muiTheme = createMuiTheme({
     isRtl: true,
 });
 
+const store = createStore();
+const history = syncHistoryWithStore(browserHistory, store);
+
 render(
     <MuiThemeProvider theme={muiTheme}>
-        <Root />
+        <Provider store={store}>
+            <Router history={history} routes={routes} />
+        </Provider>
     </MuiThemeProvider>,
     document.getElementById('react-app')
 );

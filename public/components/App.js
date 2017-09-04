@@ -4,8 +4,6 @@ import CSSModules from "react-css-modules";
 import styles from "../styles/App.scss";
 import Grid from 'material-ui/Grid';
 import AppBar from "./AppBar";
-import SideBar from "./SideBar";
-import {Paper} from "material-ui";
 
 class App extends React.Component {
 
@@ -18,16 +16,17 @@ class App extends React.Component {
                             <AppBar />
                         </div>
                     </Grid>
-                    <Grid item xs={3}>
-                        <Paper id="sideBar-container">
-                            <SideBar />
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={9}>
-                        <Paper id="main-container">
-                            {this.props.children}
-                        </Paper>
-                    </Grid>
+                    {this.props.children}
+                    {/*<Grid item xs={3}>*/}
+                        {/*<Paper id="sideBar-container">*/}
+                            {/*<SideBar />*/}
+                        {/*</Paper>*/}
+                    {/*</Grid>*/}
+                    {/*<Grid item xs={9}>*/}
+                        {/*<Paper id="main-container">*/}
+                            {/*{this.props.children}*/}
+                        {/*</Paper>*/}
+                    {/*</Grid>*/}
                 </Grid>
             </div>
         );

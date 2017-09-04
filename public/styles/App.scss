@@ -1,5 +1,9 @@
 $margin: 12px;
-$containerHeight: 450px;
+
+#appBar-container {
+    margin-bottom: $margin;
+}
+
 body {
     color: rgba(0, 0, 0, 0.87);
     font-size: 16px;
@@ -10,27 +14,3 @@ body {
     background: rgba(128, 128, 128, 0.19);
     margin: $margin $margin $margin $margin;
 }
-
-#appBar-container {
-    margin-bottom: $margin;
-}
-#sideBar-container{
-    margin: 0 0 0 $margin;
-}
-
-#main-container {
-
-    .card-content {
-        overflow-y: scroll;
-        max-height: $containerHeight;
-
-        .add-button {
-            margin-bottom: 15px;
-        }
-
-        .divider {
-            margin-bottom: 30px;
-        }
-    }
-}
-

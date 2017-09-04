@@ -1,0 +1,25 @@
+$containerHeight: 450px;
+$margin: 12px;
+
+#dashboard {
+    width: 800px;
+    #sideBar-container {
+        margin: 0 0 0 $margin;
+    }
+
+    #main-container {
+        .card-content {
+            overflow-y: scroll;
+            max-height: $containerHeight;
+
+            .add-button {
+                margin-bottom: 15px;
+            }
+
+            .divider {
+                margin-bottom: 30px;
+            }
+        }
+    }
+
+}

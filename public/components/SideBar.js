@@ -16,7 +16,7 @@ class SideBar extends React.Component {
             <div>
                 <List>
                     <div>
-                        <ListItem button onTouchTap={() => this._handleTouchTap("/status")}>
+                        <ListItem button onTouchTap={() => this._handleTouchTap("/dashboard/status")}>
                             <ListItemIcon>
                                 <KeyboardArrowLeft />
                             </ListItemIcon>
@@ -34,7 +34,7 @@ class SideBar extends React.Component {
                             </ListItemIcon>
                             <ListItemText primary="דוח יומי"/>
                         </ListItem>
-                        <ListItem button onTouchTap={() => this._handleTouchTap("/employees")}>
+                        <ListItem button onTouchTap={() => this._handleTouchTap("/dashboard/employees")}>
                             <ListItemIcon>
                                 <KeyboardArrowLeft />
                             </ListItemIcon>

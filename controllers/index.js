@@ -11,9 +11,9 @@ const config = require('../config');
 router.use('/', general);
 
 router.use(ejwt({secret: config.secret}));
-router.use('/users', users);
-router.use('/groups', groups);
-router.use('/operations', operations);
+router.use('/api/users', users);
+router.use('/api/groups', groups);
+router.use('/api/operations', operations);
 
 router.use(function (err, req, res) {
     if (err.name === 'UnauthorizedError') {
@@ -21,6 +21,9 @@ router.use(function (err, req, res) {
     }
     else if (err.name === 'PermissionError') {
         res.status(403).send('[Error] - Permission denied!');
+    }
+    else {
+        res.status(500).send(err);
     }
 });
 

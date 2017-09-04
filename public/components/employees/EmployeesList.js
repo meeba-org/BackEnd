@@ -4,7 +4,7 @@
 
 import React from 'react';
 import CSSModules from "react-css-modules";
-import styles from "../../styles/Employees.scss";
+import styles from "../../styles/EmployeesList.scss";
 import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
 import PropTypes from 'prop-types';
 import Employee from "./Employee";
