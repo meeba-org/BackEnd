@@ -7,8 +7,9 @@ import {
     DELETE_EMPLOYEE_START, DELETE_EMPLOYEE_SUCCESS, DELETE_EMPLOYEE_ERROR,
     CREATE_EMPLOYEE_ERROR, CREATE_EMPLOYEE_SUCCESS, CREATE_EMPLOYEE_START,
     UPDATE_EMPLOYEE_START, UPDATE_EMPLOYEE_SUCCESS, UPDATE_EMPLOYEE_ERROR,
-    RESET_TOKEN, ME_FROM_TOKEN_FAILURE, ME_FROM_TOKEN_SUCCESS, ME_FROM_TOKEN
+    RESET_TOKEN, ME_FROM_TOKEN_FAILURE, ME_FROM_TOKEN_SUCCESS, ME_FROM_TOKEN,
 } from "./actionTypes";
+import config from "../config";
 
 
 function requestEmployees() {
@@ -22,21 +23,28 @@ function receiveEmployeesSuccess(json) {
     };
 }
 
-function receiveEmployeesError(json) {
+function receiveEmployeesError() {
     return {
         type: RECEIVE_EMPLOYEES_ERROR,
-        data: json
     };
 }
 
 export function fetchEmployees() {
     return function (dispatch) {
+        let token = sessionStorage.getItem('jwtToken');
+        if(!token || token === '') {//if there is no token, dont bother
+            dispatch(receiveEmployeesError());
+        }
+
         dispatch(requestEmployees());
         return axios({
             url: 'http://localhost:3000/api/users',
             timeout: 20000,
             method: 'get',
-            responseType: 'json'
+            responseType: 'json',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         }).then(function (response) {
             dispatch(receiveEmployeesSuccess(response.data.users));
         }).catch(function (response) {
@@ -163,25 +171,28 @@ function handleLoginError(json) {
     };
 }
 
-export function handleLogin(values) {
+export function handleLogin(values, router) {
     return function (dispatch) {
         dispatch(handleLoginStart());
-        return axios.post('http://localhost:3000/login', values)
+        return axios.post(`${config.ROOT_URL}/login`, values)
         .then(function (response) {
             dispatch(handleLoginSuccess(response));
-        }).catch(function (response) {
-            dispatch(handleLoginError(response.data));
+            //Store JWT Token to browser session storage
+            //If you use localStorage instead of sessionStorage, then this w/ persisted across tabs and new windows.
+            //sessionStorage = persisted only in current tab
+            sessionStorage.setItem('jwtToken', response.data.token);
+            //let other components know that everything is fine by updating the redux` state
+
+            router.push('/dashboard');
+        }).catch(function () {
+            dispatch(handleLoginError());
         });
     };
 }
 
-export function meFromToken(tokenFromStorage) {
-    //check if the token is still valid, if so, get me from the server
-    const request = axios.get(`${ROOT_URL}/authenticate?token=${tokenFromStorage}`);
-
+export function meFromToken() {
     return {
         type: ME_FROM_TOKEN,
-        payload: request
     };
 }
 
@@ -202,5 +213,37 @@ export function meFromTokenFailure(error) {
 export function resetToken() {//used for logout
     return {
         type: RESET_TOKEN
+    };
+}
+
+export function loadUserFromToken() {
+    return function (dispatch) {
+        let token = sessionStorage.getItem('jwtToken');
+        if (!token || token === '') {//if there is no token, dont bother
+            return;
+        }
+
+        //fetch user from token (if server deems it's valid token)
+        dispatch(meFromToken());
+        return axios({
+            method: 'get',
+            url: `${config.ROOT_URL}/authenticate`,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(function (response) {
+            sessionStorage.setItem('jwtToken', response.data.token);
+            dispatch(meFromTokenSuccess(response.data.token));
+        }).catch(function (response) {
+            sessionStorage.removeItem('jwtToken');//remove token from storage
+            dispatch(meFromTokenFailure(response.data.token));
+        });
+    };
+}
+
+export function resetMe() {
+    return function (dispatch) {
+        sessionStorage.removeItem('jwtToken'); //remove token from storage
+        dispatch(resetToken());
     };
 }

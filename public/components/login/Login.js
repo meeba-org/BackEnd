@@ -24,7 +24,7 @@ class Login extends Component {
                                 <form onSubmit={handleSubmit}>
                                     <Grid item xs={12}>
                                         <Field component={renderTextField} onChange={handleChange}
-                                               label="שם משתמש או אימייל" name="username"/>
+                                               label="שם משתמש או אימייל" name="uid"/>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Field component={renderTextField} onChange={handleChange}

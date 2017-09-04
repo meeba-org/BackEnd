@@ -5,11 +5,11 @@ import Login from "./Login";
 import {handleLogin} from "../../actions/actions";
 import PropTypes from 'prop-types';
 
-let LoginContainer = ({ handleLoginSubmit }) =>
-    <Login onSubmit={values => handleLoginSubmit(values)} />;
+let LoginContainer = ({ handleLoginSubmit, router }) =>
+    <Login onSubmit={values => handleLoginSubmit(values, router)} />;
 
 const mapDispatchToProps = (dispatch) => ({
-    handleLoginSubmit: value => dispatch(handleLogin(value)),
+    handleLoginSubmit: (value, router) => dispatch(handleLogin(value, router)),
 });
 
 LoginContainer.propTypes = {
