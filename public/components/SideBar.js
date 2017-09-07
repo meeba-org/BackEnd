@@ -3,12 +3,13 @@
 import React from "react";
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
-import { browserHistory } from 'react-router';
+import {withRouter} from 'react-router';
 
 class SideBar extends React.Component {
 
-    _handleTouchTap(route) {
-        browserHistory.push(route);
+    updateRoute(route) {
+        let {router} = this.props;
+        router.push(route);
     }
 
     render() {
@@ -16,7 +17,7 @@ class SideBar extends React.Component {
             <div>
                 <List>
                     <div>
-                        <ListItem button onTouchTap={() => this._handleTouchTap("/dashboard/status")}>
+                        <ListItem button onTouchTap={() => this.updateRoute("/dashboard/status")}>
                             <ListItemIcon>
                                 <KeyboardArrowLeft />
                             </ListItemIcon>
@@ -34,7 +35,7 @@ class SideBar extends React.Component {
                             </ListItemIcon>
                             <ListItemText primary="דוח יומי"/>
                         </ListItem>
-                        <ListItem button onTouchTap={() => this._handleTouchTap("/dashboard/employees")}>
+                        <ListItem button onTouchTap={() => this.updateRoute("/dashboard/employees")}>
                             <ListItemIcon>
                                 <KeyboardArrowLeft />
                             </ListItemIcon>
@@ -55,5 +56,5 @@ class SideBar extends React.Component {
 SideBar.propTypes = {
 };
 
-export default SideBar;
+export default withRouter(SideBar);
 

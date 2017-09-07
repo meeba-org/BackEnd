@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => {
 
 AppContainer.propTypes = {
     loadUserFromToken: PropTypes.func.isRequired,
-    children: PropTypes.array.isRequired
+    children: PropTypes.object.isRequired
 };
 
 export default connect(null, mapDispatchToProps)(AppContainer);
