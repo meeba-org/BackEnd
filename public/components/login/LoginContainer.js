@@ -13,6 +13,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 LoginContainer.propTypes = {
-    handleLoginSubmit: PropTypes.func.isRequired
+    handleLoginSubmit: PropTypes.func.isRequired,
+    router: PropTypes.object
 };
 export default reduxForm({ form: 'LoginContainer' })(connect(null, mapDispatchToProps)(LoginContainer));

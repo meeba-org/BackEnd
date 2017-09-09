@@ -4,7 +4,7 @@ import React from "react";
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import {withRouter} from 'react-router';
-
+import PropTypes from 'prop-types';
 class SideBar extends React.Component {
 
     updateRoute(route) {
@@ -54,6 +54,7 @@ class SideBar extends React.Component {
 }
 
 SideBar.propTypes = {
+    router: PropTypes.object.isRequired
 };
 
 export default withRouter(SideBar);

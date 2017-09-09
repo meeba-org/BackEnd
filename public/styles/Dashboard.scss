@@ -1,15 +1,15 @@
-$containerHeight: 450px;
+$containerHeight: 800px;
 $margin: 12px;
 
 #dashboard {
-    width: 900px;
+    width: 100%;
     #sideBar-container {
         margin: 0 0 0 $margin;
     }
 
     #main-container {
         .card-content {
-            overflow-y: scroll;
+            overflow-y: auto;
             max-height: $containerHeight;
 
             .add-button {
