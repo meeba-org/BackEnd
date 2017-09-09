@@ -10,7 +10,7 @@ const config = require('../config');
 
 router.use('/', general);
 
-router.use(ejwt({secret: config.secret}));
+router.use('/api', ejwt({secret: config.secret}));
 router.use('/api/users', users);
 router.use('/api/groups', groups);
 router.use('/api/operations', operations);

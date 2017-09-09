@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {arrayPop, arrayPush} from 'redux-form';
-
+import callApi from "./api";
 
 import {
     RECEIVE_EMPLOYEES_ERROR, RECEIVE_EMPLOYEES_SUCCESS, REQUEST_EMPLOYEES,
@@ -31,22 +31,14 @@ function receiveEmployeesError() {
 
 export function fetchEmployees() {
     return function (dispatch) {
-        let token = sessionStorage.getItem('jwtToken');
-        if(!token || token === '') {//if there is no token, dont bother
-            dispatch(receiveEmployeesError());
-        }
-
         dispatch(requestEmployees());
-        return axios({
-            url: 'http://localhost:3000/api/users',
+        return callApi({
+            url: '/users',
             timeout: 20000,
             method: 'get',
-            responseType: 'json',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then(function (response) {
-            dispatch(receiveEmployeesSuccess(response.data.users));
+            shouldAuthenticate: true,
+         }).then(function (result) {
+            dispatch(receiveEmployeesSuccess(result.users));
         }).catch(function (response) {
             dispatch(receiveEmployeesError(response.data));
         });
@@ -73,9 +65,10 @@ function deleteEmployeeError(json) {
 export function deleteEmployee(employee) {
     return function (dispatch) {
         dispatch(deleteEmployeeStart());
-        return axios({
-            url: 'http://localhost:3000/api/users/' + employee.uid,
+        return callApi({
+            url: '/users/' + employee.uid,
             method: 'delete',
+            shouldAuthenticate: true,
         }).then(function (response) {
             dispatch(deleteEmployeeSuccess(response));
         }).catch(function (response) {
@@ -105,16 +98,15 @@ function updateEmployeeError(json) {
 export function updateEmployee(employee) {
     return function (dispatch) {
         dispatch(updateEmployeeStart());
-        return axios({
-            url: 'http://localhost:3000/api/users',
-            timeout: 20000,
+        return callApi({
+            url: '/users',
             method: 'put',
             data: employee,
-            responseType: 'json'
+            shouldAuthenticate: true
         }).then(function (response) {
-            dispatch(updateEmployeeSuccess(response.data.users));
+            dispatch(updateEmployeeSuccess(response.user));
         }).catch(function (response) {
-            dispatch(updateEmployeeError(response.data));
+            dispatch(updateEmployeeError(response.user));
         });
     };
 }
@@ -144,10 +136,14 @@ function dispatchUpdateNewEmployeesInForm(dispatch, newEmployee) {
 export function createEmployee(employee) {
     return function (dispatch) {
         dispatch(createEmployeeStart());
-        return axios.post('http://localhost:3000/api/users', employee)
-        .then(function (response) {
+        return callApi({
+            method: 'post',
+            url: '/users',
+            data: employee,
+            shouldAuthenticate: true
+        }).then(function (response) {
             dispatch(createEmployeeSuccess(response));
-            dispatchUpdateNewEmployeesInForm(dispatch, response.data.user);
+            dispatchUpdateNewEmployeesInForm(dispatch, response.user);
         }).catch(function (response) {
             dispatch(createEmployeeError(response.data));
         });
