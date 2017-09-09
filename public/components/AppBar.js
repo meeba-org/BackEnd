@@ -1,5 +1,3 @@
-// import Paper from "material-ui/Paper";
-// import Grid from "material-ui/Grid";
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
@@ -29,7 +27,7 @@ function MeebaAppBar(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography type="title" color="inherit" className={classes.flex}>
-                        מיבה
+                        מיבא
                     </Typography>
                     <Button color="contrast">כניסה</Button>
                 </Toolbar>

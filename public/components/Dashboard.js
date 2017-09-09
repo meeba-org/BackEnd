@@ -5,6 +5,7 @@ import styles from "../styles/Dashboard.scss";
 import Grid from 'material-ui/Grid';
 import SideBar from "./SideBar";
 import {Paper} from "material-ui";
+import AppBar from "./AppBar";
 
 class Dashboard extends React.Component {
 
@@ -12,15 +13,22 @@ class Dashboard extends React.Component {
         return (
             <div id="dashboard">
                 <Grid container gutter={0}>
-                    <Grid item xs={3}>
-                        <Paper id="sideBar-container">
-                            <SideBar />
-                        </Paper>
+                    <Grid item xs={12}>
+                        <div id="appBar-container">
+                            <AppBar/>
+                        </div>
                     </Grid>
-                    <Grid item xs={9}>
-                        <Paper id="main-container">
-                            {this.props.children}
-                        </Paper>
+                    <Grid container gutter={0}>
+                        <Grid item xs={3}>
+                            <Paper id="sideBar-container">
+                                <SideBar/>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={9}>
+                            <Paper id="main-container">
+                                {this.props.children}
+                            </Paper>
+                        </Grid>
                     </Grid>
                 </Grid>
             </div>

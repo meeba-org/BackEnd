@@ -9,16 +9,17 @@ import {connect} from "react-redux";
 import ArrowBackIcon from 'material-ui-icons/ArrowBack';
 import {renderTextField} from '../material-ui-wrappers';
 import PropTypes from 'prop-types';
-
+import CSSModules from "react-css-modules";
+import styles from "../../styles/Login.scss";
 class Login extends Component {
     render() {
         let {handleSubmit, handleChange} = this.props;
         return (
-            <div>
-                <Grid container gutter={0}>
+            <div id="login">
+                <h1 id="title">מיבא</h1>
+                <Grid container>
                     <Grid item xs={12}>
-                        <Paper id="main-container">
-                            <h1>Login Window</h1>
+                        <Paper>
                             <Divider/>
                             <div>
                                 <form onSubmit={handleSubmit}>
@@ -31,12 +32,13 @@ class Login extends Component {
                                                label="סיסמא"
                                                type="password" name="password"/>
                                     </Grid>
-                                    <Button dense raised color="primary" type="submit"><ArrowBackIcon/>היכנס</Button>
+                                    <Button dense raised color="primary" type="submit" id="submit-button"><ArrowBackIcon/>היכנס</Button>
                                 </form>
                             </div>
                         </Paper>
                     </Grid>
                 </Grid>
+                <h5 id="sub-title">נוצר ע"י <a target="_blank" href="https://www.linkedin.com/in/chenop/">חן אופנהיים</a></h5>
             </div>
         );
     }
@@ -52,6 +54,6 @@ export default connect(
     // mapStateToProps
 )(reduxForm({
     form: 'loginForm',
-})(Login));
+})(CSSModules(Login, styles)));
 
 

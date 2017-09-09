@@ -3,6 +3,11 @@ $margin: 12px;
 
 #dashboard {
     width: 100%;
+
+    #appBar-container {
+        margin-bottom: $margin;
+    }
+
     #sideBar-container {
         margin: 0 0 0 $margin;
     }

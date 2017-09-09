@@ -10,6 +10,8 @@ import {Provider} from "react-redux";
 import {browserHistory, Router} from "react-router";
 import createStore from "./store/configureStore";
 import {syncHistoryWithStore} from "react-router-redux";
+import createPalette from 'material-ui/styles/palette';
+import createTypography from 'material-ui/styles/typography';
 
 
 // Needed for onTouchTap
@@ -18,6 +20,9 @@ injectTapEventPlugin();
 
 const muiTheme = createMuiTheme({
     isRtl: true,
+    typography: createTypography(createPalette(), {
+        fontFamily: '"Assistant", sans-serif'
+    })
 });
 
 const store = createStore();
