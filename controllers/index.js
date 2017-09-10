@@ -5,8 +5,8 @@ const ejwt = require('express-jwt');
 const groups = require('./groupsController');
 const operations = require('./operationsController');
 const general = require('./generalController');
-const users = require('./usersController');
-const shifts = require('./shiftsController');
+const users = require('./UsersController');
+const shifts = require('./ShiftsController');
 const config = require('../config');
 
 router.use('/', general);
@@ -24,9 +24,9 @@ router.use(function (err, req, res) {
     else if (err.name === 'PermissionError') {
         res.status(403).send('[Error] - Permission denied!');
     }
-    // else if (err) {
-    //     res.status(500).send(err);
-    // }
+    else if (err) {
+        res.status(500).send(err);
+    }
 });
 
 module.exports = router;
