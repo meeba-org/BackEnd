@@ -6,12 +6,14 @@ const groups = require('./groupsController');
 const operations = require('./operationsController');
 const general = require('./generalController');
 const users = require('./usersController');
+const shifts = require('./shiftsController');
 const config = require('../config');
 
 router.use('/', general);
 
 router.use('/api', ejwt({secret: config.secret}));
 router.use('/api/users', users);
+router.use('/api/shifts', shifts);
 router.use('/api/groups', groups);
 router.use('/api/operations', operations);
 

@@ -5,16 +5,11 @@ const OperationSchema = mongoose.Schema({
   uid: { // User Id
     type: String,
     index: true,
-    //required: true
   },
   type: {
     type: String,
     required: true
   },
-  /*project_id: {
-    type: String,
-    required: true
-  },*/
   created: {
     type: Date,
     default: Date.now
