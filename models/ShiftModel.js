@@ -32,6 +32,24 @@ module.exports.getByUid = (uid) => {
     return Shift.find({uid: uid});
 };
 
+module.exports.create = (shift) => {
+    let newShift = createShiftInstance(shift);
+
+    return newShift.save();
+};
+
+module.exports.update = (shift) => {
+    let newShift = createShiftInstance(shift);
+    newShift._id = shift._id;
+
+    newShift = newShift.toObject();
+    return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true}).exec();
+};
+
+module.exports.delShift = (id) => {
+    return Shift.remove({_id: id}).exec();
+};
+
 module.exports.getLastOpenShiftByUid = (uid) => {
     return Shift.findOne({uid: uid}).sort('clockInTime').where('clockOutTime').equals(null).exec();
 };
@@ -51,24 +69,5 @@ module.exports.getShiftsStartedInDay = (date) => {
         $gte: startDate,
         $lt: endDate
     }});
-};
-
-// Return a promise
-module.exports.create = (shift) => {
-    let newShift = createShiftInstance(shift);
-
-    return newShift.save();
-};
-
-module.exports.update = (shift) => {
-    let newShift = createShiftInstance(shift);
-    newShift._id = shift._id;
-
-    newShift = newShift.toObject();
-    return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true}).exec();
-};
-
-module.exports.delShift = (id) => {
-    return Shift.remove({_id: id}).exec();
 };
 

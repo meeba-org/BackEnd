@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('../config');
-const UserModel = require("../models/userModel");
+const UserModel = require("../models/UserModel");
 
 // Get Homepage
 router.get('/', (req, res) => {

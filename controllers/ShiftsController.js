@@ -1,10 +1,11 @@
 'use strict';
-const ShiftModel = require('../models/shiftModel');
+const ShiftModel = require('../models/ShiftModel');
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 
-//GET /shifts/{uid} shift
+// TODO filter by company
+//GET /shifts shift
 router.get('/', (req, res) => {
     req.checkQuery('startDate', 'Start date is required').isRequired().notEmpty();
     const startDate = req.query.startDate;
