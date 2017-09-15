@@ -18,14 +18,14 @@ var UserService = require('../server/services/userService');
 // this is helpful when you would like to change behavior when testing
 //console.log("process.env.NODE_ENV: " + process.env.NODE_ENV);
 process.env.NODE_ENV = 'test';
-var config = require('../server/config');
+var config = require('../config');
 
 var TIMEOUT = 20000;
 
 function clearDB(doneCallBack) {
     if (process.env.NODE_ENV !== "test")
         throw new Error("Error! - working on env which is not test environment is not allowed!!!");
-    if (config.dbUrl !== config.TEST_DB_URL)
+    if (config.dbUrl !== config.TEST_DB)
         throw new Error("Error! - clear DB which is not test db is not allowed!!!");
 
     var promises = [

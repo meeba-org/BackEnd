@@ -1,5 +1,5 @@
 'use strict';
-const ShiftModel = require('../models/ShiftModel');
+const ShiftsManager = require('../managers/ShiftsManager');
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
@@ -25,18 +25,6 @@ router.get('/', (req, res) => {
         .catch((err) => res.status(400).json({message: err.array()}));
 });
 
-function overrideClockInOfExistingShift(shift, res) {
-    return ShiftModel.update(shift)
-        .then((shift) => res.status(200).json({shift: shift}))
-        .catch((err) => res.status(500).json({message: err}));
-}
-
-function createNewShift(shift, res) {
-    return ShiftModel.create(shift)
-        .then((shift) => res.status(200).json({shift: shift}))
-        .catch((err) => res.status(500).json({message: err}));
-}
-
 function updateShiftEndDate(shift, res) {
     shift.clockOutTime = new Date;
 
@@ -54,16 +42,9 @@ router.post('/', (req, res) => {
             result.throw();
 
             let newShift = req.body;
-            ShiftModel.getLastOpenShiftByUid(newShift.uid)
-                .then((shift) => {
-                    if (shift) {
-                        // Shift exist --> update startTime as current
-                        return overrideClockInOfExistingShift(newShift, res);
-                    }
-                    else {
-                        return createNewShift(newShift, res);
-                    }
-                });
+            ShiftsManager.createOrUpdateShift(newShift)
+                .then((shift) => res.status(200).json({shift: shift}))
+                .catch((err) => res.status(500).json({message: err}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
@@ -77,6 +58,7 @@ router.put('/', (req, res) => {
             result.throw();
 
             let newShift = req.body;
+            // TODO make it simple - just CRUD operations - logic in client
             return ShiftModel.getLastOpenShiftByUid(newShift.uid)
                 .then((shift) => {
                     if (shift) {
