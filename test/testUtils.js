@@ -4,21 +4,18 @@
 'use strict';
 
 
-//var config = require('../config');
-var mongoose = require('mongoose');
-var fs = require('fs');
-var mime = require('mime');
-var CompanyModel = require('../models/CompanyModel');
-var UserModel = require('../models/UserModel');
-var ShiftModel = require('../models/ShiftModel');
+const mongoose = require('mongoose');
+const CompanyModel = require('../models/CompanyModel');
+const UserModel = require('../models/UserModel');
+const ShiftModel = require('../models/ShiftModel');
 
 // ensure the NODE_ENV is set to 'test'
 // this is helpful when you would like to change behavior when testing
 //console.log("process.env.NODE_ENV: " + process.env.NODE_ENV);
 process.env.NODE_ENV = 'test';
-var config = require('../config');
+const config = require('../config');
 
-var TIMEOUT = 20000;
+const TIMEOUT = 20000;
 
 function clearDB(doneCallBack) {
     if (process.env.NODE_ENV !== "test")
@@ -26,10 +23,10 @@ function clearDB(doneCallBack) {
     if (config.dbUrl !== config.TEST_DB)
         throw new Error("Error! - clear DB which is not test db is not allowed!!!");
 
-    var promises = [
-        CompanyModel.remove().exec(),
-        UserModel.remove().exec(),
-        ShiftModel.remove().exec(),
+    const promises = [
+        CompanyModel.deleteAllCompanies(),
+        UserModel.deleteAllUsers(),
+        ShiftModel.deleteAllShifts(),
     ];
 
     Promise.all(promises)
@@ -71,7 +68,7 @@ function getAdminUser() {
 }
 
 function createAdminUser() {
-    var promises = [
+    const promises = [
         UserModel.createUser(getAdminUser())
     ];
 
@@ -79,7 +76,7 @@ function createAdminUser() {
 }
 
 function createMockedUserPlainObject() {
-    var newUser = {
+    return {
         uid: '031667330'
         , first_name: 'Chen'
         , last_name: 'Oppenhaim'
@@ -88,14 +85,12 @@ function createMockedUserPlainObject() {
         , password: "123456"
         , role: "employee"
     };
-    return newUser;
 }
 
 function createMockedCompanyPlainObject(name) {
-    var newCompany = {
+    return {
         name: name,
     };
-    return newCompany;
 }
 
 module.exports = {

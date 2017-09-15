@@ -49,3 +49,5 @@ module.exports.addUser = (companyId, user) => {
 module.exports.removeUser = (companyId, user) => {
     return Company.update( { _id: companyId }, { $pull: { users: {_id: user._id} } } );
 };
+
+module.exports.deleteAllCompanies = () => Company.remove({}).exec();

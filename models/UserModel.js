@@ -81,3 +81,5 @@ module.exports.getCleanUser = (user) => {
     delete user.password;
     return user;
 };
+
+module.exports.deleteAllUsers = () => User.remove({}).exec();

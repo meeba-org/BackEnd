@@ -67,3 +67,4 @@ module.exports.getShiftsStartedInDay = (date) => {
     }});
 };
 
+module.exports.deleteAllShifts = () => Shift.remove({}).exec();
