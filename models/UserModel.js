@@ -22,7 +22,8 @@ const UserSchema = mongoose.Schema({
     role: {
         type: String,
     },
-    shifts: [{ type: ObjectId, ref: 'Shift' }]
+    shifts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shift' }],
+    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }
 });
 
 function createUserInstance(user) {
@@ -38,7 +39,7 @@ function createUserInstance(user) {
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
-module.exports.getByUid = (uid) => {
+module.exports.getByUserUid = (uid) => {
     return User.findOne({uid: uid});
 };
 
@@ -82,4 +83,17 @@ module.exports.getCleanUser = (user) => {
     return user;
 };
 
-module.exports.deleteAllUsers = () => User.remove({}).exec();
+module.exports.deleteAllUsers = (conditions) => {
+    if (!conditions)
+        conditions = {};
+    User.remove(conditions).exec();
+};
+
+module.exports.addShift = (userId, shift) => {
+    return User.getById(userId)
+        .then((user) => user.shifts.push(shift));
+};
+
+module.exports.removeShift = (userId, shift) => {
+    return User.update( { _id: userId }, { $pull: { shifts: {_id: shift._id} } } );
+};

@@ -1,7 +1,7 @@
 const moment = require('moment');
 const mongoose = require('mongoose');
 
-// Operation Schema
+// Shift Schema
 const ShiftSchema = mongoose.Schema({
     clockInTime: {
         type: Date,
@@ -11,6 +11,7 @@ const ShiftSchema = mongoose.Schema({
         type: Date,
         default: null
     },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
     //location
 });
 
@@ -67,4 +68,8 @@ module.exports.getShiftsStartedInDay = (date) => {
     }});
 };
 
-module.exports.deleteAllShifts = () => Shift.remove({}).exec();
+module.exports.deleteAllShifts = (conditions) => {
+    if (!conditions)
+        conditions = {};
+    Shift.remove(conditions).exec();
+};

@@ -22,9 +22,10 @@ router.use(function (err, req, res) {
     else if (err.name === 'PermissionError') {
         res.status(403).send('[Error] - Permission denied!');
     }
-    else if (err) {
-        res.status(500).send(err);
-    }
+    // else if (err) {
+    //     console.log(err);
+    //     res.status(500).send(err);
+    // }
 });
 
 module.exports = router;

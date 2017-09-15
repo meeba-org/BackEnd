@@ -7,7 +7,7 @@ const CompanySchema = mongoose.Schema({
         index: true,
         required: true
     },
-    users: [{ type: ObjectId, ref: 'User' }]
+    users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
 const Company = module.exports = mongoose.model('Company', CompanySchema);
@@ -50,4 +50,8 @@ module.exports.removeUser = (companyId, user) => {
     return Company.update( { _id: companyId }, { $pull: { users: {_id: user._id} } } );
 };
 
-module.exports.deleteAllCompanies = () => Company.remove({}).exec();
+module.exports.deleteAllCompanies = (conditions) => {
+    if (!conditions)
+        conditions = {};
+    Company.remove(conditions).exec();
+}

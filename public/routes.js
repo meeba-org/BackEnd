@@ -8,7 +8,7 @@ import Dashboard from "./components/Dashboard";
 
 export default (
     <Route path="/" component={AppContainer}>
-        <IndexRoute component={LoginContainer} />
+        <IndexRoute component={Dashboard} />
         <Route path="/login" component={LoginContainer}/>
         <Route path="/dashboard" component={Dashboard} onEnter={requireAuth}>
             <IndexRoute component={EmployeesContainer} />
@@ -19,7 +19,7 @@ export default (
 );
 
 function requireAuth(nextState, replace) {
-    let token = sessionStorage.getItem('jwtToken');
+    let token = localStorage.getItem('jwtToken');
     if (!token || token === '') {
         replace({
             pathname: '/login',

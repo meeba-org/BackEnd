@@ -174,9 +174,9 @@ export function handleLogin(values, router) {
         .then(function (response) {
             dispatch(handleLoginSuccess(response));
             //Store JWT Token to browser session storage
-            //If you use localStorage instead of sessionStorage, then this w/ persisted across tabs and new windows.
-            //sessionStorage = persisted only in current tab
-            sessionStorage.setItem('jwtToken', response.data.token);
+            //If you use localStorage instead of localStorage, then this w/ persisted across tabs and new windows.
+            //localStorage = persisted only in current tab
+            localStorage.setItem('jwtToken', response.data.token);
             //let other components know that everything is fine by updating the redux` state
 
             router.push('/dashboard');
@@ -214,7 +214,7 @@ export function resetToken() {//used for logout
 
 export function loadUserFromToken() {
     return function (dispatch) {
-        let token = sessionStorage.getItem('jwtToken');
+        let token = localStorage.getItem('jwtToken');
         if (!token || token === '') {//if there is no token, dont bother
             return;
         }
@@ -228,10 +228,10 @@ export function loadUserFromToken() {
                 'Authorization': `Bearer ${token}`
             }
         }).then(function (response) {
-            sessionStorage.setItem('jwtToken', response.data.token);
+            localStorage.setItem('jwtToken', response.data.token);
             dispatch(meFromTokenSuccess(response.data.token));
         }).catch(function (response) {
-            sessionStorage.removeItem('jwtToken');//remove token from storage
+            localStorage.removeItem('jwtToken');//remove token from storage
             dispatch(meFromTokenFailure(response.data.token));
         });
     };
@@ -239,7 +239,7 @@ export function loadUserFromToken() {
 
 export function resetMe() {
     return function (dispatch) {
-        sessionStorage.removeItem('jwtToken'); //remove token from storage
+        localStorage.removeItem('jwtToken'); //remove token from storage
         dispatch(resetToken());
     };
 }
