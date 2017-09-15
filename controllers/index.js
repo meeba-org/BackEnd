@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 const ejwt = require('express-jwt');
 
-const groups = require('./groupsController');
-const operations = require('./operationsController');
 const general = require('./generalController');
 const users = require('./UsersController');
 const shifts = require('./ShiftsController');
+const companies = require('./CompaniesController');
 const config = require('../config');
 
 router.use('/', general);
@@ -14,8 +13,7 @@ router.use('/', general);
 router.use('/api', ejwt({secret: config.secret}));
 router.use('/api/users', users);
 router.use('/api/shifts', shifts);
-router.use('/api/groups', groups);
-router.use('/api/operations', operations);
+router.use('/api/companies', companies);
 
 router.use(function (err, req, res) {
     if (err.name === 'UnauthorizedError') {

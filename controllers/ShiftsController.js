@@ -3,11 +3,13 @@ const ShiftsManager = require('../managers/ShiftsManager');
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
+const ShiftModel = require('../models/ShiftModel');
 
 // TODO filter by company
 //GET /shifts shift
 router.get('/', (req, res) => {
     req.checkQuery('startDate', 'Start date is required').isRequired().notEmpty();
+
     const startDate = req.query.startDate;
     const endDate = req.query.endDate || moment(startDate).add(1, 'days');
 
@@ -58,16 +60,20 @@ router.put('/', (req, res) => {
             result.throw();
 
             let newShift = req.body;
-            // TODO make it simple - just CRUD operations - logic in client
-            return ShiftModel.getLastOpenShiftByUid(newShift.uid)
-                .then((shift) => {
-                    if (shift) {
-                        // Shift exist --> update startTime as current
-                        return updateShiftEndDate(shift, res);
-                    }
-                    throw new Error("[shifts] - PUT - could not find an open shift to clockout");
-                })
-                .catch((err) => res.status(400).json({message: err.message}));
+
+            ShiftsManager.createOrUpdateShift(newShift)
+                .then((shift) => res.status(200).json({shift: shift}))
+                .catch((err) => res.status(500).json({message: err}));
+
+            // return ShiftModel.getLastOpenShiftByUid(newShift.uid)
+            //     .then((shift) => {
+            //         if (shift) {
+            //             // Shift exist --> update startTime as current
+            //             return updateShiftEndDate(shift, res);
+            //         }
+            //         throw new Error("[shifts] - PUT - could not find an open shift to clockout");
+            //     })
+            //     .catch((err) => res.status(400).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
@@ -83,12 +89,8 @@ router.delete('/:id', (req, res) => {
             const uid = req.params.id;
 
             return ShiftModel.delShift(uid)
-                .then(() => {
-                    return res.status(204).send();
-                })
-                .catch((err) => {
-                    return res.status(500).json({message: err});
-                });
+                .then(res.status(204).send())
+                .catch((err) => res.status(500).json({message: err}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
