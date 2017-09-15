@@ -13,7 +13,7 @@ router.get('/:uid', (req, res) => {
 
             const uid = req.params.uid;
 
-            UserModel.getByUid(uid)
+            UserModel.getByUserUid(uid)
                 .then((user) => {
                     if (user)
                         return res.status(200).json(user);
@@ -26,7 +26,7 @@ router.get('/:uid', (req, res) => {
 
 //GET /users users
 router.get('/', (req, res) => {
-    UserModel.getAll()
+    UserModel.getAllUsers()
         .then((users) => res.status(200).json({users: users}))
         .catch((err) => res.status(500).json({message: err}));
 });
@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
     req.getValidationResult()
         .then(function (result) {
             result.throw();
-            UserModel.create(req.body)
+            UserModel.createUser(req.body)
                 .then((user) => res.status(200).json({user: user}))
                 .catch((err) => res.status(500).json({message: err}));
         })
@@ -63,7 +63,7 @@ router.put('/', (req, res) => {
     req.getValidationResult()
         .then(function (result) {
             result.throw();
-            UserModel.update(req.body)
+            UserModel.updateUser(req.body)
                 .then((user) => res.status(200).json({user: user}))
                 .catch((err) => res.status(500).json({message: err}));
         })
@@ -80,7 +80,7 @@ router.delete('/:uid', (req, res) => {
 
             const uid = req.params.uid;
 
-            return UserModel.delUser(uid)
+            return UserModel.deleteUser(uid)
                 .then(() => {
                     return res.status(204).send();
                 })

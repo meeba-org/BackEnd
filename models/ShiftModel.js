@@ -3,10 +3,6 @@ const mongoose = require('mongoose');
 
 // Operation Schema
 const ShiftSchema = mongoose.Schema({
-    uid: { // Shift Id
-        type: String,
-        index: true,
-    },
     clockInTime: {
         type: Date,
         default: Date.now
@@ -22,23 +18,23 @@ const Shift = module.exports = mongoose.model('Shift', ShiftSchema);
 
 function createShiftInstance(shift) {
     let newShift = new Shift();
-    newShift.uid = shift.uid;
+    newShift.id = shift.id;
     newShift.clockInTime = shift.clockInTime || newShift.clockInTime || new Date;
     newShift.clockOutTime = shift.clockOutTime || newShift.clockOutTime;
     return newShift;
 }
 
-module.exports.getByUid = (uid) => {
-    return Shift.find({uid: uid});
+module.exports.getByShiftId = (id) => {
+    return Shift.find({id: id});
 };
 
-module.exports.create = (shift) => {
+module.exports.createShift = (shift) => {
     let newShift = createShiftInstance(shift);
 
     return newShift.save();
 };
 
-module.exports.update = (shift) => {
+module.exports.updateShift = (shift) => {
     let newShift = createShiftInstance(shift);
     newShift._id = shift._id;
 
@@ -46,12 +42,12 @@ module.exports.update = (shift) => {
     return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true}).exec();
 };
 
-module.exports.delShift = (id) => {
+module.exports.deleteShift = (id) => {
     return Shift.remove({_id: id}).exec();
 };
 
-module.exports.getLastOpenShiftByUid = (uid) => {
-    return Shift.findOne({uid: uid}).sort('clockInTime').where('clockOutTime').equals(null).exec();
+module.exports.getLastOpenShiftById = (id) => {
+    return Shift.findOne({id: id}).sort('clockInTime').where('clockOutTime').equals(null).exec();
 };
 
 module.exports.getShiftsBetween = (startDate, endDate) => {

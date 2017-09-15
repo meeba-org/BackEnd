@@ -9,7 +9,6 @@ router.get('/', (req, res) => {
     res.json('Hi this is Meeba!');
 });
 
-// TODO Moved it to usersController
 //POST /register user
 router.post('/register', (req, res) => {
     // Validation
@@ -24,7 +23,7 @@ router.post('/register', (req, res) => {
     req.getValidationResult()
         .then(function (result) {
             result.throw();
-            UserModel.create(req.body)
+            UserModel.createUser(req.body)
                 .then((user) => res.status(200).json({user: user}))
                 .catch((err) => res.status(500).json({message: err}));
         })
@@ -41,7 +40,7 @@ router.post('/login', function (req, res) {
         return res.status(401).json("uid or password are missing")
     }
 
-    UserModel.getByUid(uid)
+    UserModel.getByUserUid(uid)
         .then((user) => {
             if (!user) {
                 return res.status(401).json({message: "no such user found"});
@@ -98,7 +97,7 @@ router.get('/authenticate', function(req, res) {
             return res.status(401).json({message: '[authenticate] - Token is not valid'});
 
         //return user using the id from w/in JWTToken
-        UserModel.getById(user._id)
+        UserModel.getByUserId(user._id)
             .then((user) => {
                 user = UserModel.getCleanUser(user.toObject()); //dont pass password and stuff
 

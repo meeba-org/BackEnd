@@ -12,8 +12,6 @@ var CompanyModel = require('../models/CompanyModel');
 var UserModel = require('../models/UserModel');
 var ShiftModel = require('../models/ShiftModel');
 
-var UserService = require('../server/services/userService');
-
 // ensure the NODE_ENV is set to 'test'
 // this is helpful when you would like to change behavior when testing
 //console.log("process.env.NODE_ENV: " + process.env.NODE_ENV);
@@ -74,7 +72,7 @@ function getAdminUser() {
 
 function createAdminUser() {
     var promises = [
-        UserService.createUser(getAdminUser())
+        UserModel.createUser(getAdminUser())
     ];
 
     return Promise.all(promises);

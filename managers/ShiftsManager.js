@@ -5,10 +5,10 @@ module.exports.createOrUpdateShift = (shift) => {
         .then((shift) => {
             if (shift) {
                 // Shift exist --> update startTime as current
-                return ShiftModel.update(shift);
+                return ShiftModel.updateShift(shift);
             }
             else {
-                return ShiftModel.create(shift);
+                return ShiftModel.createShift(shift);
             }
         });
 };

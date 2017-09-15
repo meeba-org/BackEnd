@@ -5,7 +5,6 @@ const router = express.Router();
 const moment = require('moment');
 const ShiftModel = require('../models/ShiftModel');
 
-// TODO filter by company
 //GET /shifts shift
 router.get('/', (req, res) => {
     req.checkQuery('startDate', 'Start date is required').isRequired().notEmpty();
@@ -30,7 +29,7 @@ router.get('/', (req, res) => {
 function updateShiftEndDate(shift, res) {
     shift.clockOutTime = new Date;
 
-    return ShiftModel.update(shift)
+    return ShiftModel.updateShift(shift)
         .then((shift) => res.status(200).json({shift: shift}))
         .catch((err) => res.status(500).json({message: err}));
 }
@@ -88,7 +87,7 @@ router.delete('/:id', (req, res) => {
 
             const uid = req.params.id;
 
-            return ShiftModel.delShift(uid)
+            return ShiftModel.deleteShift(uid)
                 .then(res.status(204).send())
                 .catch((err) => res.status(500).json({message: err}));
         })

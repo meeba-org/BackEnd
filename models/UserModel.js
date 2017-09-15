@@ -22,6 +22,7 @@ const UserSchema = mongoose.Schema({
     role: {
         type: String,
     },
+    shifts: [{ type: ObjectId, ref: 'Shift' }]
 });
 
 function createUserInstance(user) {
@@ -41,23 +42,23 @@ module.exports.getByUid = (uid) => {
     return User.findOne({uid: uid});
 };
 
-module.exports.getById = (id) => {
+module.exports.getByUserId = (id) => {
     return User.findById(id).exec();
 };
 
 // Return a promise
-module.exports.getAll = () => {
+module.exports.getAllUsers = () => {
     return User.find().exec();
 };
 
 // Return a promise
-module.exports.create = (user) => {
+module.exports.createUser = (user) => {
     let newUser = createUserInstance(user);
 
     return newUser.save();
 };
 
-module.exports.update = (user) => {
+module.exports.updateUser = (user) => {
     let newUser = createUserInstance(user);
     newUser._id = user._id;
 
@@ -65,7 +66,7 @@ module.exports.update = (user) => {
     return User.findOneAndUpdate({'_id': newUser._id}, newUser, {upsert: true, new: true}).exec();
 };
 
-module.exports.delUser = (uid) => {
+module.exports.deleteUser = (uid) => {
      return User.remove({uid: uid}).exec();
 };
 
