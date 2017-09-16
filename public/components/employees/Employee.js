@@ -22,7 +22,7 @@ class Employee extends React.Component {
             <div>
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={3}>
-                        <Input value={input.value.first_name} placeholder="שם" onChange={(e) => this.onUpdate(e, "first_name")} />
+                        <Input value={input.value.firstName} placeholder="שם" onChange={(e) => this.onUpdate(e, "firstName")} />
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Input value={input.value.uid} placeholder="ת.ז." onChange={(e) => this.onUpdate(e, "uid")} />

@@ -45,11 +45,7 @@ module.exports.deleteCompany = (id) => {
  };
 
  module.exports.addUser = (companyId, user) => {
-    return Company.getByCompanyId(companyId)
-        .then((company) => {
-            company.users.push(user)
-            return company.save();
-        });
+     return Company.findByIdAndUpdate(companyId, {$push: {"users": user}}, {safe: true, upsert: true, new : true})
 };
 
 module.exports.removeUser = (companyId, user) => {

@@ -4,6 +4,9 @@ var PRODUCTION_DB = "mongodb://admin:admin12@ds139242.mlab.com:39242/heroku_9mpw
 
 var DEVELOPMENT_ADDRESS = 'http://localhost:3000';
 
+if (!process.env.NODE_ENV)
+    process.env.NODE_ENV = 'development'
+
 if (!module.exports.dbUrl)
     init();
 

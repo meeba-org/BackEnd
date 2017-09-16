@@ -7,10 +7,11 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const mongoose = require('mongoose');
+const config = require('./config');
 
 // Connect to mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://admin:admin12@ds139242.mlab.com:39242/heroku_9mpwf6zf', {useMongoClient: true});
+mongoose.connect(config.dbUrl, {useMongoClient: true});
 
 // Init App
 const app = express();

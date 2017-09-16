@@ -66,7 +66,7 @@ export function deleteEmployee(employee) {
     return function (dispatch) {
         dispatch(deleteEmployeeStart());
         return callApi({
-            url: '/users/' + employee.uid,
+            url: '/users/' + employee._id,
             method: 'delete',
             shouldAuthenticate: true,
         }).then(function (response) {

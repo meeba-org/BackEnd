@@ -59,16 +59,16 @@ router.put('/', (req, res) => {
 });
 
 //DELETE /users/{id} userUid
-router.delete('/:uid', (req, res) => {
-    req.checkParams('uid', 'int uid is required').notEmpty().isInt();
+router.delete('/:id', (req, res) => {
+    req.checkParams('id', 'int id is required').notEmpty();
 
     return req.getValidationResult()
         .then(function (result) {
             result.throw();
 
-            const uid = req.params.uid;
+            const id = req.params.id;
 
-            return UsersManager.removeUser(uid)
+            return UsersManager.removeUser(id)
                 .then(() => res.status(204).send())
                 .catch((err) => res.status(500).json({message: err}));
         })

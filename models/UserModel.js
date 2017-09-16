@@ -7,10 +7,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         index: true,
     },
-    first_name: {
+    firstName: {
         type: String,
     },
-    last_name: {
+    lastName: {
         type: String,
     },
     email: {
@@ -62,8 +62,8 @@ module.exports.updateUser = (user) => {
     return User.findOneAndUpdate({'_id': newUser._id}, newUser, {upsert: true, new: true}).exec();
 };
 
-module.exports.deleteUser = (uid) => {
-     return User.remove({uid: uid}).exec();
+module.exports.deleteUser = (id) => {
+     return User.remove({id}).exec();
 };
 
 module.exports.comparePassword = (candidatePassword, hash, callback) => {

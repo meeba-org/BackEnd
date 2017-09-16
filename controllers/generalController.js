@@ -13,8 +13,8 @@ router.get('/', (req, res) => {
 router.post('/register', (req, res) => {
     // Validation
     req.checkBody('uid', 'id is required').notEmpty();
-    req.checkBody('first_name', 'First name is required').notEmpty();
-    req.checkBody('last_name', 'Last name is required').notEmpty();
+    req.checkBody('firstName', 'First name is required').notEmpty();
+    req.checkBody('lastName', 'Last name is required').notEmpty();
     req.checkBody('role', 'Role is required').notEmpty();
     req.checkBody('email', 'Email is required').notEmpty();
     req.checkBody('email', 'Email is not valid').isEmail();
