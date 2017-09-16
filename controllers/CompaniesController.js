@@ -13,7 +13,7 @@ router.get('/:id', (req, res) => {
 
             const id = req.params.id;
 
-            CompanyModel.getById(id)
+            CompanyModel.getByCompanyId(id)
                 .then((company) => {
                     if (company)
                         return res.status(200).json(company);
@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
 
 //GET /companies companies
 router.get('/', (req, res) => {
-    CompanyModel.getAll()
+    CompanyModel.getAllCompanies()
         .then((companies) => res.status(200).json({companies: companies}))
         .catch((err) => res.status(500).json({message: err}));
 });

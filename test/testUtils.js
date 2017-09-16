@@ -17,7 +17,7 @@ const config = require('../config');
 
 const TIMEOUT = 20000;
 
-function clearDB(doneCallBack) {
+function clearDB() {
     if (process.env.NODE_ENV !== "test")
         throw new Error("Error! - working on env which is not test environment is not allowed!!!");
     if (config.dbUrl !== config.TEST_DB)
@@ -31,33 +31,30 @@ function clearDB(doneCallBack) {
 
     Promise.all(promises)
         .then(function () {
-            return createAdminUser();
-        })
-        .then(function () {
-            doneCallBack();
+            // return createAdminUser();
         });
 }
 
-beforeEach(function (done) {
-    this.timeout(TIMEOUT);
+// beforeEach(function (done) {
+//     this.timeout(TIMEOUT);
+//
+//     if (mongoose.connection.readyState === 0) {
+//         mongoose.connect(config.dbUrl, function (err) {
+//             if (err) {
+//                 throw err;
+//             }
+//             return clearDB(done);
+//         });
+//     } else {
+//         return clearDB(done);
+//     }
+// });
 
-    if (mongoose.connection.readyState === 0) {
-        mongoose.connect(config.dbUrl, function (err) {
-            if (err) {
-                throw err;
-            }
-            return clearDB(done);
-        });
-    } else {
-        return clearDB(done);
-    }
-});
 
-
-afterEach(function (done) {
-    mongoose.disconnect();
-    return done();
-});
+// afterEach(function (done) {
+//     mongoose.disconnect();
+//     return done();
+// });
 
 function getAdminUser() {
     return {
@@ -75,15 +72,16 @@ function createAdminUser() {
     return Promise.all(promises);
 }
 
-function createMockedUserPlainObject() {
+function createMockedUserPlainObject(name) {
     return {
         uid: '031667330'
-        , first_name: 'Chen'
+        , first_name: (!name) ? 'Chen' : name
         , last_name: 'Oppenhaim'
         , email: 'chenop@gmail.com'
-        , username: "chenop"
         , password: "123456"
         , role: "employee"
+        , shifts: []
+        , company: {}
     };
 }
 
@@ -94,8 +92,9 @@ function createMockedCompanyPlainObject(name) {
 }
 
 module.exports = {
-    createMockedUserPlainObject: createMockedUserPlainObject
-    , createMockedCompanyPlainObject: createMockedCompanyPlainObject
-    , TIMEOUT: TIMEOUT
-    , getAdminUser: getAdminUser
+    createMockedUserPlainObject
+    , createMockedCompanyPlainObject
+    , TIMEOUT
+    , getAdminUser
+    , clearDB
 };

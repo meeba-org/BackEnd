@@ -28,19 +28,14 @@ const UserSchema = mongoose.Schema({
 
 function createUserInstance(user) {
     let newUser = new User();
-    newUser.uid = user.uid;
-    newUser.first_name = user.first_name;
-    newUser.last_name = user.last_name;
-    newUser.email = user.email;
-    newUser.password = user.password;
-    newUser.role = user.role;
+    Object.assign(newUser, user);
     return newUser;
 }
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
 module.exports.getByUserUid = (uid) => {
-    return User.findOne({uid: uid});
+    return User.findOne({uid: uid}).exec();
 };
 
 module.exports.getByUserId = (id) => {

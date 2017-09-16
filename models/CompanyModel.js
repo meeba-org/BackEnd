@@ -14,22 +14,25 @@ const Company = module.exports = mongoose.model('Company', CompanySchema);
 
 function createCompanyInstance(company) {
     let newCompany = new Company();
-    newCompany.name = company.uid;
-    newCompany.users = [];
+    Object.assign(newCompany, company);
     return newCompany;
 }
 
-module.exports.getById = (id) => {
-    return Company.find({_id: id});
+module.exports.getAllCompanies = () => {
+    return Company.find().exec();
 };
 
-module.exports.create = (company) => {
+module.exports.getByCompanyId = (id) => {
+    return Company.findById(id).exec();
+};
+
+module.exports.createCompany = (company) => {
     let newCompany = createCompanyInstance(company);
 
     return newCompany.save();
 };
 
-module.exports.update = (company) => {
+module.exports.updateCompany = (company) => {
     let newCompany = createCompanyInstance(company);
     newCompany._id = company._id;
 
@@ -37,13 +40,16 @@ module.exports.update = (company) => {
     return Company.findOneAndUpdate({'_id': newCompany._id}, newCompany, {upsert: true, new: true}).exec();
 };
 
-module.exports.delCompany = (id) => {
+module.exports.deleteCompany = (id) => {
     return Company.remove({_id: id}).exec();
-};
+ };
 
-module.exports.addUser = (companyId, user) => {
-    return Company.getById(companyId)
-        .then((company) => company.users.push(user));
+ module.exports.addUser = (companyId, user) => {
+    return Company.getByCompanyId(companyId)
+        .then((company) => {
+            company.users.push(user)
+            return company.save();
+        });
 };
 
 module.exports.removeUser = (companyId, user) => {

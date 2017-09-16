@@ -26,7 +26,7 @@ function createShiftInstance(shift) {
 }
 
 module.exports.getByShiftId = (id) => {
-    return Shift.find({id: id});
+    return Shift.findById({id});
 };
 
 module.exports.createShift = (shift) => {
