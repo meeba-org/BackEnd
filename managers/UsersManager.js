@@ -7,10 +7,11 @@ module.exports.addUser = (user) => {
     return UserModel.createUser(user)
         .then((createdUser) => {
             if (!!company && company.id) {
-                CompanyModel.addUser(company.id, createdUser);
+                return CompanyModel.addUser(company.id, createdUser)
+                    .then(() => createdUser);
             }
             return createdUser;
-        })
+        });
 };
 
 module.exports.removeUser = (userId) => {

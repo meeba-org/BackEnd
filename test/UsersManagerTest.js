@@ -21,7 +21,11 @@ describe('UsersManager', function() {
                 .then((createdUser) => {
                     expect(createdUser.firstName).to.exist;
                     expect(createdUser.company).to.exist;
+                    CompanyModel.getByCompanyId(createdUser.company)
+                        .then((updatedCompany) => {
+                            expect(updatedCompany.users).to.have.length(1);
+                        })
                 });
-        }).timeout(10000);
+        }).timeout(TIMEOUT);
     });
 });
