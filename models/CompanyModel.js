@@ -45,11 +45,15 @@ module.exports.deleteCompany = (id) => {
  };
 
  module.exports.addUser = (companyId, user) => {
-     return Company.findByIdAndUpdate(companyId, {$push: {"users": user.toObject()}}, {safe: true, upsert: true, new : true})
+     return Company.findByIdAndUpdate(companyId, {$push: {"users": user.toObject()}}, {new : true});
 };
 
 module.exports.removeUser = (companyId, user) => {
-    return Company.update( { _id: companyId }, { $pull: { users: {_id: user._id} } } );
+    return Company.findByIdAndUpdate(companyId,
+        // { name: 'Shula' },
+        { $pull: { users: {'_id': user.id}} },
+        {'new': true}
+        );
 };
 
 module.exports.deleteAllCompanies = (conditions) => {

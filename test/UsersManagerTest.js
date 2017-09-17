@@ -24,8 +24,27 @@ describe('UsersManager', function() {
                     CompanyModel.getByCompanyId(createdUser.company)
                         .then((updatedCompany) => {
                             expect(updatedCompany.users).to.have.length(1);
-                        })
+                        });
                 });
+        }).timeout(TIMEOUT);
+    });
+
+    describe('removeUser', function() {
+        it.only('should remove user from the company', function() {
+            let newCompany = utils.createMockedCompanyPlainObject("Toluna");
+            let newUser = utils.createMockedUserPlainObject();
+
+            return CompanyModel.createCompany(newCompany)
+                .then((createdCompany) => {
+                    newUser.company = createdCompany;
+                    return UsersManager.addUser(newUser);
+                })
+                .then((createdUser) => {
+                    return CompanyModel.removeUser(createdUser.company._id, createdUser);
+                })
+                .then((updatedCompany) => {
+                    expect(updatedCompany.users).to.have.length(0);
+                })
         }).timeout(TIMEOUT);
     });
 });
