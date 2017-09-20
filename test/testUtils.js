@@ -29,7 +29,7 @@ function clearDB() {
         ShiftModel.deleteAllShifts(),
     ];
 
-    Promise.all(promises)
+    return Promise.all(promises)
         .then(function () {
             // return createAdminUser();
         });

@@ -1,7 +1,7 @@
 'use strict';
 const UserModel = require('../models/UserModel');
 const express = require('express');
-const UsersManager = require("../managers/UsersManager");
+const AppManager = require("../managers/AppManager");
 const router = express.Router();
 
 //GET /users/{uid} user
@@ -38,7 +38,7 @@ router.post('/', (req, res) => {
     req.getValidationResult()
         .then(function (result) {
             result.throw();
-            UsersManager.addUser(req.body)
+            AppManager.addUser(req.body)
                 .then((user) => res.status(200).json({user: user}))
                 .catch((err) => res.status(500).json({message: err}));
         })
@@ -68,7 +68,7 @@ router.delete('/:id', (req, res) => {
 
             const id = req.params.id;
 
-            return UsersManager.removeUser(id)
+            return AppManager.removeUser(id)
                 .then(() => res.status(204).send())
                 .catch((err) => res.status(500).json({message: err}));
         })

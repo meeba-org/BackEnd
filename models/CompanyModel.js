@@ -49,15 +49,11 @@ module.exports.deleteCompany = (id) => {
 };
 
 module.exports.removeUser = (companyId, user) => {
-    return Company.findByIdAndUpdate(companyId,
-        // { name: 'Shula' },
-        { $pull: { users: {'_id': user.id}} },
-        {'new': true}
-        );
+    return Company.findByIdAndUpdate(companyId, { $pull: { "users": user.id} }, {'new': true} );
 };
 
 module.exports.deleteAllCompanies = (conditions) => {
     if (!conditions)
         conditions = {};
-    Company.remove(conditions).exec();
+    return Company.remove(conditions).exec();
 }

@@ -39,7 +39,7 @@ module.exports.getByUserUid = (uid) => {
 };
 
 module.exports.getByUserId = (id) => {
-    return User.findById(id).exec();
+    return User.findById(id).populate('company').exec();
 };
 
 // Return a promise
@@ -63,7 +63,7 @@ module.exports.updateUser = (user) => {
 };
 
 module.exports.deleteUser = (id) => {
-     return User.remove({id}).exec();
+     return User.findByIdAndRemove(id).exec();
 };
 
 module.exports.comparePassword = (candidatePassword, hash, callback) => {
@@ -81,7 +81,7 @@ module.exports.getCleanUser = (user) => {
 module.exports.deleteAllUsers = (conditions) => {
     if (!conditions)
         conditions = {};
-    User.remove(conditions).exec();
+    return User.remove(conditions).exec();
 };
 
 module.exports.addShift = (userId, shift) => {

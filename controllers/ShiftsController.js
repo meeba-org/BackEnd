@@ -1,5 +1,5 @@
 'use strict';
-const ShiftsManager = require('../managers/ShiftsManager');
+const ShiftsManager = require('../managers/AppManager');
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');

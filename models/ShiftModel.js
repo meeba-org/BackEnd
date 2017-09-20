@@ -71,5 +71,5 @@ module.exports.getShiftsStartedInDay = (date) => {
 module.exports.deleteAllShifts = (conditions) => {
     if (!conditions)
         conditions = {};
-    Shift.remove(conditions).exec();
+    return Shift.remove(conditions).exec();
 };
