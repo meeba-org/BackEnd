@@ -23,7 +23,7 @@ module.exports.getAllCompanies = () => {
 };
 
 module.exports.getByCompanyId = (id) => {
-    return Company.findById(id).exec();
+    return Company.findById(id).populate('users').exec();
 };
 
 module.exports.createCompany = (company) => {

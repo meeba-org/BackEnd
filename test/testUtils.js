@@ -23,21 +23,25 @@ function clearDB() {
     if (config.dbUrl !== config.TEST_DB)
         throw new Error("[testUtils.clearDB] - Error! - clear DB which is not test db is not allowed!!!");
 
+
     return Promise.all([
         CompanyModel.count().exec(),
         UserModel.count().exec(),
         ShiftModel.count().exec(),
     ]).then((responses) => {
+        console.log("clearDB 1");
         responses.forEach(response => {
             if (response > 3)
                 throw new Error("[testUtils.clearDB] - Error! - clearing db with too much documents");
         });
     }).then(() => {
-        Promise.all([
+        console.log("clearDB 2");
+        return Promise.all([
             CompanyModel.deleteAllCompanies(),
             UserModel.deleteAllUsers(),
             ShiftModel.deleteAllShifts(),
         ]).then(function () {
+            console.log("clearDB 3");
             // return createAdminUser();
         });
     });
