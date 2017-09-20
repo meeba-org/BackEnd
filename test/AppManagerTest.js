@@ -49,4 +49,11 @@ describe('AppManager', function() {
                 .then((company) => expect(company.users).to.have.length(0))
         }).timeout(TIMEOUT);
     });
+
+    describe('addShift', function() {
+        // TODO
+    })
+    describe('removeShift', function() {
+        // TODO
+    })
 });

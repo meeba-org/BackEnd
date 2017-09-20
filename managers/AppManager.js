@@ -32,18 +32,18 @@ module.exports.addShift = (shift) => {
 
 };
 
-// TODO make it like removeUser
 module.exports.removeShift = (shiftId) => {
     return ShiftModel.getByShiftId(shiftId)
         .then((shift) => {
             const user = shift.user;
 
-            // Remove shift from user
-            if (!!user && user.id)
-                UserModel.removeShift(user.id, shift);
-
             // Remove the shift itself
-            return ShiftModel.deleteShift(shift.uid);
+            return ShiftModel.deleteShift(shift.uid)
+                .then(() => {
+                    // Remove shift from user
+                    if (!!user && user.id)
+                        UserModel.removeShift(user.id, shift);
+                });
         });
 };
 
@@ -65,11 +65,10 @@ module.exports.addUser = (user) => {
 module.exports.removeUser = (userId) => {
     return UserModel.getByUserId(userId)
         .then((user) => {
-            const currentUser = user;
             const company = user.company;
 
             // Remove user itself
-            return UserModel.deleteUser(currentUser.id)
+            return UserModel.deleteUser(user.id)
                 .then(() => {
                     // Remove user from company
                     if (!!company && company.id)
