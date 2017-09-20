@@ -8,6 +8,7 @@ describe('AppManager', function() {
     beforeEach(function() {
         return utils.clearDB();
     });
+
     describe('addUser', function() {
         it.only('should add user to the company', function() {
             console.log("addUser 1");
@@ -28,6 +29,7 @@ describe('AppManager', function() {
                             console.log("addUser 3");
                             expect(updatedCompany.users).to.have.length(1);
                             expect(updatedCompany.users[0].firstName === createdUser.firstName);
+                            return Promise.resolve();
                         });
                 });
         }).timeout(TIMEOUT);

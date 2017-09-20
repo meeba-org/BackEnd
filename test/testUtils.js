@@ -3,8 +3,6 @@
  */
 'use strict';
 
-
-const mongoose = require('mongoose');
 const CompanyModel = require('../models/CompanyModel');
 const UserModel = require('../models/UserModel');
 const ShiftModel = require('../models/ShiftModel');
@@ -23,7 +21,7 @@ function clearDB() {
     if (config.dbUrl !== config.TEST_DB)
         throw new Error("[testUtils.clearDB] - Error! - clear DB which is not test db is not allowed!!!");
 
-
+    // TODO Something is not working here on run (debug is ok...)
     return Promise.all([
         CompanyModel.count().exec(),
         UserModel.count().exec(),
