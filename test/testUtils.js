@@ -19,42 +19,29 @@ const TIMEOUT = 20000;
 
 function clearDB() {
     if (process.env.NODE_ENV !== "test")
-        throw new Error("Error! - working on env which is not test environment is not allowed!!!");
+        throw new Error("[testUtils.clearDB] - Error! - working on env which is not test environment is not allowed!!!");
     if (config.dbUrl !== config.TEST_DB)
-        throw new Error("Error! - clear DB which is not test db is not allowed!!!");
+        throw new Error("[testUtils.clearDB] - Error! - clear DB which is not test db is not allowed!!!");
 
-    const promises = [
-        CompanyModel.deleteAllCompanies(),
-        UserModel.deleteAllUsers(),
-        ShiftModel.deleteAllShifts(),
-    ];
-
-    return Promise.all(promises)
-        .then(function () {
+    return Promise.all([
+        CompanyModel.count().exec(),
+        UserModel.count().exec(),
+        ShiftModel.count().exec(),
+    ]).then((responses) => {
+        responses.forEach(response => {
+            if (response > 3)
+                throw new Error("[testUtils.clearDB] - Error! - clearing db with too much documents");
+        });
+    }).then(() => {
+        Promise.all([
+            CompanyModel.deleteAllCompanies(),
+            UserModel.deleteAllUsers(),
+            ShiftModel.deleteAllShifts(),
+        ]).then(function () {
             // return createAdminUser();
         });
+    });
 }
-
-// beforeEach(function (done) {
-//     this.timeout(TIMEOUT);
-//
-//     if (mongoose.connection.readyState === 0) {
-//         mongoose.connect(config.dbUrl, function (err) {
-//             if (err) {
-//                 throw err;
-//             }
-//             return clearDB(done);
-//         });
-//     } else {
-//         return clearDB(done);
-//     }
-// });
-
-
-// afterEach(function (done) {
-//     mongoose.disconnect();
-//     return done();
-// });
 
 function getAdminUser() {
     return {
