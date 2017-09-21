@@ -11,13 +11,7 @@ const config = require('./config');
 
 // Connect to mongoose
 mongoose.Promise = global.Promise;
-
-const options = {
-    useMongoClient: true,
-    server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
-    replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }
-};
-mongoose.connect(config.dbUrl, options);
+mongoose.connect(config.dbUrl, { useMongoClient: true});
 
 // Init App
 const app = express();
