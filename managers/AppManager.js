@@ -23,11 +23,11 @@ module.exports.addShift = (shift) => {
         .then((createShift) => {
             if (!!user && user.id) {
                 // Add shift to user
-                return UserModel.addShift(user, shift)
-                    .then(() => createShift)
+                return UserModel.addShift(user.id, createShift)
+                    .then(() => createShift);
             }
             return createShift;
-        })
+        });
 
 
 };
@@ -38,7 +38,7 @@ module.exports.removeShift = (shiftId) => {
             const user = shift.user;
 
             // Remove the shift itself
-            return ShiftModel.deleteShift(shift.uid)
+            return ShiftModel.deleteShift(shift.id)
                 .then(() => {
                     // Remove shift from user
                     if (!!user && user.id)

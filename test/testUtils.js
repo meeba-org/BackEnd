@@ -55,18 +55,27 @@ function createAdminUser() {
     return Promise.all(promises);
 }
 
-function createMockedUserPlainObject(name) {
+function createMockedUserPlainObject(name = 'Chen') {
     return {
         uid: '031667330'
-        , firstName: (!name) ? 'Chen' : name
+        , firstName: name
         , lastName: 'Oppenhaim'
         , email: 'chenop@gmail.com'
         , password: "123456"
         , role: "employee"
         , shifts: []
-        , company: {}
+        //, company: {}
     };
 }
+
+function createMockedShiftPlainObject() {
+    return {
+        clockInTime: new Date()
+        , clockOutTime: new Date(new Date().getTime() +  60 * 1000)
+        , users: []
+    };
+}
+
 
 function createMockedCompanyPlainObject(name) {
     return {
@@ -77,6 +86,7 @@ function createMockedCompanyPlainObject(name) {
 module.exports = {
     createMockedUserPlainObject
     , createMockedCompanyPlainObject
+    , createMockedShiftPlainObject
     , TIMEOUT
     , getAdminUser
     , clearDB

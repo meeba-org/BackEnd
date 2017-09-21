@@ -39,7 +39,7 @@ module.exports.getByUserUid = (uid) => {
 };
 
 module.exports.getByUserId = (id) => {
-    return User.findById(id).populate('company').exec();
+    return User.findById(id).populate('company shifts').exec();
 };
 
 // Return a promise
@@ -85,10 +85,9 @@ module.exports.deleteAllUsers = (conditions) => {
 };
 
 module.exports.addShift = (userId, shift) => {
-    return User.getById(userId)
-        .then((user) => user.shifts.push(shift));
+    return User.findByIdAndUpdate(userId, {$push: {"shifts": shift.toObject()}}, {new : true});
 };
 
 module.exports.removeShift = (userId, shift) => {
-    return User.update( { _id: userId }, { $pull: { shifts: {_id: shift._id} } } );
+    return User.findByIdAndUpdate(userId, { $pull: { "shifts": shift.id} }, {'new': true} );
 };

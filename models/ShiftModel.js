@@ -19,14 +19,12 @@ const Shift = module.exports = mongoose.model('Shift', ShiftSchema);
 
 function createShiftInstance(shift) {
     let newShift = new Shift();
-    newShift.id = shift.id;
-    newShift.clockInTime = shift.clockInTime || newShift.clockInTime || new Date;
-    newShift.clockOutTime = shift.clockOutTime || newShift.clockOutTime;
+    Object.assign(newShift, shift);
     return newShift;
 }
 
 module.exports.getByShiftId = (id) => {
-    return Shift.findById({id});
+    return Shift.findById(id);
 };
 
 module.exports.createShift = (shift) => {
