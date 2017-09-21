@@ -10,7 +10,7 @@ const CompanySchema = mongoose.Schema({
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
-const Company = module.exports = mongoose.model('Company', CompanySchema);
+const Company = mongoose.model('Company', CompanySchema);
 
 function createCompanyInstance(company) {
     let newCompany = new Company();
@@ -18,21 +18,21 @@ function createCompanyInstance(company) {
     return newCompany;
 }
 
-module.exports.getAllCompanies = () => {
+const getAllCompanies = () => {
     return Company.find().exec();
 };
 
-module.exports.getByCompanyId = (id) => {
+const getByCompanyId = (id) => {
     return Company.findById(id).populate('users').exec();
 };
 
-module.exports.createCompany = (company) => {
+const createCompany = (company) => {
     let newCompany = createCompanyInstance(company);
 
     return newCompany.save();
 };
 
-module.exports.updateCompany = (company) => {
+const updateCompany = (company) => {
     let newCompany = createCompanyInstance(company);
     newCompany._id = company._id;
 
@@ -40,20 +40,34 @@ module.exports.updateCompany = (company) => {
     return Company.findOneAndUpdate({'_id': newCompany._id}, newCompany, {upsert: true, new: true}).exec();
 };
 
-module.exports.deleteCompany = (id) => {
+const deleteCompany = (id) => {
     return Company.remove({_id: id}).exec();
  };
 
- module.exports.addUser = (companyId, user) => {
+ const addUser = (companyId, user) => {
      return Company.findByIdAndUpdate(companyId, {$push: {"users": user.toObject()}}, {new : true});
 };
 
-module.exports.removeUser = (companyId, user) => {
+const removeUser = (companyId, user) => {
     return Company.findByIdAndUpdate(companyId, { $pull: { "users": user.id} }, {'new': true} );
 };
 
-module.exports.deleteAllCompanies = (conditions) => {
+const deleteAllCompanies = (conditions) => {
     if (!conditions)
         conditions = {};
     return Company.remove(conditions).exec();
-}
+};
+
+const companiesCount = () => Company.count().exec();
+
+module.exports = {
+    createCompany
+    , getByCompanyId
+    , getAllCompanies
+    , updateCompany
+    , deleteCompany
+    , deleteAllCompanies
+    , addUser
+    , removeUser
+    , companiesCount
+};

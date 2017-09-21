@@ -1,5 +1,4 @@
 'use strict';
-const ShiftsManager = require('../managers/AppManager');
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
@@ -43,7 +42,7 @@ router.post('/', (req, res) => {
             result.throw();
 
             let newShift = req.body;
-            ShiftsManager.createOrUpdateShift(newShift)
+            ShiftModel.createOrUpdateShift(newShift)
                 .then((shift) => res.status(200).json({shift: shift}))
                 .catch((err) => res.status(500).json({message: err}));
         })
@@ -60,19 +59,9 @@ router.put('/', (req, res) => {
 
             let newShift = req.body;
 
-            ShiftsManager.createOrUpdateShift(newShift)
+            ShiftModel.createOrUpdateShift(newShift)
                 .then((shift) => res.status(200).json({shift: shift}))
                 .catch((err) => res.status(500).json({message: err}));
-
-            // return ShiftModel.getLastOpenShiftByUid(newShift.uid)
-            //     .then((shift) => {
-            //         if (shift) {
-            //             // Shift exist --> update startTime as current
-            //             return updateShiftEndDate(shift, res);
-            //         }
-            //         throw new Error("[shifts] - PUT - could not find an open shift to clockout");
-            //     })
-            //     .catch((err) => res.status(400).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });

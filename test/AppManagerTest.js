@@ -6,13 +6,13 @@ const ShiftModel = require('../models/ShiftModel');
 const AppManager = require('../managers/AppManager');
 const expect = require('chai').expect;
 
-describe('AppManager', function() {
+describe('AppManager', function () {
     this.timeout(TIMEOUT);
-    beforeEach(function() {
+    beforeEach(function () {
         return utils.clearDB();
     });
 
-    describe('addUser', function() {
+    describe('addUser', function () {
         it('should add user to the company', function () {
             let newCompany = utils.createMockedCompanyPlainObject("Toluna");
             let newUser = utils.createMockedUserPlainObject();
@@ -35,8 +35,8 @@ describe('AppManager', function() {
         });
     });
 
-    describe('removeUser', function() {
-        it('should remove user from the company', function() {
+    describe('removeUser', function () {
+        it('should remove user from the company', function () {
             let newCompany = utils.createMockedCompanyPlainObject("Toluna");
             let newUser = utils.createMockedUserPlainObject();
             let createdCompany;
@@ -47,15 +47,15 @@ describe('AppManager', function() {
                     return AppManager.addUser(newUser);
                 })
                 .then((createdUser) => AppManager.removeUser(createdUser.id))
-                .then(() => UserModel.count())
+                .then(() => UserModel.usersCount())
                 .then((result) => expect(result).to.be.equal(0))
                 .then(() => CompanyModel.getByCompanyId(createdCompany.id))
-                .then((company) => expect(company.users).to.have.length(0))
+                .then((company) => expect(company.users).to.have.length(0));
         });
     });
 
-    describe('addShift', function() {
-        it('should add shift to a user', function() {
+    describe('addShift', function () {
+        it('should add shift to a user', function () {
             let newShift = utils.createMockedShiftPlainObject();
             let newUser = utils.createMockedUserPlainObject();
 
@@ -73,10 +73,10 @@ describe('AppManager', function() {
                             expect(user.shifts[0].clockInTime).to.exist;
                         });
                 });
-        })
-    })
-    describe('removeShift', function() {
-        it('should remove shift from user', function() {
+        });
+    });
+    describe('removeShift', function () {
+        it('should remove shift from user', function () {
             let newUser = utils.createMockedUserPlainObject();
             let newShift = utils.createMockedShiftPlainObject();
             let createdUser;
@@ -87,10 +87,10 @@ describe('AppManager', function() {
                     return AppManager.addShift(newShift);
                 })
                 .then((createdShift) => AppManager.removeShift(createdShift.id))
-                .then(() => ShiftModel.count())
+                .then(() => ShiftModel.shiftsCount())
                 .then((shiftsCount) => expect(shiftsCount).to.be.equal(0))
                 .then(() => UserModel.getByUserId(createdUser.id))
-                .then((user) => expect(user.shifts).to.have.length(0))
+                .then((user) => expect(user.shifts).to.have.length(0));
         });
-    })
-})
+    });
+});

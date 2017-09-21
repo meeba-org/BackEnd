@@ -22,9 +22,9 @@ function clearDB() {
         throw new Error("[testUtils.clearDB] - Error! - clear DB which is not test db is not allowed!!!");
 
     return Promise.all([
-        CompanyModel.count().exec(),
-        UserModel.count().exec(),
-        ShiftModel.count().exec(),
+        CompanyModel.companiesCount(),
+        UserModel.usersCount(),
+        ShiftModel.shiftsCount(),
     ]).then((responses) => {
         responses.forEach(response => {
             if (response > 3)

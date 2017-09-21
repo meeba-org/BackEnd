@@ -2,20 +2,7 @@ const ShiftModel = require('../models/ShiftModel');
 const UserModel = require('../models/UserModel');
 const CompanyModel = require('../models/CompanyModel');
 
-module.exports.createOrUpdateShift = (shift) => {
-    ShiftModel.getLastOpenShiftByUid(shift.uid)
-        .then((shift) => {
-            if (shift) {
-                // Shift exist --> update startTime as current
-                return ShiftModel.updateShift(shift);
-            }
-            else {
-                return ShiftModel.createShift(shift);
-            }
-        });
-};
-
-module.exports.addShift = (shift) => {
+const addShift = (shift) => {
     const user = shift.user;
 
     // Add the shift
@@ -28,11 +15,9 @@ module.exports.addShift = (shift) => {
             }
             return createShift;
         });
-
-
 };
 
-module.exports.removeShift = (shiftId) => {
+const removeShift = (shiftId) => {
     return ShiftModel.getByShiftId(shiftId)
         .then((shift) => {
             const user = shift.user;
@@ -47,7 +32,7 @@ module.exports.removeShift = (shiftId) => {
         });
 };
 
-module.exports.addUser = (user) => {
+const addUser = (user) => {
     const company = user.company;
 
     // Add the useer
@@ -62,7 +47,7 @@ module.exports.addUser = (user) => {
         });
 };
 
-module.exports.removeUser = (userId) => {
+const removeUser = (userId) => {
     return UserModel.getByUserId(userId)
         .then((user) => {
             const company = user.company;
@@ -77,3 +62,11 @@ module.exports.removeUser = (userId) => {
                 });
         });
 };
+
+module.exports = {
+    addUser
+    , removeUser
+    , addShift
+    , removeShift
+
+}

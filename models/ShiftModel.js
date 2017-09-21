@@ -15,7 +15,7 @@ const ShiftSchema = mongoose.Schema({
     //location
 });
 
-const Shift = module.exports = mongoose.model('Shift', ShiftSchema);
+const Shift = mongoose.model('Shift', ShiftSchema);
 
 function createShiftInstance(shift) {
     let newShift = new Shift();
@@ -23,17 +23,17 @@ function createShiftInstance(shift) {
     return newShift;
 }
 
-module.exports.getByShiftId = (id) => {
+const getByShiftId = (id) => {
     return Shift.findById(id);
 };
 
-module.exports.createShift = (shift) => {
+const createShift = (shift) => {
     let newShift = createShiftInstance(shift);
 
     return newShift.save();
 };
 
-module.exports.updateShift = (shift) => {
+const updateShift = (shift) => {
     let newShift = createShiftInstance(shift);
     newShift._id = shift._id;
 
@@ -41,22 +41,22 @@ module.exports.updateShift = (shift) => {
     return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true}).exec();
 };
 
-module.exports.deleteShift = (id) => {
+const deleteShift = (id) => {
     return Shift.remove({_id: id}).exec();
 };
 
-module.exports.getLastOpenShiftById = (id) => {
+const getLastOpenShiftById = (id) => {
     return Shift.findOne({id: id}).sort('clockInTime').where('clockOutTime').equals(null).exec();
 };
 
-module.exports.getShiftsBetween = (startDate, endDate) => {
+const getShiftsBetween = (startDate, endDate) => {
     return Shift.find({clockInTime: {
         $gte: startDate,
         $lt: endDate
     }});
 };
 
-module.exports.getShiftsStartedInDay = (date) => {
+const getShiftsStartedInDay = (date) => {
     const startDate = moment(date).startOf('day');
     const endDate = moment(startDate).add(1, 'days');
 
@@ -66,8 +66,30 @@ module.exports.getShiftsStartedInDay = (date) => {
     }});
 };
 
-module.exports.deleteAllShifts = (conditions) => {
+const deleteAllShifts = (conditions) => {
     if (!conditions)
         conditions = {};
     return Shift.remove(conditions).exec();
+};
+
+const createOrUpdateShift = (shift) => {
+    if (!!shift && shift.id)
+        return createShift(shift);
+    else
+        return updateShift(shift);
+};
+
+const shiftsCount = () => Shift.count().exec();
+
+module.exports = {
+    createOrUpdateShift
+    , deleteAllShifts
+    , getShiftsBetween
+    , getByShiftId
+    , createShift
+    , updateShift
+    , deleteShift
+    , getShiftsStartedInDay
+    , getLastOpenShiftById
+    , shiftsCount
 };

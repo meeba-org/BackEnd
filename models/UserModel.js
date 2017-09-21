@@ -32,29 +32,29 @@ function createUserInstance(user) {
     return newUser;
 }
 
-const User = module.exports = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
-module.exports.getByUserUid = (uid) => {
+const getByUserUid = (uid) => {
     return User.findOne({uid: uid}).exec();
 };
 
-module.exports.getByUserId = (id) => {
+const getByUserId = (id) => {
     return User.findById(id).populate('company shifts').exec();
 };
 
 // Return a promise
-module.exports.getAllUsers = () => {
+const getAllUsers = () => {
     return User.find().exec();
 };
 
 // Return a promise
-module.exports.createUser = (user) => {
+const createUser = (user) => {
     let newUser = createUserInstance(user);
 
     return newUser.save();
 };
 
-module.exports.updateUser = (user) => {
+const updateUser = (user) => {
     let newUser = createUserInstance(user);
     newUser._id = user._id;
 
@@ -62,32 +62,47 @@ module.exports.updateUser = (user) => {
     return User.findOneAndUpdate({'_id': newUser._id}, newUser, {upsert: true, new: true}).exec();
 };
 
-module.exports.deleteUser = (id) => {
+const deleteUser = (id) => {
      return User.findByIdAndRemove(id).exec();
 };
 
-module.exports.comparePassword = (candidatePassword, hash, callback) => {
+const comparePassword = (candidatePassword, hash, callback) => {
     bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
         if (err) throw err;
         callback(null, isMatch);
     });
 };
 
-module.exports.getCleanUser = (user) => {
+const getCleanUser = (user) => {
     delete user.password;
     return user;
 };
 
-module.exports.deleteAllUsers = (conditions) => {
+const deleteAllUsers = (conditions) => {
     if (!conditions)
         conditions = {};
     return User.remove(conditions).exec();
 };
 
-module.exports.addShift = (userId, shift) => {
+const addShift = (userId, shift) => {
     return User.findByIdAndUpdate(userId, {$push: {"shifts": shift.toObject()}}, {new : true});
 };
 
-module.exports.removeShift = (userId, shift) => {
+const removeShift = (userId, shift) => {
     return User.findByIdAndUpdate(userId, { $pull: { "shifts": shift.id} }, {'new': true} );
+};
+
+const usersCount = () => User.count().exec();
+
+module.exports = {
+    createUser
+    , getByUserId
+    , getAllUsers
+    , updateUser
+    , deleteUser
+    , deleteAllUsers
+    , addShift
+    , removeShift
+    , deleteAllUsers
+    , usersCount
 };
