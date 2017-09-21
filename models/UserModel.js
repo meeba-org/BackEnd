@@ -97,12 +97,13 @@ const usersCount = () => User.count().exec();
 module.exports = {
     createUser
     , getByUserId
+    , getByUserUid
     , getAllUsers
     , updateUser
     , deleteUser
     , deleteAllUsers
     , addShift
     , removeShift
-    , deleteAllUsers
     , usersCount
+    , comparePassword
 };

@@ -8,6 +8,9 @@ import {
     CREATE_EMPLOYEE_ERROR, CREATE_EMPLOYEE_SUCCESS, CREATE_EMPLOYEE_START,
     UPDATE_EMPLOYEE_START, UPDATE_EMPLOYEE_SUCCESS, UPDATE_EMPLOYEE_ERROR,
     RESET_TOKEN, ME_FROM_TOKEN_FAILURE, ME_FROM_TOKEN_SUCCESS, ME_FROM_TOKEN,
+    UPDATE_SHIFT_START, UPDATE_SHIFT_SUCCESS, UPDATE_SHIFT_ERROR,
+    CREATE_SHIFT_START, CREATE_SHIFT_SUCCESS, CREATE_SHIFT_ERROR,
+    DELETE_SHIFT_START, DELETE_SHIFT_SUCCESS, DELETE_SHIFT_ERROR,
 } from "./actionTypes";
 import config from "../config";
 
@@ -241,5 +244,110 @@ export function resetMe() {
     return function (dispatch) {
         localStorage.removeItem('jwtToken'); //remove token from storage
         dispatch(resetToken());
+    };
+}
+
+function createShiftStart() {
+    return {type: CREATE_SHIFT_START};
+}
+
+function createShiftSuccess() {
+    return {
+        type: CREATE_SHIFT_SUCCESS,
+    };
+}
+
+function createShiftError(json) {
+    return {
+        type: CREATE_SHIFT_ERROR,
+        data: json
+    };
+}
+
+function dispatchUpdateNewShiftsInForm(dispatch, newShift) {
+    dispatch(arrayPop('shiftsForm', 'shifts'));
+    dispatch(arrayPush('shiftsForm', 'shifts', newShift));
+}
+
+export function createShift(shift) {
+    return function (dispatch) {
+        dispatch(createShiftStart());
+        return callApi({
+            method: 'post',
+            url: '/shifts',
+            data: shift,
+            shouldAuthenticate: true
+        }).then(function (response) {
+            dispatch(createShiftSuccess(response));
+            dispatchUpdateNewShiftsInForm(dispatch, response.user);
+        }).catch(function (response) {
+            dispatch(createShiftError(response.data));
+        });
+    };
+}
+
+function updateShiftStart() {
+    return {type: UPDATE_SHIFT_START};
+}
+
+function updateShiftSuccess(json) {
+    return {
+        type: UPDATE_SHIFT_SUCCESS,
+        shifts: json
+    };
+}
+
+function updateShiftError(json) {
+    return {
+        type: UPDATE_SHIFT_ERROR,
+        data: json
+    };
+}
+
+export function updateShift(shift) {
+    return function (dispatch) {
+        dispatch(updateShiftStart());
+        return callApi({
+            url: '/shifts',
+            method: 'put',
+            data: shift,
+            shouldAuthenticate: true
+        }).then(function (response) {
+            dispatch(updateShiftSuccess(response.user));
+        }).catch(function (response) {
+            dispatch(updateShiftError(response.user));
+        });
+    };
+}
+
+function deleteShiftStart() {
+    return {type: DELETE_SHIFT_START};
+}
+
+function deleteShiftSuccess() {
+    return {
+        type: DELETE_SHIFT_SUCCESS,
+    };
+}
+
+function deleteShiftError(json) {
+    return {
+        type: DELETE_SHIFT_ERROR,
+        data: json
+    };
+}
+
+export function deleteShift(shift) {
+    return function (dispatch) {
+        dispatch(deleteShiftStart());
+        return callApi({
+            url: '/shifts/' + shift._id,
+            method: 'delete',
+            shouldAuthenticate: true,
+        }).then(function (response) {
+            dispatch(deleteShiftSuccess(response));
+        }).catch(function (response) {
+            dispatch(deleteShiftError(response.data));
+        });
     };
 }
