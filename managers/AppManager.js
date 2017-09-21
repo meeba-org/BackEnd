@@ -68,5 +68,4 @@ module.exports = {
     , removeUser
     , addShift
     , removeShift
-
-}
+};
