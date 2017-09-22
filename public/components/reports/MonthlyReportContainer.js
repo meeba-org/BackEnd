@@ -1,12 +1,14 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import {createShift, deleteShift, updateShift} from "../../actions/actions";
+import {createShift, deleteShift, updateShift} from "../../actions";
 import {reduxForm} from "redux-form";
 import MonthlyReport from "./MonthlyReport";
+import PropTypes from 'prop-types';
+import {fetchMonthlyReport} from "../../actions/shiftsActions";
 
 class MonthlyReportContainer extends React.Component {
     componentDidMount() {
-        // this.props.fetchMonthlyReport();
+        this.props.fetchMonthlyReport();
     }
 
     render() {
@@ -19,6 +21,15 @@ class MonthlyReportContainer extends React.Component {
     }
 }
 
+MonthlyReportContainer.propTypes = {
+    shifts: PropTypes.array,
+    handleSubmit: PropTypes.func.isRequired,
+    fetchMonthlyReport: PropTypes.func.isRequired,
+    createShift: PropTypes.func.isRequired,
+    updateShift: PropTypes.func.isRequired,
+    deleteShift: PropTypes.func.isRequired,
+};
+
 function mapStateToProps(state) {
     return {
         employees: state.data.employees, // TODO dont know how to init that without hose two... :-(
@@ -30,7 +41,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        // fetchMonthlyReport: () => {dispatch(fetchMonthlyReport());},
+        fetchMonthlyReport: () => {dispatch(fetchMonthlyReport());},
         updateShift: (employee) => {
             dispatch(updateShift(employee));
         },

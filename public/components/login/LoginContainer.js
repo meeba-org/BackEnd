@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import Login from "./Login";
-import {handleLogin} from "../../actions/actions";
+import {handleLogin} from "../../actions/index";
 import PropTypes from 'prop-types';
 
 let LoginContainer = ({ handleLoginSubmit, router }) =>

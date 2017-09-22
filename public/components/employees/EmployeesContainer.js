@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import EmployeesList from "./EmployeesList";
-import {createEmployee, deleteEmployee, fetchEmployees, updateEmployee} from "../../actions/actions";
+import {createEmployee, deleteEmployee, fetchEmployees, updateEmployee} from "../../actions";
 import {FieldArray, reduxForm} from "redux-form";
 
 class EmployeesContainer extends React.Component {

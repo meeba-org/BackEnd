@@ -4,6 +4,7 @@ import styles from "../../styles/MonthlyReport.scss";
 import {Button, Card, Divider} from "material-ui";
 import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
 import AddIcon from 'material-ui-icons/Add';
+import PropTypes from 'prop-types';
 
 class MonthlyReport extends React.Component {
     render()
@@ -30,4 +31,10 @@ class MonthlyReport extends React.Component {
     }
 }
 
+MonthlyReport.propTypes = {
+    fields: PropTypes.object.isRequired,
+    onCreate: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+};
 export default CSSModules(MonthlyReport, styles);

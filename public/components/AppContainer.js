@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {loadUserFromToken, resetMe} from '../actions/actions';
+import {loadUserFromToken, resetMe} from '../actions/index';
 import App from "./App";
 import PropTypes from 'prop-types';
 
