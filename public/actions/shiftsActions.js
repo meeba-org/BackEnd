@@ -107,33 +107,53 @@ export function deleteShift(shift) {
     };
 }
 
-function fetchMonthlyReportStart() {
-    return {type: actionsTypes.FETCH_MONTHLY_REPORT_START};
+function fetchShiftsStart() {
+    return {type: actionsTypes.FETCH_SHIFTS_START};
 }
 
-function fetchMonthlyReportSuccess(json) {
+function fetchShiftsSuccess(response) {
     return {
-        type: actionsTypes.FETCH_MONTHLY_REPORT_SUCCESS,
-        employees: json
+        type: actionsTypes.FETCH_SHIFTS_SUCCESS,
+        report: createReport(response)
     };
 }
 
-function fetchMonthlyReportError() {
+function createReport(shifts) {
+    let map = new Map();
+    shifts.forEach((shift) => {
+        if (map[shift.user.uid]) {
+            map[shift.user.uid].push(shift);
+        }
+        else
+            map[shift.user.uid] = [shift];
+    });
+    return map;
+}
+
+function fetchShiftsError() {
     return {
-        type: actionsTypes.FETCH_MONTHLY_REPORT_ERROR,
+        type: actionsTypes.FETCH_SHIFTS_ERROR,
     };
 }
+
+let fetchShifts = function (dispatch, startDate, endDate) {
+    let url = '/shifts?startDate=' + startDate;
+
+    if (endDate)
+        url += "&endDate=" + endDate;
+
+    dispatch(fetchShiftsStart());
+    return callApi({
+        url: url,
+        method: 'get',
+        shouldAuthenticate: true,
+    }).then((response) => {
+        dispatch(fetchShiftsSuccess(response));
+    }).catch(() => dispatch(fetchShiftsError()));
+};
 
 export function fetchMonthlyReport(startDate) {
     return function(dispatch) {
-        dispatch(fetchMonthlyReportStart());
-        return callApi({
-            url: '/shifts?startDate=' + startDate,
-            method: 'get',
-            shouldAuthenticate: true,
-        }).then((response) => {
-            dispatch(fetchMonthlyReportSuccess(response));
-        })
-        .catch(() => dispatch(fetchMonthlyReportError()));
+        return fetchShifts(dispatch, startDate);
     };
 }

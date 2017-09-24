@@ -53,7 +53,7 @@ const getShiftsBetween = (startDate, endDate) => {
     return Shift.find({clockInTime: {
         $gte: startDate,
         $lt: endDate
-    }});
+    }}).populate('user');
 };
 
 const getShiftsStartedInDay = (date) => {
