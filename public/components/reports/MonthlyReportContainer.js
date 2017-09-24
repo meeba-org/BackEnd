@@ -41,7 +41,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchMonthlyReport: () => {dispatch(fetchMonthlyReport());},
+        fetchMonthlyReport: () => {dispatch(fetchMonthlyReport("2017-09-01")); },
         updateShift: (employee) => {
             dispatch(updateShift(employee));
         },

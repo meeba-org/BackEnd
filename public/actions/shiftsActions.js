@@ -124,14 +124,16 @@ function fetchMonthlyReportError() {
     };
 }
 
-export function fetchMonthlyReport(month) {
+export function fetchMonthlyReport(startDate) {
     return function(dispatch) {
         dispatch(fetchMonthlyReportStart());
         return callApi({
-            url: '/shifts?month=' + month,
+            url: '/shifts?startDate=' + startDate,
             method: 'get',
             shouldAuthenticate: true,
-        }).then((response) => dispatch(fetchMonthlyReportSuccess(response)))
+        }).then((response) => {
+            dispatch(fetchMonthlyReportSuccess(response));
+        })
         .catch(() => dispatch(fetchMonthlyReportError()));
     };
 }
