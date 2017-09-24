@@ -5,7 +5,7 @@ import {Button, Card, Divider} from "material-ui";
 import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
 import AddIcon from 'material-ui-icons/Add';
 import PropTypes from 'prop-types';
-import Employee from "../employees/Employee";
+import EmployeeReport from "./EmployeeReport";
 import {Field} from "redux-form";
 
 class MonthlyReport extends React.Component {
@@ -23,7 +23,7 @@ class MonthlyReport extends React.Component {
                         <Divider className="divider" />
 
                         {fields && fields.map((employeeIndex, index) =>
-                            <Field component={Employee} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={(employee) => this.onUpdate(employee)}/>
+                            <Field component={EmployeeReport} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={(employee) => this.onUpdate(employee)}/>
                         )}
                     </div>
 
