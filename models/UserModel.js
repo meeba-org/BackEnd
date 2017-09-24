@@ -106,4 +106,5 @@ module.exports = {
     , removeShift
     , usersCount
     , comparePassword
+    , getCleanUser
 };
