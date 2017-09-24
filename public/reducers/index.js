@@ -10,10 +10,7 @@ function dataReducer(state = {isLoading: false, data: [], error: false}, action 
         case types.REQUEST_EMPLOYEES:
             return Object.assign({}, state, {isLoading: true, error: false});
         case types.FETCH_SHIFTS_SUCCESS:
-            return {
-                ...state,
-                report: action.report
-            };
+            return Object.assign({}, state, {report: action.report});
         case types.RECEIVE_EMPLOYEES_SUCCESS:
             return {
                 ...state,

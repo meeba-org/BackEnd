@@ -119,15 +119,22 @@ function fetchShiftsSuccess(response) {
 }
 
 function createReport(shifts) {
-    let map = new Map();
+    let usersToShiftsMap = {};
     shifts.forEach((shift) => {
-        if (map[shift.user.uid]) {
-            map[shift.user.uid].push(shift);
+        if (usersToShiftsMap[shift.user.uid]) {
+            let uid = shift.user.uid;
+            delete shift.user;
+            usersToShiftsMap[uid].shifts.push(shift);
         }
-        else
-            map[shift.user.uid] = [shift];
+        else {
+            let user = Object.assign({}, shift.user);
+            delete shift.user;
+            user.shifts = [shift];
+            usersToShiftsMap[user.uid] = user;
+        }
     });
-    return map;
+    const keys = Object.keys(usersToShiftsMap);
+    return keys.map((key) => usersToShiftsMap[key]); // return the users
 }
 
 function fetchShiftsError() {

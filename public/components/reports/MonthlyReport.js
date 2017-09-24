@@ -32,7 +32,7 @@ class MonthlyReport extends React.Component {
 }
 
 MonthlyReport.propTypes = {
-    fields: PropTypes.object.isRequired,
+    fields: PropTypes.object,
     onCreate: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
