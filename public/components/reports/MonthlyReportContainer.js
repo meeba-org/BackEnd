@@ -1,12 +1,13 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {createShift, deleteShift, updateShift} from "../../actions";
-import {reduxForm} from "redux-form";
+import {FieldArray, reduxForm} from "redux-form";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
 import {fetchMonthlyReport} from "../../actions/shiftsActions";
 
 class MonthlyReportContainer extends React.Component {
+
     componentDidMount() {
         this.props.fetchMonthlyReport();
     }
@@ -15,7 +16,7 @@ class MonthlyReportContainer extends React.Component {
         const {handleSubmit, updateShift, createShift, deleteShift} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
-                    <MonthlyReport onDelete={deleteShift} onUpdate={updateShift} onCreate={createShift} />
+                <FieldArray name="employees" component={MonthlyReport} onDelete={deleteShift} onUpdate={updateShift} onCreate={createShift} />
             </form>
         );
     }
@@ -32,9 +33,9 @@ MonthlyReportContainer.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        employees: state.data.employees, // TODO dont know how to init that without hose two... :-(
+        employees: state.data.report, // TODO dont know how to init that without hose two... :-(
         initialValues: {
-            employees: state.data.employees
+            employees: state.data.report
         }
     };
 }

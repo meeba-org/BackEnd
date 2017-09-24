@@ -5,6 +5,8 @@ import {Button, Card, Divider} from "material-ui";
 import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
 import AddIcon from 'material-ui-icons/Add';
 import PropTypes from 'prop-types';
+import Employee from "../employees/Employee";
+import {Field} from "redux-form";
 
 class MonthlyReport extends React.Component {
     render()
@@ -20,9 +22,9 @@ class MonthlyReport extends React.Component {
                         <Button className="add-button" dense raised color="primary" onClick={() => this.onCreate(fields)}><AddIcon /></Button>
                         <Divider className="divider" />
 
-                        {/*{fields && fields.map((employeeIndex, index) =>*/}
-                            {/*<Field component={Employee} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={(employee) => this.onUpdate(employee)}/>*/}
-                        {/*)}*/}
+                        {fields && fields.map((employeeIndex, index) =>
+                            <Field component={Employee} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={(employee) => this.onUpdate(employee)}/>
+                        )}
                     </div>
 
                 </CardContent>
