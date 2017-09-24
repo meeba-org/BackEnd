@@ -7,36 +7,16 @@ import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown';
 class EmployeeReport extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            isCollapsed: true
-        };
-    }
-
-    onUpdate(e, name) {
-        let {input,  onUpdate} = this.props;
-
-        let employee = {
-            ...input.value,
-            [name]: e.target.value,
-        };
-
-        input.onChange(employee);
-        onUpdate(employee);
-    }
-
-    toggleClicked() {
-        this.setState({isCollapsed: !(this.state.isCollapsed)});
     }
 
     render() {
-        let {input} = this.props;
-        let toggleButton =  this.state.isCollapsed ? <KeyboardArrowLeft/> : <KeyboardArrowDown/>;
+        let {input, isCollapsed, onToggle} = this.props;
+        let toggleButton =  isCollapsed(input.value.uid) ? <KeyboardArrowLeft/> : <KeyboardArrowDown/>;
         return (
             <div>
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={2}>
-                        <IconButton onClick={()=> this.toggleClicked()}>{toggleButton}</IconButton>
+                        <IconButton onClick={()=> onToggle(input.value.uid)}>{toggleButton}</IconButton>
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         {input.value.uid}

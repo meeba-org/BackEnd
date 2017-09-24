@@ -9,6 +9,19 @@ import EmployeeReport from "./EmployeeReport";
 import {Field} from "redux-form";
 
 class MonthlyReport extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {collapsed: null};
+    }
+
+    isCollapsed(name) {
+        return this.state.collapsed === name;
+    }
+
+    onToggle(name) {
+        this.setState({collapsed: name});
+    }
     render()
     {
         const {fields} = this.props;
@@ -23,7 +36,13 @@ class MonthlyReport extends React.Component {
                         <Divider className="divider" />
 
                         {fields && fields.map((employeeIndex, index) =>
-                            <Field component={EmployeeReport} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={(employee) => this.onUpdate(employee)}/>
+                            <Field component={EmployeeReport}
+                                   name={employeeIndex}
+                                   isCollapsed={(name) => this.isCollapsed(name)}
+                                   key={index}
+                                   onDelete={()=> this.onDelete(fields, index)}
+                                   onToggle={(name) => this.onToggle(name)}
+                            />
                         )}
                     </div>
 
