@@ -5,7 +5,7 @@ import {Button, Card, Divider} from "material-ui";
 import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
 import AddIcon from 'material-ui-icons/Add';
 import PropTypes from 'prop-types';
-import EmployeeReport from "./EmployeeReport";
+import EmployeeReport from "./MonthlyReportLine";
 import {Field} from "redux-form";
 
 class MonthlyReport extends React.Component {
