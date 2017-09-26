@@ -15,16 +15,18 @@ class MonthlyReport extends React.Component {
         this.state = {collapsed: null};
     }
 
-    isCollapsed(name) {
-        return this.state.collapsed === name;
+    isCollapsed(fields, index) {
+        let employee = fields.get(index);
+        return this.state.collapsed !== employee.uid;
     }
 
     onToggle(name) {
-        this.setState({collapsed: name});
+        let newCollapsedelement = this.state.collapsed === name ? null : name;
+        this.setState({collapsed: newCollapsedelement});
     }
     render()
     {
-        const {fields} = this.props;
+        const {fields, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
         return (
             <Card id="monthly-report">
                 <CardHeader title="דוח חודשי"/>
@@ -35,13 +37,13 @@ class MonthlyReport extends React.Component {
                         <Button className="add-button" dense raised color="primary" onClick={() => this.onCreate(fields)}><AddIcon /></Button>
                         <Divider className="divider" />
 
-                        {fields && fields.map((employeeIndex, index) =>
+                        {fields && fields.map((employee, index) =>
                             <Field component={EmployeeReport}
-                                   name={employeeIndex}
-                                   isCollapsed={(name) => this.isCollapsed(name)}
+                                   name={employee}
+                                   isCollapsed={this.isCollapsed(fields, index)}
                                    key={index}
-                                   onDelete={()=> this.onDelete(fields, index)}
                                    onToggle={(name) => this.onToggle(name)}
+                                   onDeleteShift={onDeleteShift} onUpdateShift={onUpdateShift} onCreateShift={onCreateShift}
                             />
                         )}
                     </div>
@@ -54,8 +56,8 @@ class MonthlyReport extends React.Component {
 
 MonthlyReport.propTypes = {
     fields: PropTypes.object,
-    onCreate: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired,
+    onCreateShift: PropTypes.func.isRequired,
+    onUpdateShift: PropTypes.func.isRequired,
+    onDeleteShift: PropTypes.func.isRequired,
 };
 export default CSSModules(MonthlyReport, styles);

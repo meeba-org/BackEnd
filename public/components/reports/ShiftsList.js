@@ -1,5 +1,6 @@
 import * as React from "react";
 import {Field} from "redux-form";
+import PropTypes from 'prop-types';
 
 class ShiftsList extends React.Component {
 
@@ -8,12 +9,12 @@ class ShiftsList extends React.Component {
         return (
             <div>
                 {fields.map((shift, index) =>
-                    <div>
+                    <div key={index}>
                         <h4>
                             Shift #{index + 1} clock in: {shift.clockInTime}
                         </h4>
                         <Field
-                            name={`${shift}.clickInTime`}
+                            name={`${shift}.clockInTime`}
                             type="text"
                             component="input"
                             label="Clock In"
@@ -25,4 +26,10 @@ class ShiftsList extends React.Component {
     }
 }
 
+ShiftsList.propTypes = {
+    fields: PropTypes.object.isRequired,
+    onCreateShift: PropTypes.func.isRequired,
+    onUpdateShift: PropTypes.func.isRequired,
+    onDeleteShift: PropTypes.func.isRequired,
+};
 export default ShiftsList;

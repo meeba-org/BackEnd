@@ -16,7 +16,7 @@ class MonthlyReportContainer extends React.Component {
         const {handleSubmit, updateShift, createShift, deleteShift} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
-                <FieldArray name="employees" component={MonthlyReport} onDelete={deleteShift} onUpdate={updateShift} onCreate={createShift} />
+                <FieldArray name="employees" component={MonthlyReport} onDeleteShift={deleteShift} onUpdateShift={updateShift} onCreateShift={createShift} />
             </form>
         );
     }

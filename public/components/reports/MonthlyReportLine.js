@@ -12,8 +12,8 @@ class MonthlyReportLine extends React.Component {
     }
 
     render() {
-        let {input, isCollapsed, onToggle, deleteShift, updateShift, createShift} = this.props;
-        let toggleButton =  isCollapsed(input.value.uid) ? <KeyboardArrowLeft/> : <KeyboardArrowDown/>;
+        let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
+        let toggleButton =  isCollapsed ? <KeyboardArrowLeft/> : <KeyboardArrowDown/>;
         return (
             <div>
                 <Grid container spacing={24}>
@@ -26,11 +26,13 @@ class MonthlyReportLine extends React.Component {
                     <Grid item xs={12} sm={2}>
                         {input.value.firstName} {input.value.lastName}
                     </Grid>
-                    <Grid sm={6} />
-                    <Grid sm={12}>
-                        <FieldArray name={input.value.shifts} component={ShiftsList} onDelete={deleteShift} onUpdate={updateShift} onCreate={createShift}/>
-                        {/*<EmployeeReport value={input.value} onDelete={deleteShift} onUpdate={updateShift} onCreate={createShift} />*/}
-                    </Grid>
+                    {!isCollapsed &&
+                        <Grid item sm={12}>
+                        <FieldArray name={`${input.name}.shifts`} component={ShiftsList}
+                                    onDeleteShift={onDeleteShift} onUpdateShift={onUpdateShift} onCreateShift={onCreateShift}/>
+                        </Grid>
+                    }
+
                 </Grid>
             </div>
         );
@@ -39,8 +41,11 @@ class MonthlyReportLine extends React.Component {
 
 MonthlyReportLine.propTypes = {
     input: PropTypes.object.isRequired,
-    onDelete: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired,
+    onCreateShift: PropTypes.func.isRequired,
+    onUpdateShift: PropTypes.func.isRequired,
+    onDeleteShift: PropTypes.func.isRequired,
+    onToggle: PropTypes.func.isRequired,
+    isCollapsed: PropTypes.bool.isRequired,
 };
 
 export default MonthlyReportLine;
