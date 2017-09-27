@@ -29,7 +29,7 @@ class MonthlyReportLine extends React.Component {
                     {!isCollapsed &&
                         <Grid item sm={12}>
                         <FieldArray name={`${input.name}.shifts`} component={ShiftsList}
-                                    onDeleteShift={onDeleteShift} onUpdateShift={onUpdateShift} onCreateShift={onCreateShift}/>
+                                    onDelete={onDeleteShift} onUpdate={onUpdateShift} onCreate={onCreateShift}/>
                         </Grid>
                     }
 

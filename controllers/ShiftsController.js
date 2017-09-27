@@ -54,8 +54,6 @@ router.post('/', (req, res) => {
 
 //PUT /shifts shift
 router.put('/', (req, res) => {
-    req.checkBody('uid', 'uid is required').notEmpty();
-
     req.getValidationResult()
         .then(function (result) {
             result.throw();
