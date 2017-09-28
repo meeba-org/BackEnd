@@ -9,7 +9,7 @@ import MonthlyReportContainer from "./components/reports/MonthlyReportContainer"
 
 export default (
     <Route path="/" component={AppContainer}>
-        <IndexRoute component={Dashboard} />
+        <IndexRoute component={Dashboard} onEnter={requireAuth} />
         <Route path="/login" component={LoginContainer}/>
         <Route path="/dashboard" component={Dashboard} onEnter={requireAuth}>
             <IndexRoute component={EmployeesContainer} />
