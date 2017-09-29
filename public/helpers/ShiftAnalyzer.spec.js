@@ -5,7 +5,7 @@ function createMockedShift(length) {
     return {
         clockInTime: new Date(),
         clockOutTime: moment(new Date()).add(length, 'hours')
-    }
+    };
 }
 
 describe('ShiftAnalyzer', function() {
@@ -57,5 +57,5 @@ describe('ShiftAnalyzer', function() {
         expect(hours.extra125Hours).toEqual(SHIFT_125_OVERDUE_LENGTH);
         expect(hours.extra150Hours).toEqual(3.5);
 
-    })
+    });
 });

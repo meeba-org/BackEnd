@@ -24,13 +24,15 @@ let processUsersToShifts = function (shifts) {
 };
 
 function processUsersAdditionalInfo(userMap) {
-    userMap.map((user) => {
+    const usersWithAdditionalInfo = userMap.map((user) => {
         let userAdditionalInfo = createUserAdditionalInfo(user);
         return {
             ...user,
             ...userAdditionalInfo
         };
     });
+
+    return usersWithAdditionalInfo;
 }
 
 function analyzeHours(shift) {
@@ -76,7 +78,7 @@ function calcExtra150Hours(shiftLength) {
         return 0;
     }
 
-    return shiftLength - (REGULAR_SHIFT_LENGTH + SHIFT_125_OVERDUE_LENGTH)
+    return shiftLength - (REGULAR_SHIFT_LENGTH + SHIFT_125_OVERDUE_LENGTH);
 }
 
 
@@ -95,6 +97,12 @@ function createUserAdditionalInfo(user) {
         hourSummary.extra125Hours += hours.extra125Hours;
         hourSummary.extra150Hours += hours.extra150Hours;
     });
+
+    // Rounding results
+    hourSummary.regularHours = hourSummary.regularHours.toFixed(2);
+    hourSummary.extra125Hours = hourSummary.extra125Hours.toFixed(2);
+    hourSummary.extra150Hours = hourSummary.extra150Hours.toFixed(2);
+    return hourSummary;
 }
 
 function createReport(shifts) {
@@ -108,4 +116,4 @@ module.exports = {
     , analyzeHours
     , REGULAR_SHIFT_LENGTH
     , SHIFT_125_OVERDUE_LENGTH
-}
+};

@@ -5,6 +5,8 @@ import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown';
 import {FieldArray} from "redux-form";
 import ShiftsList from "./ShiftsList";
+import styles from "../../styles/MonthlyReportLine.scss";
+import CSSModules from "react-css-modules";
 
 class MonthlyReportLine extends React.Component {
     constructor(props) {
@@ -15,7 +17,7 @@ class MonthlyReportLine extends React.Component {
         let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
         let toggleButton =  isCollapsed ? <KeyboardArrowLeft/> : <KeyboardArrowDown/>;
         return (
-            <div>
+            <div className="monthly-report-line">
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={2}>
                         <IconButton onClick={()=> onToggle(input.value.uid)}>{toggleButton}</IconButton>
@@ -25,6 +27,15 @@ class MonthlyReportLine extends React.Component {
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         {input.value.firstName} {input.value.lastName}
+                    </Grid>
+                    <Grid item xs={12} sm={1} className="regular-hours">
+                        {input.value.regularHours}
+                    </Grid>
+                    <Grid item xs={12} sm={1} className="extra-125">
+                        {input.value.extra125Hours}
+                    </Grid>
+                    <Grid item xs={12} sm={1} className="extra-150">
+                        {input.value.extra150Hours}
                     </Grid>
                     {!isCollapsed &&
                         <Grid item sm={12}>
@@ -48,5 +59,5 @@ MonthlyReportLine.propTypes = {
     isCollapsed: PropTypes.bool.isRequired,
 };
 
-export default MonthlyReportLine;
+export default CSSModules(MonthlyReportLine, styles);
 
