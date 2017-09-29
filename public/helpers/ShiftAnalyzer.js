@@ -40,7 +40,7 @@ function analyzeHours(shift) {
     let additionalInfo = {
         regularHours : 0,
         extra125Hours: 0,
-        external150Hours: 0
+        extra150Hours: 0
     };
 
     let shiftLength = clockOut.diff(clockIn, 'hours', true);
@@ -64,7 +64,7 @@ function calcExtra125Hours(shiftLength) {
     if (shiftLength <= REGULAR_SHIFT_LENGTH)
         return 0;
 
-    shiftLength -= SHIFT_125_OVERDUE_LENGTH;
+    shiftLength -= REGULAR_SHIFT_LENGTH;
     if (shiftLength > SHIFT_125_OVERDUE_LENGTH)
         return SHIFT_125_OVERDUE_LENGTH;
 
@@ -87,13 +87,13 @@ function createUserAdditionalInfo(user) {
     let hourSummary = {
         regularHours : 0,
         extra125Hours: 0,
-        external150Hours: 0
+        extra150Hours: 0
     };
     user.shifts.forEach((shift) => {
         let hours = analyzeHours(shift);
         hourSummary.regularHours += hours.regularHours;
         hourSummary.extra125Hours += hours.extra125Hours;
-        hourSummary.external50Hours += hours.external50Hours;
+        hourSummary.extra150Hours += hours.extra150Hours;
     });
 }
 
@@ -105,4 +105,7 @@ function createReport(shifts) {
 
 module.exports = {
     createReport
+    , analyzeHours
+    , REGULAR_SHIFT_LENGTH
+    , SHIFT_125_OVERDUE_LENGTH
 }
