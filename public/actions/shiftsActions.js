@@ -1,9 +1,7 @@
 import * as actionsTypes from "./actionTypes";
 import callApi from "./api";
 import {arrayPop, arrayPush} from 'redux-form';
-import moment from "moment";
-
-const REGULAR_SHIFT_TIME = 9;
+import * as ShiftAnalyzer from "../helpers/ShiftAnalyzer";
 
 function createShiftStart() {
     return {type: actionsTypes.CREATE_SHIFT_START};
@@ -117,97 +115,8 @@ function fetchShiftsStart() {
 function fetchShiftsSuccess(response) {
     return {
         type: actionsTypes.FETCH_SHIFTS_SUCCESS,
-        report: createReport(response)
+        report: ShiftAnalyzer.createReport(response)
     };
-}
-
-let processUsersToShifts = function (shifts) {
-    let usersToShiftsMap = {};
-
-    shifts.forEach((shift) => {
-        if (usersToShiftsMap[shift.user.uid]) {
-            let uid = shift.user.uid;
-            delete shift.user;
-            usersToShiftsMap[uid].shifts.push(shift);
-        }
-        else {
-            let user = Object.assign({}, shift.user);
-            delete shift.user;
-            user.shifts = [shift];
-            usersToShiftsMap[user.uid] = user;
-        }
-    });
-    const keys = Object.keys(usersToShiftsMap);
-    return keys.map((key) => usersToShiftsMap[key]); // return the users
-};
-
-function processUsersAdditionalInfo(userMap) {
-    userMap.map((user) => {
-        let userAdditionalInfo = createUserAdditionalInfo(user);
-        return {
-            ...user,
-            ...userAdditionalInfo
-        };
-    });
-}
-
-function analyzeHours(shift) {
-    let clockOut = moment(shift.clockOutTime);
-    let clockIn = moment(shift.clockInTime);
-
-    let additionalInfo = {
-        regularHours : 0,
-        extra125Hours: 0,
-        external150Hours: 0
-    };
-
-    let hours = clockOut.diff(clockIn, 'hours', true);
-
-    if (hours <= REGULAR_SHIFT_TIME) {
-        return {
-            ...additionalInfo,
-            regularHours: hours
-        };
-    }
-    else {
-        return {
-            regularHours: REGULAR_SHIFT_TIME,
-            extra125Hours: calcExtra125Hours(hours),
-            extra150Hours: calcExtra150Hours(hours),
-        };
-    }
-}
-
-function calcExtra125Hours(hours) {
-    return 0;
-}
-
-function calcExtra150Hours(hours) {
-    return 0;
-}
-
-
-function createUserAdditionalInfo(user) {
-    if (!user || !user.shifts)
-        return user;
-
-    let hourSummary = {
-        regularHours : 0,
-        extra125Hours: 0,
-        external150Hours: 0
-    };
-    user.shifts.forEach((shift) => {
-        let hours = analyzeHours(shift);
-        hourSummary.regularHours += hours.regularHours;
-        hourSummary.extra125Hours += hours.extra125Hours;
-        hourSummary.external50Hours += hours.external50Hours;
-    });
-}
-
-function createReport(shifts) {
-    let map = processUsersToShifts(shifts);
-    map = processUsersAdditionalInfo(map);
-    return map;
 }
 
 function fetchShiftsError() {
