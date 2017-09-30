@@ -1,7 +1,6 @@
 import * as actionsTypes from "./actionTypes";
 import callApi from "./api";
 import {arrayPop, arrayPush} from 'redux-form';
-import * as ShiftAnalyzer from "../helpers/ShiftAnalyzer";
 
 function createShiftStart() {
     return {type: actionsTypes.CREATE_SHIFT_START};
@@ -46,10 +45,10 @@ function updateShiftStart() {
     return {type: actionsTypes.UPDATE_SHIFT_START};
 }
 
-function updateShiftSuccess(json) {
+function updateShiftSuccess(shift) {
     return {
         type: actionsTypes.UPDATE_SHIFT_SUCCESS,
-        shifts: json
+        shift
     };
 }
 
@@ -69,9 +68,9 @@ export function updateShift(shift) {
             data: shift,
             shouldAuthenticate: true
         }).then(function (response) {
-            dispatch(updateShiftSuccess(response.user));
+            dispatch(updateShiftSuccess(response.shift));
         }).catch(function (response) {
-            dispatch(updateShiftError(response.user));
+            dispatch(updateShiftError(response.shift));
         });
     };
 }
@@ -80,9 +79,10 @@ function deleteShiftStart() {
     return {type: actionsTypes.DELETE_SHIFT_START};
 }
 
-function deleteShiftSuccess() {
+function deleteShiftSuccess(id) {
     return {
         type: actionsTypes.DELETE_SHIFT_SUCCESS,
+        id
     };
 }
 
@@ -100,8 +100,8 @@ export function deleteShift(shift) {
             url: '/shifts/' + shift._id,
             method: 'delete',
             shouldAuthenticate: true,
-        }).then(function (response) {
-            dispatch(deleteShiftSuccess(response));
+        }).then(function () {
+            dispatch(deleteShiftSuccess(shift._id));
         }).catch(function (response) {
             dispatch(deleteShiftError(response.data));
         });
@@ -112,10 +112,10 @@ function fetchShiftsStart() {
     return {type: actionsTypes.FETCH_SHIFTS_START};
 }
 
-function fetchShiftsSuccess(response) {
+function fetchShiftsSuccess(shifts) {
     return {
         type: actionsTypes.FETCH_SHIFTS_SUCCESS,
-        report: ShiftAnalyzer.createReport(response)
+        shifts,
     };
 }
 
@@ -136,8 +136,8 @@ let fetchShifts = function (dispatch, startDate, endDate) {
         url: url,
         method: 'get',
         shouldAuthenticate: true,
-    }).then((response) => {
-        dispatch(fetchShiftsSuccess(response));
+    }).then((shifts) => {
+        dispatch(fetchShiftsSuccess(shifts));
     }).catch(() => dispatch(fetchShiftsError()));
 };
 

@@ -111,7 +111,7 @@ function createReport(shifts) {
     return map;
 }
 
-module.exports = {
+export default {
     createReport
     , analyzeHours
     , REGULAR_SHIFT_LENGTH

@@ -43,7 +43,9 @@ class MonthlyReport extends React.Component {
                                    isCollapsed={this.isCollapsed(fields, index)}
                                    key={index}
                                    onToggle={(name) => this.onToggle(name)}
-                                   onDeleteShift={onDeleteShift} onUpdateShift={onUpdateShift} onCreateShift={onCreateShift}
+                                   onDeleteShift={onDeleteShift}
+                                   onUpdateShift={onUpdateShift}
+                                   onCreateShift={onCreateShift}
                             />
                         )}
                     </div>

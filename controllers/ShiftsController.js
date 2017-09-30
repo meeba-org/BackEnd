@@ -20,6 +20,7 @@ router.get('/', (req, res) => {
 
             ShiftModel.getShiftsBetween(startDate, endDate)
                 .then((shifts) => {
+
                     if (shifts)
                         return res.status(200).json(shifts);
                 })
@@ -27,14 +28,6 @@ router.get('/', (req, res) => {
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
-
-function updateShiftEndDate(shift, res) {
-    shift.clockOutTime = new Date;
-
-    return ShiftModel.updateShift(shift)
-        .then((shift) => res.status(200).json({shift: shift}))
-        .catch((err) => res.status(500).json({message: err}));
-}
 
 //POST /shifts shift
 router.post('/', (req, res) => {

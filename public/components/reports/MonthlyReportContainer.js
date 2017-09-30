@@ -33,9 +33,9 @@ MonthlyReportContainer.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        employees: state.data.report, // TODO dont know how to init that without hose two... :-(
+        employees: state.shifts.report, // TODO don't know how to init that without those two... :-(
         initialValues: {
-            employees: state.data.report
+            employees: state.shifts.report
         }
     };
 }
@@ -43,15 +43,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchMonthlyReport: () => {dispatch(fetchMonthlyReport("2017-09-01")); },
-        updateShift: (employee) => {
-            dispatch(updateShift(employee));
-        },
-        createShift: (employee) => {
-            dispatch(createShift(employee));
-        },
-        deleteShift: (employee) => {
-            dispatch(deleteShift(employee));
-        },
+        updateShift: (shift) => dispatch(updateShift(shift)),
+        createShift: (shift) => dispatch(createShift(shift)),
+        deleteShift: (shift) => dispatch(deleteShift(shift))
     };
 }
 
