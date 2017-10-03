@@ -4,19 +4,25 @@ const REGULAR_SHIFT_LENGTH = 9;
 const SHIFT_125_OVERDUE_LENGTH = 2;
 
 let processUsersToShifts = function (shifts) {
-    let usersToShiftsMap = {};
+    let usersToShiftsMap = [];
+
+    if (!shifts || shifts.length === 0)
+        return usersToShiftsMap;
 
     shifts.forEach((shift) => {
-        if (usersToShiftsMap[shift.user.uid]) {
-            let uid = shift.user.uid;
-            delete shift.user;
-            usersToShiftsMap[uid].shifts.push(shift);
+        let clonedShift = Object.assign({}, shift);
+
+        if (usersToShiftsMap[clonedShift.user.uid]) {
+            const uid = clonedShift.user.uid;
+            delete clonedShift.user;
+            usersToShiftsMap[uid].shifts.push(clonedShift);
         }
         else {
-            let user = Object.assign({}, shift.user);
-            delete shift.user;
-            user.shifts = [shift];
-            usersToShiftsMap[user.uid] = user;
+            let clonedUser = Object.assign({}, shift.user);
+
+            delete clonedShift.user;
+            clonedUser.shifts = [clonedShift];
+            usersToShiftsMap[clonedUser.uid] = clonedUser;
         }
     });
     const keys = Object.keys(usersToShiftsMap);
@@ -24,6 +30,9 @@ let processUsersToShifts = function (shifts) {
 };
 
 function processUsersAdditionalInfo(userMap) {
+    if (Object.keys(userMap).length === 0)
+        return userMap;
+
     const usersWithAdditionalInfo = userMap.map((user) => {
         let userAdditionalInfo = createUserAdditionalInfo(user);
         return {
@@ -107,8 +116,8 @@ function createUserAdditionalInfo(user) {
 
 function createReport(shifts) {
     let map = processUsersToShifts(shifts);
-    map = processUsersAdditionalInfo(map);
-    return map;
+    let usersArray = processUsersAdditionalInfo(map);
+    return usersArray;
 }
 
 export default {

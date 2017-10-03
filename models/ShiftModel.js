@@ -38,7 +38,7 @@ const updateShift = (shift) => {
     newShift._id = shift._id;
 
     newShift = newShift.toObject();
-    return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true}).exec();
+    return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true}).populate('user').exec();
 };
 
 const deleteShift = (id) => {

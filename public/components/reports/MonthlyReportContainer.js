@@ -5,6 +5,7 @@ import {FieldArray, reduxForm} from "redux-form";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
 import {fetchMonthlyReport} from "../../actions/shiftsActions";
+import ShiftAnalyzer from "../../helpers/ShiftAnalyzer";
 
 class MonthlyReportContainer extends React.Component {
 
@@ -16,7 +17,10 @@ class MonthlyReportContainer extends React.Component {
         const {handleSubmit, updateShift, createShift, deleteShift} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
-                <FieldArray name="employees" component={MonthlyReport} onDeleteShift={deleteShift} onUpdateShift={updateShift} onCreateShift={createShift} />
+                {this.props.employees && this.props.employees.length > 0 &&
+                    <FieldArray name="employees" component={MonthlyReport} onDeleteShift={deleteShift}
+                            onUpdateShift={updateShift} onCreateShift={createShift}/>
+                }
             </form>
         );
     }
@@ -32,10 +36,11 @@ MonthlyReportContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
+    const employees = ShiftAnalyzer.createReport(state.shifts);
     return {
-        employees: state.shifts.report, // TODO don't know how to init that without those two... :-(
+        employees: employees, // TODO don't know how to init that without those two... :-(
         initialValues: {
-            employees: state.shifts.report
+            employees: employees
         }
     };
 }
