@@ -18,9 +18,9 @@ class MonthlyReportLine extends React.Component {
         let toggleButton =  isCollapsed ? <KeyboardArrowLeft/> : <KeyboardArrowDown/>;
         return (
             <div className="monthly-report-line">
-                <Grid container spacing={24}>
-                    <Grid item xs={12} sm={2}>
-                        <IconButton onClick={()=> onToggle(input.value.uid)}>{toggleButton}</IconButton>
+                <Grid container spacing={16}>
+                    <Grid item xs={12} sm={1}>
+                        <IconButton className="toggle-icon" onClick={()=> onToggle(input.value.uid)}>{toggleButton}</IconButton>
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         {input.value.uid}
@@ -34,13 +34,14 @@ class MonthlyReportLine extends React.Component {
                     <Grid item xs={12} sm={1} className="extra-125">
                         {input.value.extra125Hours}
                     </Grid>
-                    <Grid item xs={12} sm={1} className="extra-150">
+                    <Grid item xs={12} sm={5} className="extra-150">
                         {input.value.extra150Hours}
                     </Grid>
                     {!isCollapsed &&
+
                         <Grid item sm={12}>
-                        <FieldArray name={`${input.name}.shifts`} component={ShiftsList}
-                                    onDelete={onDeleteShift} onUpdate={onUpdateShift} onCreate={onCreateShift}/>
+                            <FieldArray name={`${input.name}.shifts`} component={ShiftsList}
+                                onDelete={onDeleteShift} onUpdate={onUpdateShift} onCreate={onCreateShift}/>
                         </Grid>
                     }
 
