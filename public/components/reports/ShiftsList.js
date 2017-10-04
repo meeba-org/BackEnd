@@ -2,6 +2,8 @@ import * as React from "react";
 import {Field} from "redux-form";
 import PropTypes from 'prop-types';
 import Shift from "./Shift";
+import styles from "../../styles/ShiftsList.scss";
+import CSSModules from "react-css-modules";
 
 class ShiftsList extends React.Component {
     onCreate(fields) {
@@ -24,7 +26,7 @@ class ShiftsList extends React.Component {
     render() {
         let {fields} = this.props;
         return (
-            <div>
+            <div className="shifts-list">
                 {fields && fields.map((shiftName, index) =>
                     <Field component={Shift} name={shiftName} key={index}
                            onDelete={()=> this.onDelete(fields, index)}
@@ -42,4 +44,4 @@ ShiftsList.propTypes = {
     onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
 };
-export default ShiftsList;
+export default CSSModules(ShiftsList, styles);

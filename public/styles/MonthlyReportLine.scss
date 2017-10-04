@@ -1,16 +1,38 @@
-.monthly-report-line {
+.monthly-report-block {
+    display: flex;
+    flex-direction: column;
 
-    .toggle-icon {
-        height: 100%;
-        align-items: flex-start;
-    }
-    .regular-hours {
-        color: green;
-    }
-    .extra-125 {
-        color: orange;
-    }
-    .extra-150 {
-        color: red;
+    .monthly-report-header {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+
+        .toggle-icon {
+        }
+
+        .base-element {
+            padding: 0 10px 0 10px;
+            height: 48px;
+            align-items: center;
+            display: inline-flex;
+        }
+        .uid {
+            @extend .base-element;
+        }
+        .name {
+            @extend .base-element;
+        }
+        .regular-hours {
+            @extend .base-element;
+            color: green;
+        }
+        .extra-125 {
+            @extend .base-element;
+            color: orange;
+        }
+        .extra-150 {
+            @extend .base-element;
+            color: red;
+        }
     }
 }

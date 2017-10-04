@@ -1,0 +1,9 @@
+.shift {
+    display: flex;
+    flex-direction: row;
+    padding-right: 50px;
+
+    .elem {
+        padding: 0 10px;
+    }
+}

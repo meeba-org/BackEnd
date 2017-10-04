@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {Grid, IconButton, TextField} from "material-ui";
 import DeleteIcon from 'material-ui-icons/Delete';
 import moment from "moment";
+import styles from "../../styles/Shift.scss";
+import CSSModules from "react-css-modules";
 
 class Shift extends React.Component {
 
@@ -50,7 +52,7 @@ class Shift extends React.Component {
     }
 
     onUpdate(fieldName, value) {
-        let {input,  onUpdate} = this.props;
+        let {input, onUpdate} = this.props;
 
         let entity = {
             ...input.value,
@@ -65,24 +67,14 @@ class Shift extends React.Component {
         let {onDelete} = this.props;
 
         return (
-            <div>
-                <Grid container spacing={24}>
-                    <Grid item xs={12} sm={3}>
-                        <TextField type="date" defaultValue={this.state.startDate} placeholder="תאריך"
-                               onChange={(e) => this.onUpdateStartDate(e)}/>
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                        <TextField type="time" defaultValue={this.state.startTime} placeholder="כניסה"
-                               onChange={(e) => this.onUpdateStartTime(e, "clockOutTime")}/>
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                        <TextField type="time" defaultValue={this.state.endTime} placeholder="יציאה"
-                               onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}/>
-                    </Grid>
-                    <Grid item xs={12} sm={2}>
-                        <IconButton onClick={onDelete}><DeleteIcon/></IconButton>
-                    </Grid>
-                </Grid>
+            <div className="shift">
+                <TextField className="elem" type="date" defaultValue={this.state.startDate} placeholder="תאריך"
+                           onChange={(e) => this.onUpdateStartDate(e)}/>
+                <TextField className="elem" type="time" defaultValue={this.state.startTime} placeholder="כניסה"
+                           onChange={(e) => this.onUpdateStartTime(e, "clockOutTime")}/>
+                <TextField className="elem" type="time" defaultValue={this.state.endTime} placeholder="יציאה"
+                           onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}/>
+                <IconButton className="elem" onClick={onDelete}><DeleteIcon/></IconButton>
             </div>
         );
     }
@@ -94,4 +86,4 @@ Shift.propTypes = {
     onUpdate: PropTypes.func.isRequired,
 };
 
-export default Shift;
+export default CSSModules(Shift, styles);
