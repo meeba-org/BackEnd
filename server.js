@@ -48,6 +48,10 @@ app.use('/', require('./controllers'));
 // Set Port
 app.set('port', process.env.PORT || 3000);
 
+app.get('*', (req, res) => {
+    res.sendFile(`${__dirname}/dist/index.html`);
+});
+
 // Launch
 app.listen(app.get('port'), () => {
 	console.log('Meeba started listening on port ' + app.get('port'));
