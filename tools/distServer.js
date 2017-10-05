@@ -20,7 +20,7 @@ browserSync({
   },
 
   files: [
-    'public/*.html'
+    '*.html'
   ],
 
   middleware: [historyApiFallback()]
