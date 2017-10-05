@@ -7,7 +7,7 @@
         "preinstall": "node tools/nodeVersionCheck.js",
         "start-message": "babel-node tools/startMessage.js",
         "start-server": "gulp develop",
-        "prestart": "npm-run-all --parallel start-message",
+        "predev": "npm-run-all --parallel start-message",
         "start": "node server.js",
         "dev": "npm-run-all --parallel open:src lint:watch start-server ",
         "open:src": "babel-node tools/srcServer.js",
