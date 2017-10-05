@@ -24,6 +24,12 @@ class MonthlyReport extends React.Component {
         let newCollapsedelement = this.state.collapsed === name ? null : name;
         this.setState({collapsed: newCollapsedelement});
     }
+
+    // handleChange = name => event => {
+    //     console.log(name);
+    //     // this.setState({ [name]: event.target.value });
+    // }
+
     render()
     {
         const {fields, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
@@ -35,6 +41,15 @@ class MonthlyReport extends React.Component {
 
                     <div>
                         <Button className="add-button" dense raised color="primary" onClick={() => this.onCreate(fields)}><AddIcon /></Button>
+                        {/*<Select*/}
+                            {/*value="2017-09-01"*/}
+                            {/*onChange={this.handleChange('monthChanged')}*/}
+                            {/*input={<Input id="age-simple" />}*/}
+                        {/*>*/}
+                            {/*<MenuItem value="2017-09-01">ספטמבר 2017</MenuItem>*/}
+                            {/*<MenuItem value="2017-10-01">אוקטובר 2017</MenuItem>*/}
+                            {/*<MenuItem value="2017-11-01">נובמבר 2017</MenuItem>*/}
+                        {/*</Select>*/}
                         <Divider className="divider" />
 
                         {fields && fields.map((employee, index) =>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import PropTypes from 'prop-types';
-import {Grid, IconButton, TextField} from "material-ui";
+import {IconButton, TextField} from "material-ui";
 import DeleteIcon from 'material-ui-icons/Delete';
 import moment from "moment";
 import styles from "../../styles/Shift.scss";

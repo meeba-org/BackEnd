@@ -28,6 +28,7 @@ class MonthlyReportContainer extends React.Component {
 
 MonthlyReportContainer.propTypes = {
     shifts: PropTypes.array,
+    emplo: PropTypes.array,
     handleSubmit: PropTypes.func.isRequired,
     fetchMonthlyReport: PropTypes.func.isRequired,
     createShift: PropTypes.func.isRequired,
