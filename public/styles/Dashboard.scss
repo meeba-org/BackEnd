@@ -12,7 +12,6 @@ $margin: 12px;
         padding: 0 9px;
 
         #sideBar-container {
-            //margin: 0 0 0 $margin;
         }
 
         #main-container {
@@ -22,6 +21,10 @@ $margin: 12px;
 
                 .add-button {
                     margin-bottom: 15px;
+                }
+
+                .select {
+                    margin-right: 10px;
                 }
 
                 .divider {

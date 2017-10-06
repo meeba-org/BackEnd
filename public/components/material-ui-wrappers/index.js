@@ -13,5 +13,6 @@ export const renderTextField = ({input, label, type}) => (
 
 renderTextField.propTypes = {
     input: PropTypes.object,
-    label: PropTypes.string
+    label: PropTypes.string,
+    type: PropTypes.string,
 };

@@ -1,13 +1,14 @@
 import * as React from "react";
-import CSSModules from "react-css-modules";
-import styles from "../../styles/MonthlyReport.scss";
-import {Button, Card, Divider, Input, Select} from "material-ui";
+import {Button, Card, Divider, Input} from "material-ui";
+import Select from 'material-ui/Select';
 import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
 import AddIcon from 'material-ui-icons/Add';
-import PropTypes from 'prop-types';
 import EmployeeReport from "./MonthlyReportLine";
 import {Field} from "redux-form";
-import {MenuItem} from "../../../node_modules/material-ui/Menu/index";
+import {MenuItem} from 'material-ui/Menu';
+import PropTypes from 'prop-types';
+import CSSModules from "react-css-modules";
+import styles from '../../styles/MonthlyReport.scss';
 
 class MonthlyReport extends React.Component {
     constructor(props) {
@@ -26,15 +27,25 @@ class MonthlyReport extends React.Component {
         this.setState({collapsed: newCollapsedelement});
     }
 
+    generateMonths() {
+        return [
+            {startDay: "2017-09-01", name: "ספטמבר 2017"},
+            {startDay: "2017-10-01", name: "אוקטובר 2017"},
+            {startDay: "2017-11-01", name: "נובמבר 2017"},
+            {startDay: "2017-12-01", name: "דצמבר 2017"},
+        ];
+    }
+
     // handleChange = name =>
     //     name = 'monthChanged';
     //     console.log(name);
     //     // this.setState({ [name]: event.target.value });
     // }
 
-    render()
-    {
+    render() {
         const {fields, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
+        const months = this.generateMonths();
+
         return (
             <Card id="monthly-report">
                 <CardHeader title="דוח חודשי"/>
@@ -43,16 +54,19 @@ class MonthlyReport extends React.Component {
 
                     <div>
                         <Button className="add-button" dense raised color="primary" onClick={() => this.onCreate(fields)}><AddIcon /></Button>
+
                         <Select
+                            className="select"
                             value="2017-09-01"
                             // onChange={() => this.handleChange}
-                            input={<Input id="age-simple" />}
+                            input={<Input id="age-simple"/>}
                         >
-                            <MenuItem value="2017-09-01">ספטמבר 2017</MenuItem>
-                            <MenuItem value="2017-10-01">אוקטובר 2017</MenuItem>
-                            <MenuItem value="2017-11-01">נובמבר 2017</MenuItem>
+                            {months.map((month) =>
+                                <MenuItem key={month.name} value={month.startDay}>{month.name}</MenuItem>
+                            )}
                         </Select>
-                        <Divider className="divider" />
+
+                        <Divider className="divider"/>
 
                         {fields && fields.map((employee, index) =>
                             <Field component={EmployeeReport}
