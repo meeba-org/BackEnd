@@ -8,23 +8,26 @@ $margin: 12px;
         margin-bottom: $margin;
     }
 
-    #sideBar-container {
-        margin: 0 0 0 $margin;
-    }
+    #container {
+        padding: 0 9px;
 
-    #main-container {
-        .card-content {
-            overflow-y: auto;
-            max-height: $containerHeight;
+        #sideBar-container {
+            //margin: 0 0 0 $margin;
+        }
 
-            .add-button {
-                margin-bottom: 15px;
-            }
+        #main-container {
+            .card-content {
+                overflow-y: auto;
+                max-height: $containerHeight;
 
-            .divider {
-                margin-bottom: 30px;
+                .add-button {
+                    margin-bottom: 15px;
+                }
+
+                .divider {
+                    margin-bottom: 30px;
+                }
             }
         }
     }
-
 }

@@ -12,13 +12,13 @@ class Dashboard extends React.Component {
     render() {
         return (
             <div id="dashboard">
-                <Grid container gutter={0}>
+                <Grid container>
                     <Grid item xs={12}>
                         <div id="appBar-container">
                             <AppBar/>
                         </div>
                     </Grid>
-                    <Grid container gutter={0}>
+                    <Grid container id="container">
                         <Grid item xs={3}>
                             <Paper id="sideBar-container">
                                 <SideBar/>

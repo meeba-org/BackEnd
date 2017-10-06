@@ -28,9 +28,12 @@ class Login extends Component {
                                                label="שם משתמש או אימייל" name="uid"/>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <Field component={renderTextField} onChange={handleChange}
+                                        <Field component={renderTextField}
+                                               onChange={handleChange}
                                                label="סיסמא"
-                                               type="password" name="password"/>
+                                               type="password"
+                                               name="password"
+                                        />
                                     </Grid>
                                     <Button dense raised color="primary" type="submit" id="submit-button"><ArrowBackIcon/>היכנס</Button>
                                 </form>

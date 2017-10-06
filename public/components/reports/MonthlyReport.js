@@ -1,12 +1,13 @@
 import * as React from "react";
 import CSSModules from "react-css-modules";
 import styles from "../../styles/MonthlyReport.scss";
-import {Button, Card, Divider} from "material-ui";
+import {Button, Card, Divider, Input, Select} from "material-ui";
 import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
 import AddIcon from 'material-ui-icons/Add';
 import PropTypes from 'prop-types';
 import EmployeeReport from "./MonthlyReportLine";
 import {Field} from "redux-form";
+import {MenuItem} from "../../../node_modules/material-ui/Menu/index";
 
 class MonthlyReport extends React.Component {
     constructor(props) {
@@ -25,7 +26,8 @@ class MonthlyReport extends React.Component {
         this.setState({collapsed: newCollapsedelement});
     }
 
-    // handleChange = name => event => {
+    // handleChange = name =>
+    //     name = 'monthChanged';
     //     console.log(name);
     //     // this.setState({ [name]: event.target.value });
     // }
@@ -41,15 +43,15 @@ class MonthlyReport extends React.Component {
 
                     <div>
                         <Button className="add-button" dense raised color="primary" onClick={() => this.onCreate(fields)}><AddIcon /></Button>
-                        {/*<Select*/}
-                            {/*value="2017-09-01"*/}
-                            {/*onChange={this.handleChange('monthChanged')}*/}
-                            {/*input={<Input id="age-simple" />}*/}
-                        {/*>*/}
-                            {/*<MenuItem value="2017-09-01">ספטמבר 2017</MenuItem>*/}
-                            {/*<MenuItem value="2017-10-01">אוקטובר 2017</MenuItem>*/}
-                            {/*<MenuItem value="2017-11-01">נובמבר 2017</MenuItem>*/}
-                        {/*</Select>*/}
+                        <Select
+                            value="2017-09-01"
+                            // onChange={() => this.handleChange}
+                            input={<Input id="age-simple" />}
+                        >
+                            <MenuItem value="2017-09-01">ספטמבר 2017</MenuItem>
+                            <MenuItem value="2017-10-01">אוקטובר 2017</MenuItem>
+                            <MenuItem value="2017-11-01">נובמבר 2017</MenuItem>
+                        </Select>
                         <Divider className="divider" />
 
                         {fields && fields.map((employee, index) =>
