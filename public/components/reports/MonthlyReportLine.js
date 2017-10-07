@@ -7,6 +7,7 @@ import {FieldArray} from "redux-form";
 import ShiftsList from "./ShiftsList";
 import styles from "../../styles/MonthlyReportLine.scss";
 import CSSModules from "react-css-modules";
+import HoursBar from '../HoursBar';
 
 class MonthlyReportLine extends React.Component {
     constructor(props) {
@@ -15,19 +16,18 @@ class MonthlyReportLine extends React.Component {
 
     render() {
         let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
-        let toggleButton =  isCollapsed ? <KeyboardArrowLeft/> : <KeyboardArrowDown/>;
+        let toggleButton = isCollapsed ? <KeyboardArrowLeft/> : <KeyboardArrowDown/>;
         return (
             <div className="monthly-report-block">
                 <div className="monthly-report-header">
-                    <IconButton className="toggle-icon" onClick={() => onToggle(input.value.uid)}>{toggleButton}</IconButton>
+                    <IconButton className="toggle-icon"
+                                onClick={() => onToggle(input.value.uid)}>{toggleButton}</IconButton>
                     <div className="uid">{input.value.uid}</div>
                     <div className="name">{input.value.firstName} {input.value.lastName}</div>
-                    <div className="regular-hours">{input.value.regularHours}</div>
-                    <div className="extra-125">{input.value.extra125Hours}</div>
-                    <div className="extra-150">{input.value.extra150Hours}</div>
+                    <HoursBar {...input.value} />
                 </div>
                 {!isCollapsed &&
-                        <FieldArray name={`${input.name}.shifts`} component={ShiftsList}
+                <FieldArray name={`${input.name}.shifts`} component={ShiftsList}
                             onDelete={onDeleteShift} onUpdate={onUpdateShift} onCreate={onCreateShift}/>
                 }
             </div>
