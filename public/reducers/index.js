@@ -37,7 +37,6 @@ function shiftsReducer(state = [], action = null) {
         }
         case types.FETCH_SHIFTS_SUCCESS: {
             return [
-                ...state,
                 ...action.shifts
             ];
         }

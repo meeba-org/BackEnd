@@ -9,12 +9,20 @@ import {MenuItem} from 'material-ui/Menu';
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from '../../styles/MonthlyReport.scss';
+import moment from 'moment';
 
 class MonthlyReport extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {collapsed: null};
+        this.state = {
+            collapsed: null,
+            startDayOfMonth: moment().startOf('month').format("YYYY-MM-DD")
+        };
+    }
+
+    componentDidMount() {
+        this.props.onStartDayOfMonthChange(this.state.startDayOfMonth);
     }
 
     isCollapsed(fields, index) {
@@ -36,14 +44,16 @@ class MonthlyReport extends React.Component {
         ];
     }
 
-    // handleChange = name =>
-    //     name = 'monthChanged';
-    //     console.log(name);
-    //     // this.setState({ [name]: event.target.value });
-    // }
+    handleChange(event)  {
+        let startDayOfMonth = event.target.value;
+
+        this.setState({startDayOfMonth});
+        this.props.onStartDayOfMonthChange(startDayOfMonth);
+    }
 
     render() {
         const {fields, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
+        let startDayOfMonth = this.state.startDayOfMonth;
         const months = this.generateMonths();
 
         return (
@@ -57,8 +67,8 @@ class MonthlyReport extends React.Component {
 
                         <Select
                             className="select"
-                            value="2017-09-01"
-                            // onChange={() => this.handleChange}
+                            value={startDayOfMonth}
+                            onChange={(event) => this.handleChange(event)}
                             input={<Input id="age-simple"/>}
                         >
                             {months.map((month) =>
@@ -92,5 +102,6 @@ MonthlyReport.propTypes = {
     onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
+    onStartDayOfMonthChange: PropTypes.func.isRequired,
 };
 export default CSSModules(MonthlyReport, styles);

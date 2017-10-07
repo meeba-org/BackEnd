@@ -9,18 +9,24 @@ import ShiftAnalyzer from "../../helpers/ShiftAnalyzer";
 
 class MonthlyReportContainer extends React.Component {
 
-    componentDidMount() {
-        this.props.fetchMonthlyReport();
+    onStartDayOfMonthChange(startDateOfMonth) {
+        if (!startDateOfMonth)
+            return;
+
+        this.props.fetchMonthlyReport(startDateOfMonth);
     }
 
     render() {
         const {handleSubmit, updateShift, createShift, deleteShift} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
-                {this.props.employees && this.props.employees.length > 0 &&
-                    <FieldArray name="employees" component={MonthlyReport} onDeleteShift={deleteShift}
-                            onUpdateShift={updateShift} onCreateShift={createShift}/>
-                }
+                    <FieldArray name="employees"
+                                component={MonthlyReport}
+                                onDeleteShift={deleteShift}
+                                onUpdateShift={updateShift}
+                                onCreateShift={createShift}
+                                onStartDayOfMonthChange={(startDayOfMonth) => this.onStartDayOfMonthChange(startDayOfMonth)}
+                    />
             </form>
         );
     }
@@ -48,7 +54,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchMonthlyReport: () => {dispatch(fetchMonthlyReport("2017-09-01")); },
+        fetchMonthlyReport: (startDate) => {dispatch(fetchMonthlyReport(startDate)); },
         updateShift: (shift) => dispatch(updateShift(shift)),
         createShift: (shift) => dispatch(createShift(shift)),
         deleteShift: (shift) => dispatch(deleteShift(shift))
