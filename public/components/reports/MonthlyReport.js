@@ -89,6 +89,11 @@ class MonthlyReport extends React.Component {
                                    onCreateShift={onCreateShift}
                             />
                         )}
+                        {(!fields || (fields.length == 0)) &&
+                        <div className="no-data">
+                                לא נמצאו תוצאות
+                        </div>
+                        }
                     </div>
 
                 </CardContent>

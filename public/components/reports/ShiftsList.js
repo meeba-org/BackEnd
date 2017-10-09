@@ -34,9 +34,9 @@ class ShiftsList extends React.Component {
                            showNames={showNames}
                     />
                 )}
-                {(!fields || (fields.count == 0)) &&
+                {(!fields || (fields.length == 0)) &&
                     <div className="no-data">
-                        לא נמצאו תוצאות
+                            לא נמצאו תוצאות
                     </div>
                 }
             </div>
