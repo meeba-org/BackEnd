@@ -6,6 +6,7 @@ import EmployeesContainer from "./components/employees/EmployeesContainer";
 import LoginContainer from "./components/login/LoginContainer";
 import Dashboard from "./components/Dashboard";
 import MonthlyReportContainer from "./components/reports/MonthlyReportContainer";
+import DailyReportContainer from "./components/reports/DailyReportContainer";
 
 export default (
     <Route path="/" component={AppContainer}>
@@ -15,7 +16,11 @@ export default (
             <IndexRoute component={EmployeesContainer} />
             <Route path="status" component={Status} />
             <Route path="employees" component={EmployeesContainer} />
-            <Route path="report" component={MonthlyReportContainer} />
+            <Route path="report" >
+                <IndexRoute component={MonthlyReportContainer} />
+                <Route path="month" component={MonthlyReportContainer} />
+                <Route path="daily" component={DailyReportContainer} />
+            </Route>
         </Route>
     </Route>
 );

@@ -146,3 +146,9 @@ export function fetchMonthlyReport(startDate) {
         return fetchShifts(dispatch, startDate);
     };
 }
+
+export function fetchDailyReport(startDate) {
+    return function(dispatch) {
+        return fetchShifts(dispatch, startDate, startDate);
+    };
+}

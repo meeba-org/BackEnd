@@ -9,7 +9,8 @@ router.get('/', (req, res) => {
     req.checkQuery('startDate', 'Start date is required').notEmpty();
 
     const startDate = req.query.startDate;
-    const endDate = req.query.endDate || moment(startDate).add(30, 'days');
+    let endDate = req.query.endDate || moment(startDate).add(30, 'days');
+    endDate = moment(endDate).endOf('day');
 
     if (!moment(startDate).isValid() || !moment(endDate).isValid())
         return res.status(400).json({message: "moment isValid() failed - startDate || endDate are not valid"});

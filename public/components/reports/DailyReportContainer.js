@@ -6,8 +6,9 @@ import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
 import {fetchMonthlyReport} from "../../actions/shiftsActions";
 import ShiftAnalyzer from "../../helpers/ShiftAnalyzer";
+import DailyReport from "./DailyReport";
 
-class MonthlyReportContainer extends React.Component {
+class DailyReportContainer extends React.Component {
 
     onStartDayOfMonthChange(startDateOfMonth) {
         if (!startDateOfMonth)
@@ -21,7 +22,7 @@ class MonthlyReportContainer extends React.Component {
         return (
             <form onSubmit={handleSubmit(() => {})}>
                     <FieldArray name="employees"
-                                component={MonthlyReport}
+                                component={DailyReport}
                                 onDeleteShift={deleteShift}
                                 onUpdateShift={updateShift}
                                 onCreateShift={createShift}
@@ -32,7 +33,7 @@ class MonthlyReportContainer extends React.Component {
     }
 }
 
-MonthlyReportContainer.propTypes = {
+DailyReportContainer.propTypes = {
     shifts: PropTypes.array,
     employees: PropTypes.array,
     handleSubmit: PropTypes.func.isRequired,
@@ -54,7 +55,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchDailyReport: (startDate) => {dispatch(fetchMonthlyReport(startDate)); },
+        fetchDailyReport: (startDate) => {dispatch(fetchDailyReport(startDate)); },
         updateShift: (shift) => dispatch(updateShift(shift)),
         createShift: (shift) => dispatch(createShift(shift)),
         deleteShift: (shift) => dispatch(deleteShift(shift))
@@ -66,4 +67,4 @@ export default connect(
 )(reduxForm({
     form: 'monthlyReportForm',
     enableReinitialize: true,
-})(MonthlyReportContainer));
+})(DailyReportContainer));
