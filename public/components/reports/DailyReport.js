@@ -46,7 +46,7 @@ class DailyReport extends React.Component {
 
         return (
             <Card id="daily-report">
-                <CardHeader title="דוח חודשי"/>
+                <CardHeader title="דוח יומי"/>
 
                 <CardContent className="card-content">
 
@@ -64,7 +64,7 @@ class DailyReport extends React.Component {
                             onDelete={onDeleteShift}
                             onUpdate={onUpdateShift}
                             onCreate={onCreateShift}
-                            showNames="true"
+                            showNames={true}
                         />
                     </div>
 

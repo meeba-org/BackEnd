@@ -20,9 +20,9 @@ class DailyReportContainer extends React.Component {
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <DailyReport
-                    onDelete={deleteShift}
-                    onUpdate={updateShift}
-                    onCreate={createShift}
+                    onDeleteShift={deleteShift}
+                    onUpdateShift={updateShift}
+                    onCreateShift={createShift}
                     onDayChange={(startDayOfMonth) => this.onDayChange(startDayOfMonth)}
                 />
             </form>

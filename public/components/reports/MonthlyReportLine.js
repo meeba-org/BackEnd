@@ -27,8 +27,14 @@ class MonthlyReportLine extends React.Component {
                     <HoursBar {...input.value} />
                 </div>
                 {!isCollapsed &&
-                <FieldArray name={`${input.name}.shifts`} component={ShiftsList}
-                            onDelete={onDeleteShift} onUpdate={onUpdateShift} onCreate={onCreateShift}/>
+                <FieldArray
+                    name={`${input.name}.shifts`}
+                    component={ShiftsList}
+                    onDelete={onDeleteShift}
+                    onUpdate={onUpdateShift}
+                    onCreate={onCreateShift}
+                    showNames={false}
+                />
                 }
             </div>
         );
