@@ -13,7 +13,7 @@ class MonthlyReportContainer extends React.Component {
         if (!startDateOfMonth)
             return;
 
-        this.props.fetchDailyReport(startDateOfMonth);
+        this.props.fetchMonthlyReport(startDateOfMonth);
     }
 
     render() {
@@ -54,7 +54,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchDailyReport: (startDate) => {dispatch(fetchMonthlyReport(startDate)); },
+        fetchMonthlyReport: (startDate) => {dispatch(fetchMonthlyReport(startDate)); },
         updateShift: (shift) => dispatch(updateShift(shift)),
         createShift: (shift) => dispatch(createShift(shift)),
         deleteShift: (shift) => dispatch(deleteShift(shift))

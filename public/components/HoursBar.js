@@ -1,5 +1,5 @@
 import React from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from '../styles/HoursBar.scss';
 import CSSModules from "react-css-modules";
 
@@ -35,7 +35,11 @@ class HoursBar extends React.Component {
     }
 }
 
-// HoursBar.propTypes = {};
+HoursBar.propTypes = {
+    regularHours: PropTypes.string.isRequired,
+    extra125Hours: PropTypes.string.isRequired,
+    extra150Hours: PropTypes.string.isRequired,
+};
 
 export default CSSModules(HoursBar, styles);
 

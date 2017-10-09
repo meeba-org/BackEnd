@@ -24,15 +24,21 @@ class ShiftsList extends React.Component {
     }
 
     render() {
-        let {fields} = this.props;
+        let {fields, showNames} = this.props;
         return (
             <div className="shifts-list">
                 {fields && fields.map((shiftName, index) =>
                     <Field component={Shift} name={shiftName} key={index}
                            onDelete={()=> this.onDelete(fields, index)}
                            onUpdate={(shift) => this.onUpdate(shift)}
+                           showNames={showNames}
                     />
                 )}
+                {(!fields || (fields.count == 0)) &&
+                    <div className="no-data">
+                        לא נמצאו תוצאות
+                    </div>
+                }
             </div>
         );
     }
@@ -43,5 +49,6 @@ ShiftsList.propTypes = {
     onCreate: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    showNames: PropTypes.bool
 };
 export default CSSModules(ShiftsList, styles);

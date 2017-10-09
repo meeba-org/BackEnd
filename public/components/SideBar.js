@@ -23,13 +23,13 @@ class SideBar extends React.Component {
                             </ListItemIcon>
                             <ListItemText primary="מצב משמרת"/>
                         </ListItem>
-                        <ListItem button onTouchTap={() => this.updateRoute("/dashboard/report")}>
+                        <ListItem button onTouchTap={() => this.updateRoute("/dashboard/report/monthly")}>
                             <ListItemIcon>
                                 <KeyboardArrowLeft />
                             </ListItemIcon>
                             <ListItemText primary="דוח חודשי"/>
                         </ListItem>
-                        <ListItem button>
+                        <ListItem button onTouchTap={() => this.updateRoute("/dashboard/report/daily")}>
                             <ListItemIcon>
                                 <KeyboardArrowLeft />
                             </ListItemIcon>

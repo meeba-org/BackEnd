@@ -1,16 +1,14 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {createShift, deleteShift, updateShift} from "../../actions";
-import {FieldArray, reduxForm} from "redux-form";
-import MonthlyReport from "./MonthlyReport";
+import {reduxForm} from "redux-form";
 import PropTypes from 'prop-types';
-import {fetchMonthlyReport} from "../../actions/shiftsActions";
-import ShiftAnalyzer from "../../helpers/ShiftAnalyzer";
+import {fetchDailyReport} from "../../actions/shiftsActions";
 import DailyReport from "./DailyReport";
 
 class DailyReportContainer extends React.Component {
 
-    onStartDayOfMonthChange(startDateOfMonth) {
+    onDayChange(startDateOfMonth) {
         if (!startDateOfMonth)
             return;
 
@@ -21,13 +19,12 @@ class DailyReportContainer extends React.Component {
         const {handleSubmit, updateShift, createShift, deleteShift} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
-                    <FieldArray name="employees"
-                                component={DailyReport}
-                                onDeleteShift={deleteShift}
-                                onUpdateShift={updateShift}
-                                onCreateShift={createShift}
-                                onStartDayOfMonthChange={(startDayOfMonth) => this.onStartDayOfMonthChange(startDayOfMonth)}
-                    />
+                <DailyReport
+                    onDelete={deleteShift}
+                    onUpdate={updateShift}
+                    onCreate={createShift}
+                    onDayChange={(startDayOfMonth) => this.onDayChange(startDayOfMonth)}
+                />
             </form>
         );
     }
@@ -35,27 +32,25 @@ class DailyReportContainer extends React.Component {
 
 DailyReportContainer.propTypes = {
     shifts: PropTypes.array,
-    employees: PropTypes.array,
     handleSubmit: PropTypes.func.isRequired,
-    fetchMonthlyReport: PropTypes.func.isRequired,
+    fetchDailyReport: PropTypes.func.isRequired,
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
-    const employees = ShiftAnalyzer.createReport(state.shifts);
     return {
-        employees: employees, // TODO don't know how to init that without those two... :-(
+        shifts: state.shifts, // TODO don't know how to init that without those two... :-(
         initialValues: {
-            employees: employees
+            shifts: state.shifts
         }
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchDailyReport: (startDate) => {dispatch(fetchDailyReport(startDate)); },
+        fetchDailyReport: (startDate) => {dispatch( fetchDailyReport(startDate)); },
         updateShift: (shift) => dispatch(updateShift(shift)),
         createShift: (shift) => dispatch(createShift(shift)),
         deleteShift: (shift) => dispatch(deleteShift(shift))

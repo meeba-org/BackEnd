@@ -18,7 +18,7 @@ export default (
             <Route path="employees" component={EmployeesContainer} />
             <Route path="report" >
                 <IndexRoute component={MonthlyReportContainer} />
-                <Route path="month" component={MonthlyReportContainer} />
+                <Route path="monthly" component={MonthlyReportContainer} />
                 <Route path="daily" component={DailyReportContainer} />
             </Route>
         </Route>

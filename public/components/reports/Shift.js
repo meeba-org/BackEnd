@@ -64,10 +64,13 @@ class Shift extends React.Component {
     }
 
     render() {
-        let {onDelete} = this.props;
+        let {onDelete, showNames, input} = this.props;
 
         return (
             <div className="shift">
+                {showNames &&
+                    input.value.user.firstName
+                }
                 <TextField className="elem" type="date" defaultValue={this.state.startDate} placeholder="תאריך"
                            onChange={(e) => this.onUpdateStartDate(e)}/>
                 <TextField className="elem" type="time" defaultValue={this.state.startTime} placeholder="כניסה"
@@ -84,6 +87,7 @@ Shift.propTypes = {
     input: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
+    showNames: PropTypes.bool
 };
 
 export default CSSModules(Shift, styles);
