@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import styles from '../styles/NoData.scss';
+import CSSModules from 'react-css-modules';
 
 class NoData extends Component {
     render() {
@@ -10,5 +12,6 @@ class NoData extends Component {
     }
 }
 
-export default NoData;
+export default CSSModules(NoData, styles);
+
 
