@@ -1,7 +1,7 @@
 import moment from "moment";
 
-const REGULAR_SHIFT_LENGTH = 9;
-const SHIFT_125_OVERDUE_LENGTH = 2;
+export const REGULAR_SHIFT_LENGTH = 9;
+export const SHIFT_125_OVERDUE_LENGTH = 2;
 
 let processUsersToShifts = function (shifts) {
     let usersToShiftsMap = [];
@@ -44,7 +44,7 @@ function processUsersAdditionalInfo(userMap) {
     return usersWithAdditionalInfo;
 }
 
-function analyzeHours(shift) {
+export const analyzeHours = (shift) => {
     let clockOut = moment(shift.clockOutTime);
     let clockIn = moment(shift.clockInTime);
 
@@ -69,7 +69,7 @@ function analyzeHours(shift) {
             extra150Hours: calcExtra150Hours(shiftLength),
         };
     }
-}
+};
 
 function calcExtra125Hours(shiftLength) {
     if (shiftLength <= REGULAR_SHIFT_LENGTH)
@@ -114,15 +114,8 @@ function createUserAdditionalInfo(user) {
     return hourSummary;
 }
 
-function createReport(shifts) {
+export const createReport = (shifts) => {
     let map = processUsersToShifts(shifts);
     let usersArray = processUsersAdditionalInfo(map);
     return usersArray;
-}
-
-export default {
-    createReport
-    , analyzeHours
-    , REGULAR_SHIFT_LENGTH
-    , SHIFT_125_OVERDUE_LENGTH
 };

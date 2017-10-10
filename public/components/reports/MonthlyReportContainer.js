@@ -5,7 +5,7 @@ import {FieldArray, reduxForm} from "redux-form";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
 import {fetchMonthlyReport} from "../../actions/shiftsActions";
-import ShiftAnalyzer from "../../helpers/ShiftAnalyzer";
+import {createReport} from "../../helpers/ShiftAnalyzer";
 
 class MonthlyReportContainer extends React.Component {
 
@@ -43,7 +43,7 @@ MonthlyReportContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-    const employees = ShiftAnalyzer.createReport(state.shifts);
+    const employees = createReport(state.shifts);
     return {
         employees: employees, // TODO don't know how to init that without those two... :-(
         initialValues: {
