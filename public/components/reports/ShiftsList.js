@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Shift from "./Shift";
 import styles from "../../styles/ShiftsList.scss";
 import CSSModules from "react-css-modules";
+import NoData from "../NoData";
 
 class ShiftsList extends React.Component {
     onCreate(fields) {
@@ -35,9 +36,7 @@ class ShiftsList extends React.Component {
                     />
                 )}
                 {(!fields || (fields.length == 0)) &&
-                    <div className="no-data">
-                            לא נמצאו תוצאות
-                    </div>
+                    <NoData/>
                 }
             </div>
         );

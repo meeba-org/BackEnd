@@ -51,7 +51,7 @@
         "material-ui-icons": "v1.0.0-beta.15",
         "moment": "^2.18.1",
         "mongodb": "*",
-        "mongoose": "~4",
+        "mongoose": "^4.12.1",
         "object-assign": "4.1.0",
         "passport-http": "*",
         "passport-local": "*",

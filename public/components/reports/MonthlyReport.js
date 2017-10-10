@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from '../../styles/MonthlyReport.scss';
 import moment from 'moment';
+import NoData from "../NoData";
 
 class MonthlyReport extends React.Component {
     constructor(props) {
@@ -90,9 +91,7 @@ class MonthlyReport extends React.Component {
                             />
                         )}
                         {(!fields || (fields.length == 0)) &&
-                        <div className="no-data">
-                                לא נמצאו תוצאות
-                        </div>
+                            <NoData/>
                         }
                     </div>
 
