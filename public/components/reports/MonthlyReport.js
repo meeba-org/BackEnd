@@ -11,6 +11,7 @@ import CSSModules from "react-css-modules";
 import styles from '../../styles/MonthlyReport.scss';
 import moment from 'moment';
 import NoData from "../NoData";
+import AddShiftsDialog from "../AddShiftsDialog";
 
 class MonthlyReport extends React.Component {
     constructor(props) {
@@ -18,7 +19,8 @@ class MonthlyReport extends React.Component {
 
         this.state = {
             collapsed: null,
-            startDayOfMonth: moment().startOf('month').format("YYYY-MM-DD")
+            startDayOfMonth: moment().startOf('month').format("YYYY-MM-DD"),
+            open: false,
         };
     }
 
@@ -52,6 +54,14 @@ class MonthlyReport extends React.Component {
         this.props.onStartDayOfMonthChange(startDayOfMonth);
     }
 
+    handleClickOpen() {
+        this.setState({open: true});
+    }
+
+    handleRequestClose() {
+        this.setState({open: false});
+    }
+
     render() {
         const {fields, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
         let startDayOfMonth = this.state.startDayOfMonth;
@@ -64,7 +74,8 @@ class MonthlyReport extends React.Component {
                 <CardContent className="card-content">
 
                     <div>
-                        <Button className="add-button" dense raised color="primary" onClick={() => this.onCreate(fields)}><AddIcon /></Button>
+                        <Button className="add-button" dense raised color="primary" onClick={() => this.handleClickOpen()}><AddIcon /></Button>
+                        <AddShiftsDialog open={this.state.open} onCreate={onCreateShift} onCancel={() => this.handleRequestClose()}/>
 
                         <Select
                             className="select"
