@@ -6,8 +6,8 @@ import {FieldArray} from "redux-form";
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from '../../styles/DailyReport.scss';
-import moment from 'moment';
 import ShiftsList from "./ShiftsList";
+import {calculateCurrentDay} from "../../helpers/utils";
 
 class DailyReport extends React.Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class DailyReport extends React.Component {
 
         this.state = {
             collapsed: null,
-            currentDay: moment().format("YYYY-MM-DD")
+            currentDay: calculateCurrentDay()
         };
     }
 
