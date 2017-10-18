@@ -60,7 +60,7 @@ class AddShiftsDialog extends Component {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={onCreate} color="primary">
-                        {this.state.employeesToAdd.length > 0 ? `Add ` + this.state.employeesToAdd.length + ` people` : "Add"}
+                        {this.state.employeesToAdd.length > 0 ? `הוסף ל- ` + this.state.employeesToAdd.length + ` אנשים` : "הוסף"}
                     </Button>
                     <Button onClick={onCancel} color="primary">
                         ביטול
