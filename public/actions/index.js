@@ -15,10 +15,10 @@ function handleLoginSuccess() {
     };
 }
 
-function handleLoginError(json) {
+function handleLoginError(error) {
     return {
         type: actionsTypes.CREATE_EMPLOYEE_ERROR,
-        data: json
+        error: error
     };
 }
 

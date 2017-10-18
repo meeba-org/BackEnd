@@ -132,10 +132,7 @@
         }
     },
     "babel": {
-        "presets": [
-            "react",
-            "stage-1"
-        ],
+        "presets": ["es2015", "react"],
         "env": {
             "development": {
                 "presets": [

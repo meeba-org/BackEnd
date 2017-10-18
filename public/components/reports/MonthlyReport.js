@@ -75,7 +75,12 @@ class MonthlyReport extends React.Component {
 
                     <div>
                         <Button className="add-button" dense raised color="primary" onClick={() => this.handleClickOpen()}><AddIcon /></Button>
-                        <AddShiftsDialog open={this.state.open} onCreate={onCreateShift} onCancel={() => this.handleRequestClose()}/>
+                        <AddShiftsDialog
+                            open={this.state.open}
+                            onCreate={onCreateShift}
+                            onCancel={() => this.handleRequestClose()}
+                            employees={fields.getAll()}
+                        />
 
                         <Select
                             className="select"
