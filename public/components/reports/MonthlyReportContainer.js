@@ -5,7 +5,7 @@ import {FieldArray, reduxForm} from "redux-form";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
 import {fetchMonthlyReport} from "../../actions/shiftsActions";
-import {createReport} from "../../helpers/ShiftAnalyzer";
+import {createEmployeeShiftsReports} from "../../helpers/ShiftAnalyzer";
 
 class MonthlyReportContainer extends React.Component {
 
@@ -20,7 +20,7 @@ class MonthlyReportContainer extends React.Component {
         const {handleSubmit, updateShift, createShift, deleteShift} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
-                    <FieldArray name="employees"
+                    <FieldArray name="employeeShiftsReports"
                                 component={MonthlyReport}
                                 onDeleteShift={deleteShift}
                                 onUpdateShift={updateShift}
@@ -43,11 +43,12 @@ MonthlyReportContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-    const employees = createReport(state.shifts);
+    const employeeShiftsReports = createEmployeeShiftsReports(state.shifts);
+    const employees = state.employees;
     return {
-        employees: employees, // TODO don't know how to init that without those two... :-(
         initialValues: {
-            employees: employees
+            employeeShiftsReports,
+            employees
         }
     };
 }

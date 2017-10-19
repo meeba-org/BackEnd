@@ -2,35 +2,35 @@ import * as actionsTypes from "./actionTypes";
 import callApi from "./api";
 import {arrayPop, arrayPush} from 'redux-form';
 
-function requestEmployees() {
-    return {type: actionsTypes.REQUEST_EMPLOYEES};
+function fetchEmployeesStart() {
+    return {type: actionsTypes.FETCH_EMPLOYEES_START};
 }
 
-function receiveEmployeesSuccess(json) {
+function fetchEmployeesSuccess(employees) {
     return {
-        type: actionsTypes.RECEIVE_EMPLOYEES_SUCCESS,
-        employees: json
+        type: actionsTypes.FETCH_EMPLOYEES_SUCCESS,
+        employees
     };
 }
 
-function receiveEmployeesError() {
+function fetchEmployeesError() {
     return {
-        type: actionsTypes.RECEIVE_EMPLOYEES_ERROR,
+        type: actionsTypes.FETCH_EMPLOYEES_ERROR,
     };
 }
 
 export function fetchEmployees() {
     return function (dispatch) {
-        dispatch(requestEmployees());
+        dispatch(fetchEmployeesStart());
         return callApi({
             url: '/users',
             timeout: 20000,
             method: 'get',
             shouldAuthenticate: true,
         }).then(function (result) {
-            dispatch(receiveEmployeesSuccess(result.users));
+            dispatch(fetchEmployeesSuccess(result.users));
         }).catch(function (response) {
-            dispatch(receiveEmployeesError(response.data));
+            dispatch(fetchEmployeesError(response.data));
         });
     };
 }

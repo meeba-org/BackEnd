@@ -14,9 +14,7 @@ class EmployeesContainer extends React.Component {
         const {handleSubmit, deleteEmployee, updateEmployee, createEmployee} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
-                {this.props.employees && this.props.employees.length > 0 &&
-                    <FieldArray name="employees" component={EmployeesList} onDelete={deleteEmployee} onUpdate={updateEmployee} onCreate={createEmployee}/>
-                }
+                <FieldArray name="employees" component={EmployeesList} onDelete={deleteEmployee} onUpdate={updateEmployee} onCreate={createEmployee}/>
             </form>
         );
     }
@@ -33,9 +31,8 @@ EmployeesContainer.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        employees: state.data.employees, // TODO dont know how to init that without hose two... :-(
         initialValues: {
-            employees: state.data.employees
+            employees: state.employees
         }
     };
 }

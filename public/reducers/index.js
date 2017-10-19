@@ -5,16 +5,14 @@ import {routerReducer} from "react-router-redux";
 import { reducer as formReducer } from 'redux-form';
 
 
-function dataReducer(state = {isLoading: false, data: [], error: false}, action = null) {
+function employeesReducer(state = [], action = null) {
     switch (action.type) {
-        case types.REQUEST_EMPLOYEES:
-            return Object.assign({}, state, {isLoading: true, error: false});
-        case types.RECEIVE_EMPLOYEES_SUCCESS:
-            return {
-                ...state,
-                employees: action.employees
-            };
-        case types.RECEIVE_EMPLOYEES_ERROR:
+        case types.FETCH_EMPLOYEES_SUCCESS: {
+            return [
+                ...action.employees
+            ];
+        }
+        case types.FETCH_EMPLOYEES_ERROR:
             return Object.assign({}, state, {isLoading: false, data: action.data, error: true});
         default:
             return state;
@@ -48,7 +46,7 @@ function shiftsReducer(state = [], action = null) {
 const rootReducer = combineReducers({
     routing: routerReducer,
     form: formReducer,
-    data: dataReducer,
+    employees: employeesReducer,
     shifts: shiftsReducer,
 });
 

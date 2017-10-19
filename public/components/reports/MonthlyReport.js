@@ -3,7 +3,7 @@ import {Button, Card, Divider, Input} from "material-ui";
 import Select from 'material-ui/Select';
 import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
 import AddIcon from 'material-ui-icons/Add';
-import EmployeeReport from "./MonthlyReportLine";
+import MonthlyReportLine from "./MonthlyReportLine";
 import {Field} from "redux-form";
 import {MenuItem} from 'material-ui/Menu';
 import PropTypes from 'prop-types';
@@ -95,9 +95,9 @@ class MonthlyReport extends React.Component {
 
                         <Divider className="divider"/>
 
-                        {fields && fields.map((employee, index) =>
-                            <Field component={EmployeeReport}
-                                   name={employee}
+                        {fields && fields.map((employeeShiftsReport, index) =>
+                            <Field component={MonthlyReportLine}
+                                   name={employeeShiftsReport}
                                    isCollapsed={this.isCollapsed(fields, index)}
                                    key={index}
                                    onToggle={(name) => this.onToggle(name)}

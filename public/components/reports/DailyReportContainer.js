@@ -41,7 +41,6 @@ DailyReportContainer.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        shifts: state.shifts, // TODO don't know how to init that without those two... :-(
         initialValues: {
             shifts: state.shifts
         }

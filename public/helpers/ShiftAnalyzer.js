@@ -114,7 +114,7 @@ function createUserAdditionalInfo(user) {
     return hourSummary;
 }
 
-export const createReport = (shifts) => {
+export const createEmployeeShiftsReports = (shifts) => {
     let map = processUsersToShifts(shifts);
     let usersArray = processUsersAdditionalInfo(map);
     return usersArray;
