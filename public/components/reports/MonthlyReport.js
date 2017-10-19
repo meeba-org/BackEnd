@@ -63,7 +63,7 @@ class MonthlyReport extends React.Component {
     }
 
     render() {
-        const {fields, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
+        const {fields, onCreateShift, onUpdateShift, onDeleteShift, employees} = this.props;
         let startDayOfMonth = this.state.startDayOfMonth;
         const months = this.generateMonths();
 
@@ -79,7 +79,7 @@ class MonthlyReport extends React.Component {
                             open={this.state.open}
                             onCreate={onCreateShift}
                             onCancel={() => this.handleRequestClose()}
-                            employees={fields.getAll()}
+                            employees={employees}
                         />
 
                         <Select

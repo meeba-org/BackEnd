@@ -136,9 +136,9 @@ let fetchShifts = function (dispatch, startDate, endDate) {
         url: url,
         method: 'get',
         shouldAuthenticate: true,
-    }).then((shifts) => {
-        dispatch(fetchShiftsSuccess(shifts));
-    }).catch(() => dispatch(fetchShiftsError()));
+    })
+        .then((shifts) => dispatch(fetchShiftsSuccess(shifts)))
+        .catch(() => dispatch(fetchShiftsError()));
 };
 
 export function fetchMonthlyReport(startDate) {
