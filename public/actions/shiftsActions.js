@@ -6,9 +6,10 @@ function createShiftStart() {
     return {type: actionsTypes.CREATE_SHIFT_START};
 }
 
-function createShiftSuccess() {
+function createShiftSuccess(shift) {
     return {
         type: actionsTypes.CREATE_SHIFT_SUCCESS,
+        shift
     };
 }
 
@@ -25,6 +26,7 @@ function dispatchUpdateNewShiftsInForm(dispatch, newShift) {
 }
 
 export function createShift(shift) {
+    console.log(shift);
     return function (dispatch) {
         dispatch(createShiftStart());
         return callApi({
@@ -33,8 +35,10 @@ export function createShift(shift) {
             data: shift,
             shouldAuthenticate: true
         }).then(function (response) {
-            dispatch(createShiftSuccess(response));
-            dispatchUpdateNewShiftsInForm(dispatch, response.user);
+            let shift = response.shift;
+
+            dispatch(createShiftSuccess(shift));
+            // dispatchUpdateNewShiftsInForm(dispatch, shift);
         }).catch(function (response) {
             dispatch(createShiftError(response.data));
         });

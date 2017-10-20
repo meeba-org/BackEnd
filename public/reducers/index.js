@@ -2,7 +2,7 @@ import * as types from '../actions/actionTypes';
 import {combineReducers} from 'redux';
 import {routerReducer} from "react-router-redux";
 // import { reducer as formReducer } from 'redux-form';
-import { reducer as formReducer } from 'redux-form';
+import {reducer as formReducer} from 'redux-form';
 
 
 function employeesReducer(state = [], action = null) {
@@ -31,7 +31,7 @@ function shiftsReducer(state = [], action = null) {
             return state.map(shift => shift._id == action.shift._id ? action.shift : shift);
         }
         case types.DELETE_SHIFT_SUCCESS: {
-            return state.filter(shift => shift.id !== action.id);
+            return state.filter(shift => shift._id !== action.id);
         }
         case types.FETCH_SHIFTS_SUCCESS: {
             return [

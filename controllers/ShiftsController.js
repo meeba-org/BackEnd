@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
 
 //POST /shifts shift
 router.post('/', (req, res) => {
-    req.checkBody('uid', 'uid is required').notEmpty();
+    req.checkBody('user', 'user id is required').notEmpty();
 
     req.getValidationResult()
         .then(function (result) {
@@ -63,7 +63,7 @@ router.put('/', (req, res) => {
 
 //DELETE /shifts/{id} shiftUid
 router.delete('/:id', (req, res) => {
-    req.checkParams('id', 'id is required').notEmpty().isInt();
+    req.checkParams('id', 'id is required').notEmpty();
 
     return req.getValidationResult()
         .then(function (result) {

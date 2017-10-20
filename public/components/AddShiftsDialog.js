@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Dialog, {DialogActions, DialogContent, DialogTitle,} from 'material-ui/Dialog';
-import {calculateCurrentDay} from "../helpers/utils";
+import {calculateCurrentDay, convertTimeStrToMoment, createShift} from "../helpers/utils";
 import moment from "moment";
 import CheckBoxList from "./CheckBoxList";
 
@@ -12,8 +12,17 @@ class AddShiftsDialog extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            employeesToAdd: []
+            employeesToAdd: [],
+            startDate: moment().format("YYYY-MM-DD"),
+            startTime: moment(8, "HH").format("HH:mm"),
+            endTime: moment(8, "HH").add(8, 'hours').format("HH:mm")
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.open && !this.props.open) {
+            this.setState({employeesToAdd: []}); // resetting employeesToAdd
+        }
     }
 
     toggleEmployee(employee, check) {
@@ -33,23 +42,53 @@ class AddShiftsDialog extends Component {
         });
     }
 
+    onCreate() {
+        let {onCreate, onCancel} = this.props;
+        let {employeesToAdd} = this.state;
+
+
+        for (let employee of employeesToAdd) {
+            let shift = this.createShift(employee);
+            onCreate(shift);
+        }
+
+        onCancel();
+    }
+
+    onUpdateStartTime(e) {
+        this.setState({startTime: e.target.value});
+    }
+
+    onUpdateEndTime(e) {
+        this.setState({endTime: e.target.value});
+    }
+
+    onUpdateDateChange(e) {
+        this.setState({startDate: e.target.value});
+    }
+
+    createShift(employee) {
+        let {startDate, startTime, endTime} = this.state;
+
+        let {momentStart, momentEnd} = convertTimeStrToMoment(startDate, startTime, endTime);
+        return createShift(employee, momentStart, momentEnd);
+    }
+
     render() {
-        let {onCancel, onCreate, open, employees} = this.props;
-        let startTime = moment(8, "HH");
-        let endTime = moment(startTime).add(8, 'hours');
+        let {onCancel, open, employees} = this.props;
 
         return (
             <Dialog open={open} onRequestClose={onCancel}>
                 <DialogTitle>הוספת משמרת</DialogTitle>
                 <DialogContent>
-                    <TextField className="daily-date" type="date" defaultValue={calculateCurrentDay()} label="תאריך"
-                               onChange={(e) => this.handleChange(e)} />
+                    <TextField type="date" defaultValue={calculateCurrentDay()} label="תאריך"
+                               onChange={(e) => this.onUpdateDateChange(e)} />
 
-                    <TextField className="elem" type="time" defaultValue={startTime.format("HH:MM")} label="כניסה"
-                               // onChange={(e) => this.onUpdateStartTime(e, "clockOutTime")}
+                    <TextField type="time" defaultValue={this.state.startTime} label="כניסה"
+                               onChange={(e) => this.onUpdateStartTime(e)}
                     />
-                    <TextField className="elem" type="time" defaultValue={endTime.format("HH:MM")} label="יציאה"
-                               // onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}
+                    <TextField type="time" defaultValue={this.state.endTime} label="יציאה"
+                               onChange={(e) => this.onUpdateEndTime(e)}
                     />
 
                     <CheckBoxList
@@ -59,7 +98,7 @@ class AddShiftsDialog extends Component {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onCreate} color="primary">
+                    <Button onClick={() => this.onCreate()} color="primary">
                         {this.state.employeesToAdd.length > 0 ? `הוסף ל- ` + this.state.employeesToAdd.length + ` אנשים` : "הוסף"}
                     </Button>
                     <Button onClick={onCancel} color="primary">
