@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from '../../styles/DailyReport.scss';
 import ShiftsList from "./ShiftsList";
-import {calculateCurrentDay} from "../../helpers/utils";
+import {calculateCurrentDay, ReportModes} from "../../helpers/utils";
 import AddShiftsDialog from "../AddShiftsDialog";
 
 class DailyReport extends React.Component {
@@ -24,7 +24,7 @@ class DailyReport extends React.Component {
         this.props.onDayChange(this.state.currentDay);
     }
 
-    handleChange(event)  {
+    handleChange(event) {
         let currentDay = event.target.value;
 
         this.setState({currentDay});
@@ -40,40 +40,53 @@ class DailyReport extends React.Component {
     }
 
     render() {
-        const {onCreateShift, onUpdateShift, onDeleteShift, employees} = this.props;
+        const {onCreateShift, onUpdateShift, onDeleteShift, employees, mode} = this.props;
         let currentDay = this.state.currentDay;
 
         return (
             <Card id="daily-report">
-                <CardHeader title="דוח יומי"/>
+                {(mode === ReportModes.Daily) &&
+                <div>
+                    <CardHeader title="דוח יומי"/>
 
-                <CardContent className="card-content">
+                    <CardContent className="card-content">
 
+                        <div>
+                            <Button className="add-button" dense raised color="primary"
+                                    onClick={() => this.handleClickOpen()}><AddIcon/></Button>
+                            <AddShiftsDialog
+                                open={this.state.open}
+                                onCreate={onCreateShift}
+                                onCancel={() => this.handleRequestClose()}
+                                employees={employees}
+                            />
+
+                            <TextField className="daily-date" type="date" defaultValue={currentDay} placeholder="תאריך"
+                                       onChange={(e) => this.handleChange(e)}/>
+
+                            <Divider className="divider"/>
+
+                            <FieldArray
+                                name="shifts"
+                                component={ShiftsList}
+                                onDelete={onDeleteShift}
+                                onUpdate={onUpdateShift}
+                                onCreate={onCreateShift}
+                                showNames={true}
+                            />
+                        </div>
+
+                    </CardContent>
+                </div>
+                }
+                {(mode === ReportModes.Live) &&
                     <div>
-                        <Button className="add-button" dense raised color="primary" onClick={() => this.handleClickOpen()}><AddIcon /></Button>
-                        <AddShiftsDialog
-                            open={this.state.open}
-                            onCreate={onCreateShift}
-                            onCancel={() => this.handleRequestClose()}
-                            employees={employees}
-                        />
+                        <CardHeader title="מצב משמרת"/>
 
-                        <TextField className="daily-date" type="date" defaultValue={currentDay} placeholder="תאריך"
-                                   onChange={(e) => this.handleChange(e)} />
-
-                        <Divider className="divider"/>
-
-                        <FieldArray
-                            name="shifts"
-                            component={ShiftsList}
-                            onDelete={onDeleteShift}
-                            onUpdate={onUpdateShift}
-                            onCreate={onCreateShift}
-                            showNames={true}
-                        />
+                        <CardContent className="card-content">
+                        </CardContent>
                     </div>
-
-                </CardContent>
+                }
             </Card>
         );
     }

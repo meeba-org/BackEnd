@@ -1,12 +1,12 @@
 import React from "react";
 import {IndexRoute, Route} from "react-router";
 import AppContainer from "./components/AppContainer";
-import Status from "./components/Status";
 import EmployeesContainer from "./components/employees/EmployeesContainer";
 import LoginContainer from "./components/login/LoginContainer";
 import Dashboard from "./components/Dashboard";
 import MonthlyReportContainer from "./components/reports/MonthlyReportContainer";
 import DailyReportContainer from "./components/reports/DailyReportContainer";
+import {ReportModes} from "./helpers/utils";
 
 export default (
     <Route path="/" component={AppContainer}>
@@ -14,12 +14,12 @@ export default (
         <Route path="/login" component={LoginContainer}/>
         <Route path="/dashboard" component={Dashboard} onEnter={requireAuth}>
             <IndexRoute component={EmployeesContainer} />
-            <Route path="status" component={Status} />
             <Route path="employees" component={EmployeesContainer} />
             <Route path="report" >
                 <IndexRoute component={MonthlyReportContainer} />
                 <Route path="monthly" component={MonthlyReportContainer} />
-                <Route path="daily" component={DailyReportContainer} />
+                <Route path="daily" component={DailyReportContainer} mode={ReportModes.Daily}/>
+                <Route path="live" component={DailyReportContainer} mode={ReportModes.Live}/>
             </Route>
         </Route>
     </Route>

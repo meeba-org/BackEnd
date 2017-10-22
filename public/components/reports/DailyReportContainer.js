@@ -23,6 +23,7 @@ class DailyReportContainer extends React.Component {
             <form onSubmit={handleSubmit(() => {})}>
                 <DailyReport
                     shifts={shifts}
+                    mode={this.props.route.mode}
                     employees={employees}
                     onDeleteShift={deleteShift}
                     onUpdateShift={updateShift}

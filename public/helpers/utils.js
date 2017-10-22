@@ -19,3 +19,8 @@ export const convertTimeStrToMoment = (startDateStr, startTimeStr, endTimeStr) =
     }
     return {momentStart, momentEnd};
 };
+
+export const ReportModes = {
+    Live: 0,
+    Daily: 1
+};

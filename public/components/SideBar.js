@@ -1,10 +1,11 @@
 'use strict';
 
 import React from "react";
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import {withRouter} from 'react-router';
 import PropTypes from 'prop-types';
+
 class SideBar extends React.Component {
 
     updateRoute(route) {
@@ -17,7 +18,7 @@ class SideBar extends React.Component {
             <div>
                 <List>
                     <div>
-                        <ListItem button onTouchTap={() => this.updateRoute("/dashboard/status")}>
+                        <ListItem button onTouchTap={() => this.updateRoute("/dashboard/report/live")}>
                             <ListItemIcon>
                                 <KeyboardArrowLeft />
                             </ListItemIcon>
