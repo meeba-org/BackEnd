@@ -16,7 +16,6 @@ class MonthlyReportContainer extends React.Component {
 
         this.props.fetchMonthlyReport(startDateOfMonth);
         this.props.fetchEmployees();
-
     }
 
     render() {

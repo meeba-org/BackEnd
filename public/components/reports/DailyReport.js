@@ -8,29 +8,20 @@ import CSSModules from "react-css-modules";
 import styles from '../../styles/DailyReport.scss';
 import ShiftsList from "./ShiftsList";
 import {calculateCurrentDay} from "../../helpers/utils";
+import AddShiftsDialog from "../AddShiftsDialog";
 
 class DailyReport extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            collapsed: null,
-            currentDay: calculateCurrentDay()
+            currentDay: calculateCurrentDay(),
+            open: false,
         };
     }
 
     componentDidMount() {
         this.props.onDayChange(this.state.currentDay);
-    }
-
-    isCollapsed(fields, index) {
-        let employee = fields.get(index);
-        return this.state.collapsed !== employee.uid;
-    }
-
-    onToggle(name) {
-        let newCollapsedelement = this.state.collapsed === name ? null : name;
-        this.setState({collapsed: newCollapsedelement});
     }
 
     handleChange(event)  {
@@ -40,8 +31,16 @@ class DailyReport extends React.Component {
         this.props.onDayChange(currentDay);
     }
 
+    handleClickOpen() {
+        this.setState({open: true});
+    }
+
+    handleRequestClose() {
+        this.setState({open: false});
+    }
+
     render() {
-        const {onCreateShift, onUpdateShift, onDeleteShift} = this.props;
+        const {onCreateShift, onUpdateShift, onDeleteShift, employees} = this.props;
         let currentDay = this.state.currentDay;
 
         return (
@@ -51,7 +50,13 @@ class DailyReport extends React.Component {
                 <CardContent className="card-content">
 
                     <div>
-                        <Button className="add-button" dense raised color="primary" onClick={() => this.onCreate(fields)}><AddIcon /></Button>
+                        <Button className="add-button" dense raised color="primary" onClick={() => this.handleClickOpen()}><AddIcon /></Button>
+                        <AddShiftsDialog
+                            open={this.state.open}
+                            onCreate={onCreateShift}
+                            onCancel={() => this.handleRequestClose()}
+                            employees={employees}
+                        />
 
                         <TextField className="daily-date" type="date" defaultValue={currentDay} placeholder="תאריך"
                                    onChange={(e) => this.handleChange(e)} />
@@ -76,6 +81,7 @@ class DailyReport extends React.Component {
 
 DailyReport.propTypes = {
     shifts: PropTypes.array,
+    employees: PropTypes.array,
     onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,

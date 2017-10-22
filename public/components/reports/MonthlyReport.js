@@ -119,6 +119,7 @@ class MonthlyReport extends React.Component {
 
 MonthlyReport.propTypes = {
     fields: PropTypes.object,
+    employees: PropTypes.array,
     onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,

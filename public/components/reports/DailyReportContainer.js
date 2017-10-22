@@ -5,6 +5,7 @@ import {reduxForm} from "redux-form";
 import PropTypes from 'prop-types';
 import {fetchDailyReport} from "../../actions/shiftsActions";
 import DailyReport from "./DailyReport";
+import {fetchEmployees} from "../../actions/employeesActions";
 
 class DailyReportContainer extends React.Component {
 
@@ -13,14 +14,16 @@ class DailyReportContainer extends React.Component {
             return;
 
         this.props.fetchDailyReport(startDateOfMonth);
+        this.props.fetchEmployees();
     }
 
     render() {
-        const {handleSubmit, updateShift, createShift, deleteShift, shifts} = this.props;
+        const {handleSubmit, updateShift, createShift, deleteShift, shifts, employees} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <DailyReport
                     shifts={shifts}
+                    employees={employees}
                     onDeleteShift={deleteShift}
                     onUpdateShift={updateShift}
                     onCreateShift={createShift}
@@ -33,8 +36,10 @@ class DailyReportContainer extends React.Component {
 
 DailyReportContainer.propTypes = {
     shifts: PropTypes.array,
+    employees: PropTypes.array,
     handleSubmit: PropTypes.func.isRequired,
     fetchDailyReport: PropTypes.func.isRequired,
+    fetchEmployees: PropTypes.func.isRequired,
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
@@ -43,6 +48,7 @@ DailyReportContainer.propTypes = {
 function mapStateToProps(state) {
     return {
         shifts: state.shifts,
+        employees: state.employees,
         initialValues: {
             shifts: state.shifts
         }
@@ -52,6 +58,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchDailyReport: (startDate) => {dispatch( fetchDailyReport(startDate)); },
+        fetchEmployees: () => dispatch(fetchEmployees()),
         updateShift: (shift) => dispatch(updateShift(shift)),
         createShift: (shift) => dispatch(createShift(shift)),
         deleteShift: (shift) => dispatch(deleteShift(shift))

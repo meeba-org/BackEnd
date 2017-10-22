@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import List, {ListItem, ListItemText} from 'material-ui/List';
 import {Checkbox} from "material-ui";
+import PropTypes from 'prop-types';
 
 class CheckBoxList extends Component {
     constructor(props) {
@@ -55,7 +56,10 @@ class CheckBoxList extends Component {
     }
 }
 
-CheckBoxList.propTypes = {};
+CheckBoxList.propTypes = {
+    onCheck: PropTypes.func.isRequired,
+    items: PropTypes.array.isRequired,
+};
 CheckBoxList.defaultProps = {};
 
 export default CheckBoxList;

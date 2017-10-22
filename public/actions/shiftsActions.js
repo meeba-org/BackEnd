@@ -1,6 +1,5 @@
 import * as actionsTypes from "./actionTypes";
 import callApi from "./api";
-import {arrayPop, arrayPush} from 'redux-form';
 
 function createShiftStart() {
     return {type: actionsTypes.CREATE_SHIFT_START};
@@ -18,11 +17,6 @@ function createShiftError(json) {
         type: actionsTypes.CREATE_SHIFT_ERROR,
         data: json
     };
-}
-
-function dispatchUpdateNewShiftsInForm(dispatch, newShift) {
-    dispatch(arrayPop('shiftsForm', 'shifts'));
-    dispatch(arrayPush('shiftsForm', 'shifts', newShift));
 }
 
 export function createShift(shift) {

@@ -51,6 +51,14 @@ class Shift extends React.Component {
         onDelete(input.value);
     }
 
+    extractShiftInfo() {
+        let {clockInTime, clockOutTime} = this.props.input.value;
+        let startDateStr = moment(clockInTime).format("YYYY-MM-DD");
+        let startTimeStr = moment(clockInTime).format("HH:mm");
+        let endTimeStr = moment(clockOutTime).format("HH:mm");
+        return {startDateStr, startTimeStr, endTimeStr};
+    }
+
     render() {
         let {showNames, input} = this.props;
         let {startDateStr, startTimeStr, endTimeStr} = this.extractShiftInfo();
@@ -58,7 +66,7 @@ class Shift extends React.Component {
         return (
             <div className="shift">
                 {showNames &&
-                    input.value.user.firstName
+                input.value.user.firstName
                 }
                 <TextField className="elem" type="date" value={startDateStr} placeholder="תאריך"
                            onChange={(e) => this.onUpdateStartDate(e)}/>
@@ -69,14 +77,6 @@ class Shift extends React.Component {
                 <IconButton className="elem" onClick={() => this.onDelete()}><DeleteIcon/></IconButton>
             </div>
         );
-    }
-
-    extractShiftInfo() {
-        let {clockInTime, clockOutTime} = this.props.input.value;
-        let startDateStr = moment(clockInTime).format("YYYY-MM-DD");
-        let startTimeStr = moment(clockInTime).format("HH:mm");
-        let endTimeStr = moment(clockOutTime).format("HH:mm");
-        return {startDateStr, startTimeStr, endTimeStr};
     }
 }
 

@@ -5,6 +5,7 @@ import Dialog, {DialogActions, DialogContent, DialogTitle,} from 'material-ui/Di
 import {calculateCurrentDay, convertTimeStrToMoment, createShift} from "../helpers/utils";
 import moment from "moment";
 import CheckBoxList from "./CheckBoxList";
+import PropTypes from 'prop-types';
 
 
 class AddShiftsDialog extends Component {
@@ -109,7 +110,13 @@ class AddShiftsDialog extends Component {
     }
 }
 
-AddShiftsDialog.propTypes = {};
+AddShiftsDialog.propTypes = {
+    open: PropTypes.bool.isRequired,
+    onCreate: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    employees: PropTypes.array.isRequired,
+
+};
 AddShiftsDialog.defaultProps = {};
 
 export default AddShiftsDialog;
