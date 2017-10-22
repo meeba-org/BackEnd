@@ -2,11 +2,11 @@ import moment from "moment";
 
 export const calculateCurrentDay = () => moment().format("YYYY-MM-DD");
 
-export const createShift = (shift, momentStart, momentEnd) => {
+export const createShift = (employee, momentStart, momentEnd) => {
     return {
-        ...shift,
         clockInTime: momentStart,
         clockOutTime: momentEnd,
+        user: employee._id,
     };
 };
 

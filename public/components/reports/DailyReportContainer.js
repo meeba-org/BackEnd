@@ -16,10 +16,11 @@ class DailyReportContainer extends React.Component {
     }
 
     render() {
-        const {handleSubmit, updateShift, createShift, deleteShift} = this.props;
+        const {handleSubmit, updateShift, createShift, deleteShift, shifts} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <DailyReport
+                    shifts={shifts}
                     onDeleteShift={deleteShift}
                     onUpdateShift={updateShift}
                     onCreateShift={createShift}
@@ -41,6 +42,7 @@ DailyReportContainer.propTypes = {
 
 function mapStateToProps(state) {
     return {
+        shifts: state.shifts,
         initialValues: {
             shifts: state.shifts
         }

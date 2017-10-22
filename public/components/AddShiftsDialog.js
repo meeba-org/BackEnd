@@ -36,7 +36,6 @@ class AddShiftsDialog extends Component {
             newEmployeesToAdd.splice(currentIndex, 1);
         }
 
-        console.log(newEmployeesToAdd);
         this.setState({
             employeesToAdd: newEmployeesToAdd,
         });

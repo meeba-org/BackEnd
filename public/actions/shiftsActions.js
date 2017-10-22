@@ -26,7 +26,6 @@ function dispatchUpdateNewShiftsInForm(dispatch, newShift) {
 }
 
 export function createShift(shift) {
-    console.log(shift);
     return function (dispatch) {
         dispatch(createShiftStart());
         return callApi({

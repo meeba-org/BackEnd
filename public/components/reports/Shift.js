@@ -9,40 +9,24 @@ import {convertTimeStrToMoment} from "../../helpers/utils";
 
 class Shift extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        let {clockInTime, clockOutTime, location} = this.props.input.value;
-
-        this.state = {
-            startDateStr: moment(clockInTime).format("YYYY-MM-DD"),
-            startTimeStr: moment(clockInTime).format("HH:mm"),
-            endTimeStr: moment(clockOutTime).format("HH:mm"),
-            location: location
-        };
-    }
-
     onUpdateStartDate(e) {
-        let {startTimeStr, endTimeStr} = this.state;
+        let {startTimeStr, endTimeStr} = this.extractShiftInfo();
         let newStartDateStr = e.target.value;
 
-        this.setState({startDateStr: newStartDateStr});
         this.onUpdate(newStartDateStr, startTimeStr, endTimeStr);
     }
 
     onUpdateStartTime(e) {
-        let {startDateStr, endTimeStr} = this.state;
+        let {startDateStr, endTimeStr} = this.extractShiftInfo();
         let newStartTimeStr = e.target.value;
 
-        this.setState({startTimeStr: newStartTimeStr});
         this.onUpdate(startDateStr, newStartTimeStr, endTimeStr);
     }
 
     onUpdateEndTime(e) {
-        let {startDateStr, startTimeStr} = this.state;
+        let {startDateStr, startTimeStr} = this.extractShiftInfo();
         let newEndTimeStr = e.target.value;
 
-        this.setState({endTimeStr: newEndTimeStr});
         this.onUpdate(startDateStr, startTimeStr, newEndTimeStr);
     }
 
@@ -61,48 +45,6 @@ class Shift extends React.Component {
         onUpdate(shift);
     }
 
-    // onUpdateStartDate(e) {
-    //     let {input} = this.props;
-    //
-    //     let newStartDate = e.target.value;
-    //     let oldStartTime = moment(input.value.clockInTime).format("HH:mm");
-    //     let newValue = moment(newStartDate + ' ' + oldStartTime, 'YYYY-MM-DD HH:mm');
-    //
-    //     this.onUpdate("clockInTime", newValue.format());
-    // }
-    //
-    // onUpdateStartTime(e) {
-    //     let {input} = this.props;
-    //
-    //     let oldStartDate = moment(input.value.clockInTime).format("YYYY-MM-DD");
-    //     let newStartTime = e.target.value;
-    //     let newValue = moment(oldStartDate + ' ' + newStartTime, 'YYYY-MM-DD HH:mm');
-    //
-    //     this.onUpdate("clockInTime", newValue.format());
-    // }
-    //
-    // onUpdateEndTime(e) {
-    //     let {input} = this.props;
-    //
-    //     let oldEndDate = moment(input.value.clockOutTime).format("YYYY-MM-DD");
-    //     let newEndTime = e.target.value;
-    //     let newValue = moment(oldEndDate + ' ' + newEndTime, 'YYYY-MM-DD HH:mm');
-    //
-    //     this.onUpdate("clockOutTime", newValue.format());
-    // }
-
-    // onUpdate(fieldName, value) {
-    //     let {input, onUpdate} = this.props;
-    //
-    //     let entity = {
-    //         ...input.value,
-    //         [fieldName]: value,
-    //     };
-    //
-    //     input.onChange(entity);
-    //     onUpdate(entity);
-    // }
-
     onDelete() {
         let {onDelete, input} = this.props;
 
@@ -111,21 +53,30 @@ class Shift extends React.Component {
 
     render() {
         let {showNames, input} = this.props;
+        let {startDateStr, startTimeStr, endTimeStr} = this.extractShiftInfo();
 
         return (
             <div className="shift">
                 {showNames &&
                     input.value.user.firstName
                 }
-                <TextField className="elem" type="date" defaultValue={this.state.startDateStr} placeholder="תאריך"
+                <TextField className="elem" type="date" value={startDateStr} placeholder="תאריך"
                            onChange={(e) => this.onUpdateStartDate(e)}/>
-                <TextField className="elem" type="time" defaultValue={this.state.startTimeStr} placeholder="כניסה"
+                <TextField className="elem" type="time" value={startTimeStr} placeholder="כניסה"
                            onChange={(e) => this.onUpdateStartTime(e, "clockOutTime")}/>
-                <TextField className="elem" type="time" defaultValue={this.state.endTimeStr} placeholder="יציאה"
+                <TextField className="elem" type="time" value={endTimeStr} placeholder="יציאה"
                            onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}/>
                 <IconButton className="elem" onClick={() => this.onDelete()}><DeleteIcon/></IconButton>
             </div>
         );
+    }
+
+    extractShiftInfo() {
+        let {clockInTime, clockOutTime} = this.props.input.value;
+        let startDateStr = moment(clockInTime).format("YYYY-MM-DD");
+        let startTimeStr = moment(clockInTime).format("HH:mm");
+        let endTimeStr = moment(clockOutTime).format("HH:mm");
+        return {startDateStr, startTimeStr, endTimeStr};
     }
 }
 

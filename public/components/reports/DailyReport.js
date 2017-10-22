@@ -41,7 +41,7 @@ class DailyReport extends React.Component {
     }
 
     render() {
-        const {fields, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
+        const {onCreateShift, onUpdateShift, onDeleteShift} = this.props;
         let currentDay = this.state.currentDay;
 
         return (
@@ -75,10 +75,11 @@ class DailyReport extends React.Component {
 }
 
 DailyReport.propTypes = {
-    fields: PropTypes.object,
+    shifts: PropTypes.array,
     onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
     onDayChange: PropTypes.func.isRequired,
 };
+
 export default CSSModules(DailyReport, styles);
