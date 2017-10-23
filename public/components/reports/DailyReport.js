@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from '../../styles/DailyReport.scss';
 import ShiftsList from "./ShiftsList";
-import {calculateCurrentDay, ReportModes} from "../../helpers/utils";
+import {calculateCurrentDay, calculateCurrentTime, ReportModes} from "../../helpers/utils";
 import AddShiftsDialog from "../AddShiftsDialog";
 
 class DailyReport extends React.Component {
@@ -16,6 +16,7 @@ class DailyReport extends React.Component {
 
         this.state = {
             currentDay: calculateCurrentDay(),
+            currentTime: calculateCurrentTime(),
             open: false,
         };
     }
@@ -41,7 +42,7 @@ class DailyReport extends React.Component {
 
     render() {
         const {onCreateShift, onUpdateShift, onDeleteShift, employees, mode} = this.props;
-        let currentDay = this.state.currentDay;
+        let {currentTime, currentDay} = this.state;
 
         return (
             <Card id="daily-report">
@@ -83,7 +84,11 @@ class DailyReport extends React.Component {
                     <div>
                         <CardHeader title="מצב משמרת"/>
 
-                        <CardContent className="card-content">
+                        <CardContent className="card-content" >
+                            <div className="date">{currentDay}</div>
+                            <div className="date">{currentTime}</div>
+
+
                         </CardContent>
                     </div>
                 }

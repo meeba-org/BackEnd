@@ -5,7 +5,7 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import moment from "moment";
 import styles from "../../styles/Shift.scss";
 import CSSModules from "react-css-modules";
-import {convertTimeStrToMoment} from "../../helpers/utils";
+import {convertTimeStrToMoment, DATE_FORMAT, TIME_FORMAT} from "../../helpers/utils";
 
 class Shift extends React.Component {
 
@@ -53,9 +53,9 @@ class Shift extends React.Component {
 
     extractShiftInfo() {
         let {clockInTime, clockOutTime} = this.props.input.value;
-        let startDateStr = moment(clockInTime).format("YYYY-MM-DD");
-        let startTimeStr = moment(clockInTime).format("HH:mm");
-        let endTimeStr = moment(clockOutTime).format("HH:mm");
+        let startDateStr = moment(clockInTime).format(DATE_FORMAT);
+        let startTimeStr = moment(clockInTime).format(TIME_FORMAT);
+        let endTimeStr = moment(clockOutTime).format(TIME_FORMAT);
         return {startDateStr, startTimeStr, endTimeStr};
     }
 

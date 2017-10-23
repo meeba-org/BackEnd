@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Dialog, {DialogActions, DialogContent, DialogTitle,} from 'material-ui/Dialog';
-import {calculateCurrentDay, convertTimeStrToMoment, createShift} from "../helpers/utils";
+import {calculateCurrentDay, convertTimeStrToMoment, createShift, DATE_FORMAT, TIME_FORMAT} from "../helpers/utils";
 import moment from "moment";
 import CheckBoxList from "./CheckBoxList";
 import PropTypes from 'prop-types';
@@ -14,9 +14,9 @@ class AddShiftsDialog extends Component {
         super(props);
         this.state = {
             employeesToAdd: [],
-            startDate: moment().format("YYYY-MM-DD"),
-            startTime: moment(8, "HH").format("HH:mm"),
-            endTime: moment(8, "HH").add(8, 'hours').format("HH:mm")
+            startDate: moment().format(DATE_FORMAT),
+            startTime: moment(8, "HH").format(TIME_FORMAT),
+            endTime: moment(8, "HH").add(8, 'hours').format(TIME_FORMAT)
         };
     }
 
