@@ -9,6 +9,7 @@ import styles from '../../styles/DailyReport.scss';
 import ShiftsList from "./ShiftsList";
 import {calculateCurrentDay, calculateCurrentTime, ReportModes} from "../../helpers/utils";
 import AddShiftsDialog from "../AddShiftsDialog";
+import AutoComplete from "../AutoComplete";
 
 class DailyReport extends React.Component {
     constructor(props) {
@@ -88,6 +89,7 @@ class DailyReport extends React.Component {
                             <div className="date">{currentDay}</div>
                             <div className="date">{currentTime}</div>
 
+                            <AutoComplete placeholder="הכנס עובד למשמרת" />
 
                         </CardContent>
                     </div>
