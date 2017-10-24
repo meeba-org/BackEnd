@@ -38,6 +38,7 @@ class DailyReportContainer extends React.Component {
 DailyReportContainer.propTypes = {
     shifts: PropTypes.array,
     employees: PropTypes.array,
+    route: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     fetchDailyReport: PropTypes.func.isRequired,
     fetchEmployees: PropTypes.func.isRequired,
