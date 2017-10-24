@@ -89,7 +89,7 @@ class DailyReport extends React.Component {
                             <div className="date">{currentDay}</div>
                             <div className="date">{currentTime}</div>
 
-                            <AutoComplete placeholder="הכנס עובד למשמרת" />
+                            <AutoComplete placeholder="הכנס עובד למשמרת" suggestions={employees.map(employee => employee.firstName)}/>
 
                         </CardContent>
                     </div>
