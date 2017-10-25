@@ -1,5 +1,5 @@
 import React from "react";
-import {IndexRoute, Route} from "react-router";
+import {IndexRedirect, Route} from "react-router";
 import AppContainer from "./components/AppContainer";
 import EmployeesContainer from "./components/employees/EmployeesContainer";
 import LoginContainer from "./components/login/LoginContainer";
@@ -10,13 +10,13 @@ import {ReportModes} from "./helpers/utils";
 
 export default (
     <Route path="/" component={AppContainer}>
-        <IndexRoute component={Dashboard} onEnter={requireAuth} />
+        <IndexRedirect to="/dashboard" />
         <Route path="/login" component={LoginContainer}/>
         <Route path="/dashboard" component={Dashboard} onEnter={requireAuth}>
-            <IndexRoute component={EmployeesContainer} />
+            <IndexRedirect to="/dashboard/report" />
             <Route path="employees" component={EmployeesContainer} />
             <Route path="report" >
-                <IndexRoute component={MonthlyReportContainer} />
+                <IndexRedirect to="/dashboard/report/live" />
                 <Route path="monthly" component={MonthlyReportContainer} />
                 <Route path="daily" component={DailyReportContainer} mode={ReportModes.Report}/>
                 <Route path="live" component={DailyReportContainer} mode={ReportModes.Live}/>

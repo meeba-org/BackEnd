@@ -60,11 +60,11 @@ class Shift extends React.Component {
         onDelete(input.value);
     }
 
-    onMouseEnter = (e) => {
+    onMouseEnter = () => {
         this.setState({hover: true});
     };
 
-    onMouseLeave = (e) => {
+    onMouseLeave = () => {
         this.setState({hover: false});
     };
 
@@ -81,7 +81,7 @@ class Shift extends React.Component {
                         <IconButton>{icon}</IconButton>
                     }
                     {showNames &&
-                    <span className="name">{shift.user.firstName}</span>
+                    <div className="name">{shift.user.firstName}</div>
                     }
                 </div>
 

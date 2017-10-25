@@ -21,6 +21,13 @@ function muiTheme() {
         typography: {
             fontFamily: '"Assistant", sans-serif'
         },
+        overrides: {
+            MuiIconButton: {
+                root: {
+                    height: "100%"
+                }
+            }
+        }
     });
 }
 const store = createStore();

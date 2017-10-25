@@ -8,6 +8,11 @@
     }
 
     .name-container {
+        display: flex;
+        .name {
+            padding-top: 5px;
+            min-width: 50px;
+        }
         //width: 200px;
     }
 }
