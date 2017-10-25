@@ -29,7 +29,7 @@ export const convertTimeStrToMoment = (startDateStr, startTimeStr, endTimeStr) =
 
 export const ReportModes = {
     Live: 0,
-    Daily: 1
+    Report: 1
 };
 
 export const convertMomentToTimeStr = (shift) => {

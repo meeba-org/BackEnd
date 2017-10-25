@@ -53,7 +53,7 @@ class DailyReport extends React.Component {
 
         return (
             <Card>
-                {(mode === ReportModes.Daily) &&
+                {(mode === ReportModes.Report) &&
                 <div>
                     <CardHeader title="דוח יומי"/>
 

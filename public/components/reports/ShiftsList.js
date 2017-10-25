@@ -5,8 +5,6 @@ import Shift from "./Shift";
 import styles from "../../styles/ShiftsList.scss";
 import CSSModules from "react-css-modules";
 import NoData from "../NoData";
-import {ReportModes} from "../../helpers/utils";
-import LiveShift from "./LiveShift";
 
 class ShiftsList extends React.Component {
     onCreate(fields) {
@@ -32,11 +30,12 @@ class ShiftsList extends React.Component {
             <div className="shifts-list">
                 {fields && fields.map((shiftName, index) =>
                     <Field
-                        component={mode == ReportModes.Daily ? Shift : LiveShift}
+                        component={Shift}
                         name={shiftName} key={index}
                         onDelete={()=> this.onDelete(fields, index)}
                         onUpdate={(shift) => this.onUpdate(shift)}
                         showNames={showNames}
+                        mode={mode}
                     />
                 )}
                 {(!fields || (fields.length == 0)) &&

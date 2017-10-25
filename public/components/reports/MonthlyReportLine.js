@@ -8,6 +8,7 @@ import ShiftsList from "./ShiftsList";
 import styles from "../../styles/MonthlyReportLine.scss";
 import CSSModules from "react-css-modules";
 import HoursBar from '../HoursBar';
+import {ReportModes} from "../../helpers/utils";
 
 class MonthlyReportLine extends React.Component {
     constructor(props) {
@@ -34,6 +35,7 @@ class MonthlyReportLine extends React.Component {
                     onUpdate={onUpdateShift}
                     onCreate={onCreateShift}
                     showNames={false}
+                    mode={ReportModes.Report}
                 />
                 }
             </div>
