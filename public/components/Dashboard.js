@@ -21,7 +21,7 @@ class Dashboard extends React.Component {
                     <Grid container id="container">
                         <Grid item xs={3}>
                             <Paper id="sideBar-container">
-                                <SideBar/>
+                                <SideBar />
                             </Paper>
                         </Grid>
                         <Grid item xs={9}>
