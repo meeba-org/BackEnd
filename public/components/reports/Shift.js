@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import {IconButton, TextField} from "material-ui";
 import DeleteIcon from 'material-ui-icons/Delete';

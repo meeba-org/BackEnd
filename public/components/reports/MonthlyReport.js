@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import {Button, Card, Divider, Input} from "material-ui";
 import Select from 'material-ui/Select';
 import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";

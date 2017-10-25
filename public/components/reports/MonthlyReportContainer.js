@@ -1,12 +1,9 @@
-import * as React from "react";
+import React from "react";
 import {connect} from "react-redux";
 import {createShift, deleteShift, updateShift} from "../../actions";
 import {FieldArray, reduxForm} from "redux-form";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
-import {fetchMonthlyReport} from "../../actions/shiftsActions";
-import {fetchEmployees} from "../../actions/employeesActions";
-import {createEmployeeShiftsReports} from "../../helpers/ShiftAnalyzer";
 
 class MonthlyReportContainer extends React.Component {
 
@@ -14,8 +11,8 @@ class MonthlyReportContainer extends React.Component {
         if (!startDateOfMonth)
             return;
 
-        this.props.fetchMonthlyReport(startDateOfMonth);
-        this.props.fetchEmployees();
+        // this.props.fetchMonthlyReport(startDateOfMonth);
+         // this.props.fetchEmployees();
     }
 
     render() {
@@ -47,7 +44,7 @@ MonthlyReportContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-    const employeeShiftsReports = createEmployeeShiftsReports(state.shifts);
+    const employeeShiftsReports = state.shifts;//createEmployeeShiftsReports(state.shifts);
     const employees = state.employees;
     return {
         employees,
@@ -59,8 +56,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchMonthlyReport: (startDate) => dispatch(fetchMonthlyReport(startDate)) ,
-        fetchEmployees: () => dispatch(fetchEmployees()),
         updateShift: (shift) => dispatch(updateShift(shift)),
         createShift: (shift) => dispatch(createShift(shift)),
         deleteShift: (shift) => dispatch(deleteShift(shift))
