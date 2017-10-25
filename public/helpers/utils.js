@@ -36,7 +36,7 @@ export const convertMomentToTimeStr = (shift) => {
     let {clockInTime, clockOutTime} = shift;
     let startDateStr = moment(clockInTime).format(DATE_FORMAT);
     let startTimeStr = moment(clockInTime).format(TIME_FORMAT);
-    let endTimeStr = clockOutTime == null ? null : moment(clockOutTime).format(TIME_FORMAT);
+    let endTimeStr = clockOutTime == null ? undefined : moment(clockOutTime).format(TIME_FORMAT);
     return {startDateStr, startTimeStr, endTimeStr};
 };
 
