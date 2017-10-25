@@ -47,14 +47,17 @@ function processUsersAdditionalInfo(userMap) {
 }
 
 export const analyzeHours = (shift) => {
-    let clockOut = moment(shift.clockOutTime);
-    let clockIn = moment(shift.clockInTime);
-
     let additionalInfo = {
         regularHours : 0,
         extra125Hours: 0,
         extra150Hours: 0
     };
+
+    let clockOut = moment(shift.clockOutTime);
+    let clockIn = moment(shift.clockInTime);
+
+    if (!clockOut.isValid() || !clockIn.isValid())
+        return additionalInfo;
 
     let shiftLength = clockOut.diff(clockIn, 'hours', true);
 

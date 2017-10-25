@@ -93,7 +93,7 @@ class Shift extends React.Component {
                 <TextField className="elem" type="time" value={startTimeStr} placeholder="כניסה"
                            onChange={(e) => this.onUpdateStartTime(e, "clockOutTime")}/>
 
-                {(mode == ReportModes.Report || endTimeStr !== null) &&
+                {(mode == ReportModes.Report || !!endTimeStr) &&
                 <TextField className="elem" type="time" value={endTimeStr} placeholder="יציאה"
                            onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}/>
                 }

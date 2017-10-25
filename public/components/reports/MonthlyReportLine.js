@@ -11,10 +11,6 @@ import HoursBar from '../HoursBar';
 import {ReportModes} from "../../helpers/utils";
 
 class MonthlyReportLine extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
         let toggleButton = isCollapsed ? <KeyboardArrowLeft/> : <KeyboardArrowDown/>;
