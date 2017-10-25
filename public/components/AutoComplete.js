@@ -139,7 +139,7 @@ class AutoComplete extends React.Component {
         });
     };
 
-    handleSelect = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
+    handleSelect = (event, { suggestion}) => {
         this.props.onSelect(suggestion);
     };
 
@@ -178,6 +178,7 @@ AutoComplete.propTypes = {
     classes: PropTypes.object.isRequired,
     suggestions: PropTypes.array.isRequired,
     placeholder: PropTypes.string,
+    onSelect: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(AutoComplete);

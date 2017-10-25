@@ -136,6 +136,7 @@ DailyReport.propTypes = {
     onDeleteShift: PropTypes.func.isRequired,
     onDayChange: PropTypes.func.isRequired,
     mode: PropTypes.number.isRequired,
+    theme: PropTypes.object
 };
 
 export default CSSModules(withTheme()(DailyReport), styles);
