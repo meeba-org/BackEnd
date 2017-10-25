@@ -7,9 +7,10 @@ import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from '../../styles/DailyReport.scss';
 import ShiftsList from "./ShiftsList";
-import {calculateCurrentDay, calculateCurrentTime, ReportModes} from "../../helpers/utils";
 import AddShiftsDialog from "../AddShiftsDialog";
+import {calculateCurrentDay, calculateCurrentTime, createShiftForClockIn, ReportModes} from "../../helpers/utils";
 import AutoComplete from "../AutoComplete";
+import {withTheme} from 'material-ui/styles';
 
 class DailyReport extends React.Component {
     constructor(props) {
@@ -17,7 +18,6 @@ class DailyReport extends React.Component {
 
         this.state = {
             currentDay: calculateCurrentDay(),
-            currentTime: calculateCurrentTime(),
             open: false,
         };
     }
@@ -41,19 +41,25 @@ class DailyReport extends React.Component {
         this.setState({open: false});
     }
 
+    onClockIn = (employee) => {
+        let shift = createShiftForClockIn(employee);
+        this.props.onCreateShift(shift);
+    };
+
     render() {
         const {onCreateShift, onUpdateShift, onDeleteShift, employees, mode} = this.props;
-        let {currentTime, currentDay} = this.state;
+        let {currentDay} = this.state;
+        let {primary, secondary} = this.props.theme.palette.text;
 
         return (
-            <Card id="daily-report">
+            <Card>
                 {(mode === ReportModes.Daily) &&
                 <div>
                     <CardHeader title="דוח יומי"/>
 
                     <CardContent className="card-content">
 
-                        <div>
+                        <div id="daily-report">
                             <Button className="add-button" dense raised color="primary"
                                     onClick={() => this.handleClickOpen()}><AddIcon/></Button>
                             <AddShiftsDialog
@@ -75,6 +81,7 @@ class DailyReport extends React.Component {
                                 onUpdate={onUpdateShift}
                                 onCreate={onCreateShift}
                                 showNames={true}
+                                mode={mode}
                             />
                         </div>
 
@@ -82,17 +89,39 @@ class DailyReport extends React.Component {
                 </div>
                 }
                 {(mode === ReportModes.Live) &&
-                    <div>
-                        <CardHeader title="מצב משמרת"/>
+                <div>
+                    <CardHeader title="מצב משמרת"/>
 
-                        <CardContent className="card-content" >
-                            <div className="date">{currentDay}</div>
-                            <div className="date">{currentTime}</div>
+                    <CardContent className="card-content">
+                        <div id="live-report">
+                            <div className="live-time" style={{color: primary}}>{calculateCurrentTime()}</div>
+                            <div className="live-date" style={{color: secondary}}>{calculateCurrentDay("DD/MM/YYYY")}</div>
 
-                            <AutoComplete placeholder="הכנס עובד למשמרת" suggestions={employees.map(employee => employee.firstName)}/>
+                            <div className="auto-complete">
+                                <AutoComplete
+                                    placeholder="הכנס עובד למשמרת"
+                                    suggestions={employees.map(employee => ({
+                                            ...employee,
+                                            label: employee.firstName
+                                        })
+                                    )}
+                                    onSelect={this.onClockIn}
+                                />
+                            </div>
 
-                        </CardContent>
-                    </div>
+                            <FieldArray
+                                name="shifts"
+                                component={ShiftsList}
+                                onDelete={onDeleteShift}
+                                onUpdate={onUpdateShift}
+                                onCreate={onCreateShift}
+                                showNames={true}
+                                mode={mode}
+                            />
+                        </div>
+
+                    </CardContent>
+                </div>
                 }
             </Card>
         );
@@ -106,7 +135,8 @@ DailyReport.propTypes = {
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
     onDayChange: PropTypes.func.isRequired,
-    mode: PropTypes.string.isRequired,
+    mode: PropTypes.number.isRequired,
 };
 
-export default CSSModules(DailyReport, styles);
+export default CSSModules(withTheme()(DailyReport), styles);
+

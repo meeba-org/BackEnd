@@ -31,8 +31,8 @@ function renderInput(inputProps) {
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
-    const matches = match(suggestion, query);
-    const parts = parse(suggestion, matches);
+    const matches = match(suggestion.label, query);
+    const parts = parse(suggestion.label, matches);
 
     return (
         <MenuItem selected={isHighlighted} component="div">
@@ -64,7 +64,7 @@ function renderSuggestionsContainer(options) {
 }
 
 function getSuggestionValue(suggestion) {
-    return suggestion;
+    return suggestion.label;
 }
 
 function getSuggestions(value, suggestions) {
@@ -76,7 +76,7 @@ function getSuggestions(value, suggestions) {
         ? []
         : suggestions.filter(suggestion => {
             const keep =
-                count < 5 && suggestion.toLowerCase().slice(0, inputLength) === inputValue;
+                count < 5 && suggestion.label.toLowerCase().slice(0, inputLength) === inputValue;
 
             if (keep) {
                 count += 1;
@@ -90,7 +90,6 @@ const styles = theme => ({
     container: {
         flexGrow: 1,
         position: 'relative',
-        height: 200,
     },
     suggestionsContainerOpen: {
         position: 'absolute',
@@ -140,6 +139,10 @@ class AutoComplete extends React.Component {
         });
     };
 
+    handleSelect = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
+        this.props.onSelect(suggestion);
+    };
+
     render() {
         const { classes, placeholder } = this.props;
 
@@ -158,6 +161,7 @@ class AutoComplete extends React.Component {
                 renderSuggestionsContainer={renderSuggestionsContainer}
                 getSuggestionValue={getSuggestionValue}
                 renderSuggestion={renderSuggestion}
+                onSuggestionSelected={this.handleSelect}
                 inputProps={{
                     autoFocus: true,
                     classes,
