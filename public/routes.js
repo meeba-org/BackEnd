@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard";
 import MonthlyReportContainer from "./components/reports/MonthlyReportContainer";
 import DailyReportContainer from "./components/reports/DailyReportContainer";
 import {ReportModes} from "./helpers/utils";
+import CompanyContainer from "./components/company/CompanyContainer";
 
 export default (
     <Route path="/" component={AppContainer}>
@@ -15,6 +16,7 @@ export default (
         <Route path="/dashboard" component={Dashboard} onEnter={requireAuth}>
             <IndexRedirect to="/dashboard/report" />
             <Route path="employees" component={EmployeesContainer} />
+            <Route path="company" component={CompanyContainer} />
             <Route path="report" >
                 <IndexRedirect to="/dashboard/report/live" />
                 <Route path="monthly" component={MonthlyReportContainer} />

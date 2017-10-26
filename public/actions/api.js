@@ -16,9 +16,6 @@ export default function callApi(apiConfig) {
 
     apiConfig.url = `${config.API_URL}${apiConfig.url}`;
 
-    return axios(apiConfig).then(response => {
-        return response.data;
-    }).catch(error => {
-        return error;
-    });
+    return axios(apiConfig)
+        .then(response => response.data);
 }

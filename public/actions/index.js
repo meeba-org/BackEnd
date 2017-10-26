@@ -4,6 +4,7 @@ import config from "../config";
 
 export * from "./employeesActions";
 export * from "./shiftsActions";
+export * from "./companyActions";
 
 function handleLoginStart() {
     return {type: actionsTypes.CREATE_EMPLOYEE_START};
@@ -84,7 +85,7 @@ export function loadUserFromToken() {
             }
         }).then(function (response) {
             localStorage.setItem('jwtToken', response.data.token);
-            dispatch(meFromTokenSuccess(response.data.token));
+            dispatch(meFromTokenSuccess(response.data.user));
         }).catch(function (response) {
             localStorage.removeItem('jwtToken');//remove token from storage
             dispatch(meFromTokenFailure(response.data.token));
