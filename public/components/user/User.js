@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Grid, IconButton, Input} from "material-ui";
 import DeleteIcon from 'material-ui-icons/Delete';
 
-class Company extends React.Component {
+class User extends React.Component {
     onUpdate(e, name) {
         let {input,  onUpdate} = this.props;
 
@@ -37,11 +37,11 @@ class Company extends React.Component {
     }
 }
 
-Company.propTypes = {
+User.propTypes = {
     input: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
 };
 
-export default Company;
+export default User;
 

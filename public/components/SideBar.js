@@ -33,7 +33,7 @@ class SideBar extends React.Component {
                 },
                 {
                     text: "חברה",
-                    url: "/dashboard/company"
+                    url: "/dashboard/user"
                 },
             ]
         };
