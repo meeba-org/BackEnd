@@ -73,3 +73,4 @@ export default connect(
     form: 'monthlyReportForm',
     enableReinitialize: true,
 })(DailyReportContainer));
+

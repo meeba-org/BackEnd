@@ -1,47 +1,69 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Grid, IconButton, Input} from "material-ui";
-import DeleteIcon from 'material-ui-icons/Delete';
+import {TextField} from "material-ui";
+import CSSModules from "react-css-modules";
+import styles from '../../styles/User.scss';
+import NoData from "../NoData";
 
-class User extends React.Component {
-    onUpdate(e, name) {
-        let {input,  onUpdate} = this.props;
-
-        let employee = {
-            ...input.value,
-            [name]: e.target.value,
-        };
-
-        input.onChange(employee);
-        onUpdate(employee);
-    }
+class User extends Component {
+    handleChange = () => {
+        const {onChange, input} = this.props;
+        onChange(input.value);
+    };
 
     render() {
-        let {input, onDelete} = this.props;
-        return (
-            <div>
-                <Grid container spacing={24}>
-                    <Grid item xs={12} sm={3}>
-                        <Input value={input.value.firstName} placeholder="שם" onChange={(e) => this.onUpdate(e, "firstName")} />
-                    </Grid>
-                    <Grid item xs={12} sm={2}>
-                        <Input value={input.value.uid} placeholder="ת.ז." onChange={(e) => this.onUpdate(e, "uid")} />
-                    </Grid>
-                    <Grid item xs={12} sm={2}>
-                        <IconButton onClick={onDelete}><DeleteIcon /></IconButton>
-                    </Grid>
+        const {input} = this.props;
+        const user = input.value;
 
-                </Grid>
+        return (
+            <div id="user">
+                {!!user &&
+                <div>
+                    <div>
+                        <TextField
+                            id="firstName"
+                            label="פרטי"
+                            value={user.firstName}
+                            onChange={this.handleChange}
+                        />
+                        <TextField
+                            id="lastName"
+                            label="משפחה"
+                            value={user.lastName}
+                            onChange={this.handleChange}
+                        />
+                    </div>
+                    <div>
+                        <TextField
+                            id="email"
+                            label="דואר אלקטרוני"
+                            type="email"
+                            value={user.email}
+                            onChange={this.handleChange}
+                        />
+                    </div>
+                    <div>
+                        <TextField
+                            id="uid"
+                            label="ת.ז."
+                            type="number"
+                            value={user.uid}
+                            onChange={this.handleChange}
+                        />
+                    </div>
+                </div>
+                }
+                {!user &&
+                <NoData/>
+                }
             </div>
         );
     }
 }
 
 User.propTypes = {
-    input: PropTypes.object.isRequired,
-    onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
 };
 
-export default User;
+export default CSSModules(User, styles);
 

@@ -4,7 +4,7 @@ import config from "../config";
 
 export * from "./employeesActions";
 export * from "./shiftsActions";
-export * from "./companyActions";
+export * from "./userActions";
 
 function handleLoginStart() {
     return {type: actionsTypes.CREATE_EMPLOYEE_START};
