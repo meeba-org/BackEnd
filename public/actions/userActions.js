@@ -11,6 +11,8 @@ export const fetchUser = (userId) => ({
         url: "/users/" + userId,
         method: "get",
         success: fetchUserSuccess,
+    },
+    meta: {
         shouldAuthenticate: true,
     }
 });
@@ -22,6 +24,8 @@ export const updateUser = (user) => ({
         method: "put",
         data: user,
         success: fetchUserSuccess,
+    },
+    meta: {
         shouldAuthenticate: true,
     }
 });

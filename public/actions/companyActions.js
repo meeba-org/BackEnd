@@ -11,6 +11,8 @@ export const fetchCompany = (companyId) => ({
         url: "/companies/" + companyId,
         method: "get",
         success: fetchCompanySuccess,
+    },
+    meta: {
         shouldAuthenticate: true,
     }
 });
@@ -22,6 +24,8 @@ export const updateCompany = (company) => ({
         method: "put",
         data: company,
         success: fetchCompanySuccess,
+    },
+    meta: {
         shouldAuthenticate: true,
     }
 });
