@@ -6,12 +6,13 @@ const api = ({dispatch}) => next => action => {
 		return next(action);
 	}
 
-	let {url, success, method} = action.payload;
+	let {url, success, method, data} = action.payload;
 
     callApi({
-        url: url,
+        url,
         timeout: 20000,
-        method: method,
+        method,
+        data,
         shouldAuthenticate: true,
     }).then(response => response.json())
         .then(data => dispatch(success(data)))

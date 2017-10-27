@@ -20,11 +20,11 @@ class SideBar extends React.Component {
                     url: "/dashboard/report/live",
                 },
                 {
-                    text: "דוח חודשי",
+                    text: "דו\"ח חודשי",
                     url: "/dashboard/report/monthly"
                 },
                 {
-                    text: "מצב יומי",
+                    text: "דו\"ח יומי",
                     url: "/dashboard/report/daily"
                 },
                 {
@@ -32,7 +32,7 @@ class SideBar extends React.Component {
                     url: "/dashboard/employees"
                 },
                 {
-                    text: "חברה",
+                    text: "פרופיל משתמש",
                     url: "/dashboard/user"
                 },
             ]

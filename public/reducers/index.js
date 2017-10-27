@@ -7,10 +7,10 @@ import {UserReducer} from "./UserReducer";
 
 const rootReducer = combineReducers({
     routing: routerReducer,
-    form: formReducer,
     employees: EmployeesReducer,
     shifts: ShiftsReducer,
     user: UserReducer,
+    form: formReducer,
 });
 
 export default rootReducer;

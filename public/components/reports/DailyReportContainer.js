@@ -70,7 +70,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps, mapDispatchToProps
 )(reduxForm({
-    form: 'monthlyReportForm',
+    form: 'dailyReportForm',
     enableReinitialize: true,
 })(DailyReportContainer));
 

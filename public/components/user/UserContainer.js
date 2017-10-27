@@ -7,12 +7,8 @@ import User from "./User";
 import {updateUser} from "../../actions/userActions";
 
 class UserContainer extends React.Component {
-    componentDidMount() {
-        // this.props.loadUserFromToken();
-    }
-
     render() {
-        const {handleSubmit} = this.props;
+        const {handleSubmit, updateUser} = this.props;
 
         return (
             <form onSubmit={handleSubmit(() => {})}>
