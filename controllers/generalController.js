@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const UserModel = require("../models/UserModel");
+const jwtService = require("./jwtService");
 
 // Get Homepage
 router.get('/', (req, res) => {
@@ -40,7 +41,7 @@ router.post('/login', function (req, res) {
         return res.status(401).json("uid or password are missing")
     }
 
-    UserModel.getByUserUid(uid)
+    UserModel.getByUserUid(uid, true)
         .then((user) => {
             if (!user) {
                 return res.status(401).json({message: "no such user found"});
@@ -64,28 +65,11 @@ router.post('/login', function (req, res) {
         });
 });
 
-function extractTokenFromRequest(req) {
-    const authorization = req.headers['authorization'];
-    if (authorization) {
-        let parts = authorization.split(' ');
-
-        if (parts.length == 2) {
-            var scheme = parts[0],
-                token = parts[1];
-
-            if (/^Bearer$/i.test(scheme)) {
-                return token;
-            }
-        }
-    }
-    return req.body.token || req.query.token || req.headers['x-access-token'] || null;
-}
-
 //get current user from token
 router.get('/authenticate', function(req, res) {
 
     // check header or url parameters or post parameters for token
-    var token = extractTokenFromRequest(req);
+    var token = jwtService.extractTokenFromRequest(req);
     if (!token) {
         return res.status(401).json({message: '[authenticate] - Must pass token'});
     }

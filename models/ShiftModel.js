@@ -11,7 +11,8 @@ const ShiftSchema = mongoose.Schema({
         type: Date,
         default: null
     },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }
     //location
 });
 
@@ -49,11 +50,14 @@ const getLastOpenShiftById = (id) => {
     return Shift.findOne({id: id}).sort('clockInTime').where('clockOutTime').equals(null).exec();
 };
 
-const getShiftsBetween = (startDate, endDate) => {
-    return Shift.find({clockInTime: {
-        $gte: startDate,
-        $lt: endDate
-    }}).populate('user');
+const getShiftsBetween = (company, startDate, endDate) => {
+    return Shift.find({
+        clockInTime: {
+            $gte: startDate,
+            $lt: endDate
+        },
+        company: company._id
+    }).populate('user');
 };
 
 const getShiftsStartedInDay = (date) => {
@@ -73,10 +77,13 @@ const deleteAllShifts = (conditions) => {
 };
 
 const createOrUpdateShift = (shift) => {
-    if (!!shift && shift.id)
-        return createShift(shift);
-    else
+    if (!shift)
+        throw new Error('Shift is not valid');
+
+    if (shift.id)
         return updateShift(shift);
+    else
+        return createShift(shift);
 };
 
 const shiftsCount = () => Shift.count().exec();

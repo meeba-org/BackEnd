@@ -100,7 +100,7 @@ class DailyReport extends React.Component {
                             <div className="auto-complete">
                                 <AutoComplete
                                     placeholder="הכנס עובד למשמרת"
-                                    suggestions={employees.map(employee => ({
+                                    suggestions={employees && employees.map(employee => ({
                                             ...employee,
                                             label: employee.firstName
                                         })

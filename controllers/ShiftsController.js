@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 const ShiftModel = require('../models/ShiftModel');
+const jwtService = require("./jwtService");
 
 //GET /shifts shift
 router.get('/', (req, res) => {
@@ -19,7 +20,9 @@ router.get('/', (req, res) => {
         .then(function (result) {
             result.throw();
 
-            ShiftModel.getShiftsBetween(startDate, endDate)
+            const company = jwtService.getCompanyFromLocals(res);
+
+            ShiftModel.getShiftsBetween(company, startDate, endDate)
                 .then((shifts) => {
 
                     if (shifts)
@@ -39,6 +42,9 @@ router.post('/', (req, res) => {
             result.throw();
 
             let newShift = req.body;
+            const companyFromToken = jwtService.getCompanyFromLocals(res);
+            newShift.company = companyFromToken._id;
+
             ShiftModel.createOrUpdateShift(newShift)
                 .then((shift) => res.status(200).json({shift: shift}))
                 .catch((err) => res.status(500).json({message: err}));
@@ -53,6 +59,8 @@ router.put('/', (req, res) => {
             result.throw();
 
             let newShift = req.body;
+            const companyFromToken = jwtService.getCompanyFromLocals(res);
+            newShift.company = companyFromToken._id;
 
             ShiftModel.createOrUpdateShift(newShift)
                 .then((shift) => res.status(200).json({shift: shift}))

@@ -34,8 +34,13 @@ function createUserInstance(user) {
 
 const User = mongoose.model('User', UserSchema);
 
-const getByUserUid = (uid) => {
-    return User.findOne({uid: uid}).exec();
+const getByUserUid = (uid, shouldPopulateCompany) => {
+    let query = User.findOne({uid: uid});
+
+    if (shouldPopulateCompany)
+        query = query.populate('company');
+
+    return query.exec();
 };
 
 const getByUserId = (id) => {
@@ -43,8 +48,8 @@ const getByUserId = (id) => {
 };
 
 // Return a promise
-const getAllUsers = () => {
-    return User.find().exec();
+const getUsers = (company) => {
+    return User.find({company: company._id}).exec();
 };
 
 // Return a promise
@@ -98,7 +103,7 @@ module.exports = {
     createUser
     , getByUserId
     , getByUserUid
-    , getAllUsers
+    , getUsers
     , updateUser
     , deleteUser
     , deleteAllUsers

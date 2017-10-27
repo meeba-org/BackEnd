@@ -2,6 +2,7 @@
 const UserModel = require('../models/UserModel');
 const express = require('express');
 const AppManager = require("../managers/AppManager");
+const jwtService = require("./jwtService");
 const router = express.Router();
 
 //GET /users/{uid} user
@@ -27,7 +28,9 @@ router.get('/:uid', (req, res) => {
 
 //GET /users users
 router.get('/', (req, res) => {
-    UserModel.getAllUsers()
+    let company = jwtService.getCompanyFromLocals(res);
+
+    UserModel.getUsers(company)
         .then((users) => res.status(200).json({users: users}))
         .catch((err) => res.status(500).json({message: err}));
 });
@@ -38,7 +41,12 @@ router.post('/', (req, res) => {
     req.getValidationResult()
         .then(function (result) {
             result.throw();
-            AppManager.addUser(req.body)
+
+            let user = req.body;
+            const companyFromToken = jwtService.getCompanyFromLocals(res);
+            user.company = companyFromToken._id;
+
+            AppManager.addUser(user)
                 .then((user) => res.status(200).json({user: user}))
                 .catch((err) => res.status(500).json({message: err}));
         })
@@ -51,7 +59,12 @@ router.put('/', (req, res) => {
     req.getValidationResult()
         .then(function (result) {
             result.throw();
-            UserModel.updateUser(req.body)
+
+            let user = req.body;
+            const companyFromToken = jwtService.getCompanyFromLocals(res);
+            user.company = companyFromToken._id;
+
+            UserModel.updateUser(user)
                 .then((user) => res.status(200).json({user: user}))
                 .catch((err) => res.status(500).json({message: err}));
         })
