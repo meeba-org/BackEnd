@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
     req.getValidationResult()
         .then(function (result) {
             result.throw();
-            CompanyModel.create(req.body)
+            CompanyModel.createCompany(req.body)
                 .then((company) => res.status(200).json({company: company}))
                 .catch((err) => res.status(500).json({message: err}));
         })
@@ -50,7 +50,7 @@ router.put('/', (req, res) => {
     req.getValidationResult()
         .then(function (result) {
             result.throw();
-            CompanyModel.update(req.body)
+            CompanyModel.updateCompany(req.body)
                 .then((company) => res.status(200).json({company: company}))
                 .catch((err) => res.status(500).json({message: err}));
         })
@@ -67,7 +67,7 @@ router.delete('/:id', (req, res) => {
 
             const id = req.params.id;
 
-            return CompanyModel.delCompany(id)
+            return CompanyModel.deleteCompany(id)
                 .then(() => {
                     return res.status(204).send();
                 })

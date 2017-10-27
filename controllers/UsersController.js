@@ -45,8 +45,6 @@ router.post('/', (req, res) => {
         .catch((err) => res.status(400).json({message: err.array()}));
 });
 
-
-// TODO Chen seems that this should be verified - need to take children from kindegarten (al;kdjf ;lsdflksd$#$$$#$)
 //PUT /users user
 router.put('/', (req, res) => {
 

@@ -6,8 +6,8 @@ import styles from '../../styles/User.scss';
 import NoData from "../NoData";
 
 class User extends Component {
-    handleChange = (field, e) => {
-        const {onUpdate, input} = this.props;
+    handleUserChange = (field, e) => {
+        const {onUpdateUser, input} = this.props;
         const value = e.target.value;
 
         let user = {
@@ -16,7 +16,24 @@ class User extends Component {
         };
 
         input.onChange(user);
-        onUpdate(user);
+        onUpdateUser(user);
+    };
+
+    handleCompanyChange = (field, e) => {
+        const {onUpdateCompany, input} = this.props;
+        const value = e.target.value;
+
+        let user = {
+            ...input.value,
+        };
+
+        user.company = {
+            ...input.value.company,
+            [field]: value
+        };
+
+        input.onChange(user);
+        onUpdateCompany(user.company);
     };
 
     render() {
@@ -36,13 +53,13 @@ class User extends Component {
                                 id="firstName"
                                 label="פרטי"
                                 value={user.firstName}
-                                onChange={(e) => this.handleChange("firstName", e)}
+                                onChange={(e) => this.handleUserChange("firstName", e)}
                             />
                             <TextField
                                 id="lastName"
                                 label="משפחה"
                                 value={user.lastName}
-                                onChange={(e) => this.handleChange("lastName", e)}
+                                onChange={(e) => this.handleUserChange("lastName", e)}
                             />
                         </div>
                         <div>
@@ -51,7 +68,7 @@ class User extends Component {
                                 label="דואר אלקטרוני"
                                 type="email"
                                 value={user.email}
-                                onChange={(e) => this.handleChange("email", e)}
+                                onChange={(e) => this.handleUserChange("email", e)}
                             />
                         </div>
                         <div>
@@ -60,7 +77,7 @@ class User extends Component {
                                 label="ת.ז."
                                 type="number"
                                 value={user.uid}
-                                onChange={(e) => this.handleChange("uid", e)}
+                                onChange={(e) => this.handleUserChange("uid", e)}
                             />
                         </div>
                     </div>
@@ -79,7 +96,7 @@ class User extends Component {
                             id="company-name"
                             label="שם"
                             value={user.company.name}
-                            onChange={(e) => this.handleChange("company.name", e)}
+                            onChange={(e) => this.handleCompanyChange("name", e)}
                         />
                     </CardContent>
                 </div>
@@ -90,7 +107,8 @@ class User extends Component {
 }
 
 User.propTypes = {
-    onUpdate: PropTypes.func.isRequired,
+    onUpdateUser: PropTypes.func.isRequired,
+    onUpdateCompany: PropTypes.func.isRequired,
 };
 
 export default CSSModules(User, styles);

@@ -2,11 +2,11 @@ import * as actions from "../actions/actionTypes";
 import callApi from "../actions/api";
 
 const api = ({dispatch}) => next => action => {
-	if (action.type !== actions.API) {
-		return next(action);
-	}
+    if (action.type !== actions.API) {
+        return next(action);
+    }
 
-	let {url, success, method, data} = action.payload;
+    let {url, success, method, data} = action.payload;
 
     callApi({
         url,
@@ -14,11 +14,10 @@ const api = ({dispatch}) => next => action => {
         method,
         data,
         shouldAuthenticate: true,
-    }).then(response => response.json())
-        .then(data => dispatch(success(data)))
-        .catch(response => dispatch(actions.ErrorAction(response.data)));
+    }).then(data => dispatch(success(data)))
+        .catch(() => dispatch(actions.ErrorAction));
 
-	return next(action);
+    return next(action);
 };
 
 export default api;

@@ -18,7 +18,7 @@ export const fetchUser = (userId) => ({
 export const updateUser = (user) => ({
     type: actions.API,
     payload: {
-        url: "/users/" + user._id,
+        url: "/users",
         method: "put",
         data: user,
         success: fetchUserSuccess,

@@ -5,17 +5,24 @@ import {loadUserFromToken} from "../../actions/index";
 import {Field, reduxForm} from "redux-form";
 import User from "./User";
 import {updateUser} from "../../actions/userActions";
+import {updateCompany} from "../../actions/companyActions";
 
 class UserContainer extends React.Component {
+
+    componentDidMount() {
+        this.props.loadUserFromToken();
+    }
+
     render() {
-        const {handleSubmit, updateUser} = this.props;
+        const {handleSubmit, updateUser, updateCompany} = this.props;
 
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <Field
                     component={User}
                     name="user"
-                    onUpdate={updateUser}
+                    onUpdateUser={updateUser}
+                    onUpdateCompany={updateCompany}
                 />
             </form>
         );
@@ -39,6 +46,7 @@ function mapDispatchToProps(dispatch) {
     return {
         loadUserFromToken: () => {dispatch(loadUserFromToken());},
         updateUser: (user) => {dispatch(updateUser(user));},
+        updateCompany: (user) => {dispatch(updateCompany(user));},
     };
 }
 
