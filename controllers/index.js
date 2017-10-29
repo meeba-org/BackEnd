@@ -11,12 +11,17 @@ const jwtService = require("./jwtService");
 router.use('/', general);
 
 router.use('/api', ejwt({secret: config.secret}));
-router.use('/api', function (req, res, next) {
+router.use('/api', (req, res, next) => {
     if (req.method.toLowerCase() == 'options')
-        next();
+        return next();
 
-    res.locals.user = jwtService.getUserFromToken(req);
-    next();
+    try {
+        res.locals.user = jwtService.getUserFromToken(req);
+    }
+    catch(err) {
+        return res.status(500).send(err);
+    }
+    return next();
 });
 
 router.use('/api/users', users);

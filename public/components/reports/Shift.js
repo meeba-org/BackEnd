@@ -81,7 +81,7 @@ class Shift extends React.Component {
                         <IconButton>{icon}</IconButton>
                     }
                     {showNames &&
-                    <div className="name">{shift.user.firstName}</div>
+                    <div className="name">{shift.user && shift.user.firstName}</div>
                     }
                 </div>
 

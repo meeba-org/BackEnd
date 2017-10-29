@@ -31,7 +31,8 @@ const getByShiftId = (id) => {
 const createShift = (shift) => {
     let newShift = createShiftInstance(shift);
 
-    return newShift.save();
+    // Do this way since I didnt find a way to save & populate the user in the same syntax
+    return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true}).populate('user').exec();
 };
 
 const updateShift = (shift) => {
@@ -80,7 +81,7 @@ const createOrUpdateShift = (shift) => {
     if (!shift)
         throw new Error('Shift is not valid');
 
-    if (shift.id)
+    if (shift._id)
         return updateShift(shift);
     else
         return createShift(shift);

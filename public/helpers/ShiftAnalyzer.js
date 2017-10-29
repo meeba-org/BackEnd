@@ -15,14 +15,12 @@ let processUsersToShifts = function (shifts) {
         if (usersToShiftsMap[clonedShift.user.uid]) {
             const uid = clonedShift.user.uid;
             clonedShift.user = clonedShift.user._id;
-            // delete clonedShift.user;
             usersToShiftsMap[uid].shifts.push(clonedShift);
         }
         else {
             let clonedUser = Object.assign({}, shift.user);
 
             clonedShift.user = clonedShift.user._id;
-            // delete clonedShift.user;
             clonedUser.shifts = [clonedShift];
             usersToShiftsMap[clonedUser.uid] = clonedUser;
         }

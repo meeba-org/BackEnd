@@ -20,6 +20,9 @@ function extractTokenFromRequest(req) {
 
 function getUserFromToken(req) {
     const token = extractTokenFromRequest(req);
+    if (!token)
+        throw new Error("[jwtService.getUserFromToken] - token could not extracted from request")
+
     return jwt.verify(token, config.secret);
 }
 
