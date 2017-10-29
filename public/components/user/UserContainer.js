@@ -31,6 +31,9 @@ class UserContainer extends React.Component {
 
 UserContainer.propTypes = {
     updateUser: PropTypes.func.isRequired,
+    loadUserFromToken: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    updateCompany: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {

@@ -10,6 +10,7 @@ import styles from '../styles/AppBar.scss';
 import {connect} from "react-redux";
 import * as selectors from "../selectors";
 import {handleLogout} from "../actions/index";
+import PropTypes from 'prop-types';
 
 class MeebaAppBar extends Component {
     render() {
@@ -32,7 +33,12 @@ class MeebaAppBar extends Component {
     }
 }
 
-MeebaAppBar.propTypes = {};
+MeebaAppBar.propTypes = {
+    logout: PropTypes.func.isRequired,
+    router: PropTypes.object.isRequired,
+    companyName: PropTypes.string.isRequired,
+
+};
 
 function mapStateToProps(state) {
     return {

@@ -109,6 +109,7 @@ class User extends Component {
 User.propTypes = {
     onUpdateUser: PropTypes.func.isRequired,
     onUpdateCompany: PropTypes.func.isRequired,
+    input: PropTypes.object.isRequired,
 };
 
 export default CSSModules(User, styles);

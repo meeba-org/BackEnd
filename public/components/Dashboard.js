@@ -40,6 +40,7 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
     children: PropTypes.object,
+    router: PropTypes.object.isRequired,
 };
 
 export default CSSModules(Dashboard, styles);
