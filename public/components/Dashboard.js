@@ -10,12 +10,14 @@ import AppBar from "./AppBar";
 class Dashboard extends React.Component {
 
     render() {
+        let {router} = this.props;
+
         return (
             <div id="dashboard">
                 <Grid container>
                     <Grid item xs={12}>
                         <div id="appBar-container">
-                            <AppBar/>
+                            <AppBar router={router}/>
                         </div>
                     </Grid>
                     <Grid container id="container">

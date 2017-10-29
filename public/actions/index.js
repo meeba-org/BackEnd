@@ -42,6 +42,10 @@ export function handleLogin(values, router) {
     };
 }
 
+export function handleLogout(router) {
+    localStorage.removeItem('jwtToken');
+    router.push('/login');
+}
 export function meFromToken() {
     return {
         type: actionsTypes.ME_FROM_TOKEN,
