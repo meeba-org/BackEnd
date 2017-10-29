@@ -83,7 +83,7 @@ router.get('/authenticate', function(req, res) {
         //return user using the id from w/in JWTToken
         UserModel.getByUserId(user._id)
             .then((user) => {
-                user = UserModel.getCleanUser(user.toObject()); //dont pass password and stuff
+                user = UserModel.getCleanUser(user.toObject()); //don't pass password and stuff
 
                 //note: you can renew token by creating new token(i.e. refresh it) w/ new expiration time at this point, but I'm passing the old token back.
                 // var token = utils.generateToken(user);
