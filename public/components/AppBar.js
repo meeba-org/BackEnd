@@ -13,8 +13,13 @@ import {handleLogout} from "../actions/index";
 import PropTypes from 'prop-types';
 
 class MeebaAppBar extends Component {
+    onLogout() {
+        let {logout, router} = this.props;
+        logout(router);
+    }
+
     render() {
-        let {logout, router, companyName} = this.props;
+        let {companyName} = this.props;
         return (
             <div id="app-bar">
                 <AppBar position="static">
@@ -24,7 +29,7 @@ class MeebaAppBar extends Component {
                         </IconButton>
                         <Typography type="title" color="inherit">{companyName}</Typography>
                         <div className="login">
-                            <Button onClick={() => logout(router)} color="contrast">יציאה</Button>
+                            <Button onClick={() => this.onLogout()} color="contrast">יציאה</Button>
                         </div>
                     </Toolbar>
                 </AppBar>
