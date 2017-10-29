@@ -58,7 +58,8 @@ const getShiftsBetween = (company, startDate, endDate) => {
             $lt: endDate
         },
         company: company._id
-    }).populate('user');
+    }).populate('user')
+        .then((shifts) => shifts.sort((s1, s2) => s1.clockInTime - s2.clockInTime));
 };
 
 const getShiftsStartedInDay = (date) => {
