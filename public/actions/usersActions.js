@@ -7,6 +7,16 @@ export const fetchUserSuccess = (payload) => ({
     payload
 });
 
+export const updateUserSuccess = (payload) => ({
+    type: actions.UPDATE_USER_SUCCESS,
+    payload
+});
+
+export const deleteUserSuccess = (id) => ({
+    type: actions.DELETE_USER_SUCCESS,
+    id
+});
+
 export const fetchUsersSuccess = (payload) => ({
     type: actions.FETCH_USERS_SUCCESS,
     payload
@@ -25,7 +35,7 @@ export const createUser = (user) => {
             data: user,
             shouldAuthenticate: true
         }).then(function (response) {
-            dispatchUpdateNewEmployeesInForm(dispatch, response.user);
+            dispatchUpdateNewEmployeesInForm(dispatch, response);
         });
     };
 };
@@ -60,7 +70,7 @@ export const updateUser = (user) => ({
         url: "/users",
         method: "put",
         data: user,
-        success: fetchUserSuccess,
+        success: updateUserSuccess,
     },
     meta: {
         shouldAuthenticate: true,
@@ -73,7 +83,7 @@ export const deleteUser = (user) => ({
         url: "/users/" + user._id,
         method: "delete",
         data: user,
-        success: () => {},
+        success: deleteUserSuccess,
     },
     meta: {
         shouldAuthenticate: true,

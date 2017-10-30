@@ -14,7 +14,12 @@ class EmployeesContainer extends React.Component {
         const {handleSubmit, deleteUser, updateUser, createUser} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
-                <FieldArray name="employees" component={EmployeesList} onDelete={deleteUser} onUpdate={updateUser} onCreate={createUser}/>
+                <FieldArray
+                    name="employees"
+                    component={EmployeesList}
+                    onDelete={deleteUser}
+                    onUpdate={updateUser}
+                    onCreate={createUser}/>
             </form>
         );
     }

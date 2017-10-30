@@ -7,6 +7,13 @@ export function UsersReducer(state = [], action = null) {
                 ...action.payload
             ];
         }
+        case types.UPDATE_USER_SUCCESS: {
+            return state.map(user => user._id == action.payload._id ? action.payload : user);
+        }
+        case types.DELETE_USER_SUCCESS: {
+            return state.filter(user => user._id !== action.id);
+        }
+
         default:
             return state;
     }
