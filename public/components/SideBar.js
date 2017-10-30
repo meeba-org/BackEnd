@@ -35,6 +35,11 @@ class SideBar extends React.Component {
                     text: "פרופיל משתמש",
                     url: "/dashboard/user"
                 },
+                {
+                    text: "יצוא לאקסל (בקרוב...)",
+                    url: "/dashboard/user",
+                    disabled: true
+                },
             ]
         };
 
@@ -70,6 +75,7 @@ class SideBar extends React.Component {
                     <div>
                         {this.state.items.map((item, index) =>
                         <ListItem key={index} button onTouchTap={() => this.updateRoute(item, index)}
+                                  disabled={item.disabled}
                                   style={{ backgroundColor: item.selected ? theme.palette.text.divider : 'transparent'}}
                         >
                             <ListItemIcon>
