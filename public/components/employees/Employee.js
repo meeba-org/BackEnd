@@ -13,8 +13,13 @@ class Employee extends React.Component {
         };
 
         input.onChange(employee);
-        onUpdate(employee);
     }
+
+    onBlur = () => {
+        let {input, onUpdate} = this.props;
+
+        onUpdate(input.value);
+    };
 
     render() {
         let {input, onDelete} = this.props;
@@ -22,10 +27,16 @@ class Employee extends React.Component {
             <div>
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={3}>
-                        <Input value={input.value.firstName} placeholder="שם" onChange={(e) => this.onUpdate(e, "firstName")} />
+                        <Input value={input.value.firstName} placeholder="שם"
+                               onChange={(e) => this.onUpdate(e, "firstName")}
+                               onBlur={this.onBlur}
+                        />
                     </Grid>
                     <Grid item xs={12} sm={2}>
-                        <Input value={input.value.uid} placeholder="ת.ז." onChange={(e) => this.onUpdate(e, "uid")} />
+                        <Input value={input.value.uid} placeholder="ת.ז."
+                               onChange={(e) => this.onUpdate(e, "uid")}
+                               onBlur={this.onBlur}
+                        />
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <IconButton onClick={onDelete}><DeleteIcon /></IconButton>
