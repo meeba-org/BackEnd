@@ -29,6 +29,7 @@
         "no-console": 1,
         "no-debugger": 1,
         "no-var": 1,
+        "no-unused-vars": 1,
         "semi": [
             1,
             "always"
