@@ -1,14 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import {loadUserFromToken, resetMe} from '../actions/index';
 import App from "./App";
 import PropTypes from 'prop-types';
 
 class AppContainer extends React.Component {
-    componentWillMount() {
-        this.props.loadUserFromToken();
-    }
-
     render() {
         return (
             <App>
@@ -18,16 +12,8 @@ class AppContainer extends React.Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        loadUserFromToken: () => {dispatch(loadUserFromToken());},
-        resetMe: () => {dispatch(resetMe());},
-    };
-};
-
 AppContainer.propTypes = {
-    loadUserFromToken: PropTypes.func.isRequired,
     children: PropTypes.object.isRequired
 };
 
-export default connect(null, mapDispatchToProps)(AppContainer);
+export default AppContainer;

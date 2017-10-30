@@ -6,8 +6,14 @@ import Grid from 'material-ui/Grid';
 import SideBar from "./SideBar";
 import {Paper} from "material-ui";
 import AppBar from "./AppBar";
+import {connect} from "react-redux";
+import {loadUserFromToken} from "../actions/index";
 
 class Dashboard extends React.Component {
+
+    componentWillMount() {
+        this.props.loadUserFromToken();
+    }
 
     render() {
         let {router} = this.props;
@@ -39,9 +45,16 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
+    loadUserFromToken: PropTypes.func.isRequired,
     children: PropTypes.object,
     router: PropTypes.object.isRequired,
 };
 
-export default CSSModules(Dashboard, styles);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadUserFromToken: () => {dispatch(loadUserFromToken());},
+    };
+};
+
+export default connect(null, mapDispatchToProps)(CSSModules(Dashboard, styles));
 

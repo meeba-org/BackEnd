@@ -1,17 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {loadUserFromToken} from "../../actions/index";
 import {Field, reduxForm} from "redux-form";
 import User from "./User";
 import {updateUser} from "../../actions/userActions";
 import {updateCompany} from "../../actions/companyActions";
 
 class UserContainer extends React.Component {
-
-    componentDidMount() {
-        this.props.loadUserFromToken();
-    }
 
     render() {
         const {handleSubmit, updateUser, updateCompany} = this.props;
@@ -31,7 +26,6 @@ class UserContainer extends React.Component {
 
 UserContainer.propTypes = {
     updateUser: PropTypes.func.isRequired,
-    loadUserFromToken: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     updateCompany: PropTypes.func.isRequired,
 };
@@ -47,7 +41,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadUserFromToken: () => {dispatch(loadUserFromToken());},
         updateUser: (user) => {dispatch(updateUser(user));},
         updateCompany: (user) => {dispatch(updateCompany(user));},
     };
