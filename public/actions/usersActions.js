@@ -1,5 +1,4 @@
 import * as actions from "./actionTypes";
-import callApi from "./api";
 import {arrayPop, arrayPush} from 'redux-form';
 
 export const fetchUserSuccess = (payload) => ({
@@ -22,6 +21,11 @@ export const fetchUsersSuccess = (payload) => ({
     payload
 });
 
+export const createUserSuccess = (payload) => ({
+    type: actions.CREATE_USER_SUCCESS,
+    payload
+});
+
 function dispatchUpdateNewEmployeesInForm(dispatch, newEmployee) {
     dispatch(arrayPop('employeesForm', 'employees'));
     dispatch(arrayPush('employeesForm', 'employees', newEmployee));
@@ -39,6 +43,19 @@ export const createUser = (user) => {
         });
     };
 };
+
+// export const createUser = (user) => ({
+//     type: actions.API,
+//     payload: {
+//         url: "/users",
+//         method: "post",
+//         data: user,
+//         success: createUserSuccess,
+//     },
+//     meta: {
+//         shouldAuthenticate: true,
+//     }
+// });
 
 export const fetchUsers = () => ({
     type: actions.API,

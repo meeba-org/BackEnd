@@ -2,6 +2,12 @@ import * as types from "../actions/actionTypes";
 
 export function UsersReducer(state = [], action = null) {
     switch (action.type) {
+        case types.CREATE_USER_SUCCESS: {
+            return [
+                ...state,
+                action.payload
+            ];
+        }
         case types.FETCH_USERS_SUCCESS: {
             return [
                 ...action.payload
@@ -13,7 +19,6 @@ export function UsersReducer(state = [], action = null) {
         case types.DELETE_USER_SUCCESS: {
             return state.filter(user => user._id !== action.id);
         }
-
         default:
             return state;
     }
