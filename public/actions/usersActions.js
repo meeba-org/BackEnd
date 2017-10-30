@@ -1,5 +1,6 @@
 import * as actions from "./actionTypes";
 import {arrayPop, arrayPush} from 'redux-form';
+import callApi from "./api";
 
 export const fetchUserSuccess = (payload) => ({
     type: actions.FETCH_USER_SUCCESS,
