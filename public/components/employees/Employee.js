@@ -5,7 +5,7 @@ import DeleteIcon from 'material-ui-icons/Delete';
 
 class Employee extends React.Component {
     onUpdate(e, name) {
-        let {input,  onUpdate} = this.props;
+        let {input} = this.props;
 
         let employee = {
             ...input.value,
