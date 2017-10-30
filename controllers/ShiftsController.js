@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
             newShift.company = companyFromToken._id;
 
             ShiftModel.createOrUpdateShift(newShift)
-                .then((shift) => res.status(200).json({shift: shift}))
+                .then((shift) => res.status(200).json(shift))
                 .catch((err) => res.status(500).json({message: err}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
@@ -63,7 +63,7 @@ router.put('/', (req, res) => {
             newShift.company = companyFromToken._id;
 
             ShiftModel.createOrUpdateShift(newShift)
-                .then((shift) => res.status(200).json({shift: shift}))
+                .then((shift) => res.status(200).json(shift))
                 .catch((err) => res.status(500).json({message: err}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));

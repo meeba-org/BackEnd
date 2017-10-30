@@ -1,151 +1,105 @@
-import * as actionsTypes from "./actionTypes";
-import callApi from "./api";
+import * as actions from "./actionTypes";
 
-function createShiftStart() {
-    return {type: actionsTypes.CREATE_SHIFT_START};
-}
+export const fetchShiftSuccess = (payload) => ({
+    type: actions.FETCH_SHIFT_SUCCESS,
+    payload
+});
 
-function createShiftSuccess(shift) {
-    return {
-        type: actionsTypes.CREATE_SHIFT_SUCCESS,
-        shift
-    };
-}
+export const updateShiftSuccess = (payload) => ({
+    type: actions.UPDATE_SHIFT_SUCCESS,
+    payload
+});
 
-function createShiftError(json) {
-    return {
-        type: actionsTypes.CREATE_SHIFT_ERROR,
-        data: json
-    };
-}
+export const deleteShiftSuccess = (id) => ({
+    type: actions.DELETE_SHIFT_SUCCESS,
+    id
+});
 
-export function createShift(shift) {
-    return function (dispatch) {
-        dispatch(createShiftStart());
-        return callApi({
-            method: 'post',
-            url: '/shifts',
-            data: shift,
-            shouldAuthenticate: true
-        }).then(function (response) {
-            let shift = response.shift;
+export const fetchShiftsSuccess = (payload) => ({
+    type: actions.FETCH_SHIFTS_SUCCESS,
+    payload
+});
 
-            dispatch(createShiftSuccess(shift));
-            // dispatchUpdateNewShiftsInForm(dispatch, shift);
-        }).catch(function (response) {
-            dispatch(createShiftError(response.data));
-        });
-    };
-}
+export const createShiftsSuccess = (payload) => ({
+    type: actions.CREATE_SHIFT_SUCCESS,
+    payload
+});
 
-function updateShiftStart() {
-    return {type: actionsTypes.UPDATE_SHIFT_START};
-}
+export const createShift = (shift) => ({
+    type: actions.API,
+    payload: {
+        url: "/shifts",
+        method: "post",
+        data: shift,
+        success: createShiftsSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+    }
+});
 
-function updateShiftSuccess(shift) {
-    return {
-        type: actionsTypes.UPDATE_SHIFT_SUCCESS,
-        shift
-    };
-}
-
-function updateShiftError(json) {
-    return {
-        type: actionsTypes.UPDATE_SHIFT_ERROR,
-        data: json
-    };
-}
-
-export function updateShift(shift) {
-    return function (dispatch) {
-        dispatch(updateShiftStart());
-        return callApi({
-            url: '/shifts',
-            method: 'put',
-            data: shift,
-            shouldAuthenticate: true
-        }).then(function (response) {
-            dispatch(updateShiftSuccess(response.shift));
-        }).catch(function (response) {
-            dispatch(updateShiftError(response.shift));
-        });
-    };
-}
-
-function deleteShiftStart() {
-    return {type: actionsTypes.DELETE_SHIFT_START};
-}
-
-function deleteShiftSuccess(id) {
-    return {
-        type: actionsTypes.DELETE_SHIFT_SUCCESS,
-        id
-    };
-}
-
-function deleteShiftError(json) {
-    return {
-        type: actionsTypes.DELETE_SHIFT_ERROR,
-        data: json
-    };
-}
-
-export function deleteShift(shift) {
-    return function (dispatch) {
-        dispatch(deleteShiftStart());
-        return callApi({
-            url: '/shifts/' + shift._id,
-            method: 'delete',
-            shouldAuthenticate: true,
-        }).then(function () {
-            dispatch(deleteShiftSuccess(shift._id));
-        }).catch(function (response) {
-            dispatch(deleteShiftError(response.data));
-        });
-    };
-}
-
-function fetchShiftsStart() {
-    return {type: actionsTypes.FETCH_SHIFTS_START};
-}
-
-function fetchShiftsSuccess(shifts) {
-    return {
-        type: actionsTypes.FETCH_SHIFTS_SUCCESS,
-        shifts,
-    };
-}
-
-function fetchShiftsError() {
-    return {
-        type: actionsTypes.FETCH_SHIFTS_ERROR,
-    };
-}
-
-let fetchShifts = function (dispatch, startDate, endDate) {
+function prepareFetchShiftsUrl(startDate, endDate) {
     let url = '/shifts?startDate=' + startDate;
 
     if (endDate)
         url += "&endDate=" + endDate;
 
-    dispatch(fetchShiftsStart());
-    return callApi({
-        url: url,
-        method: 'get',
+    return url;
+}
+export const fetchShifts = (startDate, endDate) => ({
+    type: actions.API,
+    payload: {
+        url: prepareFetchShiftsUrl(startDate, endDate),
+        method: "get",
+        success: fetchShiftsSuccess,
+    },
+    meta: {
         shouldAuthenticate: true,
-    })
-        .then((shifts) => dispatch(fetchShiftsSuccess(shifts)))
-        .catch(() => dispatch(fetchShiftsError()));
-};
+    }
+});
+
+export const fetchShift = (shiftId) => ({
+    type: actions.API,
+    payload: {
+        url: "/shifts/" + shiftId,
+        method: "get",
+        success: fetchShiftSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+    }
+});
+
+export const updateShift = (shift) => ({
+    type: actions.API,
+    payload: {
+        url: "/shifts",
+        method: "put",
+        data: shift,
+        success: updateShiftSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+    }
+});
+
+export const deleteShift = (shift) => ({
+    type: actions.API,
+    payload: {
+        url: "/shifts/" + shift._id,
+        method: "delete",
+        data: shift,
+        success: deleteShiftSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+    }
+});
 
 export function fetchMonthlyReport(startDate) {
-    return function(dispatch) {
-        return fetchShifts(dispatch, startDate);
-    };
+    return fetchShifts(startDate);
 }
 
 export function fetchDailyReport(startDate) {
-    return function(dispatch) {
-        return fetchShifts(dispatch, startDate, startDate);
-    };
+    return fetchShifts(startDate, startDate);
 }

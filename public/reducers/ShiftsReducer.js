@@ -5,18 +5,18 @@ export function ShiftsReducer(state = [], action = null) {
         case types.CREATE_SHIFT_SUCCESS: {
             return [
                 ...state,
-                action.shift
+                action.payload
             ];
         }
         case types.UPDATE_SHIFT_SUCCESS: {
-            return state.map(shift => shift._id == action.shift._id ? action.shift : shift);
+            return state.map(shift => shift._id == action.payload._id ? action.payload : shift);
         }
         case types.DELETE_SHIFT_SUCCESS: {
             return state.filter(shift => shift._id !== action.id);
         }
         case types.FETCH_SHIFTS_SUCCESS: {
             return [
-                ...action.shifts
+                ...action.payload
             ];
         }
         default:
