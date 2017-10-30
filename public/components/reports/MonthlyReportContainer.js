@@ -5,7 +5,7 @@ import {FieldArray, reduxForm} from "redux-form";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
 import {fetchMonthlyReport} from "../../actions/shiftsActions";
-import {fetchEmployees} from "../../actions/employeesActions";
+import {fetchUsers} from "../../actions/usersActions";
 import {createEmployeeShiftsReports} from "../../helpers/ShiftAnalyzer";
 
 class MonthlyReportContainer extends React.Component {
@@ -48,7 +48,7 @@ MonthlyReportContainer.propTypes = {
 
 function mapStateToProps(state) {
     const employeeShiftsReports = createEmployeeShiftsReports(state.shifts);
-    const employees = state.employees;
+    const employees = state.users;
     return {
         employees,
         initialValues: {
@@ -60,7 +60,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchMonthlyReport: (startDate) => dispatch(fetchMonthlyReport(startDate)) ,
-        fetchEmployees: () => dispatch(fetchEmployees()),
+        fetchEmployees: () => dispatch(fetchUsers()),
         updateShift: (shift) => dispatch(updateShift(shift)),
         createShift: (shift) => dispatch(createShift(shift)),
         deleteShift: (shift) => dispatch(deleteShift(shift))

@@ -5,7 +5,7 @@ import {reduxForm} from "redux-form";
 import PropTypes from 'prop-types';
 import {fetchDailyReport} from "../../actions/shiftsActions";
 import DailyReport from "./DailyReport";
-import {fetchEmployees} from "../../actions/employeesActions";
+import {fetchUsers} from "../../actions/usersActions";
 
 class DailyReportContainer extends React.Component {
 
@@ -50,7 +50,7 @@ DailyReportContainer.propTypes = {
 function mapStateToProps(state) {
     return {
         shifts: state.shifts,
-        employees: state.employees,
+        employees: state.users,
         initialValues: {
             shifts: state.shifts
         }
@@ -60,7 +60,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchDailyReport: (startDate) => {dispatch( fetchDailyReport(startDate)); },
-        fetchEmployees: () => dispatch(fetchEmployees()),
+        fetchEmployees: () => dispatch(fetchUsers()),
         updateShift: (shift) => dispatch(updateShift(shift)),
         createShift: (shift) => dispatch(createShift(shift)),
         deleteShift: (shift) => dispatch(deleteShift(shift))

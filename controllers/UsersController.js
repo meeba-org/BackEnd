@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
     let company = jwtService.getCompanyFromLocals(res);
 
     UserModel.getUsers(company)
-        .then((users) => res.status(200).json({users: users}))
+        .then((users) => res.status(200).json(users))
         .catch((err) => res.status(500).json({message: err}));
 });
 
@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
             user.company = companyFromToken._id;
 
             AppManager.addUser(user)
-                .then((user) => res.status(200).json({user: user}))
+                .then((user) => res.status(200).json(user))
                 .catch((err) => res.status(500).json({message: err}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
@@ -65,7 +65,7 @@ router.put('/', (req, res) => {
             user.company = companyFromToken._id;
 
             UserModel.updateUser(user)
-                .then((user) => res.status(200).json({user: user}))
+                .then((user) => res.status(200).json(user))
                 .catch((err) => res.status(500).json({message: err}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));

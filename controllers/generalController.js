@@ -41,7 +41,7 @@ router.post('/login', function (req, res) {
         return res.status(401).json("uid or password are missing")
     }
 
-    UserModel.getByUserUid(uid, true)
+    return UserModel.getByUserUid(uid, true)
         .then((user) => {
             if (!user) {
                 return res.status(401).json({message: "no such user found"});

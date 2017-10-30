@@ -25,7 +25,7 @@ const api = ({dispatch}) => next => action => {
         method,
         data,
         headers,
-    }).then(data => dispatch(success(data)))
+    }).then(response => dispatch(success(response.data)))
     .catch(() => dispatch(actions.ErrorAction));
 
     return next(action);

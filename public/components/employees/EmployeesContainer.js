@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import EmployeesList from "./EmployeesList";
-import {createEmployee, deleteEmployee, fetchEmployees, updateEmployee} from "../../actions";
+import {createUser, deleteUser, fetchUsers, updateUser} from "../../actions";
 import {FieldArray, reduxForm} from "redux-form";
 
 class EmployeesContainer extends React.Component {
@@ -11,10 +11,10 @@ class EmployeesContainer extends React.Component {
     }
 
     render() {
-        const {handleSubmit, deleteEmployee, updateEmployee, createEmployee} = this.props;
+        const {handleSubmit, deleteUser, updateUser, createUser} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
-                <FieldArray name="employees" component={EmployeesList} onDelete={deleteEmployee} onUpdate={updateEmployee} onCreate={createEmployee}/>
+                <FieldArray name="employees" component={EmployeesList} onDelete={deleteUser} onUpdate={updateUser} onCreate={createUser}/>
             </form>
         );
     }
@@ -24,25 +24,25 @@ EmployeesContainer.propTypes = {
     employees: PropTypes.array,
     handleSubmit: PropTypes.func.isRequired,
     fetchEmployees: PropTypes.func.isRequired,
-    createEmployee: PropTypes.func.isRequired,
-    updateEmployee: PropTypes.func.isRequired,
-    deleteEmployee: PropTypes.func.isRequired,
+    createUser: PropTypes.func.isRequired,
+    updateUser: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
     return {
         initialValues: {
-            employees: state.employees
+            employees: state.users
         }
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchEmployees: () => {dispatch(fetchEmployees());},
-        createEmployee: (employee) => {dispatch(createEmployee(employee));},
-        updateEmployee: (employee) => {dispatch(updateEmployee(employee));},
-        deleteEmployee: (employee) => {dispatch(deleteEmployee(employee));},
+        fetchEmployees: () => {dispatch(fetchUsers());},
+        createUser: (employee) => {dispatch(createUser(employee));},
+        updateUser: (employee) => {dispatch(updateUser(employee));},
+        deleteUser: (employee) => {dispatch(deleteUser(employee));},
     };
 }
 
