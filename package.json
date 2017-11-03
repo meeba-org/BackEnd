@@ -16,7 +16,7 @@
         "lint:watch": "npm run lint -- --watch",
         "clean-dist": "mkdir dist",
         "remove-dist": "rimraf ./dist",
-        "prebuild": "npm run clean-dist && npm run lint && npm run test-fe",
+        "prebuild": "npm run clean-dist",
         "build": "babel-node tools/build.js && npm run open:dist",
         "test-fe": "jest",
         "test:CI": "babel-node tools/testCi.js",
@@ -65,8 +65,7 @@
         "react-router-redux": "4.0.8",
         "react-tap-event-plugin": "2.0.1",
         "redux": "3.6.0",
-        "redux-thunk": "2.1.0",
-        "eslint": "^4.9.0"
+        "redux-thunk": "2.1.0"
     },
     "devDependencies": {
         "autoprefixer": "6.5.4",
@@ -90,6 +89,7 @@
         "coveralls": "2.11.15",
         "css-loader": "0.26.1",
         "enzyme": "2.8.2",
+        "eslint": "^4.9.0",
         "eslint-plugin-import": "2.2.0",
         "eslint-plugin-react": "6.8.0",
         "eslint-watch": "^3.1.3",
