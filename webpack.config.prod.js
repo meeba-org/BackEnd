@@ -56,7 +56,7 @@ export default {
             trackJSToken: ''
         }),
         new webpack.DefinePlugin({
-            'process.env.PORT': 4000,
+            'process.env.PORT': 3000,
         }),
 
         // Minify JS
