@@ -17,7 +17,7 @@
         "clean-dist": "mkdir dist",
         "remove-dist": "rimraf ./dist",
         "prebuild": "npm run clean-dist",
-        "build": "webpack --config ./webpack.prod.config.js --progress --colors",
+        "build": "webpack --config ./webpack.config.prod.js --progress --colors",
         "test-fe": "jest",
         "test:CI": "babel-node tools/testCi.js",
         "test:cover": "npm run test-fe -- --coverage ",
