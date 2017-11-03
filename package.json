@@ -71,6 +71,7 @@
         "html-webpack-plugin": "2.24.1",
         "autoprefixer": "6.5.4",
         "babel-loader": "6.2.10",
+        "babel-core": "6.20.0",
         "file-loader": "0.9.0",
         "url-loader": "0.5.7",
         "style-loader": "0.13.1",
@@ -78,7 +79,6 @@
     },
     "devDependencies": {
         "babel-cli": "6.18.0",
-        "babel-core": "6.20.0",
         "babel-eslint": "^8",
         "babel-jest": "18.0.0",
         "babel-plugin-transform-class-properties": "^6.24.1",
