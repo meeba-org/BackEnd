@@ -8,7 +8,7 @@
         "start-message": "babel-node tools/startMessage.js",
         "start-server": "gulp develop",
         "predev": "npm-run-all --parallel start-message",
-        "start": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 server.js",
+        "start": "node server.js",
         "dev": "npm-run-all --parallel open:src lint:watch start-server ",
         "open:src": "babel-node tools/srcServer.js",
         "open:dist": "babel-node tools/distServer.js",
