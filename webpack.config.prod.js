@@ -6,9 +6,11 @@ const WebpackMd5Hash = require('webpack-md5-hash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const path = require('path');
+process.env.NODE_ENV = 'production';
 
 const GLOBALS = {
     'process.env.NODE_ENV': JSON.stringify('production'),
+    'process.env.BABEL_ENV': JSON.stringify('production'),
     __DEV__: false
 };
 

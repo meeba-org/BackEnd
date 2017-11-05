@@ -5,11 +5,6 @@ const config = require('../config');
 const UserModel = require("../models/UserModel");
 const jwtService = require("./jwtService");
 
-// // Get Homepage
-// router.get('/', (req, res) => {
-//     res.json('Hi this is Meeba!');
-// });
-
 //POST /register user
 router.post('/register', (req, res) => {
     // Validation

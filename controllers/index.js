@@ -28,13 +28,14 @@ router.use('/api/users', users);
 router.use('/api/shifts', shifts);
 router.use('/api/companies', companies);
 
-router.use(function (err, req, res) {
+router.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
         res.status(403).send('[Error] - invalid token, message: ' + err.message);
     }
     else if (err.name === 'PermissionError') {
         res.status(403).send('[Error] - Permission denied!');
     }
+
     // else if (err) {
     //     console.log(err);
     //     res.status(500).send(err);
