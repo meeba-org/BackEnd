@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 
 var TEST_DB = "mongodb://admin:admin12@ds135594.mlab.com:35594/heroku_l3mnf6v2";
 var PRODUCTION_DB = "mongodb://admin:admin12@ds139242.mlab.com:39242/heroku_9mpwf6zf";
@@ -13,6 +14,7 @@ if (!module.exports.dbUrl)
 function init() {
     module.exports.secret = 'bohemian-rhapsody';
     module.exports.TEST_DB = TEST_DB;
+    mongoose.Promise = global.Promise;
 
     switch (process.env.NODE_ENV) {
         case "production" :
