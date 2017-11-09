@@ -51,14 +51,19 @@ const getLastOpenShiftById = (id) => {
     return Shift.findOne({id: id}).sort('clockInTime').where('clockOutTime').equals(null).exec();
 };
 
-const getShiftsBetween = (company, startDate, endDate) => {
-    return Shift.find({
+const getShiftsBetween = (company, startDate, endDate, userId) => {
+    let condition = {
         clockInTime: {
             $gte: startDate,
             $lt: endDate
         },
         company: company._id
-    }).populate('user')
+    };
+
+    if (userId)
+        condition.user = userId;
+
+    return Shift.find(condition).populate('user')
         .then((shifts) => shifts.sort((s1, s2) => s1.clockInTime - s2.clockInTime));
 };
 

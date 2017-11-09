@@ -33,8 +33,14 @@ function getCompanyFromLocals(res) {
     return user.company;
 }
 
+function isUserIdValid(userId, req) {
+    let user = getUserFromToken(req);
+    return user._id === userId;
+}
+
 module.exports = {
     extractTokenFromRequest,
     getUserFromToken,
     getCompanyFromLocals,
+    isUserIdValid
 };

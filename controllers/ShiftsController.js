@@ -7,9 +7,12 @@ const jwtService = require("./jwtService");
 
 //GET /shifts shift
 router.get('/', (req, res) => {
-    req.checkQuery('startDate', 'Start date is required').notEmpty();
+    const startDate = req.query.startDate || moment().startOf('month');
+    const userId = req.query.userId;
 
-    const startDate = req.query.startDate;
+    if (userId && !jwtService.isUserIdValid(userId, req))
+        return res.status(400).json({message: "[ShiftsController.Get] userId is not valid - does not fit token"});
+
     let endDate = req.query.endDate || moment(startDate).add(30, 'days');
     endDate = moment(endDate).endOf('day');
 
@@ -22,7 +25,7 @@ router.get('/', (req, res) => {
 
             const company = jwtService.getCompanyFromLocals(res);
 
-            ShiftModel.getShiftsBetween(company, startDate, endDate)
+            ShiftModel.getShiftsBetween(company, startDate, endDate, userId)
                 .then((shifts) => {
 
                     if (shifts)
