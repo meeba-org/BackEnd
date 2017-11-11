@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
     if (userId && !jwtService.isUserIdValid(userId, req))
         return res.status(400).json({message: "[ShiftsController.Get] userId is not valid - does not fit token"});
 
-    let endDate = req.query.endDate || moment(startDate).add(30, 'days');
+    let endDate = req.query.endDate || moment(startDate).endOf('month');
     endDate = moment(endDate).endOf('day');
 
     if (!moment(startDate).isValid() || !moment(endDate).isValid())

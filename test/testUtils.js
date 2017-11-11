@@ -6,6 +6,7 @@
 const CompanyModel = require('../models/CompanyModel');
 const UserModel = require('../models/UserModel');
 const ShiftModel = require('../models/ShiftModel');
+const moment = require('moment');
 
 // ensure the NODE_ENV is set to 'test'
 // this is helpful when you would like to change behavior when testing
@@ -68,11 +69,16 @@ function createMockedUserPlainObject(name = 'Chen') {
     };
 }
 
-function createMockedShiftPlainObject() {
+function createMockedShiftPlainObject(clockInTime1, company) {
+
+    let clockInTime = clockInTime1 || new Date();
+    let clockOutTime = moment(clockInTime).add(8, 'hours');
+
     return {
-        clockInTime: new Date()
-        , clockOutTime: new Date(new Date().getTime() +  60 * 1000)
-        , users: []
+        clockInTime: clockInTime
+        , clockOutTime: clockOutTime
+        , user: []
+        , company: company
     };
 }
 
