@@ -5,7 +5,7 @@ const moment = require('moment');
 const ShiftModel = require("../models/ShiftModel");
 const expect = require('chai').expect;
 
-describe.only('Shifts', function () {
+describe('Shifts', function () {
     this.timeout(TIMEOUT);
     beforeEach(function () {
         return utils.clearDB();
