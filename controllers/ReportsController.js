@@ -24,10 +24,9 @@ router.get('/', (req, res) => {
                 .then((shifts) => {
                     let workbook = ExcelManager.createExcel(shifts, year, month, company);
 
-                    let fileName = company.name + '-' + ExcelManager.createTitleDate(year, month) + '.xlsx';
+                    let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
                     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                     res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
-                    // res.attachment('/' + fileName);
                     return workbook.xlsx.write(res)
                         .then(function() {
                             res.end();

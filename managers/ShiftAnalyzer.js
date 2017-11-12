@@ -4,7 +4,7 @@ const REGULAR_SHIFT_LENGTH = 9;
 const SHIFT_125_OVERDUE_LENGTH = 2;
 
 let processUsersToShifts = function (shifts) {
-    let usersToShiftsMap = [];
+    let usersToShiftsMap = {};
 
     if (!shifts || shifts.length === 0)
         return usersToShiftsMap;
@@ -35,7 +35,7 @@ function processUsersAdditionalInfo(userMap) {
 
     const usersWithAdditionalInfo = userMap.map((user) => {
         let userAdditionalInfo = createUserAdditionalInfo(user);
-        Object.assign({}, user, userAdditionalInfo);
+        return Object.assign({}, user, userAdditionalInfo);
     });
 
     return usersWithAdditionalInfo;

@@ -9,7 +9,7 @@ const createTitleDate = function (year, month) {
 const createSheet = (workbook, year, month) => {
     let sheetTitleDate = createTitleDate(year, month);
     // create a sheet with the first row and column frozen
-    let sheet = workbook.addWorksheet('חודש ' + sheetTitleDate, {views:[{xSplit: 1, ySplit:1}]});
+    let sheet = workbook.addWorksheet(sheetTitleDate, {views:[{xSplit: 1, ySplit:1}]});
 
     sheet.columns = [
         { header: 'שם עובד', key: 'employeeName', width: 40 },

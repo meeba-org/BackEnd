@@ -76,7 +76,8 @@ const getShiftsInMonth = (year, month, company) => {
     let startDate = moment().year(year).month(month).startOf('month');
     let endDate = moment().year(year).month(month).endOf('month');
 
-    return getShiftsBetween(company, startDate, endDate);
+    return getShiftsBetween(company, startDate, endDate)
+        .then((shifts) => shifts.map(shift => shift.toObject()));
 };
 
 const getShiftsStartedInDay = (date) => {
