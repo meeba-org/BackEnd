@@ -5,6 +5,7 @@ const general = require('./generalController');
 const users = require('./UsersController');
 const shifts = require('./ShiftsController');
 const companies = require('./CompaniesController');
+const reports = require('./ReportsController');
 const config = require('../config');
 const jwtService = require("./jwtService");
 
@@ -27,9 +28,10 @@ router.use('/api', (req, res, next) => {
 router.use('/api/users', users);
 router.use('/api/shifts', shifts);
 router.use('/api/companies', companies);
+router.use('/api/reports', reports);
 
 router.use(function (err, req, res, next) {
-    if (err.name === 'UnauthorizedError') {
+     if (err.name === 'UnauthorizedError') {
         res.status(403).send('[Error] - invalid token, message: ' + err.message);
     }
     else if (err.name === 'PermissionError') {

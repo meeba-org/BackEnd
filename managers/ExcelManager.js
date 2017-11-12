@@ -1,11 +1,11 @@
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
-const ShiftModel = require("../models/ShiftModel");
 var Excel = require('exceljs');
 
-let createTitleDate = function (year, month) {
-    return moment().year(year).month(month).format('MM/YYYY');
+const createTitleDate = function (year, month) {
+    return moment().year(year).month(month).format('MM-YYYY');
 };
+
 const createSheet = (workbook, year, month) => {
     let sheetTitleDate = createTitleDate(year, month);
     // create a sheet with the first row and column frozen
@@ -24,6 +24,9 @@ const createSheet = (workbook, year, month) => {
 };
 
 let createContent = function (shifts, worksheet) {
+    if (!shifts || shifts.length == 0)
+        return;
+
     let employees = ShiftAnalyzer.createEmployeeShiftsReports(shifts);
 
     employees.forEach((employee) => {
@@ -32,9 +35,9 @@ let createContent = function (shifts, worksheet) {
             regularHours: employee.regularHours,
             extra125Hours: employee.extra125Hours,
             extra150Hours: employee.extra150Hours,
-            overallHours: employee.regularHours + employee.extra125Hours + employee.extra150Hours,
+            overallHours: 100,//employee.regularHours + employee.extra125Hours + employee.extra150Hours,
         });
-    })
+    });
 };
 let createWorkbook = function () {
     const workbook = new Excel.Workbook();
@@ -42,35 +45,17 @@ let createWorkbook = function () {
     workbook.created = new Date();
     return workbook;
 };
-let WriteWorkbookToFile = function (workbook, fileName) {
-// write to a file
-//     var workbook = createAndFillWorkbook();
-    workbook.xlsx.writeFile(fileName)
-        .then(function () {
-            // done
-        });
 
-    // // write to a stream
-    // workbook.xlsx.write(stream)
-    //     .then(function () {
-    //         // done
-    //     });
-};
-const createExcel = (year, month, company) => {
-    return ShiftModel.getShiftsInMonth(year, month, company)
-        .then((shifts) => {
-            const workbook = createWorkbook();
-            let worksheet = createSheet(workbook, year, month);
-            createContent(shifts, worksheet);
+const createExcel = (shifts, year, month, company) => {
+    const workbook = createWorkbook();
+    let worksheet = createSheet(workbook, year, month);
+    createContent(shifts, worksheet);
 
-            // TODO Probably this should be in the controller?
-            // see example: https://github.com/guyonroche/exceljs/issues/354
-            let fileName = company.name + ' ' + createTitleDate(year, month);
-            WriteWorkbookToFile(workbook, fileName);
-        });
+    return workbook;
 };
 
 module.exports = {
-    createExcel
+    createExcel,
+    createTitleDate
 };
 

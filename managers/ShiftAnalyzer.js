@@ -1,7 +1,7 @@
-import moment from "moment";
+const moment = require('moment');
 
-export const REGULAR_SHIFT_LENGTH = 9;
-export const SHIFT_125_OVERDUE_LENGTH = 2;
+const REGULAR_SHIFT_LENGTH = 9;
+const SHIFT_125_OVERDUE_LENGTH = 2;
 
 let processUsersToShifts = function (shifts) {
     let usersToShiftsMap = [];
@@ -35,16 +35,13 @@ function processUsersAdditionalInfo(userMap) {
 
     const usersWithAdditionalInfo = userMap.map((user) => {
         let userAdditionalInfo = createUserAdditionalInfo(user);
-        return {
-            ...user,
-            ...userAdditionalInfo
-        };
+        Object.assign({}, user, userAdditionalInfo);
     });
 
     return usersWithAdditionalInfo;
 }
 
-export const analyzeHours = (shift) => {
+const analyzeHours = (shift) => {
     let additionalInfo = {
         regularHours : 0,
         extra125Hours: 0,
@@ -60,10 +57,7 @@ export const analyzeHours = (shift) => {
     let shiftLength = clockOut.diff(clockIn, 'hours', true);
 
     if (shiftLength <= REGULAR_SHIFT_LENGTH) {
-        return {
-            ...additionalInfo,
-            regularHours: shiftLength
-        };
+        return Object.assign({}, additionalInfo, {regularHours: shiftLength});
     }
     else {
         return {
