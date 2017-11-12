@@ -1,5 +1,7 @@
 import * as actions from "./actionTypes";
 
+const FileSaver = require("file-saver");
+
 export const fetchShiftSuccess = (payload) => ({
     type: actions.FETCH_SHIFT_SUCCESS,
     payload
@@ -90,6 +92,22 @@ export const deleteShift = (shift) => ({
         method: "delete",
         data: shift,
         success: deleteShiftSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+    }
+});
+
+export const generateExcelReport = (month, year) => ({
+    type: actions.API,
+    payload: {
+        url: "/reports?year=" + year + "&month=" + month,
+        method: "get",
+        responseType: 'blob',
+        success: (data)  => {
+            let blob = new Blob([data], {type: 'vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'});
+            FileSaver.saveAs(blob, 'דוח ' + month + "-" + year + ".xlsx");
+        },
     },
     meta: {
         shouldAuthenticate: true,

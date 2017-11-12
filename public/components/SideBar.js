@@ -36,9 +36,8 @@ class SideBar extends React.Component {
                     url: "/dashboard/user"
                 },
                 {
-                    text: "יצוא לאקסל (בקרוב...)",
-                    url: "/dashboard/user",
-                    disabled: true
+                    text: "יצוא לאקסל",
+                    url: "/dashboard/report/excel",
                 },
             ]
         };

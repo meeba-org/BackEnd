@@ -8,6 +8,7 @@ import MonthlyReportContainer from "./components/reports/MonthlyReportContainer"
 import DailyReportContainer from "./components/reports/DailyReportContainer";
 import {ReportModes} from "./helpers/utils";
 import UserContainer from "./components/user/UserContainer";
+import ExcelReportContainer from "./components/reports/ExcelReportContainer";
 
 export default (
     <Route path="/" component={AppContainer}>
@@ -22,6 +23,7 @@ export default (
                 <Route path="monthly" component={MonthlyReportContainer} />
                 <Route path="daily" component={DailyReportContainer} mode={ReportModes.Report}/>
                 <Route path="live" component={DailyReportContainer} mode={ReportModes.Live}/>
+                <Route path="excel" component={ExcelReportContainer} />
             </Route>
         </Route>
     </Route>

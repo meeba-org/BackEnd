@@ -15,7 +15,7 @@ const api = ({dispatch}) => next => action => {
         }
     }
 
-    let {url, success, method, data} = action.payload;
+    let {url, success, method, data, responseType} = action.payload;
 
     url = `${config.API_URL}${url}`;
 
@@ -25,6 +25,7 @@ const api = ({dispatch}) => next => action => {
         method,
         data,
         headers,
+        responseType,
     }).then(response => dispatch(success(response.data)))
     .catch(() => dispatch(actions.ErrorAction));
 
