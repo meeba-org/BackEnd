@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {IconButton} from "material-ui";
+import {IconButton, Tooltip} from "material-ui";
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown';
 import {FieldArray} from "redux-form";
@@ -25,7 +25,10 @@ class MonthlyReportLine extends React.Component {
 
     render() {
         let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
-        let toggleButton = isCollapsed ? <KeyboardArrowLeft/> : <KeyboardArrowDown/>;
+        let toggleButton = isCollapsed ?
+            <Tooltip title="פרטי משמרות" placement="top"><KeyboardArrowLeft/></Tooltip> :
+            <KeyboardArrowDown/>;
+
         return (
             <div className="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={() => onToggle(input.value.uid)}>
                 <div className="monthly-report-header">

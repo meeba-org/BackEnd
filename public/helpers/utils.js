@@ -43,3 +43,5 @@ export const convertMomentToTimeStr = (shift) => {
 export const isWorking = (shift) => {
     return !moment(shift.clockOutTime).isValid();
 };
+
+export const getCurrentTime = () => moment();

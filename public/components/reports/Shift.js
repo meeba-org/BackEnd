@@ -6,7 +6,13 @@ import WorkIcon from 'material-ui-icons/Work';
 import HomeIcon from 'material-ui-icons/Home';
 import styles from "../../styles/Shift.scss";
 import CSSModules from "react-css-modules";
-import {convertMomentToTimeStr, convertTimeStrToMoment, isWorking, ReportModes} from "../../helpers/utils";
+import {
+    convertMomentToTimeStr,
+    convertTimeStrToMoment,
+    getCurrentTime,
+    isWorking,
+    ReportModes
+} from "../../helpers/utils";
 
 class Shift extends React.Component {
 
@@ -60,6 +66,13 @@ class Shift extends React.Component {
         onDelete(input.value);
     }
 
+    onShiftComplete = () => {
+        let {startDateStr, startTimeStr} = convertMomentToTimeStr(this.props.input.value);
+        let newEndTimeStr = getCurrentTime();
+
+        this.onUpdate(startDateStr, startTimeStr, newEndTimeStr);
+    };
+
     onMouseEnter = () => {
         this.setState({hover: true});
     };
@@ -72,7 +85,9 @@ class Shift extends React.Component {
         let {showNames, input, mode} = this.props;
         let shift = input.value;
         let {startDateStr, startTimeStr, endTimeStr} = convertMomentToTimeStr(shift);
-        let icon = isWorking(shift) ? <WorkIcon/> : <HomeIcon/>;
+        let icon = isWorking(shift) ?
+            <Tooltip title="בעבודה" placement="right"><WorkIcon/></Tooltip> :
+            <Tooltip title="בבית" placement="right"><HomeIcon/></Tooltip>;
 
         return (
             <div className="shift" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
@@ -99,9 +114,16 @@ class Shift extends React.Component {
                 }
 
                 {this.state.hover &&
-                <Tooltip title="מחיקה" placement="top">
-                    <IconButton className="elem" onClick={() => this.onDelete()}><DeleteIcon/></IconButton>
-                </Tooltip>
+                <div>
+                    {mode == ReportModes.Live &&
+                    <Tooltip title="סיים משמרת" placement="left">
+                        <IconButton className="elem" onClick={() => this.onShiftComplete()}><HomeIcon/></IconButton>
+                    </Tooltip>
+                    }
+                    <Tooltip title="מחיקת משמרת" placement="left">
+                        <IconButton className="elem" onClick={() => this.onDelete()}><DeleteIcon/></IconButton>
+                    </Tooltip>
+                </div>
                 }
             </div>
         );
@@ -112,6 +134,7 @@ Shift.propTypes = {
     input: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
+    onShiftComplete: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
     mode: PropTypes.number.isRequired,
 };
