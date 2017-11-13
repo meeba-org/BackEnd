@@ -48,7 +48,7 @@ const getByUserId = (id) => {
 
 // Return a promise
 const getUsers = (company) => {
-    return User.find({company: company._id}).exec();
+    return User.find({company: company._id, role: {'$ne':ERoles.COMPANY_MANAGER}}).exec();
 };
 
 // Return a promise
