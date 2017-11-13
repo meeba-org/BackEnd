@@ -13,7 +13,7 @@ import {ReportModes} from "../../helpers/utils";
 class MonthlyReportLine extends React.Component {
     state = {
         hover: false
-    }
+    };
 
     onMouseEnter = () => {
         this.setState({hover: true});

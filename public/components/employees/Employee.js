@@ -4,6 +4,11 @@ import {Grid, IconButton, Input, Tooltip} from "material-ui";
 import DeleteIcon from 'material-ui-icons/Delete';
 
 class Employee extends React.Component {
+
+    state = {
+        hover: false
+    };
+
     onUpdate(e, name) {
         let {input} = this.props;
 
@@ -21,10 +26,18 @@ class Employee extends React.Component {
         onUpdate(input.value);
     };
 
+    onMouseEnter = () => {
+        this.setState({hover: true});
+    };
+
+    onMouseLeave = () => {
+        this.setState({hover: false});
+    };
+
     render() {
         let {input, onDelete} = this.props;
         return (
-            <div>
+            <div onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={3}>
                         <Input value={input.value.firstName} placeholder="שם"
@@ -39,9 +52,11 @@ class Employee extends React.Component {
                         />
                     </Grid>
                     <Grid item xs={12} sm={2}>
-                        <Tooltip title="מחיקה" placement="top">
-                            <IconButton onClick={onDelete}><DeleteIcon /></IconButton>
-                        </Tooltip>
+                        {this.state.hover &&
+                            <Tooltip title="מחיקה" placement="top">
+                                <IconButton onClick={onDelete}><DeleteIcon/></IconButton>
+                            </Tooltip>
+                        }
                     </Grid>
 
                 </Grid>
