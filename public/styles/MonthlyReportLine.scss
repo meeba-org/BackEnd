@@ -24,17 +24,22 @@
             @extend .base-element;
             min-width: 100px;
         }
-        .regular-hours {
-            @extend .base-element;
-            color: green;
-        }
-        .extra-125 {
-            @extend .base-element;
-            color: orange;
-        }
-        .extra-150 {
-            @extend .base-element;
-            color: red;
+
+        .details {
+            display: inline-flex;
+
+            .regular-hours {
+                @extend .base-element;
+                color: green;
+            }
+            .extra-125 {
+                @extend .base-element;
+                color: orange;
+            }
+            .extra-150 {
+                @extend .base-element;
+                color: red;
+            }
         }
     }
 }

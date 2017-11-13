@@ -11,17 +11,29 @@ import HoursBar from '../HoursBar';
 import {ReportModes} from "../../helpers/utils";
 
 class MonthlyReportLine extends React.Component {
+    state = {
+        hover: false
+    }
+
+    onMouseEnter = () => {
+        this.setState({hover: true});
+    };
+
+    onMouseLeave = () => {
+        this.setState({hover: false});
+    };
+
     render() {
         let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
         let toggleButton = isCollapsed ? <KeyboardArrowLeft/> : <KeyboardArrowDown/>;
         return (
-            <div className="monthly-report-block">
+            <div className="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div className="monthly-report-header">
                     <IconButton color="primary" className="toggle-icon"
                                 onClick={() => onToggle(input.value.uid)}>{toggleButton}</IconButton>
                     <div className="uid">{input.value.uid}</div>
                     <div className="name">{input.value.firstName} {input.value.lastName}</div>
-                    <HoursBar {...input.value} />
+                    <HoursBar {...input.value} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&
                 <FieldArray
