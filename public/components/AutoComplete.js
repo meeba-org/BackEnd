@@ -97,6 +97,7 @@ const styles = theme => ({
         marginBottom: theme.spacing.unit * 3,
         left: 0,
         right: 0,
+        "z-index": 1
     },
     suggestion: {
         display: 'block',
