@@ -55,7 +55,7 @@ MonthlyReportContainer.propTypes = {
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
-    userRole: PropTypes.number.isRequired,
+    userRole: PropTypes.string,
 };
 
 function mapStateToProps(state) {

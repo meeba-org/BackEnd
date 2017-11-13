@@ -154,7 +154,7 @@ MonthlyReport.propTypes = {
     onDeleteShift: PropTypes.func.isRequired,
     onStartDayOfMonthChange: PropTypes.func.isRequired,
     onGenerateExcel: PropTypes.func.isRequired,
-    userRole: PropTypes.number.isRequired,
+    userRole: PropTypes.string,
 };
 
 export default CSSModules(MonthlyReport, styles);

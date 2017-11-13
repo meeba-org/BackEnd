@@ -20,7 +20,7 @@ const UserSchema = mongoose.Schema({
     password: {
         type: String,
     },
-    role: { type: Number, default: ERoles.EMPLOYEE},
+    role: { type: String, default: ERoles.EMPLOYEE},
     shifts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shift' }],
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }
 });

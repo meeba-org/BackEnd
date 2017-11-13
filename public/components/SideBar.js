@@ -5,6 +5,8 @@ import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import {withRouter} from 'react-router';
 import PropTypes from 'prop-types';
 import {withTheme} from 'material-ui/styles';
+import {IfAnyGranted} from "react-authorization";
+import * as ERoles from "../helpers/ERoles";
 
 class SideBar extends React.Component {
 
@@ -18,22 +20,27 @@ class SideBar extends React.Component {
                 {
                     text: "מצב משמרת",
                     url: "/dashboard/report/live",
+                    allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER]
                 },
                 {
                     text: "דו\"ח חודשי",
-                    url: "/dashboard/report/monthly"
+                    url: "/dashboard/report/monthly",
+                    allowedRoles: [ERoles.COMPANY_MANAGER]
                 },
                 {
                     text: "דו\"ח יומי",
-                    url: "/dashboard/report/daily"
+                    url: "/dashboard/report/daily",
+                    allowedRoles: [ERoles.COMPANY_MANAGER]
                 },
                 {
                     text: "עובדים",
-                    url: "/dashboard/employees"
+                    url: "/dashboard/employees",
+                    allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER]
                 },
                 {
                     text: "פרופיל משתמש",
-                    url: "/dashboard/user"
+                    url: "/dashboard/user",
+                    allowedRoles: [ERoles.COMPANY_MANAGER]
                 },
             ]
         };
@@ -62,22 +69,24 @@ class SideBar extends React.Component {
     }
 
     render() {
-        const {theme} = this.props;
+        const {theme, userRole} = this.props;
 
         return (
             <div>
                 <List>
                     <div>
                         {this.state.items.map((item, index) =>
-                        <ListItem key={index} button onTouchTap={() => this.updateRoute(item, index)}
-                                  disabled={item.disabled}
-                                  style={{ backgroundColor: item.selected ? theme.palette.text.divider : 'transparent'}}
-                        >
-                            <ListItemIcon>
-                                <KeyboardArrowLeft />
-                            </ListItemIcon>
-                            <ListItemText primary={item.text}/>
-                        </ListItem>
+                            <IfAnyGranted  key={index} expected={item.allowedRoles} actual={[userRole]}>
+                                <ListItem button onTouchTap={() => this.updateRoute(item, index)}
+                                          disabled={item.disabled}
+                                          style={{ backgroundColor: item.selected ? theme.palette.text.divider : 'transparent'}}
+                                >
+                                    <ListItemIcon>
+                                        <KeyboardArrowLeft />
+                                    </ListItemIcon>
+                                    <ListItemText primary={item.text}/>
+                                </ListItem>
+                            </IfAnyGranted>
                         )}
                     </div>
                 </List>
@@ -89,6 +98,7 @@ class SideBar extends React.Component {
 SideBar.propTypes = {
     router: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
+    userRole: PropTypes.string,
 };
 
 export default withRouter(withTheme()(SideBar));

@@ -8,6 +8,7 @@ import {Paper} from "material-ui";
 import AppBar from "./AppBar";
 import {connect} from "react-redux";
 import {loadUserFromToken} from "../actions/index";
+import * as selectors from "../selectors";
 
 class Dashboard extends React.Component {
 
@@ -16,7 +17,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        let {router} = this.props;
+        let {router, userRole} = this.props;
 
         return (
             <div id="dashboard">
@@ -29,7 +30,7 @@ class Dashboard extends React.Component {
                     <Grid container id="container">
                         <Grid item xs={3}>
                             <Paper id="sideBar-container">
-                                <SideBar />
+                                <SideBar userRole={userRole} />
                             </Paper>
                         </Grid>
                         <Grid item xs={9}>
@@ -48,6 +49,13 @@ Dashboard.propTypes = {
     loadUserFromToken: PropTypes.func.isRequired,
     children: PropTypes.object,
     router: PropTypes.object.isRequired,
+    userRole: PropTypes.string,
+};
+
+const mapStateToProps = (state) => {
+    return {
+        userRole: selectors.getUserRole(state),
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -56,5 +64,5 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(CSSModules(Dashboard, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(Dashboard, styles));
 
