@@ -93,7 +93,7 @@ class Shift extends React.Component {
             <div className="shift" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div className="name-container">
                     {mode == ReportModes.Live &&
-                        <IconButton>{icon}</IconButton>
+                        <IconButton className="icon">{icon}</IconButton>
                     }
                     {showNames &&
                     <div className="name">{shift.user && shift.user.firstName}</div>
@@ -115,7 +115,7 @@ class Shift extends React.Component {
 
                 {this.state.hover &&
                 <div>
-                    {mode == ReportModes.Live &&
+                    {mode == ReportModes.Live && isWorking(shift) &&
                     <Tooltip title="סיים משמרת" placement="left">
                         <IconButton className="elem" onClick={() => this.onShiftComplete()}><HomeIcon/></IconButton>
                     </Tooltip>

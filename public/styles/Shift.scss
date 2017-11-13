@@ -9,9 +9,13 @@
 
     .name-container {
         display: flex;
-        .name {
+
+        .icon {
             padding-top: 5px;
-            min-width: 50px;
+        }
+        .name {
+            min-width: 100px;
+            padding-top: 5px;
         }
         //width: 200px;
     }
