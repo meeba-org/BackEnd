@@ -30,8 +30,8 @@ class MonthlyReportLine extends React.Component {
             <KeyboardArrowDown/>;
 
         return (
-            <div className="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={() => onToggle(input.value.uid)}>
-                <div className="monthly-report-header">
+            <div className="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <div className="monthly-report-header" onClick={() => onToggle(input.value.uid)}>
                     <IconButton color="primary" className="toggle-icon">{toggleButton}</IconButton>
                     <div className="uid">{input.value.uid}</div>
                     <div className="name">{input.value.firstName} {input.value.lastName}</div>
