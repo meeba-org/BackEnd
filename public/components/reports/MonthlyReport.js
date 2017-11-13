@@ -112,7 +112,7 @@ class MonthlyReport extends React.Component {
                                 <Button className="action-button" dense raised color="primary"
                                         onClick={() => this.handleOpenAddDialog()}><AddIcon/></Button>
                             </Tooltip>
-                            <Tooltip title="ייצוא דוח לאקסל" placement="top">
+                            <Tooltip title="ייצוא דוח חודשי לאקסל" placement="top">
                                 <Button className="action-button" dense raised color="primary"
                                         onClick={() => this.handleGenerateExcelClick()}><AssignmentIcon/></Button>
                             </Tooltip>

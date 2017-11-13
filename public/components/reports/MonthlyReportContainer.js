@@ -49,10 +49,10 @@ MonthlyReportContainer.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     fetchMonthlyReport: PropTypes.func.isRequired,
     fetchEmployees: PropTypes.func.isRequired,
+    generateExcelReport: PropTypes.func.isRequired,
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
-
 };
 
 function mapStateToProps(state) {
