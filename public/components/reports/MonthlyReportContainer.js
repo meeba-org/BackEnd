@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import {fetchMonthlyReport, generateExcelReport} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
 import {createEmployeeShiftsReports} from "../../helpers/ShiftAnalyzer";
+import * as selectors from "../../selectors";
 
 class MonthlyReportContainer extends React.Component {
 
@@ -26,7 +27,7 @@ class MonthlyReportContainer extends React.Component {
     }
 
     render() {
-        const {handleSubmit, updateShift, createShift, deleteShift, employees} = this.props;
+        const {handleSubmit, updateShift, createShift, deleteShift, employees, userRole} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="employeeShiftsReports"
@@ -37,6 +38,7 @@ class MonthlyReportContainer extends React.Component {
                             onCreateShift={createShift}
                             onStartDayOfMonthChange={(startDayOfMonth) => this.onStartDayOfMonthChange(startDayOfMonth)}
                             onGenerateExcel={(month, year) => this.onGenerateExcel(month, year)}
+                            userRole={userRole}
                 />
             </form>
         );
@@ -53,6 +55,7 @@ MonthlyReportContainer.propTypes = {
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
+    userRole: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -60,6 +63,7 @@ function mapStateToProps(state) {
     const employees = state.users;
     return {
         employees,
+        userRole: selectors.getUserRole(state),
         initialValues: {
             employeeShiftsReports,
         }

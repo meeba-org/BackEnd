@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const ERoles = require("./ERoles");
 
 // User Schema
 const UserSchema = mongoose.Schema({
@@ -19,9 +20,7 @@ const UserSchema = mongoose.Schema({
     password: {
         type: String,
     },
-    role: {
-        type: String,
-    },
+    role: { type: Number, default: ERoles.EMPLOYEE},
     shifts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shift' }],
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }
 });

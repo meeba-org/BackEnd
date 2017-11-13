@@ -75,6 +75,7 @@
         "passport-http": "*",
         "passport-local": "*",
         "react": "15.5.4",
+        "react-authorization": "0.0.2",
         "react-autosuggest": "^9.3.2",
         "react-css-modules": "4.6.0",
         "react-dom": "15.5.4",

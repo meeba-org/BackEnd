@@ -14,6 +14,8 @@ import moment from 'moment';
 import NoData from "../NoData";
 import AddShiftsDialog from "../AddShiftsDialog";
 import {DATE_FORMAT} from "../../helpers/utils";
+import {IfGranted} from "react-authorization";
+import * as ERoles from "../../helpers/ERoles";
 
 class MonthlyReport extends React.Component {
     constructor(props) {
@@ -78,7 +80,7 @@ class MonthlyReport extends React.Component {
     }
 
     render() {
-        const {fields, onCreateShift, onUpdateShift, onDeleteShift, employees} = this.props;
+        const {fields, onCreateShift, onUpdateShift, onDeleteShift, employees, userRole} = this.props;
         let startDayOfMonth = this.state.startDayOfMonth;
         const months = this.generateMonths();
 
@@ -112,10 +114,13 @@ class MonthlyReport extends React.Component {
                                 <Button className="action-button" dense raised color="primary"
                                         onClick={() => this.handleOpenAddDialog()}><AddIcon/></Button>
                             </Tooltip>
-                            <Tooltip title="ייצוא דוח חודשי לאקסל" placement="top">
-                                <Button className="action-button" dense raised color="primary"
-                                        onClick={() => this.handleGenerateExcelClick()}><AssignmentIcon/></Button>
-                            </Tooltip>
+
+                            <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
+                                <Tooltip title="ייצוא דוח חודשי לאקסל" placement="top">
+                                    <Button className="action-button" dense raised color="primary"
+                                            onClick={() => this.handleGenerateExcelClick()}><AssignmentIcon/></Button>
+                                </Tooltip>
+                            </IfGranted>
                         </div>
                         <Divider className="divider"/>
 
@@ -149,5 +154,7 @@ MonthlyReport.propTypes = {
     onDeleteShift: PropTypes.func.isRequired,
     onStartDayOfMonthChange: PropTypes.func.isRequired,
     onGenerateExcel: PropTypes.func.isRequired,
+    userRole: PropTypes.number.isRequired,
 };
+
 export default CSSModules(MonthlyReport, styles);
