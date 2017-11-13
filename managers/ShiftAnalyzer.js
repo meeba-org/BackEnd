@@ -105,6 +105,7 @@ function createUserAdditionalInfo(user) {
     });
 
     // Rounding results
+    hourSummary.overallHours = (hourSummary.regularHours + hourSummary.extra125Hours + hourSummary.extra150Hours).toFixed(2);
     hourSummary.regularHours = hourSummary.regularHours.toFixed(2);
     hourSummary.extra125Hours = hourSummary.extra125Hours.toFixed(2);
     hourSummary.extra150Hours = hourSummary.extra150Hours.toFixed(2);

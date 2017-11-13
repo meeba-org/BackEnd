@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Card, Divider, TextField} from "material-ui";
+import {Button, Card, Divider, TextField, Tooltip} from "material-ui";
 import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
 import AddIcon from 'material-ui-icons/Add';
 import {FieldArray} from "redux-form";
@@ -64,8 +64,10 @@ class DailyReport extends React.Component {
                                 <TextField className="daily-date" type="date" defaultValue={currentDay} placeholder="תאריך"
                                            onChange={(e) => this.handleChange(e)}/>
 
-                                <Button className="action-button" dense raised color="primary"
+                                <Tooltip title="הוספת משמרת" placement="top">
+                                    <Button className="action-button" dense raised color="primary"
                                         onClick={() => this.handleClickOpen()}><AddIcon/></Button>
+                                </Tooltip>
                                 <AddShiftsDialog
                                     open={this.state.open}
                                     onCreate={onCreateShift}

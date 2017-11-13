@@ -9,17 +9,26 @@ const createTitleDate = function (year, month) {
 const createSheet = (workbook, year, month) => {
     let sheetTitleDate = createTitleDate(year, month);
     // create a sheet with the first row and column frozen
-    let sheet = workbook.addWorksheet(sheetTitleDate, {views:[{xSplit: 1, ySplit:1}]});
+    let sheet = workbook.addWorksheet(sheetTitleDate, {views:[ {state: 'frozen', xSplit: 1, ySplit:1, rightToLeft: true} ]});
 
     sheet.columns = [
-        { header: 'שם עובד', key: 'employeeName', width: 40 },
-        { header: '100% שעות', key: 'regularHours', width: 15 },
-        { header: '125% שעות', key: 'extra125Hours', width: 15 },
-        { header: '150% שעות', key: 'extra150Hours', width: 15 },
-        { header: 'שכ"ע לשעה', key: 'hourFee', width: 15 },
-        { header: 'סה"כ שעות', key: 'overallHours', width: 15 },
-        { header: 'סה"כ שכר', key: 'payment', width: 15 },
+        { header: 'שם עובד', key: 'employeeName', width: 30, style: {alignment: {horizontal: 'right'} } },
+        { header: '100% שעות', key: 'regularHours', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        { header: '125% שעות', key: 'extra125Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        { header: '150% שעות', key: 'extra150Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        { header: 'שכ"ע לשעה', key: 'hourFee', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        { header: 'סה"כ שעות', key: 'overallHours', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        { header: 'סה"כ שכר', key: 'payment', width: 13, style: {alignment: {horizontal: 'right'} }  },
     ];
+
+    ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1'].map(key => {
+        sheet.getCell(key).fill = {
+            type: 'pattern',
+            pattern:'solid',
+            fgColor:{argb:'cccccc'}
+        };
+    });
+
     return sheet;
 };
 
@@ -35,7 +44,7 @@ let createContent = function (shifts, worksheet) {
             regularHours: employee.regularHours,
             extra125Hours: employee.extra125Hours,
             extra150Hours: employee.extra150Hours,
-            overallHours: 100,//employee.regularHours + employee.extra125Hours + employee.extra150Hours,
+            overallHours: employee.overallHours,
         });
     });
 };
