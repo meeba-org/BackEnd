@@ -4,7 +4,7 @@ import {createShift, deleteShift, updateShift} from "../../actions";
 import {FieldArray, reduxForm} from "redux-form";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
-import {fetchMonthlyReport} from "../../actions/shiftsActions";
+import {fetchMonthlyReport, generateExcelReport} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
 import {createEmployeeShiftsReports} from "../../helpers/ShiftAnalyzer";
 
@@ -18,6 +18,13 @@ class MonthlyReportContainer extends React.Component {
         this.props.fetchEmployees();
     }
 
+    onGenerateExcel(month, year) {
+        if (!month || !year)
+            return;
+
+        this.props.generateExcelReport(month, year);
+    }
+
     render() {
         const {handleSubmit, updateShift, createShift, deleteShift, employees} = this.props;
         return (
@@ -29,6 +36,7 @@ class MonthlyReportContainer extends React.Component {
                             onUpdateShift={updateShift}
                             onCreateShift={createShift}
                             onStartDayOfMonthChange={(startDayOfMonth) => this.onStartDayOfMonthChange(startDayOfMonth)}
+                            onGenerateExcel={(month, year) => this.onGenerateExcel(month, year)}
                 />
             </form>
         );
@@ -44,6 +52,7 @@ MonthlyReportContainer.propTypes = {
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
+
 };
 
 function mapStateToProps(state) {
@@ -61,6 +70,7 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchMonthlyReport: (startDate) => dispatch(fetchMonthlyReport(startDate)) ,
         fetchEmployees: () => dispatch(fetchUsers()),
+        generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
         updateShift: (shift) => dispatch(updateShift(shift)),
         createShift: (shift) => dispatch(createShift(shift)),
         deleteShift: (shift) => dispatch(deleteShift(shift))

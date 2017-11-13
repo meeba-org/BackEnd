@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Grid, IconButton, Input} from "material-ui";
+import {Grid, IconButton, Input, Tooltip} from "material-ui";
 import DeleteIcon from 'material-ui-icons/Delete';
 
 class Employee extends React.Component {
@@ -39,7 +39,9 @@ class Employee extends React.Component {
                         />
                     </Grid>
                     <Grid item xs={12} sm={2}>
-                        <IconButton onClick={onDelete}><DeleteIcon /></IconButton>
+                        <Tooltip title="מחיקה" placement="top">
+                            <IconButton onClick={onDelete}><DeleteIcon /></IconButton>
+                        </Tooltip>
                     </Grid>
 
                 </Grid>

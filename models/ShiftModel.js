@@ -73,6 +73,8 @@ const getShiftsInMonth = (year, month, company) => {
     if (!month)
         throw new Error('[ShiftModel.getShiftsInMonth] - month is not valid');
 
+    // moment consider month in a zero based
+    month = month - 1;
     let startDate = moment().year(year).month(month).startOf('month');
     let endDate = moment().year(year).month(month).endOf('month');
 

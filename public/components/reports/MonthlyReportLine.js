@@ -17,7 +17,7 @@ class MonthlyReportLine extends React.Component {
         return (
             <div className="monthly-report-block">
                 <div className="monthly-report-header">
-                    <IconButton className="toggle-icon"
+                    <IconButton color="primary" className="toggle-icon"
                                 onClick={() => onToggle(input.value.uid)}>{toggleButton}</IconButton>
                     <div className="uid">{input.value.uid}</div>
                     <div className="name">{input.value.firstName} {input.value.lastName}</div>

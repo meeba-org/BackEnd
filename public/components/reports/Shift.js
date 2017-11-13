@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {IconButton, TextField} from "material-ui";
+import {IconButton, TextField, Tooltip} from "material-ui";
 import DeleteIcon from 'material-ui-icons/Delete';
 import WorkIcon from 'material-ui-icons/Work';
 import HomeIcon from 'material-ui-icons/Home';
@@ -99,7 +99,9 @@ class Shift extends React.Component {
                 }
 
                 {this.state.hover &&
-                <IconButton className="elem" onClick={() => this.onDelete()}><DeleteIcon/></IconButton>
+                <Tooltip title="מחיקה" placement="top">
+                    <IconButton className="elem" onClick={() => this.onDelete()}><DeleteIcon/></IconButton>
+                </Tooltip>
                 }
             </div>
         );

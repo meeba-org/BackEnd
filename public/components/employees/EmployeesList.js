@@ -8,7 +8,7 @@ import styles from "../../styles/EmployeesList.scss";
 import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
 import PropTypes from 'prop-types';
 import Employee from "./Employee";
-import {Button, Card, Divider} from "material-ui";
+import {Button, Card, Divider, Tooltip} from "material-ui";
 import {Field} from "redux-form";
 import AddIcon from 'material-ui-icons/Add';
 
@@ -45,7 +45,11 @@ class EmployeesList extends React.Component {
                 <CardContent className="card-content">
 
                     <div>
-                        <Button className="add-button" dense raised color="primary" onClick={() => this.onCreate(fields)}><AddIcon /></Button>
+                        <div className="controls-line">
+                            <Tooltip title="הוספת עובד" placement="top">
+                                <Button className="action-button" dense raised color="primary" onClick={() => this.onCreate(fields)}><AddIcon /></Button>
+                            </Tooltip>
+                        </div>
                         <Divider className="divider" />
 
                         {fields && fields.map((employeeIndex, index) =>

@@ -19,8 +19,14 @@ $margin: 12px;
                 overflow-y: auto;
                 max-height: $containerHeight;
 
-                .add-button {
+                .controls-line {
                     margin-bottom: 15px;
+
+                    .action-button {
+                        margin-right: 10px;
+                        padding: 5px 4px;
+                        min-width: 40px;
+                    }
                 }
 
                 .divider {

@@ -18,9 +18,11 @@
         }
         .uid {
             @extend .base-element;
+            min-width: 80px;
         }
         .name {
             @extend .base-element;
+            min-width: 100px;
         }
         .regular-hours {
             @extend .base-element;

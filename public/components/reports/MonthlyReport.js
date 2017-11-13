@@ -1,8 +1,9 @@
 import React from "react";
-import {Button, Card, Divider, Input} from "material-ui";
+import {Button, Card, Divider, Input, Tooltip} from "material-ui";
 import Select from 'material-ui/Select';
 import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
 import AddIcon from 'material-ui-icons/Add';
+import AssignmentIcon from 'material-ui-icons/Assignment';
 import MonthlyReportLine from "./MonthlyReportLine";
 import {Field} from "redux-form";
 import {MenuItem} from 'material-ui/Menu';
@@ -20,13 +21,13 @@ class MonthlyReport extends React.Component {
 
         this.state = {
             collapsed: null,
-            startDayOfMonth: moment().startOf('month').format(DATE_FORMAT),
+            startDayOfMonth: moment().startOf('month').format('MM-YYYY'),
             open: false,
         };
     }
 
     componentDidMount() {
-        this.props.onStartDayOfMonthChange(this.state.startDayOfMonth);
+        this.onStartDayOfMonthChange(this.state.startDayOfMonth);
     }
 
     isCollapsed(fields, index) {
@@ -39,27 +40,40 @@ class MonthlyReport extends React.Component {
         this.setState({collapsed: newCollapsedelement});
     }
 
+    generateMonthStr = (month, year) => moment().year(year).month(month).startOf('month').format('MM-YYYY');
+
     generateMonths() {
         return [
-            {startDay: "2017-09-01", name: "ספטמבר 2017"},
-            {startDay: "2017-10-01", name: "אוקטובר 2017"},
-            {startDay: "2017-11-01", name: "נובמבר 2017"},
-            {startDay: "2017-12-01", name: "דצמבר 2017"},
+            {startDay: this.generateMonthStr(8, 2017), name: "ספטמבר 2017"},
+            {startDay: this.generateMonthStr(9, 2017), name: "אוקטובר 2017"},
+            {startDay: this.generateMonthStr(10, 2017), name: "נובמבר 2017"},
+            {startDay: this.generateMonthStr(11, 2017), name: "דצמבר 2017"},
         ];
     }
+
+    handleGenerateExcelClick = () => {
+        let value = moment(this.state.startDayOfMonth, "MM-YYYY");
+
+        this.props.onGenerateExcel(value.format('MM'), value.format('YYYY'));
+    };
 
     handleChange(event)  {
         let startDayOfMonth = event.target.value;
 
         this.setState({startDayOfMonth});
+        this.onStartDayOfMonthChange(startDayOfMonth);
+    }
+
+    onStartDayOfMonthChange(selectedMonth) {
+        let startDayOfMonth = moment(selectedMonth, 'MM-YYYY').format(DATE_FORMAT);
         this.props.onStartDayOfMonthChange(startDayOfMonth);
     }
 
-    handleClickOpen() {
+    handleOpenAddDialog() {
         this.setState({open: true});
     }
 
-    handleRequestClose() {
+    handleCloseAddDialog() {
         this.setState({open: false});
     }
 
@@ -75,25 +89,34 @@ class MonthlyReport extends React.Component {
                 <CardContent className="card-content">
 
                     <div>
-                        <Button className="add-button" dense raised color="primary" onClick={() => this.handleClickOpen()}><AddIcon /></Button>
-                        <AddShiftsDialog
-                            open={this.state.open}
-                            onCreate={onCreateShift}
-                            onCancel={() => this.handleRequestClose()}
-                            employees={employees}
-                        />
+                        <div className="controls-line">
+                            <AddShiftsDialog
+                                open={this.state.open}
+                                onCreate={onCreateShift}
+                                onCancel={() => this.handleCloseAddDialog()}
+                                employees={employees}
+                            />
 
-                        <Select
-                            className="select"
-                            value={startDayOfMonth}
-                            onChange={(event) => this.handleChange(event)}
-                            input={<Input id="age-simple"/>}
-                        >
-                            {months.map((month) =>
-                                <MenuItem key={month.name} value={month.startDay}>{month.name}</MenuItem>
-                            )}
-                        </Select>
+                            <Select
+                                className="select"
+                                value={startDayOfMonth}
+                                onChange={(event) => this.handleChange(event)}
+                                input={<Input id="age-simple"/>}
+                            >
+                                {months.map((month) =>
+                                    <MenuItem key={month.name} value={month.startDay}>{month.name}</MenuItem>
+                                )}
+                            </Select>
 
+                            <Tooltip title="הוספת משמרת" placement="top">
+                                <Button className="action-button" dense raised color="primary"
+                                        onClick={() => this.handleOpenAddDialog()}><AddIcon/></Button>
+                            </Tooltip>
+                            <Tooltip title="ייצוא דוח לאקסל" placement="top">
+                                <Button className="action-button" dense raised color="primary"
+                                        onClick={() => this.handleGenerateExcelClick()}><AssignmentIcon/></Button>
+                            </Tooltip>
+                        </div>
                         <Divider className="divider"/>
 
                         {fields && fields.map((employeeShiftsReport, index) =>
@@ -125,5 +148,6 @@ MonthlyReport.propTypes = {
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
     onStartDayOfMonthChange: PropTypes.func.isRequired,
+    onGenerateExcel: PropTypes.func.isRequired,
 };
 export default CSSModules(MonthlyReport, styles);

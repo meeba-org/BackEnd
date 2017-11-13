@@ -60,17 +60,19 @@ class DailyReport extends React.Component {
                     <CardContent className="card-content">
 
                         <div id="daily-report">
-                            <Button className="add-button" dense raised color="primary"
-                                    onClick={() => this.handleClickOpen()}><AddIcon/></Button>
-                            <AddShiftsDialog
-                                open={this.state.open}
-                                onCreate={onCreateShift}
-                                onCancel={() => this.handleRequestClose()}
-                                employees={employees}
-                            />
+                            <div className="controls-line">
+                                <TextField className="daily-date" type="date" defaultValue={currentDay} placeholder="תאריך"
+                                           onChange={(e) => this.handleChange(e)}/>
 
-                            <TextField className="daily-date" type="date" defaultValue={currentDay} placeholder="תאריך"
-                                       onChange={(e) => this.handleChange(e)}/>
+                                <Button className="action-button" dense raised color="primary"
+                                        onClick={() => this.handleClickOpen()}><AddIcon/></Button>
+                                <AddShiftsDialog
+                                    open={this.state.open}
+                                    onCreate={onCreateShift}
+                                    onCancel={() => this.handleRequestClose()}
+                                    employees={employees}
+                                />
+                            </div>
 
                             <Divider className="divider"/>
 
