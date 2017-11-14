@@ -20,7 +20,6 @@ class ShiftsList extends React.Component {
 
     onDelete(fields, index) {
         let entityToDelete = fields.get(index);
-        fields.remove(index);
         this.props.onDelete(entityToDelete);
     }
 

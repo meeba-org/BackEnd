@@ -82,7 +82,7 @@ router.delete('/:id', (req, res) => {
             const id = req.params.id;
 
             return AppManager.removeUser(id)
-                .then(() => res.status(204).send())
+                .then(() => res.status(200).send(id))
                 .catch((err) => res.status(500).json({message: err}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));

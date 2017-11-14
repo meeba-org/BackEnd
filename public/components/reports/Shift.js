@@ -92,7 +92,7 @@ class Shift extends React.Component {
         return (
             <div className="shift" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div className="name-container">
-                    {mode == ReportModes.Live &&
+                    {mode === ReportModes.Live &&
                         <IconButton className="icon">{icon}</IconButton>
                     }
                     {showNames &&
@@ -100,7 +100,7 @@ class Shift extends React.Component {
                     }
                 </div>
 
-                {mode == ReportModes.Report &&
+                {mode === ReportModes.Report &&
                 <TextField className="elem" type="date" value={startDateStr} placeholder="תאריך"
                            onChange={(e) => this.onUpdateStartDate(e)}/>
                 }
@@ -108,14 +108,14 @@ class Shift extends React.Component {
                 <TextField className="elem" type="time" value={startTimeStr} placeholder="כניסה"
                            onChange={(e) => this.onUpdateStartTime(e, "clockOutTime")}/>
 
-                {(mode == ReportModes.Report || !!endTimeStr) &&
+                {(mode === ReportModes.Report || !!endTimeStr) &&
                 <TextField className="elem" type="time" value={endTimeStr} placeholder="יציאה"
                            onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}/>
                 }
 
                 {this.state.hover &&
                 <div>
-                    {mode == ReportModes.Live && isWorking(shift) &&
+                    {mode === ReportModes.Live && isWorking(shift) &&
                     <Tooltip title="סיים משמרת" placement="left">
                         <IconButton className="elem" onClick={() => this.onShiftComplete()}><HomeIcon/></IconButton>
                     </Tooltip>

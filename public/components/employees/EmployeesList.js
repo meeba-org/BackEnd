@@ -18,11 +18,8 @@ class EmployeesList extends React.Component {
         super(props);
     }
 
-    onCreate(fields) {
-        let newEmployee = {
-        };
-        fields.push(newEmployee);
-        this.props.onCreate(newEmployee);
+    onCreate = () => {
+        this.props.onCreate({});
     }
 
     onUpdate(employee) {
@@ -31,7 +28,6 @@ class EmployeesList extends React.Component {
 
     onDelete(fields, index) {
         let employeeToDelete = fields.get(index);
-        fields.remove(index);
         this.props.onDelete(employeeToDelete);
     }
 
@@ -47,7 +43,7 @@ class EmployeesList extends React.Component {
                     <div>
                         <div className="controls-line">
                             <Tooltip title="הוספת עובד" placement="top">
-                                <Button className="action-button" dense raised color="primary" onClick={() => this.onCreate(fields)}><AddIcon /></Button>
+                                <Button className="action-button" dense raised color="primary" onClick={this.onCreate}><AddIcon /></Button>
                             </Tooltip>
                         </div>
                         <Divider className="divider" />

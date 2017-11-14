@@ -80,10 +80,10 @@ router.delete('/:id', (req, res) => {
         .then(function (result) {
             result.throw();
 
-            const uid = req.params.id;
+            const id = req.params.id;
 
-            return ShiftModel.deleteShift(uid)
-                .then(res.status(204).send())
+            return ShiftModel.deleteShift(id)
+                .then(res.status(200).send(id))
                 .catch((err) => res.status(500).json({message: err}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
