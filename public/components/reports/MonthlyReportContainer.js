@@ -1,10 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
-import {createShift, deleteShift, updateShift} from "../../actions";
+import {createShift, updateShift} from "../../actions";
 import {FieldArray, reduxForm} from "redux-form";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
-import {fetchMonthlyReport, generateExcelReport} from "../../actions/shiftsActions";
+import {fetchMonthlyReport, generateExcelReport, showDeleteShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
 import {createEmployeeShiftsReports} from "../../helpers/ShiftAnalyzer";
 import * as selectors from "../../selectors";
@@ -77,7 +77,7 @@ function mapDispatchToProps(dispatch) {
         generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
         updateShift: (shift) => dispatch(updateShift(shift)),
         createShift: (shift) => dispatch(createShift(shift)),
-        deleteShift: (shift) => dispatch(deleteShift(shift))
+        deleteShift: (shift) => dispatch(showDeleteShiftModal(shift))
     };
 }
 

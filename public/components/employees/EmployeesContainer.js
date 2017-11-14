@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import EmployeesList from "./EmployeesList";
-import {createUser, deleteUser, fetchUsers, updateUser} from "../../actions";
+import {createUser, fetchUsers, updateUser} from "../../actions";
 import {FieldArray, reduxForm} from "redux-form";
+import {showDeleteUserModal} from "../../actions/usersActions";
 
 class EmployeesContainer extends React.Component {
     componentDidMount() {
@@ -47,7 +48,7 @@ function mapDispatchToProps(dispatch) {
         fetchEmployees: () => {dispatch(fetchUsers());},
         createUser: (employee) => {dispatch(createUser(employee));},
         updateUser: (employee) => {dispatch(updateUser(employee));},
-        deleteUser: (employee) => {dispatch(deleteUser(employee));},
+        deleteUser: (employee) => {dispatch(showDeleteUserModal(employee));},
     };
 }
 

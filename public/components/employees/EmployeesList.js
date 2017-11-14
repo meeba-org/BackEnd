@@ -20,7 +20,7 @@ class EmployeesList extends React.Component {
 
     onCreate = () => {
         this.props.onCreate({});
-    }
+    };
 
     onUpdate(employee) {
         this.props.onUpdate(employee);

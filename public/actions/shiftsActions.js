@@ -85,6 +85,18 @@ export const updateShift = (shift) => ({
     }
 });
 
+export const showDeleteShiftModal = (shift) => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: 'DELETE_ENTITY',
+        modalProps: {
+            entity: shift,
+            deleteEntity: deleteShift
+        }
+    }
+});
+
+
 export const deleteShift = (shift) => ({
     type: actions.API,
     payload: {

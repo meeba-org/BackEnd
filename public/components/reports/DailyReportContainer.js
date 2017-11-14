@@ -1,9 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
-import {createShift, deleteShift, updateShift} from "../../actions";
+import {createShift, updateShift} from "../../actions";
 import {reduxForm} from "redux-form";
 import PropTypes from 'prop-types';
-import {fetchDailyReport} from "../../actions/shiftsActions";
+import {fetchDailyReport, showDeleteShiftModal} from "../../actions/shiftsActions";
 import DailyReport from "./DailyReport";
 import {fetchUsers} from "../../actions/usersActions";
 
@@ -63,7 +63,7 @@ function mapDispatchToProps(dispatch) {
         fetchEmployees: () => dispatch(fetchUsers()),
         updateShift: (shift) => dispatch(updateShift(shift)),
         createShift: (shift) => dispatch(createShift(shift)),
-        deleteShift: (shift) => dispatch(deleteShift(shift))
+        deleteShift: (shift) => dispatch(showDeleteShiftModal(shift))
     };
 }
 

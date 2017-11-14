@@ -75,6 +75,18 @@ export const updateUser = (user) => ({
     }
 });
 
+
+export const showDeleteUserModal = (user) => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: 'DELETE_ENTITY',
+        modalProps: {
+            entity: user,
+            deleteEntity: deleteUser
+        }
+    }
+});
+
 export const deleteUser = (user) => ({
     type: actions.API,
     payload: {
