@@ -44,4 +44,4 @@ export const isWorking = (shift) => {
     return !moment(shift.clockOutTime).isValid();
 };
 
-export const getCurrentTime = () => moment();
+export const getCurrentTime = () => moment().format(TIME_FORMAT);
