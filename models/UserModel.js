@@ -4,22 +4,12 @@ const ERoles = require("./ERoles");
 
 // User Schema
 const UserSchema = mongoose.Schema({
-    uid: {
-        type: String,
-        index: true,
-    },
-    firstName: {
-        type: String,
-    },
-    lastName: {
-        type: String,
-    },
-    email: {
-        type: String
-    },
-    password: {
-        type: String,
-    },
+    uid: { type: String, index: true },
+    firstName: { type: String },
+    lastName: { type: String },
+    email: { type: String },
+    password: { type: String },
+    hourSalary: {type: Number, default: 26.7 },
     role: { type: String, default: ERoles.EMPLOYEE},
     shifts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shift' }],
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }

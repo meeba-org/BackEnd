@@ -51,6 +51,12 @@ class Employee extends React.Component {
                                onBlur={this.onBlur}
                         />
                     </Grid>
+                    <Grid item xs={12} sm={1}>
+                        <Input value={input.value.hourSalary} placeholder="שכר שעתי"
+                               onChange={(e) => this.onUpdate(e, "hourSalary")}
+                               onBlur={this.onBlur}
+                        />
+                    </Grid>
                     <Grid item xs={12} sm={2}>
                         {this.state.hover &&
                             <Tooltip title="מחיקה" placement="top">
