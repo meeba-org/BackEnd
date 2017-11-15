@@ -4,7 +4,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
+import AccessTimeIcon from 'material-ui-icons/AccessTime';
 import CSSModules from "react-css-modules";
 import styles from '../styles/AppBar.scss';
 import {connect} from "react-redux";
@@ -25,7 +25,7 @@ class MeebaAppBar extends Component {
                 <AppBar position="static">
                     <Toolbar id="toolbar">
                         <IconButton color="contrast" aria-label="Menu">
-                            <MenuIcon/>
+                            <AccessTimeIcon/>
                         </IconButton>
                         <Typography type="title" color="inherit">{companyName}</Typography>
                         <div className="login">

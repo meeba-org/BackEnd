@@ -24,7 +24,7 @@ class ShiftsList extends React.Component {
     }
 
     render() {
-        let {fields, showNames, mode} = this.props;
+        let {fields, showNames, mode, shouldDisplayNoData} = this.props;
         return (
             <div className="shifts-list">
                 {fields && fields.map((shiftName, index) =>
@@ -37,7 +37,7 @@ class ShiftsList extends React.Component {
                         mode={mode}
                     />
                 )}
-                {(!fields || (fields.length == 0)) &&
+                {shouldDisplayNoData && (!fields || (fields.length == 0)) &&
                     <NoData/>
                 }
             </div>
@@ -51,6 +51,7 @@ ShiftsList.propTypes = {
     onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
+    shouldDisplayNoData: PropTypes.bool,
     mode: PropTypes.number.isRequired,
 };
 export default CSSModules(ShiftsList, styles);

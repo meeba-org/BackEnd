@@ -86,6 +86,7 @@ class DailyReport extends React.Component {
                                 onCreate={onCreateShift}
                                 showNames={true}
                                 mode={mode}
+                                shouldDisplayNoData={true}
                             />
                         </div>
 
@@ -121,6 +122,7 @@ class DailyReport extends React.Component {
                                 onCreate={onCreateShift}
                                 showNames={true}
                                 mode={mode}
+                                shouldDisplayNoData={false}
                             />
                         </div>
 

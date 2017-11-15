@@ -46,6 +46,7 @@ class MonthlyReportLine extends React.Component {
                     onCreate={onCreateShift}
                     showNames={false}
                     mode={ReportModes.Report}
+                    shouldDisplayNoData={true}
                 />
                 }
             </div>
