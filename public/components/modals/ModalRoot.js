@@ -16,7 +16,7 @@ const ModalRoot = ({ modalType, modalProps }) => {
     return <SpecificModal {...modalProps} />;
 };
 
-ModalRoot.PropTypes = {
+ModalRoot.propTypes = {
     modalType: PropTypes.string.isRequired,
     modalProps: PropTypes.object.isRequired,
 };

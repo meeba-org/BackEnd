@@ -16,9 +16,9 @@ const createSheet = (workbook, year, month) => {
         { header: '100% שעות', key: 'regularHours', width: 13, style: {alignment: {horizontal: 'right'} }  },
         { header: '125% שעות', key: 'extra125Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
         { header: '150% שעות', key: 'extra150Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
-        { header: 'שכ"ע לשעה', key: 'hourFee', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        { header: 'שכ"ע לשעה', key: 'hourWage', width: 13, style: {alignment: {horizontal: 'right'} }  },
         { header: 'סה"כ שעות', key: 'overallHours', width: 13, style: {alignment: {horizontal: 'right'} }  },
-        { header: 'סה"כ שכר', key: 'payment', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        { header: 'סה"כ שכר', key: 'overallSalary', width: 13, style: {alignment: {horizontal: 'right'} }  },
     ];
 
     ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1'].map(key => {
@@ -45,6 +45,8 @@ let createContent = function (shifts, worksheet) {
             extra125Hours: employee.extra125Hours,
             extra150Hours: employee.extra150Hours,
             overallHours: employee.overallHours,
+            hourWage: employee.hourWage,
+            overallSalary: employee.overallSalary,
         });
     });
 };

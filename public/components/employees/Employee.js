@@ -52,8 +52,8 @@ class Employee extends React.Component {
                         />
                     </Grid>
                     <Grid item xs={12} sm={1}>
-                        <Input value={input.value.hourSalary} placeholder="שכר שעתי"
-                               onChange={(e) => this.onUpdate(e, "hourSalary")}
+                        <Input value={input.value.hourWage} placeholder="שכר שעתי"
+                               onChange={(e) => this.onUpdate(e, "hourWage")}
                                onBlur={this.onBlur}
                         />
                     </Grid>

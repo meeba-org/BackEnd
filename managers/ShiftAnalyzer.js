@@ -109,6 +109,7 @@ function createUserAdditionalInfo(user) {
     hourSummary.regularHours = hourSummary.regularHours.toFixed(2);
     hourSummary.extra125Hours = hourSummary.extra125Hours.toFixed(2);
     hourSummary.extra150Hours = hourSummary.extra150Hours.toFixed(2);
+    hourSummary.overallSalary = (hourSummary.overallHours * user.hourWage).toFixed(2);
     return hourSummary;
 }
 

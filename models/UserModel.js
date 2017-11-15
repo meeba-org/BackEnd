@@ -9,7 +9,7 @@ const UserSchema = mongoose.Schema({
     lastName: { type: String },
     email: { type: String },
     password: { type: String },
-    hourSalary: {type: Number, default: 26.7 },
+    hourWage: {type: Number, default: 26.7 },
     role: { type: String, default: ERoles.EMPLOYEE},
     shifts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shift' }],
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }

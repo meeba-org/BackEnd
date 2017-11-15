@@ -3,7 +3,7 @@ export * from "./shiftsActions";
 export * from "./usersActions";
 export * from "./loginLogoutActions";
 
-export const hideDeleteEntityModal = (payload) => ({
+export const hideDeleteEntityModal = () => ({
     type: 'HIDE_MODAL',
     payload : {
         modalType: 'DELETE_ENTITY',
