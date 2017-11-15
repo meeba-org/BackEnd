@@ -10,7 +10,9 @@ export function ModalReducer(state = initialState, action) {
                 ...action.payload
             };
         case 'HIDE_MODAL':
-            return initialState;
+            return {
+                ...action.payload
+            };
         default:
             return state;
     }

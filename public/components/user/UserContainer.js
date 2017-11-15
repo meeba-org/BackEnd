@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Field, reduxForm} from "redux-form";
 import User from "./User";
 import {updateUser} from "../../actions/usersActions";
-import {updateCompany} from "../../actions";
+import {updateCompany} from "../../actions/companyActions";
 
 class UserContainer extends React.Component {
 

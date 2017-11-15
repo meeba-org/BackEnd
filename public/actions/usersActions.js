@@ -82,7 +82,8 @@ export const showDeleteUserModal = (user) => ({
         modalType: 'DELETE_ENTITY',
         modalProps: {
             entity: user,
-            deleteEntity: deleteUser
+            deleteEntity: deleteUser,
+            open: true
         }
     }
 });

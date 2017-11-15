@@ -1,10 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
-import {createShift, updateShift} from "../../actions";
 import {FieldArray, reduxForm} from "redux-form";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
-import {fetchMonthlyReport, generateExcelReport, showDeleteShiftModal} from "../../actions/shiftsActions";
+import {createShift, updateShift, fetchMonthlyReport, generateExcelReport, showDeleteShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
 import {createEmployeeShiftsReports} from "../../helpers/ShiftAnalyzer";
 import * as selectors from "../../selectors";
