@@ -3,18 +3,18 @@ import {connect} from "react-redux";
 import {FieldArray, reduxForm} from "redux-form";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
-import {createShift, updateShift, fetchMonthlyReport, generateExcelReport, showDeleteShiftModal} from "../../actions/shiftsActions";
+import {createShift, showDeleteShiftModal, updateShift} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
-import {createEmployeeShiftsReports} from "../../helpers/ShiftAnalyzer";
 import * as selectors from "../../selectors";
+import {fetchMonthlyReport, generateExcelReport} from "../../actions/reportsActions";
 
 class MonthlyReportContainer extends React.Component {
 
-    onStartDayOfMonthChange(startDateOfMonth) {
-        if (!startDateOfMonth)
+    onStartDayOfMonthChange(month, year) {
+        if (!month || !year)
             return;
 
-        this.props.fetchMonthlyReport(startDateOfMonth);
+        this.props.fetchMonthlyReport(month, year);
         this.props.fetchEmployees();
     }
 
@@ -28,14 +28,15 @@ class MonthlyReportContainer extends React.Component {
     render() {
         const {handleSubmit, updateShift, createShift, deleteShift, employees, userRole} = this.props;
         return (
-            <form onSubmit={handleSubmit(() => {})}>
+            <form onSubmit={handleSubmit(() => {
+            })}>
                 <FieldArray name="employeeShiftsReports"
                             component={MonthlyReport}
                             employees={employees}
                             onDeleteShift={deleteShift}
                             onUpdateShift={updateShift}
                             onCreateShift={createShift}
-                            onStartDayOfMonthChange={(startDayOfMonth) => this.onStartDayOfMonthChange(startDayOfMonth)}
+                            onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
                             onGenerateExcel={(month, year) => this.onGenerateExcel(month, year)}
                             userRole={userRole}
                 />
@@ -58,7 +59,7 @@ MonthlyReportContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-    const employeeShiftsReports = createEmployeeShiftsReports(state.shifts);
+    const employeeShiftsReports = state.reports.employeesMonthlyReports;
     const employees = state.users;
     return {
         employees,
@@ -71,7 +72,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchMonthlyReport: (startDate) => dispatch(fetchMonthlyReport(startDate)) ,
+        fetchMonthlyReport: (month, year) => dispatch(fetchMonthlyReport(month, year)),
         fetchEmployees: () => dispatch(fetchUsers()),
         generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
         updateShift: (shift) => dispatch(updateShift(shift)),

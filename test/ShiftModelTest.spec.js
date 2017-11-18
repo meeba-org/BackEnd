@@ -6,11 +6,6 @@ const ShiftModel = require("../models/ShiftModel");
 const expect = require('chai').expect;
 
 describe('Shifts', function () {
-    this.timeout(TIMEOUT);
-    beforeEach(function () {
-        return utils.clearDB();
-    });
-
     describe('ShiftModel', function () {
         it('getShiftsInMonth - should return shifts of a specific month', function () {
             let newCompany = utils.createMockedCompanyPlainObject("Toluna");
@@ -41,7 +36,7 @@ describe('Shifts', function () {
                     return ShiftModel.createShift(shift3)
                 })
                 .then(() => {
-                    return ShiftModel.getShiftsInMonth(year, month, createdCompany)
+                    return ShiftModel.getShiftsInMonth(year, month + 1, createdCompany)
                 })
                 .then((shifts) => {
                     expect(shifts).to.not.be.null;

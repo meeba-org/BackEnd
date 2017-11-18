@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
                     if (shifts)
                         return res.status(200).json(shifts);
                 })
-                .catch((err) => res.status(500).json({message: err}));
+                .catch((err) => res.status(500).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
@@ -50,7 +50,7 @@ router.post('/', (req, res) => {
 
             ShiftModel.createOrUpdateShift(newShift)
                 .then((shift) => res.status(200).json(shift))
-                .catch((err) => res.status(500).json({message: err}));
+                .catch((err) => res.status(500).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
@@ -67,7 +67,7 @@ router.put('/', (req, res) => {
 
             ShiftModel.createOrUpdateShift(newShift)
                 .then((shift) => res.status(200).json(shift))
-                .catch((err) => res.status(500).json({message: err}));
+                .catch((err) => res.status(500).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
@@ -84,7 +84,7 @@ router.delete('/:id', (req, res) => {
 
             return ShiftModel.deleteShift(id)
                 .then(res.status(200).send(id))
-                .catch((err) => res.status(500).json({message: err}));
+                .catch((err) => res.status(500).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });

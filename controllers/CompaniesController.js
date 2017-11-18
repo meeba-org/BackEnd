@@ -19,7 +19,7 @@ router.get('/:id', (req, res) => {
                         return res.status(200).json(company);
                     return Promise.reject("Company with id " + id + " does not exist");
                 })
-                .catch((err) => res.status(500).json({message: err}));
+                .catch((err) => res.status(500).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
@@ -28,7 +28,7 @@ router.get('/:id', (req, res) => {
 router.get('/', (req, res) => {
     CompanyModel.getAllCompanies()
         .then((companies) => res.status(200).json({companies: companies}))
-        .catch((err) => res.status(500).json({message: err}));
+        .catch((err) => res.status(500).json({message: err.message}));
 });
 
 //POST /companies company
@@ -39,7 +39,7 @@ router.post('/', (req, res) => {
             result.throw();
             CompanyModel.createCompany(req.body)
                 .then((company) => res.status(200).json({company: company}))
-                .catch((err) => res.status(500).json({message: err}));
+                .catch((err) => res.status(500).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
@@ -52,7 +52,7 @@ router.put('/', (req, res) => {
             result.throw();
             CompanyModel.updateCompany(req.body)
                 .then((company) => res.status(200).json({company: company}))
-                .catch((err) => res.status(500).json({message: err}));
+                .catch((err) => res.status(500).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
@@ -72,7 +72,7 @@ router.delete('/:id', (req, res) => {
                     return res.status(204).send();
                 })
                 .catch((err) => {
-                    return res.status(500).json({message: err});
+                    return res.status(500).json({message: err.message});
                 });
         })
         .catch((err) => res.status(400).json({message: err.array()}));

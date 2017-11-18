@@ -13,7 +13,6 @@ import styles from '../../styles/MonthlyReport.scss';
 import moment from 'moment';
 import NoData from "../NoData";
 import AddShiftsDialog from "../AddShiftsDialog";
-import {DATE_FORMAT} from "../../helpers/utils";
 import {IfGranted} from "react-authorization";
 import * as ERoles from "../../helpers/ERoles";
 
@@ -67,8 +66,8 @@ class MonthlyReport extends React.Component {
     }
 
     onStartDayOfMonthChange(selectedMonth) {
-        let startDayOfMonth = moment(selectedMonth, 'MM-YYYY').format(DATE_FORMAT);
-        this.props.onStartDayOfMonthChange(startDayOfMonth);
+        let value = moment(selectedMonth, "MM-YYYY");
+        this.props.onStartDayOfMonthChange(value.format('MM'), value.format('YYYY'));
     }
 
     handleOpenAddDialog() {

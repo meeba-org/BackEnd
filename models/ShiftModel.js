@@ -63,7 +63,7 @@ const getShiftsBetween = (company, startDate, endDate, userId) => {
     if (userId)
         condition.user = userId;
 
-    return Shift.find(condition).populate('user')
+    return Shift.find(condition).populate('user').lean()
         .then((shifts) => shifts.sort((s1, s2) => s1.clockInTime - s2.clockInTime));
 };
 
@@ -78,18 +78,7 @@ const getShiftsInMonth = (year, month, company) => {
     let startDate = moment().year(year).month(month).startOf('month');
     let endDate = moment().year(year).month(month).endOf('month');
 
-    return getShiftsBetween(company, startDate, endDate)
-        .then((shifts) => shifts.map(shift => shift.toObject()));
-};
-
-const getShiftsStartedInDay = (date) => {
-    const startDate = moment(date).startOf('day');
-    const endDate = moment(startDate).add(1, 'days');
-
-    return Shift.find({clockInTime: {
-        $gte: startDate,
-        $lt: endDate
-    }});
+    return getShiftsBetween(company, startDate, endDate);
 };
 
 const deleteAllShifts = (conditions) => {

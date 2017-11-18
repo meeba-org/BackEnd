@@ -31,7 +31,7 @@ let processUsersToShifts = function (shifts) {
 
 function processUsersAdditionalInfo(userMap) {
     if (Object.keys(userMap).length === 0)
-        return userMap;
+        return [];
 
     const usersWithAdditionalInfo = userMap.map((user) => {
         let userAdditionalInfo = createUserAdditionalInfo(user);
@@ -120,5 +120,8 @@ const createEmployeeShiftsReports = (shifts) => {
 };
 
 module.exports = {
-    createEmployeeShiftsReports
+    createEmployeeShiftsReports,
+    analyzeHours,
+    REGULAR_SHIFT_LENGTH,
+    SHIFT_125_OVERDUE_LENGTH,
 };

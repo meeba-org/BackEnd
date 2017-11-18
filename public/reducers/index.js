@@ -5,6 +5,7 @@ import {ShiftsReducer} from "./ShiftsReducer";
 import {UserReducer} from "./UserReducer";
 import {UsersReducer} from "./UsersReducer";
 import {ModalReducer} from "./ModalReducer";
+import {ReportsReducer} from "./ReportsReducer";
 
 const rootReducer = combineReducers({
     routing: routerReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     shifts: ShiftsReducer,
     user: UserReducer,
     modal: ModalReducer,
+    reports: ReportsReducer,
     form: formReducer,
 });
 

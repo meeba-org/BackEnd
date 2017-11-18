@@ -7,11 +7,6 @@ const AppManager = require('../managers/AppManager');
 const expect = require('chai').expect;
 
 describe('AppManager', function () {
-    this.timeout(TIMEOUT);
-    beforeEach(function () {
-        return utils.clearDB();
-    });
-
     describe('addUser', function () {
         it('should add user to the company', function () {
             let newCompany = utils.createMockedCompanyPlainObject("Toluna");

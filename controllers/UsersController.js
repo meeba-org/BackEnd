@@ -21,7 +21,7 @@ router.get('/:uid', (req, res) => {
                         return res.status(200).json(user);
                     return Promise.reject("User with uid " + uid + " does not exist");
                 })
-                .catch((err) => res.status(500).json({message: err}));
+                .catch((err) => res.status(500).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
 
     UserModel.getUsers(company)
         .then((users) => res.status(200).json(users))
-        .catch((err) => res.status(500).json({message: err}));
+        .catch((err) => res.status(500).json({message: err.message}));
 });
 
 //POST /users user
@@ -48,7 +48,7 @@ router.post('/', (req, res) => {
 
             AppManager.addUser(user)
                 .then((user) => res.status(200).json(user))
-                .catch((err) => res.status(500).json({message: err}));
+                .catch((err) => res.status(500).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
@@ -66,7 +66,7 @@ router.put('/', (req, res) => {
 
             UserModel.updateUser(user)
                 .then((user) => res.status(200).json(user))
-                .catch((err) => res.status(500).json({message: err}));
+                .catch((err) => res.status(500).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });
@@ -83,7 +83,7 @@ router.delete('/:id', (req, res) => {
 
             return AppManager.removeUser(id)
                 .then(() => res.status(200).send(id))
-                .catch((err) => res.status(500).json({message: err}));
+                .catch((err) => res.status(500).json({message: err.message}));
         })
         .catch((err) => res.status(400).json({message: err.array()}));
 });

@@ -7,6 +7,7 @@ const CompanyModel = require('../models/CompanyModel');
 const UserModel = require('../models/UserModel');
 const ShiftModel = require('../models/ShiftModel');
 const moment = require('moment');
+const mongoose = require("mongoose");
 
 // ensure the NODE_ENV is set to 'test'
 // this is helpful when you would like to change behavior when testing
@@ -15,6 +16,19 @@ process.env.NODE_ENV = 'test';
 const config = require('../config');
 
 const TIMEOUT = 20000;
+
+beforeEach(function (done) {
+    this.timeout(TIMEOUT);
+    if (mongoose.connection.db)
+        return clearDB()
+            .then(() => done());
+
+    mongoose.connect(config.dbUrl, { useMongoClient: true})
+        .then(() => {
+            clearDB()
+                .then(() => done());
+        })
+});
 
 function clearDB() {
     if (process.env.NODE_ENV !== "test")
@@ -26,9 +40,10 @@ function clearDB() {
         CompanyModel.companiesCount(),
         UserModel.usersCount(),
         ShiftModel.shiftsCount(),
-    ]).then((responses) => {
+    ])
+    .then((responses) => {
         responses.forEach(response => {
-            if (response > 3)
+            if (response > 4)
                 throw new Error("[testUtils.clearDB] - Error! - clearing db with too much documents");
         });
     }).then(() => {
