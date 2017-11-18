@@ -18,10 +18,13 @@ const createSheet = (workbook, year, month) => {
         { header: '150% שעות', key: 'extra150Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
         { header: 'שכ"ע לשעה', key: 'hourWage', width: 13, style: {alignment: {horizontal: 'right'} }  },
         { header: 'סה"כ שעות', key: 'overallHours', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        { header: 'משמרות', key: 'shiftsCount', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        { header: 'נסיעות יומי', key: 'transportation', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        { header: 'סה"כ נסיעות', key: 'overallTransportation', width: 13, style: {alignment: {horizontal: 'right'} }  },
         { header: 'סה"כ שכר', key: 'overallSalary', width: 13, style: {alignment: {horizontal: 'right'} }  },
     ];
 
-    ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1'].map(key => {
+    ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'H1', 'I1', 'J1'].map(key => {
         sheet.getCell(key).fill = {
             type: 'pattern',
             pattern:'solid',
@@ -46,6 +49,9 @@ let createContent = function (shifts, worksheet) {
             extra150Hours: employee.extra150Hours,
             overallHours: employee.overallHours,
             hourWage: employee.hourWage,
+            shiftsCount: employee.shiftsCount,
+            transportation: employee.transportation,
+            overallTransportation: employee.overallTransportation,
             overallSalary: employee.overallSalary,
         });
     });

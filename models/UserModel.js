@@ -10,6 +10,7 @@ const UserSchema = mongoose.Schema({
     email: { type: String },
     password: { type: String },
     hourWage: {type: Number, default: 26.7 },
+    transportation: {type: Number, default: 11.8 },
     role: { type: String, default: ERoles.EMPLOYEE},
     shifts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shift' }],
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }

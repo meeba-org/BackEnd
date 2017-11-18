@@ -92,25 +92,28 @@ function createUserAdditionalInfo(user) {
     if (!user || !user.shifts)
         return user;
 
-    let hourSummary = {
+    let info = {
         regularHours : 0,
         extra125Hours: 0,
         extra150Hours: 0
     };
     user.shifts.forEach((shift) => {
         let hours = analyzeHours(shift);
-        hourSummary.regularHours += hours.regularHours;
-        hourSummary.extra125Hours += hours.extra125Hours;
-        hourSummary.extra150Hours += hours.extra150Hours;
+        info.regularHours += hours.regularHours;
+        info.extra125Hours += hours.extra125Hours;
+        info.extra150Hours += hours.extra150Hours;
     });
 
+    info.shiftsCount = user.shifts.length;
+    info.overallTransportation = user.shifts.length * user.transportation;
+
     // Rounding results
-    hourSummary.overallHours = (hourSummary.regularHours + hourSummary.extra125Hours * 1.25 + hourSummary.extra150Hours * 1.5).toFixed(2);
-    hourSummary.regularHours = hourSummary.regularHours.toFixed(2);
-    hourSummary.extra125Hours = hourSummary.extra125Hours.toFixed(2);
-    hourSummary.extra150Hours = hourSummary.extra150Hours.toFixed(2);
-    hourSummary.overallSalary = (hourSummary.overallHours * user.hourWage).toFixed(2);
-    return hourSummary;
+    info.overallHours = (info.regularHours + info.extra125Hours * 1.25 + info.extra150Hours * 1.5).toFixed(2);
+    info.regularHours = info.regularHours.toFixed(2);
+    info.extra125Hours = info.extra125Hours.toFixed(2);
+    info.extra150Hours = info.extra150Hours.toFixed(2);
+    info.overallSalary = (info.overallHours * user.hourWage + info.overallTransportation).toFixed(2);
+    return info;
 }
 
 const createEmployeeShiftsReports = (shifts) => {

@@ -57,6 +57,12 @@ class Employee extends React.Component {
                                onBlur={this.onBlur}
                         />
                     </Grid>
+                    <Grid item xs={12} sm={1}>
+                        <Input value={input.value.transportation} placeholder="נסיעות"
+                               onChange={(e) => this.onUpdate(e, "transportation")}
+                               onBlur={this.onBlur}
+                        />
+                    </Grid>
                     <Grid item xs={12} sm={2}>
                         {this.state.hover &&
                             <Tooltip title="מחיקה" placement="top">
