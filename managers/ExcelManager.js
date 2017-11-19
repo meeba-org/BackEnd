@@ -35,11 +35,11 @@ const createSheet = (workbook, year, month) => {
     return sheet;
 };
 
-let createContent = function (shifts, worksheet) {
+let createContent = function (worksheet, shifts, settings) {
     if (!shifts || shifts.length == 0)
         return;
 
-    let employees = ShiftAnalyzer.createEmployeeShiftsReports(shifts);
+    let employees = ShiftAnalyzer.createEmployeeShiftsReports(shifts, settings);
 
     employees.forEach((employee) => {
         worksheet.addRow({
@@ -66,7 +66,7 @@ let createWorkbook = function () {
 const createExcel = (shifts, year, month, company) => {
     const workbook = createWorkbook();
     let worksheet = createSheet(workbook, year, month);
-    createContent(shifts, worksheet);
+    createContent(worksheet, shifts, company.settings);
 
     return workbook;
 };

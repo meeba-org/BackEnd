@@ -56,7 +56,7 @@ router.get('/monthly', (req, res) => {
                 .then((shifts) => {
 
                     if (shifts) {
-                        let employeesMonthlyReports = ShiftAnalyzer.createEmployeeShiftsReports(shifts);
+                        let employeesMonthlyReports = ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
                         return res.status(200).json(employeesMonthlyReports);
                     }
                 })

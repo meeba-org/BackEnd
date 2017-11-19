@@ -29,19 +29,19 @@ let processUsersToShifts = function (shifts) {
     return keys.map((key) => usersToShiftsMap[key]); // return the users
 };
 
-function processUsersAdditionalInfo(userMap) {
+function processUsersAdditionalInfo(userMap, settings) {
     if (Object.keys(userMap).length === 0)
         return [];
 
     const usersWithAdditionalInfo = userMap.map((user) => {
-        let userAdditionalInfo = createUserAdditionalInfo(user);
+        let userAdditionalInfo = createUserAdditionalInfo(user, settings);
         return Object.assign({}, user, userAdditionalInfo);
     });
 
     return usersWithAdditionalInfo;
 }
 
-const analyzeHours = (shift) => {
+const analyzeHours = (shift, settings) => {
     let additionalInfo = {
         regularHours : 0,
         extra125Hours: 0,
@@ -88,7 +88,7 @@ function calcExtra150Hours(shiftLength) {
 }
 
 
-function createUserAdditionalInfo(user) {
+function createUserAdditionalInfo(user, settings) {
     if (!user || !user.shifts)
         return user;
 
@@ -98,7 +98,7 @@ function createUserAdditionalInfo(user) {
         extra150Hours: 0
     };
     user.shifts.forEach((shift) => {
-        let hours = analyzeHours(shift);
+        let hours = analyzeHours(shift, settings);
         info.regularHours += hours.regularHours;
         info.extra125Hours += hours.extra125Hours;
         info.extra150Hours += hours.extra150Hours;
@@ -116,9 +116,9 @@ function createUserAdditionalInfo(user) {
     return info;
 }
 
-const createEmployeeShiftsReports = (shifts) => {
+const createEmployeeShiftsReports = (shifts, settings) => {
     let map = processUsersToShifts(shifts);
-    let usersArray = processUsersAdditionalInfo(map);
+    let usersArray = processUsersAdditionalInfo(map, settings);
     return usersArray;
 };
 

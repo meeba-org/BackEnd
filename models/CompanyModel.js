@@ -7,7 +7,11 @@ const CompanySchema = mongoose.Schema({
         index: true,
         required: true
     },
-    users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+    users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    settings: {
+        eveningHolidayStartHour: {type: String, default: "18:00"}, // start hour of evening holiday (i.e. Friday knisat shabat hour)
+        holidayDayEndHour: {type: String, default: "19:00"} // end hour of holiday (i.e. Saturday Yetziat shabat hour)
+    }
 });
 
 const Company = mongoose.model('Company', CompanySchema);
