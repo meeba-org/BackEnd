@@ -51,32 +51,42 @@ function processUsersAdditionalInfo(userMap, settings) {
 }
 
 const analyzeShiftHours = (shift, settings) => {
-    if (!isShiftValid(shift))
+    let clockOut = moment(shift.clockOutTime);
+    let clockIn = moment(shift.clockInTime);
+
+    if (!isShiftValid(clockIn, clockOut))
         return EmptyAdditionalInfo;
 
-    let clockInTime = moment(shift.clockInTime);
-
-    let dayType = analyzeDayType(clockInTime);
+    let dayType = analyzeDayType(clockIn);
     switch (dayType) {
+        case DayType.Holiday:
+            return analyzeHolidayShiftHours(clockIn, clockOut, settings);
+        case DayType.HolidayEvening:
+            return analyzeHolidayEveningShiftHours(clockIn, clockOut, settings);
         case DayType.Regular:
         default:
-            return analyzeRegularDayShiftHours(shift, settings);
+            return analyzeRegularDayShiftHours(clockIn, clockOut, settings);
     }
 };
 
-const isShiftValid = (shift) => {
-    let clockOut = moment(shift.clockOutTime);
-    let clockIn = moment(shift.clockInTime);
-
+const isShiftValid = (clockIn, clockOut) => {
     if (!clockOut.isValid() || !clockIn.isValid())
         return false;
     return true;
-}
+};
 
-const analyzeRegularDayShiftHours = (shift, settings) => {
-    let clockOut = moment(shift.clockOutTime);
-    let clockIn = moment(shift.clockInTime);
+const analyzeHolidayShiftHours = (shift, settings) => {
 
+};
+
+const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
+    let eveningHolidayStartHour = moment(clockIn).hour(settings.eveningHolidayStartHour);
+
+    let regularShiftLength = eveningHolidayStartHour.diff(clockIn, 'hours', true);
+    let regularAdditionalInfo = analyzeRegularDayShiftHours(clockIn, eveningHolidayStartHour, settings);
+};
+
+const analyzeRegularDayShiftHours = (clockIn, clockOut, settings) => {
     let shiftLength = clockOut.diff(clockIn, 'hours', true);
 
     if (shiftLength <= REGULAR_SHIFT_LENGTH) {
