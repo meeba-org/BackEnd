@@ -143,7 +143,7 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
         regularHoursShiftLength -= settings.holidayShiftLength;
     }
     else {
-        holidayAdditionalInfo.extra150Hours =- regularHoursShiftLength;
+        holidayAdditionalInfo.extra150Hours -= regularHoursShiftLength;
         holidayAdditionalInfo.regularHours = regularHoursShiftLength;
         return holidayAdditionalInfo;
     }
@@ -154,7 +154,7 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
         regularHoursShiftLength -= settings.holidayShiftLength;
     }
     else {
-        holidayAdditionalInfo.extra175Hours =- regularHoursShiftLength;
+        holidayAdditionalInfo.extra175Hours -= regularHoursShiftLength;
         holidayAdditionalInfo.extra125Hours = regularHoursShiftLength;
         return holidayAdditionalInfo;
     }
@@ -164,7 +164,7 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
         throw new Error("[ShiftAnalyzer.analyzeHolidayEveningShiftHours] - Error in calculation: clockIn:" + clockIn + ", clockOut: " + clockOut);
     }
     else {
-        holidayAdditionalInfo.extra200Hours =- regularHoursShiftLength;
+        holidayAdditionalInfo.extra200Hours -= regularHoursShiftLength;
         holidayAdditionalInfo.extra150Hours = regularHoursShiftLength;
     }
 
@@ -194,30 +194,36 @@ const analyzeWholeShiftInHolidayHours = (clockIn, clockOut, settings) => {
     }
     else {
         return Object.assign({}, EmptyAdditionalInfo, {
-            extra150Hours: REGULAR_SHIFT_LENGTH,
-            extra175Hours: calcExtra25PercentHours(shiftLength),
-            extra200Hours: calcExtra50PercentHours(shiftLength),
+            extra150Hours: settings.holidayShiftLength,
+            extra175Hours: calcExtra25PercentHours(shiftLength, settings.holidayShiftLength),
+            extra200Hours: calcExtra50PercentHours(shiftLength, settings.holidayShiftLength),
         });
     }
 };
 
-function calcExtra25PercentHours(shiftLength) {
-    if (shiftLength <= REGULAR_SHIFT_LENGTH)
+function calcExtra25PercentHours(shiftLength, regularShiftLength) {
+    if (!regularShiftLength)
+        regularShiftLength = REGULAR_SHIFT_LENGTH
+
+    if (shiftLength <= regularShiftLength)
         return 0;
 
-    shiftLength -= REGULAR_SHIFT_LENGTH;
+    shiftLength -= regularShiftLength;
     if (shiftLength > SHIFT_125_OVERDUE_LENGTH)
         return SHIFT_125_OVERDUE_LENGTH;
 
     return shiftLength;
 }
 
-function calcExtra50PercentHours(shiftLength) {
-    if (shiftLength <= REGULAR_SHIFT_LENGTH + SHIFT_125_OVERDUE_LENGTH) {
+function calcExtra50PercentHours(shiftLength, regularShiftLength) {
+    if (!regularShiftLength)
+        regularShiftLength = REGULAR_SHIFT_LENGTH
+
+    if (shiftLength <= regularShiftLength + SHIFT_125_OVERDUE_LENGTH) {
         return 0;
     }
 
-    return shiftLength - (REGULAR_SHIFT_LENGTH + SHIFT_125_OVERDUE_LENGTH);
+    return shiftLength - (regularShiftLength + SHIFT_125_OVERDUE_LENGTH);
 }
 
 
@@ -257,7 +263,7 @@ const createEmployeeShiftsReports = (shifts, settings) => {
 
 module.exports = {
     createEmployeeShiftsReports,
-    analyzeHours: analyzeShiftHours,
+    analyzeShiftHours: analyzeShiftHours,
     REGULAR_SHIFT_LENGTH,
     SHIFT_125_OVERDUE_LENGTH,
 };

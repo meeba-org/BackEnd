@@ -1,5 +1,5 @@
-const FRIDAY = "5";
-const SATURDAY = "6";
+const FRIDAY = 5;
+const SATURDAY = 6;
 
 const DayType = {
     Regular: 0,

@@ -1,64 +1,161 @@
 let moment = require('moment');
 const SHIFT_125_OVERDUE_LENGTH = require("../managers/ShiftAnalyzer").SHIFT_125_OVERDUE_LENGTH;
 const REGULAR_SHIFT_LENGTH = require("../managers/ShiftAnalyzer").REGULAR_SHIFT_LENGTH;
-const analyzeHours = require("../managers/ShiftAnalyzer").analyzeHours;
+const analyzeHours = require("../managers/ShiftAnalyzer").analyzeShiftHours;
 const expect = require('chai').expect;
 
 function createMockedShift(length) {
     return {
-        clockInTime: new Date(),
+        clockInTime: moment(),
         clockOutTime: moment(new Date()).add(length, 'hours')
     };
 }
 
-describe('ShiftAnalyzer', function() {
-    it('full regular shift', function() {
-        const shift = createMockedShift(REGULAR_SHIFT_LENGTH);
-        const hours = analyzeHours(shift);
+const createMockedEveningHolidayShift = (overallLength, regularHoursLength) => {
+    // Assuming evening holiday starts at 18
+    let clockInTime = moment().day("Friday").hour(settings.eveningHolidayStartHour - regularHoursLength).minute(0);
 
-        expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
-        expect(hours.extra125Hours).to.be.equal(0);
-        expect(hours.extra150Hours).to.be.equal(0);
+    return {
+        clockInTime: clockInTime,
+        clockOutTime: moment(clockInTime).add(overallLength, 'hours')
+    };
+}
+
+const createMockedHolidayShift = (overallLength, holidayHoursLength) => {
+    // Assuming holiday ends at 18
+    let clockInTime = moment().day("Saturday").hour(settings.holidayDayEndHour - holidayHoursLength);
+
+    return {
+        clockInTime: clockInTime,
+        clockOutTime: moment(clockInTime).add(overallLength, 'hours')
+    };
+}
+
+const settings = {
+    eveningHolidayStartHour: 18,
+    holidayDayEndHour: 19,
+    holidayShiftLength: 7
+};
+describe('ShiftAnalyzer', function () {
+    describe('Regular Day', function () {
+        it('full regular shift', function () {
+            const shift = createMockedShift(REGULAR_SHIFT_LENGTH);
+            const hours = analyzeHours(shift);
+
+            expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
+            expect(hours.extra125Hours).to.be.equal(0);
+            expect(hours.extra150Hours).to.be.equal(0);
+
+        });
+
+        it('part regular shift', function () {
+            const shift = createMockedShift(4.5);
+            const hours = analyzeHours(shift);
+
+            expect(hours.regularHours).to.be.equal(4.5);
+            expect(hours.extra125Hours).to.be.equal(0);
+            expect(hours.extra150Hours).to.be.equal(0);
+
+        });
+
+        it('part overdue 125 shift test1', function () {
+            const shift = createMockedShift(REGULAR_SHIFT_LENGTH + 0.5);
+            const hours = analyzeHours(shift);
+
+            expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
+            expect(hours.extra125Hours).to.be.equal(0.5);
+            expect(hours.extra150Hours).to.be.equal(0);
+
+        });
+
+        it('part overdue 125 shift test2', function () {
+            const shift = createMockedShift(REGULAR_SHIFT_LENGTH + SHIFT_125_OVERDUE_LENGTH);
+            const hours = analyzeHours(shift);
+
+            expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
+            expect(hours.extra125Hours).to.be.equal(SHIFT_125_OVERDUE_LENGTH);
+            expect(hours.extra150Hours).to.be.equal(0);
+
+        });
+
+        it('part overdue 150 shift test2', function () {
+            const shift = createMockedShift(REGULAR_SHIFT_LENGTH + SHIFT_125_OVERDUE_LENGTH + 3.5);
+            const hours = analyzeHours(shift);
+
+            expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
+            expect(hours.extra125Hours).to.be.equal(SHIFT_125_OVERDUE_LENGTH);
+            expect(hours.extra150Hours).to.be.equal(3.5);
+
+        });
+    });
+
+    describe('Evening Holiday Day', function () {
+        let HOLIDAY_SHIFT_LENGTH = settings.holidayShiftLength;
+
+        it('regular shift in evening holiday', function () {
+            const shift = createMockedEveningHolidayShift(4.5, 4.5);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(4.5);
+        });
+
+        it('evening holiday occurs during HOLIDAY_SHIFT_LENGTH - less than full shift length', function () {
+            const shift = createMockedEveningHolidayShift(HOLIDAY_SHIFT_LENGTH, 3);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(3);
+            expect(hours.extra150Hours).to.be.equal(HOLIDAY_SHIFT_LENGTH - 3);
+
+        });
+
+        it('evening holiday occurs during HOLIDAY_SHIFT_LENGTH - go into 25 percent bonus ', function () {
+            const shift = createMockedEveningHolidayShift(HOLIDAY_SHIFT_LENGTH + 1, 3);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(3);
+            expect(hours.extra150Hours).to.be.equal(HOLIDAY_SHIFT_LENGTH - 3);
+            expect(hours.extra175Hours).to.be.equal(1);
+        });
+
+        it('evening holiday occurs during HOLIDAY_SHIFT_LENGTH - go into 50 percent bonus', function () {
+            const shift = createMockedEveningHolidayShift(HOLIDAY_SHIFT_LENGTH + 6, 3);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(3);
+            expect(hours.extra150Hours).to.be.equal(HOLIDAY_SHIFT_LENGTH - 3);
+            expect(hours.extra175Hours).to.be.equal(2);
+            expect(hours.extra200Hours).to.be.equal(4);
+        });
+
+        it('evening holiday occurs after HOLIDAY_SHIFT_LENGTH - go into 25 percent bonus ', function () {
+            const shift = createMockedEveningHolidayShift(HOLIDAY_SHIFT_LENGTH + 1, HOLIDAY_SHIFT_LENGTH);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(HOLIDAY_SHIFT_LENGTH);
+            expect(hours.extra125Hours).to.be.equal(0);
+            expect(hours.extra175Hours).to.be.equal(1);
+
+        });
+
+        it('evening holiday occurs after HOLIDAY_SHIFT_LENGTH - go into 50 percent bonus', function () {
+            const shift = createMockedEveningHolidayShift(HOLIDAY_SHIFT_LENGTH + 6, HOLIDAY_SHIFT_LENGTH + 1);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(HOLIDAY_SHIFT_LENGTH);
+            expect(hours.extra125Hours).to.be.equal(1);
+            expect(hours.extra175Hours).to.be.equal(1);
+            expect(hours.extra200Hours).to.be.equal(4);
+        });
+
+        it('evening holiday occurs after HOLIDAY_SHIFT_LENGTH + 2 - go into 50 percent bonus', function () {
+            const shift = createMockedEveningHolidayShift(HOLIDAY_SHIFT_LENGTH + 6, HOLIDAY_SHIFT_LENGTH + 2);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(HOLIDAY_SHIFT_LENGTH);
+            expect(hours.extra125Hours).to.be.equal(2);
+            expect(hours.extra200Hours).to.be.equal(4);
+        });
 
     });
 
-    it('part regular shift', function() {
-        const shift = createMockedShift(4.5);
-        const hours = analyzeHours(shift);
-
-        expect(hours.regularHours).to.be.equal(4.5);
-        expect(hours.extra125Hours).to.be.equal(0);
-        expect(hours.extra150Hours).to.be.equal(0);
-
-    });
-
-    it('part overdue 125 shift test1', function() {
-        const shift = createMockedShift(REGULAR_SHIFT_LENGTH + 0.5);
-        const hours = analyzeHours(shift);
-
-        expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
-        expect(hours.extra125Hours).to.be.equal(0.5);
-        expect(hours.extra150Hours).to.be.equal(0);
-
-    });
-
-    it('part overdue 125 shift test2', function() {
-        const shift = createMockedShift(REGULAR_SHIFT_LENGTH + SHIFT_125_OVERDUE_LENGTH);
-        const hours = analyzeHours(shift);
-
-        expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
-        expect(hours.extra125Hours).to.be.equal(SHIFT_125_OVERDUE_LENGTH);
-        expect(hours.extra150Hours).to.be.equal(0);
-
-    });
-
-    it('part overdue 150 shift test2', function() {
-        const shift = createMockedShift(REGULAR_SHIFT_LENGTH + SHIFT_125_OVERDUE_LENGTH + 3.5);
-        const hours = analyzeHours(shift);
-
-        expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
-        expect(hours.extra125Hours).to.be.equal(SHIFT_125_OVERDUE_LENGTH);
-        expect(hours.extra150Hours).to.be.equal(3.5);
-
-    });
 });
