@@ -5,9 +5,10 @@ const analyzeHours = require("../managers/ShiftAnalyzer").analyzeShiftHours;
 const expect = require('chai').expect;
 
 function createMockedShift(length) {
+    let clockInTime = moment().day("Monday");
     return {
-        clockInTime: moment(),
-        clockOutTime: moment(new Date()).add(length, 'hours')
+        clockInTime: clockInTime,
+        clockOutTime: moment(clockInTime).add(length, 'hours')
     };
 }
 
@@ -22,8 +23,8 @@ const createMockedEveningHolidayShift = (overallLength, regularHoursLength) => {
 }
 
 const createMockedHolidayShift = (overallLength, holidayHoursLength) => {
-    // Assuming holiday ends at 18
-    let clockInTime = moment().day("Saturday").hour(settings.holidayDayEndHour - holidayHoursLength);
+    // Assuming holiday ends at 19
+    let clockInTime = moment().day("Saturday").hour(settings.holidayDayEndHour - holidayHoursLength).minute(0);
 
     return {
         clockInTime: clockInTime,
@@ -158,4 +159,67 @@ describe('ShiftAnalyzer', function () {
 
     });
 
+    describe('Holiday Day', function () {
+        let HOLIDAY_SHIFT_LENGTH = settings.holidayShiftLength;
+
+        it('regular shift in holiday', function () {
+            const shift = createMockedHolidayShift(4.5, 0);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(4.5);
+        });
+
+        it('holiday occurs during HOLIDAY_SHIFT_LENGTH - less than full shift length', function () {
+            const shift = createMockedHolidayShift(HOLIDAY_SHIFT_LENGTH, 3);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(HOLIDAY_SHIFT_LENGTH - 3);
+            expect(hours.extra150Hours).to.be.equal(3);
+
+        });
+
+        it('holiday occurs during HOLIDAY_SHIFT_LENGTH - go into 25 percent bonus ', function () {
+            const shift = createMockedHolidayShift(HOLIDAY_SHIFT_LENGTH + 1, 3);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(HOLIDAY_SHIFT_LENGTH - 3);
+            expect(hours.extra125Hours).to.be.equal(1);
+            expect(hours.extra150Hours).to.be.equal(3);
+        });
+
+        it('holiday occurs during HOLIDAY_SHIFT_LENGTH - go into 50 percent bonus', function () {
+            const shift = createMockedHolidayShift(HOLIDAY_SHIFT_LENGTH + 6, 3);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(HOLIDAY_SHIFT_LENGTH - 3);
+            expect(hours.extra150Hours).to.be.equal(7); // 3 first holiday hours + 4 hours in the end (150%)
+            expect(hours.extra125Hours).to.be.equal(2);
+        });
+
+        it('holiday occurs after HOLIDAY_SHIFT_LENGTH - go into 25 percent bonus ', function () {
+            const shift = createMockedHolidayShift(HOLIDAY_SHIFT_LENGTH + 1, HOLIDAY_SHIFT_LENGTH);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.extra150Hours).to.be.equal(HOLIDAY_SHIFT_LENGTH);
+            expect(hours.extra125Hours).to.be.equal(1);
+        });
+
+        it('holiday occurs after HOLIDAY_SHIFT_LENGTH - go into 50 percent bonus', function () {
+            const shift = createMockedHolidayShift(HOLIDAY_SHIFT_LENGTH + 6, HOLIDAY_SHIFT_LENGTH + 1);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.extra150Hours).to.be.equal(HOLIDAY_SHIFT_LENGTH + 4); // HOLIDAY_SHIFT_LENGTH hours are holiday hours, and 4 more in the end are 150%
+            expect(hours.extra175Hours).to.be.equal(1);
+            expect(hours.extra125Hours).to.be.equal(1);
+        });
+
+        it('holiday occurs after HOLIDAY_SHIFT_LENGTH + 2 - go into 50 percent bonus', function () {
+            const shift = createMockedHolidayShift(HOLIDAY_SHIFT_LENGTH + 6, HOLIDAY_SHIFT_LENGTH + 2);
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.extra150Hours).to.be.equal(HOLIDAY_SHIFT_LENGTH + 4); // HOLIDAY_SHIFT_LENGTH hours are holiday hours, and 4 more in the end are 150%
+            expect(hours.extra175Hours).to.be.equal(2);
+        });
+
+    })
 });

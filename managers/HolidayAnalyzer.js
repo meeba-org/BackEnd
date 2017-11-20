@@ -27,6 +27,4 @@ const analyzeDayType = (momentDay) => {
 module.exports = {
     DayType,
     analyzeDayType,
-    isHoliday,
-    isHolidayEvening,
 };

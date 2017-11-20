@@ -65,7 +65,7 @@ const analyzeShiftHours = (shift, settings) => {
             return analyzeHolidayEveningShiftHours(clockIn, clockOut, settings);
         case DayType.Regular:
         default:
-            return analyzeRegularDayShiftHours(clockIn, clockOut, settings);
+            return analyzeRegularDayShiftHours(clockIn, clockOut, settings, REGULAR_SHIFT_LENGTH);
     }
 };
 
@@ -78,7 +78,7 @@ const isShiftValid = (clockIn, clockOut) => {
 const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
     let holidayEndHour = moment(clockIn).hour(settings.holidayDayEndHour);
 
-    let regularHoursAdditionalInfo = analyzeRegularDayShiftHours(clockIn, clockOut, settings);
+    let regularHoursAdditionalInfo = analyzeRegularDayShiftHours(clockIn, clockOut, settings, settings.holidayShiftLength);
 
     if (holidayEndHour.isAfter(clockOut))
         return analyzeWholeShiftInHolidayHours(clockIn, clockOut, settings);
@@ -89,24 +89,24 @@ const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
     let holidayHoursShiftLength = holidayEndHour.diff(clockIn, 'hours', true);
 
     if (holidayHoursShiftLength > settings.holidayShiftLength) {
-        regularHoursAdditionalInfo.extra150Hours = regularHoursAdditionalInfo.regularHours;
+        regularHoursAdditionalInfo.extra150Hours += regularHoursAdditionalInfo.regularHours;
         delete regularHoursAdditionalInfo.regularHours;
         holidayHoursShiftLength -= settings.holidayShiftLength;
     }
     else {
-        regularHoursAdditionalInfo.regularHours =- holidayHoursShiftLength;
-        regularHoursAdditionalInfo.extra150Hours = holidayHoursShiftLength;
+        regularHoursAdditionalInfo.regularHours -= holidayHoursShiftLength;
+        regularHoursAdditionalInfo.extra150Hours += holidayHoursShiftLength;
         return regularHoursAdditionalInfo;
     }
 
     if (holidayHoursShiftLength > SHIFT_125_OVERDUE_LENGTH) {
-        regularHoursAdditionalInfo.extra175Hours = regularHoursAdditionalInfo.extra125Hours;
+        regularHoursAdditionalInfo.extra175Hours += regularHoursAdditionalInfo.extra125Hours;
         delete regularHoursAdditionalInfo.extra125Hours;
         holidayHoursShiftLength -= settings.holidayShiftLength;
     }
     else {
-        regularHoursAdditionalInfo.extra125Hours =- holidayHoursShiftLength;
-        regularHoursAdditionalInfo.extra175Hours = holidayHoursShiftLength;
+        regularHoursAdditionalInfo.extra125Hours -= holidayHoursShiftLength;
+        regularHoursAdditionalInfo.extra175Hours += holidayHoursShiftLength;
         return regularHoursAdditionalInfo;
     }
 
@@ -115,8 +115,8 @@ const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
         throw new Error("[ShiftAnalyzer.analyzeHolidayShiftHours] - Error in calculation: clockIn:" + clockIn + ", clockOut: " + clockOut);
     }
     else {
-        regularHoursAdditionalInfo.extra150Hours =- holidayHoursShiftLength;
-        regularHoursAdditionalInfo.extra200Hours = holidayHoursShiftLength;
+        regularHoursAdditionalInfo.extra150Hours -= holidayHoursShiftLength;
+        regularHoursAdditionalInfo.extra200Hours += holidayHoursShiftLength;
     }
 
 
@@ -132,7 +132,7 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
         return holidayAdditionalInfo;
 
     if (eveningHolidayStartHour.isAfter(clockOut))
-        return analyzeRegularDayShiftHours(clockIn, clockOut, settings);
+        return analyzeRegularDayShiftHours(clockIn, clockOut, settings, settings.holidayShiftLength);
 
     let regularHoursShiftLength = eveningHolidayStartHour.diff(clockIn, 'hours', true);
 
@@ -171,17 +171,17 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
     return holidayAdditionalInfo;
 };
 
-const analyzeRegularDayShiftHours = (clockIn, clockOut, settings) => {
+const analyzeRegularDayShiftHours = (clockIn, clockOut, settings, regularHoursInShift) => {
     let shiftLength = clockOut.diff(clockIn, 'hours', true);
 
-    if (shiftLength <= REGULAR_SHIFT_LENGTH) {
+    if (shiftLength <= regularHoursInShift) {
         return Object.assign({}, EmptyAdditionalInfo, {regularHours: shiftLength});
     }
     else {
         return Object.assign({}, EmptyAdditionalInfo, {
-            regularHours: REGULAR_SHIFT_LENGTH,
-            extra125Hours: calcExtra25PercentHours(shiftLength),
-            extra150Hours: calcExtra50PercentHours(shiftLength),
+            regularHours: regularHoursInShift,
+            extra125Hours: calcExtra25PercentHours(shiftLength, regularHoursInShift),
+            extra150Hours: calcExtra50PercentHours(shiftLength, regularHoursInShift),
         });
     }
 };
@@ -215,15 +215,15 @@ function calcExtra25PercentHours(shiftLength, regularShiftLength) {
     return shiftLength;
 }
 
-function calcExtra50PercentHours(shiftLength, regularShiftLength) {
-    if (!regularShiftLength)
-        regularShiftLength = REGULAR_SHIFT_LENGTH
+function calcExtra50PercentHours(shiftLength, regularHoursInShift) {
+    if (!regularHoursInShift)
+        regularHoursInShift = REGULAR_SHIFT_LENGTH
 
-    if (shiftLength <= regularShiftLength + SHIFT_125_OVERDUE_LENGTH) {
+    if (shiftLength <= regularHoursInShift + SHIFT_125_OVERDUE_LENGTH) {
         return 0;
     }
 
-    return shiftLength - (regularShiftLength + SHIFT_125_OVERDUE_LENGTH);
+    return shiftLength - (regularHoursInShift + SHIFT_125_OVERDUE_LENGTH);
 }
 
 
