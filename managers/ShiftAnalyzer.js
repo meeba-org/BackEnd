@@ -82,8 +82,42 @@ const analyzeHolidayShiftHours = (shift, settings) => {
 const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
     let eveningHolidayStartHour = moment(clockIn).hour(settings.eveningHolidayStartHour);
 
-    let regularShiftLength = eveningHolidayStartHour.diff(clockIn, 'hours', true);
-    let regularAdditionalInfo = analyzeRegularDayShiftHours(clockIn, eveningHolidayStartHour, settings);
+    let holidayAdditionalInfo = analyzeHoliDayShiftHours(clockIn, clockOut, settings);
+
+    if (eveningHolidayStartHour.isBefore(clockIn))
+        return holidayAdditionalInfo;
+
+    let overallShiftLength = clockOut.diff(clockIn, 'hours', true);
+    let regularHoursShiftLength = eveningHolidayStartHour.diff(clockIn, 'hours', true);
+
+    // Subtract from extra 150 hours
+    if (regularHoursShiftLength > settings.holidayShiftLength) {
+        holidayAdditionalInfo.regularHours = holidayAdditionalInfo.extra150Hours;
+        delete holidayAdditionalInfo.extra150Hours;
+        regularHoursShiftLength -= settings.holidayShiftLength;
+    }
+    else {
+        holidayAdditionalInfo.extra150Hours =- regularHoursShiftLength;
+        holidayAdditionalInfo.regularHours = regularHoursShiftLength;
+        return holidayAdditionalInfo;
+    }
+
+    if (regularHoursShiftLength > SHIFT_125_OVERDUE_LENGTH) {
+        holidayAdditionalInfo.extra125Hours = holidayAdditionalInfo.extra175Hours;
+        delete holidayAdditionalInfo.extra175Hours;
+        regularHoursShiftLength -= settings.holidayShiftLength;
+    }
+    else {
+        holidayAdditionalInfo.extra175Hours =- regularHoursShiftLength;
+        holidayAdditionalInfo.extra125Hours = regularHoursShiftLength;
+        return holidayAdditionalInfo;
+    }
+
+    if (regularHoursShiftLength > 0) {
+        holidayAdditionalInfo.extra200Hours =- regularHoursShiftLength;
+        holidayAdditionalInfo.extra150 = regularHoursShiftLength;
+        return holidayAdditionalInfo;
+    }
 };
 
 const analyzeRegularDayShiftHours = (clockIn, clockOut, settings) => {
