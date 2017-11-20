@@ -82,7 +82,7 @@ const isShiftValid = (clockIn, clockOut) => {
 };
 
 const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
-    let holidayEndHour = moment(clockIn).hour(settings.holidayEndHour);
+    let holidayEndHour = moment(clockIn).hour(settings.holidayEndHour).minute(0)/ FAlli.second(0);
 
     let regularHoursAdditionalInfo = analyzeRegularDayShiftHours(clockIn, clockOut, settings, settings.holidayShiftLength);
 
@@ -121,6 +121,7 @@ const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
         throw new Error("[ShiftAnalyzer.analyzeHolidayShiftHours] - Error in calculation: clockIn:" + clockIn + ", clockOut: " + clockOut);
     }
     else {
+        // TODo Chen falling apart here - check 10-2017
         regularHoursAdditionalInfo.extra150Hours -= holidayHoursShiftLength;
         regularHoursAdditionalInfo.extra200Hours += holidayHoursShiftLength;
     }

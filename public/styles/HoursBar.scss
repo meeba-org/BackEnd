@@ -23,7 +23,17 @@
 
     .extra-150-bar {
         @extend .bar;
-        background: red;
+        background: saddlebrown;
+    }
+
+    .extra-175-bar {
+        @extend .bar;
+        background: orangered;
+    }
+
+    .extra-200-bar {
+        @extend .bar;
+        background: purple;
     }
 
 }
