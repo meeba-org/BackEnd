@@ -24,7 +24,7 @@ const createMockedEveningHolidayShift = (overallLength, regularHoursLength) => {
 
 const createMockedHolidayShift = (overallLength, holidayHoursLength) => {
     // Assuming holiday ends at 19
-    let clockInTime = moment().day("Saturday").hour(settings.holidayDayEndHour - holidayHoursLength).minute(0);
+    let clockInTime = moment().day("Saturday").hour(settings.holidayEndHour - holidayHoursLength).minute(0);
 
     return {
         clockInTime: clockInTime,
@@ -34,9 +34,10 @@ const createMockedHolidayShift = (overallLength, holidayHoursLength) => {
 
 const settings = {
     eveningHolidayStartHour: 18,
-    holidayDayEndHour: 19,
+    holidayEndHour: 19,
     holidayShiftLength: 7
 };
+
 describe('ShiftAnalyzer', function () {
     describe('Regular Day', function () {
         it('full regular shift', function () {

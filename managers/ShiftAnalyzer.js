@@ -12,6 +12,12 @@ const EmptyAdditionalInfo = {
     extra200Hours: 0,
 };
 
+const EmptySettings = {
+    eveningHolidayStartHour: 18,
+    holidayEndHour: 19,
+    holidayShiftLength: 7
+};
+
 let processUsersToShifts = function (shifts) {
     let usersToShiftsMap = {};
 
@@ -76,7 +82,7 @@ const isShiftValid = (clockIn, clockOut) => {
 };
 
 const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
-    let holidayEndHour = moment(clockIn).hour(settings.holidayDayEndHour);
+    let holidayEndHour = moment(clockIn).hour(settings.holidayEndHour);
 
     let regularHoursAdditionalInfo = analyzeRegularDayShiftHours(clockIn, clockOut, settings, settings.holidayShiftLength);
 
@@ -118,9 +124,6 @@ const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
         regularHoursAdditionalInfo.extra150Hours -= holidayHoursShiftLength;
         regularHoursAdditionalInfo.extra200Hours += holidayHoursShiftLength;
     }
-
-
-
 };
 
 const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
@@ -182,6 +185,8 @@ const analyzeRegularDayShiftHours = (clockIn, clockOut, settings, regularHoursIn
             regularHours: regularHoursInShift,
             extra125Hours: calcExtra25PercentHours(shiftLength, regularHoursInShift),
             extra150Hours: calcExtra50PercentHours(shiftLength, regularHoursInShift),
+            extra175Hours: 0,
+            extra200Hours: 0,
         });
     }
 };
@@ -234,13 +239,18 @@ function createUserAdditionalInfo(user, settings) {
     let info = {
         regularHours : 0,
         extra125Hours: 0,
-        extra150Hours: 0
+        extra150Hours: 0,
+        extra175Hours: 0,
+        extra200Hours: 0,
     };
+
     user.shifts.forEach((shift) => {
         let hours = analyzeShiftHours(shift, settings);
         info.regularHours += hours.regularHours;
         info.extra125Hours += hours.extra125Hours;
         info.extra150Hours += hours.extra150Hours;
+        info.extra175Hours += hours.extra175Hours;
+        info.extra200Hours += hours.extra200Hours;
     });
 
     info.shiftsCount = user.shifts.length;
@@ -256,6 +266,7 @@ function createUserAdditionalInfo(user, settings) {
 }
 
 const createEmployeeShiftsReports = (shifts, settings) => {
+    settings = settings || EmptySettings;
     let map = processUsersToShifts(shifts);
     let usersArray = processUsersAdditionalInfo(map, settings);
     return usersArray;
