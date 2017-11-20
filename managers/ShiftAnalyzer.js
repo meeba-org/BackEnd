@@ -113,11 +113,16 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
         return holidayAdditionalInfo;
     }
 
-    if (regularHoursShiftLength > 0) {
+    if (regularHoursShiftLength > 0 && regularHoursShiftLength > holidayAdditionalInfo.extra200Hours) {
+        holidayAdditionalInfo.regularHours = holidayAdditionalInfo.extra200Hours;
+        delete holidayAdditionalInfo.extra200Hours;
+    }
+    else {
         holidayAdditionalInfo.extra200Hours =- regularHoursShiftLength;
         holidayAdditionalInfo.extra150 = regularHoursShiftLength;
-        return holidayAdditionalInfo;
     }
+
+    return holidayAdditionalInfo;
 };
 
 const analyzeRegularDayShiftHours = (clockIn, clockOut, settings) => {
