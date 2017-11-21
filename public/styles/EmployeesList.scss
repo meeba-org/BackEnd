@@ -1,12 +1,17 @@
 #employees {
-        .cell {
-            border: 1px solid transparent;
-            margin-left: 10px;
-            min-width: 140px;
-            display: inline-block;
+    .cell {
+        border: 1px solid transparent;
+        margin-left: 10px;
+        min-width: 140px;
+        display: inline-block;
 
-            &:hover {
-                border: 1px solid #eee;
-            }
+        &:hover {
+            border: 1px solid #eee;
         }
+    }
+
+    .header {
+        opacity: 0.5;
+    }
+
 }
