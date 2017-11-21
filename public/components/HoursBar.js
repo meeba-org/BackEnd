@@ -52,7 +52,7 @@ class HoursBar extends React.Component {
                                 <div className="extra-175">{extra175Hours}</div>
                             </Tooltip>
                         }
-                        {extra175HoursPer > 0 &&
+                        {extra200HoursPer > 0 &&
                             <Tooltip title="200%" placement="top">
                                 <div className="extra-200">{extra200Hours}</div>
                             </Tooltip>
@@ -68,6 +68,8 @@ HoursBar.propTypes = {
     regularHours: PropTypes.string.isRequired,
     extra125Hours: PropTypes.string.isRequired,
     extra150Hours: PropTypes.string.isRequired,
+    extra175Hours: PropTypes.string.isRequired,
+    extra200Hours: PropTypes.string.isRequired,
     displayDetails: PropTypes.bool.isRequired,
 };
 

@@ -16,6 +16,8 @@ const createSheet = (workbook, year, month) => {
         { header: '100% שעות', key: 'regularHours', width: 13, style: {alignment: {horizontal: 'right'} }  },
         { header: '125% שעות', key: 'extra125Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
         { header: '150% שעות', key: 'extra150Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        { header: '175% שעות', key: 'extra175Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        { header: '200% שעות', key: 'extra200Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
         { header: 'שכ"ע לשעה', key: 'hourWage', width: 13, style: {alignment: {horizontal: 'right'} }  },
         { header: 'סה"כ שעות', key: 'overallHours', width: 13, style: {alignment: {horizontal: 'right'} }  },
         { header: 'משמרות', key: 'shiftsCount', width: 13, style: {alignment: {horizontal: 'right'} }  },
@@ -24,7 +26,7 @@ const createSheet = (workbook, year, month) => {
         { header: 'סה"כ שכר', key: 'overallSalary', width: 13, style: {alignment: {horizontal: 'right'} }  },
     ];
 
-    ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'H1', 'I1', 'J1'].map(key => {
+    ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'H1', 'I1', 'J1', 'K1', 'L1'].map(key => {
         sheet.getCell(key).fill = {
             type: 'pattern',
             pattern:'solid',
@@ -47,6 +49,8 @@ let createContent = function (worksheet, shifts, settings) {
             regularHours: employee.regularHours,
             extra125Hours: employee.extra125Hours,
             extra150Hours: employee.extra150Hours,
+            extra175Hours: employee.extra175Hours,
+            extra200Hours: employee.extra200Hours,
             overallHours: employee.overallHours,
             hourWage: employee.hourWage,
             shiftsCount: employee.shiftsCount,

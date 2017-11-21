@@ -10,13 +10,20 @@ import {fetchMonthlyReport, generateExcelReport} from "../../actions/reportsActi
 
 class MonthlyReportContainer extends React.Component {
 
+    componentDidMount() {
+        this.props.fetchEmployees();
+    }
+
     onStartDayOfMonthChange(month, year) {
         if (!month || !year)
             return;
 
         this.props.fetchMonthlyReport(month, year);
-        this.props.fetchEmployees();
     }
+
+    onDataChange = (month, year) => {
+        this.props.fetchMonthlyReport(month, year);
+    };
 
     onGenerateExcel(month, year) {
         if (!month || !year)
@@ -36,6 +43,7 @@ class MonthlyReportContainer extends React.Component {
                             onDeleteShift={deleteShift}
                             onUpdateShift={updateShift}
                             onCreateShift={createShift}
+                            onDataChange={this.onDataChange}
                             onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
                             onGenerateExcel={(month, year) => this.onGenerateExcel(month, year)}
                             userRole={userRole}

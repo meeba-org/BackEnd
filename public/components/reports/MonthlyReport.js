@@ -58,7 +58,7 @@ class MonthlyReport extends React.Component {
         this.props.onGenerateExcel(value.format('MM'), value.format('YYYY'));
     };
 
-    handleChange(event)  {
+    handleMonthChange(event)  {
         let startDayOfMonth = event.target.value;
 
         this.setState({startDayOfMonth});
@@ -78,8 +78,23 @@ class MonthlyReport extends React.Component {
         this.setState({open: false});
     }
 
+    onCreateShift = (shift) => {
+        this.props.onCreateShift(shift);
+        this.onStartDayOfMonthChange(this.state.startDayOfMonth);
+    };
+
+    onUpdateShift = (shift) => {
+        this.props.onUpdateShift(shift);
+        this.onStartDayOfMonthChange(this.state.startDayOfMonth);
+    };
+
+    onDeleteShift = (shift) => {
+        this.props.onDeleteShift(shift);
+        this.onStartDayOfMonthChange(this.state.startDayOfMonth);
+    };
+
     render() {
-        const {fields, onCreateShift, onUpdateShift, onDeleteShift, employees, userRole} = this.props;
+        const {fields, employees, userRole} = this.props;
         let startDayOfMonth = this.state.startDayOfMonth;
         const months = this.generateMonths();
 
@@ -93,7 +108,7 @@ class MonthlyReport extends React.Component {
                         <div className="controls-line">
                             <AddShiftsDialog
                                 open={this.state.open}
-                                onCreate={onCreateShift}
+                                onCreate={this.onCreateShift}
                                 onCancel={() => this.handleCloseAddDialog()}
                                 employees={employees}
                             />
@@ -101,7 +116,7 @@ class MonthlyReport extends React.Component {
                             <Select
                                 className="select"
                                 value={startDayOfMonth}
-                                onChange={(event) => this.handleChange(event)}
+                                onChange={(event) => this.handleMonthChange(event)}
                                 input={<Input id="age-simple"/>}
                             >
                                 {months.map((month) =>
@@ -129,9 +144,9 @@ class MonthlyReport extends React.Component {
                                    isCollapsed={this.isCollapsed(fields, index)}
                                    key={index}
                                    onToggle={(name) => this.onToggle(name)}
-                                   onDeleteShift={onDeleteShift}
-                                   onUpdateShift={onUpdateShift}
-                                   onCreateShift={onCreateShift}
+                                   onDeleteShift={this.onDeleteShift}
+                                   onUpdateShift={this.onUpdateShift}
+                                   onCreateShift={this.onCreateShift}
                             />
                         )}
                         {(!fields || (fields.length == 0)) &&

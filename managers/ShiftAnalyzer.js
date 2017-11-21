@@ -82,7 +82,7 @@ const isShiftValid = (clockIn, clockOut) => {
 };
 
 const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
-    let holidayEndHour = moment(clockIn).hour(settings.holidayEndHour).startOf('minute');
+    let holidayEndHour = moment(clockIn).hour(settings.holidayEndHour) .startOf('minute');
 
     let regularHoursAdditionalInfo = analyzeRegularDayShiftHours(clockIn, clockOut, settings, settings.holidayShiftLength);
 
@@ -96,8 +96,8 @@ const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
 
     if (holidayHoursShiftLength > settings.holidayShiftLength) {
         regularHoursAdditionalInfo.extra150Hours += regularHoursAdditionalInfo.regularHours;
-        delete regularHoursAdditionalInfo.regularHours;
-        holidayHoursShiftLength -= settings.holidayShiftLength;
+        holidayHoursShiftLength -= regularHoursAdditionalInfo.regularHours;
+        regularHoursAdditionalInfo.regularHours = 0;
     }
     else {
         regularHoursAdditionalInfo.regularHours -= holidayHoursShiftLength;
@@ -107,8 +107,8 @@ const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
 
     if (holidayHoursShiftLength > SHIFT_125_OVERDUE_LENGTH) {
         regularHoursAdditionalInfo.extra175Hours += regularHoursAdditionalInfo.extra125Hours;
-        delete regularHoursAdditionalInfo.extra125Hours;
-        holidayHoursShiftLength -= settings.holidayShiftLength;
+        holidayHoursShiftLength -= regularHoursAdditionalInfo.extra125Hours;
+        regularHoursAdditionalInfo.extra125Hours = 0;
     }
     else {
         regularHoursAdditionalInfo.extra125Hours -= holidayHoursShiftLength;
@@ -116,15 +116,10 @@ const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
         return regularHoursAdditionalInfo;
     }
 
-    if (holidayHoursShiftLength > 0 && holidayHoursShiftLength > regularHoursAdditionalInfo.extra150Hours) {
-        // If we are here something is wrong
-        throw new Error("[ShiftAnalyzer.analyzeHolidayShiftHours] - Error in calculation: clockIn:" + clockIn + ", clockOut: " + clockOut);
-    }
-    else {
-        // TODo Chen falling apart here - check 10-2017
-        regularHoursAdditionalInfo.extra150Hours -= holidayHoursShiftLength;
-        regularHoursAdditionalInfo.extra200Hours += holidayHoursShiftLength;
-    }
+    regularHoursAdditionalInfo.extra150Hours -= holidayHoursShiftLength;
+    regularHoursAdditionalInfo.extra200Hours += holidayHoursShiftLength;
+
+    return regularHoursAdditionalInfo;
 };
 
 const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
@@ -143,8 +138,8 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
     // Subtract from extra 150 hours
     if (regularHoursShiftLength > settings.holidayShiftLength) {
         holidayAdditionalInfo.regularHours = holidayAdditionalInfo.extra150Hours;
-        delete holidayAdditionalInfo.extra150Hours;
-        regularHoursShiftLength -= settings.holidayShiftLength;
+        regularHoursShiftLength -= holidayAdditionalInfo.extra150Hours;
+        holidayAdditionalInfo.extra150Hours = 0;
     }
     else {
         holidayAdditionalInfo.extra150Hours -= regularHoursShiftLength;
@@ -154,8 +149,8 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
 
     if (regularHoursShiftLength > SHIFT_125_OVERDUE_LENGTH) {
         holidayAdditionalInfo.extra125Hours = holidayAdditionalInfo.extra175Hours;
-        delete holidayAdditionalInfo.extra175Hours;
-        regularHoursShiftLength -= settings.holidayShiftLength;
+        regularHoursShiftLength -= holidayAdditionalInfo.extra175Hours;
+        holidayAdditionalInfo.extra175Hours = 0;
     }
     else {
         holidayAdditionalInfo.extra175Hours -= regularHoursShiftLength;
@@ -163,14 +158,8 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
         return holidayAdditionalInfo;
     }
 
-    if (regularHoursShiftLength > 0 && regularHoursShiftLength > holidayAdditionalInfo.extra200Hours) {
-        // If we are here something is wrong
-        throw new Error("[ShiftAnalyzer.analyzeHolidayEveningShiftHours] - Error in calculation: clockIn:" + clockIn + ", clockOut: " + clockOut);
-    }
-    else {
-        holidayAdditionalInfo.extra200Hours -= regularHoursShiftLength;
-        holidayAdditionalInfo.extra150Hours = regularHoursShiftLength;
-    }
+    holidayAdditionalInfo.extra200Hours -= regularHoursShiftLength;
+    holidayAdditionalInfo.extra150Hours = regularHoursShiftLength;
 
     return holidayAdditionalInfo;
 };
@@ -258,10 +247,12 @@ function createUserAdditionalInfo(user, settings) {
     info.overallTransportation = user.shifts.length * user.transportation;
 
     // Rounding results
-    info.overallHours = (info.regularHours + info.extra125Hours * 1.25 + info.extra150Hours * 1.5).toFixed(2);
+    info.overallHours = (info.regularHours + info.extra125Hours * 1.25 + info.extra150Hours * 1.5 + info.extra175Hours * 1.75 + info.extra200Hours * 2).toFixed(2);
     info.regularHours = info.regularHours.toFixed(2);
     info.extra125Hours = info.extra125Hours.toFixed(2);
     info.extra150Hours = info.extra150Hours.toFixed(2);
+    info.extra175Hours = info.extra175Hours.toFixed(2);
+    info.extra200Hours = info.extra200Hours.toFixed(2);
     info.overallSalary = (info.overallHours * user.hourWage + info.overallTransportation).toFixed(2);
     return info;
 }
