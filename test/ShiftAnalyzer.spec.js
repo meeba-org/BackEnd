@@ -5,7 +5,7 @@ const analyzeHours = require("../managers/ShiftAnalyzer").analyzeShiftHours;
 const expect = require('chai').expect;
 
 function createMockedShift(length) {
-    let clockInTime = moment().day("Monday");
+    let clockInTime = moment().day("Monday").startOf('hour');
     return {
         clockInTime: clockInTime,
         clockOutTime: moment(clockInTime).add(length, 'hours')
@@ -14,7 +14,7 @@ function createMockedShift(length) {
 
 const createMockedEveningHolidayShift = (overallLength, regularHoursLength) => {
     // Assuming evening holiday starts at 18
-    let clockInTime = moment().day("Friday").hour(settings.eveningHolidayStartHour - regularHoursLength).minute(0);
+    let clockInTime = moment().day("Friday").hour(settings.eveningHolidayStartHour - regularHoursLength).startOf('hour');
 
     return {
         clockInTime: clockInTime,
@@ -24,7 +24,7 @@ const createMockedEveningHolidayShift = (overallLength, regularHoursLength) => {
 
 const createMockedHolidayShift = (overallLength, holidayHoursLength) => {
     // Assuming holiday ends at 19
-    let clockInTime = moment().day("Saturday").hour(settings.holidayEndHour - holidayHoursLength).minute(0);
+    let clockInTime = moment().day("Saturday").hour(settings.holidayEndHour - holidayHoursLength).startOf('hour');
 
     return {
         clockInTime: clockInTime,

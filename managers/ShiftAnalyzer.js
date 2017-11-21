@@ -82,7 +82,7 @@ const isShiftValid = (clockIn, clockOut) => {
 };
 
 const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
-    let holidayEndHour = moment(clockIn).hour(settings.holidayEndHour).minute(0)/ FAlli.second(0);
+    let holidayEndHour = moment(clockIn).hour(settings.holidayEndHour).startOf('minute');
 
     let regularHoursAdditionalInfo = analyzeRegularDayShiftHours(clockIn, clockOut, settings, settings.holidayShiftLength);
 
