@@ -1,3 +1,5 @@
+@import "variables";
+
 .monthly-report-block {
     display: flex;
     flex-direction: column;
@@ -31,15 +33,23 @@
 
             .regular-hours {
                 @extend .base-element;
-                color: green;
+                color: $hourRate100;
             }
             .extra-125 {
                 @extend .base-element;
-                color: orange;
+                color: $hourRate125;
             }
             .extra-150 {
                 @extend .base-element;
-                color: red;
+                color: $hourRate150;
+            }
+            .extra-175 {
+                @extend .base-element;
+                color: $hourRate175;
+            }
+            .extra-200 {
+                @extend .base-element;
+                color: $hourRate200;
             }
         }
     }

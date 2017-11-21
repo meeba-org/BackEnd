@@ -1,3 +1,5 @@
+@import "variables";
+
 .stacked-bar-graph {
     width: 100%;
     height: 13px;
@@ -13,27 +15,27 @@
 
     .regular-hours-bar {
         @extend .bar;
-        background: green;
+        background: $hourRate100;
     }
 
     .extra-125-bar {
         @extend .bar;
-        background: orange;
+        background: $hourRate125;
     }
 
     .extra-150-bar {
         @extend .bar;
-        background: saddlebrown;
+        background: $hourRate150;
     }
 
     .extra-175-bar {
         @extend .bar;
-        background: orangered;
+        background: $hourRate175;
     }
 
     .extra-200-bar {
         @extend .bar;
-        background: purple;
+        background: $hourRate200;
     }
 
 }

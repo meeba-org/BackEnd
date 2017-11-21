@@ -10,7 +10,7 @@ import {
     convertMomentToTimeStr,
     convertTimeStrToMoment,
     getCurrentTime,
-    isWorking,
+    isWorking, momentToDay,
     ReportModes
 } from "../../helpers/utils";
 
@@ -88,6 +88,7 @@ class Shift extends React.Component {
         let icon = isWorking(shift) ?
             <Tooltip title="בעבודה" placement="right"><WorkIcon/></Tooltip> :
             <Tooltip title="בבית" placement="right"><HomeIcon/></Tooltip>;
+        let hebrewDay = momentToDay(shift.clockInTime);
 
         return (
             <div className="shift" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
@@ -101,8 +102,11 @@ class Shift extends React.Component {
                 </div>
 
                 {mode === ReportModes.Report &&
-                <TextField className="elem" type="date" value={startDateStr} placeholder="תאריך"
-                           onChange={(e) => this.onUpdateStartDate(e)}/>
+                <div>
+                    <span>{hebrewDay}'</span>
+                    <TextField className="elem" type="date" value={startDateStr} placeholder="תאריך"
+                               onChange={(e) => this.onUpdateStartDate(e)}/>
+                </div>
                 }
 
                 <TextField className="elem" type="time" value={startTimeStr} placeholder="כניסה"

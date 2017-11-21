@@ -40,6 +40,20 @@ export const convertMomentToTimeStr = (shift) => {
     return {startDateStr, startTimeStr, endTimeStr};
 };
 
+export const momentToDay = (momentTime) => {
+    let day = moment(momentTime).day();
+
+    switch (day) {
+        case 0: return 'א';
+        case 1: return 'ב';
+        case 2: return 'ג';
+        case 3: return 'ד';
+        case 4: return 'ה';
+        case 5: return 'ו';
+        case 6: return 'ש';
+    }
+};
+
 export const isWorking = (shift) => {
     return !moment(shift.clockOutTime).isValid();
 };
