@@ -1,5 +1,5 @@
 const moment = require('moment');
-const EDayType = require("./EDayType");
+const EDayType = require("../models/EDayType");
 const analyzeDayType = require("./HolidayAnalyzer").analyzeDayType;
 
 const REGULAR_SHIFT_LENGTH = 9;

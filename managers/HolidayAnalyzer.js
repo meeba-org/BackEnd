@@ -3,7 +3,7 @@ const SATURDAY = 6;
 let holidays = {};
 const rawHolidaysArray = require('../data/holidays');
 const moment = require('moment');
-const EDayType = require('./EDayType');
+const EDayType = require('../models/EDayType');
 
 const isListedHoliday = (date, dayType) => {
     if (Object.keys(holidays).length === 0) {
@@ -14,7 +14,7 @@ const isListedHoliday = (date, dayType) => {
 };
 
 const isHolidayExist = (date, dayType) => {
-    let dateStr = date.format("YYYY-MM-DD");
+    let dateStr = moment(date).format("YYYY-MM-DD");
     let holiday = holidays[dateStr];
     return !!holiday && !!holiday.dayType && holiday.dayType == dayType;
 };

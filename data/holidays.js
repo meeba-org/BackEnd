@@ -1,4 +1,5 @@
-let EDataType = require('../managers/EDayType');
+let EDataType = require('../models/EDayType');
+
 module.exports = [
     {
         "link": "http://www.hebcal.com/holidays/rosh-hashana",
