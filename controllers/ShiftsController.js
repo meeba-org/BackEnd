@@ -4,6 +4,7 @@ const router = express.Router();
 const moment = require('moment');
 const ShiftModel = require('../models/ShiftModel');
 const jwtService = require("./jwtService");
+const HolidayAnalyzer = require('../managers/HolidayAnalyzer');
 
 //GET /shifts shift
 router.get('/', (req, res) => {
@@ -36,6 +37,16 @@ router.get('/', (req, res) => {
         .catch((err) => res.status(400).json({message: err.array()}));
 });
 
+function fillHolidayData(newShift) {
+    newShift.dayType = HolidayAnalyzer.analyzeDayType(newShift.clockInTime);
+}
+
+let fillMissingShiftData = function (res, newShift) {
+    const companyFromToken = jwtService.getCompanyFromLocals(res);
+    newShift.company = companyFromToken._id;
+
+    fillHolidayData(newShift);
+};
 //POST /shifts shift
 router.post('/', (req, res) => {
     req.checkBody('user', 'user id is required').notEmpty();
@@ -45,8 +56,7 @@ router.post('/', (req, res) => {
             result.throw();
 
             let newShift = req.body;
-            const companyFromToken = jwtService.getCompanyFromLocals(res);
-            newShift.company = companyFromToken._id;
+            fillMissingShiftData(res, newShift);
 
             ShiftModel.createOrUpdateShift(newShift)
                 .then((shift) => res.status(200).json(shift))
@@ -62,8 +72,7 @@ router.put('/', (req, res) => {
             result.throw();
 
             let newShift = req.body;
-            const companyFromToken = jwtService.getCompanyFromLocals(res);
-            newShift.company = companyFromToken._id;
+            fillMissingShiftData(res, newShift);
 
             ShiftModel.createOrUpdateShift(newShift)
                 .then((shift) => res.status(200).json(shift))

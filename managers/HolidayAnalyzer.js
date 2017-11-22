@@ -31,12 +31,15 @@ const initHolidays = () => {
     return holidays;
 };
 
-const isHoliday = (momentDay) => {
-    return moment(momentDay).day() === SATURDAY || isListedHoliday(momentDay, EDayType.Holiday);
+const isHoliday = (day) => {
+    let momentDay = moment(day);
+    return momentDay.day() === SATURDAY || isListedHoliday(momentDay, EDayType.Holiday);
 };
 
-const isHolidayEvening = (momentDay) => {
-    return moment(momentDay).day() === FRIDAY || isListedHoliday(momentDay, EDayType.HolidayEvening);
+const isHolidayEvening = (day) => {
+    let momentDay = moment(day);
+
+    return momentDay.day() === FRIDAY || isListedHoliday(momentDay, EDayType.HolidayEvening);
 };
 
 const analyzeDayType = (momentDay) => {
@@ -52,5 +55,5 @@ module.exports = {
     analyzeDayType,
     isListedHoliday,
     isHoliday,
-    isHolidayEvening
+    isHolidayEvening,
 };

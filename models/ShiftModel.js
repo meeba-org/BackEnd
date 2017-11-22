@@ -11,6 +11,9 @@ const ShiftSchema = mongoose.Schema({
         type: Date,
         default: null
     },
+    dayType: {
+        type: Number
+    },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }
     //location
@@ -45,10 +48,6 @@ const updateShift = (shift) => {
 
 const deleteShift = (id) => {
     return Shift.remove({_id: id}).exec();
-};
-
-const getLastOpenShiftById = (id) => {
-    return Shift.findOne({id: id}).sort('clockInTime').where('clockOutTime').equals(null).exec();
 };
 
 const getShiftsBetween = (company, startDate, endDate, userId) => {
