@@ -1,5 +1,5 @@
 const moment = require('moment');
-const DayType = require("./HolidayAnalyzer").DayType;
+const EDayType = require("./EDayType");
 const analyzeDayType = require("./HolidayAnalyzer").analyzeDayType;
 
 const REGULAR_SHIFT_LENGTH = 9;
@@ -65,11 +65,11 @@ const analyzeShiftHours = (shift, settings) => {
 
     let dayType = analyzeDayType(clockIn);
     switch (dayType) {
-        case DayType.Holiday:
+        case EDayType.Holiday:
             return analyzeHolidayShiftHours(clockIn, clockOut, settings);
-        case DayType.HolidayEvening:
+        case EDayType.HolidayEvening:
             return analyzeHolidayEveningShiftHours(clockIn, clockOut, settings);
-        case DayType.Regular:
+        case EDayType.Regular:
         default:
             return analyzeRegularDayShiftHours(clockIn, clockOut, settings, REGULAR_SHIFT_LENGTH);
     }

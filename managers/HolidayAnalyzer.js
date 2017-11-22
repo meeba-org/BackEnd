@@ -1,37 +1,30 @@
 const FRIDAY = 5;
 const SATURDAY = 6;
 let holidays = {};
-const rawHolidays = require('../data/holidays.json');
+const rawHolidaysArray = require('../data/holidays');
 const moment = require('moment');
+const EDayType = require('./EDayType');
 
-const DayType = {
-    Regular: 0,
-    HolidayEvening: 1,
-    Holiday: 2,
-};
-
-const isListedHoliday = (date) => {
+const isListedHoliday = (date, dayType) => {
     if (Object.keys(holidays).length === 0) {
         initHolidays();
     }
 
-    return isHolidayExist(date);
+    return isHolidayExist(date, dayType);
 };
 
-const isHolidayExist = (date) => {
-    return date in holidays;
+const isHolidayExist = (date, dayType) => {
+    let dateStr = date.format("YYYY-MM-DD");
+    let holiday = holidays[dateStr];
+    return !!holiday && !!holiday.dayType && holiday.dayType == dayType;
 };
 
 const initHolidays = () => {
-    let year = moment().year();
-    if (!(year in rawHolidays))
-        throw new Error("[HolidayAnalyzer.initHolidays] - could not find year " + year);
-
-    let holidaysRawArray = rawHolidays[year];
-    holidaysRawArray.forEach(day => {
+    rawHolidaysArray.forEach(day => {
        holidays[day.date] = {
            name: day.hebrew,
-           date: day.date
+           date: day.date,
+           dayType: day.DayType,
        };
     });
 
@@ -39,24 +32,23 @@ const initHolidays = () => {
 };
 
 const isHoliday = (momentDay) => {
-    return moment(momentDay).day() === SATURDAY;
+    return moment(momentDay).day() === SATURDAY || isListedHoliday(momentDay, EDayType.Holiday);
 };
 
 const isHolidayEvening = (momentDay) => {
-    return moment(momentDay).day() === FRIDAY;
+    return moment(momentDay).day() === FRIDAY || isListedHoliday(momentDay, EDayType.HolidayEvening);
 };
 
 const analyzeDayType = (momentDay) => {
     if (isHoliday(momentDay))
-        return DayType.Holiday;
+        return EDayType.Holiday;
     else if (isHolidayEvening(momentDay))
-        return DayType.HolidayEvening;
+        return EDayType.HolidayEvening;
     else
-        return DayType.Regular;
+        return EDayType.Regular;
 }
 
 module.exports = {
-    DayType,
     analyzeDayType,
     isListedHoliday,
     isHoliday,
