@@ -1,6 +1,8 @@
 const FRIDAY = 5;
 const SATURDAY = 6;
-let holidays = null;
+let holidays = {};
+const rawHolidays = require('../data/holidays.json');
+const moment = require('moment');
 
 const DayType = {
     Regular: 0,
@@ -9,23 +11,39 @@ const DayType = {
 };
 
 const isListedHoliday = (date) => {
-    if (!holidays) {
+    if (Object.keys(holidays).length === 0) {
         initHolidays();
     }
 
     return isHolidayExist(date);
 };
 
-const initHolidays() {
-    
-}
+const isHolidayExist = (date) => {
+    return date in holidays;
+};
+
+const initHolidays = () => {
+    let year = moment().year();
+    if (!(year in rawHolidays))
+        throw new Error("[HolidayAnalyzer.initHolidays] - could not find year " + year);
+
+    let holidaysRawArray = rawHolidays[year];
+    holidaysRawArray.forEach(day => {
+       holidays[day.date] = {
+           name: day.hebrew,
+           date: day.date
+       };
+    });
+
+    return holidays;
+};
 
 const isHoliday = (momentDay) => {
-    return momentDay.day() === SATURDAY;
+    return moment(momentDay).day() === SATURDAY;
 };
 
 const isHolidayEvening = (momentDay) => {
-    return momentDay.day() === FRIDAY;
+    return moment(momentDay).day() === FRIDAY;
 };
 
 const analyzeDayType = (momentDay) => {
@@ -40,4 +58,7 @@ const analyzeDayType = (momentDay) => {
 module.exports = {
     DayType,
     analyzeDayType,
+    isListedHoliday,
+    isHoliday,
+    isHolidayEvening
 };
