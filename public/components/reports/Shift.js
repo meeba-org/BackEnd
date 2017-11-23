@@ -81,6 +81,10 @@ class Shift extends React.Component {
         this.setState({hover: false});
     };
 
+    isHoliday = (shift) => {
+        return shift.dayType !== 0;
+    };
+
     render() {
         let {showNames, input, mode} = this.props;
         let shift = input.value;
@@ -89,9 +93,10 @@ class Shift extends React.Component {
             <Tooltip title="בעבודה" placement="right"><WorkIcon/></Tooltip> :
             <Tooltip title="בבית" placement="right"><HomeIcon/></Tooltip>;
         let hebrewDay = momentToDay(shift.clockInTime);
+        let classNames = "shift " + (this.isHoliday(shift) ? "holiday" : "");
 
         return (
-            <div className="shift" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+            <div className={classNames} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div className="name-container">
                     {mode === ReportModes.Live &&
                         <IconButton className="icon">{icon}</IconButton>

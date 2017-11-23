@@ -1,4 +1,8 @@
 .shift {
+    &.holiday {
+        color: red;
+    }
+
     display: flex;
     flex-direction: row;
     padding-right: 50px;
