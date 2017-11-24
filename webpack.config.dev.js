@@ -58,7 +58,16 @@ export default {
             {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml'},
             {test: /\.(jpe?g|png|gif)$/i, loader: 'file-loader?name=[name].[ext]'},
             {test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
-            {test: /\.scss$/, use: [{loader: "style-loader"}, {loader: "css-loader"}, {loader: "sass-loader"}]}
+            {test: /\.scss$/, use: [
+                {loader: "style-loader"},
+                {loader: "css-loader"},
+                {loader: "sass-loader",options: {
+                    includePaths: [
+                        path.resolve(__dirname, 'node_modules/sass-material-colors/sass/sass-material-colors'),
+                        path.resolve(__dirname, 'public/styles')
+                    ]
+                }}
+            ]}
         ]
     }
 };
