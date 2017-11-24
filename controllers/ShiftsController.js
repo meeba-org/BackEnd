@@ -47,6 +47,7 @@ let fillMissingShiftData = function (res, newShift) {
 
     fillHolidayData(newShift);
 };
+
 //POST /shifts shift
 router.post('/', (req, res) => {
     req.checkBody('user', 'user id is required').notEmpty();
