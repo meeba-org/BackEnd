@@ -118,12 +118,11 @@ class Shift extends React.Component {
 
                 <TextField className="elem" type="time" value={startTimeStr} placeholder="כניסה"
                            inputClassName={inputTextFieldClasses} onChange={(e) => this.onUpdateStartTime(e, "clockOutTime")}/>
-
                 {(mode === ReportModes.Report || !!endTimeStr) &&
+
                 <TextField className="elem" type="time" value={endTimeStr} placeholder="יציאה"
                            inputClassName={inputTextFieldClasses} onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}/>
                 }
-
                 {this.state.hover &&
                 <div>
                     {mode === ReportModes.Live && isWorking(shift) &&

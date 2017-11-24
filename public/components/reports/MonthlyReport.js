@@ -79,18 +79,18 @@ class MonthlyReport extends React.Component {
     }
 
     onCreateShift = (shift) => {
-        this.props.onCreateShift(shift);
-        this.onStartDayOfMonthChange(this.state.startDayOfMonth);
+        let value = moment(this.state.startDayOfMonth, "MM-YYYY");
+        this.props.onCreateShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
     onUpdateShift = (shift) => {
-        this.props.onUpdateShift(shift);
-        this.onStartDayOfMonthChange(this.state.startDayOfMonth);
+        let value = moment(this.state.startDayOfMonth, "MM-YYYY");
+        this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
     onDeleteShift = (shift) => {
-        this.props.onDeleteShift(shift);
-        this.onStartDayOfMonthChange(this.state.startDayOfMonth);
+        let value = moment(this.state.startDayOfMonth, "MM-YYYY");
+        this.props.onDeleteShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
     render() {

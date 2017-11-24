@@ -1,4 +1,5 @@
 import * as actions from "./actionTypes";
+import {fetchMonthlyReport} from "./reportsActions";
 
 export const fetchShiftSuccess = (payload) => ({
     type: actions.FETCH_SHIFT_SUCCESS,
@@ -25,13 +26,18 @@ export const createShiftsSuccess = (payload) => ({
     payload
 });
 
-export const createShift = (shift) => ({
+export const createShift = (shift, dispatch, month, year) => ({
     type: actions.API,
     payload: {
         url: "/shifts",
         method: "post",
         data: shift,
-        success: createShiftsSuccess,
+        success: (data) => {
+            dispatch(createShiftsSuccess(data));
+            if (!!month && !!year)
+                dispatch(fetchMonthlyReport(month, year));
+        },
+
     },
     meta: {
         shouldAuthenticate: true,
@@ -70,39 +76,47 @@ export const fetchShift = (shiftId) => ({
     }
 });
 
-export const updateShift = (shift) => ({
+export const updateShift = (shift, dispatch, month, year) => ({
     type: actions.API,
     payload: {
         url: "/shifts",
         method: "put",
         data: shift,
-        success: updateShiftSuccess,
+        success: (data) => {
+            dispatch(updateShiftSuccess(data));
+            if (!!month && !!year)
+                dispatch(fetchMonthlyReport(month, year));
+        },
     },
     meta: {
         shouldAuthenticate: true,
     }
 });
 
-export const showDeleteShiftModal = (shift) => ({
+export const showDeleteShiftModal = (shift, dispatch, month, year) => ({
     type: 'SHOW_MODAL',
     payload: {
         modalType: 'DELETE_ENTITY',
         modalProps: {
             entity: shift,
-            deleteEntity: deleteShift,
+            deleteEntity: () => deleteShift(shift, dispatch, month, year),
             open: true
         }
     }
 });
 
 
-export const deleteShift = (shift) => ({
+export const deleteShift = (shift, dispatch, month, year) => ({
     type: actions.API,
     payload: {
         url: "/shifts/" + shift._id,
         method: "delete",
         data: shift,
-        success: deleteShiftSuccess,
+        success: (data) => {
+            dispatch(deleteShiftSuccess(data));
+            if (!!month && !!year)
+                dispatch(fetchMonthlyReport(month, year));
+        },
     },
     meta: {
         shouldAuthenticate: true,

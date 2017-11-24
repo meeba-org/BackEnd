@@ -61,9 +61,9 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchDailyReport: (startDate) => {dispatch( fetchDailyReport(startDate)); },
         fetchEmployees: () => dispatch(fetchUsers()),
-        updateShift: (shift) => dispatch(updateShift(shift)),
-        createShift: (shift) => dispatch(createShift(shift)),
-        deleteShift: (shift) => dispatch(showDeleteShiftModal(shift))
+        updateShift: (shift) => dispatch(updateShift(shift, dispatch)),
+        createShift: (shift) => dispatch(createShift(shift, dispatch)),
+        deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
     };
 }
 
