@@ -10,7 +10,8 @@ import {
     convertMomentToTimeStr,
     convertTimeStrToMoment,
     getCurrentTime,
-    isWorking, momentToDay,
+    isWorking,
+    momentToDay,
     ReportModes
 } from "../../helpers/utils";
 
@@ -93,7 +94,8 @@ class Shift extends React.Component {
             <Tooltip title="בעבודה" placement="right"><WorkIcon/></Tooltip> :
             <Tooltip title="בבית" placement="right"><HomeIcon/></Tooltip>;
         let hebrewDay = momentToDay(shift.clockInTime);
-        let classNames = "shift " + (this.isHoliday(shift) ? "holiday" : "");
+        let inputTextFieldClasses = this.isHoliday(shift) ? "holiday" : "" ;
+        let classNames = "shift " + inputTextFieldClasses;
 
         return (
             <div className={classNames} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
@@ -110,16 +112,16 @@ class Shift extends React.Component {
                 <div>
                     <span>{hebrewDay}'</span>
                     <TextField className="elem" type="date" value={startDateStr} placeholder="תאריך"
-                               onChange={(e) => this.onUpdateStartDate(e)}/>
+                               inputClassName={inputTextFieldClasses} onChange={(e) => this.onUpdateStartDate(e)}/>
                 </div>
                 }
 
                 <TextField className="elem" type="time" value={startTimeStr} placeholder="כניסה"
-                           onChange={(e) => this.onUpdateStartTime(e, "clockOutTime")}/>
+                           inputClassName={inputTextFieldClasses} onChange={(e) => this.onUpdateStartTime(e, "clockOutTime")}/>
 
                 {(mode === ReportModes.Report || !!endTimeStr) &&
                 <TextField className="elem" type="time" value={endTimeStr} placeholder="יציאה"
-                           onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}/>
+                           inputClassName={inputTextFieldClasses} onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}/>
                 }
 
                 {this.state.hover &&
