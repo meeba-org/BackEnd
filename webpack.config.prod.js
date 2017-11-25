@@ -69,9 +69,6 @@ module.exports = {
             debug: false,
             noInfo: true, // set to false to see a list of every file being bundled.
             options: {
-                // sassLoader: {
-                //     includePaths: [path.resolve(__dirname, 'public', 'scss'), path.resolve(__dirname, 'node_modules', 'scss')]
-                // },
                 context: '/',
                 postcss: () => [autoprefixer],
             }
