@@ -16,7 +16,7 @@ $margin: 12px;
 
         #main-container {
             .card-content {
-                overflow-y: auto;
+                overflow-y: visible;
                 max-height: $containerHeight;
 
                 .controls-line {
