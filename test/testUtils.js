@@ -17,16 +17,14 @@ const config = require('../config');
 
 const TIMEOUT = 20000;
 
-beforeEach(function (done) {
+beforeEach(function () {
     this.timeout(TIMEOUT);
     if (mongoose.connection.db)
-        return clearDB()
-            .then(() => done());
+        return clearDB();
 
-    mongoose.connect(config.dbUrl, { useMongoClient: true})
-        .then(() => {
-            clearDB()
-                .then(() => done());
+    return mongoose.connect(config.dbUrl, {useMongoClient: true})
+        .then(function() {
+            return clearDB();
         })
 });
 
