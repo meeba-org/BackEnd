@@ -6,6 +6,15 @@ const createTitleDate = function (year, month) {
     return moment().year(year).month(month).format('MM-YYYY');
 };
 
+let setHeaderColor = function (sheet) {
+    ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'H1', 'I1', 'J1', 'K1', 'L1'].map(key => {
+        sheet.getCell(key).fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: {argb: 'cccccc'}
+        };
+    });
+};
 const createSheet = (workbook, year, month) => {
     let sheetTitleDate = createTitleDate(year, month);
     // create a sheet with the first row and column frozen
@@ -26,13 +35,7 @@ const createSheet = (workbook, year, month) => {
         { header: 'סה"כ שכר', key: 'overallSalary', width: 13, style: {alignment: {horizontal: 'right'} }  },
     ];
 
-    ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'H1', 'I1', 'J1', 'K1', 'L1'].map(key => {
-        sheet.getCell(key).fill = {
-            type: 'pattern',
-            pattern:'solid',
-            fgColor:{argb:'cccccc'}
-        };
-    });
+    setHeaderColor(sheet);
 
     return sheet;
 };

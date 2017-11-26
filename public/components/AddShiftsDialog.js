@@ -98,7 +98,7 @@ class AddShiftsDialog extends Component {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => this.onCreate()} color="primary">
+                    <Button onClick={() => this.onCreate()} dense raised color="primary">
                         {this.state.employeesToAdd.length > 0 ? `הוסף ל- ` + this.state.employeesToAdd.length + ` אנשים` : "הוסף"}
                     </Button>
                     <Button onClick={onCancel} color="primary">
