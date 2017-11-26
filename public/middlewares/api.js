@@ -29,7 +29,7 @@ const api = ({dispatch}) => next => action => {
     }).then(response => {
         dispatch(success(response.data));
     })
-    .catch(() => dispatch(actions.ErrorAction));
+    .catch(() => dispatch(actionTypes.Error));
 
     return next(action);
 };
