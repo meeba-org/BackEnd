@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
 var TEST_DB = "mongodb://admin:admin12@ds135594.mlab.com:35594/heroku_l3mnf6v2";
-var PRODUCTION_DB = "mongodb://admin:admin12@ds139242.mlab.com:39242/heroku_9mpwf6zf";
-
-var DEVELOPMENT_ADDRESS = 'http://localhost:3000';
+var DEVELOPMENT_DB = "mongodb://admin:admin12@ds139242.mlab.com:39242/heroku_9mpwf6zf";
+var PRODUCTION_DB = "mongodb://admin:admin12@ds121906.mlab.com:21906/heroku_72bs9k0z";
 
 if (!process.env.NODE_ENV)
     process.env.NODE_ENV = 'development'
@@ -22,15 +21,13 @@ function init() {
             console.log("Production Mode!")
 
             module.exports.dbUrl = PRODUCTION_DB;
-            // module.exports.baseUrl = PRODUCTION_ADDRESS;
             break;
         }
         case "development" :
         {
             console.log("Development Mode!");
 
-            module.exports.dbUrl = PRODUCTION_DB;
-            module.exports.baseUrl = DEVELOPMENT_ADDRESS;
+            module.exports.dbUrl = DEVELOPMENT_DB;
             break;
         }
         case "test" :
