@@ -8,12 +8,16 @@ if (!process.env.NODE_ENV)
 if (!module.exports.dbUrl)
     init();
 
-function init() {
+let readEnvFileIfExists = function () {
     if (fs.existsSync(dotEnvFile)) {
         require('dotenv').config({
             path: dotEnvFile,
         });
     }
+};
+
+function init() {
+    readEnvFileIfExists();
 
     module.exports.secret = process.env.SECRET;
     module.exports.TEST_DB = process.env.TEST_DB;
