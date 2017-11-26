@@ -42,10 +42,12 @@ router.post('/login', function (req, res) {
                 return res.status(401).json({message: "no such user found"});
             }
 
-            let isMatch = UserModel.comparePassword(password, user.password);
+            if (!UserModel.isEmployee(user)) {
+                let isMatch = UserModel.comparePassword(password, user.password);
 
-            if (!isMatch) {
-                return res.status(401).json({message: "password did not match"});
+                if (!isMatch) {
+                    return res.status(401).json({message: "password did not match"});
+                }
             }
 
             // use the jsonwebtoken package to create the token and respond with it
