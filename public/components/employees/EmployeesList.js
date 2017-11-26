@@ -11,6 +11,7 @@ import Employee from "./Employee";
 import {Button, Card, Divider, Grid, Tooltip} from "material-ui";
 import {Field} from "redux-form";
 import AddIcon from 'material-ui-icons/Add';
+import NoData from "../NoData";
 
 class EmployeesList extends React.Component {
 
@@ -47,15 +48,20 @@ class EmployeesList extends React.Component {
                             </Tooltip>
                         </div>
                         <Divider className="divider" />
+                        {fields && fields.length > 0 &&
                         <Grid className="header" container spacing={24}>
                             <Grid item xs={12} sm={3}>שם</Grid>
                             <Grid item xs={12} sm={2}>ת.ז.</Grid>
                             <Grid item xs={12} sm={1}>שכ"ע</Grid>
                             <Grid item xs={12} sm={1}>נסיעות</Grid>
                         </Grid>
+                        }
                         {fields && fields.map((employeeIndex, index) =>
                             <Field component={Employee} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={(employee) => this.onUpdate(employee)}/>
                         )}
+                        {(!fields || (fields.length == 0)) &&
+                        <NoData text="אין עובדים - בוא ננסה להוסיף!"/>
+                        }
                     </div>
 
                 </CardContent>

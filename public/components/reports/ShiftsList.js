@@ -38,7 +38,7 @@ class ShiftsList extends React.Component {
                     />
                 )}
                 {shouldDisplayNoData && (!fields || (fields.length == 0)) &&
-                    <NoData/>
+                    <NoData text="לא נמצאו משמרות"/>
                 }
             </div>
         );

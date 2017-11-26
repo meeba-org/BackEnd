@@ -150,7 +150,7 @@ class MonthlyReport extends React.Component {
                             />
                         )}
                         {(!fields || (fields.length == 0)) &&
-                            <NoData/>
+                            <NoData text="לא נמצאו משמרות"/>
                         }
                     </div>
 
