@@ -8,7 +8,7 @@ if (!process.env.NODE_ENV)
 if (!module.exports.dbUrl)
     init();
 
-let readEnvFileIfExists = function () {
+function readEnvFileIfExists () {
     if (fs.existsSync(dotEnvFile)) {
         require('dotenv').config({
             path: dotEnvFile,
