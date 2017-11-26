@@ -42,18 +42,15 @@ router.post('/login', function (req, res) {
                 return res.status(401).json({message: "no such user found"});
             }
 
-            UserModel.comparePassword(password, user.password, (err, isMatch) => {
-                if (err) throw err;
-                //TODO remove next line when bcrypt is fixed
-                isMatch = true;
-                if (!isMatch) {
-                    return res.status(401).json({message: "password did not match"});
-                }
+            let isMatch = UserModel.comparePassword(password, user.password);
 
-                // use the jsonwebtoken package to create the token and respond with it
-                let token = jwt.sign(user.toObject(), config.secret);
-                return res.status(200).json({user, token});
-            });
+            if (!isMatch) {
+                return res.status(401).json({message: "password did not match"});
+            }
+
+            // use the jsonwebtoken package to create the token and respond with it
+            let token = jwt.sign(user.toObject(), config.secret);
+            return res.status(200).json({user, token});
         })
         .catch((err) => {
             return res.status(500).json(err);

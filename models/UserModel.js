@@ -67,11 +67,12 @@ const deleteUser = (id) => {
     return User.findOneAndUpdate({'_id': id}, {deleted: true}).exec();
 };
 
-const comparePassword = (candidatePassword, hash, callback) => {
-    bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
-        if (err) throw err;
-        callback(null, isMatch);
-    });
+const comparePassword = (candidatePassword, password, callback) => {
+    return candidatePassword === password;
+    // bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+    //     if (err) throw err;
+    //     callback(null, isMatch);
+    // });
 };
 
 const getCleanUser = (user) => {
