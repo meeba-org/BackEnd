@@ -96,6 +96,8 @@ const removeShift = (userId, shift) => {
 
 const usersCount = () => User.count().exec();
 
+const isEmployee = (user) => user.role === ERoles.EMPLOYEE;
+
 module.exports = {
     createUser
     , getByUserId
@@ -109,4 +111,5 @@ module.exports = {
     , usersCount
     , comparePassword
     , getCleanUser
+    , isEmployee
 };
