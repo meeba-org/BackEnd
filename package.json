@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "BackEnd & FrontEnd of meeba - Time Tracking",
   "main": "server.js",
- "engines" : { "node" : "~6.10.0" },
+  "engines": {
+    "node": "~6.10.0"
+  },
   "scripts": {
     "preinstall": "node tools/nodeVersionCheck.js",
     "start-message": "babel-node tools/startMessage.js",
@@ -90,12 +92,12 @@
     "redux-thunk": "2.1.0",
     "rimraf": "2.5.4",
     "sass-loader": "6.0.2",
+    "sass-material-colors": "0.0.5",
     "style-loader": "0.13.1",
     "supertest": "^3.0.0",
     "url-loader": "0.5.7",
     "webpack": "^3.7.1",
-    "webpack-md5-hash": "0.0.5",
-    "sass-material-colors": "0.0.5"
+    "webpack-md5-hash": "0.0.5"
   },
   "devDependencies": {
     "babel-cli": "6.18.0",

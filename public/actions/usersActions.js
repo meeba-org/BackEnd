@@ -38,10 +38,10 @@ export const createUser = (user) => ({
     }
 });
 
-export const fetchUsers = () => ({
+export const fetchUsers = (hideDeleted) => ({
     type: actions.API,
     payload: {
-        url: "/users",
+        url: "/users" + (hideDeleted ? "?hideDeleted=true" : ""),
         method: "get",
         success: fetchUsersSuccess,
     },

@@ -13,7 +13,8 @@ const UserSchema = mongoose.Schema({
     transportation: {type: Number, default: 11.8 },
     role: { type: String, default: ERoles.EMPLOYEE},
     shifts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shift' }],
-    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }
+    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
+    deleted: {type: Boolean, default: false},
 });
 
 function createUserInstance(user) {
@@ -38,8 +39,13 @@ const getByUserId = (id) => {
 };
 
 // Return a promise
-const getUsers = (company) => {
-    return User.find({company: company._id, role: {'$ne':ERoles.COMPANY_MANAGER}}).exec();
+const getUsers = (company, hideDeleted) => {
+    let conditions = {company: company._id, role: {'$ne':ERoles.COMPANY_MANAGER}};
+
+    if (!!hideDeleted)
+        conditions.deleted = false; // get users that are not deleted
+
+    return User.find(conditions).exec();
 };
 
 // Return a promise
@@ -58,7 +64,7 @@ const updateUser = (user) => {
 };
 
 const deleteUser = (id) => {
-     return User.findByIdAndRemove(id).exec();
+    return User.findOneAndUpdate({'_id': id}, {deleted: true}).exec();
 };
 
 const comparePassword = (candidatePassword, hash, callback) => {

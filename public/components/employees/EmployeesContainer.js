@@ -45,7 +45,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchEmployees: () => {dispatch(fetchUsers());},
+        fetchEmployees: () => {dispatch(fetchUsers(true));},
         createUser: (employee) => {dispatch(createUser(employee));},
         updateUser: (employee) => {dispatch(updateUser(employee));},
         deleteUser: (employee) => {dispatch(showDeleteUserModal(employee));},

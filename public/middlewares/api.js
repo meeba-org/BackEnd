@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 import config from "../config";
 import axios from "axios";
+import {ErrorAction} from "../actions/index";
 
 const api = ({dispatch}) => next => action => {
     if (action.type !== actionTypes.API) {
@@ -29,7 +30,7 @@ const api = ({dispatch}) => next => action => {
     }).then(response => {
         dispatch(success(response.data));
     })
-    .catch(() => dispatch(actionTypes.Error));
+    .catch((err) => dispatch(ErrorAction(err)));
 
     return next(action);
 };

@@ -81,7 +81,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchMonthlyReport: (month, year) => dispatch(fetchMonthlyReport(month, year)),
-        fetchEmployees: () => dispatch(fetchUsers()),
+        fetchEmployees: () => dispatch(fetchUsers(true)),
         generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
         updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, month, year)),
         createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
