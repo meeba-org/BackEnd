@@ -98,6 +98,11 @@ const usersCount = () => User.count().exec();
 
 const isEmployee = (user) => user.role === ERoles.EMPLOYEE;
 
+const isShiftManager = (user) => user.role === ERoles.SHIFT_MANAGER;
+
+const isCompanyManager = (user) => user.role === ERoles.COMPANY_MANAGER;
+
+
 module.exports = {
     createUser
     , getByUserId
@@ -112,4 +117,6 @@ module.exports = {
     , comparePassword
     , getCleanUser
     , isEmployee
+    , isShiftManager
+    , isCompanyManager
 };

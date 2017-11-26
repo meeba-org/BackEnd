@@ -32,8 +32,8 @@ router.post('/login', function (req, res) {
     let uid = req.body.uid;
     let password = req.body.password;
 
-    if (!uid || !password) {
-        return res.status(401).json("uid or password are missing")
+    if (!uid) {
+        return res.status(401).json("uid is missing")
     }
 
     return UserModel.getByUserUid(uid, true)
@@ -42,7 +42,10 @@ router.post('/login', function (req, res) {
                 return res.status(401).json({message: "no such user found"});
             }
 
-            if (!UserModel.isEmployee(user)) {
+            if (UserModel.isCompanyManager(user)) {
+                if (!password)
+                    return res.status(401).json("password is missing");
+
                 let isMatch = UserModel.comparePassword(password, user.password);
 
                 if (!isMatch) {
