@@ -11,7 +11,7 @@ const config = require('./config');
 
 // Connect to mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect(config.dbUrl, { useMongoClient: true});
+mongoose.connect(config.dbUrl, { useMongoClient: true, user: config.DB_USER, pass: config.DB_PASS});
 
 // Init App
 const app = express();

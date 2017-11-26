@@ -63,3 +63,4 @@ typings/
 .idea
 /meeba-web.iml
 /dist/
+/.env

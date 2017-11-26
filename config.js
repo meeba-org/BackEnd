@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-
-var TEST_DB = "mongodb://admin:admin12@ds135594.mlab.com:35594/heroku_l3mnf6v2";
-var DEVELOPMENT_DB = "mongodb://admin:admin12@ds139242.mlab.com:39242/heroku_9mpwf6zf";
-var PRODUCTION_DB = "mongodb://admin:admin12@ds121906.mlab.com:21906/heroku_72bs9k0z";
+const fs = require('fs');
+const dotEnvFile = '.env';
 
 if (!process.env.NODE_ENV)
     process.env.NODE_ENV = 'development'
@@ -11,8 +9,16 @@ if (!module.exports.dbUrl)
     init();
 
 function init() {
-    module.exports.secret = 'bohemian-rhapsody';
-    module.exports.TEST_DB = TEST_DB;
+    if (fs.existsSync(dotEnvFile)) {
+        require('dotenv').config({
+            path: dotEnvFile,
+        });
+    }
+
+    module.exports.secret = process.env.SECRET;
+    module.exports.TEST_DB = process.env.TEST_DB;
+    module.exports.DB_USER = process.env.DB_USER;
+    module.exports.DB_PASS= process.env.DB_PASS;
     mongoose.Promise = global.Promise;
 
     switch (process.env.NODE_ENV) {
@@ -20,14 +26,14 @@ function init() {
         {
             console.log("Production Mode!")
 
-            module.exports.dbUrl = PRODUCTION_DB;
+            module.exports.dbUrl = process.env.PRODUCTION_DB;
             break;
         }
         case "development" :
         {
             console.log("Development Mode!");
 
-            module.exports.dbUrl = DEVELOPMENT_DB;
+            module.exports.dbUrl = process.env.DEVELOPMENT_DB;
             break;
         }
         case "test" :
