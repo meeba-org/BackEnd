@@ -1,3 +1,5 @@
+import {Error} from "./actionTypes";
+
 export * from "./companyActions";
 export * from "./shiftsActions";
 export * from "./usersActions";
@@ -11,4 +13,9 @@ export const hideDeleteEntityModal = () => ({
             open: false
         }
     }
+});
+
+export const ErrorAction = (err) => ({
+    type: Error,
+    err
 });

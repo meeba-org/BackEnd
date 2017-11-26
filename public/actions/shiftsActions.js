@@ -99,7 +99,9 @@ export const showDeleteShiftModal = (shift, dispatch, month, year) => ({
         modalType: 'DELETE_ENTITY',
         modalProps: {
             entity: shift,
-            deleteEntity: () => deleteShift(shift, dispatch, month, year),
+            month,
+            year,
+            deleteEntity: deleteShift,
             open: true
         }
     }

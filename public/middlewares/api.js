@@ -1,9 +1,9 @@
-import * as actions from "../actions/actionTypes";
+import * as actionTypes from "../actions/actionTypes";
 import config from "../config";
 import axios from "axios";
 
 const api = ({dispatch}) => next => action => {
-    if (action.type !== actions.API) {
+    if (action.type !== actionTypes.API) {
         return next(action);
     }
 

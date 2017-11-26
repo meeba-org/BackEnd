@@ -7,9 +7,9 @@ import PropTypes from 'prop-types';
 class DeleteModal extends Component {
 
     handleDelete = () => {
-        let {dispatch, deleteEntity, entity} = this.props;
+        let {dispatch, deleteEntity, entity, month, year} = this.props;
 
-        dispatch(deleteEntity(entity));
+        dispatch(deleteEntity(entity, dispatch, month, year));
         dispatch(hideDeleteEntityModal());
     };
 

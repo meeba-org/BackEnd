@@ -21,5 +21,5 @@ export const FETCH_COMPANY_SUCCESS = 'FETCH_COMPANY_SUCCESS';
 export const FETCH_MONTHLY_REPORT_SUCCESS = 'FETCH_MONTHLY_REPORT_SUCCESS';
 
 export const API = 'API';
-export const ErrorAction = 'ErrorAction';
+export const Error = 'Error';
 
