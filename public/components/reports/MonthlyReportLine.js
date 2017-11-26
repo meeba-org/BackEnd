@@ -40,7 +40,6 @@ class MonthlyReportLine extends React.Component {
                 {!isCollapsed &&
                 <ReactCSSTransitionGroup
                     transitionName="shiftsList"
-                    transitionAppear={true}
                     transitionEnterTimeout={500}
                     transitionLeaveTimeout={300}>
 
