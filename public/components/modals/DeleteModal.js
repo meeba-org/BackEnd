@@ -36,8 +36,8 @@ class DeleteModal extends Component {
 }
 
 DeleteModal.propTypes = {
-    entity: PropTypes.object.isRequired,
-    deleteEntity: PropTypes.func.isRequired,
+    entity: PropTypes.object,
+    deleteEntity: PropTypes.func,
     dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired
 };
