@@ -5,6 +5,33 @@
     flex-direction: column;
     cursor: pointer;
 
+    .shiftsList-enter {
+        opacity: 0.01;
+    }
+
+    .shiftsList-enter.shiftsList-enter-active {
+        opacity: 1;
+        transition: opacity 500ms ease-in;
+    }
+
+    .shiftsList-leave {
+        opacity: 1;
+    }
+
+    .shiftsList-leave.shiftsList-leave-active {
+        opacity: 0.01;
+        transition: opacity 300ms ease-in;
+    }
+
+    .shiftsList-appear {
+        opacity: 0.01;
+        transition: opacity .5s ease-in;
+    }
+
+    .shiftsList-appear.shiftsList-appear-active {
+        opacity: 1;
+    }
+
     .monthly-report-header {
         display: flex;
         flex-direction: row;
@@ -53,31 +80,4 @@
             }
         }
     }
-}
-
-.shiftsList-enter {
-    opacity: 0.01;
-}
-
-.shiftsList-enter.shiftsList-enter-active {
-    opacity: 1;
-    transition: opacity 500ms ease-in;
-}
-
-.shiftsList-leave {
-    opacity: 1;
-}
-
-.shiftsList-leave.shiftsList-leave-active {
-    opacity: 0.01;
-    transition: opacity 300ms ease-in;
-}
-
-.shiftsList-appear {
-    opacity: 0.01;
-    transition: opacity .5s ease-in;
-}
-
-.shiftsList-appear.shiftsList-appear-active {
-    opacity: 1;
 }
