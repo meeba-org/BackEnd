@@ -1,3 +1,5 @@
+@import "~sass-material-colors/sass/sass-material-colors";
+
 #login {
     color: #636363;
     margin-top: 80px;
@@ -32,6 +34,11 @@
 
         #submit-button {
             margin: 22px 0;
+        }
+
+        .error-msg {
+            margin-top: 10px;
+            color: material-color('red', '400')
         }
     }
 }

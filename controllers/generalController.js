@@ -33,23 +33,23 @@ router.post('/login', function (req, res) {
     let password = req.body.password;
 
     if (!uid) {
-        return res.status(401).json("uid is missing")
+        return res.status(401).send({message: "אנא הכנס שם משתמש"})
     }
 
     return UserModel.getByUserUid(uid, true)
         .then((user) => {
             if (!user) {
-                return res.status(401).json({message: "no such user found"});
+                return res.status(401).send({message: "שם משתמש לא קיים"});
             }
 
             if (UserModel.isCompanyManager(user)) {
                 if (!password)
-                    return res.status(401).json("password is missing");
+                    return res.status(401).json({message: "אנא הכנס סיסמא"});
 
                 let isMatch = UserModel.comparePassword(password, user.password);
 
                 if (!isMatch) {
-                    return res.status(401).json({message: "password did not match"});
+                    return res.status(401).json({message: "הסיסמא לא נכונה - נסה שנית"});
                 }
             }
 

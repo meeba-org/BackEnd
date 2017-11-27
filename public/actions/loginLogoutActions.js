@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as actionsTypes from "./actionTypes";
 import config from "../config";
+import {SubmissionError} from "redux-form";
 
 function handleLoginStart() {
     return {type: actionsTypes.HANDLE_LOGIN_START};
@@ -16,19 +17,18 @@ function handleLoginSuccess(response, router) {
     router.push('/dashboard');
 }
 
-function handleLoginError(error) {
-    return {
-        type: actionsTypes.HANDLE_LOGIN_ERROR,
-        error: error
-    };
-}
-
 export function handleLogin(values, router) {
     return function (dispatch) {
         dispatch(handleLoginStart());
         return axios.post(`${config.ROOT_URL}/login`, values)
             .then((response) => handleLoginSuccess(response, router))
-            .catch(dispatch(handleLoginError()));
+            .catch((err) => {
+                let data = err.response.data;
+
+                throw new SubmissionError({
+                    _error: data.message
+                });
+            });
     };
 }
 
