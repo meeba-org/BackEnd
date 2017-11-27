@@ -34,8 +34,8 @@ function checkEnvInfoExists() {
 }
 
 function init() {
-    console.log("env: " + process.env.NODE_ENV);
-    checkEnvInfoExists();
+    if (process.env.NODE_ENV !== 'test')
+        checkEnvInfoExists();
 
     module.exports.secret = process.env.SECRET;
     module.exports.TEST_DB = process.env.TEST_DB;
@@ -62,7 +62,7 @@ function init() {
         {
             console.log("Testing Mode!")
 
-            module.exports.dbUrl = process.env.TEST_DB;
+            module.exports.dbUrl = "mongodb://admin:admin12@ds135594.mlab.com:35594/heroku_l3mnf6v2";
             break;
         }
         default :
