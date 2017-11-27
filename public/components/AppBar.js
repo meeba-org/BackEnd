@@ -9,14 +9,19 @@ import CSSModules from "react-css-modules";
 import styles from '../styles/AppBar.scss';
 import {connect} from "react-redux";
 import * as selectors from "../selectors";
-import {handleLogout} from "../actions/index";
+import {handleLogout, navigateHome} from "../actions/index";
 import PropTypes from 'prop-types';
 
 class MeebaAppBar extends Component {
-    onLogout() {
+    onLogout = () => {
         let {logout, router} = this.props;
         logout(router);
-    }
+    };
+
+    onLogoClock = () => {
+        let {navigateHome, router} = this.props;
+        navigateHome(router);
+    };
 
     render() {
         let {companyName} = this.props;
@@ -24,12 +29,14 @@ class MeebaAppBar extends Component {
             <div id="app-bar">
                 <AppBar position="static">
                     <Toolbar id="toolbar">
-                        <IconButton color="contrast" aria-label="Menu">
-                            <AccessTimeIcon/>
-                        </IconButton>
-                        <Typography type="title" color="inherit">{companyName}</Typography>
+                        <div className="logo" onClick={this.onLogoClock}>
+                            <IconButton color="contrast" aria-label="Menu">
+                                <AccessTimeIcon/>
+                            </IconButton>
+                            <Typography type="title" color="inherit">{companyName}</Typography>
+                        </div>
                         <div className="login">
-                            <Button onClick={() => this.onLogout()} color="contrast">יציאה</Button>
+                            <Button onClick={this.onLogout} color="contrast">יציאה</Button>
                         </div>
                     </Toolbar>
                 </AppBar>
@@ -40,6 +47,7 @@ class MeebaAppBar extends Component {
 
 MeebaAppBar.propTypes = {
     logout: PropTypes.func.isRequired,
+    navigateHome: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired,
     companyName: PropTypes.string.isRequired,
 
@@ -54,6 +62,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         logout: (router) => dispatch(handleLogout(router)),
+        navigateHome: (router) => dispatch(navigateHome(router)),
     };
 }
 

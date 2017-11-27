@@ -38,6 +38,13 @@ export function handleLogout(router) {
         router.push('/login');
     };
 }
+
+export function navigateHome(router) {
+    return function () {
+        router.push('/');
+    };
+}
+
 export function meFromToken() {
     return {
         type: actionsTypes.ME_FROM_TOKEN,

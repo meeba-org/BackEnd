@@ -52,6 +52,7 @@ class Login extends Component {
 Login.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     handleChange: PropTypes.func,
+    error: PropTypes.string,
 };
 Login.defaultProps = {};
 
