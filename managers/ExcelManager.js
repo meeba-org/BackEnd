@@ -3,7 +3,7 @@ const moment = require('moment');
 var Excel = require('exceljs');
 
 const createTitleDate = function (year, month) {
-    return moment().year(year).month(month).format('MM-YYYY');
+    return moment().year(year).month(month-1).format('MM-YYYY');
 };
 
 let setHeaderColor = function (sheet) {
