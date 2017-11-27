@@ -19,12 +19,8 @@ function readEnvFileIfExists () {
 function checkEnvInfoExists() {
     readEnvFileIfExists();
 
-    if (!process.env.TEST_DB)
-        throw new Error("[config] - TEST_DB is not defined");
-
     if (!process.env.SECRET)
         throw new Error("[config] - SECRET is not defined");
-
 
     if (!process.env.DB_USER)
         throw new Error("[config] - DB_USER is not defined");
@@ -34,7 +30,7 @@ function checkEnvInfoExists() {
 }
 
 function init() {
-    // if (process.env.NODE_ENV !== 'test')
+    if (process.env.NODE_ENV !== 'test')
         checkEnvInfoExists();
 
     module.exports.secret = process.env.SECRET;
