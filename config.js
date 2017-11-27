@@ -59,6 +59,7 @@ function init() {
             console.log("Testing Mode!")
 
             module.exports.dbUrl = "mongodb://admin:admin12@ds135594.mlab.com:35594/heroku_l3mnf6v2";
+            module.exports.TEST_DB = "mongodb://admin:admin12@ds135594.mlab.com:35594/heroku_l3mnf6v2";
             break;
         }
         default :
