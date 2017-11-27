@@ -34,7 +34,7 @@ function checkEnvInfoExists() {
 }
 
 function init() {
-    if (process.env.NODE_ENV !== 'test')
+    // if (process.env.NODE_ENV !== 'test')
         checkEnvInfoExists();
 
     module.exports.secret = process.env.SECRET;
@@ -48,14 +48,14 @@ function init() {
         {
             console.log("Production Mode!")
 
-            module.exports.dbUrl = process.env.PRODUCTION_DB;
+            module.exports.dbUrl = process.env.MONGOLAB_ORANGE_URI;
             break;
         }
         case "development" :
         {
             console.log("Development Mode!");
 
-            module.exports.dbUrl = process.env.DEVELOPMENT_DB;
+            module.exports.dbUrl = process.env.MONGODB_URI;
             break;
         }
         case "test" :

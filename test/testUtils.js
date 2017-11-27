@@ -22,7 +22,7 @@ beforeEach(function () {
     if (mongoose.connection.db)
         return clearDB();
 
-    return mongoose.connect(config.dbUrl, {useMongoClient: true, user: config.DB_USER, pass: config.DB_PASS})
+    return mongoose.connect(config.dbUrl, {useMongoClient: true})
         .then(function() {
             return clearDB();
         })
