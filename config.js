@@ -61,6 +61,8 @@ function init() {
             /**
              * Ugly hack - cant extract the process.env.TEST_DB in test phase in heroku
              * Check more details in here: https://stackoverflow.com/questions/19570064/process-env-does-not-contain-config-variables-on-heroku/47513032#47513032
+             *
+             * So I'm exposing credential here but its ok - only test db
              * @type {string}
              */
             module.exports.dbUrl = "mongodb://admin:admin12@ds135594.mlab.com:35594/heroku_l3mnf6v2";
