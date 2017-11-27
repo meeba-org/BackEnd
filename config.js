@@ -34,6 +34,7 @@ function checkEnvInfoExists() {
 }
 
 function init() {
+    console.log("env: " + process.env.NODE_ENV);
     checkEnvInfoExists();
 
     module.exports.secret = process.env.SECRET;
