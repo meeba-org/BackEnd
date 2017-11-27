@@ -20,7 +20,7 @@ function checkEnvInfoExists() {
     readEnvFileIfExists();
 
     if (!process.env.SECRET)
-        throw new Error("[config] - SECERT is not defined");
+        throw new Error("[config] - SECRET is not defined");
 
     if (!process.env.TEST_DB)
         throw new Error("[config] - TEST_DB is not defined");
@@ -30,7 +30,7 @@ function checkEnvInfoExists() {
 
     if (!process.env.DB_PASS)
         throw new Error("[config] - DB_PASS is not defined");
-};
+}
 
 function init() {
     checkEnvInfoExists();
