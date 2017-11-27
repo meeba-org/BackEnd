@@ -94,7 +94,14 @@ const removeShift = (userId, shift) => {
     return User.findByIdAndUpdate(userId, { $pull: { "shifts": shift.id} }, {'new': true} );
 };
 
-const usersCount = () => User.count().exec();
+const usersCount = (ignoreDeleted) => {
+    let conditions = {};
+
+    if (ignoreDeleted)
+        conditions.deleted = false;
+
+    return User.count(conditions).exec();
+}
 
 const isEmployee = (user) => user.role === ERoles.EMPLOYEE;
 

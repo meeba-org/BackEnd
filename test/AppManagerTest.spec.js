@@ -42,7 +42,7 @@ describe('AppManager', function () {
                     return AppManager.addUser(newUser);
                 })
                 .then((createdUser) => AppManager.removeUser(createdUser.id))
-                .then(() => UserModel.usersCount())
+                .then(() => UserModel.usersCount(true))
                 .then((result) => expect(result).to.be.equal(0))
                 .then(() => CompanyModel.getByCompanyId(createdCompany.id))
                 .then((company) => expect(company.users).to.have.length(0));

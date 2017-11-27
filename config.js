@@ -14,10 +14,26 @@ function readEnvFileIfExists () {
             path: dotEnvFile,
         });
     }
+}
+
+function checkEnvInfoExists() {
+    readEnvFileIfExists();
+
+    if (!process.env.SECRET)
+        throw new Error("[config] - SECERT is not defined");
+
+    if (!process.env.TEST_DB)
+        throw new Error("[config] - TEST_DB is not defined");
+
+    if (!process.env.DB_USER)
+        throw new Error("[config] - DB_USER is not defined");
+
+    if (!process.env.DB_PASS)
+        throw new Error("[config] - DB_PASS is not defined");
 };
 
 function init() {
-    readEnvFileIfExists();
+    checkEnvInfoExists();
 
     module.exports.secret = process.env.SECRET;
     module.exports.TEST_DB = process.env.TEST_DB;
@@ -44,12 +60,12 @@ function init() {
         {
             console.log("Testing Mode!")
 
-            module.exports.dbUrl = TEST_DB;
+            module.exports.dbUrl = process.env.TEST_DB;
             break;
         }
         default :
         {
-            console.log("Error! No Mode was set!")
+            throw new Error("Error! No dbUrl was set!")
         }
     }
 }
