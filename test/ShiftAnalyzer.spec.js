@@ -236,7 +236,7 @@ describe('ShiftAnalyzer', function () {
             expect(hours.extra175Hours).to.be.equal(2);
         });
 
-        it.only('holiday 17:30 to 03:00', function () {
+        it('holiday 17:30 to 03:00', function () {
             const shift = {
                 clockInTime: moment('02/12/2017 17:30', 'DD/MM/YYYY HH:mm'),
                 clockOutTime: moment('03/12/2017 03:00', 'DD/MM/YYYY HH:mm'),
