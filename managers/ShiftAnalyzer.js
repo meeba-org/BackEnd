@@ -1,6 +1,7 @@
-const moment = require('moment');
 const EDayType = require("../models/EDayType");
 const analyzeDayType = require("./HolidayAnalyzer").analyzeDayType;
+const moment = require('moment-timezone');
+moment.tz.setDefault("Asia/Jerusalem");
 
 const REGULAR_SHIFT_LENGTH = 9;
 const SHIFT_125_OVERDUE_LENGTH = 2;
