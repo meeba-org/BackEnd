@@ -1,13 +1,33 @@
 @import "variables";
 
 #home {
-    background: url(https://mdbootstrap.com/img/Photos/Others/images/45.jpg) no-repeat center center fixed;
+    background: url(https://mdbootstrap.com/img/Photos/Others/images/45.jpg) no-repeat fixed center center;
     background-size: cover;
     min-height: 100%;
 
     #container {
+        @media (min-width: 576px) {
+            max-width: 540px;
+        }
+        @media (min-width: 768px) {
+            max-width: 720px;
+        }
+        @media (min-width: 992px) {
+            max-width: 960px;
+        }
+        @media (min-width: 1200px) {
+            max-width: 1140px;
+        }
+
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+
         .app-bar {
             background-color: transparent;
+            box-shadow: none;
         }
     }
 }
