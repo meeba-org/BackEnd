@@ -5,29 +5,36 @@
     background-size: cover;
     min-height: 100%;
 
-    #container {
-        @media (min-width: 576px) {
-            max-width: 540px;
-        }
-        @media (min-width: 768px) {
-            max-width: 720px;
-        }
-        @media (min-width: 992px) {
-            max-width: 960px;
-        }
-        @media (min-width: 1200px) {
-            max-width: 1140px;
-        }
-
+    #home-bg {
+        background-color: rgba(0, 0, 0, .3);
+        position: absolute;
         width: 100%;
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-right: auto;
-        margin-left: auto;
+        height: 100%;
 
-        .app-bar {
-            background-color: transparent;
-            box-shadow: none;
+        #container {
+            @media (min-width: 576px) {
+                max-width: 540px;
+            }
+            @media (min-width: 768px) {
+                max-width: 720px;
+            }
+            @media (min-width: 992px) {
+                max-width: 960px;
+            }
+            @media (min-width: 1200px) {
+                max-width: 1140px;
+            }
+
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+
+            .app-bar {
+                background-color: transparent;
+                box-shadow: none;
+            }
         }
     }
 }

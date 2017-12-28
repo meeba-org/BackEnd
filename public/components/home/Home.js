@@ -8,18 +8,20 @@ class Home extends Component {
     render() {
         return (
             <div id="home">
-                <div id="container">
-                    <AppBar position="static" className="app-bar">
-                        <Toolbar>
-                            <IconButton color="contrast" aria-label="Menu">
-                                <AccessTimeIcon/>
-                            </IconButton>
-                            <Typography type="title" color="inherit">
-                                מיבא
-                            </Typography>
-                            <Button color="contrast">בית</Button>
-                        </Toolbar>
-                    </AppBar>
+                <div id="home-bg">
+                    <div id="container">
+                        <AppBar position="static" className="app-bar">
+                            <Toolbar>
+                                <IconButton color="contrast" aria-label="Menu">
+                                    <AccessTimeIcon/>
+                                </IconButton>
+                                <Typography type="title" color="inherit">
+                                    מיבא
+                                </Typography>
+                                <Button color="contrast">בית</Button>
+                            </Toolbar>
+                        </AppBar>
+                    </div>
                 </div>
             </div>
         );
