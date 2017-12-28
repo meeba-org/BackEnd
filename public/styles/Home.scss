@@ -1,0 +1,13 @@
+@import "variables";
+
+#home {
+    background: url(https://mdbootstrap.com/img/Photos/Others/images/45.jpg) no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100%;
+
+    #container {
+        .app-bar {
+            background-color: transparent;
+        }
+    }
+}

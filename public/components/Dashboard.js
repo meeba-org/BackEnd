@@ -21,25 +21,27 @@ class Dashboard extends React.Component {
 
         return (
             <div id="dashboard">
-                <Grid container>
-                    <Grid item xs={12}>
-                        <div id="appBar-container">
-                            <AppBar router={router}/>
-                        </div>
-                    </Grid>
-                    <Grid container id="container">
-                        <Grid item xs={3}>
-                            <Paper id="sideBar-container">
-                                <SideBar userRole={userRole} />
-                            </Paper>
+                <div id="container">
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <div id="appBar-container">
+                                <AppBar router={router}/>
+                            </div>
                         </Grid>
-                        <Grid item xs={9}>
-                            <Paper id="main-container">
-                                {this.props.children}
-                            </Paper>
+                        <Grid container id="grid-container">
+                            <Grid item xs={3}>
+                                <Paper id="sideBar-container">
+                                    <SideBar userRole={userRole}/>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <Paper id="main-container">
+                                    {this.props.children}
+                                </Paper>
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
+                </div>
             </div>
         );
     }
@@ -60,7 +62,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadUserFromToken: () => {dispatch(loadUserFromToken());},
+        loadUserFromToken: () => {
+            dispatch(loadUserFromToken());
+        },
     };
 };
 

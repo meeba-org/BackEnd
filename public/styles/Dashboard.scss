@@ -1,36 +1,55 @@
 $containerHeight: 800px;
 $margin: 12px;
 
-#dashboard {
-    width: 100%;
+.button {
+    height: 100%;
+}
 
-    #appBar-container {
-        margin-bottom: $margin;
-    }
+#dashboard {
+    background: rgba(128, 128, 128, 0.19);
+    min-height: 100%;
 
     #container {
-        padding: 0 9px;
+        color: rgba(0, 0, 0, 0.87);
+        font-size: 16px;
+        font-weight: 400;
+        max-width: 1200px;
+        font-family: 'Assistant', sans-serif;
+        line-height: 24px;
 
-        #sideBar-container {
+        margin: 0 auto;
+        padding: 12px;
+
+        width: 100%;
+
+        #appBar-container {
+            margin-bottom: $margin;
         }
 
-        #main-container {
-            .card-content {
-                overflow-y: visible;
-                max-height: $containerHeight;
+        #grid-container {
+            padding: 0 9px;
 
-                .controls-line {
-                    margin-bottom: 15px;
+            #sideBar-container {
+            }
 
-                    .action-button {
-                        margin-right: 10px;
-                        padding: 5px 4px;
-                        min-width: 40px;
+            #main-container {
+                .card-content {
+                    overflow-y: visible;
+                    max-height: $containerHeight;
+
+                    .controls-line {
+                        margin-bottom: 15px;
+
+                        .action-button {
+                            margin-right: 10px;
+                            padding: 5px 4px;
+                            min-width: 40px;
+                        }
                     }
-                }
 
-                .divider {
-                    margin-bottom: 30px;
+                    .divider {
+                        margin-bottom: 30px;
+                    }
                 }
             }
         }
