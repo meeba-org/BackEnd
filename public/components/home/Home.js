@@ -3,6 +3,7 @@ import {AppBar, Button, IconButton, Toolbar, Typography} from "material-ui";
 import styles from "../../styles/Home.scss";
 import AccessTimeIcon from 'material-ui-icons/AccessTime';
 import CSSModules from "react-css-modules";
+import {ArrowBack} from "material-ui-icons";
 
 class Home extends Component {
     render() {
@@ -29,6 +30,10 @@ class Home extends Component {
                                 <div className="sub-title">
                                     שעון נוכחות וחישוב שכר לעובדים שעתיים
                                 </div>
+                                <Button className="login-button" raised color="primary">
+                                    <span>כניסה</span>
+                                    <ArrowBack />
+                                </Button>
                             </div>
                         </div>
                     </div>
