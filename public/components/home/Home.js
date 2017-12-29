@@ -19,7 +19,12 @@ class Home extends Component {
                                 <Typography type="title" color="inherit">
                                     מיבא
                                 </Typography>
-                                <Button color="contrast">בית</Button>
+                                <div className="right-buttons-group">
+                                    <Button color="contrast">בית</Button>
+                                </div>
+                                <div className="left-buttons-group">
+                                    <Button color="contrast">כניסה</Button>
+                                </div>
                             </Toolbar>
                         </AppBar>
                         <div id="content">

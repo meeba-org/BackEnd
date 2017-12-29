@@ -39,6 +39,14 @@
             .app-bar {
                 background-color: transparent;
                 box-shadow: none;
+
+                .right-buttons-group {
+                    flex-grow: 1;
+                }
+
+                .left-buttons-group {
+
+                }
             }
 
             #content {
