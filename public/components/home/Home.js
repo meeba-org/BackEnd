@@ -4,8 +4,18 @@ import styles from "../../styles/Home.scss";
 import AccessTimeIcon from 'material-ui-icons/AccessTime';
 import CSSModules from "react-css-modules";
 import {ArrowBack} from "material-ui-icons";
+import LoginRegisterContainer from "../login/LoginRegisterContainer";
+import PropTypes from 'prop-types';
 
 class Home extends Component {
+    state = {
+        visible: false
+    };
+
+    setLoginDialogVisibility = (visible) => {
+        this.setState({visible});
+    };
+
     render() {
         return (
             <div id="home">
@@ -35,7 +45,7 @@ class Home extends Component {
                                 <div className="sub-title">
                                     שעון נוכחות וחישוב שכר לעובדים שעתיים
                                 </div>
-                                <Button className="login-button" raised color="primary">
+                                <Button className="login-button" raised color="primary" onClick={() => this.setLoginDialogVisibility(true)}>
                                     <span>כניסה</span>
                                     <ArrowBack />
                                 </Button>
@@ -43,12 +53,19 @@ class Home extends Component {
                         </div>
                     </div>
                 </div>
+                <LoginRegisterContainer
+                    visible={this.state.visible}
+                    router={this.props.router}
+                    onCancel={() => this.setLoginDialogVisibility(false)}
+                />
             </div>
         );
     }
 }
 
-Home.propTypes = {};
+Home.propTypes = {
+    router: PropTypes.object,
+};
 Home.defaultProps = {};
 
 export default CSSModules(Home, styles);
