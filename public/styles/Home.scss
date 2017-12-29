@@ -4,6 +4,7 @@
     background: url(https://mdbootstrap.com/img/Photos/Others/images/45.jpg) no-repeat fixed center center;
     background-size: cover;
     min-height: 100%;
+    font-family: 'Assistant';
 
     #home-bg {
         background-color: rgba(0, 0, 0, .3);
@@ -12,6 +13,7 @@
         height: 100%;
 
         #container {
+            height: 100%;
             @media (min-width: 576px) {
                 max-width: 540px;
             }
@@ -34,6 +36,37 @@
             .app-bar {
                 background-color: transparent;
                 box-shadow: none;
+            }
+
+            #content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                min-height: 100%;
+
+                #middle-content {
+                    color: white;
+                    width: 100%;
+                    text-align: center;
+
+                    .title {
+                        background-color: rgba(0, 0, 0, .3);
+                        font-size: 72px;
+                        font-weight: bold;
+                        width: 100%;
+                        min-width: 100%;
+                    }
+                    hr {
+                        border-top: 1px solid #fff;
+                        width: 100%;
+                        margin-top: 30px;
+                        margin-bottom: 30px;
+                    }
+                    .sub-title {
+                        font-size: 32px;
+                    }
+                }
             }
         }
     }

@@ -21,6 +21,16 @@ class Home extends Component {
                                 <Button color="contrast">בית</Button>
                             </Toolbar>
                         </AppBar>
+                        <div id="content">
+                        <div id="middle-content">
+
+                            <div className="title">מיבא</div>
+                            <hr />
+                            <div className="sub-title">
+                                שעון נוכחות וחישוב שכר לעובדים שעתיים
+                            </div>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
