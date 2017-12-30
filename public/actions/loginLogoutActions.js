@@ -27,7 +27,7 @@ export function handleLogin(values, router) {
                 if (err) {
                     if (!!err.response && !! err.response && !!err.response.data && !!err.response.data.message)
                         message = err.response.data.message;
-                    if (err.message)
+                    else if (err.message)
                         message = err.message;
                 }
 
