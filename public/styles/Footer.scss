@@ -1,5 +1,7 @@
+@import "variables";
 #footer {
-    background-color: #6f7178;
+    background-color: material-color('brown', '400');
+    color: material-color('brown', '900');
     display: flex;
     text-align: center;
     justify-content: center;
