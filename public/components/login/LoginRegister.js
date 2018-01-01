@@ -40,7 +40,7 @@ class LoginRegister extends Component {
                                 />
                             </div>
                             {error && <div className="error-msg">{error}</div>}
-                            <div id="footer">
+                            <div id="login-register-footer">
                                 <Button dense raised color="primary" type="submit" id="login-button">
                                     <ArrowBackIcon/>היכנס
                                 </Button>

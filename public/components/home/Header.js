@@ -4,12 +4,14 @@ import CSSModules from "react-css-modules/dist/index";
 import {AppBar, Button, IconButton, Toolbar, Typography} from "material-ui";
 import AccessTimeIcon from 'material-ui-icons/AccessTime';
 import {ArrowBack} from "material-ui-icons";
+import PropTypes from 'prop-types';
 
 class Header extends Component {
     render() {
+        let {setLoginDialogVisibility} = this.props;
         return (
             <div id="header">
-                <AppBar position="static" className="app-bar">
+                <AppBar position="fixed" className="app-bar">
                     <Toolbar>
                         <IconButton color="contrast" aria-label="Menu">
                             <AccessTimeIcon/>
@@ -21,7 +23,7 @@ class Header extends Component {
                             <Button color="contrast">בית</Button>
                         </div>
                         <div className="left-buttons-group">
-                            <Button color="contrast" onClick={() => this.setLoginDialogVisibility(true)}>כניסה</Button>
+                            <Button color="contrast" onClick={() => setLoginDialogVisibility(true)}>כניסה</Button>
                         </div>
                     </Toolbar>
                 </AppBar>
@@ -33,7 +35,7 @@ class Header extends Component {
                         <div className="sub-title">
                             שעון נוכחות וחישוב שכר לעובדים שעתיים
                         </div>
-                        <Button className="login-button" raised color="primary" onClick={() => this.setLoginDialogVisibility(true)}>
+                        <Button className="login-button" raised color="primary" onClick={() => setLoginDialogVisibility(true)}>
                             <span>כניסה</span>
                             <ArrowBack />
                         </Button>
@@ -44,7 +46,9 @@ class Header extends Component {
     }
 }
 
-Header.propTypes = {};
+Header.propTypes = {
+    setLoginDialogVisibility: PropTypes.func.isRequired
+};
 Header.defaultProps = {};
 
 export default CSSModules(Header, styles);
