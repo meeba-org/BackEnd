@@ -33,7 +33,7 @@ class Home extends Component {
                                     <Button color="contrast">בית</Button>
                                 </div>
                                 <div className="left-buttons-group">
-                                    <Button color="contrast">כניסה</Button>
+                                    <Button color="contrast" onClick={() => this.setLoginDialogVisibility(true)}>כניסה</Button>
                                 </div>
                             </Toolbar>
                         </AppBar>

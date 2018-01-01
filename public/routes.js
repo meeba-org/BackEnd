@@ -33,7 +33,7 @@ function requireAuth(nextState, replace) {
     let token = localStorage.getItem('jwtToken');
     if (!token || token === '') {
         replace({
-            pathname: '/login',
+            pathname: '/home',
             state: {nextPathname: nextState.location.pathname}
         });
     }

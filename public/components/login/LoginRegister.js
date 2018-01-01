@@ -18,7 +18,7 @@ class LoginRegister extends Component {
     render() {
         let {handleSubmit, handleChange, error, onCancel, visible} = this.props;
         return (
-            <Dialog open={visible} onRequestClose={onCancel}>
+            <Dialog open={visible} onClose={onCancel}>
                 <div id="login-register">
                     <DialogContent>
                         <div id="title">
