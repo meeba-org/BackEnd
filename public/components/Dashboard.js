@@ -21,7 +21,7 @@ class Dashboard extends React.Component {
 
         return (
             <div id="dashboard">
-                <div id="header">
+                <div id="dashboard-container">
                     <Grid container>
                         <Grid item xs={12}>
                             <div id="appBar-container">

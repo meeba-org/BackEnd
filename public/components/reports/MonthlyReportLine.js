@@ -41,6 +41,7 @@ class MonthlyReportLine extends React.Component {
                 <ReactCSSTransitionGroup
                     transitionName="shiftsList"
                     transitionAppear={true}
+                    transitionAppearTimeout={500}
                     transitionEnterTimeout={500}
                     transitionLeaveTimeout={300}>
 

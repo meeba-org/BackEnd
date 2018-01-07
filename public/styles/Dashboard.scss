@@ -5,22 +5,22 @@ $margin: 12px;
     height: 100%;
 }
 
-#dashboard {
+
+#dashboard
+{
+    display: flex;
     background: rgba(128, 128, 128, 0.19);
     min-height: 100%;
+    flex-direction: column;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    font-family: 'Assistant', sans-serif;
 
-    #header {
-        color: rgba(0, 0, 0, 0.87);
-        font-size: 16px;
-        font-weight: 400;
+    #dashboard-container {
         max-width: 1200px;
-        font-family: 'Assistant', sans-serif;
-        line-height: 24px;
-
-        margin: 0 auto;
-        padding: 12px;
-
-        width: 100%;
 
         #appBar-container {
             margin-bottom: $margin;
