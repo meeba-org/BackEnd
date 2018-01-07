@@ -82,10 +82,6 @@ class Shift extends React.Component {
         this.setState({hover: false});
     };
 
-    isHoliday = (shift) => {
-        return shift.dayType !== 0;
-    };
-
     render() {
         let {showNames, input, mode} = this.props;
         let shift = input.value;
@@ -94,11 +90,9 @@ class Shift extends React.Component {
             <Tooltip title="בעבודה" placement="right"><WorkIcon/></Tooltip> :
             <Tooltip title="בבית" placement="right"><HomeIcon/></Tooltip>;
         let hebrewDay = momentToDay(shift.clockInTime);
-        let inputTextFieldClasses = this.isHoliday(shift) ? "holiday" : "" ;
-        let classNames = "shift " + inputTextFieldClasses;
 
         return (
-            <div className={classNames} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+            <div className="shift" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div className="name-container">
                     {mode === ReportModes.Live &&
                         <IconButton className="icon">{icon}</IconButton>
@@ -112,16 +106,16 @@ class Shift extends React.Component {
                 <div>
                     <span>{hebrewDay}'</span>
                     <TextField className="elem" type="date" value={startDateStr} placeholder="תאריך"
-                               inputProps={{"className": inputTextFieldClasses}} onChange={(e) => this.onUpdateStartDate(e)}/>
+                               onChange={(e) => this.onUpdateStartDate(e)}/>
                 </div>
                 }
 
                 <TextField className="elem" type="time" value={startTimeStr} placeholder="כניסה"
-                           inputProps={{"className": inputTextFieldClasses}} onChange={(e) => this.onUpdateStartTime(e, "clockOutTime")}/>
+                           onChange={(e) => this.onUpdateStartTime(e, "clockOutTime")}/>
                 {(mode === ReportModes.Report || !!endTimeStr) &&
 
                 <TextField className="elem" type="time" value={endTimeStr} placeholder="יציאה"
-                           inputProps={{"className": inputTextFieldClasses}} onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}/>
+                           onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}/>
                 }
                 {this.state.hover &&
                 <div>
