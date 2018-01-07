@@ -23,10 +23,16 @@ export function handleLogin(values, router) {
         return axios.post(`${config.ROOT_URL}/login`, values)
             .then((response) => handleLoginSuccess(response, router))
             .catch((err) => {
-                let data = err.response.data;
+                let message = 'Unknown Error';
+                if (err) {
+                    if (!!err.response && !! err.response && !!err.response.data && !!err.response.data.message)
+                        message = err.response.data.message;
+                    else if (err.message)
+                        message = err.message;
+                }
 
                 throw new SubmissionError({
-                    _error: data.message
+                    _error: message
                 });
             });
     };
@@ -35,7 +41,7 @@ export function handleLogin(values, router) {
 export function handleLogout(router) {
     return function () {
         localStorage.removeItem('jwtToken');
-        router.push('/login');
+        router.push('/home');
     };
 }
 

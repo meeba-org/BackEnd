@@ -1,0 +1,46 @@
+@import "variables";
+
+#login-register {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 245px;
+    min-width: 300px;
+    font-family: 'Assistant';
+
+    #title {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: $primary;
+        color: white;
+        height: 30%;
+        text-align: center;
+    }
+
+    hr {
+        border-top: 1px solid #fff;
+        width: 100%;
+    }
+
+    .field {
+        width: 100%;
+    }
+
+    .error-msg {
+        margin-top: 10px;
+        color: material-color('red', '400');
+        text-align: center;
+    }
+
+    #login-register-footer {
+        display: flex;
+        justify-content: center;
+
+        #login-button  {
+            margin-top: 20px;
+        }
+    }
+
+}

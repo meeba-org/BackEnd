@@ -8,10 +8,12 @@ import MonthlyReportContainer from "./components/reports/MonthlyReportContainer"
 import DailyReportContainer from "./components/reports/DailyReportContainer";
 import {ReportModes} from "./helpers/utils";
 import UserContainer from "./components/user/UserContainer";
+import Home from "./components/home/Home";
 
 export default (
     <Route path="/" component={AppContainer}>
         <IndexRedirect to="/dashboard" />
+        <Route path="/home" component={Home}/>
         <Route path="/login" component={LoginContainer}/>
         <Route path="/dashboard" component={Dashboard} onEnter={requireAuth}>
             <IndexRedirect to="/dashboard/report" />
@@ -31,7 +33,7 @@ function requireAuth(nextState, replace) {
     let token = localStorage.getItem('jwtToken');
     if (!token || token === '') {
         replace({
-            pathname: '/login',
+            pathname: '/home',
             state: {nextPathname: nextState.location.pathname}
         });
     }

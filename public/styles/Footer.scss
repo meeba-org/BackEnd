@@ -1,0 +1,8 @@
+@import "variables";
+#footer {
+    background-color: material-color('brown', '400');
+    color: material-color('brown', '900');
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}

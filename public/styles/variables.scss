@@ -1,5 +1,8 @@
 @import "~sass-material-colors/sass/sass-material-colors";
 
+$primary: material-color('brown', '500');
+$secondary: material-color('orange', '500');
+
 $hourRate100: material-color('green', '400');
 $hourRate125: material-color('yellow', '400');
 $hourRate150: material-color('amber', '400');

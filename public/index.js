@@ -1,7 +1,6 @@
 import "babel-polyfill";
 import {render} from "react-dom";
 import React from "react";
-// import createMuiTheme from 'material-ui/styles/theme';
 import injectTapEventPlugin from "react-tap-event-plugin";
 import routes from "./routes";
 
@@ -10,14 +9,14 @@ import {browserHistory, Router} from "react-router";
 import createStore from "./store/configureStore";
 import {syncHistoryWithStore} from "react-router-redux";
 import {createMuiTheme, MuiThemeProvider} from 'material-ui/styles';
-
+import {brown, orange} from 'material-ui/colors';
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
 function muiTheme() {
     return createMuiTheme({
-        isRtl: true,
+        direction: "rtl",
         typography: {
             fontFamily: '"Assistant", sans-serif'
         },
@@ -27,7 +26,11 @@ function muiTheme() {
                     height: "100%"
                 }
             }
-        }
+        },
+        palette: {
+            primary: brown,
+            secondary: orange,
+        },
     });
 }
 const store = createStore();
