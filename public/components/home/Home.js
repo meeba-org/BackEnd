@@ -5,6 +5,7 @@ import LoginRegisterContainer from "../login/LoginRegisterContainer";
 import PropTypes from 'prop-types';
 import Header from "./Header";
 import Footer from "./Footer";
+import Features from "./Features";
 
 class Home extends Component {
     state = {
@@ -20,6 +21,7 @@ class Home extends Component {
             <div id="home">
                 <div id="home-bg">
                     <Header setLoginDialogVisibility={this.setLoginDialogVisibility}/>
+                    <Features />
                     <Footer />
                 </div>
                 <LoginRegisterContainer
