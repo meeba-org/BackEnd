@@ -49,6 +49,12 @@ class MonthlyReport extends React.Component {
             {startDay: this.generateMonthStr(9, 2017), name: "אוקטובר 2017"},
             {startDay: this.generateMonthStr(10, 2017), name: "נובמבר 2017"},
             {startDay: this.generateMonthStr(11, 2017), name: "דצמבר 2017"},
+            {startDay: this.generateMonthStr(0, 2018), name: "ינואר 2018"},
+            {startDay: this.generateMonthStr(1, 2018), name: "פברואר 2018"},
+            {startDay: this.generateMonthStr(2, 2018), name: "מרץ 2018"},
+            {startDay: this.generateMonthStr(3, 2018), name: "אפריל 2018"},
+            {startDay: this.generateMonthStr(4, 2018), name: "מאי 2018"},
+            {startDay: this.generateMonthStr(5, 2018), name: "יוני 2018"},
         ];
     }
 
