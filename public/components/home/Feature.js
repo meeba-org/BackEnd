@@ -1,20 +1,25 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import CSSModules from "react-css-modules";
+import styles from "../../styles/Feature.scss";
 
 class Feature extends Component {
     render() {
-        let {title, description} = this.props;
+        let {icon, title, description} = this.props;
 
         return (
             <div className="feature">
-                <div className="title">{title}</div>
-                <div className="description">{description}</div>
+                <div className="feature-icon">{{__html: icon}}</div>
+                <div className="feature-title">{title}</div>
+                <div className="feature-description">{description}</div>
             </div>
         );
     }
 }
 
-Feature.propTypes = {};
-Feature.defaultProps = {};
+Feature.propTypes = {
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+};
 
-export default Feature;
+export default CSSModules(Feature, styles);

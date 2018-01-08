@@ -1,3 +1,56 @@
-#features {
+@import "variables";
 
+#features {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .title {
+        font-size: 30px;
+        font-weight: bold;
+        margin-top: 50px;
+    }
+
+    .sub-title {
+        opacity: 0.5;
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+    .features-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        .feature {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 50px 20px;
+            flex: 1 0 auto;
+            max-width: 250px;
+
+            .feature-icon {
+                text-align: center;
+                color: $primary;
+                height: 48px;
+            }
+
+            .feature-title {
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+                opacity: 0.8;
+            }
+
+            .feature-description {
+                text-align: center;
+                font-size: 20px;
+                opacity: 0.6;
+            }
+        }
+    }
 }
