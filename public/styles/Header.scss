@@ -1,3 +1,5 @@
+@import "variables";
+
 #header {
     height: 100%;
     width: 100%;
@@ -26,6 +28,10 @@
         background-color: transparent;
         box-shadow: none;
 
+        @media (max-width: $mobileWidth) {
+            display: none;
+        }
+
         .right-buttons-group {
             flex-grow: 1;
         }
@@ -42,10 +48,20 @@
         align-items: center;
         flex-grow: 1;
 
+        @media (max-width: $mobileWidth) {
+            justify-content: flex-start;
+            margin-top: 100px;
+        }
+
+
         #middle-content {
-            color: white;//#4483ff;
+            display: flex;
+            flex-direction: column;
+            color: white;
             width: 100%;
             text-align: center;
+            justify-content: center;
+            align-items: center;
 
             .title {
                 background-color: rgba(0, 0, 0, .3);
@@ -53,12 +69,21 @@
                 font-weight: bold;
                 width: 100%;
                 min-width: 100%;
+
+                @media (max-width: $mobileWidth) {
+                    width: 70%;
+                    min-width: 70%;
+                }
             }
             hr {
                 border-top: 1px solid #fff;
                 width: 100%;
                 margin-top: 30px;
                 margin-bottom: 30px;
+
+                @media (max-width: $mobileWidth) {
+                    width: 70%;
+                }
             }
             .sub-title {
                 font-size: 32px;
@@ -71,6 +96,11 @@
                     margin-left: 10px;
                     font-size: 3vh;
                 }
+
+                @media (max-width: $mobileWidth) {
+                    width: 70%;
+                }
+
             }
         }
     }
