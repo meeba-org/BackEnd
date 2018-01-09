@@ -1,25 +1,37 @@
 import React, {Component} from 'react';
-import styles from "../../styles/Features.scss";
-import CSSModules from "react-css-modules";
 import {Computer, Description, PhonelinkRing} from "material-ui-icons";
+import {withStyles} from 'material-ui/styles';
+
+const styles1 = {
+    root: {
+        height: 48,
+        width: 48,
+    }
+};
 
 class Features extends Component {
+    icon = {
+        root: {
+            height: "48px"
+        }
+    };
+
     state = {
         features: [
             {
                 icon: <PhonelinkRing />,
                 title: "העובד",
-                description: "רישום שעות באמצעות הנייד"
+                description: "רישום שעות באמצעות הנייד - תמיכה באנדרואיד ואייפון"
             },
             {
                 icon: <Computer />,
                 title: "המנהל",
-                description: "מעקב שעות, יצירת דוחות"
+                description: "מעקב אחר שעות, חישוב שעות נוספות, סטטיסטיקות"
             },
             {
                 icon: <Description />,
                 title: "האקסל",
-                description: "המערכת תפיק דוח אקסל לרואה החשבון - הכולל מספר שעות עבודה לכך עובד, דמי נסיעות ושכר"
+                description: "הפקת דוח אקסל לרואה החשבון - הכולל מספר שעות עבודה לכל עובד, דמי נסיעות ושכר"
             }
         ]
     };
@@ -44,4 +56,5 @@ class Features extends Component {
     }
 }
 
-export default CSSModules(Features, styles);
+export default withStyles(styles1)(Features);//, styles1);
+
