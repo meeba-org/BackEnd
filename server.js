@@ -39,7 +39,6 @@ app.use(cookieParser());
 
 // Set Static Folder
 app.use(express.static('public/*.html'));
-app.use(express.static('public/styles/images/icon.png'));
 app.use(express.static('dist'));
 
 // Set Controllers
