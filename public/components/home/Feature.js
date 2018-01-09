@@ -9,7 +9,7 @@ class Feature extends Component {
 
         return (
             <div className="feature">
-                <div className="feature-icon">{{__html: icon}}</div>
+                <div className="feature-icon">{icon}</div>
                 <div className="feature-title">{title}</div>
                 <div className="feature-description">{description}</div>
             </div>

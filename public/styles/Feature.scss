@@ -4,9 +4,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 50px;
+    margin: 50px 20px;
+    flex: 1 0 auto;
+    max-width: 250px;
 
     .feature-icon {
+        text-align: center;
         color: $primary;
     }
 
@@ -22,6 +25,4 @@
         font-size: 20px;
         opacity: 0.6;
     }
-
-
 }

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
@@ -11,6 +10,7 @@ import {connect} from "react-redux";
 import * as selectors from "../selectors";
 import {handleLogout, navigateHome} from "../actions/index";
 import PropTypes from 'prop-types';
+import {AppBar} from "material-ui";
 
 class MeebaAppBar extends Component {
     onLogout = () => {

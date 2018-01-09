@@ -25,12 +25,6 @@ function muiTheme() {
                 root: {
                     height: "100%"
                 }
-            },
-            MuiSvgIcon: {
-                root: {
-                    height: "48px",
-                    width:"48px"
-                }
             }
         },
         palette: {
