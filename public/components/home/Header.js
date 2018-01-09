@@ -37,7 +37,7 @@ class Header extends Component {
                         </div>
                         <Button className="login-button" raised color="primary" onClick={() => setLoginDialogVisibility(true)}>
                             <span>כניסה</span>
-                            <ArrowBack />
+                            <ArrowBack style={{"padding-top": "5px"}}/>
                         </Button>
                     </div>
                 </div>
