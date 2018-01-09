@@ -20,6 +20,7 @@ class Feature extends Component {
 Feature.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    icon: PropTypes.object.isRequired,
 };
 
 export default CSSModules(Feature, styles);

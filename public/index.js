@@ -14,8 +14,7 @@ import {brown, orange} from 'material-ui/colors';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-function muiTheme() {
-    return createMuiTheme({
+const muiTheme = createMuiTheme({
         direction: "rtl",
         typography: {
             fontFamily: '"Assistant", sans-serif'
@@ -30,9 +29,9 @@ function muiTheme() {
         palette: {
             primary: brown,
             secondary: orange,
-        },
-    });
-}
+        }
+});
+
 const store = createStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
