@@ -30,6 +30,7 @@ export default {
         new webpack.NoEmitOnErrorsPlugin(),
         new HtmlWebpackPlugin({     // Create HTML file that includes references to bundled CSS and JS.
             template: 'public/index.ejs',
+            favicon: 'public/styles/images/icon.png',
             minify: {
                 removeComments: true,
                 collapseWhitespace: true
