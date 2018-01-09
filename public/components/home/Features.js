@@ -25,7 +25,7 @@ class Features extends Component {
             },
             {
                 icon: <Description style={iconStyle} />,
-                title: "האקסל",
+                title: "הדוח החודשי",
                 description: "הפקת דוח אקסל לרואה החשבון - הכולל מספר שעות עבודה לכל עובד, דמי נסיעות ושכר"
             }
         ]
