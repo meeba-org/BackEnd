@@ -16,7 +16,7 @@ class Features extends Component {
             {
                 icon: <PhonelinkRing style={iconStyle} />,
                 title: "העובד",
-                description: "רישום שעות באמצעות הנייד - תמיכה באנדרואיד ואייפון"
+                description: <span>רישום שעות באמצעות הנייד - תמיכה <a target="_blank" href="https://play.google.com/store/apps/details?id=chenop.meeba&hl=en">באנדרואיד</a> ואייפון</span>
             },
             {
                 icon: <Computer style={iconStyle} />,
