@@ -52,7 +52,7 @@ class EmployeesList extends React.Component {
                         <Grid className="header" container spacing={24}>
                             <Grid item xs={12} sm={3}>שם</Grid>
                             <Grid item xs={12} sm={2}>ת.ז.</Grid>
-                            <Grid item xs={12} sm={1}>שכ"ע</Grid>
+                            <Grid item xs={12} sm={1}>שכר לשעה</Grid>
                             <Grid item xs={12} sm={1}>נסיעות</Grid>
                         </Grid>
                         }
