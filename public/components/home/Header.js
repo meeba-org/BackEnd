@@ -20,7 +20,8 @@ class Header extends Component {
                             מיבא
                         </Typography>
                         <div className="right-buttons-group">
-                            <Button color="contrast">בית</Button>
+                            <Button href="#header" color="contrast">בית</Button>
+                            <Button href="#features" color="contrast">כלים</Button>
                         </div>
                         <div className="left-buttons-group">
                             <Button color="contrast" onClick={() => setLoginDialogVisibility(true)}>כניסה</Button>

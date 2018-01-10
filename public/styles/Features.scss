@@ -24,5 +24,9 @@
         display: flex;
         flex-direction: row;
         justify-content: space-around;
+
+        @media (max-width: $mobileWidth) {
+            flex-direction: column;
+        }
     }
 }
