@@ -14,6 +14,8 @@ import {
     momentToDay,
     ReportModes
 } from "../../helpers/utils";
+import moment from "moment";
+import WarningIcon from "./WarningIcon";
 
 class Shift extends React.Component {
 
@@ -82,6 +84,14 @@ class Shift extends React.Component {
         this.setState({hover: false});
     };
 
+    getErrors = () => {
+        let {input} = this.props;
+        let shift = input.value;
+
+        let {clockInTime, clockOutTime} = shift;
+        return moment(clockOutTime).diff(moment(clockInTime), 'hours', true) < 12 ? undefined : "משמרת ארוכה באופן מחשיד";
+    };
+
     render() {
         let {showNames, input, mode} = this.props;
         let shift = input.value;
@@ -90,6 +100,7 @@ class Shift extends React.Component {
             <Tooltip title="בעבודה" placement="right"><WorkIcon/></Tooltip> :
             <Tooltip title="בבית" placement="right"><HomeIcon/></Tooltip>;
         let hebrewDay = momentToDay(shift.clockInTime);
+        let errors = this.getErrors();
 
         return (
             <div className="shift" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
@@ -116,6 +127,11 @@ class Shift extends React.Component {
 
                 <TextField className="elem" type="time" value={endTimeStr} placeholder="יציאה"
                            onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}/>
+                }
+                {errors &&
+                    <div className="warning">
+                        <WarningIcon  text={errors} />
+                    </div>
                 }
                 {this.state.hover &&
                 <div>
