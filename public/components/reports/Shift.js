@@ -7,7 +7,11 @@ import HomeIcon from 'material-ui-icons/Home';
 import styles from "../../styles/Shift.scss";
 import CSSModules from "react-css-modules";
 import {
-    convertMomentToTimeStr, convertTimeStrToMoment, getCurrentTime, isWorking, momentToDay,
+    convertMomentToTimeStr,
+    convertTimeStrToMoment,
+    getCurrentTime,
+    isWorking,
+    momentToDay,
     ReportModes
 } from "../../helpers/utils";
 import moment from "moment";
@@ -97,7 +101,13 @@ class Shift extends React.Component {
         let shift = input.value;
 
         let {clockInTime, clockOutTime} = shift;
-        return moment(clockOutTime).diff(moment(clockInTime), 'hours', true) < 12 ? undefined : "משמרת ארוכה באופן מחשיד";
+        let isShiftTooLong = moment(clockOutTime).diff(moment(clockInTime), 'hours', true) > 12;
+        if (isShiftTooLong) {
+            let clockInTimeStr = moment(clockInTime).format('DD/MM/YYYY HH:mm');
+            let clockOutTimeStr = moment(clockOutTime).format('DD/MM/YYYY HH:mm');
+            return "משמרת מעל 12 שעות " + clockOutTimeStr + " - " + clockInTimeStr;
+        }
+        return undefined;
     };
 
     render() {
@@ -145,7 +155,7 @@ class Shift extends React.Component {
                     classes={{root: 'time'}}
                     value={endTimeStr}
                     inputComponent={TimeMaskCustom}
-                    onChange={(e) => {this.onUpdateEndTime(e)}}
+                    onChange={(e) => {this.onUpdateEndTime(e);}}
                 />
 
                 }

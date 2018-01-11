@@ -90,6 +90,9 @@ export const updateShift = (shift, dispatch, month, year) => ({
     },
     meta: {
         shouldAuthenticate: true,
+        debounce: {
+            time: 700
+        }
     }
 });
 

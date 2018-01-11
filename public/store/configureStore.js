@@ -2,6 +2,7 @@ import {applyMiddleware, compose, createStore} from 'redux';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
+import createDebounce from 'redux-debounced';
 import api from "../middlewares/api";
 
 function configureStoreProd(initialState) {
@@ -10,6 +11,7 @@ function configureStoreProd(initialState) {
 
         // thunk middleware can also accept an extra argument to be passed to each thunk action
         // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
+        createDebounce(),
         thunk,
         api,
     ];
@@ -29,6 +31,7 @@ function configureStoreDev(initialState) {
 
         // thunk middleware can also accept an extra argument to be passed to each thunk action
         // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
+        createDebounce(),
         thunk,
         api,
     ];
