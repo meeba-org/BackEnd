@@ -23,7 +23,8 @@ class Shift extends React.Component {
         super(props);
 
         this.state = {
-            hover: false
+            hover: false,
+            focus: false
         };
     }
 
@@ -84,6 +85,16 @@ class Shift extends React.Component {
         this.setState({hover: false});
     };
 
+    onFocus = () => {
+        this.setState({focus: true});
+        console.log('focus');
+    };
+
+    onBlur = () => {
+        this.setState({focus: false});
+        console.log('blur');
+    };
+
     getErrors = () => {
         let {input} = this.props;
         let shift = input.value;
@@ -101,9 +112,11 @@ class Shift extends React.Component {
             <Tooltip title="בבית" placement="right"><HomeIcon/></Tooltip>;
         let hebrewDay = momentToDay(shift.clockInTime);
         let errors = this.getErrors();
+        let classes1 = "shift " + (this.state.focus ? "focus" : "");
 
         return (
-            <div className="shift" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+            <div className={classes1} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}
+                onFocus={this.onFocus} onBlur={this.onBlur}>
                 <div className="name-container">
                     {mode === ReportModes.Live &&
                         <IconButton className="icon">{icon}</IconButton>

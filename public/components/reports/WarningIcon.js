@@ -7,7 +7,6 @@ class WarningIcon extends Component {
     render() {
         let {text} = this.props;
 
-        console.log(text);
         return (
             <Tooltip title={text} placement="top">
                 <Warning />

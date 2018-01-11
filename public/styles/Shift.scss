@@ -1,13 +1,7 @@
 @import "variables";
 .shift {
-    &.holiday {
-        color: $holidayColor;
-    }
-
-    input {
-        &.holiday {
-            color: $holidayColor;
-        }
+    &.focus {
+        background-color: rgba(0, 0, 0, 0.12);
     }
 
     display: flex;
