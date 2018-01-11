@@ -9,8 +9,19 @@
     padding-right: 50px;
 
     .elem {
-        padding: 0 10px;
+        margin: 0 10px;
     }
+
+    .time {
+        margin: 0 10px;
+        width: 50px;
+        direction: ltr;
+
+        input {
+            text-align: center
+        }
+    }
+
 
     .name-container {
         display: flex;

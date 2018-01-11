@@ -1,21 +1,18 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {IconButton, TextField, Tooltip} from "material-ui";
+import {IconButton, Input, TextField, Tooltip} from "material-ui";
 import DeleteIcon from 'material-ui-icons/Delete';
 import WorkIcon from 'material-ui-icons/Work';
 import HomeIcon from 'material-ui-icons/Home';
 import styles from "../../styles/Shift.scss";
 import CSSModules from "react-css-modules";
 import {
-    convertMomentToTimeStr,
-    convertTimeStrToMoment,
-    getCurrentTime,
-    isWorking,
-    momentToDay,
+    convertMomentToTimeStr, convertTimeStrToMoment, getCurrentTime, isWorking, momentToDay,
     ReportModes
 } from "../../helpers/utils";
 import moment from "moment";
 import WarningIcon from "./WarningIcon";
+import TimeMaskCustom from "./TimeMaskCustom";
 
 class Shift extends React.Component {
 
@@ -129,17 +126,28 @@ class Shift extends React.Component {
                 {mode === ReportModes.Report &&
                 <div>
                     <span>{hebrewDay}'</span>
+
                     <TextField className="elem" type="date" value={startDateStr} placeholder="תאריך"
                                onChange={(e) => this.onUpdateStartDate(e)}/>
                 </div>
                 }
 
-                <TextField className="elem" type="time" value={startTimeStr} placeholder="כניסה"
-                           onChange={(e) => this.onUpdateStartTime(e, "clockOutTime")}/>
+                <Input
+                    classes={{root: 'time'}}
+                    value={startTimeStr}
+                    inputComponent={TimeMaskCustom}
+                    onChange={(e) => this.onUpdateStartTime(e)}
+                />
+
                 {(mode === ReportModes.Report || !!endTimeStr) &&
 
-                <TextField className="elem" type="time" value={endTimeStr} placeholder="יציאה"
-                           onChange={(e) => this.onUpdateEndTime(e, "clockOutTime")}/>
+                <Input
+                    classes={{root: 'time'}}
+                    value={endTimeStr}
+                    inputComponent={TimeMaskCustom}
+                    onChange={(e) => {this.onUpdateEndTime(e)}}
+                />
+
                 }
                 {errors &&
                     <div className="warning">
