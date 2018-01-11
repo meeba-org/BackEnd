@@ -88,12 +88,10 @@ class Shift extends React.Component {
 
     onFocus = () => {
         this.setState({focus: true});
-        console.log('focus');
     };
 
     onBlur = () => {
         this.setState({focus: false});
-        console.log('blur');
     };
 
     getErrors = () => {
