@@ -10,6 +10,7 @@ import CSSModules from "react-css-modules";
 import HoursBar from '../HoursBar';
 import {ReportModes} from "../../helpers/utils";
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import HoursSummary from "./HoursSummary";
 
 class MonthlyReportLine extends React.Component {
     state = {
@@ -38,24 +39,28 @@ class MonthlyReportLine extends React.Component {
                     <HoursBar {...input.value} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&
-                <ReactCSSTransitionGroup
-                    transitionName="shiftsList"
-                    transitionAppear={true}
-                    transitionAppearTimeout={500}
-                    transitionEnterTimeout={500}
-                    transitionLeaveTimeout={300}>
+                <div className="monthly-report-body">
+                    <ReactCSSTransitionGroup
+                        transitionName="shiftsList"
+                        transitionAppear={true}
+                        transitionAppearTimeout={500}
+                        transitionEnterTimeout={500}
+                        transitionLeaveTimeout={300}>
 
-                    <FieldArray
-                        name={`${input.name}.shifts`}
-                        component={ShiftsList}
-                        onDelete={onDeleteShift}
-                        onUpdate={onUpdateShift}
-                        onCreate={onCreateShift}
-                        showNames={false}
-                        mode={ReportModes.Report}
-                        shouldDisplayNoData={true}
-                    />
-                </ReactCSSTransitionGroup>
+                        <HoursSummary className="hours-summary" data={input.value}/>
+
+                        <FieldArray
+                            name={`${input.name}.shifts`}
+                            component={ShiftsList}
+                            onDelete={onDeleteShift}
+                            onUpdate={onUpdateShift}
+                            onCreate={onCreateShift}
+                            showNames={false}
+                            mode={ReportModes.Report}
+                            shouldDisplayNoData={true}
+                        />
+                    </ReactCSSTransitionGroup>
+                </div>
                 }
             </div>
         );

@@ -46,6 +46,7 @@
             align-items: center;
             display: inline-flex;
         }
+
         .uid {
             @extend .base-element;
             min-width: 80px;
@@ -54,30 +55,14 @@
             @extend .base-element;
             min-width: 100px;
         }
+    }
 
-        .details {
-            display: inline-flex;
+    .monthly-report-body {
 
-            .regular-hours {
-                @extend .base-element;
-                color: $hourRate100;
-            }
-            .extra-125 {
-                @extend .base-element;
-                color: $hourRate125;
-            }
-            .extra-150 {
-                @extend .base-element;
-                color: $hourRate150;
-            }
-            .extra-175 {
-                @extend .base-element;
-                color: $hourRate175;
-            }
-            .extra-200 {
-                @extend .base-element;
-                color: $hourRate200;
-            }
+        padding-right: 60px;
+
+        .hours-summary {
+
         }
     }
 }

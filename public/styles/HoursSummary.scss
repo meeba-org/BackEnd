@@ -1,0 +1,32 @@
+@import "variables";
+
+.hours-summary-container {
+    display: inline-flex;
+
+    .hour-label {
+        display: inline-flex;
+        margin-left: 10px;
+        opacity: 0.5;
+    }
+
+    .hours-item {
+        display: inline-flex;
+        margin-left: 30px;
+
+        .regular-hours {
+            color: $hourRate100;
+        }
+        .extra-125 {
+            color: $hourRate125;
+        }
+        .extra-150 {
+            color: $hourRate150;
+        }
+        .extra-175 {
+            color: $hourRate175;
+        }
+        .extra-200 {
+            color: $hourRate200;
+        }
+    }
+}

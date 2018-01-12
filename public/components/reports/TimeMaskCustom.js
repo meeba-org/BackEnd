@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import MaskedInput from 'react-text-mask';
 
 class TimeMaskCustom extends Component {
@@ -15,8 +14,5 @@ class TimeMaskCustom extends Component {
         );
     }
 }
-
-TimeMaskCustom.propTypes = {};
-TimeMaskCustom.defaultProps = {};
 
 export default TimeMaskCustom;
