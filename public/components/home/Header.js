@@ -33,13 +33,31 @@ class Header extends Component {
 
                         <div className="title">מיבא</div>
                         <hr/>
-                        <div className="sub-title">
-                            שעון נוכחות וחישוב שכר לעובדים שעתיים
+                        <div className="lower-middle-content">
+                            <div className="sub-title">
+                                שעון נוכחות וחישוב שכר לעובדים שעתיים
+                            </div>
+                            <Button className="login-button" raised color="primary"
+                                    onClick={() => setLoginDialogVisibility(true)}>
+                                <span>כניסה למנהל</span>
+                                <ArrowBack style={{"padding-top": "5px"}}/>
+                            </Button>
+
+                            <div className="badges">
+                                <div className="badge">
+                                    <a target="_blank" href="https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                                        <img alt=" Google Play כעת ב-"
+                                        src="../../styles/images/playStore.svg"/>
+                                    </a>
+                                </div>
+                                <div className="badge">
+                                    <a target="_blank" href="https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8">
+                                        <img alt=" Apple Store כעת ב-"
+                                        src="../../styles/images/appStore.svg"/>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <Button className="login-button" raised color="primary" onClick={() => setLoginDialogVisibility(true)}>
-                            <span>כניסה</span>
-                            <ArrowBack style={{"padding-top": "5px"}}/>
-                        </Button>
                     </div>
                 </div>
             </div>
