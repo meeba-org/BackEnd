@@ -88,21 +88,22 @@
                 width: 480px;
                 flex-direction: column;
 
+                @media (max-width: $mobileWidth) {
+                    width: 70%;
+                }
+
                 .sub-title {
                     font-size: 32px;
                 }
                 .login-button {
-                    margin-top: 20px;
+                    margin: 20px auto 0;
                     height: 60px;
                     flex: 1 0 auto;
+                    width: 100%;
 
                     span {
                         margin-left: 10px;
                         font-size: 3vh;
-                    }
-
-                    @media (max-width: $mobileWidth) {
-                        width: 70%;
                     }
                 }
 
@@ -116,6 +117,10 @@
 
                     .badge {
                         padding: 30px 30px 30px;
+
+                        @media (max-width: $mobileWidth) {
+                            padding: 30px 10px 10px;
+                        }
 
                         img {
                             width: 100%;
