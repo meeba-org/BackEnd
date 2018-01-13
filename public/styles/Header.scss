@@ -69,6 +69,7 @@
                 min-width: 100%;
 
                 @media (max-width: $mobileWidth) {
+                    font-size: 48px;
                     width: 70%;
                     min-width: 70%;
                 }
@@ -81,6 +82,8 @@
 
                 @media (max-width: $mobileWidth) {
                     width: 70%;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
                 }
             }
             .lower-middle-content {
@@ -119,7 +122,7 @@
                         padding: 30px 30px 30px;
 
                         @media (max-width: $mobileWidth) {
-                            padding: 30px 10px 10px;
+                            padding: 20px 10px 0 10px;
                         }
 
                         img {
