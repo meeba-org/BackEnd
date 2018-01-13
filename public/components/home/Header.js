@@ -33,7 +33,12 @@ class Header extends Component {
                 <div id="content">
                     <div id="middle-content">
 
-                        <div className="title">מיבא</div>
+                        <div className="title">
+                            <div className="title-text">
+                                מיבא
+                            <img src="https://i.imgur.com/WCg0FBl.png" />
+                            </div>
+                        </div>
                         <hr/>
                         <div className="lower-middle-content">
                             <div className="sub-title">

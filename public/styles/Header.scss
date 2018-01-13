@@ -62,12 +62,29 @@
             align-items: center;
 
             .title {
+                display: flex;
+                justify-content: center;
                 background-color: rgba(0, 0, 0, .3);
                 font-size: 72px;
                 font-weight: bold;
                 width: 100%;
                 min-width: 100%;
 
+                .title-text {
+                    position: relative;
+
+                    img {
+                        width: 68px;
+                        position: absolute;
+                        top: 68px;
+                        right: -25px;
+                        transform: rotate(-21deg);
+
+                        @media (max-width: $mobileWidth) {
+                            top: 48px;
+                        }
+                    }
+                }
                 @media (max-width: $mobileWidth) {
                     font-size: 48px;
                     width: 70%;
