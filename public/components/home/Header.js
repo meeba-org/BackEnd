@@ -5,6 +5,8 @@ import {AppBar, Button, IconButton, Toolbar, Typography} from "material-ui";
 import AccessTimeIcon from 'material-ui-icons/AccessTime';
 import {ArrowBack} from "material-ui-icons";
 import PropTypes from 'prop-types';
+import playStoreImage from '../../styles/images/playStore.svg';
+import appStoreImage from '../../styles/images/appStore.svg';
 
 class Header extends Component {
     render() {
@@ -45,15 +47,17 @@ class Header extends Component {
 
                             <div className="badges">
                                 <div className="badge">
-                                    <a target="_blank" href="https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                                    <a target="_blank"
+                                       href="https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
                                         <img alt=" Google Play כעת ב-"
-                                        src="/styles/images/playStore.svg"/>
+                                             src={playStoreImage}/>
                                     </a>
                                 </div>
                                 <div className="badge">
-                                    <a target="_blank" href="https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8">
+                                    <a target="_blank"
+                                       href="https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8">
                                         <img alt=" Apple Store כעת ב-"
-                                        src="/styles/images/appStore.svg"/>
+                                             src={appStoreImage}/>
                                     </a>
                                 </div>
                             </div>
