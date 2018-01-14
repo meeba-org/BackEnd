@@ -2,17 +2,18 @@ import axios from 'axios';
 import * as actionsTypes from "./actionTypes";
 import config from "../config";
 import {SubmissionError} from "redux-form";
+import {isUserAllowedLogin} from "../helpers/utils";
 
 function handleLoginStart() {
     return {type: actionsTypes.HANDLE_LOGIN_START};
 }
 
 function handleLoginSuccess(response, router) {
-    //Store JWT Token to browser session storage
-    //If you use localStorage instead of localStorage, then this w/ persisted across tabs and new windows.
-    //localStorage = persisted only in current tab
+    let user = response.data.user;
+    if (!!user && !isUserAllowedLogin(user))
+        throw new Error('אין הרשאות מתאימות');
+
     localStorage.setItem('jwtToken', response.data.token);
-    //let other components know that everything is fine by updating the redux` state
 
     router.push('/dashboard');
 }
@@ -87,11 +88,15 @@ export function loadUserFromToken() {
                 'Authorization': `Bearer ${token}`
             }
         }).then(function (response) {
+            let user = response.data.user;
+            if (!!user && !isUserAllowedLogin(user))
+                throw new Error('user is not allowed to login');
+
             localStorage.setItem('jwtToken', response.data.token);
-            dispatch(meFromTokenSuccess(response.data.user));
-        }).catch(function (response) {
+            dispatch(meFromTokenSuccess(user));
+        }).catch(function () {
             localStorage.removeItem('jwtToken');//remove token from storage
-            dispatch(meFromTokenFailure(response.data.token));
+            dispatch(meFromTokenFailure("Error loading user from token"));
         });
     };
 }

@@ -7,6 +7,10 @@ export function UserReducer(state = {}, action = null) {
                 ...action.payload
             };
         }
+        case types.ME_FROM_TOKEN_FAILURE: {
+            return { // Empty User
+            };
+        }
         default:
             return state;
     }
