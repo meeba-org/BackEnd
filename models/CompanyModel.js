@@ -5,7 +5,8 @@ const CompanySchema = mongoose.Schema({
     name: {
         type: String,
         index: true,
-        required: true
+        required: true,
+        default: "החברה שלי"
     },
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     settings: {

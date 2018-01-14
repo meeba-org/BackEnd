@@ -1,7 +1,7 @@
 const ShiftModel = require('../models/ShiftModel');
 const UserModel = require('../models/UserModel');
 const CompanyModel = require('../models/CompanyModel');
-
+const ERoles = require ('../models/ERoles');
 const addShift = (shift) => {
     const user = shift.user;
 
@@ -35,7 +35,7 @@ const removeShift = (shiftId) => {
 const addUser = (user) => {
     const company = user.company;
 
-    // Add the useer
+    // Add the user
     return UserModel.createUser(user)
         .then((createdUser) => {
             if (!!company && company.id) {
@@ -63,9 +63,25 @@ const removeUser = (userId) => {
         });
 };
 
+const registerCompanyManager = (username, password) => {
+    return CompanyModel.createCompany({})
+        .then(company => {
+            let user = {
+                username,
+                password,
+                role: ERoles.COMPANY_MANAGER,
+                shifts: [],
+                company,
+            };
+
+            return addUser(user);
+        });
+};
+
 module.exports = {
     addUser
     , removeUser
     , addShift
     , removeShift
+    , registerCompanyManager
 };

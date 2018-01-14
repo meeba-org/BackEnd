@@ -72,6 +72,7 @@ function createAdminUser() {
 function createMockedUserPlainObject(name = 'Chen') {
     return {
         uid: '031667330'
+        , username: 'chenop'
         , firstName: name
         , lastName: 'Oppenhaim'
         , email: 'chenop@gmail.com'

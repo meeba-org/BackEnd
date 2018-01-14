@@ -7,6 +7,7 @@ const UserSchema = mongoose.Schema({
     uid: { type: String, index: true },
     firstName: { type: String },
     lastName: { type: String },
+    username: { type: String },
     email: { type: String },
     password: { type: String },
     hourWage: {type: Number, default: 26.7 },
@@ -36,6 +37,20 @@ const getByUserUid = (uid, shouldPopulateCompany) => {
 
 const getByUserId = (id) => {
     return User.findById(id).populate('company shifts').exec();
+};
+
+const getByUserName = (username) => {
+    return User.findOne({username}).exec();
+};
+
+const getByUserIdentifier = (identifier) => {
+    return getByUserName(identifier)
+        .then(user => {
+            if (!!user)
+                return user;
+
+            return getByUserId(identifier);
+        });
 };
 
 // Return a promise
@@ -109,11 +124,11 @@ const isShiftManager = (user) => user.role === ERoles.SHIFT_MANAGER;
 
 const isCompanyManager = (user) => user.role === ERoles.COMPANY_MANAGER;
 
-
 module.exports = {
     createUser
     , getByUserId
     , getByUserUid
+    , getByUserName
     , getUsers
     , updateUser
     , deleteUser
@@ -126,4 +141,5 @@ module.exports = {
     , isEmployee
     , isShiftManager
     , isCompanyManager
+    , getByUserIdentifier
 };

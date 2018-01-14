@@ -4,39 +4,42 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 const UserModel = require("../models/UserModel");
 const jwtService = require("./jwtService");
+const AppManager = require('../managers/AppManager');
 
 //POST /register user
 router.post('/register', (req, res) => {
-    // Validation
-    req.checkBody('uid', 'id is required').notEmpty();
-    req.checkBody('firstName', 'First name is required').notEmpty();
-    req.checkBody('lastName', 'Last name is required').notEmpty();
-    req.checkBody('role', 'Role is required').notEmpty();
-    req.checkBody('email', 'Email is required').notEmpty();
-    req.checkBody('email', 'Email is not valid').isEmail();
-    req.checkBody('password', 'Password is required').notEmpty();
+    let username = req.body.username;
+    let password = req.body.password;
+    let retypePassword = req.body.retypePassword;
 
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
-            UserModel.createUser(req.body)
-                .then((user) => res.status(200).json({user: user}))
-                .catch((err) => res.status(500).json({message: err.message}));
+    if (!username || !password || !retypePassword)
+        return res.status(401).send({message: "שדות חסרים"});
+
+    if (password != retypePassword)
+        return res.status(401).send({message: "סיסמאות אינן תואמות"});
+
+    return UserModel.getByUserName(username)
+        .then(user => {
+            if (user)
+                return res.status(401).send({message: "שם משתמש קיים"});
+
+            return AppManager.registerCompanyManager(username, password);
         })
-        .catch((err) => res.status(400).json({message: err.array()}));
+        .then((user) => res.status(200).json({user}))
+        .catch((err) => res.status(500).json({message: err.message}));
 });
 
 // Creating a /login route to acquire a token
 //POST /login user
 router.post('/login', function (req, res) {
-    let uid = req.body.uid;
+    let identifier = req.body.uid;
     let password = req.body.password;
 
-    if (!uid) {
-        return res.status(401).send({message: "אנא הכנס שם משתמש"})
+    if (!identifier) {
+        return res.status(401).send({message: "אנא הכנס שם משתמש"});
     }
 
-    return UserModel.getByUserUid(uid, true)
+    return UserModel.getByUserIdentifier(identifier, true)
         .then((user) => {
             if (!user) {
                 return res.status(401).send({message: "שם משתמש לא קיים"});
