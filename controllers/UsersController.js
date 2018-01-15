@@ -28,12 +28,17 @@ router.get('/:uid', (req, res) => {
 
 //GET /users users
 router.get('/', (req, res) => {
-    let company = jwtService.getCompanyFromLocals(res);
-    let hideDeleted = req.query.hideDeleted;
+    try {
+        let company = jwtService.getCompanyFromLocals(res);
+        let hideDeleted = req.query.hideDeleted;
 
-    UserModel.getUsers(company, hideDeleted)
-        .then((users) => res.status(200).json(users))
-        .catch((err) => res.status(500).json({message: err.message}));
+        UserModel.getUsers(company, hideDeleted)
+            .then((users) => res.status(200).json(users))
+            .catch((err) => res.status(500).json({message: err.message}));
+    }
+    catch (err) {
+        return res.status(500).json({message: err.message})
+    }
 });
 
 //POST /users user

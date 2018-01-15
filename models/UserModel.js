@@ -49,12 +49,15 @@ const getByUserIdentifier = (identifier) => {
             if (!!user)
                 return user;
 
-            return getByUserUid(identifier);
+            return getByUserUid(identifier, true);
         });
 };
 
 // Return a promise
 const getUsers = (company, hideDeleted) => {
+    if (!company || !company._id)
+        throw new Error('[UserModel.getUsers] - No Valid company object');
+
     let conditions = {company: company._id, role: {'$ne':ERoles.COMPANY_MANAGER}};
 
     if (!!hideDeleted)
