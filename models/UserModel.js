@@ -40,7 +40,7 @@ const getByUserId = (id) => {
 };
 
 const getByUserName = (username) => {
-    return User.findOne({username}).exec();
+    return User.findOne({username}).populate('company').exec();
 };
 
 const getByUserIdentifier = (identifier) => {
@@ -116,11 +116,9 @@ const usersCount = (ignoreDeleted) => {
         conditions.deleted = false;
 
     return User.count(conditions).exec();
-}
+};
 
 const isEmployee = (user) => user.role === ERoles.EMPLOYEE;
-
-const isShiftManager = (user) => user.role === ERoles.SHIFT_MANAGER;
 
 const isCompanyManager = (user) => user.role === ERoles.COMPANY_MANAGER;
 
@@ -139,7 +137,6 @@ module.exports = {
     , comparePassword
     , getCleanUser
     , isEmployee
-    , isShiftManager
     , isCompanyManager
     , getByUserIdentifier
 };
