@@ -49,7 +49,7 @@ const getByUserIdentifier = (identifier) => {
             if (!!user)
                 return user;
 
-            return getByUserId(identifier);
+            return getByUserUid(identifier);
         });
 };
 

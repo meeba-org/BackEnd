@@ -1,31 +1,34 @@
 @import "variables";
 
 #login-register {
-    min-height: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     min-height: 245px;
     min-width: 300px;
     font-family: 'Assistant';
 
     #title {
-        flex: 1;
         display: flex;
+        flex: 1 0 auto;
+        justify-content: flex-end;
         flex-direction: column;
-        justify-content: center;
         background-color: $primary;
         color: white;
-        height: 30%;
-        text-align: center;
+        text-align: right;
+        font-size: 32px;
+        padding-bottom: 5px;
+        height: 70px;
+        width: 100%;
+
+        #title-text {
+            margin-right: 20px;
+        }
     }
 
-    hr {
-        border-top: 1px solid #fff;
-        width: 100%;
-    }
-
-    .field {
-        width: 100%;
+    form {
+        width: 70%;
     }
 
     .error-msg {
@@ -37,10 +40,38 @@
     #login-register-footer {
         display: flex;
         justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
 
         #login-button  {
-            margin-top: 20px;
+            margin: 20px 20px 10px 20px;
+            width: 120px;
+
+            span {
+                font-size: 16px;
+                margin-left: 5px;
+            }
+        }
+
+        .footer-text {
+            display: flex;
+            flex-direction: row;
+
+            .question {
+                opacity: 0.5;
+                margin-left: 7px;
+            }
+
+            .change-mode {
+                //font-weight: bold;
+                cursor: pointer;
+            }
+
         }
     }
-
 }
+.root1 {
+    padding: 0;
+}
+

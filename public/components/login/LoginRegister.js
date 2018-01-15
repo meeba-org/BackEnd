@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react';
-import {Button, Dialog, DialogContent} from "material-ui";
+import {Button, Dialog} from "material-ui";
 import {Field, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import ArrowBackIcon from 'material-ui-icons/ArrowBack';
@@ -14,39 +14,69 @@ import styles from "../../styles/LoginRegister.scss";
 
 class LoginRegister extends Component {
 
+    state = {
+        isLoginMode: true
+    };
+
+    toggleLoginMode= () => {
+        this.setState({isLoginMode: !this.state.isLoginMode});
+    }
 
     render() {
         let {handleSubmit, handleChange, error, onCancel, visible} = this.props;
+        let {isLoginMode} = this.state;
+
+        let buttonText = isLoginMode ? "היכנס" : "הירשם";
+        let footerTextQuestion = isLoginMode ? "עדיין לא נרשמת?" : "נרשמת כבר?";
+        let changeModeText = isLoginMode ? "הירשם כעת" : "היכנס עכשיו";
+
         return (
-            <Dialog open={visible} onClose={onCancel}>
+            <Dialog open={visible} onClose={onCancel} classes={{root: 'root1'}}>
                 <div id="login-register">
-                    <DialogContent>
                         <div id="title">
+                            <div id="title-text">
                             ברוך הבא!
-                        </div>
-                        <hr/>
-                        <form onSubmit={handleSubmit}>
-                            <div >
-                                <Field fullWidth={true} component={renderTextField} onChange={handleChange}
-                                       label="תעודת זהות" name="uid" autoFocus={true} />
                             </div>
-                            <div className="field">
+                        </div>
+                        <form onSubmit={handleSubmit}>
+                                <Field className="field"
+                                       fullWidth={true}
+                                       component={renderTextField}
+                                       onChange={handleChange}
+                                       label="תעודת זהות"
+                                       name="uid"
+                                       autoFocus
+                                />
                                 <Field component={renderTextField}
+                                       className="field"
                                        fullWidth={true}
                                        onChange={handleChange}
                                        label="סיסמא"
                                        type="password"
                                        name="password"
                                 />
-                            </div>
+                            {!isLoginMode &&
+                                <Field component={renderTextField}
+                                       className="field"
+                                       fullWidth={true}
+                                       onChange={handleChange}
+                                       label="אימות סיסמא"
+                                       type="password"
+                                       name="retypePassword"
+                                />
+                            }
                             {error && <div className="error-msg">{error}</div>}
                             <div id="login-register-footer">
                                 <Button dense raised color="primary" type="submit" id="login-button">
-                                    <ArrowBackIcon/>היכנס
+                                    <span>{buttonText}</span>
+                                    <ArrowBackIcon/>
                                 </Button>
+                                <div className="footer-text">
+                                    <div className="question">{footerTextQuestion}</div>
+                                    <div className="change-mode" onClick={this.toggleLoginMode}>{changeModeText}</div>
+                                </div>
                             </div>
                         </form>
-                    </DialogContent>
                 </div>
             </Dialog>
         );
