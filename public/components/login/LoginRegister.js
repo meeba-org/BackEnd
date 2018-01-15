@@ -20,6 +20,7 @@ class LoginRegister extends Component {
 
     toggleLoginMode= () => {
         this.setState({isLoginMode: !this.state.isLoginMode});
+        this.props.change('isLoginMode', !this.state.isLoginMode);
     }
 
     render() {
@@ -43,8 +44,8 @@ class LoginRegister extends Component {
                                        fullWidth={true}
                                        component={renderTextField}
                                        onChange={handleChange}
-                                       label="תעודת זהות"
-                                       name="uid"
+                                       label={isLoginMode ? "שם משתמש או תעודת זהות" : "שם משתמש"}
+                                       name={isLoginMode ? "uid" : "username"}
                                        autoFocus
                                 />
                                 <Field component={renderTextField}
@@ -89,6 +90,7 @@ LoginRegister.propTypes = {
     onCancel: PropTypes.func.isRequired,
     visible: PropTypes.bool.isRequired,
     error: PropTypes.string,
+    change: PropTypes.func,
 };
 LoginRegister.defaultProps = {};
 
@@ -96,6 +98,10 @@ export default connect(
     // mapStateToProps
 )(reduxForm({
     form: 'loginRegisterForm',
+    fields: ['isLoginMode'],
+    initialValues: {
+        isLoginMode: true
+    }
 })(CSSModules(LoginRegister, styles)));
 
 

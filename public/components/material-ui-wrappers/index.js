@@ -18,6 +18,7 @@ renderTextField.propTypes = {
     input: PropTypes.object,
     label: PropTypes.string,
     type: PropTypes.string,
+    className: PropTypes.string,
     fullWidth: PropTypes.bool,
     autoFocus: PropTypes.bool,
 };

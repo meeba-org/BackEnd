@@ -25,7 +25,11 @@ router.post('/register', (req, res) => {
 
             return AppManager.registerCompanyManager(username, password);
         })
-        .then((user) => res.status(200).json({user}))
+        .then((user) => {
+            // use the jsonwebtoken package to create the token and respond with it
+            let token = jwt.sign(user.toObject(), config.secret);
+            return res.status(200).json({user, token});
+        })
         .catch((err) => res.status(500).json({message: err.message}));
 });
 

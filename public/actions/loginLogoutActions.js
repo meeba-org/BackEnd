@@ -20,8 +20,10 @@ function handleLoginSuccess(response, router) {
 
 export function handleLogin(values, router) {
     return function (dispatch) {
+        let route = values.isLoginMode ? "login" : "register";
+
         dispatch(handleLoginStart());
-        return axios.post(`${config.ROOT_URL}/login`, values)
+        return axios.post(`${config.ROOT_URL}/${route}`, values)
             .then((response) => handleLoginSuccess(response, router))
             .catch((err) => {
                 let message = 'Unknown Error';
