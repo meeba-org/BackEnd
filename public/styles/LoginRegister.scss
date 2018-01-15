@@ -6,7 +6,7 @@
     align-items: center;
     flex-direction: column;
     min-height: 245px;
-    min-width: 300px;
+    max-width: 310px;
     font-family: 'Assistant';
 
     #title {
@@ -70,8 +70,5 @@
 
         }
     }
-}
-.root1 {
-    padding: 0;
 }
 

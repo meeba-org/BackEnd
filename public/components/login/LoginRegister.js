@@ -31,7 +31,7 @@ class LoginRegister extends Component {
         let changeModeText = isLoginMode ? "הירשם כעת" : "היכנס עכשיו";
 
         return (
-            <Dialog open={visible} onClose={onCancel} classes={{root: 'root1'}}>
+            <Dialog open={visible} onClose={onCancel}>
                 <div id="login-register">
                         <div id="title">
                             <div id="title-text">
