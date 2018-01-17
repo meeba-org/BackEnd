@@ -11,10 +11,15 @@
         margin: 0 10px;
     }
 
+    .date {
+        display: flex;
+        width: 170px;
+    }
+
     .time {
-        margin: 0 10px;
         width: 50px;
         direction: ltr;
+        margin: 0 10px;
 
         input {
             text-align: center
@@ -33,6 +38,7 @@
             padding-top: 5px;
         }
     }
+
 
     .warning {
         margin-top: 5px;

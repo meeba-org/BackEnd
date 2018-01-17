@@ -132,7 +132,7 @@ class Shift extends React.Component {
                 </div>
 
                 {mode === ReportModes.Report &&
-                <div>
+                <div className="date">
                     <span>{hebrewDay}'</span>
 
                     <TextField className="elem" type="date" value={startDateStr} placeholder="תאריך"
@@ -149,13 +149,12 @@ class Shift extends React.Component {
 
                 {(mode === ReportModes.Report || !!endTimeStr) &&
 
-                <Input
-                    classes={{root: 'time'}}
-                    value={endTimeStr}
-                    inputComponent={TimeMaskCustom}
-                    onChange={(e) => {this.onUpdateEndTime(e);}}
-                />
-
+                    <Input
+                        classes={{root: 'time'}}
+                        value={endTimeStr}
+                        inputComponent={TimeMaskCustom}
+                        onChange={(e) => {this.onUpdateEndTime(e);}}
+                    />
                 }
                 {errors &&
                     <div className="warning">
