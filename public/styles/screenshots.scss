@@ -1,0 +1,25 @@
+#screenshots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+
+    #roles {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 40px;
+
+        button {
+            font-size: 32px;
+        }
+    }
+
+    #images {
+        img {
+            object-fit: contain;
+            max-width: 100%;
+        }
+    }
+}
