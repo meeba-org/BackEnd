@@ -6,6 +6,7 @@ import WorkIcon from 'material-ui-icons/Work';
 import HomeIcon from 'material-ui-icons/Home';
 import styles from "../../styles/Shift.scss";
 import CSSModules from "react-css-modules";
+import * as utils from "../../helpers/utils";
 import {
     convertMomentToTimeStr,
     convertTimeStrToMoment,
@@ -38,14 +39,14 @@ class Shift extends React.Component {
 
     onUpdateStartTime(e) {
         let {startDateStr, endTimeStr} = convertMomentToTimeStr(this.props.input.value);
-        let newStartTimeStr = e.target.value;
+        let newStartTimeStr = utils.fillBlanks(e.target.value);
 
         this.onUpdate(startDateStr, newStartTimeStr, endTimeStr);
     }
 
     onUpdateEndTime(e) {
         let {startDateStr, startTimeStr} = convertMomentToTimeStr(this.props.input.value);
-        let newEndTimeStr = e.target.value;
+        let newEndTimeStr = utils.fillBlanks(e.target.value);
 
         this.onUpdate(startDateStr, startTimeStr, newEndTimeStr);
     }

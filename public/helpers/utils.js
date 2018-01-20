@@ -67,3 +67,5 @@ export const isUserAllowedLogin = (user) => {
 
     return (user.role === ERoles.COMPANY_MANAGER || user.role === ERoles.SHIFT_MANAGER);
 };
+
+export const fillBlanks = (str) => str.replace(/\s/g, "0");

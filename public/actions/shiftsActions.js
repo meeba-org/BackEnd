@@ -83,9 +83,9 @@ export const updateShift = (shift, dispatch, month, year) => ({
         method: "put",
         data: shift,
         success: (data) => {
-            dispatch(updateShiftSuccess(data));
             if (!!month && !!year)
                 dispatch(fetchMonthlyReport(month, year));
+            return dispatch(updateShiftSuccess(data));
         },
     },
     meta: {

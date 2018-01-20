@@ -28,9 +28,11 @@ const api = ({dispatch}) => next => action => {
         headers,
         responseType,
     }).then(response => {
-        dispatch(success(response.data));
+        return dispatch(success(response.data));
     })
-    .catch((err) => dispatch(ErrorAction(err)));
+    .catch((err) => {
+        return dispatch(ErrorAction(err));
+    });
 
     return next(action);
 };
