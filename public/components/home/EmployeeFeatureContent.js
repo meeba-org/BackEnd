@@ -10,7 +10,7 @@ class EmployeeFeatureContent extends Component {
             <div id="employee-content">
                 <div id="employee-content-container">
                     <div id="mobile-sc">
-                        <img src="../../styles/images/2.png"/>
+                        <img src="../../styles/images/1.png"/>
                     </div>
                     <div className="badges">
                         <div className="badge">

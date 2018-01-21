@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
-import playStoreImage from '../../styles/images/playStore.svg';
+import excelImage from '../../styles/images/excel.png';
+import CSSModules from "react-css-modules";
+import styles from '../../styles/ReportFeatureContent.scss';
 
 class ReportFeatureContent extends Component {
     render() {
         return (
-            <div>
-                <img src={playStoreImage}/>
+            <div id="report-content">
+                <img src={excelImage}/>
             </div>
         );
     }
@@ -14,4 +16,4 @@ class ReportFeatureContent extends Component {
 ReportFeatureContent.propTypes = {};
 ReportFeatureContent.defaultProps = {};
 
-export default ReportFeatureContent;
+export default CSSModules(ReportFeatureContent, styles);

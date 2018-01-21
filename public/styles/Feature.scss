@@ -7,7 +7,11 @@
     margin: 50px 20px;
     flex: 1 0 auto;
     max-width: 250px;
+    cursor: pointer;
 
+    &.select {
+        background-color: rgba(0, 0, 0, 0.12);
+    }
     .feature-icon {
         text-align: center;
         color: $primary;
