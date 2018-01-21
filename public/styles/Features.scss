@@ -5,6 +5,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    max-width: 768px;
+    margin: 0 auto;
 
     .title {
         font-size: 30px;
@@ -32,7 +34,7 @@
 
     #feature-content {
         display: flex;
-        max-height: 500px;
+        height: 500px;
 
         img {
             object-fit: contain;

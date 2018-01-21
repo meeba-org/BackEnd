@@ -3,8 +3,9 @@ import {Computer, Description, PhonelinkRing} from "material-ui-icons";
 import styles from '../../styles/Features.scss';
 import CSSModules from "react-css-modules/dist/index";
 import Feature from "./Feature";
-import playStoreImage from '../../styles/images/playStore.svg';
-import appStoreImage from '../../styles/images/appStore.svg';
+import EmployeeFeatureContent from "./EmployeeFeatureContent";
+import ManagerFeatureContent from "./ManagerFeatureContent";
+import ReportFeatureContent from "./ReportFeatureContent";
 
 
 const iconStyle = {
@@ -21,41 +22,19 @@ class Features extends Component {
                 title: "העובד",
                 description: <span>רישום שעות באמצעות הנייד - תמיכה <a target="_blank" href="https://play.google.com/store/apps/details?id=chenop.meeba&hl=en">באנדרואיד</a> ו<a target="_blank" href="https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8">אייפון</a></span>,
                 selected: true,
-                content: <div>
-                    <div className="badges">
-                        <div className="badge">
-                            <a target="_blank"
-                               href="https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
-                                <img alt=" Google Play כעת ב-"
-                                     src={playStoreImage}/>
-                            </a>
-                        </div>
-                        <div className="badge">
-                            <a target="_blank"
-                               href="https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8">
-                                <img alt=" Apple Store כעת ב-"
-                                     src={appStoreImage}/>
-                            </a>
-                        </div>
-                    </div>
-                    <img src="../../styles/images/2.png"/>
-                </div>
+                content: <EmployeeFeatureContent/>
             },
             {
                 icon: <Computer style={iconStyle} />,
                 title: "המנהל",
                 description: "מעקב אחר שעות, חישוב שעות נוספות, סטטיסטיקות",
-                content: <div>
-                    <img src="../../styles/images/sc1.png"/>
-                </div>
+                content: <ManagerFeatureContent />
             },
             {
                 icon: <Description style={iconStyle} />,
                 title: "הדוח החודשי",
                 description: "הפקת דוח אקסל לרואה החשבון - מכיל מספר שעות עבודה לכל עובד, דמי נסיעות ושכר",
-                content: <div>
-                    <img src="../../styles/images/playStore.svg"/>
-                </div>
+                content: <ReportFeatureContent />
             }
         ]
 };

@@ -1,0 +1,38 @@
+#employee-content {
+    display: flex;
+    flex-direction: column;
+
+    #employee-content-container {
+        display: flex;
+        flex-direction: row;
+
+        #mobile-sc {
+            display: flex;
+            flex: 1 0 auto;
+            width: 50%;
+            img {
+                object-fit: contain;
+                max-width: 100%;
+            }
+        }
+
+        .badges {
+            display: flex;
+            flex: 1 0 auto;
+            flex-direction: column;
+            width: 50%;
+            margin: auto 0;
+
+            .badge {
+                display: flex;
+                flex: 1 0 auto;
+                max-width: 50%;
+
+
+                a {
+                    flex: 1 0 auto;
+                }
+            }
+        }
+    }
+}
