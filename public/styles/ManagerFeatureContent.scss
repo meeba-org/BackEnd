@@ -1,8 +1,11 @@
 #manager-content {
     display: flex;
+    align-items: center;
     margin: 20px;
+
     img {
-        object-fit: contain;
-        max-width: 100%;
+        flex-grow: 0;
+        width: 100%;
+        height: auto;
     }
 }

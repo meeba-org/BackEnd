@@ -21,7 +21,6 @@ class Features extends Component {
                 icon: <PhonelinkRing style={iconStyle} />,
                 title: "העובד",
                 description: <span>רישום שעות באמצעות הנייד - תמיכה <a target="_blank" href="https://play.google.com/store/apps/details?id=chenop.meeba&hl=en">באנדרואיד</a> ו<a target="_blank" href="https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8">אייפון</a></span>,
-                selected: true,
                 content: <EmployeeFeatureContent/>
             },
             {
@@ -37,24 +36,9 @@ class Features extends Component {
                 content: <ReportFeatureContent />
             }
         ]
-};
-
-    onSelect = (title) => {
-        let features = this.state.features.map(feature => {
-            return {
-                ...feature,
-                selected: feature.title === title
-            };
-        });
-
-        this.setState({features});
     };
 
-    getSelectedFeature = () => this.state.features.find(feature => feature.selected);
-
     render() {
-        let selectedFeature = this.getSelectedFeature();
-
         return (
             <div id="features">
                 <div className="title">שמחים שאתם איתנו!</div>
@@ -67,13 +51,10 @@ class Features extends Component {
                             icon={feature.icon}
                             title={feature.title}
                             description={feature.description}
-                            onSelect={this.onSelect}
-                            selected={feature.selected}
+                            content={feature.content}
+                            direction={0}
                         />
                     )}
-                </div>
-                <div id="feature-content">
-                    {selectedFeature.content}
                 </div>
             </div>
         );

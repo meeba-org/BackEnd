@@ -1,32 +1,65 @@
 @import "variables";
 
 .feature {
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
     margin: 50px 20px;
     flex: 1 0 auto;
-    max-width: 250px;
-    cursor: pointer;
-
-    &.select {
-        background-color: rgba(0, 0, 0, 0.12);
+    height: 200px;
+    @media (max-width: $mobileWidth) {
+        height: 80px;
     }
-    .feature-icon {
-        text-align: center;
-        color: $primary;
+    .side1 {
+        width: 50%;
+
+        @media (max-width: $mobileWidth) {
+            width: 100%;
+        }
+
+        .feature-title-container {
+            display: flex;
+            flex-direction: row;
+
+            @media (max-width: $mobileWidth) {
+                justify-content: center;
+            }
+
+            .feature-icon {
+                color: $primary;
+
+            }
+
+            .feature-title {
+                justify-content: center;
+                align-items: center;
+                margin-right: 15px;
+                font-size: 40px;
+                font-weight: bold;
+                opacity: 0.8;
+            }
+
+        }
+
+        .feature-description {
+            text-align: start;
+            font-size: 20px;
+            opacity: 0.6;
+
+            @media (max-width: $mobileWidth) {
+                text-align: center;
+            }
+
+        }
     }
 
-    .feature-title {
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
-        opacity: 0.8;
-    }
+    .side2 {
+        width: 50%;
+        cursor: pointer;
 
-    .feature-description {
-        text-align: center;
-        font-size: 20px;
-        opacity: 0.6;
+        @media (max-width: $mobileWidth) {
+            display: none;
+        }
     }
 }
+

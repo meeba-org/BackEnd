@@ -8,11 +8,12 @@
 
         #mobile-sc {
             display: flex;
-            flex: 1 0 auto;
-            width: 50%;
+            align-items: center;
+
             img {
-                object-fit: contain;
-                max-width: 100%;
+                flex-grow: 0;
+                width: 100%;
+                height: auto;
             }
         }
 
@@ -26,8 +27,7 @@
             .badge {
                 display: flex;
                 flex: 1 0 auto;
-                max-width: 50%;
-
+                max-width: 80%;
 
                 a {
                     flex: 1 0 auto;
