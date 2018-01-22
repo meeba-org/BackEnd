@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import playStoreImage from '../../styles/images/playStore.svg';
 import appStoreImage from '../../styles/images/appStore.svg';
+import mobileImage from '../../styles/images/1.png';
 import styles from '../../styles/EmployeeFeatureContent.scss';
 import CSSModules from "react-css-modules";
 
@@ -10,7 +11,7 @@ class EmployeeFeatureContent extends Component {
             <div id="employee-content">
                 <div id="employee-content-container">
                     <div id="mobile-sc">
-                        <img src="../../styles/images/1.png"/>
+                        <img src={mobileImage}/>
                     </div>
                     <div className="badges">
                         <div className="badge">
