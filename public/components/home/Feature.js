@@ -34,7 +34,7 @@ class Feature extends Component {
 
 Feature.propTypes = {
     title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    description: PropTypes.any.isRequired,
     icon: PropTypes.object.isRequired,
     content: PropTypes.object.isRequired,
 };
