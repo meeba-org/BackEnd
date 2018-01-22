@@ -10,10 +10,10 @@ class Feature extends Component {
     };
 
     render() {
-        let {icon, title, description, content, direction} = this.props;
+        let {icon, title, description, content} = this.props;
 
         return (
-            <div className="feature" style={{flexDirection: direction ? "row-reverse" : "row"}}>
+            <div className="feature">
                 <div className="side1">
                     <div className="feature-title-container">
                         <div className="feature-icon">{icon}</div>
@@ -34,7 +34,7 @@ class Feature extends Component {
 
 Feature.propTypes = {
     title: PropTypes.string.isRequired,
-    description: PropTypes.any.isRequired,
+    description: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     icon: PropTypes.object.isRequired,
     content: PropTypes.object.isRequired,
 };

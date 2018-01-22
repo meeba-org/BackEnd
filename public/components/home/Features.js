@@ -52,7 +52,6 @@ class Features extends Component {
                             title={feature.title}
                             description={feature.description}
                             content={feature.content}
-                            direction={0}
                         />
                     )}
                 </div>
