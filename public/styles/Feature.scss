@@ -10,12 +10,16 @@
     flex: 1 0 auto;
     height: 200px;
     cursor: pointer;
+
     &:hover {
         background-color: rgba(0, 0, 0, 0.12);
     }
+
     @media (max-width: $mobileWidth) {
         height: 80px;
+        padding: 50px 20px;
     }
+
     .side1 {
         width: 50%;
 
