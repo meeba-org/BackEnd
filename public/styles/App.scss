@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Assistant&subset=hebrew');
 
+html {
+    scroll-behavior: smooth;
+}
+
 html, body, #react-app, #react-app>div {
     height: 100%;
     margin: 0 auto;
