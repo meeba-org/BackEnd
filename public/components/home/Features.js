@@ -41,7 +41,7 @@ class Features extends Component {
     render() {
         return (
             <div id="features">
-                <div className="title">שמחים שאתם איתנו!</div>
+                <div className="title">איך זה עובד?</div>
                 <div className="sub-title">תהליכי עבודה מתקדמים</div>
 
                 <div className="features-container">
