@@ -10,10 +10,10 @@ class Feature extends Component {
     };
 
     render() {
-        let {icon, title, description, content} = this.props;
+        let {icon, title, description, sideContent, dialogContent} = this.props;
 
         return (
-            <div className="feature">
+            <div className="feature" onClick={() => {this.setState({open: true});}}>
                 <div className="side1">
                     <div className="feature-title-container">
                         <div className="feature-icon">{icon}</div>
@@ -22,11 +22,11 @@ class Feature extends Component {
                     <div className="feature-description">{description}</div>
                 </div>
                 <div className="side2">
-                    <div onClick={() => {this.setState({open: true});}}> {content}</div>
-                    <Dialog maxWidth={false} onClose={() => this.setState({open: false})} open={this.state.open}>
-                        {content}
-                    </Dialog>
+                    <div>{sideContent}</div>
                 </div>
+                <Dialog maxWidth={false} onClose={() => this.setState({open: false})} open={this.state.open}>
+                    {dialogContent}
+                </Dialog>
             </div>
         );
     }
@@ -36,7 +36,8 @@ Feature.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     icon: PropTypes.object.isRequired,
-    content: PropTypes.object.isRequired,
+    sideContent: PropTypes.object.isRequired,
+    dialogContent: PropTypes.object.isRequired,
 };
 
 export default CSSModules(Feature, styles);
