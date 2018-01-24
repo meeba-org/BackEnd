@@ -7,6 +7,7 @@ import {ArrowBack} from "material-ui-icons";
 import PropTypes from 'prop-types';
 import playStoreImage from '../../styles/images/playStore.svg';
 import appStoreImage from '../../styles/images/appStore.svg';
+import facebookImage from '../../styles/images/facebook.png';
 
 class Header extends Component {
     render() {
@@ -24,6 +25,10 @@ class Header extends Component {
                         <div className="right-buttons-group">
                             <Button href="#header" color="contrast">בית</Button>
                             <Button href="#features" color="contrast">איך זה עובד?</Button>
+                            <Button color="contrast" href="https://m.me/meebaOnFace" target="_blank">
+                                צור קשר ב-
+                                <img src={facebookImage} />
+                            </Button>
                         </div>
                         <div className="left-buttons-group">
                             <Button color="contrast" onClick={() => setLoginDialogVisibility(true)}>כניסה</Button>

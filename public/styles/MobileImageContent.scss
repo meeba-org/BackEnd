@@ -1,0 +1,11 @@
+.mobile-image {
+    display: flex;
+    align-items: center;
+
+    img {
+        flex-grow: 0;
+        height: 600px;
+        width: 600px;
+        object-fit: contain;
+    }
+}
