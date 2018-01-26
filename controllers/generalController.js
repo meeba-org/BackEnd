@@ -56,7 +56,7 @@ router.post('/login', function (req, res) {
                 let isMatch = UserModel.comparePassword(password, user.password);
 
                 if (!isMatch) {
-                    return res.status(401).json({message: "הסיסמא לא נכונה - נסה שנית"});
+                    return res.status(401).json({message: "סיסמא לא נכונה - נסה שנית"});
                 }
             }
 
