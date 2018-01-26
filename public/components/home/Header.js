@@ -25,8 +25,7 @@ class Header extends Component {
                         <div className="right-buttons-group">
                             <Button href="#header" color="contrast">בית</Button>
                             <Button href="#features" color="contrast">איך זה עובד?</Button>
-                            <Button color="contrast" href="https://m.me/meebaOnFace" target="_blank">
-                                צור קשר ב-
+                            <Button color="contrast" href="https://www.facebook.com/meebaOnFace/" target="_blank">
                                 <img src={facebookImage} />
                             </Button>
                         </div>

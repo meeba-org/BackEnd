@@ -1,12 +1,30 @@
 @import "variables";
+
 #footer {
     background-color: material-color('brown', '900');
     color: material-color('brown', '200');
     display: flex;
+    flex-direction: column;
     text-align: center;
     justify-content: center;
+    align-items: center;
 
-    a {
-        color: material-color('brown', '100')
+    #footer-container {
+        width: 768px;
+
+        .weak {
+            color: material-color('brown', '100')
+        }
+        #social {
+            .facebook-link {
+                margin-right: 6px;
+            }
+        }
+
+        #signature {
+            a {
+                color: material-color('brown', '100')
+            }
+        }
     }
 }
