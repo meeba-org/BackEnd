@@ -11,6 +11,12 @@ export function UserReducer(state = {}, action = null) {
             return { // Empty User
             };
         }
+        case types.FETCH_COMPANY_SUCCESS: {
+            return {
+                ...state,
+                company: action.payload.company,
+            };
+        }
         default:
             return state;
     }
