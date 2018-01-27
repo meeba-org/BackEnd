@@ -44,7 +44,7 @@ class LoginRegister extends Component {
                                        fullWidth={true}
                                        component={renderTextField}
                                        onChange={handleChange}
-                                       label={isLoginMode ? "שם משתמש או תעודת זהות" : "שם משתמש"}
+                                       label="שם משתמש"
                                        name={isLoginMode ? "uid" : "username"}
                                        autoFocus
                                 />
