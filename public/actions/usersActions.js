@@ -10,6 +10,11 @@ export const updateUserSuccess = (payload) => ({
     payload
 });
 
+export const updateActiveUserSuccess = (payload) => ({
+    type: actions.UPDATE_ACTIVE_USER_SUCCESS,
+    payload
+});
+
 export const deleteUserSuccess = (id) => ({
     type: actions.DELETE_USER_SUCCESS,
     id
@@ -72,6 +77,22 @@ export const updateUser = (user) => ({
     },
     meta: {
         shouldAuthenticate: true,
+    }
+});
+
+export const updateActiveUser = (user) => ({
+    type: actions.API,
+    payload: {
+        url: "/users",
+        method: "put",
+        data: user,
+        success: updateActiveUserSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+        debounce: {
+            time: 700
+        }
     }
 });
 

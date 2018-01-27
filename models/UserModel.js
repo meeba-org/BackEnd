@@ -78,7 +78,7 @@ const updateUser = (user) => {
     newUser._id = user._id;
 
     newUser = newUser.toObject();
-    return User.findOneAndUpdate({'_id': newUser._id}, newUser, {upsert: true, new: true}).exec();
+    return User.findOneAndUpdate({'_id': newUser._id}, newUser, {upsert: true, new: true}).populate('company').exec();
 };
 
 const deleteUser = (id) => {

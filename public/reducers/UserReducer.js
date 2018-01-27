@@ -17,6 +17,11 @@ export function UserReducer(state = {}, action = null) {
                 company: action.payload.company,
             };
         }
+        case types.UPDATE_ACTIVE_USER_SUCCESS: {
+            return {
+                ...action.payload,
+            };
+        }
         default:
             return state;
     }
