@@ -116,7 +116,7 @@
     "connect-history-api-fallback": "1.3.0",
     "coveralls": "2.11.15",
     "enzyme": "2.8.2",
-    "eslint": "^4.15.0",
+    "eslint": "^4.16.0",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-react": "6.8.0",
     "eslint-watch": "^3.1.3",
