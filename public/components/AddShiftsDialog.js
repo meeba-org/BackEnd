@@ -78,7 +78,7 @@ class AddShiftsDialog extends Component {
         let {onCancel, open, employees} = this.props;
 
         return (
-            <Dialog open={open} onRequestClose={onCancel}>
+            <Dialog open={open} onClose={onCancel}>
                 <DialogTitle>הוספת משמרת</DialogTitle>
                 <DialogContent>
                     <TextField type="date" defaultValue={calculateCurrentDay()} label="תאריך"

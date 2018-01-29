@@ -4,12 +4,12 @@ import {Button, Dialog, DialogActions, DialogTitle} from "material-ui";
 import {hideDeleteEntityModal} from "../../actions/index";
 import PropTypes from 'prop-types';
 
-class DeleteModal extends Component {
+class MovingShiftOutOfMonthModal extends Component {
 
-    handleDelete = () => {
-        let {dispatch, deleteEntity, entity, month, year} = this.props;
+    updateShift = () => {
+        let {dispatch, updateShift, entity, month, year} = this.props;
 
-        dispatch(deleteEntity(entity, dispatch, month, year));
+        dispatch(updateShift(entity, dispatch, month, year));
         dispatch(hideDeleteEntityModal());
     };
 
@@ -21,9 +21,9 @@ class DeleteModal extends Component {
         let {open} = this.props;
         return (
             <Dialog onClose={this.handleCancel} open={open}>
-                <DialogTitle>{"האם אתה בטוח?"}</DialogTitle>
+                <DialogTitle>{"הינך מעביר משמרת לחודש אחר - האם אתה בטוח?"}</DialogTitle>
                 <DialogActions>
-                    <Button dense raised onClick={() => this.handleDelete()} color="primary" autoFocus>
+                    <Button dense raised onClick={() => this.updateShift()} color="primary" autoFocus>
                         כן
                     </Button>
                     <Button onClick={this.handleCancel} color="primary">
@@ -35,13 +35,13 @@ class DeleteModal extends Component {
     }
 }
 
-DeleteModal.propTypes = {
+MovingShiftOutOfMonthModal.propTypes = {
     entity: PropTypes.object,
-    deleteEntity: PropTypes.func,
+    updateShift: PropTypes.func,
     dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
     month: PropTypes.string,
     year: PropTypes.string,
 };
 
-export default connect()(DeleteModal);
+export default connect()(MovingShiftOutOfMonthModal);

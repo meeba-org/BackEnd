@@ -76,25 +76,58 @@ export const fetchShift = (shiftId) => ({
     }
 });
 
-export const updateShift = (shift, dispatch, month, year) => ({
-    type: actions.API,
-    payload: {
-        url: "/shifts",
-        method: "put",
-        data: shift,
-        success: (data) => {
-            if (!!month && !!year)
-                dispatch(fetchMonthlyReport(month, year));
-            return dispatch(updateShiftSuccess(data));
-        },
-    },
-    meta: {
-        shouldAuthenticate: true,
-        debounce: {
-            time: 700
-        }
+const isMovingShiftOutOfMonth = (shift, dispatch, orgMonth, orgYear) => {
+    let newYear = shift.clockInTime.format('YYYY');
+    let newMonth = shift.clockInTime.format('MM');
+
+    if (!orgYear || !orgMonth)
+        return false;
+
+    // Is that the right way? maybe just calculate in the event and add property isMovingShiftOutOfMonth on shift? Tired...
+    return (orgMonth !== newMonth || orgYear !== newYear);
+};
+
+export const updateShift = (shift, dispatch, month, year) => {
+    if (isMovingShiftOutOfMonth(shift, dispatch, month, year)) {
+        return {
+            type: 'SHOW_MODAL',
+            payload: {
+                modalType: 'MOVING_SHIFT_OUT_OF_MONTH',
+                modalProps: {
+                    entity: shift,
+                    month,
+                    year,
+                    updateShift: updateShift0,
+                    open: true
+                }
+            }
+        };
     }
-});
+
+    return updateShift0(shift, dispatch, month, year);
+};
+
+export const updateShift0 = (shift, dispatch, month, year) => {
+    return {
+        type: actions.API,
+        payload: {
+            url: "/shifts",
+            method: "put",
+            data: shift,
+            success: (data) => {
+                if (!!month && !!year)
+                    dispatch(fetchMonthlyReport(month, year));
+                return dispatch(updateShiftSuccess(data));
+            },
+        },
+        meta: {
+            shouldAuthenticate: true,
+            debounce: {
+                time: 700
+            }
+        }
+    };
+};
 
 export const showDeleteShiftModal = (shift, dispatch, month, year) => ({
     type: 'SHOW_MODAL',
