@@ -88,6 +88,7 @@ const isMovingShiftOutOfMonth = (shift, dispatch, orgMonth, orgYear) => {
 };
 
 export const updateShift = (shift, dispatch, month, year) => {
+    // TODO replace month & year with isMovingShiftOutOfMonth
     if (isMovingShiftOutOfMonth(shift, dispatch, month, year)) {
         return {
             type: 'SHOW_MODAL',
@@ -115,8 +116,11 @@ export const updateShift0 = (shift, dispatch, month, year) => {
             method: "put",
             data: shift,
             success: (data) => {
-                if (!!month && !!year)
+                // TODO maybe replace with shouldFetchMonthlyReport
+                if (!!month && !!year) {
+                    // TODO Extract month & year from shift?
                     dispatch(fetchMonthlyReport(month, year));
+                }
                 return dispatch(updateShiftSuccess(data));
             },
         },
