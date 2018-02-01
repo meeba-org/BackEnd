@@ -62,8 +62,7 @@ class Shift extends React.Component {
             clockOutTime: momentEnd,
         };
 
-        input.onChange(shift);
-        onUpdate(shift);
+        onUpdate(shift, input);
     }
 
     onDelete() {

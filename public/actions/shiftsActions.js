@@ -87,8 +87,7 @@ const isMovingShiftOutOfMonth = (shift, dispatch, orgMonth, orgYear) => {
     return (orgMonth !== newMonth || orgYear !== newYear);
 };
 
-export const updateShift = (shift, dispatch, month, year) => {
-    // TODO replace month & year with isMovingShiftOutOfMonth
+export const updateShift = (shift, dispatch, input, shouldFetchMonthlyReport, month, year) => {
     if (isMovingShiftOutOfMonth(shift, dispatch, month, year)) {
         return {
             type: 'SHOW_MODAL',
@@ -98,6 +97,8 @@ export const updateShift = (shift, dispatch, month, year) => {
                     entity: shift,
                     month,
                     year,
+                    input,
+                    shouldFetchMonthlyReport,
                     updateShift: updateShift0,
                     open: true
                 }
@@ -105,10 +106,12 @@ export const updateShift = (shift, dispatch, month, year) => {
         };
     }
 
-    return updateShift0(shift, dispatch, month, year);
+    return updateShift0(shift, dispatch, input, shouldFetchMonthlyReport, month, year);
 };
 
-export const updateShift0 = (shift, dispatch, month, year) => {
+export const updateShift0 = (shift, dispatch, input, shouldFetchMonthlyReport, month, year) => {
+    input.onChange(shift); // Updating the field
+
     return {
         type: actions.API,
         payload: {
@@ -116,9 +119,7 @@ export const updateShift0 = (shift, dispatch, month, year) => {
             method: "put",
             data: shift,
             success: (data) => {
-                // TODO maybe replace with shouldFetchMonthlyReport
-                if (!!month && !!year) {
-                    // TODO Extract month & year from shift?
+                if (shouldFetchMonthlyReport && !!month && !!year) {
                     dispatch(fetchMonthlyReport(month, year));
                 }
                 return dispatch(updateShiftSuccess(data));

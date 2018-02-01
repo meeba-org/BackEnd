@@ -14,8 +14,8 @@ class ShiftsList extends React.Component {
         this.props.onCreate(newEntity);
     }
 
-    onUpdate(entity) {
-        this.props.onUpdate(entity);
+    onUpdate(entity, input) {
+        this.props.onUpdate(entity, input);
     }
 
     onDelete(fields, index) {
@@ -32,7 +32,7 @@ class ShiftsList extends React.Component {
                         component={Shift}
                         name={shiftName} key={index}
                         onDelete={()=> this.onDelete(fields, index)}
-                        onUpdate={(shift) => this.onUpdate(shift)}
+                        onUpdate={(shift, input) => this.onUpdate(shift, input)}
                         showNames={showNames}
                         mode={mode}
                     />

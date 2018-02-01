@@ -83,7 +83,7 @@ function mapDispatchToProps(dispatch) {
         fetchMonthlyReport: (month, year) => dispatch(fetchMonthlyReport(month, year)),
         fetchEmployees: () => dispatch(fetchUsers(true)),
         generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
-        updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, month, year)),
+        updateShift: (shift, month, year, input) => dispatch(updateShift(shift, dispatch, input, true, month, year)),
         createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
     };

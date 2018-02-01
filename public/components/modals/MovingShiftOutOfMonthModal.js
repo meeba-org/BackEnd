@@ -7,9 +7,9 @@ import PropTypes from 'prop-types';
 class MovingShiftOutOfMonthModal extends Component {
 
     updateShift = () => {
-        let {dispatch, updateShift, entity, month, year} = this.props;
+        let {dispatch, updateShift, entity, month, year, input, shouldFetchMonthlyReport} = this.props;
 
-        dispatch(updateShift(entity, dispatch, month, year));
+        dispatch(updateShift(entity, dispatch, input, shouldFetchMonthlyReport, month, year));
         dispatch(hideDeleteEntityModal());
     };
 

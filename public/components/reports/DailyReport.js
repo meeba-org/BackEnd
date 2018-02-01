@@ -8,9 +8,13 @@ import CSSModules from "react-css-modules";
 import styles from '../../styles/DailyReport.scss';
 import ShiftsList from "./ShiftsList";
 import AddShiftsDialog from "../AddShiftsDialog";
-import {calculateCurrentDay, calculateCurrentTime, createShiftForClockIn, ReportModes} from "../../helpers/utils";
+import {
+    calculateCurrentDay, calculateCurrentTime, createShiftForClockIn, DATE_FORMAT,
+    ReportModes
+} from "../../helpers/utils";
 import AutoComplete from "../AutoComplete";
 import {withTheme} from 'material-ui/styles';
+import moment from "moment/moment";
 
 class DailyReport extends React.Component {
     constructor(props) {
@@ -44,6 +48,11 @@ class DailyReport extends React.Component {
     onClockIn = (employee) => {
         let shift = createShiftForClockIn(employee);
         this.props.onCreateShift(shift);
+    };
+
+    onUpdateShift = (shift, input) => {
+        let value = moment(this.state.currentDay, DATE_FORMAT);
+        this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'), input);
     };
 
     render() {
@@ -82,7 +91,7 @@ class DailyReport extends React.Component {
                                 name="shifts"
                                 component={ShiftsList}
                                 onDelete={onDeleteShift}
-                                onUpdate={onUpdateShift}
+                                onUpdate={this.onUpdateShift}
                                 onCreate={onCreateShift}
                                 showNames={true}
                                 mode={mode}
