@@ -157,6 +157,10 @@
         }
 
         #bottom-content {
+            @media (max-height: 560px) {
+                display: none;
+            }
+
             position: absolute;
             bottom: 10px ;
             color: white;
