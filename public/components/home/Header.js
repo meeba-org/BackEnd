@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import playStoreImage from '../../styles/images/playStore.svg';
 import appStoreImage from '../../styles/images/appStore.svg';
 import facebookImage from '../../styles/images/facebook.png';
+import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown';
 
 class Header extends Component {
     render() {
@@ -36,7 +37,6 @@ class Header extends Component {
                 </AppBar>
                 <div id="content">
                     <div id="middle-content">
-
                         <div className="title">
                             <div className="title-text">
                                 מיבא
@@ -72,6 +72,14 @@ class Header extends Component {
                             </div>
                         </div>
                     </div>
+                    <a id="bottom-content" href="#features">
+                        <div className="continue-scrolling-indication">
+                            המשך גלילה
+                        </div>
+                        <div className="arrow">
+                            <ArrowDownIcon/>
+                        </div>
+                    </a>
                 </div>
             </div>
         );

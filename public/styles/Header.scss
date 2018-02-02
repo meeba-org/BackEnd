@@ -151,5 +151,24 @@
                 }
             }
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+        }
+
+        #bottom-content {
+            position: absolute;
+            bottom: 10px ;
+            color: white;
+            height: 40px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            animation: fadeIn 1s infinite alternate;
+            cursor: pointer;
+            text-decoration: none;
+        }
     }
 }
