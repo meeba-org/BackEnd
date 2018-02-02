@@ -27,6 +27,9 @@ export const updateCompany = (company) => ({
     },
     meta: {
         shouldAuthenticate: true,
+        debounce: {
+            time: 700
+        }
     }
 });
 

@@ -18,10 +18,13 @@ class MovingShiftOutOfMonthModal extends Component {
     };
 
     render() {
-        let {open} = this.props;
+        let {open, entity} = this.props;
+        let month = entity.clockInTime.format('MM/YYYY');
+
+
         return (
             <Dialog onClose={this.handleCancel} open={open}>
-                <DialogTitle>{"הינך מעביר משמרת לחודש אחר - האם אתה בטוח?"}</DialogTitle>
+                <DialogTitle>{`הינך מעביר משמרת ל-${month} - האם אתה בטוח?`}</DialogTitle>
                 <DialogActions>
                     <Button dense raised onClick={() => this.updateShift()} color="primary" autoFocus>
                         כן
@@ -42,6 +45,8 @@ MovingShiftOutOfMonthModal.propTypes = {
     open: PropTypes.bool.isRequired,
     month: PropTypes.string,
     year: PropTypes.string,
+    input: PropTypes.object,
+    shouldFetchMonthlyReport: PropTypes.bool,
 };
 
 export default connect()(MovingShiftOutOfMonthModal);
