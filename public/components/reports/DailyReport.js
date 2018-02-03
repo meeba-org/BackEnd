@@ -127,7 +127,7 @@ class DailyReport extends React.Component {
                                 name="shifts"
                                 component={ShiftsList}
                                 onDelete={onDeleteShift}
-                                onUpdate={onUpdateShift}
+                                onUpdate={this.onUpdateShift}
                                 onCreate={onCreateShift}
                                 showNames={true}
                                 mode={mode}
