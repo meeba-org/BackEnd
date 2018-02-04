@@ -182,8 +182,8 @@ class SideBar extends React.Component {
                 open={this.state.open}
             >
                 <div className={classes.drawerInner}>
-                    <div className={classes.drawerHeader}>
-                        <IconButton onClick={this.state.open ? this.handleDrawerClose : this.handleDrawerOpen}>
+                    <div className={classes.drawerHeader} onClick={this.state.open ? this.handleDrawerClose : this.handleDrawerOpen}>
+                        <IconButton>
                             {this.state.open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                         </IconButton>
                     </div>
