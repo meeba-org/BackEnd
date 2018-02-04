@@ -56,7 +56,7 @@ class DailyReport extends React.Component {
     };
 
     render() {
-        const {onCreateShift, onUpdateShift, onDeleteShift, employees, mode} = this.props;
+        const {onCreateShift, onDeleteShift, employees, mode} = this.props;
         let {currentDay} = this.state;
         let {primary, secondary} = this.props.theme.palette.text;
 

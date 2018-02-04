@@ -6,7 +6,7 @@ import CSSModules from "react-css-modules";
 class HoursBar extends React.Component {
     render() {
         let {regularHours, extra125Hours, extra150Hours, extra175Hours, extra200Hours, displayDetails, overallHours} = this.props;
-        const MAX_HOURS_PER_MONTH = 200;
+        const MAX_HOURS_PER_MONTH = 300;
 
         let total = (parseFloat(regularHours) + parseFloat(extra125Hours) + parseFloat(extra150Hours) + parseFloat(extra175Hours) + parseFloat(extra200Hours));
         const factor = total / MAX_HOURS_PER_MONTH;
