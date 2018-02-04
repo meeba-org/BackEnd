@@ -1,5 +1,10 @@
 #sideBar {
-    background: red;
-    height: 100%;
-    display: inline-block;
+    .drawer-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 8px;
+        cursor: pointer;
+        min-height: 48px;
+    }
 }
