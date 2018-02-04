@@ -29,7 +29,7 @@ class Dashboard extends React.Component {
                             </div>
                         </Grid>
                         <Grid container id="grid-container">
-                            <Grid item xs={3}>
+                            <Grid item>
                                 <Paper id="sideBar-container">
                                     <SideBar userRole={userRole}/>
                                 </Paper>
