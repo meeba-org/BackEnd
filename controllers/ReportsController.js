@@ -42,6 +42,7 @@ router.get('/download', (req, res) => {
 router.get('/monthly', (req, res) => {
     req.checkQuery('year', 'year is required').notEmpty();
     req.checkQuery('month', 'month is required').notEmpty();
+    let userId = req.query.userId;
 
     const year = req.query.year || moment().format('YYYY');
     const month = req.query.month || moment().format('MM');
@@ -52,7 +53,7 @@ router.get('/monthly', (req, res) => {
 
             const company = jwtService.getCompanyFromLocals(res);
 
-            ShiftModel.getShiftsInMonth(year, month, company)
+            ShiftModel.getShiftsInMonth(year, month, company, userId)
                 .then((shifts) => {
 
                     if (shifts) {
