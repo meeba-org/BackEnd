@@ -47,7 +47,11 @@ class Header extends Component {
                         <div className="lower-middle-content">
                             <div className="sub-title">
                                 <span itemProp="applicationCategory">שעון נוכחות</span>  וחישוב שכר לעובדים שעתיים
-                                <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">חינם</div>
+                                <div itemProp="offers" itemScope itemType="http://schema.org/Offer">
+                                    <span itemProp="description">חינם</span>
+                                    <meta itemProp="price" content="0" />
+                                    <meta itemProp="priceCurrency" content="USD" />
+                                </div>
                             </div>
                             <Button className="login-button" raised color="primary"
                                     onClick={() => setLoginDialogVisibility(true)}>
