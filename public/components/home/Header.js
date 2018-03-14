@@ -47,6 +47,7 @@ class Header extends Component {
                         <div className="lower-middle-content">
                             <div className="sub-title">
                                 <span itemProp="applicationCategory">שעון נוכחות</span>  וחישוב שכר לעובדים שעתיים
+                                <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">חינם</div>
                             </div>
                             <Button className="login-button" raised color="primary"
                                     onClick={() => setLoginDialogVisibility(true)}>
