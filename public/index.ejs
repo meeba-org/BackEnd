@@ -29,6 +29,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <meta charset="utf-8"/>
     <title>מיבא - שעון נוכחות ומחשבון שכר לעסקים קטנים</title>
+
+    <!-- Facebook Customer Chat Plugin -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId            : 'your-app-id',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v2.12'
+            });
+        };
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/he_IL/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <div class="fb-customerchat"
+         page_id="2039324052970425"
+         logged_in_greeting="שלום, איך אפשר לעזור?"
+         logged_out_greeting="שלום, איך אפשר לעזור?"
+    >
+    </div>
+
 </head>
 <body dir="rtl">
 <div id="react-app"></div>
