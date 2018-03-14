@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
+<html lang="en" dir="rtl" itemscope itemtype="http://schema.org/WebApplication">
 <!--
   **NOTE:** This is a template for index.html. It uses ejs and htmlWebpackPlugin to generate a different index.html for each environment. htmlWebpackPlugin will dynamically add references to the scripts and styles that it bundles to this file. The generated bundles have hash-based filenames, so it's necessary to add the references dynamically.
   For more info on ejs, see http://www.embeddedjs.com/. For examples of using it with htmlWebpackPlugin, see https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs
@@ -29,6 +29,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <meta charset="utf-8"/>
     <title>מיבא</title>
+    <meta content="מיבא" itemprop="name" property="og:title" />
+    <meta content="שעון נוכחות" itemprop="description" name="description" property="og:description" />
 </head>
 <body dir="rtl">
 <div id="react-app"></div>
