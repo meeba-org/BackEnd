@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl" itemscope itemtype="http://schema.org/SoftwareApplication">
+<html lang="en" dir="rtl">
 <!--
   **NOTE:** This is a template for index.html. It uses ejs and htmlWebpackPlugin to generate a different index.html for each environment. htmlWebpackPlugin will dynamically add references to the scripts and styles that it bundles to this file. The generated bundles have hash-based filenames, so it's necessary to add the references dynamically.
   For more info on ejs, see http://www.embeddedjs.com/. For examples of using it with htmlWebpackPlugin, see https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs
@@ -29,15 +29,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <meta charset="utf-8"/>
     <title>מיבא - שעון נוכחות ומחשבון שכר לעסקים קטנים</title>
-    <meta content="מיבא" itemprop="name" property="og:title" />
-    <meta content="שעון נוכחות" itemprop="description" name="description" property="og:description" />
-    <meta content="שעון נוכחות" itemprop="applicationCategory" />
-    <meta content="Android, OSX, Windows 7, Windows 10" itemprop="operatingSystem" />
-    <meta content="Israel" itemprop="countriesSupported" />
-    <meta content="https://www.meeba.org.il/1.png" itemprop="screenshot" />
-    <!--<meta content="free" itemprop="offers" />-->
-    <!--<meta content="0" itemprop="price" />-->
-    <!--<meta content="ILS" itemprop="priceCurrency" />-->
+
+    <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "SoftwareApplication",
+      "name" : "מיבא",
+      "description": "שעון נוכחות",
+      "applicationCategory": "שעון נוכחות",
+      "operatingSystem": "Android, OSX, Windows 7, Windows 10",
+      "countriesSupported": "Israel",
+      "screenshot": "https://www.meeba.org.il/1.png",
+
+      "offers" : {
+        "@type" : "Offer",
+        "price" : "0",
+        "priceCurrency": "ILS"
+      }
+    }
+    </script>
 
     <!-- Facebook Customer Chat Plugin -->
     <script>
