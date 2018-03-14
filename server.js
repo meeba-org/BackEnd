@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const mongoose = require('mongoose');
 const config = require('./config');
+const enforce = require("express-sslify");
 
 // Connect to mongoose
 mongoose.Promise = global.Promise;
@@ -15,6 +16,8 @@ mongoose.connect(config.dbUrl, { useMongoClient: true});
 
 // Init App
 const app = express();
+
+app.use(enforce.HTTPS({ trustProtoHeader: true })); // redirect http requests to https
 
 // Support webpack-dev-server
 app.use(function(req, res, next) {

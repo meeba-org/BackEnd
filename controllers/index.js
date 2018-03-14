@@ -15,10 +15,10 @@ router.use('/', general);
 router.use('/api', ejwt({secret: config.secret}));
 router.use('/api', extractUserMiddleware);
 router.use('/api/shifts', shifts);
-router.use('/api', restrictEmployee);
+router.use('/api/reports', reports);
+router.use('/api', restrictEmployee); // Beyond here api is not allowed for employees
 router.use('/api/users', users);
 router.use('/api/companies', companies);
-router.use('/api/reports', reports);
 
 router.use(function (err, req, res, next) {
      if (err.name === 'UnauthorizedError') {

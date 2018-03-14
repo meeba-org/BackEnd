@@ -65,6 +65,7 @@
     "express-jwt": "^5.3.0",
     "express-messages": "*",
     "express-session": "*",
+    "express-sslify": "^1.2.0",
     "express-validator": "^4.3.0",
     "extract-text-webpack-plugin": "2.1.0",
     "file-loader": "0.9.0",

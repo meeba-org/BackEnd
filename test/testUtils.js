@@ -83,7 +83,7 @@ function createMockedUserPlainObject(name = 'Chen') {
     };
 }
 
-function createMockedShiftPlainObject(clockInTime1, company) {
+function createMockedShiftPlainObject(clockInTime1, company, user) {
 
     let clockInTime = clockInTime1 || new Date();
     let clockOutTime = moment(clockInTime).add(8, 'hours');
@@ -91,7 +91,7 @@ function createMockedShiftPlainObject(clockInTime1, company) {
     return {
         clockInTime: clockInTime
         , clockOutTime: clockOutTime
-        , user: []
+        , user: user || {}
         , company: company
     };
 }
