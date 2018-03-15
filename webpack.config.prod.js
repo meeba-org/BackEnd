@@ -2,7 +2,7 @@
 // For info on how we're generating bundles with hashed filenames for cache busting: https://medium.com/@okonetchnikov/long-term-caching-of-static-assets-with-webpack-1ecb139adb95#.w99i89nsz
 const webpack = require('webpack');
 const ExtractTextPlugin  = require('extract-text-webpack-plugin');
-const WebpackMd5Hash = require('webpack-md5-hash');
+const WebpackChunkHash = require('webpack-chunk-hash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
@@ -27,15 +27,15 @@ module.exports = {
         publicPath: '/',
         filename: '[name].[chunkhash].js'
     },
+    stats: {
+        children: false,
+    },
     plugins: [
         // Hash the files using MD5 so that their names change when the content changes.
-        new WebpackMd5Hash(),
+        new WebpackChunkHash({algorithm: 'md5'}), // 'md5' is default value
 
         // Tells React to build in prod mode. https://facebook.github.io/react/downloads.html
         new webpack.DefinePlugin(GLOBALS),
-
-        // Generate an external css file with a hash in the filename
-        new ExtractTextPlugin('[name].[contenthash].css'),
 
         // Generate HTML file that contains references to generated bundles. See here for how this works: https://github.com/ampedandwired/html-webpack-plugin#basic-usage
         new HtmlWebpackPlugin({
@@ -58,6 +58,10 @@ module.exports = {
             // To track JavaScript errors via TrackJS, sign up for a free trial at TrackJS.com and enter your token below.
             trackJSToken: ''
         }),
+
+        // Generate an external css file with a hash in the filename
+        new ExtractTextPlugin('[name].[contenthash].css'),
+
         // https://github.com/numical/script-ext-html-webpack-plugin
         new ScriptExtHtmlWebpackPlugin({
             defaultAttribute: 'async'
@@ -87,16 +91,19 @@ module.exports = {
             {test: /\.[ot]tf(\?v=\d+.\d+.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream'},
             {test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader?name=[name].[ext]'},
             {test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
-            {test: /\.scss$/, use: [
-                {loader: "style-loader"},
-                {loader: "css-loader"},
-                {loader: "sass-loader",options: {
-                    includePaths: [
-                        path.resolve(__dirname, 'node_modules/sass-material-colors/sass/sass-material-colors'),
-                        path.resolve(__dirname, 'public/styles')
+            {test: /\.scss$/, use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {loader: "css-loader"},
+                        {loader: "sass-loader",options: {
+                            includePaths: [
+                                path.resolve(__dirname, 'node_modules/sass-material-colors/sass/sass-material-colors'),
+                                path.resolve(__dirname, 'public/styles')
+                            ]
+                        }}
                     ]
-                }}
-            ]}
+                })
+            }
         ]
     }
 };
