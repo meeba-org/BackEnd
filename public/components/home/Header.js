@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import playStoreImage from '../../styles/images/playStore.svg';
 import appStoreImage from '../../styles/images/appStore.svg';
 import facebookImage from '../../styles/images/facebook.png';
+import betaImage from '../../styles/images/beta.png';
 import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown';
 
 class Header extends Component {
@@ -40,7 +41,7 @@ class Header extends Component {
                         <div className="title">
                             <div className="title-text">
                                 מיבא
-                            <img src="https://i.imgur.com/WCg0FBl.png" />
+                                <img src={betaImage} />
                             </div>
                         </div>
                         <hr/>
