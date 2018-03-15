@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin  = require('extract-text-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 process.env.NODE_ENV = 'production';
@@ -56,6 +57,10 @@ module.exports = {
             // Note that you can add custom options here if you need to handle other custom logic in index.html
             // To track JavaScript errors via TrackJS, sign up for a free trial at TrackJS.com and enter your token below.
             trackJSToken: ''
+        }),
+        // https://github.com/numical/script-ext-html-webpack-plugin
+        new ScriptExtHtmlWebpackPlugin({
+            defaultAttribute: 'async'
         }),
         new webpack.DefinePlugin({
             'process.env.PORT': 3000,
