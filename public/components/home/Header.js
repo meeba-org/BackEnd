@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import playStoreImage from '../../styles/images/playStore.svg';
 import appStoreImage from '../../styles/images/appStore.svg';
 import facebookImage from '../../styles/images/facebook.png';
-import betaImage from '../../styles/images/beta.png';
 import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown';
 
 class Header extends Component {
@@ -41,13 +40,13 @@ class Header extends Component {
                         <div className="title">
                             <div className="title-text">
                                 מיבא
-                                <img src={betaImage} />
+                                {/*<img src={betaImage} />*/}
                             </div>
                         </div>
                         <hr/>
                         <div className="lower-middle-content">
                             <div className="sub-title">
-                                שעון נוכחות וחישוב שכר לעובדים שעתיים
+                                שעון נוכחות חינמי
                             </div>
                             <Button className="login-button" raised color="primary"
                                     onClick={() => setLoginDialogVisibility(true)}>
