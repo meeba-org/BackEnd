@@ -145,7 +145,7 @@ class AutoComplete extends React.Component {
     };
 
     render() {
-        const { classes, placeholder } = this.props;
+        const { classes, placeholder, disabled } = this.props;
 
         return (
             <Autosuggest
@@ -169,6 +169,7 @@ class AutoComplete extends React.Component {
                     placeholder,
                     value: this.state.value,
                     onChange: this.handleChange,
+                    disabled
                 }}
             />
         );
@@ -180,6 +181,7 @@ AutoComplete.propTypes = {
     suggestions: PropTypes.array.isRequired,
     placeholder: PropTypes.string,
     onSelect: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(AutoComplete);
