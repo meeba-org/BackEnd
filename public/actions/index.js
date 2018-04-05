@@ -1,4 +1,4 @@
-import {Error} from "./actionTypes";
+import {Error, HIDE_LOADING, SHOW_LOADING} from "./actionTypes";
 
 export * from "./companyActions";
 export * from "./shiftsActions";
@@ -18,4 +18,12 @@ export const hideDeleteEntityModal = () => ({
 export const ErrorAction = (err) => ({
     type: Error,
     err
+});
+
+export const ShowLoading = () => ({
+    type: SHOW_LOADING
+});
+
+export const HideLoading = () => ({
+    type: HIDE_LOADING
 });

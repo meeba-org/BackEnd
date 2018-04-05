@@ -68,7 +68,7 @@ class DailyReport extends React.Component {
     };
 
     render() {
-        const {onCreateShift, onDeleteShift, employees, mode} = this.props;
+        const {onCreateShift, onDeleteShift, employees, mode, isLoading} = this.props;
         let {currentDay} = this.state;
         let {primary, secondary} = this.props.theme.palette.text;
 
@@ -132,10 +132,10 @@ class DailyReport extends React.Component {
                                         })
                                     )}
                                     onSelect={this.onClockIn}
-                                    disabled={!this.hasEmployees(employees)}
+                                    disabled={!isLoading && !this.hasEmployees(employees)}
                                 />
 
-                                {!this.hasEmployees(employees) &&
+                                {!isLoading && !this.hasEmployees(employees) &&
                                 <div className="warning">
                                     <Warning className="icon"/>
                                     <span>
@@ -175,6 +175,7 @@ DailyReport.propTypes = {
     mode: PropTypes.number.isRequired,
     theme: PropTypes.object,
     router: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
 };
 
 export default CSSModules(withTheme()(DailyReport), styles);

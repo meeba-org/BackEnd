@@ -18,7 +18,8 @@ class DailyReportContainer extends React.Component {
     }
 
     render() {
-        const {handleSubmit, updateShift, createShift, deleteShift, shifts, employees, router} = this.props;
+        const {handleSubmit, updateShift, createShift, deleteShift, shifts, employees, router, isLoading} = this.props;
+
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <DailyReport
@@ -30,6 +31,7 @@ class DailyReportContainer extends React.Component {
                     onCreateShift={createShift}
                     onDayChange={(startDayOfMonth) => this.onDayChange(startDayOfMonth)}
                     router={router}
+                    isLoading={isLoading}
                 />
             </form>
         );
@@ -47,6 +49,7 @@ DailyReportContainer.propTypes = {
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -55,7 +58,8 @@ function mapStateToProps(state) {
         employees: state.users,
         initialValues: {
             shifts: state.shifts
-        }
+        },
+        isLoading: state.loader.isLoading
     };
 }
 

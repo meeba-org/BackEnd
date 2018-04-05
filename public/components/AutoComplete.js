@@ -169,7 +169,7 @@ class AutoComplete extends React.Component {
                     placeholder,
                     value: this.state.value,
                     onChange: this.handleChange,
-                    disabled
+                    disabled: disabled
                 }}
             />
         );
