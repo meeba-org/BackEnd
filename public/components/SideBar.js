@@ -135,7 +135,7 @@ class SideBar extends React.Component {
                     <List>
                         {this.state.items.map((item, index) =>
                             <IfAnyGranted key={index} expected={item.allowedRoles} actual={[userRole]}>
-                                <ListItem button onTouchTap={() => this.updateRoute(item, index)}
+                                <ListItem button onClick={() => this.updateRoute(item, index)}
                                           disabled={item.disabled}
                                           style={{
                                               backgroundColor: item.selected ? theme.palette.text.divider : 'transparent',
