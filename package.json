@@ -72,7 +72,7 @@
     "file-saver": "^1.3.3",
     "html-webpack-plugin": "2.24.1",
     "jss-rtl": "^0.2.1",
-    "material-ui": "^1.0.0-beta.27",
+    "material-ui": "1.0.0-beta.27",
     "material-ui-icons": "v1.0.0-beta.15",
     "moment": "^2.19.3",
     "moment-timezone": "^0.5.14",
