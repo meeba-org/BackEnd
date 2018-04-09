@@ -4,7 +4,7 @@
   "description": "BackEnd & FrontEnd of meeba - Time Tracking",
   "main": "server.js",
   "engines": {
-    "node": "8.x"
+      "node": "~6.10.0"
   },
   "scripts": {
     "preinstall": "node tools/nodeVersionCheck.js",
