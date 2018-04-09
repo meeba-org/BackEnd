@@ -6,8 +6,10 @@ import {UserReducer} from "./UserReducer";
 import {UsersReducer} from "./UsersReducer";
 import {ModalReducer} from "./ModalReducer";
 import {ReportsReducer} from "./ReportsReducer";
+import {LoaderReducer} from "./LoaderReducer";
 
 const rootReducer = combineReducers({
+    loader: LoaderReducer,
     routing: routerReducer,
     users: UsersReducer,
     shifts: ShiftsReducer,

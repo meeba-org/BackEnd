@@ -1,7 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 import config from "../config";
 import axios from "axios";
-import {ErrorAction} from "../actions/index";
+import {ErrorAction, HideLoading, ShowLoading} from "../actions/index";
 
 const api = ({dispatch}) => next => action => {
     if (action.type !== actionTypes.API) {
@@ -20,6 +20,7 @@ const api = ({dispatch}) => next => action => {
 
     url = `${config.API_URL}${url}`;
 
+    dispatch(ShowLoading());
     axios({
         url,
         timeout: 20000,
@@ -28,9 +29,11 @@ const api = ({dispatch}) => next => action => {
         headers,
         responseType,
     }).then(response => {
+        dispatch(HideLoading());
         return dispatch(success(response.data));
     })
     .catch((err) => {
+        dispatch(HideLoading());
         return dispatch(ErrorAction(err));
     });
 

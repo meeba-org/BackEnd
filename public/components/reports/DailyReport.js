@@ -9,12 +9,16 @@ import styles from '../../styles/DailyReport.scss';
 import ShiftsList from "./ShiftsList";
 import AddShiftsDialog from "../AddShiftsDialog";
 import {
-    calculateCurrentDay, calculateCurrentTime, createShiftForClockIn, DATE_FORMAT,
+    calculateCurrentDay,
+    calculateCurrentTime,
+    createShiftForClockIn,
+    DATE_FORMAT,
     ReportModes
 } from "../../helpers/utils";
 import AutoComplete from "../AutoComplete";
 import {withTheme} from 'material-ui/styles';
 import moment from "moment/moment";
+import {Warning} from "material-ui-icons";
 
 class DailyReport extends React.Component {
     constructor(props) {
@@ -55,8 +59,16 @@ class DailyReport extends React.Component {
         this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'), input);
     };
 
+    hasEmployees = (employees) => {
+        return employees && employees.length > 0;
+    };
+
+    navigateToEmployees = () => {
+        this.props.router.push('/dashboard/employees');
+    };
+
     render() {
-        const {onCreateShift, onDeleteShift, employees, mode} = this.props;
+        const {onCreateShift, onDeleteShift, employees, mode, isLoading} = this.props;
         let {currentDay} = this.state;
         let {primary, secondary} = this.props.theme.palette.text;
 
@@ -120,7 +132,17 @@ class DailyReport extends React.Component {
                                         })
                                     )}
                                     onSelect={this.onClockIn}
+                                    disabled={!isLoading && !this.hasEmployees(employees)}
                                 />
+
+                                {!isLoading && !this.hasEmployees(employees) &&
+                                <div className="warning">
+                                    <Warning className="icon"/>
+                                    <span>
+                                    עדיין לא הזנו עובדים. <a href="#" onClick={this.navigateToEmployees}>בוא נעשה זאת עכשיו!</a>
+                                    </span>
+                                </div>
+                                }
                             </div>
 
                             <FieldArray
@@ -151,7 +173,9 @@ DailyReport.propTypes = {
     onDeleteShift: PropTypes.func.isRequired,
     onDayChange: PropTypes.func.isRequired,
     mode: PropTypes.number.isRequired,
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    router: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
 };
 
 export default CSSModules(withTheme()(DailyReport), styles);

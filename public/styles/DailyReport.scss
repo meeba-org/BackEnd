@@ -19,5 +19,15 @@
     .auto-complete {
         width: 50%;
         margin: 20px auto 50px;
+
+        .warning {
+            .icon {
+                color: orange;
+                vertical-align: middle;
+                margin-left: 5px;
+            }
+            margin-top: 20px;
+            text-align: center;
+        }
     }
 }
