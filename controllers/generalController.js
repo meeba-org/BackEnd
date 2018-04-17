@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const UserModel = require("../models/UserModel");
+const CompanyModel = require("../models/CompanyModel");
 const jwtService = require("./jwtService");
 const AppManager = require('../managers/AppManager');
 
@@ -95,6 +96,22 @@ router.get('/authenticate', function(req, res) {
                 res.status(200).json({user, token});
             })
             .catch(() => res.status(401).json({message: '[authenticate] - User was not found'}));
+    });
+});
+
+router.get('/general/meta', function(req, res) {
+    return Promise.all([
+        CompanyModel.companiesCount(),
+        UserModel.usersCount(),
+    ])
+    .then((resultArr) => {
+        return res.status(200).json({
+            companiesCount: resultArr[0],
+            usersCount: resultArr[1],
+        });
+    })
+    .catch((err) => {
+        return res.status(500).json(err);
     });
 });
 module.exports = router;

@@ -121,4 +121,3 @@ export const deleteUser = (user) => ({
         shouldAuthenticate: true,
     }
 });
-
