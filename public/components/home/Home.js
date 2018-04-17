@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Header from "./Header";
 import Footer from "./Footer";
 import Features from "./Features";
+import Statistics from "./Statistics";
 
 class Home extends Component {
     state = {
@@ -22,6 +23,7 @@ class Home extends Component {
                 <div id="home-bg">
                     <Header setLoginDialogVisibility={this.setLoginDialogVisibility}/>
                     <Features />
+                    <Statistics />
                     <Footer />
                 </div>
                 <LoginRegisterContainer
