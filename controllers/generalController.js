@@ -99,7 +99,7 @@ router.get('/authenticate', function(req, res) {
     });
 });
 
-router.get('/general/meta', function(req, res) {
+router.get('/api/general/meta', function(req, res) {
     return Promise.all([
         CompanyModel.companiesCount(),
         UserModel.usersCount(),
