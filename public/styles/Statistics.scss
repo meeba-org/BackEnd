@@ -1,23 +1,29 @@
+@import "variables";
+
 #statistics {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-size: cover;
-    background: url(./images/beta.png) no-repeat fixed center;
+    //background: url(./images/beta.png) no-repeat fixed center;
+    background-color: $lightPrimary;
     width: 100%;
     height: auto;
 
     .content {
-        width: 720px;
+        max-width: 720px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        padding: 20px;
 
         .cells {
             display: flex;
+            width: 100%;
             flex-direction: row;
+            justify-content: space-evenly;
         }
     }
 }

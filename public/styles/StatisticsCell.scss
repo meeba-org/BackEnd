@@ -1,5 +1,13 @@
 .statisticsCell {
-    hr {
+    max-width: 140px;
+    .number {
+        font-size: 72px;
+        text-align: center;
+        padding: 0 20px;
+    }
 
+    .title {
+        text-align: center;
+        font-size: 24px;
     }
 }

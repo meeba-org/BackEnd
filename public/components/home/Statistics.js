@@ -9,7 +9,7 @@ class Statistics extends Component {
         return (
             <div id="statistics">
                 <div className="content">
-                    <h1>הנה כמה מספרים עלינו</h1>
+                    <h1>מי כבר עובד עם מיבא?</h1>
                     <div className="cells">
                         <StatisticsCell title="מנהלים" num="40" />
                         <StatisticsCell title="עובדים" num="52" />
