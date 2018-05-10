@@ -6,13 +6,16 @@
     justify-content: center;
     align-items: center;
     background-size: cover;
-    //background: url(./images/beta.png) no-repeat fixed center;
-    background-color: $lightPrimary;
-    width: 100%;
+    background: url(./images/coffee.jpg) no-repeat center;
     height: auto;
+    color: white;
 
     .content {
-        max-width: 720px;
+
+        @media (min-width: $mobileWidth) {
+            width: 400px;
+        }
+
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -22,8 +25,14 @@
         .cells {
             display: flex;
             width: 100%;
-            flex-direction: row;
-            justify-content: space-evenly;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+
+            @media (min-width: $mobileWidth) {
+                width: 400px;
+                flex-direction: row;
+            }
         }
     }
 }
