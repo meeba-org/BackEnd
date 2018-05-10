@@ -8,11 +8,13 @@ class Statistics extends Component {
     render() {
         return (
             <div id="statistics">
-                <div className="content">
-                    <h1>מי כבר עובד עם מיבא?</h1>
-                    <div className="cells">
-                        <StatisticsCell title="מנהלים" num="40" />
-                        <StatisticsCell title="עובדים" num="52" />
+                <div id="statistics-content">
+                    <div className="content">
+                        <h1>מי כבר עובד עם מיבא?</h1>
+                        <div className="cells">
+                            <StatisticsCell title="מנהלים" num="40"/>
+                            <StatisticsCell title="עובדים" num="52"/>
+                        </div>
                     </div>
                 </div>
             </div>
