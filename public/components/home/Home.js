@@ -22,8 +22,8 @@ class Home extends Component {
             <div id="home">
                 <div id="home-bg">
                     <Header setLoginDialogVisibility={this.setLoginDialogVisibility}/>
-                    <Features />
                     <Statistics />
+                    <Features />
                     <Footer />
                 </div>
                 <LoginRegisterContainer

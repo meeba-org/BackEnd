@@ -3,7 +3,21 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url(./images/bg.jpg) no-repeat fixed center center;
     background-size: cover;
-    min-height: 100%;
+    background: url(./images/beta.png) no-repeat fixed center;
+    width: 100%;
+    height: auto;
+
+    .content {
+        width: 720px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .cells {
+            display: flex;
+            flex-direction: row;
+        }
+    }
 }
