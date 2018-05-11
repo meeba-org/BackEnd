@@ -12,5 +12,5 @@ export const getUserRole = (state) => {
 };
 
 export const getMeta = (state) => {
-    return (!state.meta) ? null : state.meta;
+    return (!state.general.meta) ? null : state.general.meta;
 };

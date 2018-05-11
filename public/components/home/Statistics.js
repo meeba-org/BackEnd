@@ -13,15 +13,16 @@ class Statistics extends Component {
         this.props.fetchUsersMetaData();
     }
     render() {
+        let meta = this.props.meta || {};
+
         return (
             <div id="statistics">
                 <div id="statistics-content">
                     <div className="content">
                         <h1>מי כבר עובד עם מיבא?</h1>
-                        Hi: {this.props.meta}
                         <div className="cells">
-                            <StatisticsCell title="מנהלים" num="40"/>
-                            <StatisticsCell title="עובדים" num="52"/>
+                            <StatisticsCell title="מנהלים" num={meta.companiesCount}/>
+                            <StatisticsCell title="עובדים" num={meta.usersCount}/>
                         </div>
                     </div>
                 </div>
@@ -31,7 +32,8 @@ class Statistics extends Component {
 }
 
 Statistics.propTypes = {
-    fetchUsersMetaData: PropTypes.func.isRequired
+    fetchUsersMetaData: PropTypes.func.isRequired,
+    meta: PropTypes.object
 };
 Statistics.defaultProps = {};
 
@@ -47,5 +49,5 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 export default connect(
-    null, mapDispatchToProps
+    mapStateToProps, mapDispatchToProps
 )(CSSModules(Statistics, styles));
