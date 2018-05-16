@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {IconButton, Input, TextField, Tooltip} from "material-ui";
-import DeleteIcon from 'material-ui-icons/Delete';
-import WorkIcon from 'material-ui-icons/Work';
-import HomeIcon from 'material-ui-icons/Home';
+import {IconButton, Input, TextField, Tooltip} from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
+import WorkIcon from '@material-ui/icons/Work';
+import HomeIcon from '@material-ui/icons/Home';
 import styles from "../../styles/Shift.scss";
 import CSSModules from "react-css-modules";
 import {
@@ -18,6 +18,7 @@ import {
 import moment from "moment";
 import WarningIcon from "./WarningIcon";
 import TimeMaskCustom from "./TimeMaskCustom";
+import {DatePicker} from "material-ui-pickers";
 
 class Shift extends React.Component {
 
@@ -137,6 +138,13 @@ class Shift extends React.Component {
 
                     <TextField className="elem" type="date" value={startDateStr} placeholder="תאריך"
                                onChange={(e) => this.onUpdateStartDate(e)}/>
+
+                    <DatePicker
+                        label="Basic example"
+                        value={startDateStr}
+                        onChange={this.onUpdateStartDate}
+                        animateYearScrolling={false}
+                    />
                 </div>
                 }
 

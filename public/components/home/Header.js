@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import styles from "../../styles/Header.scss";
 import CSSModules from "react-css-modules/dist/index";
-import {AppBar, Button, IconButton, Toolbar, Typography} from "material-ui";
-import AccessTimeIcon from 'material-ui-icons/AccessTime';
-import {ArrowBack} from "material-ui-icons";
+import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import {ArrowBack} from "@material-ui/icons";
 import PropTypes from 'prop-types';
 import playStoreImage from '../../styles/images/playStore.svg';
 import appStoreImage from '../../styles/images/appStore.svg';
 import facebookImage from '../../styles/images/facebook.png';
-import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown';
+import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 class Header extends Component {
     render() {

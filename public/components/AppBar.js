@@ -1,16 +1,12 @@
 import React, {Component} from 'react';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import AccessTimeIcon from 'material-ui-icons/AccessTime';
+import {AppBar, Button, IconButton, Toolbar, Typography} from '@material-ui/core';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import CSSModules from "react-css-modules";
 import styles from '../styles/AppBar.scss';
 import {connect} from "react-redux";
 import * as selectors from "../selectors";
 import {handleLogout, navigateHome} from "../actions/index";
 import PropTypes from 'prop-types';
-import {AppBar} from "material-ui";
 
 class MeebaAppBar extends Component {
     onLogout = () => {
@@ -30,13 +26,13 @@ class MeebaAppBar extends Component {
                 <AppBar position="static">
                     <Toolbar id="toolbar">
                         <div className="logo" onClick={this.onLogoClock}>
-                            <IconButton color="contrast" aria-label="Menu">
+                            <IconButton aria-label="Menu">
                                 <AccessTimeIcon/>
                             </IconButton>
                             <Typography type="title" color="inherit">{companyName}</Typography>
                         </div>
                         <div className="login">
-                            <Button onClick={this.onLogout} color="contrast">יציאה</Button>
+                            <Button onClick={this.onLogout}>יציאה</Button>
                         </div>
                     </Toolbar>
                 </AppBar>

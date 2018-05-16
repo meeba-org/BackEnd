@@ -3,10 +3,10 @@
  */
 
 import React, {Component} from 'react';
-import {Button, Divider, Grid, Paper} from "material-ui";
+import {Button, Divider, Grid, Paper} from "@material-ui/core";
 import {Field, reduxForm} from "redux-form";
 import {connect} from "react-redux";
-import ArrowBackIcon from 'material-ui-icons/ArrowBack';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {renderTextField} from '../material-ui-wrappers';
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";

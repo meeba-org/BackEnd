@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {Button, Dialog, DialogActions, DialogTitle} from "material-ui";
+import {Button, Dialog, DialogActions, DialogTitle} from "@material-ui/core";
 import {hideDeleteEntityModal} from "../../actions/index";
 import PropTypes from 'prop-types';
 

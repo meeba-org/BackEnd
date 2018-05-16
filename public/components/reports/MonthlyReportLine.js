@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {IconButton, Tooltip} from "material-ui";
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
-import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown';
+import {IconButton, Tooltip} from "@material-ui/core";
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import {FieldArray} from "redux-form";
 import ShiftsList from "./ShiftsList";
 import styles from "../../styles/MonthlyReportLine.scss";

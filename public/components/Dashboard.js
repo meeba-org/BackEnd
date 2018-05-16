@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from "../styles/Dashboard.scss";
 import SideBar from "./SideBar";
-import {Paper} from "material-ui";
+import {Paper} from "@material-ui/core";
 import AppBar from "./AppBar";
 import {connect} from "react-redux";
 import {loadUserFromToken} from "../actions/index";

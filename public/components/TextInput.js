@@ -1,6 +1,6 @@
 // import React from 'react';
 // import PropTypes from 'prop-types';
-// import {Input} from "material-ui";
+// import {Input} from "@material-ui/core";
 //
 // class TextInput extends React.Component {
 //     onUpdate(e) {

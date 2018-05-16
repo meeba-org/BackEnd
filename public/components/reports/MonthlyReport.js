@@ -1,12 +1,11 @@
 import React from "react";
-import {Button, Card, Divider, Input, Tooltip} from "material-ui";
-import Select from 'material-ui/Select';
-import {CardContent, CardHeader} from "../../../node_modules/material-ui/Card/index";
-import AddIcon from 'material-ui-icons/Add';
-import AssignmentIcon from 'material-ui-icons/Assignment';
+import {Button, Card, Divider, Input, Tooltip, Select} from "@material-ui/core";
+import {CardContent, CardHeader} from "@material-ui/core/Card";
+import AddIcon from '@material-ui/icons/Add';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import MonthlyReportLine from "./MonthlyReportLine";
 import {Field} from "redux-form";
-import {MenuItem} from 'material-ui/Menu';
+import {MenuItem} from '@material-ui/core/Menu';
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from '../../styles/MonthlyReport.scss';

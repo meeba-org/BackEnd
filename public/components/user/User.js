@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {CardContent, CardHeader, TextField} from "material-ui";
+import {CardContent, CardHeader, TextField} from "@material-ui/core";
 import CSSModules from "react-css-modules";
 import styles from '../../styles/User.scss';
 import NoData from "../NoData";

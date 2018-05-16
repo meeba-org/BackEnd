@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Computer, Description, PhonelinkRing} from "material-ui-icons";
+import {Computer, Description, PhonelinkRing} from "@material-ui/icons";
 import styles from '../../styles/Features.scss';
 import CSSModules from "react-css-modules/dist/index";
 import Feature from "./Feature";

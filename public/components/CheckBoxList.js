@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import List, {ListItem, ListItemText} from 'material-ui/List';
-import {Checkbox} from "material-ui";
+import List, {ListItem, ListItemText} from '@material-ui/core/List';
+import {Checkbox} from "@material-ui/core";
 import PropTypes from 'prop-types';
 
 class CheckBoxList extends Component {

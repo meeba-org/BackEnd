@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Grid, IconButton, Input, Tooltip} from "material-ui";
-import DeleteIcon from 'material-ui-icons/Delete';
+import {Grid, IconButton, Input, Tooltip} from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 class Employee extends React.Component {
 
