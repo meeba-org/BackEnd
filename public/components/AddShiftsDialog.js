@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Button, TextField} from '@material-ui/core';
-import Dialog, {DialogActions, DialogContent, DialogTitle} from '@material-ui/core/Dialog';
+import {Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle} from '@material-ui/core';
 import {calculateCurrentDay, convertTimeStrToMoment, createShift, DATE_FORMAT, TIME_FORMAT} from "../helpers/utils";
 import moment from "moment";
 import CheckBoxList from "./CheckBoxList";

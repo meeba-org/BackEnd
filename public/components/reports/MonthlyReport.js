@@ -1,11 +1,12 @@
 import React from "react";
 import {Button, Card, Divider, Input, Tooltip, Select} from "@material-ui/core";
-import {CardContent, CardHeader} from "@material-ui/core/Card";
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 import AddIcon from '@material-ui/icons/Add';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import MonthlyReportLine from "./MonthlyReportLine";
 import {Field} from "redux-form";
-import {MenuItem} from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from '../../styles/MonthlyReport.scss';
@@ -130,13 +131,13 @@ class MonthlyReport extends React.Component {
                             </Select>
 
                             <Tooltip title="הוספת משמרת" placement="top">
-                                <Button className="action-button" dense raised color="primary"
+                                <Button className="action-button" color="primary"
                                         onClick={() => this.handleOpenAddDialog()}><AddIcon/></Button>
                             </Tooltip>
 
                             <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
                                 <Tooltip title="ייצוא דוח חודשי לאקסל" placement="top">
-                                    <Button className="action-button" dense raised color="primary"
+                                    <Button className="action-button" color="primary"
                                             onClick={() => this.handleGenerateExcelClick()}><AssignmentIcon/></Button>
                                 </Tooltip>
                             </IfGranted>

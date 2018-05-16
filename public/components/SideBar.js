@@ -1,6 +1,6 @@
 'use strict';
 import React from "react";
-import List, {ListItem, ListItemIcon, ListItemText} from '@material-ui/core/List';
+import {List, ListItem, ListItemIcon, ListItemText, Divider, Drawer, IconButton} from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {withRouter} from 'react-router';
@@ -10,13 +10,12 @@ import Assessment from '@material-ui/icons/Assessment';
 import DateRange from '@material-ui/icons/DateRange';
 import PermContactCalendar from '@material-ui/icons/PermContactCalendar';
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
-import {withStyles, withTheme} from '@material-ui/core/styles';
 import {IfAnyGranted} from "react-authorization";
 import * as ERoles from "../helpers/ERoles";
-import {Divider, Drawer, IconButton} from "@material-ui/core";
 import classNames from 'classnames';
 import CSSModulesStyles from '../styles/SideBar.scss';
 import CSSModules from "react-css-modules";
+import { withStyles, withTheme } from '@material-ui/core/styles';
 
 const drawerWidth = 200;
 
@@ -118,7 +117,7 @@ class SideBar extends React.Component {
 
         return (
             <Drawer id="sideBar"
-                    type="permanent"
+                    variant="permanent"
                     classes={{
                         paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
                     }}
@@ -138,8 +137,9 @@ class SideBar extends React.Component {
                                 <ListItem button onClick={() => this.updateRoute(item, index)}
                                           disabled={item.disabled}
                                           style={{
-                                              backgroundColor: item.selected ? theme.palette.text.divider : 'transparent',
-                                              height: "24px",
+                                              backgroundColor: item.selected ? "rgba(0, 0, 0, 0.10)" : 'transparent',
+                                              paddingTop: "10px",
+                                              paddingBottom: "10px",
                                               paddingRight: 0
                                           }}
                                 >

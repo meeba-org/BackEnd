@@ -24,7 +24,7 @@ class Dashboard extends React.Component {
                     <div id="appBar-container">
                         <AppBar router={router}/>
                     </div>
-                    <div container id="grid-container">
+                    <div id="grid-container">
                         <Paper id="sideBar-container">
                             <SideBar userRole={userRole}/>
                         </Paper>
