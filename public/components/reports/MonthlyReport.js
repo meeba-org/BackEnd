@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Card, Divider, Input, Tooltip, Select} from "@material-ui/core";
+import {Button, Card, Divider, Input, Select, Tooltip} from "@material-ui/core";
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import AddIcon from '@material-ui/icons/Add';
@@ -131,13 +131,13 @@ class MonthlyReport extends React.Component {
                             </Select>
 
                             <Tooltip title="הוספת משמרת" placement="top">
-                                <Button className="action-button" color="primary"
+                                <Button className="action-button" variant="raised" color="primary"
                                         onClick={() => this.handleOpenAddDialog()}><AddIcon/></Button>
                             </Tooltip>
 
                             <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
                                 <Tooltip title="ייצוא דוח חודשי לאקסל" placement="top">
-                                    <Button className="action-button" color="primary"
+                                    <Button className="action-button" variant="raised" color="primary"
                                             onClick={() => this.handleGenerateExcelClick()}><AssignmentIcon/></Button>
                                 </Tooltip>
                             </IfGranted>

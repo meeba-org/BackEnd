@@ -37,7 +37,7 @@ class Login extends Component {
                                         />
                                     </Grid>
                                     {error && <div className="error-msg">{error}</div>}
-                                    <Button dense raised color="primary" type="submit" id="submit-button"><ArrowBackIcon/>היכנס</Button>
+                                    <Button variant="raised" color="primary" type="submit" id="submit-button"><ArrowBackIcon/>היכנס</Button>
                                 </form>
                             </div>
                         </Paper>

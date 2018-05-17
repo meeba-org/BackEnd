@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import List, {ListItem, ListItemText} from '@material-ui/core/List';
-import {Checkbox} from "@material-ui/core";
+import {Checkbox, List, ListItem, ListItemText} from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 class CheckBoxList extends Component {
@@ -39,7 +38,7 @@ class CheckBoxList extends Component {
                 {items.map((item, index) => (
                     <ListItem
                         key={index}
-                        dense
+                        variant="raised"
                         button
                         onClick={() => this.handleToggle(item)}
                     >

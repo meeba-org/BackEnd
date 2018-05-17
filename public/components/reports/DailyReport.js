@@ -85,7 +85,7 @@ class DailyReport extends React.Component {
                                            onChange={(e) => this.handleChange(e)}/>
 
                                 <Tooltip title="הוספת משמרת" placement="top">
-                                    <Button className="action-button" dense raised color="primary"
+                                    <Button className="action-button" variant="raised" color="primary"
                                         onClick={() => this.handleClickOpen()}><AddIcon/></Button>
                                 </Tooltip>
                                 <AddShiftsDialog

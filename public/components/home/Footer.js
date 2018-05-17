@@ -10,7 +10,7 @@ class Footer extends Component {
             <div id="footer">
                 <div id="footer-container">
                     <div id={"social"}>
-                        <Button color="contrast" href="https://m.me/meebaOnFace" target="_blank">
+                        <Button color="inherit" href="https://m.me/meebaOnFace" target="_blank">
                             <span className="weak"> שאלה? בעיה?</span>
                             <span className="facebook-link">צור קשר איתנו ב-</span>
                             <img src={facebookImage}/>

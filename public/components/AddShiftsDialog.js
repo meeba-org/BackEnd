@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle} from '@material-ui/core';
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from '@material-ui/core';
 import {calculateCurrentDay, convertTimeStrToMoment, createShift, DATE_FORMAT, TIME_FORMAT} from "../helpers/utils";
 import moment from "moment";
 import CheckBoxList from "./CheckBoxList";
@@ -96,7 +96,7 @@ class AddShiftsDialog extends Component {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => this.onCreate()} dense raised color="primary">
+                    <Button onClick={() => this.onCreate()} variant="raised" color="primary">
                         {this.state.employeesToAdd.length > 0 ? `הוסף ל- ` + this.state.employeesToAdd.length + ` אנשים` : "הוסף"}
                     </Button>
                     <Button onClick={onCancel} color="primary">

@@ -43,7 +43,7 @@ class EmployeesList extends React.Component {
                     <div>
                         <div className="controls-line">
                             <Tooltip title="הוספת עובד" placement="top">
-                                <Button className="action-button" dense raised color="primary" onClick={this.onCreate}><AddIcon /></Button>
+                                <Button className="action-button" variant="raised" color="primary" onClick={this.onCreate}><AddIcon /></Button>
                             </Tooltip>
                         </div>
                         <Divider className="divider" />

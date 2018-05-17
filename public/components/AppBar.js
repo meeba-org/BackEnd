@@ -26,13 +26,13 @@ class MeebaAppBar extends Component {
                 <AppBar position="static">
                     <Toolbar id="toolbar">
                         <div className="logo" onClick={this.onLogoClock}>
-                            <IconButton aria-label="Menu">
+                            <IconButton color="inherit" aria-label="Menu">
                                 <AccessTimeIcon/>
                             </IconButton>
                             <Typography type="title" color="inherit">{companyName}</Typography>
                         </div>
                         <div className="login">
-                            <Button onClick={this.onLogout}>יציאה</Button>
+                            <Button onClick={this.onLogout} color="inherit">יציאה</Button>
                         </div>
                     </Toolbar>
                 </AppBar>

@@ -23,7 +23,7 @@ class DeleteModal extends Component {
             <Dialog onClose={this.handleCancel} open={open}>
                 <DialogTitle>{"האם אתה בטוח?"}</DialogTitle>
                 <DialogActions>
-                    <Button dense raised onClick={() => this.handleDelete()} color="primary" autoFocus>
+                    <Button variant="raised" onClick={() => this.handleDelete()} color="primary" autoFocus>
                         כן
                     </Button>
                     <Button onClick={this.handleCancel} color="primary">
