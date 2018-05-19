@@ -165,19 +165,3 @@ SideBar.propTypes = {
 };
 
 export default withRouter(withTheme()(CSSModules(withStyles(styles, {withTheme: true})(SideBar)), CSSModulesStyles));
-
-sendAjaxRequest() {
-    fetch('www.cnn.com', {
-        headers: {
-            'Access-Control-Allow-Origin': 'www.cnn.com',
-            'Access-Control-Allow-Methods': 'GET',
-            "Content-type": "application/json"
-        }
-    }).then(function (response) {
-        response.body.getReader().read().then(({ done, value }) => {
-            console.log(new TextDecoder("utf-8").decode(value));
-        })
-
-    });
-}
-
