@@ -28,14 +28,14 @@ class ShiftsList extends React.Component {
         return (
             <div className="shifts-list">
                 {fields && fields.map((shiftName, index) =>
-                    <Field
+                    (<Field
                         component={Shift}
                         name={shiftName} key={index}
                         onDelete={()=> this.onDelete(fields, index)}
                         onUpdate={(shift, input) => this.onUpdate(shift, input)}
                         showNames={showNames}
                         mode={mode}
-                    />
+                    />)
                 )}
                 {shouldDisplayNoData && (!fields || (fields.length == 0)) &&
                     <NoData text="לא נמצאו משמרות"/>

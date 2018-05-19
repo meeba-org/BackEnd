@@ -29,7 +29,9 @@ class Dashboard extends React.Component {
                             <SideBar userRole={userRole}/>
                         </Paper>
                         <Paper id="main-container">
+                            {/*<MuiPickersUtilsProvider utils={MomentUtils}>*/}
                             {this.props.children}
+                            {/*</MuiPickersUtilsProvider>*/}
                         </Paper>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 'use strict';
 import React from "react";
-import {List, ListItem, ListItemIcon, ListItemText, Divider, Drawer, IconButton} from '@material-ui/core';
+import {Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {withRouter} from 'react-router';
@@ -15,7 +15,7 @@ import * as ERoles from "../helpers/ERoles";
 import classNames from 'classnames';
 import CSSModulesStyles from '../styles/SideBar.scss';
 import CSSModules from "react-css-modules";
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import {withStyles, withTheme} from '@material-ui/core/styles';
 
 const drawerWidth = 200;
 
@@ -133,7 +133,7 @@ class SideBar extends React.Component {
                     <Divider/>
                     <List>
                         {this.state.items.map((item, index) =>
-                            <IfAnyGranted key={index} expected={item.allowedRoles} actual={[userRole]}>
+                            (<IfAnyGranted key={index} expected={item.allowedRoles} actual={[userRole]}>
                                 <ListItem button onClick={() => this.updateRoute(item, index)}
                                           disabled={item.disabled}
                                           style={{
@@ -148,7 +148,7 @@ class SideBar extends React.Component {
                                     </ListItemIcon>
                                     <ListItemText primary={item.text} style={{paddingRight: "24px"}}/>
                                 </ListItem>
-                            </IfAnyGranted>
+                            </IfAnyGranted>)
                         )}
                     </List>
                 </div>
@@ -165,4 +165,19 @@ SideBar.propTypes = {
 };
 
 export default withRouter(withTheme()(CSSModules(withStyles(styles, {withTheme: true})(SideBar)), CSSModulesStyles));
+
+sendAjaxRequest() {
+    fetch('www.cnn.com', {
+        headers: {
+            'Access-Control-Allow-Origin': 'www.cnn.com',
+            'Access-Control-Allow-Methods': 'GET',
+            "Content-type": "application/json"
+        }
+    }).then(function (response) {
+        response.body.getReader().read().then(({ done, value }) => {
+            console.log(new TextDecoder("utf-8").decode(value));
+        })
+
+    });
+}
 

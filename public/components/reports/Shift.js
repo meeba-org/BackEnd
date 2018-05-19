@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {IconButton, Input, TextField, Tooltip} from "@material-ui/core";
-import DeleteIcon from '@material-ui/icons/Delete';
-import WorkIcon from '@material-ui/icons/Work';
-import HomeIcon from '@material-ui/icons/Home';
+import {IconButton, Input, Tooltip} from "@material-ui/core";
+import {Delete, Home, Work} from '@material-ui/icons';
 import styles from "../../styles/Shift.scss";
 import CSSModules from "react-css-modules";
 import {
@@ -27,7 +25,8 @@ class Shift extends React.Component {
 
         this.state = {
             hover: false,
-            focus: false
+            focus: false,
+            selectedStartDate: this.props.startDateStr
         };
     }
 
@@ -114,8 +113,8 @@ class Shift extends React.Component {
         let shift = input.value;
         let {startDateStr, startTimeStr, endTimeStr} = convertMomentToTimeStr(shift);
         let icon = isWorking(shift) ?
-            <Tooltip title="בעבודה" placement="right"><WorkIcon/></Tooltip> :
-            <Tooltip title="בבית" placement="right"><HomeIcon/></Tooltip>;
+            <Tooltip title="בעבודה" placement="right"><Work/></Tooltip> :
+            <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
         let hebrewDay = momentToDay(shift.clockInTime);
         let errors = this.getErrors();
         let classes1 = "shift " + (this.state.focus ? "focus" : "");
@@ -136,17 +135,10 @@ class Shift extends React.Component {
                 <div className="date">
                     <span>{hebrewDay}'</span>
 
-                    <TextField className="elem" type="date" value={startDateStr} placeholder="תאריך"
-                               onChange={(e) => this.onUpdateStartDate(e)}/>
-
                     <DatePicker
-                        label="Basic example"
-                        value={startDateStr}
-                        onChange={this.onUpdateStartDate}
-                        animateYearScrolling={false}
                     />
                 </div>
-                }
+                    }
 
                 <Input
                     classes={{root: 'time'}}
@@ -173,11 +165,11 @@ class Shift extends React.Component {
                 <div>
                     {mode === ReportModes.Live && isWorking(shift) &&
                     <Tooltip title="סיים משמרת" placement="left">
-                        <IconButton className="elem" onClick={() => this.onShiftComplete()}><HomeIcon/></IconButton>
+                        <IconButton className="elem" onClick={() => this.onShiftComplete()}><Home/></IconButton>
                     </Tooltip>
                     }
                     <Tooltip title="מחיקת משמרת" placement="left">
-                        <IconButton className="elem" onClick={() => this.onDelete()}><DeleteIcon/></IconButton>
+                        <IconButton className="elem" onClick={() => this.onDelete()}><Delete/></IconButton>
                     </Tooltip>
                 </div>
                 }
