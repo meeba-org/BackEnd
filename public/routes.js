@@ -1,8 +1,9 @@
 import React from "react";
+import {Route} from "react-router";
 import AppContainer from "./components/AppContainer";
 
 export default (
-    <AppContainer/>
+    <Route path="/" component={AppContainer} />
 );
 
 function requireAuth(nextState, replace) {

@@ -58,12 +58,7 @@ export default {
             {test: /\.scss$/, use: [
                 {loader: "style-loader"},
                 {loader: "css-loader"},
-                {loader: "sass-loader",options: {
-                    includePaths: [
-                        path.resolve(__dirname, 'node_modules/sass-material-colors/sass/sass-material-colors'),
-                        path.resolve(__dirname, 'public/styles')
-                    ]
-                }}
+                {loader: "sass-loader"}
             ]}
         ]
     }
