@@ -49,14 +49,14 @@ class Features extends Component {
 
                 <div className="features-container">
                     {this.state.features.map((feature, index) =>
-                        (<Feature
+                        <Feature
                             key={index}
                             icon={feature.icon}
                             title={feature.title}
                             description={feature.description}
                             sideContent={feature.sideContent}
                             dialogContent={feature.dialogContent}
-                        />)
+                        />
                     )}
                 </div>
             </div>

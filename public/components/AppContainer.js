@@ -1,19 +1,19 @@
-import React, {Component} from 'react';
-import CSSModules from "react-css-modules";
-import {DatePicker} from "material-ui-pickers";
-import styles from "../styles/App.scss";
+import React from 'react';
+import App from "./App";
+import PropTypes from 'prop-types';
 
-class AppContainer extends Component {
+class AppContainer extends React.Component {
     render() {
         return (
-            <DatePicker />
+            <App>
+                {this.props.children}
+            </App>
         );
     }
 }
 
-const MyComponent = () => {
-    return (
-        <DatePicker/>
-    );
+AppContainer.propTypes = {
+    children: PropTypes.object.isRequired
 };
-export default CSSModules(AppContainer, styles);
+
+export default AppContainer;

@@ -145,7 +145,7 @@ class MonthlyReport extends React.Component {
                         <Divider className="divider"/>
 
                         {fields && fields.map((employeeShiftsReport, index) =>
-                            (<Field component={MonthlyReportLine}
+                            <Field component={MonthlyReportLine}
                                    name={employeeShiftsReport}
                                    isCollapsed={this.isCollapsed(fields, index)}
                                    key={index}
@@ -153,7 +153,7 @@ class MonthlyReport extends React.Component {
                                    onDeleteShift={this.onDeleteShift}
                                    onUpdateShift={this.onUpdateShift}
                                    onCreateShift={this.onCreateShift}
-                            />)
+                            />
                         )}
                         {(!fields || (fields.length == 0)) &&
                             <NoData text="לא נמצאו משמרות"/>

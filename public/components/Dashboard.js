@@ -8,6 +8,8 @@ import AppBar from "./AppBar";
 import {connect} from "react-redux";
 import {loadUserFromToken} from "../actions/index";
 import * as selectors from "../selectors";
+import {MuiPickersUtilsProvider} from "material-ui-pickers";
+import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 
 class Dashboard extends React.Component {
 
@@ -29,9 +31,9 @@ class Dashboard extends React.Component {
                             <SideBar userRole={userRole}/>
                         </Paper>
                         <Paper id="main-container">
-                            {/*<MuiPickersUtilsProvider utils={MomentUtils}>*/}
+                            <MuiPickersUtilsProvider utils={MomentUtils}>
                             {this.props.children}
-                            {/*</MuiPickersUtilsProvider>*/}
+                            </MuiPickersUtilsProvider>
                         </Paper>
                     </div>
                 </div>
