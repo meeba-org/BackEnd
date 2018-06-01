@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from "../styles/Dashboard.scss";
+import SideBar from "./SideBar";
+import {Paper} from "@material-ui/core";
+import AppBar from "./AppBar";
 import {connect} from "react-redux";
 import {loadUserFromToken} from "../actions/index";
 import * as selectors from "../selectors";
-import {DatePicker, MuiPickersUtilsProvider} from "material-ui-pickers";
-import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 
 class Dashboard extends React.Component {
 
@@ -18,18 +19,26 @@ class Dashboard extends React.Component {
         let {router, userRole} = this.props;
 
         return (
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-                <DatePicker />
-            </MuiPickersUtilsProvider>
+            <div id="dashboard">
+                <div id="dashboard-container">
+                    <div id="appBar-container">
+                        <AppBar router={router}/>
+                    </div>
+                    <div id="grid-container">
+                        <Paper id="sideBar-container">
+                            <SideBar userRole={userRole}/>
+                        </Paper>
+                        <Paper id="main-container">
+                            {/*<MuiPickersUtilsProvider utils={MomentUtils}>*/}
+                            {this.props.children}
+                            {/*</MuiPickersUtilsProvider>*/}
+                        </Paper>
+                    </div>
+                </div>
+            </div>
         );
     }
 }
-
-const MyDashboard = () => (
-    <MuiPickersUtilsProvider utils={MomentUtils}>
-        <DatePicker />
-    </MuiPickersUtilsProvider>
-);
 
 Dashboard.propTypes = {
     loadUserFromToken: PropTypes.func.isRequired,
@@ -52,5 +61,5 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(MyDashboard, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(Dashboard, styles));
 

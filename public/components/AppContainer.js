@@ -1,25 +1,19 @@
 import React, {Component} from 'react';
 import CSSModules from "react-css-modules";
-import {DatePicker, MuiPickersUtilsProvider} from "material-ui-pickers";
-import MomentUtils from 'material-ui-pickers/utils/moment-utils';
+import {DatePicker} from "material-ui-pickers";
+import styles from "../styles/App.scss";
 
 class AppContainer extends Component {
     render() {
         return (
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-                HOC
-                <DatePicker />
-            </MuiPickersUtilsProvider>
+            <DatePicker />
         );
     }
 }
 
 const MyComponent = () => {
     return (
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-            DUMB
-            <DatePicker />
-        </MuiPickersUtilsProvider>
+        <DatePicker/>
     );
 };
-export default CSSModules(AppContainer);
+export default CSSModules(AppContainer, styles);
