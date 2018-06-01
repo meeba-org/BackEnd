@@ -30,9 +30,17 @@ class Shift extends React.Component {
         };
     }
 
-    onUpdateStartDate(e) {
+    onUpdateStartDate2(e) {
         let {startTimeStr, endTimeStr} = convertMomentToTimeStr(this.props.input.value);
         let newStartDateStr = e.target.value;
+
+        this.onUpdate(newStartDateStr, startTimeStr, endTimeStr);
+    }
+
+    onUpdateStartDate(date) {
+        console.log("test");
+        let {startTimeStr, endTimeStr} = convertMomentToTimeStr(this.props.input.value);
+        let newStartDateStr = date.format("YYYY-MM-DD");
 
         this.onUpdate(newStartDateStr, startTimeStr, endTimeStr);
     }
@@ -135,8 +143,7 @@ class Shift extends React.Component {
                 <div className="date">
                     <span>{hebrewDay}'</span>
 
-                    <DatePicker
-                    />
+                    <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={startDateStr}/>
                 </div>
                     }
 
