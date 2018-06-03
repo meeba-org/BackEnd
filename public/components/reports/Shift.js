@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {IconButton, Input, Tooltip} from "@material-ui/core";
+import {IconButton, Tooltip} from "@material-ui/core";
 import {Delete, Home, Work} from '@material-ui/icons';
-import styles from "../../styles/Shift.scss";
 import CSSModules from "react-css-modules";
 import {
     convertMomentToTimeStr,
@@ -15,10 +14,9 @@ import {
 } from "../../helpers/utils";
 import moment from "moment";
 import WarningIcon from "./WarningIcon";
-import TimeMaskCustom from "./TimeMaskCustom";
-import {DatePicker} from "material-ui-pickers";
+import {DatePicker, TimePicker} from "material-ui-pickers";
 
-class Shift extends React.Component {
+class Shift extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -45,16 +43,24 @@ class Shift extends React.Component {
         this.onUpdate(newStartDateStr, startTimeStr, endTimeStr);
     }
 
-    onUpdateStartTime(e) {
+    onUpdateStartTime2(e) {
         let {startDateStr, endTimeStr} = convertMomentToTimeStr(this.props.input.value);
         let newStartTimeStr = fillBlanks(e.target.value);
 
         this.onUpdate(startDateStr, newStartTimeStr, endTimeStr);
     }
 
-    onUpdateEndTime(e) {
+    onUpdateStartTime(time) {
+        let {startDateStr, endTimeStr} = convertMomentToTimeStr(this.props.input.value);
+        let newStartTimeStr = time.format("HH:mm");
+
+        this.onUpdate(startDateStr, newStartTimeStr, endTimeStr);
+    }
+
+
+    onUpdateEndTime(time) {
         let {startDateStr, startTimeStr} = convertMomentToTimeStr(this.props.input.value);
-        let newEndTimeStr = fillBlanks(e.target.value);
+        let newEndTimeStr = time.format("HH:mm");
 
         this.onUpdate(startDateStr, startTimeStr, newEndTimeStr);
     }
@@ -143,24 +149,25 @@ class Shift extends React.Component {
                 <div className="date">
                     <span>{hebrewDay}'</span>
 
-                    <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={startDateStr}/>
+                    <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={startDateStr} format="DD/MM/YYYY"/>
                 </div>
                     }
 
-                <Input
-                    classes={{root: 'time'}}
-                    value={startTimeStr}
-                    inputComponent={TimeMaskCustom}
-                    onChange={(e) => this.onUpdateStartTime(e)}
+                <TimePicker className="time"
+                    ampm={false}
+                    autoOk
+                    value={shift.clockInTime}
+                    onChange={(time) => this.onUpdateStartTime(time)}
                 />
 
                 {(mode === ReportModes.Report || !!endTimeStr) &&
 
-                    <Input
-                        classes={{root: 'time'}}
-                        value={endTimeStr}
-                        inputComponent={TimeMaskCustom}
-                        onChange={(e) => {this.onUpdateEndTime(e);}}
+                    <TimePicker
+                        className="time"
+                        ampm={false}
+                        autoOk
+                        value={moment(endTimeStr, 'HH:mm')}
+                        onChange={(time) => this.onUpdateEndTime(time)}
                     />
                 }
                 {errors &&
@@ -193,4 +200,4 @@ Shift.propTypes = {
     mode: PropTypes.number.isRequired,
 };
 
-export default CSSModules(Shift, styles);
+export default CSSModules(Shift);

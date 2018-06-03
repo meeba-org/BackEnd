@@ -5,7 +5,6 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import {FieldArray} from "redux-form";
 import ShiftsList from "./ShiftsList";
-import styles from "../../styles/MonthlyReportLine.scss";
 import CSSModules from "react-css-modules";
 import HoursBar from '../HoursBar';
 import {ReportModes} from "../../helpers/utils";
@@ -76,5 +75,5 @@ MonthlyReportLine.propTypes = {
     isCollapsed: PropTypes.bool.isRequired,
 };
 
-export default CSSModules(MonthlyReportLine, styles);
+export default CSSModules(MonthlyReportLine);
 

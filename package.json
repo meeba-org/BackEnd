@@ -1,189 +1,189 @@
 {
-  "name": "meeba-web",
-  "version": "1.0.0",
-  "description": "BackEnd & FrontEnd of meeba - Time Tracking",
-  "main": "server.js",
-  "engines": {
-    "node": "8.x"
-  },
-  "scripts": {
-    "preinstall": "node tools/nodeVersionCheck.js",
-    "start-message": "babel-node tools/startMessage.js",
-    "start-server": "gulp develop",
-    "predev": "npm-run-all --parallel start-message",
-    "start": "node server.js",
-    "dev": "npm-run-all --parallel open:src lint:watch start-server ",
-    "open:src": "babel-node tools/srcServer.js",
-    "open:dist": "babel-node tools/distServer.js",
-    "lint": "eslint --fix webpack.config.* public tools --color",
-    "lint:watch": "npm run lint",
-    "clean-dist": "npm run remove-dist && mkdir dist",
-    "heroku-postbuild": "npm run build",
-    "remove-dist": "rimraf ./dist",
-    "prebuild": "npm run clean-dist",
-    "build": "webpack --config ./webpack.config.prod.js --progress --colors",
-    "test-fe": "jest",
-    "test:CI": "babel-node tools/testCi.js",
-    "test:cover": "npm run test-fe -- --coverage ",
-    "test:cover:CI": "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
-    "test:watch": "npm run test-fe -- --watch",
-    "open:cover": "npm run test:cover && opn ./coverage/lcov-report/index.html",
-    "analyze-bundle": "babel-node ./tools/analyzeBundle.js",
-    "test": "mocha ./test/**/*.spec.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/meeba-org/meeba-web.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/meeba-org/meeba-web/issues"
-  },
-  "homepage": "https://github.com/meeba-org/meeba-web#readme",
-  "dependencies": {
-    "@material-ui/core": "^1.0.0-rc.1",
-    "@material-ui/icons": "^1.0.0-rc.0",
-    "autoprefixer": "6.5.4",
-    "autosuggest-highlight": "^3.1.1",
-    "axios": "0.16.2",
-    "babel-core": "6.20.0",
-    "babel-loader": "6.2.10",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-react-constant-elements": "6.9.1",
-    "babel-plugin-transform-react-remove-prop-types": "0.2.11",
-    "babel-polyfill": "6.20.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "6.16.0",
-    "babel-preset-stage-3": "^6.24.1",
-    "bcryptjs": "*",
-    "body-parser": "*",
-    "classnames": "^2.2.5",
-    "compression": "^1.7.2",
-    "cookie-parser": "^1.4.3",
-    "css-loader": "0.26.1",
-    "dotenv": "^4.0.0",
-    "exceljs": "^0.6.2",
-    "express": "4.15.4",
-    "express-jwt": "^5.3.0",
-    "express-messages": "*",
-    "express-session": "*",
-    "express-sslify": "^1.2.0",
-    "express-validator": "^4.3.0",
-    "file-loader": "0.9.0",
-    "file-saver": "^1.3.3",
-    "html-webpack-plugin": "2.24.1",
-    "jss-rtl": "^0.2.1",
-    "material-ui-pickers": "^1.0.0-rc.9",
-    "moment": "^2.19.3",
-    "moment-timezone": "^0.5.14",
-    "mongodb": "^2.2.34",
-    "mongoose": "^4.13.9",
-    "node-sass": "^4.7.2",
-    "object-assign": "4.1.0",
-    "passport-http": "*",
-    "passport-local": "*",
-    "react": "^16.3.1",
-    "react-addons-css-transition-group": "^15.6.2",
-    "react-authorization": "0.0.2",
-    "react-autosuggest": "^9.3.2",
-    "react-css-modules": "^4.7.3",
-    "react-dom": "^16.3.1",
-    "react-redux": "5.0.5",
-    "react-router": "~3",
-    "react-router-redux": "4.0.8",
-    "react-text-mask": "^5.1.0",
-    "redux": "3.6.0",
-    "redux-debounced": "^0.4.0",
-    "redux-form": "7.0.3",
-    "redux-immutable-state-invariant": "1.2.4",
-    "redux-thunk": "2.1.0",
-    "rimraf": "2.5.4",
-    "sass-loader": "6.0.2",
-    "sass-material-colors": "0.0.5",
-    "script-ext-html-webpack-plugin": "^2.0.1",
-    "style-loader": "0.13.1",
-    "supertest": "^3.0.0",
-    "url-loader": "0.5.7",
-    "webpack": "^3.10.0",
-    "webpack-chunk-hash": "^0.5.0"
-  },
-  "devDependencies": {
-    "babel-cli": "6.18.0",
-    "babel-eslint": "^8.2.3",
-    "babel-jest": "18.0.0",
-    "babel-preset-react-hmre": "1.1.1",
-    "browser-sync": "2.18.5",
-    "chai": "^4.1.2",
-    "chalk": "1.1.3",
-    "connect-history-api-fallback": "1.3.0",
-    "coveralls": "2.11.15",
-    "enzyme": "2.8.2",
-    "eslint": "^4.19.1",
-    "eslint-plugin-import": "2.2.0",
-    "eslint-plugin-react": "6.8.0",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "gulp-jshint": "^2.1.0",
-    "gulp-nodemon": "^2.2.1",
-    "identity-obj-proxy": "3.0.0",
-    "jest": "18.1.0",
-    "jshint": "^2.9.4",
-    "json-loader": "0.5.4",
-    "mocha": "^3",
-    "mockdate": "2.0.1",
-    "npm-run-all": "3.1.2",
-    "opn-cli": "3.1.0",
-    "postcss-loader": "1.2.1",
-    "prompt": "1.0.0",
-    "prop-types": "15.5.10",
-    "raw-loader": "^0.5.1",
-    "react-hot-loader": "^3.0.0",
-    "react-test-renderer": "15.5.4",
-    "replace": "0.3.0",
-    "resolve-url-loader": "2.1.0",
-    "webpack-bundle-analyzer": "2.1.1",
-    "webpack-dev-middleware": "1.9.0",
-    "webpack-dev-server": "^2.10.0",
-    "webpack-hot-middleware": "2.17.1"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(css|scss)$": "identity-obj-proxy",
-      "^.+\\.(gif|ttf|eot|svg|woff|woff2|ico)$": "<rootDir>/tools/fileMock.js"
+    "name": "meeba-web",
+    "version": "1.0.0",
+    "description": "BackEnd & FrontEnd of meeba - Time Tracking",
+    "main": "server.js",
+    "engines": {
+        "node": "8.x"
+    },
+    "scripts": {
+        "preinstall": "node tools/nodeVersionCheck.js",
+        "start-message": "babel-node tools/startMessage.js",
+        "start-server": "gulp develop",
+        "predev": "npm-run-all --parallel start-message",
+        "start": "node server.js",
+        "dev": "npm-run-all --parallel open:src lint:watch start-server ",
+        "open:src": "babel-node tools/srcServer.js",
+        "open:dist": "babel-node tools/distServer.js",
+        "lint": "eslint --fix webpack.config.* public tools --color",
+        "lint:watch": "npm run lint",
+        "clean-dist": "npm run remove-dist && mkdir dist",
+        "heroku-postbuild": "npm run build",
+        "remove-dist": "rimraf ./dist",
+        "prebuild": "npm run clean-dist",
+        "build": "webpack --config ./webpack.config.prod.js --progress --colors",
+        "test-fe": "jest",
+        "test:CI": "babel-node tools/testCi.js",
+        "test:cover": "npm run test-fe -- --coverage ",
+        "test:cover:CI": "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
+        "test:watch": "npm run test-fe -- --watch",
+        "open:cover": "npm run test:cover && opn ./coverage/lcov-report/index.html",
+        "analyze-bundle": "babel-node ./tools/analyzeBundle.js",
+        "test": "mocha ./test/**/*.spec.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/meeba-org/meeba-web.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/meeba-org/meeba-web/issues"
+    },
+    "homepage": "https://github.com/meeba-org/meeba-web#readme",
+    "dependencies": {
+        "@material-ui/core": "^1.1.0",
+        "@material-ui/icons": "^1.1.0",
+        "autoprefixer": "6.5.4",
+        "autosuggest-highlight": "^3.1.1",
+        "axios": "0.16.2",
+        "babel-core": "6.20.0",
+        "babel-loader": "6.2.10",
+        "babel-plugin-transform-class-properties": "^6.24.1",
+        "babel-plugin-transform-react-constant-elements": "6.9.1",
+        "babel-plugin-transform-react-remove-prop-types": "0.2.11",
+        "babel-polyfill": "6.20.0",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-react": "6.16.0",
+        "babel-preset-stage-3": "^6.24.1",
+        "bcryptjs": "*",
+        "body-parser": "*",
+        "classnames": "^2.2.5",
+        "compression": "^1.7.2",
+        "cookie-parser": "^1.4.3",
+        "css-loader": "0.26.1",
+        "dotenv": "^4.0.0",
+        "exceljs": "^0.6.2",
+        "express": "4.15.4",
+        "express-jwt": "^5.3.0",
+        "express-messages": "*",
+        "express-session": "*",
+        "express-sslify": "^1.2.0",
+        "express-validator": "^4.3.0",
+        "file-loader": "0.9.0",
+        "file-saver": "^1.3.3",
+        "html-webpack-plugin": "2.24.1",
+        "jss-rtl": "^0.2.1",
+        "material-ui-pickers": "^1.0.0-rc.9",
+        "moment": "^2.19.3",
+        "moment-timezone": "^0.5.14",
+        "mongodb": "^2.2.34",
+        "mongoose": "^4.13.9",
+        "node-sass": "^4.7.2",
+        "object-assign": "4.1.0",
+        "passport-http": "*",
+        "passport-local": "*",
+        "react": "^16.3.1",
+        "react-addons-css-transition-group": "^15.6.2",
+        "react-authorization": "0.0.2",
+        "react-autosuggest": "^9.3.2",
+        "react-css-modules": "^4.7.3",
+        "react-dom": "^16.3.1",
+        "react-redux": "5.0.5",
+        "react-router": "~3",
+        "react-router-redux": "4.0.8",
+        "react-text-mask": "^5.1.0",
+        "redux": "3.6.0",
+        "redux-debounced": "^0.4.0",
+        "redux-form": "7.0.3",
+        "redux-immutable-state-invariant": "1.2.4",
+        "redux-thunk": "2.1.0",
+        "rimraf": "2.5.4",
+        "sass-loader": "6.0.2",
+        "sass-material-colors": "0.0.5",
+        "script-ext-html-webpack-plugin": "^2.0.1",
+        "style-loader": "0.13.1",
+        "supertest": "^3.0.0",
+        "url-loader": "0.5.7",
+        "webpack": "^3.10.0",
+        "webpack-chunk-hash": "^0.5.0"
+    },
+    "devDependencies": {
+        "babel-cli": "6.18.0",
+        "babel-eslint": "^8.2.3",
+        "babel-jest": "18.0.0",
+        "babel-preset-react-hmre": "1.1.1",
+        "browser-sync": "2.18.5",
+        "chai": "^4.1.2",
+        "chalk": "1.1.3",
+        "connect-history-api-fallback": "1.3.0",
+        "coveralls": "2.11.15",
+        "enzyme": "2.8.2",
+        "eslint": "^4.19.1",
+        "eslint-plugin-import": "2.2.0",
+        "eslint-plugin-react": "6.8.0",
+        "extract-text-webpack-plugin": "^3.0.2",
+        "gulp-jshint": "^2.1.0",
+        "gulp-nodemon": "^2.2.1",
+        "identity-obj-proxy": "3.0.0",
+        "jest": "18.1.0",
+        "jshint": "^2.9.4",
+        "json-loader": "0.5.4",
+        "mocha": "^3",
+        "mockdate": "2.0.1",
+        "npm-run-all": "3.1.2",
+        "opn-cli": "3.1.0",
+        "postcss-loader": "1.2.1",
+        "prompt": "1.0.0",
+        "prop-types": "15.5.10",
+        "raw-loader": "^0.5.1",
+        "react-hot-loader": "^3.0.0",
+        "react-test-renderer": "15.5.4",
+        "replace": "0.3.0",
+        "resolve-url-loader": "2.1.0",
+        "webpack-bundle-analyzer": "2.1.1",
+        "webpack-dev-middleware": "1.9.0",
+        "webpack-dev-server": "^2.10.0",
+        "webpack-hot-middleware": "2.17.1"
+    },
+    "jest": {
+        "moduleNameMapper": {
+            "\\.(css|scss)$": "identity-obj-proxy",
+            "^.+\\.(gif|ttf|eot|svg|woff|woff2|ico)$": "<rootDir>/tools/fileMock.js"
+        }
+    },
+    "babel": {
+        "env": {
+            "development": {
+                "presets": [
+                    "es2015",
+                    "react",
+                    "react-hmre",
+                    "stage-3"
+                ],
+                "plugins": [
+                    "transform-class-properties"
+                ]
+            },
+            "production": {
+                "presets": [
+                    "es2015",
+                    "react",
+                    "stage-3"
+                ],
+                "plugins": [
+                    "transform-class-properties",
+                    "transform-react-constant-elements",
+                    "transform-react-remove-prop-types"
+                ]
+            },
+            "test": {
+                "presets": [
+                    "es2015",
+                    "react",
+                    "stage-3"
+                ]
+            }
+        }
     }
-  },
-  "babel": {
-    "env": {
-      "development": {
-        "presets": [
-          "es2015",
-          "react",
-          "react-hmre",
-          "stage-3"
-        ],
-        "plugins": [
-          "transform-class-properties"
-        ]
-      },
-      "production": {
-        "presets": [
-          "es2015",
-          "react",
-          "stage-3"
-        ],
-        "plugins": [
-          "transform-class-properties",
-          "transform-react-constant-elements",
-          "transform-react-remove-prop-types"
-        ]
-      },
-      "test": {
-        "presets": [
-          "es2015",
-          "react",
-          "stage-3"
-        ]
-      }
-    }
-  }
 }

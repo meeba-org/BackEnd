@@ -2,7 +2,6 @@ import React from "react";
 import {Field} from "redux-form";
 import PropTypes from 'prop-types';
 import Shift from "./Shift";
-import styles from "../../styles/ShiftsList.scss";
 import CSSModules from "react-css-modules";
 import NoData from "../NoData";
 
@@ -54,4 +53,4 @@ ShiftsList.propTypes = {
     shouldDisplayNoData: PropTypes.bool,
     mode: PropTypes.number.isRequired,
 };
-export default CSSModules(ShiftsList, styles);
+export default CSSModules(ShiftsList);

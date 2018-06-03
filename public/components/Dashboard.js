@@ -11,7 +11,7 @@ import * as selectors from "../selectors";
 import {MuiPickersUtilsProvider} from "material-ui-pickers";
 import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 
-class Dashboard extends React.Component {
+class Dashboard extends React.PureComponent {
 
     componentWillMount() {
         this.props.loadUserFromToken();
