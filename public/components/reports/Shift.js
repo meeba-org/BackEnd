@@ -15,6 +15,7 @@ import {
 import moment from "moment";
 import WarningIcon from "./WarningIcon";
 import {DatePicker, TimePicker} from "material-ui-pickers";
+import styles from "../../styles/Shift.scss";
 
 class Shift extends React.PureComponent {
 
@@ -135,10 +136,10 @@ class Shift extends React.PureComponent {
 
         return (
             <div className={classes1} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}
-                onFocus={this.onFocus} onBlur={this.onBlur}>
+                 onFocus={this.onFocus} onBlur={this.onBlur}>
                 <div className="name-container">
                     {mode === ReportModes.Live &&
-                        <IconButton className="icon">{icon}</IconButton>
+                    <IconButton className="icon">{icon}</IconButton>
                     }
                     {showNames &&
                     <div className="name">{shift.user && shift.user.firstName}</div>
@@ -149,31 +150,32 @@ class Shift extends React.PureComponent {
                 <div className="date">
                     <span>{hebrewDay}'</span>
 
-                    <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={startDateStr} format="DD/MM/YYYY"/>
+                    <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={startDateStr}
+                                format="DD/MM/YYYY"/>
                 </div>
-                    }
+                }
 
                 <TimePicker className="time"
-                    ampm={false}
-                    autoOk
-                    value={shift.clockInTime}
-                    onChange={(time) => this.onUpdateStartTime(time)}
+                            ampm={false}
+                            autoOk
+                            value={shift.clockInTime}
+                            onChange={(time) => this.onUpdateStartTime(time)}
                 />
 
                 {(mode === ReportModes.Report || !!endTimeStr) &&
 
-                    <TimePicker
-                        className="time"
-                        ampm={false}
-                        autoOk
-                        value={moment(endTimeStr, 'HH:mm')}
-                        onChange={(time) => this.onUpdateEndTime(time)}
-                    />
+                <TimePicker
+                    className="time"
+                    ampm={false}
+                    autoOk
+                    value={moment(endTimeStr, 'HH:mm')}
+                    onChange={(time) => this.onUpdateEndTime(time)}
+                />
                 }
                 {errors &&
-                    <div className="warning">
-                        <WarningIcon  text={errors} />
-                    </div>
+                <div className="warning">
+                    <WarningIcon text={errors}/>
+                </div>
                 }
                 {this.state.hover &&
                 <div>
@@ -200,4 +202,4 @@ Shift.propTypes = {
     mode: PropTypes.number.isRequired,
 };
 
-export default CSSModules(Shift);
+export default CSSModules(Shift, styles);
