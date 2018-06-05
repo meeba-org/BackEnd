@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import ModalRoot from "./modals/ModalRoot";
+import styles from "../styles/App.scss";
 
 class App extends React.Component {
 
@@ -9,7 +10,7 @@ class App extends React.Component {
         return (
             <div>
                 {this.props.children}
-                <ModalRoot />
+                <ModalRoot/>
             </div>
         );
     }

@@ -2,6 +2,7 @@ import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import autoprefixer from "autoprefixer";
 import path from "path";
+const ExtractTextPlugin  = require('extract-text-webpack-plugin');
 
 export default {
     resolve: {
@@ -45,7 +46,8 @@ export default {
                 context: '/',
                 postcss: () => [autoprefixer],
             }
-        })
+        }),
+        new ExtractTextPlugin("styles.css")
     ],
     module: {
         rules: [
@@ -55,16 +57,26 @@ export default {
             {test: /\.[ot]tf(\?v=\d+.\d+.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream'},
             {test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader?name=[name].[ext]'},
             {test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
-            {test: /\.scss$/, use: [
-                {loader: "style-loader"},
-                {loader: "css-loader"},
-                {loader: "sass-loader",options: {
-                    includePaths: [
-                        path.resolve(__dirname, 'node_modules/sass-material-colors/sass/sass-material-colors'),
-                        path.resolve(__dirname, 'public/styles')
+            {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                   fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader'
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                includePaths: [
+                                    path.resolve(__dirname, 'src/scss'),
+                                    path.resolve(__dirname, "node_modules/foundation-sites/scss")
+                                ]
+                            }
+                        }
                     ]
-                }}
-            ]}
+                }),
+            }
         ]
     }
 };

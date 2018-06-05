@@ -15,6 +15,7 @@ import {
 import moment from "moment";
 import WarningIcon from "./WarningIcon";
 import {DatePicker, TimePicker} from "material-ui-pickers";
+import styles from "../../styles/Shift.scss";
 
 class Shift extends React.PureComponent {
 
@@ -134,56 +135,57 @@ class Shift extends React.PureComponent {
         let classes1 = "shift " + (this.state.focus ? "focus" : "");
 
         return (
-            <div className={classes1} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}
-                onFocus={this.onFocus} onBlur={this.onBlur}>
-                <div className="name-container">
+            <div styleName={classes1} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}
+                 onFocus={this.onFocus} onBlur={this.onBlur}>
+                <div styleName="name-container">
                     {mode === ReportModes.Live &&
-                        <IconButton className="icon">{icon}</IconButton>
+                    <IconButton styleName="icon">{icon}</IconButton>
                     }
                     {showNames &&
-                    <div className="name">{shift.user && shift.user.firstName}</div>
+                    <div styleName="name">{shift.user && shift.user.firstName}</div>
                     }
                 </div>
 
                 {mode === ReportModes.Report &&
-                <div className="date">
+                <div styleName="date">
                     <span>{hebrewDay}'</span>
 
-                    <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={startDateStr} format="DD/MM/YYYY"/>
+                    <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={startDateStr}
+                                format="DD/MM/YYYY"/>
                 </div>
-                    }
+                }
 
-                <TimePicker className="time"
-                    ampm={false}
-                    autoOk
-                    value={shift.clockInTime}
-                    onChange={(time) => this.onUpdateStartTime(time)}
+                <TimePicker styleName="time"
+                            ampm={false}
+                            autoOk
+                            value={shift.clockInTime}
+                            onChange={(time) => this.onUpdateStartTime(time)}
                 />
 
                 {(mode === ReportModes.Report || !!endTimeStr) &&
 
-                    <TimePicker
-                        className="time"
-                        ampm={false}
-                        autoOk
-                        value={moment(endTimeStr, 'HH:mm')}
-                        onChange={(time) => this.onUpdateEndTime(time)}
-                    />
+                <TimePicker
+                    styleName="time"
+                    ampm={false}
+                    autoOk
+                    value={moment(endTimeStr, 'HH:mm')}
+                    onChange={(time) => this.onUpdateEndTime(time)}
+                />
                 }
                 {errors &&
-                    <div className="warning">
-                        <WarningIcon  text={errors} />
-                    </div>
+                <div styleName="warning">
+                    <WarningIcon text={errors}/>
+                </div>
                 }
                 {this.state.hover &&
                 <div>
                     {mode === ReportModes.Live && isWorking(shift) &&
                     <Tooltip title="סיים משמרת" placement="left">
-                        <IconButton className="elem" onClick={() => this.onShiftComplete()}><Home/></IconButton>
+                        <IconButton styleName="elem" onClick={() => this.onShiftComplete()}><Home/></IconButton>
                     </Tooltip>
                     }
                     <Tooltip title="מחיקת משמרת" placement="left">
-                        <IconButton className="elem" onClick={() => this.onDelete()}><Delete/></IconButton>
+                        <IconButton styleName="elem" onClick={() => this.onDelete()}><Delete/></IconButton>
                     </Tooltip>
                 </div>
                 }
@@ -200,4 +202,4 @@ Shift.propTypes = {
     mode: PropTypes.number.isRequired,
 };
 
-export default CSSModules(Shift);
+export default CSSModules(Shift, styles);
