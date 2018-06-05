@@ -23,7 +23,7 @@
 // TextInput.propTypes = {
 //     type: PropTypes.string.isRequired,
 //     label: PropTypes.string,
-//     className: PropTypes.string.isRequired,
+//     styleName: PropTypes.string.isRequired,
 //     onUpdate: PropTypes.func.isRequired,
 //     name: PropTypes.string.isRequired,
 //     value: PropTypes.string.isRequired,

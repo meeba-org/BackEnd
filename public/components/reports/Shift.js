@@ -142,7 +142,7 @@ class Shift extends React.PureComponent {
                     <IconButton styleName="icon">{icon}</IconButton>
                     }
                     {showNames &&
-                    <div styleName="name">{shift.user && shift.user.firstName}</div>
+                    <div className="name">{shift.user && shift.user.firstName}</div>
                     }
                 </div>
 
@@ -202,4 +202,4 @@ Shift.propTypes = {
     mode: PropTypes.number.isRequired,
 };
 
-export default CSSModules(Shift, styles);
+export default CSSModules(Shift, styles, {allowMultiple: true});

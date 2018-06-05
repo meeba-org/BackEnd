@@ -7,7 +7,7 @@ class NoData extends Component {
     render() {
         let text = this.props.text || "לא נמצאו תוצאות";
         return (
-            <div className="no-data">
+            <div styleName="no-data">
                 {text}
             </div>
         );

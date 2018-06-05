@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import Shift from "./Shift";
 import CSSModules from "react-css-modules";
 import NoData from "../NoData";
+import styles from "../../styles/ShiftsList.scss";
 
 class ShiftsList extends React.Component {
     onCreate(fields) {
-        let newEntity = {
-        };
+        let newEntity = {};
         fields.push(newEntity);
         this.props.onCreate(newEntity);
     }
@@ -25,19 +25,19 @@ class ShiftsList extends React.Component {
     render() {
         let {fields, showNames, mode, shouldDisplayNoData} = this.props;
         return (
-            <div className="shifts-list">
+            <div styleName="shifts-list">
                 {fields && fields.map((shiftName, index) =>
                     <Field
                         component={Shift}
                         name={shiftName} key={index}
-                        onDelete={()=> this.onDelete(fields, index)}
+                        onDelete={() => this.onDelete(fields, index)}
                         onUpdate={(shift, input) => this.onUpdate(shift, input)}
                         showNames={showNames}
                         mode={mode}
                     />
                 )}
                 {shouldDisplayNoData && (!fields || (fields.length == 0)) &&
-                    <NoData text="לא נמצאו משמרות"/>
+                <NoData text="לא נמצאו משמרות"/>
                 }
             </div>
         );
@@ -53,4 +53,4 @@ ShiftsList.propTypes = {
     shouldDisplayNoData: PropTypes.bool,
     mode: PropTypes.number.isRequired,
 };
-export default CSSModules(ShiftsList);
+export default CSSModules(ShiftsList, styles);

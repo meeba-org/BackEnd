@@ -13,15 +13,15 @@ class Feature extends Component {
         let {icon, title, description, sideContent, dialogContent} = this.props;
 
         return (
-            <div className="feature" onClick={() => {this.setState({open: true});}}>
-                <div className="side1">
-                    <div className="feature-title-container">
-                        <div className="feature-icon">{icon}</div>
-                        <div className="feature-title">{title}</div>
+            <div styleName="feature" onClick={() => {this.setState({open: true});}}>
+                <div styleName="side1">
+                    <div styleName="feature-title-container">
+                        <div styleName="feature-icon">{icon}</div>
+                        <div styleName="feature-title">{title}</div>
                     </div>
-                    <div className="feature-description">{description}</div>
+                    <div styleName="feature-description">{description}</div>
                 </div>
-                <div className="side2">
+                <div styleName="side2">
                     <div>{sideContent}</div>
                 </div>
                 <Dialog maxWidth={false} onClose={() => this.setState({open: false})} open={this.state.open}>

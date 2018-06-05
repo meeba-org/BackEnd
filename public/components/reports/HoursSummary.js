@@ -16,33 +16,33 @@ class HoursSummary extends Component {
         let extra200HoursPer = Math.floor(extra200Hours / total * 100) * factor ;
 
         return (
-            <div className="hours-summary-container">
-                <div className="hours-item">
-                    <div className="hour-label">100%:</div>
-                    <div className="regular-hours">{regularHours}</div>
+            <div styleName="hours-summary-container">
+                <div styleName="hours-item">
+                    <div styleName="hour-label">100%:</div>
+                    <div styleName="regular-hours">{regularHours}</div>
                 </div>
                 {extra125HoursPer > 0 &&
-                    <div className="hours-item">
-                        <div className="hour-label">125%:</div>
-                        <div className="extra-125">{extra125Hours}</div>
+                    <div styleName="hours-item">
+                        <div styleName="hour-label">125%:</div>
+                        <div styleName="extra-125">{extra125Hours}</div>
                     </div>
                 }
                 {extra150HoursPer > 0 &&
-                <div className="hours-item">
-                    <div className="hour-label">150%:</div>
-                    <div className="extra-150">{extra150Hours}</div>
+                <div styleName="hours-item">
+                    <div styleName="hour-label">150%:</div>
+                    <div styleName="extra-150">{extra150Hours}</div>
                 </div>
                 }
                 {extra175HoursPer > 0 &&
-                <div className="hours-item">
-                    <div className="hour-label">175%:</div>
-                    <div className="extra-175">{extra175Hours}</div>
+                <div styleName="hours-item">
+                    <div styleName="hour-label">175%:</div>
+                    <div styleName="extra-175">{extra175Hours}</div>
                 </div>
                 }
                 {extra200HoursPer > 0 &&
-                <div className="hours-item">
-                    <div className="hour-label">200%:</div>
-                    <div className="extra-200">{extra200Hours}</div>
+                <div styleName="hours-item">
+                    <div styleName="hour-label">200%:</div>
+                    <div styleName="extra-200">{extra200Hours}</div>
                 </div>
                 }
             </div>

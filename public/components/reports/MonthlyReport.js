@@ -120,7 +120,7 @@ class MonthlyReport extends React.Component {
                             />
 
                             <Select
-                                className="select"
+                                styleName="select"
                                 value={startDayOfMonth}
                                 onChange={(event) => this.handleMonthChange(event)}
                                 input={<Input id="age-simple"/>}

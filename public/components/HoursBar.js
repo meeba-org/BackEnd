@@ -16,23 +16,23 @@ class HoursBar extends React.Component {
         let extra175HoursPer = Math.floor(extra175Hours / total * 100) * factor ;
         let extra200HoursPer = Math.floor(extra200Hours / total * 100) * factor ;
         return (
-            <div className="stacked-bar-graph">
-                <span style={{width: regularHoursPer + '%'}} className="regular-hours-bar" />
+            <div styleName="stacked-bar-graph">
+                <span style={{width: regularHoursPer + '%'}} styleName="regular-hours-bar" />
                 {extra125HoursPer > 0 &&
-                    <span style={{width: extra125HoursPer + '%'}} className="extra-125-bar" />
+                    <span style={{width: extra125HoursPer + '%'}} styleName="extra-125-bar" />
                 }
                 {extra150HoursPer > 0 &&
-                    <span style={{width: extra150HoursPer + '%'}} className="extra-150-bar" />
+                    <span style={{width: extra150HoursPer + '%'}} styleName="extra-150-bar" />
                 }
                 {extra175HoursPer > 0 &&
-                    <span style={{width: extra175HoursPer + '%'}} className="extra-175-bar" />
+                    <span style={{width: extra175HoursPer + '%'}} styleName="extra-175-bar" />
                 }
                 {extra200HoursPer > 0 &&
-                    <span style={{width: extra200HoursPer + '%'}} className="extra-200-bar" />
+                    <span style={{width: extra200HoursPer + '%'}} styleName="extra-200-bar" />
                 }
 
                 {displayDetails &&
-                    <div className="details">{overallHours} שעות</div>
+                    <div styleName="details">{overallHours} שעות</div>
                 }
             </div>
         );

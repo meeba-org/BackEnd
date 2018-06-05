@@ -44,10 +44,10 @@ class Features extends Component {
     render() {
         return (
             <div id="features">
-                <div className="title">איך זה עובד?</div>
-                <div className="sub-title">תהליכי עבודה מתקדמים</div>
+                <div styleName="title">איך זה עובד?</div>
+                <div styleName="sub-title">תהליכי עבודה מתקדמים</div>
 
-                <div className="features-container">
+                <div styleName="features-container">
                     {this.state.features.map((feature, index) =>
                         <Feature
                             key={index}

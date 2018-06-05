@@ -16,7 +16,7 @@ function renderInput(inputProps) {
     return (
         <TextField
             autoFocus={autoFocus}
-            className={classes.textField}
+            styleName={classes.textField}
             value={value}
             inputRef={ref}
             InputProps={{

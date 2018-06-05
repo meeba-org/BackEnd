@@ -36,7 +36,7 @@ class Login extends Component {
                                                name="password"
                                         />
                                     </Grid>
-                                    {error && <div className="error-msg">{error}</div>}
+                                    {error && <div styleName="error-msg">{error}</div>}
                                     <Button variant="raised" color="primary" type="submit" id="submit-button"><ArrowBackIcon/>היכנס</Button>
                                 </form>
                             </div>

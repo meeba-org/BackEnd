@@ -63,7 +63,10 @@ export default {
                    fallback: 'style-loader',
                     use: [
                         {
-                            loader: 'css-loader'
+                            loader: 'css-loader',
+                            options: {
+                                modules: true
+                            }
                         },
                         {
                             loader: 'sass-loader',

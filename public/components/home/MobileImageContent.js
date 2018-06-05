@@ -6,7 +6,7 @@ import CSSModules from "react-css-modules";
 class MobileImageContent extends Component {
     render() {
         return (
-            <div className="mobile-image">
+            <div styleName="mobile-image">
                 <img src={mobileImage}/>
             </div>
         );

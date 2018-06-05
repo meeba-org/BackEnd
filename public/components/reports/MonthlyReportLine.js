@@ -10,6 +10,7 @@ import HoursBar from '../HoursBar';
 import {ReportModes} from "../../helpers/utils";
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import HoursSummary from "./HoursSummary";
+import styles from "../../styles/MonthlyReportLine.scss";
 
 class MonthlyReportLine extends React.Component {
     state = {
@@ -31,14 +32,14 @@ class MonthlyReportLine extends React.Component {
             <KeyboardArrowDown/>;
 
         return (
-            <div className="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                <div className="monthly-report-header" onClick={() => onToggle(input.value.uid)}>
+            <div styleName="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <div styleName="monthly-report-header" onClick={() => onToggle(input.value.uid)}>
                     <IconButton color="primary" className="toggle-icon">{toggleButton}</IconButton>
                     <div className="name">{input.value.firstName} {input.value.lastName}</div>
                     <HoursBar {...input.value} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&
-                <div className="monthly-report-body">
+                <div styleName="monthly-report-body">
                     <ReactCSSTransitionGroup
                         transitionName="shiftsList"
                         transitionAppear={true}
@@ -46,7 +47,7 @@ class MonthlyReportLine extends React.Component {
                         transitionEnterTimeout={500}
                         transitionLeaveTimeout={300}>
 
-                        <HoursSummary className="hours-summary" data={input.value}/>
+                        <HoursSummary data={input.value}/>
 
                         <FieldArray
                             name={`${input.name}.shifts`}
@@ -75,5 +76,5 @@ MonthlyReportLine.propTypes = {
     isCollapsed: PropTypes.bool.isRequired,
 };
 
-export default CSSModules(MonthlyReportLine);
+export default CSSModules(MonthlyReportLine, styles);
 

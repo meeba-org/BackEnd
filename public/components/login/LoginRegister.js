@@ -40,7 +40,7 @@ class LoginRegister extends Component {
                             </div>
                         </div>
                         <form onSubmit={handleSubmit}>
-                                <Field className="field"
+                                <Field styleName="field"
                                        fullWidth={true}
                                        component={renderTextField}
                                        onChange={handleChange}
@@ -49,7 +49,7 @@ class LoginRegister extends Component {
                                        autoFocus
                                 />
                                 <Field component={renderTextField}
-                                       className="field"
+                                       styleName="field"
                                        fullWidth={true}
                                        onChange={handleChange}
                                        label="סיסמא"
@@ -58,7 +58,7 @@ class LoginRegister extends Component {
                                 />
                             {!isLoginMode &&
                                 <Field component={renderTextField}
-                                       className="field"
+                                       styleName="field"
                                        fullWidth={true}
                                        onChange={handleChange}
                                        label="אימות סיסמא"
@@ -66,15 +66,15 @@ class LoginRegister extends Component {
                                        name="retypePassword"
                                 />
                             }
-                            {error && <div className="error-msg">{error}</div>}
+                            {error && <div styleName="error-msg">{error}</div>}
                             <div id="login-register-footer">
                                 <Button variant="raised" color="primary" type="submit" id="login-button">
                                     <span>{buttonText}</span>
                                     <ArrowBackIcon/>
                                 </Button>
-                                <div className="footer-text">
-                                    <div className="question">{footerTextQuestion}</div>
-                                    <div className="change-mode" onClick={this.toggleLoginMode}>{changeModeText}</div>
+                                <div styleName="footer-text">
+                                    <div styleName="question">{footerTextQuestion}</div>
+                                    <div styleName="change-mode" onClick={this.toggleLoginMode}>{changeModeText}</div>
                                 </div>
                             </div>
                         </form>

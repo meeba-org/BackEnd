@@ -81,7 +81,7 @@ class DailyReport extends React.Component {
 
                         <div id="daily-report">
                             <div className="controls-line">
-                                <TextField className="daily-date" type="date" defaultValue={currentDay} placeholder="תאריך"
+                                <TextField styleName="daily-date" type="date" defaultValue={currentDay} placeholder="תאריך"
                                            onChange={(e) => this.handleChange(e)}/>
 
                                 <Tooltip title="הוספת משמרת" placement="top">
@@ -119,10 +119,10 @@ class DailyReport extends React.Component {
 
                     <CardContent className="card-content">
                         <div id="live-report">
-                            <div className="live-time" style={{color: primary}}>{calculateCurrentTime()}</div>
-                            <div className="live-date" style={{color: secondary}}>{calculateCurrentDay("DD/MM/YYYY")}</div>
+                            <div styleName="live-time" style={{color: primary}}>{calculateCurrentTime()}</div>
+                            <div styleName="live-date" style={{color: secondary}}>{calculateCurrentDay("DD/MM/YYYY")}</div>
 
-                            <div className="auto-complete">
+                            <div styleName="auto-complete">
                                 <AutoComplete
                                     placeholder="הכנס עובד למשמרת"
                                     suggestions={employees && employees.map(employee => ({
@@ -135,8 +135,8 @@ class DailyReport extends React.Component {
                                 />
 
                                 {!isLoading && !this.hasEmployees(employees) &&
-                                <div className="warning">
-                                    <Warning className="icon"/>
+                                <div styleName="warning">
+                                    <Warning styleName="icon"/>
                                     <span>
                                     עדיין לא הזנו עובדים. <a href="#" onClick={this.navigateToEmployees}>בוא נעשה זאת עכשיו!</a>
                                     </span>
