@@ -77,15 +77,15 @@ class DailyReport extends React.Component {
                 <div>
                     <CardHeader title="דוח יומי"/>
 
-                    <CardContent className="card-content">
+                    <CardContent className={styles["card-content"]}>
 
-                        <div className="daily-report">
-                            <div className="controls-line">
-                                <TextField className="daily-date" type="date" defaultValue={currentDay} placeholder="תאריך"
+                        <div className={styles["daily-report"]}>
+                            <div className={styles["controls-line"]}>
+                                <TextField className={styles["daily-date"]} type="date" defaultValue={currentDay} placeholder="תאריך"
                                            onChange={(e) => this.handleChange(e)}/>
 
                                 <Tooltip title="הוספת משמרת" placement="top">
-                                    <Button className="action-button" variant="raised" color="primary"
+                                    <Button className={styles["action-button"]} variant="raised" color="primary"
                                         onClick={() => this.handleClickOpen()}><AddIcon/></Button>
                                 </Tooltip>
                                 <AddShiftsDialog
@@ -96,7 +96,7 @@ class DailyReport extends React.Component {
                                 />
                             </div>
 
-                            <Divider className="divider"/>
+                            <Divider className={styles["divider"]}/>
 
                             <FieldArray
                                 name="shifts"
@@ -117,12 +117,12 @@ class DailyReport extends React.Component {
                 <div>
                     <CardHeader title="מצב משמרת"/>
 
-                    <CardContent className="card-content">
-                        <div className="live-report">
-                            <div className="live-time" style={{color: primary}}>{calculateCurrentTime()}</div>
-                            <div className="live-date" style={{color: secondary}}>{calculateCurrentDay("DD/MM/YYYY")}</div>
+                    <CardContent className={styles["card-content"]}>
+                        <div className={styles["live-report"]}>
+                            <div className={styles["live-time"]} style={{color: primary}}>{calculateCurrentTime()}</div>
+                            <div className={styles["live-date"]} style={{color: secondary}}>{calculateCurrentDay("DD/MM/YYYY")}</div>
 
-                            <div className="auto-complete">
+                            <div className={styles["auto-complete"]}>
                                 <AutoComplete
                                     placeholder="הכנס עובד למשמרת"
                                     suggestions={employees && employees.map(employee => ({
@@ -135,8 +135,8 @@ class DailyReport extends React.Component {
                                 />
 
                                 {!isLoading && !this.hasEmployees(employees) &&
-                                <div className="warning">
-                                    <Warning className="icon"/>
+                                <div className={styles["warning"]}>
+                                    <Warning className={styles["icon"]}/>
                                     <span>
                                     עדיין לא הזנו עובדים. <a href="#" onClick={this.navigateToEmployees}>בוא נעשה זאת עכשיו!</a>
                                     </span>

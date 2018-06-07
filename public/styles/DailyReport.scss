@@ -1,6 +1,15 @@
+@import "./Dashboard";
+
 .daily-report {
-    .daily-date {
-        margin-right: 10px;
+    color: red;
+    .controls-line {
+        margin-bottom: 15px;
+
+        @extend .action-button;
+
+        .daily-date {
+            margin-right: 10px;
+        }
     }
 }
 
@@ -14,7 +23,6 @@
     .live-date {
         text-align: center;
     }
-
 
     .auto-complete {
         width: 50%;

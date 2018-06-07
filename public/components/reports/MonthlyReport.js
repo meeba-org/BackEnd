@@ -105,13 +105,13 @@ class MonthlyReport extends React.Component {
         const months = this.generateMonths();
 
         return (
-            <Card id="monthly-report">
+            <Card className={styles["monthly-report"]}>
                 <CardHeader title="דוח חודשי"/>
 
-                <CardContent className="card-content">
+                <CardContent className={styles["card-content"]}>
 
                     <div>
-                        <div className="controls-line">
+                        <div className={styles["controls-line"]}>
                             <AddShiftsDialog
                                 open={this.state.open}
                                 onCreate={this.onCreateShift}
@@ -120,10 +120,10 @@ class MonthlyReport extends React.Component {
                             />
 
                             <Select
-                                className="select"
+                                className={styles["select"]}
                                 value={startDayOfMonth}
                                 onChange={(event) => this.handleMonthChange(event)}
-                                input={<Input id="age-simple"/>}
+                                input={<Input />}
                             >
                                 {months.map((month) =>
                                     <MenuItem key={month.name} value={month.startDay}>{month.name}</MenuItem>
@@ -131,18 +131,18 @@ class MonthlyReport extends React.Component {
                             </Select>
 
                             <Tooltip title="הוספת משמרת" placement="top">
-                                <Button className="action-button" variant="raised" color="primary"
+                                <Button className={styles["action-button"]} variant="raised" color="primary"
                                         onClick={() => this.handleOpenAddDialog()}><AddIcon/></Button>
                             </Tooltip>
 
                             <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
                                 <Tooltip title="ייצוא דוח חודשי לאקסל" placement="top">
-                                    <Button className="action-button" variant="raised" color="primary"
+                                    <Button className={styles["action-button"]} variant="raised" color="primary"
                                             onClick={() => this.handleGenerateExcelClick()}><AssignmentIcon/></Button>
                                 </Tooltip>
                             </IfGranted>
                         </div>
-                        <Divider className="divider"/>
+                        <Divider className={styles["divider"]}/>
 
                         {fields && fields.map((employeeShiftsReport, index) =>
                             <Field component={MonthlyReportLine}

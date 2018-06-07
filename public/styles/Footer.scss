@@ -1,6 +1,6 @@
 @import "variables";
 
-#footer {
+.footer {
     background-color: material-color('brown', '900');
     color: material-color('brown', '200');
     display: flex;
@@ -9,7 +9,7 @@
     justify-content: center;
     align-items: center;
 
-    #footer-container {
+    .footer-container {
         @media (min-width: $mobileWidth) {
             width: 768px;
         }
@@ -17,13 +17,13 @@
         .weak {
             color: material-color('brown', '100')
         }
-        #social {
+        .social {
             .facebook-link {
                 margin-right: 6px;
             }
         }
 
-        #signature {
+        .signature {
             a {
                 color: material-color('brown', '100')
             }
