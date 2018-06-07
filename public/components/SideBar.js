@@ -116,7 +116,7 @@ class SideBar extends React.Component {
         const {classes, theme, userRole} = this.props;
 
         return (
-            <Drawer styleName="sideBar"
+            <Drawer className="sideBar"
                     variant="permanent"
                     classes={{
                         paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),

@@ -1,17 +1,16 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from "react-css-modules";
 import ModalRoot from "./modals/ModalRoot";
-import styles from "../styles/App.scss";
+import "../styles/App.scss";
 
 class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <Fragment>
                 {this.props.children}
-                <ModalRoot/>
-            </div>
+                <ModalRoot />
+            </Fragment>
         );
     }
 }
@@ -20,5 +19,5 @@ App.propTypes = {
     children: PropTypes.object,
 };
 
-export default CSSModules(App);
+export default App;
 

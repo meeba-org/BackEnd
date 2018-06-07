@@ -2,6 +2,7 @@ import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import autoprefixer from "autoprefixer";
 import path from "path";
+
 const ExtractTextPlugin  = require('extract-text-webpack-plugin');
 
 export default {
@@ -59,6 +60,7 @@ export default {
             {test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
             {
                 test: /\.scss$/,
+                exclude: /node_modules/,
                 use: ExtractTextPlugin.extract({
                    fallback: 'style-loader',
                     use: [
@@ -66,6 +68,7 @@ export default {
                             loader: 'css-loader',
                             options: {
                                 modules: true,
+                                importLoaders: 1,
                                 localIdentName: '[name]-[local]-[hash:base64:2]',
                                 sourceMap: true
                             }
