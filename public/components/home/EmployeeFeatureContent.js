@@ -8,9 +8,9 @@ import CSSModules from "react-css-modules";
 class EmployeeFeatureContent extends Component {
     render() {
         return (
-            <div id="employee-content">
-                <div id="employee-content-container">
-                    <div id="mobile-sc">
+            <div styleName="employee-content">
+                <div styleName="employee-content-container">
+                    <div styleName="mobile-sc">
                         <img src={mobileImage}/>
                     </div>
                     <div styleName="badges">

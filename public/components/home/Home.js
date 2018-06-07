@@ -18,8 +18,8 @@ class Home extends Component {
 
     render() {
         return (
-            <div id="home">
-                <div id="home-bg">
+            <div styleName="home">
+                <div styleName="home-bg">
                     <Header setLoginDialogVisibility={this.setLoginDialogVisibility}/>
                     <Features />
                     <Footer />

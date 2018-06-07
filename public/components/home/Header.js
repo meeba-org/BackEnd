@@ -14,8 +14,8 @@ class Header extends Component {
     render() {
         let {setLoginDialogVisibility} = this.props;
         return (
-            <div id="header">
-                <AppBar position="fixed" styleName="app-bar">
+            <div styleName="header">
+                <AppBar position="fixed" className="app-bar">
                     <Toolbar>
                         <IconButton  aria-label="Menu" color="inherit">
                             <AccessTimeIcon/>
@@ -23,20 +23,20 @@ class Header extends Component {
                         <Typography type="title" color="inherit">
                             מיבא
                         </Typography>
-                        <div styleName="right-buttons-group">
+                        <div className="right-buttons-group">
                             <Button href="#header" color="inherit">בית</Button>
                             <Button href="#features" color="inherit">איך זה עובד?</Button>
                             <Button href="https://www.facebook.com/meebaOnFace/" color="inherit" target="_blank">
                                 <img src={facebookImage} />
                             </Button>
                         </div>
-                        <div styleName="left-buttons-group">
+                        <div>
                             <Button color="inherit" onClick={() => setLoginDialogVisibility(true)}>כניסה</Button>
                         </div>
                     </Toolbar>
                 </AppBar>
-                <div id="content">
-                    <div id="middle-content">
+                <div styleName="content">
+                    <div styleName="middle-content">
                         <div styleName="title">
                             <div styleName="title-text">
                                 מיבא
@@ -72,11 +72,11 @@ class Header extends Component {
                             </div>
                         </div>
                     </div>
-                    <a id="bottom-content" href="#features">
-                        <div styleName="continue-scrolling-indication">
+                    <a styleName="bottom-content" href="#features">
+                        <div>
                             המשך גלילה
                         </div>
-                        <div styleName="arrow">
+                        <div>
                             <ArrowDownIcon/>
                         </div>
                     </a>

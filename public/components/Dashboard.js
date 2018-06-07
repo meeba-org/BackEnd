@@ -21,16 +21,16 @@ class Dashboard extends React.PureComponent {
         let {router, userRole} = this.props;
 
         return (
-            <div id="dashboard">
-                <div id="dashboard-container">
-                    <div id="appBar-container">
+            <div styleName="dashboard">
+                <div styleName="dashboard-container">
+                    <div styleName="appBar-container">
                         <AppBar router={router}/>
                     </div>
-                    <div id="grid-container">
-                        <Paper id="sideBar-container">
+                    <div styleName="grid-container">
+                        <Paper styleName="sideBar-container">
                             <SideBar userRole={userRole}/>
                         </Paper>
-                        <Paper id="main-container">
+                        <Paper styleName="main-container">
                             <MuiPickersUtilsProvider utils={MomentUtils}>
                             {this.props.children}
                             </MuiPickersUtilsProvider>

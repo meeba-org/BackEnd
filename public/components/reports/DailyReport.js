@@ -79,9 +79,9 @@ class DailyReport extends React.Component {
 
                     <CardContent className="card-content">
 
-                        <div id="daily-report">
+                        <div className="daily-report">
                             <div className="controls-line">
-                                <TextField styleName="daily-date" type="date" defaultValue={currentDay} placeholder="תאריך"
+                                <TextField className="daily-date" type="date" defaultValue={currentDay} placeholder="תאריך"
                                            onChange={(e) => this.handleChange(e)}/>
 
                                 <Tooltip title="הוספת משמרת" placement="top">
@@ -118,11 +118,11 @@ class DailyReport extends React.Component {
                     <CardHeader title="מצב משמרת"/>
 
                     <CardContent className="card-content">
-                        <div id="live-report">
-                            <div styleName="live-time" style={{color: primary}}>{calculateCurrentTime()}</div>
-                            <div styleName="live-date" style={{color: secondary}}>{calculateCurrentDay("DD/MM/YYYY")}</div>
+                        <div className="live-report">
+                            <div className="live-time" style={{color: primary}}>{calculateCurrentTime()}</div>
+                            <div className="live-date" style={{color: secondary}}>{calculateCurrentDay("DD/MM/YYYY")}</div>
 
-                            <div styleName="auto-complete">
+                            <div className="auto-complete">
                                 <AutoComplete
                                     placeholder="הכנס עובד למשמרת"
                                     suggestions={employees && employees.map(employee => ({
@@ -135,8 +135,8 @@ class DailyReport extends React.Component {
                                 />
 
                                 {!isLoading && !this.hasEmployees(employees) &&
-                                <div styleName="warning">
-                                    <Warning styleName="icon"/>
+                                <div className="warning">
+                                    <Warning className="icon"/>
                                     <span>
                                     עדיין לא הזנו עובדים. <a href="#" onClick={this.navigateToEmployees}>בוא נעשה זאת עכשיו!</a>
                                     </span>

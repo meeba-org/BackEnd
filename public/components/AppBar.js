@@ -22,9 +22,9 @@ class MeebaAppBar extends Component {
     render() {
         let {companyName} = this.props;
         return (
-            <div id="app-bar">
+            <div styleName="app-bar">
                 <AppBar position="static">
-                    <Toolbar id="toolbar">
+                    <Toolbar styleName="toolbar">
                         <div styleName="logo" onClick={this.onLogoClock}>
                             <IconButton color="inherit" aria-label="Menu">
                                 <AccessTimeIcon/>

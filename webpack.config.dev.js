@@ -65,12 +65,15 @@ export default {
                         {
                             loader: 'css-loader',
                             options: {
-                                modules: true
+                                modules: true,
+                                localIdentName: '[name]-[local]-[hash:base64:2]',
+                                sourceMap: true
                             }
                         },
                         {
                             loader: 'sass-loader',
                             options: {
+                                sourceMap: true,
                                 includePaths: [
                                     path.resolve(__dirname, 'src/scss'),
                                     path.resolve(__dirname, "node_modules/foundation-sites/scss")

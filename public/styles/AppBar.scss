@@ -1,5 +1,5 @@
-#app-bar {
-    #toolbar {
+.app-bar {
+    .toolbar {
         display: flex;
         width: 100%;
         padding: 0;
@@ -8,6 +8,7 @@
             cursor: pointer;
             display: inline-flex;
         }
+
         .login {
             margin-right: auto;
             padding-left: 42px;

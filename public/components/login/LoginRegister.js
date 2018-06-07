@@ -40,7 +40,7 @@ class LoginRegister extends Component {
                             </div>
                         </div>
                         <form onSubmit={handleSubmit}>
-                                <Field styleName="field"
+                                <Field
                                        fullWidth={true}
                                        component={renderTextField}
                                        onChange={handleChange}
@@ -49,7 +49,6 @@ class LoginRegister extends Component {
                                        autoFocus
                                 />
                                 <Field component={renderTextField}
-                                       styleName="field"
                                        fullWidth={true}
                                        onChange={handleChange}
                                        label="סיסמא"
@@ -58,7 +57,6 @@ class LoginRegister extends Component {
                                 />
                             {!isLoginMode &&
                                 <Field component={renderTextField}
-                                       styleName="field"
                                        fullWidth={true}
                                        onChange={handleChange}
                                        label="אימות סיסמא"

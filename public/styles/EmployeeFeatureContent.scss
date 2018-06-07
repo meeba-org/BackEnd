@@ -1,12 +1,12 @@
-#employee-content {
+.employee-content {
     display: flex;
     flex-direction: column;
 
-    #employee-content-container {
+    .employee-content-container {
         display: flex;
         flex-direction: row;
 
-        #mobile-sc {
+        .mobile-sc {
             display: flex;
             align-items: center;
 
