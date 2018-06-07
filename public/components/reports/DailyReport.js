@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {Button, Card, CardContent, CardHeader, Divider, TextField, Tooltip} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import {FieldArray} from "redux-form";
@@ -74,7 +74,7 @@ class DailyReport extends React.Component {
         return (
             <Card>
                 {(mode === ReportModes.Report) &&
-                <div>
+                <Fragment>
                     <CardHeader title="דוח יומי"/>
 
                     <CardContent className={styles["card-content"]}>
@@ -111,10 +111,10 @@ class DailyReport extends React.Component {
                         </div>
 
                     </CardContent>
-                </div>
+                </Fragment>
                 }
                 {(mode === ReportModes.Live) &&
-                <div>
+                <Fragment>
                     <CardHeader title="מצב משמרת"/>
 
                     <CardContent className={styles["card-content"]}>
@@ -157,7 +157,7 @@ class DailyReport extends React.Component {
                         </div>
 
                     </CardContent>
-                </div>
+                </Fragment>
                 }
             </Card>
         );

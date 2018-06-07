@@ -5,10 +5,18 @@ $margin: 12px;
     height: 100%;
 }
 
-.action-button {
-    margin-right: 10px;
-    padding: 5px 4px;
-    min-width: 40px;
+.controls-line {
+    margin-bottom: 15px;
+
+    .action-button {
+        margin-right: 10px;
+        padding: 5px 4px;
+        min-width: 40px;
+    }
+}
+
+.divider {
+    margin-bottom: 30px;
 }
 
 .dashboard
@@ -51,10 +59,6 @@ $margin: 12px;
                 .card-content {
                     overflow-y: visible;
                     max-height: $containerHeight;
-
-                    .divider {
-                        margin-bottom: 30px;
-                    }
                 }
             }
         }

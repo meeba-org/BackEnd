@@ -1,17 +1,16 @@
-#employees {
-    .cell {
-        border: 1px solid transparent;
-        margin-left: 10px;
-        min-width: 140px;
-        display: inline-block;
+@import "./Dashboard";
 
-        &:hover {
-            border: 1px solid #eee;
-        }
+.cell {
+    border: 1px solid transparent;
+    margin-left: 10px;
+    min-width: 140px;
+    display: inline-block;
+
+    &:hover {
+        border: 1px solid #eee;
     }
+}
 
-    .header {
-        opacity: 0.5;
-    }
-
+.header {
+    opacity: 0.5;
 }

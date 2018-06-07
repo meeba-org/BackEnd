@@ -105,7 +105,7 @@ class MonthlyReport extends React.Component {
         const months = this.generateMonths();
 
         return (
-            <Card className={styles["monthly-report"]}>
+            <Card>
                 <CardHeader title="דוח חודשי"/>
 
                 <CardContent className={styles["card-content"]}>

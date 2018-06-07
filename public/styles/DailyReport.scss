@@ -1,15 +1,8 @@
 @import "./Dashboard";
 
 .daily-report {
-    color: red;
-    .controls-line {
-        margin-bottom: 15px;
-
-        @extend .action-button;
-
-        .daily-date {
-            margin-right: 10px;
-        }
+    .daily-date {
+        margin-right: 10px;
     }
 }
 

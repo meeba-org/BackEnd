@@ -31,37 +31,37 @@ class EmployeesList extends React.Component {
         this.props.onDelete(employeeToDelete);
     }
 
-    render()
-    {
+    render() {
         const {fields} = this.props;
         return (
-            <Card id="employees">
+            <Card>
                 <CardHeader title="עובדים"/>
 
-                <CardContent className="card-content">
+                <CardContent className={styles["card-content"]}>
 
-                    <div>
-                        <div className="controls-line">
-                            <Tooltip title="הוספת עובד" placement="top">
-                                <Button className="action-button" variant="raised" color="primary" onClick={this.onCreate}><AddIcon /></Button>
-                            </Tooltip>
-                        </div>
-                        <Divider className="divider" />
-                        {fields && fields.length > 0 &&
-                        <Grid styleName="header" container spacing={24}>
-                            <Grid item xs={12} sm={3}>שם</Grid>
-                            <Grid item xs={12} sm={2}>ת.ז.</Grid>
-                            <Grid item xs={12} sm={1}>שכר לשעה</Grid>
-                            <Grid item xs={12} sm={1}>נסיעות</Grid>
-                        </Grid>
-                        }
-                        {fields && fields.map((employeeIndex, index) =>
-                            <Field component={Employee} name={employeeIndex} key={index} onDelete={()=> this.onDelete(fields, index)} onUpdate={(employee) => this.onUpdate(employee)}/>
-                        )}
-                        {(!fields || (fields.length == 0)) &&
-                        <NoData text="אין עובדים - בוא ננסה להוסיף!"/>
-                        }
+                    <div className={styles["controls-line"]}>
+                        <Tooltip title="הוספת עובד" placement="top">
+                            <Button className={styles["action-button"]} variant="raised" color="primary"
+                                    onClick={this.onCreate}><AddIcon/></Button>
+                        </Tooltip>
                     </div>
+                    <Divider className={styles["divider"]}/>
+                    {fields && fields.length > 0 &&
+                    <Grid className={styles["header"]} container spacing={24}>
+                        <Grid item xs={12} sm={3}>שם</Grid>
+                        <Grid item xs={12} sm={2}>ת.ז.</Grid>
+                        <Grid item xs={12} sm={1}>שכר לשעה</Grid>
+                        <Grid item xs={12} sm={1}>נסיעות</Grid>
+                    </Grid>
+                    }
+                    {fields && fields.map((employeeIndex, index) =>
+                        <Field component={Employee} name={employeeIndex} key={index}
+                               onDelete={() => this.onDelete(fields, index)}
+                               onUpdate={(employee) => this.onUpdate(employee)}/>
+                    )}
+                    {(!fields || (fields.length == 0)) &&
+                    <NoData text="אין עובדים - בוא ננסה להוסיף!"/>
+                    }
 
                 </CardContent>
             </Card>

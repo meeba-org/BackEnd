@@ -1,14 +1,5 @@
 @import "./Dashboard";
 
-.monthly-report {
-
-    .controls-line {
-        margin-bottom: 15px;
-
-        @extend .action-button;
-
-        .select {
-            margin-right: 10px;
-        }
-    }
+.select {
+    margin-right: 10px;
 }
