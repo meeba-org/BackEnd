@@ -34,8 +34,8 @@ class MonthlyReportLine extends React.Component {
         return (
             <div styleName="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div styleName="monthly-report-header" onClick={() => onToggle(input.value.uid)}>
-                    <IconButton color="primary" className="toggle-icon">{toggleButton}</IconButton>
-                    <div className="name">{input.value.firstName} {input.value.lastName}</div>
+                    <IconButton color="primary" >{toggleButton}</IconButton>
+                    <div styleName="name">{input.value.firstName} {input.value.lastName}</div>
                     <HoursBar {...input.value} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&
