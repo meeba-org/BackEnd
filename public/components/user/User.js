@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {CardContent, CardHeader, TextField} from "@material-ui/core";
 import CSSModules from "react-css-modules";
@@ -41,7 +41,7 @@ class User extends Component {
         const user = input.value;
 
         return (
-            <div id="user">
+            <Fragment>
                 <CardHeader title="פרופיל משתמש"/>
 
                 <CardContent className="card-content">
@@ -64,7 +64,7 @@ class User extends Component {
                         </div>
                         <div>
                             <TextField
-                                id="email"
+                                className={styles["email"]}
                                 label="דואר אלקטרוני"
                                 type="email"
                                 value={user.email}
@@ -101,7 +101,7 @@ class User extends Component {
                     </CardContent>
                 </div>
                 }
-            </div>
+            </Fragment>
         );
     }
 }
