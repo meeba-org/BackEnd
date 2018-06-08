@@ -2,6 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Grid, IconButton, Input, Tooltip} from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
+import {withStyles} from '@material-ui/core/styles';
+
+const styles = {
+    root: {
+        display: "block"
+    }
+};
 
 class Employee extends React.Component {
 
@@ -35,7 +42,7 @@ class Employee extends React.Component {
     };
 
     render() {
-        let {input, onDelete} = this.props;
+        let {input, onDelete, classes} = this.props;
         return (
             <div onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <Grid container spacing={24}>
@@ -49,18 +56,21 @@ class Employee extends React.Component {
                         <Input value={input.value.uid} placeholder="ת.ז."
                                onChange={(e) => this.onUpdate(e, "uid")}
                                onBlur={this.onBlur}
+                               classes={{root: classes.root}}
                         />
                     </Grid>
                     <Grid item xs={12} sm={1}>
                         <Input value={input.value.hourWage} placeholder="שכר שעתי"
                                onChange={(e) => this.onUpdate(e, "hourWage")}
                                onBlur={this.onBlur}
+                               classes={{root: classes.root}}
                         />
                     </Grid>
                     <Grid item xs={12} sm={1}>
                         <Input value={input.value.transportation} placeholder="נסיעות"
                                onChange={(e) => this.onUpdate(e, "transportation")}
                                onBlur={this.onBlur}
+                               classes={{root: classes.root}}
                         />
                     </Grid>
                     <Grid item xs={12} sm={2}>
@@ -83,5 +93,5 @@ Employee.propTypes = {
     onUpdate: PropTypes.func.isRequired,
 };
 
-export default Employee;
+export default withStyles(styles)(Employee);
 
