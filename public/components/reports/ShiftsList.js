@@ -5,6 +5,7 @@ import Shift from "./Shift";
 import CSSModules from "react-css-modules";
 import NoData from "../NoData";
 import styles from "../../styles/ShiftsList.scss";
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 class ShiftsList extends React.PureComponent {
     onCreate(fields) {
@@ -27,14 +28,32 @@ class ShiftsList extends React.PureComponent {
         return (
             <div styleName="shifts-list">
                 {fields && fields.map((shiftName, index) =>
-                    <Field
-                        component={Shift}
-                        name={shiftName} key={index}
-                        onDelete={() => this.onDelete(fields, index)}
-                        onUpdate={(shift, input) => this.onUpdate(shift, input)}
-                        showNames={showNames}
-                        mode={mode}
-                    />
+                    <TransitionGroup>
+                    <CSSTransition
+                        key={index}
+                        timeout={500}
+                        classNames={{
+                            appear: styles['fade-appear'],
+                            appearActive: styles['fade-appear-active'],
+                            enter: styles['fade-enter'],
+                            enterActive: styles['fade-enter-active'],
+                            enterDone: styles['fade-enter-done'],
+                            exit: styles['fade-exit'],
+                            exitActive: styles['fade-exit-active'],
+                            exitDone: styles['fade-exit-done']
+                        }}
+                        appear
+                    >
+                        <Field
+                            component={Shift}
+                            name={shiftName} key={index}
+                            onDelete={() => this.onDelete(fields, index)}
+                            onUpdate={(shift, input) => this.onUpdate(shift, input)}
+                            showNames={showNames}
+                            mode={mode}
+                        />
+                    </CSSTransition>
+                    </TransitionGroup>
                 )}
                 {shouldDisplayNoData && (!fields || (fields.length == 0)) &&
                 <NoData text="לא נמצאו משמרות"/>

@@ -8,9 +8,9 @@ import ShiftsList from "./ShiftsList";
 import CSSModules from "react-css-modules";
 import HoursBar from '../HoursBar';
 import {ReportModes} from "../../helpers/utils";
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import HoursSummary from "./HoursSummary";
 import styles from "../../styles/MonthlyReportLine.scss";
+
 
 class MonthlyReportLine extends React.PureComponent {
     state = {
@@ -40,13 +40,6 @@ class MonthlyReportLine extends React.PureComponent {
                 </div>
                 {!isCollapsed &&
                 <div styleName="monthly-report-body">
-                    <ReactCSSTransitionGroup
-                        transitionName="shiftsList"
-                        transitionAppear={true}
-                        transitionAppearTimeout={500}
-                        transitionEnterTimeout={500}
-                        transitionLeaveTimeout={300}>
-
                         <HoursSummary data={input.value}/>
 
                         <FieldArray
@@ -59,7 +52,6 @@ class MonthlyReportLine extends React.PureComponent {
                             mode={ReportModes.Report}
                             shouldDisplayNoData={true}
                         />
-                    </ReactCSSTransitionGroup>
                 </div>
                 }
             </div>
