@@ -22,6 +22,7 @@ const drawerWidth = 200;
 const styles = theme => ({
     drawerPaper: {
         position: 'relative',
+        whiteSpace: 'nowrap',
         height: '100%',
         width: drawerWidth,
         transition: theme.transitions.create('width', {
@@ -37,6 +38,10 @@ const styles = theme => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
     },
+    root: {
+        paddingRight: 0,
+        textAlign: "right"
+    }
 });
 
 class SideBar extends React.Component {
@@ -116,15 +121,14 @@ class SideBar extends React.Component {
         const {classes, theme, userRole} = this.props;
 
         return (
-            <Drawer className="sideBar"
+            <Drawer
                     variant="permanent"
                     classes={{
                         paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
                     }}
                     open={this.state.open}
             >
-                <div>
-                    <div className="drawer-header"
+                    <div className={CSSModulesStyles["drawer-header"]}
                          onClick={this.state.open ? this.handleDrawerClose : this.handleDrawerOpen}>
                         <IconButton>
                             {this.state.open ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
@@ -136,11 +140,11 @@ class SideBar extends React.Component {
                             (<IfAnyGranted key={index} expected={item.allowedRoles} actual={[userRole]}>
                                 <ListItem button onClick={() => this.updateRoute(item, index)}
                                           disabled={item.disabled}
+                                          classes={{
+                                              root: classes.root
+                                          }}
                                           style={{
                                               backgroundColor: item.selected ? "rgba(0, 0, 0, 0.10)" : 'transparent',
-                                              paddingTop: "10px",
-                                              paddingBottom: "10px",
-                                              paddingRight: 0
                                           }}
                                 >
                                     <ListItemIcon>
@@ -151,7 +155,6 @@ class SideBar extends React.Component {
                             </IfAnyGranted>)
                         )}
                     </List>
-                </div>
             </Drawer>
         );
     }

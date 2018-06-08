@@ -16,7 +16,7 @@ import AddShiftsDialog from "../AddShiftsDialog";
 import {IfGranted} from "react-authorization";
 import * as ERoles from "../../helpers/ERoles";
 
-class MonthlyReport extends React.Component {
+class MonthlyReport extends React.PureComponent {
     constructor(props) {
         super(props);
 

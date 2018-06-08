@@ -12,7 +12,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import HoursSummary from "./HoursSummary";
 import styles from "../../styles/MonthlyReportLine.scss";
 
-class MonthlyReportLine extends React.Component {
+class MonthlyReportLine extends React.PureComponent {
     state = {
         hover: false
     };

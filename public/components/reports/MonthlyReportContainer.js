@@ -8,7 +8,7 @@ import {fetchUsers} from "../../actions/usersActions";
 import * as selectors from "../../selectors";
 import {fetchMonthlyReport, generateExcelReport} from "../../actions/reportsActions";
 
-class MonthlyReportContainer extends React.Component {
+class MonthlyReportContainer extends React.PureComponent {
 
     componentDidMount() {
         this.props.fetchEmployees();

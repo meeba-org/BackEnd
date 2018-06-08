@@ -6,7 +6,7 @@ import CSSModules from "react-css-modules";
 import NoData from "../NoData";
 import styles from "../../styles/ShiftsList.scss";
 
-class ShiftsList extends React.Component {
+class ShiftsList extends React.PureComponent {
     onCreate(fields) {
         let newEntity = {};
         fields.push(newEntity);
