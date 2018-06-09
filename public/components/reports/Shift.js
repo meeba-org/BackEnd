@@ -37,7 +37,6 @@ class Shift extends React.PureComponent {
     }
 
     onUpdateStartDate(date) {
-        console.log("test");
         let {startTimeStr, endTimeStr} = convertMomentToTimeStr(this.props.input.value);
         let newStartDateStr = date.format("YYYY-MM-DD");
 
