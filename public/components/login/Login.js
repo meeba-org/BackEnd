@@ -16,8 +16,8 @@ class Login extends Component {
     render() {
         let {handleSubmit, handleChange, error} = this.props;
         return (
-            <div id="login">
-                <h1 id="title">מיבא</h1>
+            <div styleName="login">
+                <h1 styleName="title">מיבא</h1>
                 <Grid container>
                     <Grid item xs={12}>
                         <Paper>
@@ -37,13 +37,13 @@ class Login extends Component {
                                         />
                                     </Grid>
                                     {error && <div styleName="error-msg">{error}</div>}
-                                    <Button variant="raised" color="primary" type="submit" id="submit-button"><ArrowBackIcon/>היכנס</Button>
+                                    <Button variant="raised" color="primary" type="submit" styleName="submit-button"><ArrowBackIcon/>היכנס</Button>
                                 </form>
                             </div>
                         </Paper>
                     </Grid>
                 </Grid>
-                <h5 id="sub-title">נוצר ע"י <a target="_blank" href="https://www.linkedin.com/in/chenop/">חן אופנהיים</a></h5>
+                <h5 styleName="sub-title">נוצר ע"י <a target="_blank" href="https://www.linkedin.com/in/chenop/">חן אופנהיים</a></h5>
             </div>
         );
     }

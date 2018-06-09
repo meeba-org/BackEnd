@@ -9,11 +9,21 @@ class Feature extends Component {
         open: false
     };
 
+    handleClose = () => {
+        console.log("closing: ", this.props.title);
+        this.setState({ open: false });
+    };
+
+    handleOpen = () => {
+        this.setState({ open: true});
+    };
+
     render() {
         let {icon, title, description, sideContent, dialogContent} = this.props;
 
+        //console.log("open: ", title, this.state.open);
         return (
-            <div styleName="feature" onClick={() => {this.setState({open: true});}}>
+            <div styleName="feature" onClick={this.handleOpen}>
                 <div styleName="side1">
                     <div styleName="feature-title-container">
                         <div styleName="feature-icon">{icon}</div>
@@ -24,7 +34,7 @@ class Feature extends Component {
                 <div styleName="side2">
                     <div>{sideContent}</div>
                 </div>
-                <Dialog maxWidth={false} onClose={() => this.setState({open: false})} open={this.state.open}>
+                <Dialog maxWidth={false} onClose={this.handleClose} open={this.state.open}>
                     {dialogContent}
                 </Dialog>
             </div>

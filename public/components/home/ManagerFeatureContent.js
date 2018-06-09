@@ -6,7 +6,7 @@ import browserImage from '../../styles/images/browser.png';
 class ManagerFeatureContent extends Component {
     render() {
         return (
-            <div id="manager-content">
+            <div styleName="manager-content">
                 <img src={browserImage}/>
             </div>
         );

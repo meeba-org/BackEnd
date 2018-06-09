@@ -15,7 +15,7 @@ class Header extends Component {
         let {setLoginDialogVisibility} = this.props;
         return (
             <div styleName="header">
-                <AppBar position="fixed" className="app-bar">
+                <AppBar position="fixed" className={styles["app-bar"]}>
                     <Toolbar>
                         <IconButton  aria-label="Menu" color="inherit">
                             <AccessTimeIcon/>
@@ -23,7 +23,7 @@ class Header extends Component {
                         <Typography type="title" color="inherit">
                             מיבא
                         </Typography>
-                        <div className="right-buttons-group">
+                        <div className={styles["right-buttons-group"]}>
                             <Button href="#header" color="inherit">בית</Button>
                             <Button href="#features" color="inherit">איך זה עובד?</Button>
                             <Button href="https://www.facebook.com/meebaOnFace/" color="inherit" target="_blank">
@@ -35,34 +35,34 @@ class Header extends Component {
                         </div>
                     </Toolbar>
                 </AppBar>
-                <div styleName="content">
-                    <div styleName="middle-content">
-                        <div styleName="title">
-                            <div styleName="title-text">
+                <div className={styles["content"]}>
+                    <div className={styles["middle-content"]}>
+                        <div className={styles["title"]}>
+                            <div className={styles["title-text"]}>
                                 מיבא
                                 {/*<img src={betaImage} />*/}
                             </div>
                         </div>
                         <hr/>
                         <div styleName="lower-middle-content">
-                            <div styleName="sub-title">
+                            <div className={styles["sub-title"]}>
                                 שעון נוכחות חינמי
                             </div>
-                            <Button styleName="login-button" variant="raised" color="primary"
+                            <Button className={styles["login-button"]} variant="raised" color="primary"
                                     onClick={() => setLoginDialogVisibility(true)}>
                                 <span>כניסה</span>
                                 <ArrowBack style={{"paddingTop": "5px"}}/>
                             </Button>
 
-                            <div styleName="badges">
-                                <div styleName="badge">
+                            <div className={styles["badges"]}>
+                                <div className={styles["badge"]}>
                                     <a target="_blank"
                                        href="https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
                                         <img alt=" Google Play כעת ב-"
                                              src={playStoreImage}/>
                                     </a>
                                 </div>
-                                <div styleName="badge">
+                                <div className={styles["badge"]}>
                                     <a target="_blank"
                                        href="https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8">
                                         <img alt=" Apple Store כעת ב-"
@@ -72,7 +72,7 @@ class Header extends Component {
                             </div>
                         </div>
                     </div>
-                    <a styleName="bottom-content" href="#features">
+                    <a className={styles["bottom-content"]} href="#features">
                         <div>
                             המשך גלילה
                         </div>

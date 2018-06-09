@@ -6,7 +6,7 @@ import styles from '../../styles/ReportFeatureContent.scss';
 class ReportFeatureContent extends Component {
     render() {
         return (
-            <div id="report-content">
+            <div styleName="report-content">
                 <img src={excelImage}/>
             </div>
         );
