@@ -1,6 +1,6 @@
 @import "variables";
 
-#login-register {
+.login-register {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,7 +9,7 @@
     max-width: 310px;
     font-family: 'Assistant';
 
-    #title {
+    .title {
         display: flex;
         flex: 1 0 auto;
         justify-content: flex-end;
@@ -22,7 +22,7 @@
         height: 70px;
         width: 100%;
 
-        #title-text {
+        .title-text {
             margin-right: 20px;
         }
     }
@@ -37,14 +37,14 @@
         text-align: center;
     }
 
-    #login-register-footer {
+    .login-register-footer {
         display: flex;
         justify-content: center;
         flex-direction: column;
         align-items: center;
         margin-bottom: 20px;
 
-        #login-button  {
+        .login-button  {
             margin: 20px 20px 10px 20px;
             width: 120px;
 

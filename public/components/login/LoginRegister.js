@@ -33,9 +33,9 @@ class LoginRegister extends Component {
 
         return (
             <Dialog open={visible} onClose={onCancel}>
-                <div id="login-register">
-                        <div id="title">
-                            <div id="title-text">
+                <div className={styles["login-register"]}>
+                        <div className={styles["title"]}>
+                            <div className={styles["title-text"]}>
                             ברוך הבא!
                             </div>
                         </div>
@@ -64,15 +64,15 @@ class LoginRegister extends Component {
                                        name="retypePassword"
                                 />
                             }
-                            {error && <div styleName="error-msg">{error}</div>}
-                            <div id="login-register-footer">
-                                <Button variant="raised" color="primary" type="submit" id="login-button">
+                            {error && <div className={styles["error-msg"]}>{error}</div>}
+                            <div styleName="login-register-footer">
+                                <Button variant="raised" color="primary" type="submit" className={styles["login-button"]}>
                                     <span>{buttonText}</span>
                                     <ArrowBackIcon/>
                                 </Button>
-                                <div styleName="footer-text">
-                                    <div styleName="question">{footerTextQuestion}</div>
-                                    <div styleName="change-mode" onClick={this.toggleLoginMode}>{changeModeText}</div>
+                                <div className={styles["footer-text"]}>
+                                    <div className={styles["question"]}>{footerTextQuestion}</div>
+                                    <div className={styles["change-mode"]} onClick={this.toggleLoginMode}>{changeModeText}</div>
                                 </div>
                             </div>
                         </form>
