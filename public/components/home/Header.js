@@ -14,7 +14,7 @@ class Header extends Component {
     render() {
         let {setLoginDialogVisibility} = this.props;
         return (
-            <div styleName="header">
+            <div id="header1" styleName="header">
                 <AppBar position="fixed" className={styles["app-bar"]}>
                     <Toolbar>
                         <IconButton  aria-label="Menu" color="inherit">
@@ -24,8 +24,8 @@ class Header extends Component {
                             מיבא
                         </Typography>
                         <div className={styles["right-buttons-group"]}>
-                            <Button href="#header" color="inherit">בית</Button>
-                            <Button href="#features" color="inherit">איך זה עובד?</Button>
+                            <Button href="#header1" color="inherit">בית</Button>
+                            <Button href="#features1" color="inherit">איך זה עובד?</Button>
                             <Button href="https://www.facebook.com/meebaOnFace/" color="inherit" target="_blank">
                                 <img src={facebookImage} />
                             </Button>
