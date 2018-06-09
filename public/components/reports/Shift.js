@@ -146,25 +146,28 @@ class Shift extends React.PureComponent {
                 </div>
 
                 {mode === ReportModes.Report &&
-                <div styleName="date">
+                <div className={styles["date"]}>
                     <span>{hebrewDay}'</span>
 
                     <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={startDateStr}
-                                format="DD/MM/YYYY"/>
+                                format="DD/MM/YYYY"
+                                style={{margin: "0 10px"}}
+                    />
                 </div>
                 }
 
-                <TimePicker styleName="time"
-                            ampm={false}
-                            autoOk
-                            value={shift.clockInTime}
-                            onChange={(time) => this.onUpdateStartTime(time)}
+                <TimePicker
+                    className={styles["time"]}
+                    ampm={false}
+                    autoOk
+                    value={shift.clockInTime}
+                    onChange={(time) => this.onUpdateStartTime(time)}
                 />
 
                 {(mode === ReportModes.Report || !!endTimeStr) &&
 
                 <TimePicker
-                    styleName="time"
+                    className={styles["time"]}
                     ampm={false}
                     autoOk
                     value={moment(endTimeStr, 'HH:mm')}
@@ -180,11 +183,11 @@ class Shift extends React.PureComponent {
                 <div>
                     {mode === ReportModes.Live && isWorking(shift) &&
                     <Tooltip title="סיים משמרת" placement="left">
-                        <IconButton styleName="elem" onClick={() => this.onShiftComplete()}><Home/></IconButton>
+                        <IconButton className={styles["elem"]} onClick={() => this.onShiftComplete()}><Home/></IconButton>
                     </Tooltip>
                     }
                     <Tooltip title="מחיקת משמרת" placement="left">
-                        <IconButton styleName="elem" onClick={() => this.onDelete()}><Delete/></IconButton>
+                        <IconButton className={styles["elem"]} onClick={() => this.onDelete()}><Delete/></IconButton>
                     </Tooltip>
                 </div>
                 }
