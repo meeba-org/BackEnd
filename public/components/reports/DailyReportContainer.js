@@ -7,7 +7,7 @@ import {fetchDailyReport, showDeleteShiftModal} from "../../actions/shiftsAction
 import DailyReport from "./DailyReport";
 import {fetchUsers} from "../../actions/usersActions";
 
-class DailyReportContainer extends React.Component {
+class DailyReportContainer extends React.PureComponent {
 
     onDayChange(startDateOfMonth) {
         if (!startDateOfMonth)

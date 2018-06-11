@@ -28,6 +28,16 @@ export const convertTimeStrToMoment = (startDateStr, startTimeStr, endTimeStr) =
     return {momentStart, momentEnd};
 };
 
+export const convertTimeStrToMoment2 = ({startDate, startTime, endTime}) => {
+    let momentStart = moment(startDate).hour(startTime.hour()).minute(startTime.minute()).startOf('minute');
+    let momentEnd = moment(startDate).hour(endTime.hour()).minute(endTime.minute()).startOf('minute');
+
+    if (momentEnd.isBefore(momentStart)) {
+        momentEnd.add(1, 'days');
+    }
+    return {momentStart, momentEnd};
+};
+
 export const ReportModes = {
     Live: 0,
     Report: 1

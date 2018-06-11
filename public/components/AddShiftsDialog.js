@@ -1,20 +1,21 @@
-import React, {Component} from 'react';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from '@material-ui/core';
-import {calculateCurrentDay, convertTimeStrToMoment, createShift, DATE_FORMAT, TIME_FORMAT} from "../helpers/utils";
+import React, {PureComponent} from 'react';
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from '@material-ui/core';
+import {convertTimeStrToMoment2, createShift} from "../helpers/utils";
 import moment from "moment";
 import CheckBoxList from "./CheckBoxList";
 import PropTypes from 'prop-types';
+import {DatePicker, TimePicker} from "material-ui-pickers";
 
 
-class AddShiftsDialog extends Component {
+class AddShiftsDialog extends PureComponent {
 
     constructor(props) {
         super(props);
         this.state = {
             employeesToAdd: [],
-            startDate: moment().format(DATE_FORMAT),
-            startTime: moment(8, "HH").format(TIME_FORMAT),
-            endTime: moment(8, "HH").add(8, 'hours').format(TIME_FORMAT)
+            startDate: moment(),
+            startTime: moment(8, "HH"),
+            endTime: moment(8, "HH").add(8, 'hours')
         };
     }
 
@@ -53,22 +54,20 @@ class AddShiftsDialog extends Component {
         onCancel();
     }
 
-    onUpdateStartTime(e) {
-        this.setState({startTime: e.target.value});
+    onUpdateStartTime(time) {
+        this.setState({startTime: time});
     }
 
-    onUpdateEndTime(e) {
-        this.setState({endTime: e.target.value});
+    onUpdateEndTime(time) {
+        this.setState({endTime: time});
     }
 
-    onUpdateDateChange(e) {
-        this.setState({startDate: e.target.value});
+    onUpdateDateChange(date) {
+        this.setState({startDate: date});
     }
 
     createShift(employee) {
-        let {startDate, startTime, endTime} = this.state;
-
-        let {momentStart, momentEnd} = convertTimeStrToMoment(startDate, startTime, endTime);
+        let {momentStart, momentEnd} = convertTimeStrToMoment2(this.state);
         return createShift(employee, momentStart, momentEnd);
     }
 
@@ -79,14 +78,25 @@ class AddShiftsDialog extends Component {
             <Dialog open={open} onClose={onCancel}>
                 <DialogTitle>הוספת משמרת</DialogTitle>
                 <DialogContent>
-                    <TextField type="date" defaultValue={calculateCurrentDay()} label="תאריך"
-                               onChange={(e) => this.onUpdateDateChange(e)} />
-
-                    <TextField type="time" defaultValue={this.state.startTime} label="כניסה"
-                               onChange={(e) => this.onUpdateStartTime(e)}
+                    <DatePicker autoOk onChange={(date) => this.onUpdateDateChange(date)}
+                                value={moment()}
+                                format="DD/MM/YYYY"
+                                style={{margin: "0 10px"}}
+                                disableFuture
                     />
-                    <TextField type="time" defaultValue={this.state.endTime} label="יציאה"
-                               onChange={(e) => this.onUpdateEndTime(e)}
+
+                    <TimePicker
+                        ampm={false}
+                        autoOk
+                        value={this.state.startTime}
+                        onChange={(time) => this.onUpdateStartTime(time)}
+                    />
+
+                    <TimePicker
+                        ampm={false}
+                        autoOk
+                        value={moment(this.state.endTime)}
+                        onChange={(time) => this.onUpdateEndTime(time)}
                     />
 
                     <CheckBoxList

@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-import {Button, Card, CardContent, CardHeader, Divider, TextField, Tooltip} from "@material-ui/core";
+import {Button, Card, CardContent, CardHeader, Divider, Tooltip} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import {FieldArray} from "redux-form";
 import PropTypes from 'prop-types';
@@ -18,8 +18,9 @@ import AutoComplete from "../AutoComplete";
 import {withTheme} from '@material-ui/core/styles';
 import moment from "moment/moment";
 import {Warning} from "@material-ui/icons";
+import {DatePicker} from "material-ui-pickers";
 
-class DailyReport extends React.Component {
+class DailyReport extends React.PureComponent {
     constructor(props) {
         super(props);
 
@@ -33,8 +34,8 @@ class DailyReport extends React.Component {
         this.props.onDayChange(this.state.currentDay);
     }
 
-    handleChange(event) {
-        let currentDay = event.target.value;
+    handleChange(date) {
+        let currentDay = date.format("YYYY-MM-DD");
 
         this.setState({currentDay});
         this.props.onDayChange(currentDay);
@@ -81,8 +82,11 @@ class DailyReport extends React.Component {
 
                         <div className={styles["daily-report"]}>
                             <div className={styles["controls-line"]}>
-                                <TextField className={styles["daily-date"]} type="date" defaultValue={currentDay} placeholder="תאריך"
-                                           onChange={(e) => this.handleChange(e)}/>
+                                <DatePicker autoOk onChange={(date) => this.handleChange(date)} value={currentDay}
+                                            format="DD/MM/YYYY"
+                                            style={{margin: "0 10px"}}
+                                            disableFuture
+                                />
 
                                 <Tooltip title="הוספת משמרת" placement="top">
                                     <Button className={styles["action-button"]} variant="raised" color="primary"
