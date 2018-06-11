@@ -72,7 +72,7 @@ class Header extends Component {
                             </div>
                         </div>
                     </div>
-                    <a className={styles["bottom-content"]} href="#features">
+                    <a className={styles["bottom-content"]} href="#features1">
                         <div>
                             המשך גלילה
                         </div>
