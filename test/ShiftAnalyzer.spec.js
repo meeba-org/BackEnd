@@ -89,6 +89,18 @@ describe('ShiftAnalyzer', function () {
             expect(hours.extra150Hours).to.be.equal(3.5);
 
         });
+
+        it.only('12:00 - 00:00 test', function () {
+            const shift = {
+                clockInTime: moment().hour(12).startOf('hour'),
+                clockOutTime: moment().add(1, 'days').startOf('day'),
+            };
+            const hours = analyzeHours(shift);
+
+            expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
+            expect(hours.extra125Hours).to.be.equal(SHIFT_125_OVERDUE_LENGTH);
+            expect(hours.extra150Hours).to.be.equal(12 - REGULAR_SHIFT_LENGTH - SHIFT_125_OVERDUE_LENGTH);
+        });
     });
 
     describe('Evening Holiday Day', function () {
