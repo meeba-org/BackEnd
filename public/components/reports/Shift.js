@@ -24,7 +24,6 @@ class Shift extends React.PureComponent {
         this.state = {
             hover: false,
             focus: false,
-            selectedStartDate: this.props.startDateStr
         };
     }
 
@@ -95,7 +94,6 @@ class Shift extends React.PureComponent {
     getErrors = () => {
         let {input} = this.props;
         let shift = input.value;
-
         let {clockInTime, clockOutTime} = shift;
         let isShiftTooLong = moment(clockOutTime).diff(moment(clockInTime), 'hours', true) > 12;
         if (isShiftTooLong) {
@@ -109,7 +107,6 @@ class Shift extends React.PureComponent {
     render() {
         let {showNames, input, mode} = this.props;
         let shift = input.value;
-        let {startDateStr, endTimeStr} = convertMomentToTimeStr(shift);
         let icon = isWorking(shift) ?
             <Tooltip title="בעבודה" placement="right"><Work/></Tooltip> :
             <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
@@ -133,7 +130,7 @@ class Shift extends React.PureComponent {
                 <div className={styles["date"]}>
                     <span>{hebrewDay}'</span>
 
-                    <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={startDateStr}
+                    <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={shift.clockInTime}
                                 format="DD/MM/YYYY"
                                 style={{margin: "0 10px"}}
                                 disableFuture
@@ -149,13 +146,13 @@ class Shift extends React.PureComponent {
                     onChange={(time) => this.onUpdateStartTime(time)}
                 />
 
-                {(mode === ReportModes.Report || !!endTimeStr) &&
+                {(mode === ReportModes.Report || !!shift.clockOutTime) &&
 
                 <TimePicker
                     className={styles["time"]}
                     ampm={false}
                     autoOk
-                    value={moment(endTimeStr, 'HH:mm')}
+                    value={moment(shift.clockOutTime)}
                     onChange={(time) => this.onUpdateEndTime(time)}
                 />
                 }
@@ -187,7 +184,6 @@ Shift.propTypes = {
     onUpdate: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
     mode: PropTypes.number.isRequired,
-    startDateStr: PropTypes.string.isRequired,
 };
 
 export default CSSModules(Shift, styles, {allowMultiple: true});
