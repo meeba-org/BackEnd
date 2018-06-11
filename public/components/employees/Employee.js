@@ -91,6 +91,7 @@ Employee.propTypes = {
     input: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Employee);

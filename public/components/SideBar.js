@@ -118,7 +118,7 @@ class SideBar extends React.Component {
     }
 
     render() {
-        const {classes, theme, userRole} = this.props;
+        const {classes, userRole} = this.props;
 
         return (
             <Drawer

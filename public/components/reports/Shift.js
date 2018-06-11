@@ -6,7 +6,6 @@ import CSSModules from "react-css-modules";
 import {
     convertMomentToTimeStr,
     convertTimeStrToMoment,
-    fillBlanks,
     getCurrentTime,
     isWorking,
     momentToDay,
@@ -29,25 +28,11 @@ class Shift extends React.PureComponent {
         };
     }
 
-    onUpdateStartDate2(e) {
-        let {startTimeStr, endTimeStr} = convertMomentToTimeStr(this.props.input.value);
-        let newStartDateStr = e.target.value;
-
-        this.onUpdate(newStartDateStr, startTimeStr, endTimeStr);
-    }
-
     onUpdateStartDate(date) {
         let {startTimeStr, endTimeStr} = convertMomentToTimeStr(this.props.input.value);
         let newStartDateStr = date.format("YYYY-MM-DD");
 
         this.onUpdate(newStartDateStr, startTimeStr, endTimeStr);
-    }
-
-    onUpdateStartTime2(e) {
-        let {startDateStr, endTimeStr} = convertMomentToTimeStr(this.props.input.value);
-        let newStartTimeStr = fillBlanks(e.target.value);
-
-        this.onUpdate(startDateStr, newStartTimeStr, endTimeStr);
     }
 
     onUpdateStartTime(time) {
@@ -56,7 +41,6 @@ class Shift extends React.PureComponent {
 
         this.onUpdate(startDateStr, newStartTimeStr, endTimeStr);
     }
-
 
     onUpdateEndTime(time) {
         let {startDateStr, startTimeStr} = convertMomentToTimeStr(this.props.input.value);
@@ -125,7 +109,7 @@ class Shift extends React.PureComponent {
     render() {
         let {showNames, input, mode} = this.props;
         let shift = input.value;
-        let {startDateStr, startTimeStr, endTimeStr} = convertMomentToTimeStr(shift);
+        let {startDateStr, endTimeStr} = convertMomentToTimeStr(shift);
         let icon = isWorking(shift) ?
             <Tooltip title="בעבודה" placement="right"><Work/></Tooltip> :
             <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
@@ -202,6 +186,7 @@ Shift.propTypes = {
     onUpdate: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
     mode: PropTypes.number.isRequired,
+    startDateStr: PropTypes.string.isRequired,
 };
 
 export default CSSModules(Shift, styles, {allowMultiple: true});

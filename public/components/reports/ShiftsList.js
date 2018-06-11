@@ -28,31 +28,31 @@ class ShiftsList extends React.PureComponent {
         return (
             <div styleName="shifts-list">
                 {fields && fields.map((shiftName, index) =>
-                    <TransitionGroup>
-                    <CSSTransition
-                        key={index}
-                        timeout={500}
-                        classNames={{
-                            appear: styles['fade-appear'],
-                            appearActive: styles['fade-appear-active'],
-                            enter: styles['fade-enter'],
-                            enterActive: styles['fade-enter-active'],
-                            enterDone: styles['fade-enter-done'],
-                            exit: styles['fade-exit'],
-                            exitActive: styles['fade-exit-active'],
-                            exitDone: styles['fade-exit-done']
-                        }}
-                        appear
-                    >
-                        <Field
-                            component={Shift}
-                            name={shiftName} key={index}
-                            onDelete={() => this.onDelete(fields, index)}
-                            onUpdate={(shift, input) => this.onUpdate(shift, input)}
-                            showNames={showNames}
-                            mode={mode}
-                        />
-                    </CSSTransition>
+                    <TransitionGroup key={index}>
+                        <CSSTransition
+                            key={index}
+                            timeout={500}
+                            classNames={{
+                                appear: styles['fade-appear'],
+                                appearActive: styles['fade-appear-active'],
+                                enter: styles['fade-enter'],
+                                enterActive: styles['fade-enter-active'],
+                                enterDone: styles['fade-enter-done'],
+                                exit: styles['fade-exit'],
+                                exitActive: styles['fade-exit-active'],
+                                exitDone: styles['fade-exit-done']
+                            }}
+                            appear
+                        >
+                            <Field
+                                component={Shift}
+                                name={shiftName} key={index}
+                                onDelete={() => this.onDelete(fields, index)}
+                                onUpdate={(shift, input) => this.onUpdate(shift, input)}
+                                showNames={showNames}
+                                mode={mode}
+                            />
+                        </CSSTransition>
                     </TransitionGroup>
                 )}
                 {shouldDisplayNoData && (!fields || (fields.length == 0)) &&
