@@ -7,6 +7,10 @@ import {withStyles} from '@material-ui/core/styles';
 const styles = {
     root: {
         display: "block"
+    },
+    item: {
+        margin: "12px",
+        padding: 0
     }
 };
 
@@ -56,21 +60,21 @@ class Employee extends React.Component {
                         <Input value={input.value.uid} placeholder="ת.ז."
                                onChange={(e) => this.onUpdate(e, "uid")}
                                onBlur={this.onBlur}
-                               classes={{root: classes.root}}
+                               classes={{root: classes.root, item: classes.item}}
                         />
                     </Grid>
                     <Grid item xs={12} sm={1}>
                         <Input value={input.value.hourWage} placeholder="שכר שעתי"
                                onChange={(e) => this.onUpdate(e, "hourWage")}
                                onBlur={this.onBlur}
-                               classes={{root: classes.root}}
+                               classes={{root: classes.root, item: classes.item}}
                         />
                     </Grid>
                     <Grid item xs={12} sm={1}>
                         <Input value={input.value.transportation} placeholder="נסיעות"
                                onChange={(e) => this.onUpdate(e, "transportation")}
                                onBlur={this.onBlur}
-                               classes={{root: classes.root}}
+                               classes={{root: classes.root, item: classes.item}}
                         />
                     </Grid>
                     <Grid item xs={12} sm={2}>

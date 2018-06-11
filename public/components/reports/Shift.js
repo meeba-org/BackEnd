@@ -125,7 +125,7 @@ class Shift extends React.PureComponent {
                     <IconButton styleName="icon">{icon}</IconButton>
                     }
                     {showNames &&
-                    <div className="name">{shift.user && shift.user.firstName}</div>
+                    <div styleName="name">{shift.user && shift.user.firstName}</div>
                     }
                 </div>
 
@@ -136,6 +136,7 @@ class Shift extends React.PureComponent {
                     <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={startDateStr}
                                 format="DD/MM/YYYY"
                                 style={{margin: "0 10px"}}
+                                disableFuture
                     />
                 </div>
                 }

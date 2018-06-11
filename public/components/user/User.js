@@ -44,7 +44,7 @@ class User extends Component {
             <Fragment>
                 <CardHeader title="פרופיל משתמש"/>
 
-                <CardContent className="card-content">
+                <CardContent className={styles["card-content"]}>
 
                     {!!user &&
                     <div>
@@ -91,7 +91,7 @@ class User extends Component {
                 <div>
                     <CardHeader title="חברה"/>
 
-                    < CardContent className="card-content">
+                    < CardContent className={styles["card-content"]}>
                         <TextField
                             id="company-name"
                             label="שם"
