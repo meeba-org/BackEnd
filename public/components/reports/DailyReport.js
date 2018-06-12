@@ -15,11 +15,10 @@ import {
     ReportModes
 } from "../../helpers/utils";
 import AutoComplete from "../AutoComplete";
-import {withTheme} from '@material-ui/core/styles';
 import moment from "moment/moment";
 import {Warning} from "@material-ui/icons";
 import {DatePicker} from "material-ui-pickers";
-import {withStyles} from '@material-ui/core/styles';
+import {withStyles, withTheme} from '@material-ui/core/styles';
 
 const styles1 = {
     root: {
@@ -185,6 +184,7 @@ DailyReport.propTypes = {
     mode: PropTypes.number.isRequired,
     theme: PropTypes.object,
     router: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
 };
 

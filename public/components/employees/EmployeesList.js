@@ -2,7 +2,7 @@
  * Created by Chen on 16/07/2017.
  */
 
-import React, {Fragment} from 'react';
+import React from 'react';
 import CSSModules from "react-css-modules";
 import styles from "../../styles/EmployeesList.scss";
 import PropTypes from 'prop-types';
