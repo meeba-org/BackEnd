@@ -5,6 +5,7 @@ import Shift from "./Shift";
 import CSSModules from "react-css-modules";
 import NoData from "../NoData";
 import styles from "../../styles/ShiftsList.scss";
+import animation from "../../styles/Animation.scss";
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 class ShiftsList extends React.PureComponent {
@@ -32,16 +33,7 @@ class ShiftsList extends React.PureComponent {
                         <CSSTransition
                             key={index}
                             timeout={500}
-                            classNames={{
-                                appear: styles['fade-appear'],
-                                appearActive: styles['fade-appear-active'],
-                                enter: styles['fade-enter'],
-                                enterActive: styles['fade-enter-active'],
-                                enterDone: styles['fade-enter-done'],
-                                exit: styles['fade-exit'],
-                                exitActive: styles['fade-exit-active'],
-                                exitDone: styles['fade-exit-done']
-                            }}
+                            classNames={{ ...animation }}
                             appear
                         >
                             <Field

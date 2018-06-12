@@ -2,7 +2,7 @@
  * Created by Chen on 16/07/2017.
  */
 
-import React from 'react';
+import React, {Fragment} from 'react';
 import CSSModules from "react-css-modules";
 import styles from "../../styles/EmployeesList.scss";
 import PropTypes from 'prop-types';
@@ -11,6 +11,8 @@ import {Button, Card, CardContent, CardHeader, Divider, Grid, Tooltip} from "@ma
 import {Field} from "redux-form";
 import AddIcon from '@material-ui/icons/Add';
 import NoData from "../NoData";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
+import animation from "../../styles/Animation.scss";
 
 class EmployeesList extends React.Component {
 
@@ -46,7 +48,7 @@ class EmployeesList extends React.Component {
                         </Tooltip>
                     </div>
                     <Divider className={styles["divider"]}/>
-                    {fields && fields.length > 0 &&
+                        {fields && fields.length > 0 &&
                     <Grid className={styles["header"]} container spacing={24}>
                         <Grid item xs={12} sm={3}>שם</Grid>
                         <Grid item xs={12} sm={2}>ת.ז.</Grid>
@@ -55,13 +57,24 @@ class EmployeesList extends React.Component {
                     </Grid>
                     }
                     {fields && fields.map((employeeIndex, index) =>
-                        <Field component={Employee} name={employeeIndex} key={index}
-                               onDelete={() => this.onDelete(fields, index)}
-                               onUpdate={(employee) => this.onUpdate(employee)}/>
+                        <TransitionGroup>
+                            <CSSTransition
+                                timeout={500}
+                                classNames={{...animation}}
+                                appear
+                            >
+                                <Fragment>
+                                    <Field component={Employee} name={employeeIndex} key={index}
+                                           onDelete={() => this.onDelete(fields, index)}
+                                           onUpdate={(employee) => this.onUpdate(employee)}/>
+                                </Fragment>
+                            </CSSTransition>
+                        </TransitionGroup>
                     )}
                     {(!fields || (fields.length == 0)) &&
                     <NoData text="אין עובדים - בוא ננסה להוסיף!"/>
                     }
+
 
                 </CardContent>
             </Card>

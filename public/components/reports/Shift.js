@@ -152,7 +152,7 @@ class Shift extends React.PureComponent {
                     className={styles["time"]}
                     ampm={false}
                     autoOk
-                    value={moment(shift.clockOutTime)}
+                    value={shift.clockOutTime}
                     onChange={(time) => this.onUpdateEndTime(time)}
                 />
                 }
