@@ -56,7 +56,7 @@ class EmployeesList extends React.Component {
                     </Grid>
                     }
                     {fields && fields.map((employeeIndex, index) =>
-                        <Fade>
+                        <Fade key={index}>
                             <Field component={Employee} name={employeeIndex} key={index}
                                    onDelete={() => this.onDelete(fields, index)}
                                    onUpdate={(employee) => this.onUpdate(employee)}/>

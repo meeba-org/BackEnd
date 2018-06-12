@@ -10,7 +10,7 @@ const Fade = (props) => (
             appear
         >
             <Fragment>
-                {props.children}
+                {React.cloneElement(props.children, {...props})}
             </Fragment>
         </CSSTransition>
     </TransitionGroup>
