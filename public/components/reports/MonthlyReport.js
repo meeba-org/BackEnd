@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {Button, Card, Divider, Input, Select, Tooltip} from "@material-ui/core";
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,6 +15,7 @@ import NoData from "../NoData";
 import AddShiftsDialog from "../AddShiftsDialog";
 import {IfGranted} from "react-authorization";
 import * as ERoles from "../../helpers/ERoles";
+import Fade from "../Fade";
 
 class MonthlyReport extends React.PureComponent {
     constructor(props) {
@@ -144,20 +145,22 @@ class MonthlyReport extends React.PureComponent {
                         </div>
                         <Divider className={styles["divider"]}/>
 
-                        {fields && fields.map((employeeShiftsReport, index) =>
-                            <Field component={MonthlyReportLine}
-                                   name={employeeShiftsReport}
-                                   isCollapsed={this.isCollapsed(fields, index)}
-                                   key={index}
-                                   onToggle={(name) => this.onToggle(name)}
-                                   onDeleteShift={this.onDeleteShift}
-                                   onUpdateShift={this.onUpdateShift}
-                                   onCreateShift={this.onCreateShift}
-                            />
-                        )}
-                        {(!fields || (fields.length == 0)) &&
-                            <NoData text="לא נמצאו משמרות"/>
-                        }
+                                {fields && fields.map((employeeShiftsReport, index) =>
+                                    <Fade>
+                                        <Field component={MonthlyReportLine}
+                                               name={employeeShiftsReport}
+                                               isCollapsed={this.isCollapsed(fields, index)}
+                                               key={index}
+                                               onToggle={(name) => this.onToggle(name)}
+                                               onDeleteShift={this.onDeleteShift}
+                                               onUpdateShift={this.onUpdateShift}
+                                               onCreateShift={this.onCreateShift}
+                                        />
+                                    </Fade>
+                                )}
+                                {(!fields || (fields.length == 0)) &&
+                                <NoData text="לא נמצאו משמרות"/>
+                                }
                     </div>
 
                 </CardContent>

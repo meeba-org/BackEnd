@@ -11,8 +11,7 @@ import {Button, Card, CardContent, CardHeader, Divider, Grid, Tooltip} from "@ma
 import {Field} from "redux-form";
 import AddIcon from '@material-ui/icons/Add';
 import NoData from "../NoData";
-import {CSSTransition, TransitionGroup} from "react-transition-group";
-import animation from "../../styles/Animation.scss";
+import Fade from "../Fade";
 
 class EmployeesList extends React.Component {
 
@@ -57,19 +56,11 @@ class EmployeesList extends React.Component {
                     </Grid>
                     }
                     {fields && fields.map((employeeIndex, index) =>
-                        <TransitionGroup>
-                            <CSSTransition
-                                timeout={500}
-                                classNames={{...animation}}
-                                appear
-                            >
-                                <Fragment>
-                                    <Field component={Employee} name={employeeIndex} key={index}
-                                           onDelete={() => this.onDelete(fields, index)}
-                                           onUpdate={(employee) => this.onUpdate(employee)}/>
-                                </Fragment>
-                            </CSSTransition>
-                        </TransitionGroup>
+                        <Fade>
+                            <Field component={Employee} name={employeeIndex} key={index}
+                                   onDelete={() => this.onDelete(fields, index)}
+                                   onUpdate={(employee) => this.onUpdate(employee)}/>
+                        </Fade>
                     )}
                     {(!fields || (fields.length == 0)) &&
                     <NoData text="אין עובדים - בוא ננסה להוסיף!"/>

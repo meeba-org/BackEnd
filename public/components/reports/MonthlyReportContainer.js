@@ -35,8 +35,7 @@ class MonthlyReportContainer extends React.PureComponent {
     render() {
         const {handleSubmit, updateShift, createShift, deleteShift, employees, userRole} = this.props;
         return (
-            <form onSubmit={handleSubmit(() => {
-            })}>
+            <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="employeeShiftsReports"
                             component={MonthlyReport}
                             employees={employees}

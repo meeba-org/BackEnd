@@ -5,8 +5,7 @@ import Shift from "./Shift";
 import CSSModules from "react-css-modules";
 import NoData from "../NoData";
 import styles from "../../styles/ShiftsList.scss";
-import animation from "../../styles/Animation.scss";
-import {CSSTransition, TransitionGroup} from 'react-transition-group';
+import Fade from "../Fade";
 
 class ShiftsList extends React.PureComponent {
     onCreate(fields) {
@@ -29,13 +28,7 @@ class ShiftsList extends React.PureComponent {
         return (
             <div styleName="shifts-list">
                 {fields && fields.map((shiftName, index) =>
-                    <TransitionGroup key={index}>
-                        <CSSTransition
-                            key={index}
-                            timeout={500}
-                            classNames={{ ...animation }}
-                            appear
-                        >
+                    <Fade key={index}>
                             <Field
                                 component={Shift}
                                 name={shiftName} key={index}
@@ -44,8 +37,7 @@ class ShiftsList extends React.PureComponent {
                                 showNames={showNames}
                                 mode={mode}
                             />
-                        </CSSTransition>
-                    </TransitionGroup>
+                    </Fade>
                 )}
                 {shouldDisplayNoData && (!fields || (fields.length == 0)) &&
                 <NoData text="לא נמצאו משמרות"/>
