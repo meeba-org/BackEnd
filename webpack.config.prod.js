@@ -91,18 +91,31 @@ module.exports = {
             {test: /\.[ot]tf(\?v=\d+.\d+.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream'},
             {test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader?name=[name].[ext]'},
             {test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
-            {test: /\.scss$/, use: ExtractTextPlugin.extract({
+            {
+                test: /\.scss$/,
+                exclude: /node_modules/,
+                use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
-                        {loader: "css-loader"},
-                        {loader: "sass-loader",options: {
-                            includePaths: [
-                                path.resolve(__dirname, 'node_modules/sass-material-colors/sass/sass-material-colors'),
-                                path.resolve(__dirname, 'public/styles')
-                            ]
-                        }}
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                importLoaders: 1,
+                                localIdentName: '[name]-[local]-[hash:base64:2]',
+                            }
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                includePaths: [
+                                    path.resolve(__dirname, 'src/scss'),
+                                    path.resolve(__dirname, "node_modules/foundation-sites/scss")
+                                ]
+                            }
+                        }
                     ]
-                })
+                }),
             }
         ]
     }
