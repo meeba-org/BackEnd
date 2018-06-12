@@ -1,3 +1,4 @@
+import * as types from "../actions/actionTypes";
 const initialState = {
     modalType: null,
     modalProps: {}
@@ -5,11 +6,11 @@ const initialState = {
 
 export function ModalReducer(state = initialState, action) {
     switch (action.type) {
-        case 'SHOW_MODAL':
+        case types.SHOW_MODAL:
             return {
                 ...action.payload
             };
-        case 'HIDE_MODAL':
+        case types.HIDE_MODAL:
             return {
                 ...action.payload
             };

@@ -10,3 +10,7 @@ export const getCompanyName = (state) => {
 export const getUserRole = (state) => {
     return (!state.user) ? null : state.user.role;
 };
+
+export const getMeta = (state) => {
+    return (!state.general.meta) ? null : state.general.meta;
+};

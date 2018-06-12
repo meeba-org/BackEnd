@@ -1,0 +1,42 @@
+@import "variables";
+
+#statistics {
+    background: url(./images/coffee.jpg) no-repeat center;
+
+    #statistics-content {
+        background-color: rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-size: cover;
+        height: auto;
+        color: white;
+
+        .content {
+
+            @media (min-width: $mobileWidth) {
+                width: 400px;
+            }
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+
+            .cells {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+                flex-direction: column;
+
+                @media (min-width: $mobileWidth) {
+                    width: 400px;
+                    flex-direction: row;
+                }
+            }
+        }
+    }
+}
