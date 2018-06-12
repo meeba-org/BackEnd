@@ -19,6 +19,13 @@ import {withTheme} from '@material-ui/core/styles';
 import moment from "moment/moment";
 import {Warning} from "@material-ui/icons";
 import {DatePicker} from "material-ui-pickers";
+import {withStyles} from '@material-ui/core/styles';
+
+const styles1 = {
+    root: {
+        overflow: "visible"
+    }
+};
 
 class DailyReport extends React.PureComponent {
     constructor(props) {
@@ -68,12 +75,12 @@ class DailyReport extends React.PureComponent {
     };
 
     render() {
-        const {onCreateShift, onDeleteShift, employees, mode, isLoading} = this.props;
+        const {onCreateShift, onDeleteShift, employees, mode, isLoading, classes} = this.props;
         let {currentDay} = this.state;
         let {primary, secondary} = this.props.theme.palette.text;
 
         return (
-            <Card>
+            <Card classes={{root: classes.root}}>
                 {(mode === ReportModes.Report) &&
                 <Fragment>
                     <CardHeader title="דוח יומי"/>
@@ -181,5 +188,5 @@ DailyReport.propTypes = {
     isLoading: PropTypes.bool.isRequired,
 };
 
-export default CSSModules(withTheme()(DailyReport), styles);
+export default withStyles(styles1)(CSSModules(withTheme()(DailyReport), styles));
 

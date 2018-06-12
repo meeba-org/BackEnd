@@ -8,10 +8,6 @@ const styles = {
     root: {
         display: "block"
     },
-    input: {
-        margin: "12px 12px0 12px",
-        padding: 0
-    }
 };
 
 class Employee extends React.Component {
@@ -48,8 +44,7 @@ class Employee extends React.Component {
     render() {
         let {input, onDelete, classes} = this.props;
         return (
-            <div onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                <Grid container spacing={24}>
+                <Grid container spacing={24} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Grid item xs={12} sm={3}>
                         <Input value={input.value.firstName} placeholder="שם"
                                onChange={(e) => this.onUpdate(e, "firstName")}
@@ -60,21 +55,21 @@ class Employee extends React.Component {
                         <Input value={input.value.uid} placeholder="ת.ז."
                                onChange={(e) => this.onUpdate(e, "uid")}
                                onBlur={this.onBlur}
-                               classes={{root: classes.root, input: classes.input}}
+                               classes={{root: classes.root}}
                         />
                     </Grid>
                     <Grid item xs={12} sm={1}>
                         <Input value={input.value.hourWage} placeholder="שכר שעתי"
                                onChange={(e) => this.onUpdate(e, "hourWage")}
                                onBlur={this.onBlur}
-                               classes={{root: classes.root, input: classes.input}}
+                               classes={{root: classes.root}}
                         />
                     </Grid>
                     <Grid item xs={12} sm={1}>
                         <Input value={input.value.transportation} placeholder="נסיעות"
                                onChange={(e) => this.onUpdate(e, "transportation")}
                                onBlur={this.onBlur}
-                               classes={{root: classes.root, input: classes.input}}
+                               classes={{root: classes.root}}
                         />
                     </Grid>
                     <Grid item xs={12} sm={2}>
@@ -84,9 +79,7 @@ class Employee extends React.Component {
                             </Tooltip>
                         }
                     </Grid>
-
                 </Grid>
-            </div>
         );
     }
 }
