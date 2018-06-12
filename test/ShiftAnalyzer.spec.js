@@ -90,7 +90,7 @@ describe('ShiftAnalyzer', function () {
 
         });
 
-        it.only('12:00 - 00:00 test', function () {
+        it('12:00 - 00:00 test', function () {
             const shift = {
                 clockInTime: moment().hour(12).startOf('hour'),
                 clockOutTime: moment().add(1, 'days').startOf('day'),
