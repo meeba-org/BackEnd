@@ -1,9 +1,9 @@
 @import "variables";
 
-#statistics {
+.statistics {
     background: url(./images/coffee.jpg) no-repeat center;
 
-    #statistics-content {
+    .statistics-content {
         background-color: rgba(0, 0, 0, 0.4);
         display: flex;
         flex-direction: column;

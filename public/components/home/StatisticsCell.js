@@ -6,11 +6,11 @@ import CSSModules from "react-css-modules/dist/index";
 class StatisticsCell extends Component {
     render() {
         return (
-            <div className="statisticsCell">
+            <div styleName="statisticsCell">
                 <hr className="h1"/>
-                <div className="number">{this.props.num}</div>
+                <div styleName="number">{this.props.num}</div>
                 <hr className="h1"/>
-                <div className="title">{this.props.title}</div>
+                <div styleName="title">{this.props.title}</div>
             </div>
         );
     }

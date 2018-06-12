@@ -16,11 +16,11 @@ class Statistics extends Component {
         let meta = this.props.meta || {};
 
         return (
-            <div id="statistics">
-                <div id="statistics-content">
-                    <div className="content">
+            <div styleName="statistics">
+                <div styleName="statistics-content">
+                    <div styleName="content">
                         <h1>מי כבר עובד עם מיבא?</h1>
-                        <div className="cells">
+                        <div styleName="cells">
                             <StatisticsCell title="מנהלים" num={meta.companiesCount}/>
                             <StatisticsCell title="עובדים" num={meta.usersCount}/>
                         </div>
