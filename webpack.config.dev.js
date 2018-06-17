@@ -1,9 +1,6 @@
 import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import autoprefixer from "autoprefixer";
 import path from "path";
-
-const ExtractTextPlugin  = require('extract-text-webpack-plugin');
 
 export default {
     resolve: {
@@ -39,16 +36,6 @@ export default {
             },
             inject: true
         }),
-        new webpack.LoaderOptionsPlugin({
-            minimize: false,
-            debug: true,
-            noInfo: true, // set to false to see a list of every file being bundled.
-            options: {
-                context: '/',
-                postcss: () => [autoprefixer],
-            }
-        }),
-        new ExtractTextPlugin("styles.css")
     ],
     module: {
         rules: [
@@ -92,7 +79,14 @@ export default {
             },
             {
                 test: /\.(jpe?g|png|gif|ico)$/i,
-                use: ['file-loader']
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]'
+                        }
+                    }
+                ]
             },
             {
                 test: /(\.css|\.scss|\.sass)$/,
