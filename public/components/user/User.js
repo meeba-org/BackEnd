@@ -4,7 +4,7 @@ import {CardContent, CardHeader, TextField} from "@material-ui/core";
 import CSSModules from "react-css-modules";
 import styles from '../../styles/User.scss';
 import NoData from "../NoData";
-import withStyles from "@material-ui/core/es/styles/withStyles";
+import {withStyles} from '@material-ui/core/styles';
 
 const cssStyles = {
     input: {
