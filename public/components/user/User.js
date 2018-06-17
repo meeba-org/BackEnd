@@ -4,6 +4,13 @@ import {CardContent, CardHeader, TextField} from "@material-ui/core";
 import CSSModules from "react-css-modules";
 import styles from '../../styles/User.scss';
 import NoData from "../NoData";
+import withStyles from "@material-ui/core/es/styles/withStyles";
+
+const cssStyles = {
+    input: {
+        minWidth: "318px"
+    }
+};
 
 class User extends Component {
     handleUserChange = (field, e) => {
@@ -37,7 +44,7 @@ class User extends Component {
     };
 
     render() {
-        const {input} = this.props;
+        const {input, classes} = this.props;
         const user = input.value;
 
         return (
@@ -69,6 +76,9 @@ class User extends Component {
                                 type="email"
                                 value={user.email}
                                 onChange={(e) => this.handleUserChange("email", e)}
+                                InputProps={{
+                                    className: classes.input
+                                }}
                             />
                         </div>
                         <div>
@@ -91,7 +101,7 @@ class User extends Component {
                 <div>
                     <CardHeader title="חברה"/>
 
-                    < CardContent className={styles["card-content"]}>
+                    <CardContent className={styles["card-content"]}>
                         <TextField
                             id="company-name"
                             label="שם"
@@ -112,5 +122,5 @@ User.propTypes = {
     input: PropTypes.object.isRequired,
 };
 
-export default CSSModules(User, styles);
+export default withStyles(cssStyles)(CSSModules(User, styles));
 
