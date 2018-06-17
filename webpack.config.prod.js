@@ -5,13 +5,14 @@ const ExtractTextPlugin  = require('extract-text-webpack-plugin');
 const WebpackChunkHash = require('webpack-chunk-hash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const autoprefixer = require('autoprefixer');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 process.env.NODE_ENV = 'production';
 
 const GLOBALS = {
     'process.env.NODE_ENV': JSON.stringify('production'),
     'process.env.BABEL_ENV': JSON.stringify('production'),
+    'process.env.PORT': 3000,
     __DEV__: false
 };
 
@@ -66,22 +67,16 @@ module.exports = {
         new ScriptExtHtmlWebpackPlugin({
             defaultAttribute: 'async'
         }),
-        new webpack.DefinePlugin({
-            'process.env.PORT': 3000,
-        }),
-
         // Minify JS
-        new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
-
-        new webpack.LoaderOptionsPlugin({
-            minimize: true,
-            debug: false,
-            noInfo: true, // set to false to see a list of every file being bundled.
-            options: {
-                context: '/',
-                postcss: () => [autoprefixer],
-            }
+        new UglifyJsPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor",
+            minChunks: isVendor
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "manifest",
         })
+
     ],
     module: {
         rules: [
@@ -172,3 +167,9 @@ module.exports = {
         ]
     }
 };
+
+function isVendor({resource}) {
+    return (
+        resource && resource.indexOf("node_modules") >= 0 && resource.match(/\.js$/)
+    );
+}
