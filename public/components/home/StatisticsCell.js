@@ -17,7 +17,7 @@ class StatisticsCell extends Component {
 }
 
 StatisticsCell.propTypes = {
-    num: PropTypes.string,
+    num: PropTypes.number,
     title: PropTypes.string.isRequired
 };
 

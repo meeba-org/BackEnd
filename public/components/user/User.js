@@ -120,6 +120,7 @@ User.propTypes = {
     onUpdateUser: PropTypes.func.isRequired,
     onUpdateCompany: PropTypes.func.isRequired,
     input: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(cssStyles)(CSSModules(User, styles));
