@@ -20,7 +20,7 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx', '.json']
     },
-    devtool: 'source-map', // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
+    devtool: false, // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
     entry: path.resolve(__dirname, 'public/index'),
     target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
     output: {
@@ -141,7 +141,7 @@ module.exports = {
                                 modules: true,
                                 importLoaders: 1,
                                 localIdentName: '[name]-[local]-[hash:base64:2]',
-                                sourceMap: true
+                                // sourceMap: true
                             }
                         }, {
                             loader: 'postcss-loader',
@@ -149,7 +149,7 @@ module.exports = {
                                 plugins: () => [
                                     require('autoprefixer')
                                 ],
-                                sourceMap: true
+                                // sourceMap: true
                             }
                         }, {
                             loader: 'sass-loader',
@@ -158,7 +158,7 @@ module.exports = {
                                     path.resolve(__dirname, 'src/scss'),
                                     path.resolve(__dirname, "node_modules/foundation-sites/scss")
                                 ],
-                                sourceMap: true
+                                // sourceMap: true
                             }
                         }
                     ]
