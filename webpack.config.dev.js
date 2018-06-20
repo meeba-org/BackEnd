@@ -105,8 +105,7 @@ export default {
                         loader: 'sass-loader',
                         options: {
                             includePaths: [
-                                path.resolve(__dirname, 'src/scss'),
-                                path.resolve(__dirname, "node_modules/foundation-sites/scss")
+                                path.resolve(__dirname, 'public/styles'),
                             ],
                             sourceMap: true
                         }

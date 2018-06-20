@@ -141,7 +141,6 @@ module.exports = {
                                 modules: true,
                                 importLoaders: 1,
                                 localIdentName: '[name]-[local]-[hash:base64:2]',
-                                // sourceMap: true
                             }
                         }, {
                             loader: 'postcss-loader',
@@ -149,16 +148,13 @@ module.exports = {
                                 plugins: () => [
                                     require('autoprefixer')
                                 ],
-                                // sourceMap: true
                             }
                         }, {
                             loader: 'sass-loader',
                             options: {
                                 includePaths: [
-                                    path.resolve(__dirname, 'src/scss'),
-                                    path.resolve(__dirname, "node_modules/foundation-sites/scss")
+                                    path.resolve(__dirname, 'public/styles'),
                                 ],
-                                // sourceMap: true
                             }
                         }
                     ]
