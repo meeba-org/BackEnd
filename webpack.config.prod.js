@@ -69,13 +69,13 @@ module.exports = {
         }),
         // Minify JS
         new UglifyJsPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "vendor",
-            minChunks: isVendor
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "manifest",
-        })
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: "vendor",
+        //     minChunks: isVendor
+        // }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: "manifest",
+        // })
 
     ],
     module: {

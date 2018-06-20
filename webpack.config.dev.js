@@ -6,7 +6,7 @@ export default {
     resolve: {
         extensions: ['*', '.js', '.jsx', '.json']
     },
-        devtool: "source-map", // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
+    devtool: "cheap-module-eval-source-map", // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
     entry: [
         // must be first entry to properly set public path
         './public/webpack-public-path',
