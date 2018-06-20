@@ -1,6 +1,7 @@
 import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
+let HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 export default {
     resolve: {
@@ -15,12 +16,14 @@ export default {
         path.resolve(__dirname, 'public/index.js') // Defining path seems necessary for this to work consistently on Windows machines.
     ],
     target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
+    // mode: "development",
     output: {
         path: path.resolve(__dirname, 'dist'), // Note: Physical files are only output by the production build task `npm run build`.
         publicPath: '/',
         filename: 'bundle.js'
     },
     plugins: [
+        new HardSourceWebpackPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
             __DEV__: true
