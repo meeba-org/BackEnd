@@ -39,7 +39,7 @@ class Header extends Component {
                     <div className={styles["middle-content"]}>
                         <div className={styles["title"]}>
                             <div className={styles["title-text"]}>
-                                מיבא
+מיבא
                                 {/*<img src={betaImage} />*/}
                             </div>
                         </div>

@@ -10,7 +10,6 @@ module.exports = {
     entry: [
         // must be first entry to properly set public path
         './public/webpack-public-path',
-        'react-hot-loader/patch',
         'webpack-hot-middleware/client?reload=true',
         path.resolve(__dirname, 'public/index.js') // Defining path seems necessary for this to work consistently on Windows machines.
     ],
