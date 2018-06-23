@@ -48,7 +48,24 @@ app.use(cookieParser());
 
 // Set Static Folder
 app.use(express.static('public/*.html'));
-app.use(express.static('dist'));
+
+// if (process.env.NODE_ENV !== 'production') {
+//     const webpack = require('webpack');
+//     const webpackConfig = require('./webpack.config.dev');
+//     const compiler = webpack(webpackConfig);
+//
+//     app.use(require('webpack-dev-middleware')(compiler, {
+//         publicPath: webpackConfig.output.publicPath,
+//         hot: true,
+//         stats: {
+//             colors: true
+//         }
+//     }));
+//
+//     app.use(require('webpack-hot-middleware')(compiler))
+// } else {
+    app.use(express.static('dist'));
+// }
 
 // Set Controllers
 app.use('/', require('./controllers'));
