@@ -62,7 +62,7 @@ module.exports = {
         }),
 
         // Generate an external css file with a hash in the filename
-        new ExtractTextPlugin('[name].[contenthash].css'),
+        new ExtractTextPlugin('[name].[md5:contenthash:hex:20].css'),
 
         // https://github.com/numical/script-ext-html-webpack-plugin
         new ScriptExtHtmlWebpackPlugin({
