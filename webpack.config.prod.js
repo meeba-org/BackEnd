@@ -29,6 +29,11 @@ module.exports = {
         publicPath: '/',
         filename: '[name].[chunkhash].js'
     },
+    optimization: {
+        splitChunks: {
+            chunks: "all"
+        }
+    },
     stats: {
         children: false,
     },
@@ -70,13 +75,6 @@ module.exports = {
         }),
         // Minify JS
         new UglifyJsPlugin(),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: "vendor",
-        //     minChunks: isVendor
-        // }),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: "manifest",
-        // })
 
     ],
     module: {

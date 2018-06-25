@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+let HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 module.exports = {
     resolve: {
@@ -21,11 +22,7 @@ module.exports = {
         filename: 'bundle.js'
     },
     plugins: [
-        // new HardSourceWebpackPlugin(),
-        // new webpack.DefinePlugin({
-        //     'process.env.NODE_ENV': JSON.stringify('development'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
-        //     __DEV__: true
-        // }),
+        new HardSourceWebpackPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({     // Create HTML file that includes references to bundled CSS and JS.
             template: 'public/index.ejs',
