@@ -1,8 +1,9 @@
-import webpack from "webpack";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import path from "path";
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+let HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
-export default {
+module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx', '.json']
     },
@@ -10,10 +11,10 @@ export default {
     entry: [
         // must be first entry to properly set public path
         './public/webpack-public-path',
-        'react-hot-loader/patch',
         'webpack-hot-middleware/client?reload=true',
         path.resolve(__dirname, 'public/index.js') // Defining path seems necessary for this to work consistently on Windows machines.
     ],
+    mode: "development",
     target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
     output: {
         path: path.resolve(__dirname, 'dist'), // Note: Physical files are only output by the production build task `npm run build`.
@@ -21,12 +22,8 @@ export default {
         filename: 'bundle.js'
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('development'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
-            __DEV__: true
-        }),
+        new HardSourceWebpackPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
         new HtmlWebpackPlugin({     // Create HTML file that includes references to bundled CSS and JS.
             template: 'public/index.ejs',
             favicon: 'public/styles/images/icon.png',

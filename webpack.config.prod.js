@@ -22,11 +22,17 @@ module.exports = {
     },
     devtool: false, // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
     entry: path.resolve(__dirname, 'public/index'),
+    mode: "production",
     target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
         filename: '[name].[chunkhash].js'
+    },
+    optimization: {
+        splitChunks: {
+            chunks: "all"
+        }
     },
     stats: {
         children: false,
@@ -61,7 +67,7 @@ module.exports = {
         }),
 
         // Generate an external css file with a hash in the filename
-        new ExtractTextPlugin('[name].[contenthash].css'),
+        new ExtractTextPlugin('[name].[md5:contenthash:hex:20].css'),
 
         // https://github.com/numical/script-ext-html-webpack-plugin
         new ScriptExtHtmlWebpackPlugin({
@@ -69,13 +75,6 @@ module.exports = {
         }),
         // Minify JS
         new UglifyJsPlugin(),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: "vendor",
-        //     minChunks: isVendor
-        // }),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: "manifest",
-        // })
 
     ],
     module: {

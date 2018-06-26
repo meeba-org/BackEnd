@@ -1,6 +1,5 @@
 // This file configures the development web server
 // which supports hot reloading and synchronized testing.
-
 // Require Browsersync along with webpack and middleware for it
 import browserSync from 'browser-sync';
 // Required for react-router browserHistory
@@ -15,35 +14,36 @@ const bundler = webpack(config);
 
 // Run Browsersync and use middleware for Hot Module Replacement
 browserSync({
-  port: 5000,
-  ui: {
-    port: 5001
-  },
-  server: {
-    baseDir: 'public',
+    port: 5000,
+    ui: {
+        port: 5001
+    },
+    server: {
+        baseDir: 'public',
 
-    middleware: [
-      historyApiFallback(),
+        middleware: [
+            historyApiFallback(),
 
-      webpackDevMiddleware(bundler, {
-        // Dev middleware can't access config, so we provide publicPath
-        publicPath: config.output.publicPath,
+            webpackDevMiddleware(bundler, {
+                // Dev middleware can't access config, so we provide publicPath
+                publicPath: config.output.publicPath,
 
-        // These settings suppress noisy webpack output so only errors are displayed to the console.
-        stats: "errors-only",
+                // These settings suppress noisy webpack output so only errors are displayed to the console.
+                stats: "minimal",
+                logLevel: 'warn'
 
-        // for other settings see
-        // http://webpack.github.io/docs/webpack-dev-middleware.html
-      }),
+                // for other settings see
+                // http://webpack.github.io/docs/webpack-dev-middleware.html
+            }),
 
-      // bundler should be the same as above
-      webpackHotMiddleware(bundler)
+            // bundler should be the same as above
+            webpackHotMiddleware(bundler)
+        ]
+    },
+
+    // no need to watch '*.js' here, webpack will take care of it for us,
+    // including full page reloads if HMR won't work
+    files: [
+        'public/*.html'
     ]
-  },
-
-  // no need to watch '*.js' here, webpack will take care of it for us,
-  // including full page reloads if HMR won't work
-  files: [
-    'public/*.html'
-  ]
 });
