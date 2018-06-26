@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextField} from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
 import PropTypes from 'prop-types';
 
 export const renderTextField = ({input, label, type, fullWidth, autoFocus, styleName}) => (

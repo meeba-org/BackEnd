@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
-import {AppBar, Button, IconButton, Toolbar, Typography} from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import CSSModules from "react-css-modules";
 import styles from '../styles/AppBar.scss';

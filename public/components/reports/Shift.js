@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {IconButton, Tooltip} from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 import Delete from '@material-ui/icons/Delete';
 import Home from '@material-ui/icons/Home';
 import Work from '@material-ui/icons/Work';

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {IconButton, Tooltip} from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import {FieldArray} from "redux-form";

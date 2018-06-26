@@ -1,6 +1,12 @@
 'use strict';
 import React from "react";
-import {Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {withRouter} from 'react-router';
@@ -15,7 +21,8 @@ import * as ERoles from "../helpers/ERoles";
 import classNames from 'classnames';
 import CSSModulesStyles from '../styles/SideBar.scss';
 import CSSModules from "react-css-modules";
-import {withStyles, withTheme} from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+import withTheme from '@material-ui/core/styles/withTheme';
 
 const drawerWidth = 200;
 

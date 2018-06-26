@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from "../../styles/Feature.scss";
-import {Dialog} from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
 
 class Feature extends Component {
     state = {

@@ -5,8 +5,10 @@ import {Provider} from "react-redux";
 import {browserHistory, Router} from "react-router";
 import createStore from "./store/configureStore";
 import {syncHistoryWithStore} from "react-router-redux";
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
-import {brown, orange} from '@material-ui/core/colors';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import brown from '@material-ui/core/colors/brown';
+import orange from '@material-ui/core/colors/orange';
 
 const muiTheme = createMuiTheme({
     direction: "rtl",

@@ -1,5 +1,10 @@
 import React, {Fragment} from "react";
-import {Button, Card, CardContent, CardHeader, Divider, Tooltip} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import Divider from "@material-ui/core/Divider";
+import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from '@material-ui/icons/Add';
 import {FieldArray} from "redux-form";
 import PropTypes from 'prop-types';
@@ -18,7 +23,8 @@ import AutoComplete from "../AutoComplete";
 import moment from "moment/moment";
 import Warning from "@material-ui/icons/Warning";
 import {DatePicker} from "material-ui-pickers";
-import {withStyles, withTheme} from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+import withTheme from '@material-ui/core/styles/withTheme';
 
 const styles1 = {
     root: {

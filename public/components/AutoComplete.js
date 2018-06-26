@@ -4,11 +4,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
-import {Paper, TextField} from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import {withStyles} from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 function renderInput(inputProps) {
     const { classes, autoFocus, value, ref, ...other } = inputProps;

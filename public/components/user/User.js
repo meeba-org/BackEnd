@@ -1,10 +1,12 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
-import {CardContent, CardHeader, TextField} from "@material-ui/core";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import TextField from "@material-ui/core/TextField";
 import CSSModules from "react-css-modules";
 import styles from '../../styles/User.scss';
 import NoData from "../NoData";
-import {withStyles} from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const cssStyles = {
     input: {

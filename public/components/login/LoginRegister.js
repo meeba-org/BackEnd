@@ -3,7 +3,8 @@
  */
 
 import React, {Component} from 'react';
-import {Button, Dialog} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
 import {Field, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';

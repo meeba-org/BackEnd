@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Grid, IconButton, Input, Tooltip} from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import Input from "@material-ui/core/Input";
+import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from '@material-ui/icons/Delete';
-import {withStyles} from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = {
     root: {

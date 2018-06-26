@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 import styles from "../../styles/Header.scss";
 import CSSModules from "react-css-modules/dist/index";
-import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import PropTypes from 'prop-types';

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styles from '../../styles/Footer.scss';
 import CSSModules from "react-css-modules/dist/index";
 import facebookImage from '../../styles/images/facebook.png';
-import {Button} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 class Footer extends Component {
     render() {
