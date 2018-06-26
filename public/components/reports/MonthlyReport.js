@@ -10,7 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import AddIcon from '@material-ui/icons/Add';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import MonthlyReportLine from "./MonthlyReportLine";
-import {Field} from "redux-form";
+import Field from "redux-form/es/Field";
 import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";

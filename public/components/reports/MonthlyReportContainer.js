@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
-import {FieldArray, reduxForm} from "redux-form";
+import FieldArray from "redux-form/es/FieldArray";
+import reduxForm from "redux-form/es/reduxForm";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
 import {createShift, showDeleteShiftModal, updateShift} from "../../actions/shiftsActions";

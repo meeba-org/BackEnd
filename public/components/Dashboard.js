@@ -8,7 +8,7 @@ import AppBar from "./AppBar";
 import {connect} from "react-redux";
 import {loadUserFromToken} from "../actions/index";
 import * as selectors from "../selectors";
-import {MuiPickersUtilsProvider} from "material-ui-pickers";
+import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsProvider";
 import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 
 class Dashboard extends React.PureComponent {

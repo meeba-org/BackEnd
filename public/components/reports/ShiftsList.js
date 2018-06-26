@@ -1,5 +1,5 @@
 import React from "react";
-import {Field} from "redux-form";
+import Field from "redux-form/es/Field";
 import PropTypes from 'prop-types';
 import Shift from "./Shift";
 import CSSModules from "react-css-modules";

@@ -4,7 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
-import {FieldArray} from "redux-form";
+import FieldArray from "redux-form/es/FieldArray";
 import ShiftsList from "./ShiftsList";
 import CSSModules from "react-css-modules";
 import HoursBar from '../HoursBar';

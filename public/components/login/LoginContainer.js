@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {reduxForm} from 'redux-form';
+import reduxForm from "redux-form/es/reduxForm";
 import Login from "./Login";
 import {handleLogin} from "../../actions/index";
 import PropTypes from 'prop-types';

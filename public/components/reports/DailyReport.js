@@ -6,7 +6,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Divider from "@material-ui/core/Divider";
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from '@material-ui/icons/Add';
-import {FieldArray} from "redux-form";
+import FieldArray from "redux-form/es/FieldArray";
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from '../../styles/DailyReport.scss';
@@ -22,7 +22,7 @@ import {
 import AutoComplete from "../AutoComplete";
 import moment from "moment/moment";
 import Warning from "@material-ui/icons/Warning";
-import {DatePicker} from "material-ui-pickers";
+import DatePicker from "material-ui-pickers/DatePicker";
 import withStyles from '@material-ui/core/styles/withStyles';
 import withTheme from '@material-ui/core/styles/withTheme';
 

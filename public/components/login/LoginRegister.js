@@ -5,7 +5,9 @@
 import React, {Component} from 'react';
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import {Field, reduxForm} from "redux-form";
+import Field from "redux-form/es/Field";
+import reduxForm from "redux-form/es/reduxForm";
+
 import {connect} from "react-redux";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {renderTextField} from '../material-ui-wrappers';

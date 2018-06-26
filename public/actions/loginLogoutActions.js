@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as actionsTypes from "./actionTypes";
 import config from "../config";
-import {SubmissionError} from "redux-form";
+import SubmissionError from "redux-form/es/SubmissionError";
 import {isUserAllowedLogin} from "../helpers/utils";
 
 function handleLoginStart() {

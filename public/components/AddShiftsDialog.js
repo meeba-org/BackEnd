@@ -8,7 +8,8 @@ import {convertTimeStrToMoment2, createShift} from "../helpers/utils";
 import moment from "moment";
 import CheckBoxList from "./CheckBoxList";
 import PropTypes from 'prop-types';
-import {DatePicker, TimePicker} from "material-ui-pickers";
+import DatePicker from "material-ui-pickers/DatePicker";
+import TimePicker from "material-ui-pickers/TimePicker";
 
 
 class AddShiftsDialog extends PureComponent {

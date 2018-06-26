@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {createShift, updateShift} from "../../actions";
-import {reduxForm} from "redux-form";
+import reduxForm from "redux-form/es/reduxForm";
 import PropTypes from 'prop-types';
 import {fetchDailyReport, showDeleteShiftModal} from "../../actions/shiftsActions";
 import DailyReport from "./DailyReport";

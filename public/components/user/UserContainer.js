@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Field, reduxForm} from "redux-form";
+import Field from "redux-form/es/Field";
+import reduxForm from "redux-form/es/reduxForm";
 import User from "./User";
 import {updateActiveUser} from "../../actions/usersActions";
 import {updateCompany} from "../../actions/companyActions";

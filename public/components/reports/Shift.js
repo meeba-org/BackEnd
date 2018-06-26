@@ -16,7 +16,8 @@ import {
 } from "../../helpers/utils";
 import moment from "moment";
 import WarningIcon from "./WarningIcon";
-import {DatePicker, TimePicker} from "material-ui-pickers";
+import DatePicker from "material-ui-pickers/DatePicker";
+import TimePicker from "material-ui-pickers/TimePicker";
 import styles from "../../styles/Shift.scss";
 
 class Shift extends React.PureComponent {

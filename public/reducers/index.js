@@ -1,6 +1,5 @@
 import {combineReducers} from 'redux';
 import {routerReducer} from "react-router-redux";
-import {reducer as formReducer} from 'redux-form';
 import {ShiftsReducer} from "./ShiftsReducer";
 import {UserReducer} from "./UserReducer";
 import {UsersReducer} from "./UsersReducer";
@@ -8,6 +7,7 @@ import {ModalReducer} from "./ModalReducer";
 import {ReportsReducer} from "./ReportsReducer";
 import {LoaderReducer} from "./LoaderReducer";
 import {GeneralReducer} from "./GeneralReducer";
+import reducer from "redux-form/es/reducer";
 
 const rootReducer = combineReducers({
     loader: LoaderReducer,
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
     user: UserReducer,
     modal: ModalReducer,
     reports: ReportsReducer,
-    form: formReducer,
+    form: reducer,
     general: GeneralReducer
 });
 

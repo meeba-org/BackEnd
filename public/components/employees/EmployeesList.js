@@ -14,7 +14,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Tooltip from "@material-ui/core/Tooltip";
-import {Field} from "redux-form";
+import Field from "redux-form/es/Field";
 import AddIcon from '@material-ui/icons/Add';
 import NoData from "../NoData";
 import Fade from "../Fade";

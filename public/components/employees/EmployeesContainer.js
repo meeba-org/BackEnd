@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import EmployeesList from "./EmployeesList";
 import {createUser, fetchUsers, updateUser} from "../../actions";
-import {FieldArray, reduxForm} from "redux-form";
+import FieldArray from "redux-form/es/FieldArray";
+import reduxForm from "redux-form/es/reduxForm";
 import {showDeleteUserModal} from "../../actions/usersActions";
 
 class EmployeesContainer extends React.Component {
