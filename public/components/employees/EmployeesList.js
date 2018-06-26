@@ -56,11 +56,11 @@ class EmployeesList extends React.Component {
                     </Grid>
                     }
                     {fields && fields.map((employeeIndex, index) =>
-                        <Fade key={index}>
+                        (<Fade key={index}>
                             <Field component={Employee} name={employeeIndex} key={index}
                                    onDelete={() => this.onDelete(fields, index)}
                                    onUpdate={(employee) => this.onUpdate(employee)}/>
-                        </Fade>
+                        </Fade>)
                     )}
                     {(!fields || (fields.length == 0)) &&
                     <NoData text="אין עובדים - בוא ננסה להוסיף!"/>

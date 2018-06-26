@@ -16,7 +16,7 @@ import {
 } from "../../helpers/utils";
 import AutoComplete from "../AutoComplete";
 import moment from "moment/moment";
-import {Warning} from "@material-ui/icons";
+import Warning from "@material-ui/icons/Warning";
 import {DatePicker} from "material-ui-pickers";
 import {withStyles, withTheme} from '@material-ui/core/styles';
 

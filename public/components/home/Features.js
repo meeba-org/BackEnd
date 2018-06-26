@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {Computer, Description, PhonelinkRing} from "@material-ui/icons";
+import Computer from "@material-ui/icons/Computer";
+import Description from "@material-ui/icons/Description";
+import PhonelinkRing from "@material-ui/icons/PhonelinkRing";
 import styles from '../../styles/Features.scss';
 import CSSModules from "react-css-modules/dist/index";
 import Feature from "./Feature";
@@ -49,14 +51,14 @@ class Features extends Component {
 
                 <div styleName="features-container">
                     {this.state.features.map((feature, index) =>
-                        <Feature
+                        (<Feature
                             key={index}
                             icon={feature.icon}
                             title={feature.title}
                             description={feature.description}
                             sideContent={feature.sideContent}
                             dialogContent={feature.dialogContent}
-                        />
+                        />)
                     )}
                 </div>
             </div>

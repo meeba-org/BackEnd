@@ -152,7 +152,7 @@ class MonthlyReport extends React.PureComponent {
                         <Divider className={styles["divider"]}/>
 
                                 {fields && fields.map((employeeShiftsReport, index) =>
-                                    <Fade key={index}>
+                                    (<Fade key={index}>
                                         <Field component={MonthlyReportLine}
                                                name={employeeShiftsReport}
                                                isCollapsed={this.isCollapsed(fields, index)}
@@ -162,7 +162,7 @@ class MonthlyReport extends React.PureComponent {
                                                onUpdateShift={this.onUpdateShift}
                                                onCreateShift={this.onCreateShift}
                                         />
-                                    </Fade>
+                                    </Fade>)
                                 )}
                                 {(!fields || (fields.length == 0)) &&
                                 <NoData text="לא נמצאו משמרות"/>

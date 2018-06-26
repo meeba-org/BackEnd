@@ -30,10 +30,10 @@ const store = createStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
 const Root = () =>
-    <MuiThemeProvider theme={muiTheme}>
+    (<MuiThemeProvider theme={muiTheme}>
         <Provider store={store}>
             <Router history={history} routes={routes}/>
         </Provider>
-    </MuiThemeProvider>;
+    </MuiThemeProvider>);
 
 export default hot(module)(Root);

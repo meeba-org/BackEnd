@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 process.env.NODE_ENV = 'production';
 
 const GLOBALS = {
@@ -75,7 +76,10 @@ module.exports = {
         }),
         // Minify JS
         new UglifyJsPlugin(),
-
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static'
+        }),
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // we dont need all the locale in moment
     ],
     module: {
         rules: [

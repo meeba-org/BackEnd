@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Warning} from "@material-ui/icons";
+import Warning from "@material-ui/icons/Warning";
 import {Tooltip} from "@material-ui/core";
 
 class WarningIcon extends Component {

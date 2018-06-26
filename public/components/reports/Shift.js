@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import {IconButton, Tooltip} from "@material-ui/core";
-import {Delete, Home, Work} from '@material-ui/icons';
+import Delete from '@material-ui/icons/Delete';
+import Home from '@material-ui/icons/Home';
+import Work from '@material-ui/icons/Work';
 import CSSModules from "react-css-modules";
 import {
     convertMomentToTimeStr,

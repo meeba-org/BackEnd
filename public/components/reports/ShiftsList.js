@@ -28,7 +28,7 @@ class ShiftsList extends React.PureComponent {
         return (
             <div styleName="shifts-list">
                 {fields && fields.map((shiftName, index) =>
-                    <Fade key={index}>
+                    (<Fade key={index}>
                             <Field
                                 component={Shift}
                                 name={shiftName} key={index}
@@ -37,7 +37,7 @@ class ShiftsList extends React.PureComponent {
                                 showNames={showNames}
                                 mode={mode}
                             />
-                    </Fade>
+                    </Fade>)
                 )}
                 {shouldDisplayNoData && (!fields || (fields.length == 0)) &&
                 <NoData text="לא נמצאו משמרות"/>
