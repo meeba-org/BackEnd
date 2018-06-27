@@ -24,6 +24,9 @@ export const FETCH_MONTHLY_REPORT_SUCCESS = 'FETCH_MONTHLY_REPORT_SUCCESS';
 export const SHOW_LOADING = 'SHOW_LOADING';
 export const HIDE_LOADING = 'HIDE_LOADING';
 
+export const DESKTOP = 'DESKTOP';
+export const MOBILE = 'MOBILE';
+
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const HIDE_MODAL = 'HIDE_MODAL';
 

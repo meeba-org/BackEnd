@@ -49,8 +49,11 @@ $margin: 12px;
             flex-direction: row;
 
             .sideBar-container {
-                margin-left: 20px;
                 height: 100%;
+            }
+
+            .isDesktop {
+                margin-left: 20px;
             }
 
             .main-container {

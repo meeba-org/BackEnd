@@ -9,6 +9,16 @@ export function GeneralReducer(state = initialState, action) {
                 ...state,
                 meta: action.payload
             };
+        case types.DESKTOP:
+            return {
+                ...state,
+                isDesktop: true
+            };
+        case types.MOBILE:
+            return {
+                ...state,
+                isDesktop: false
+            };
         default:
             return state;
     }

@@ -1,4 +1,4 @@
-import {Error, HIDE_LOADING, SHOW_LOADING} from "./actionTypes";
+import {DESKTOP, Error, HIDE_LOADING, MOBILE, SHOW_LOADING} from "./actionTypes";
 
 export * from "./companyActions";
 export * from "./shiftsActions";
@@ -27,3 +27,8 @@ export const ShowLoading = () => ({
 export const HideLoading = () => ({
     type: HIDE_LOADING
 });
+
+export const handleResize = () => ({
+    type: window.innerWidth > 600 ? DESKTOP : MOBILE
+});
+

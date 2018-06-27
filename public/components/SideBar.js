@@ -56,7 +56,7 @@ class SideBar extends React.Component {
     constructor(props) {
         super(props);
 
-        const {router} = this.props;
+        const {router, isDesktop} = this.props;
 
         this.state = {
             items: [
@@ -91,7 +91,7 @@ class SideBar extends React.Component {
                     icon: <SettingsApplications/>
                 },
             ],
-            open: true,
+            open: isDesktop,
         };
 
         this.state.items.forEach(item => {
@@ -125,25 +125,27 @@ class SideBar extends React.Component {
     }
 
     render() {
-        const {classes, userRole} = this.props;
+        const {classes, userRole, isDesktop} = this.props;
+        let {open, items} = this.state;
+        let variant = isDesktop ? "permanent" : "temporary";
 
         return (
             <Drawer
-                    variant="permanent"
+                    variant={variant}
                     classes={{
-                        paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
+                        paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
                     }}
-                    open={this.state.open}
+                    open={open}
             >
                     <div className={CSSModulesStyles["drawer-header"]}
-                         onClick={this.state.open ? this.handleDrawerClose : this.handleDrawerOpen}>
+                         onClick={open ? this.handleDrawerClose : this.handleDrawerOpen}>
                         <IconButton>
-                            {this.state.open ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
+                            {open ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
                         </IconButton>
                     </div>
                     <Divider/>
                     <List>
-                        {this.state.items.map((item, index) =>
+                        {items.map((item, index) =>
                             (<IfAnyGranted key={index} expected={item.allowedRoles} actual={[userRole]}>
                                 <ListItem button onClick={() => this.updateRoute(item, index)}
                                           disabled={item.disabled}
@@ -172,6 +174,7 @@ SideBar.propTypes = {
     theme: PropTypes.object.isRequired,
     userRole: PropTypes.string,
     classes: PropTypes.object,
+    isDesktop: PropTypes.bool.isRequired,
 };
 
 export default withRouter(withTheme()(CSSModules(withStyles(styles, {withTheme: true})(SideBar)), CSSModulesStyles));

@@ -18,7 +18,7 @@ class Dashboard extends React.PureComponent {
     }
 
     render() {
-        let {router, userRole} = this.props;
+        let {router, userRole, isDesktop} = this.props;
 
         return (
             <div styleName="dashboard">
@@ -27,8 +27,8 @@ class Dashboard extends React.PureComponent {
                         <AppBar router={router}/>
                     </div>
                     <div styleName="grid-container">
-                        <Paper styleName="sideBar-container">
-                            <SideBar userRole={userRole}/>
+                        <Paper styleName={"sideBar-container" + (isDesktop ? " isDesktop" : "")}>
+                            <SideBar userRole={userRole} isDesktop={isDesktop}/>
                         </Paper>
                         <Paper styleName="main-container">
                             <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -52,6 +52,7 @@ Dashboard.propTypes = {
 const mapStateToProps = (state) => {
     return {
         userRole: selectors.getUserRole(state),
+        isDesktop: selectors.isDesktop(state)
     };
 };
 
@@ -63,5 +64,5 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(Dashboard, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(Dashboard, styles, {allowMultiple: true}));
 

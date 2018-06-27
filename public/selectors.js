@@ -14,3 +14,7 @@ export const getUserRole = (state) => {
 export const getMeta = (state) => {
     return (!state.general.meta) ? null : state.general.meta;
 };
+
+export const isDesktop = (state) => {
+    return state.general.isDesktop;
+};

@@ -1,13 +1,30 @@
-import React from 'react';
-import App from "./App";
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
+import ModalRoot from "./modals/ModalRoot";
+import "../styles/App.scss";
+import {handleResize} from "../actions/index";
+import connect from "react-redux/es/connect/connect";
 
 class AppContainer extends React.Component {
+    componentDidMount() {
+        this.updatePredicate();
+        window.addEventListener("resize", () => this.updatePredicate());
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", () => this.updatePredicate());
+    }
+
+    updatePredicate() {
+        this.props.handleResize();
+    }
+
     render() {
         return (
-            <App>
+            <Fragment>
                 {this.props.children}
-            </App>
+                <ModalRoot />
+            </Fragment>
         );
     }
 }
@@ -16,4 +33,11 @@ AppContainer.propTypes = {
     children: PropTypes.object.isRequired
 };
 
-export default AppContainer;
+const mapDispatchToProps = (dispatch) => ({
+    handleResize: () => dispatch(handleResize())
+});
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(AppContainer);
