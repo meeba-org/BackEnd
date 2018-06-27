@@ -13,22 +13,31 @@ import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 
 class Dashboard extends React.PureComponent {
 
+    state = {
+        open: this.props.isDesktop,
+    };
+
     componentWillMount() {
         this.props.loadUserFromToken();
     }
 
+    toggleDrawer = () => {
+        this.setState({open: !this.state.open});
+    };
+
     render() {
         let {router, userRole, isDesktop} = this.props;
+        let {open} = this.state;
 
         return (
             <div styleName="dashboard">
                 <div styleName="dashboard-container">
                     <div styleName="appBar-container">
-                        <AppBar router={router}/>
+                        <AppBar router={router} onLogoClick={this.toggleDrawer} isDesktop={!!isDesktop}/>
                     </div>
                     <div styleName="grid-container">
                         <Paper styleName={"sideBar-container" + (isDesktop ? " isDesktop" : "")}>
-                            <SideBar userRole={userRole} isDesktop={isDesktop}/>
+                            <SideBar userRole={userRole} isDesktop={!!isDesktop} open={open} toggleSideBar={this.toggleDrawer}/>
                         </Paper>
                         <Paper styleName="main-container">
                             <MuiPickersUtilsProvider utils={MomentUtils}>

@@ -91,7 +91,6 @@ class SideBar extends React.Component {
                     icon: <SettingsApplications/>
                 },
             ],
-            open: isDesktop,
         };
 
         this.state.items.forEach(item => {
@@ -100,14 +99,6 @@ class SideBar extends React.Component {
                 item.selected = true;
         });
     }
-
-    handleDrawerOpen = () => {
-        this.setState({open: true});
-    };
-
-    handleDrawerClose = () => {
-        this.setState({open: false});
-    };
 
     updateRoute(item, index) {
         let {router} = this.props;
@@ -125,8 +116,8 @@ class SideBar extends React.Component {
     }
 
     render() {
-        const {classes, userRole, isDesktop} = this.props;
-        let {open, items} = this.state;
+        const {classes, userRole, isDesktop, open, toggleSideBar} = this.props;
+        let {items} = this.state;
         let variant = isDesktop ? "permanent" : "temporary";
 
         return (
@@ -136,9 +127,10 @@ class SideBar extends React.Component {
                         paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
                     }}
                     open={open}
+                    anchor="right"
             >
                     <div className={CSSModulesStyles["drawer-header"]}
-                         onClick={open ? this.handleDrawerClose : this.handleDrawerOpen}>
+                         onClick={toggleSideBar}>
                         <IconButton>
                             {open ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
                         </IconButton>
@@ -175,6 +167,7 @@ SideBar.propTypes = {
     userRole: PropTypes.string,
     classes: PropTypes.object,
     isDesktop: PropTypes.bool.isRequired,
+    toggleSideBar: PropTypes.func.isRequired,
 };
 
 export default withRouter(withTheme()(CSSModules(withStyles(styles, {withTheme: true})(SideBar)), CSSModulesStyles));

@@ -18,9 +18,12 @@ class MeebaAppBar extends Component {
         logout(router);
     };
 
-    onLogoClock = () => {
-        let {navigateHome, router} = this.props;
-        navigateHome(router);
+    onLogoClick = () => {
+        let {navigateHome, router, isDesktop, onLogoClick} = this.props;
+        if (isDesktop)
+            navigateHome(router);
+        else
+            onLogoClick();
     };
 
     render() {
@@ -29,7 +32,7 @@ class MeebaAppBar extends Component {
             <div styleName="app-bar">
                 <AppBar position="static">
                     <Toolbar styleName="toolbar">
-                        <div styleName="logo" onClick={this.onLogoClock}>
+                        <div styleName="logo" onClick={this.onLogoClick}>
                             <IconButton color="inherit" aria-label="Menu">
                                 <AccessTimeIcon/>
                             </IconButton>
@@ -47,10 +50,11 @@ class MeebaAppBar extends Component {
 
 MeebaAppBar.propTypes = {
     logout: PropTypes.func.isRequired,
+    onLogoClick: PropTypes.func.isRequired,
     navigateHome: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired,
     companyName: PropTypes.string.isRequired,
-
+    isDesktop: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {
