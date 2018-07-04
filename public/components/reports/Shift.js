@@ -130,36 +130,40 @@ class Shift extends React.PureComponent {
                     }
                 </div>
 
-                {mode === ReportModes.Report &&
-                <div className={styles["date"]}>
-                    <span>{hebrewDay}'</span>
+                <div styleName={"shift-members"}>
+                    {mode === ReportModes.Report &&
+                        <div className={styles["date"]}>
+                            <span>{hebrewDay}'</span>
 
-                    <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={shift.clockInTime}
-                                format="DD/MM/YYYY"
-                                style={{margin: "0 10px"}}
-                                disableFuture
+                            <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={shift.clockInTime}
+                                        format="DD/MM/YYYY"
+                                        style={{margin: "0 10px"}}
+                                        disableFuture
+                            />
+                        </div>
+                    }
+
+                    <div styleName="times">
+                    <TimePicker
+                        className={styles["time"]}
+                        ampm={false}
+                        autoOk
+                        value={shift.clockInTime}
+                        onChange={(time) => this.onUpdateStartTime(time)}
                     />
+
+                    {(mode === ReportModes.Report || !!shift.clockOutTime) &&
+
+                    <TimePicker
+                        className={styles["time"]}
+                        ampm={false}
+                        autoOk
+                        value={shift.clockOutTime}
+                        onChange={(time) => this.onUpdateEndTime(time)}
+                    />
+                    }
+                    </div>
                 </div>
-                }
-
-                <TimePicker
-                    className={styles["time"]}
-                    ampm={false}
-                    autoOk
-                    value={shift.clockInTime}
-                    onChange={(time) => this.onUpdateStartTime(time)}
-                />
-
-                {(mode === ReportModes.Report || !!shift.clockOutTime) &&
-
-                <TimePicker
-                    className={styles["time"]}
-                    ampm={false}
-                    autoOk
-                    value={shift.clockOutTime}
-                    onChange={(time) => this.onUpdateEndTime(time)}
-                />
-                }
                 {errors &&
                 <div styleName="warning">
                     <WarningIcon text={errors}/>

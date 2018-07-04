@@ -1,7 +1,13 @@
 @import "variables";
 
 .hours-summary-container {
-    display: inline-flex;
+    @media (min-width: 577px) {
+        display: inline-flex;
+    }
+    @media (max-width: 576px) {
+        display: flex;
+        flex-direction: column;
+    }
 
     .hour-label {
         display: inline-flex;

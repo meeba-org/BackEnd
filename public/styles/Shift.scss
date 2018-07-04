@@ -11,21 +11,38 @@
         margin: 0 10px;
     }
 
-    .date {
+    .shift-members {
         display: flex;
-        width: 170px;
-    }
+        @media (max-width: 576px) {
+            flex-direction: column;
+        }
+        @media (min-width: 577px) {
+            flex-direction: row;
+        }
 
-    .time {
-        width: 50px;
-        direction: ltr;
-        margin: 0 10px;
 
-        input {
-            text-align: center
+        .date {
+            display: flex;
+            width: 130px;
+        }
+
+        .times {
+            @media (max-width: 576px) {
+                margin: 0 10px;
+                display: flex;
+                flex-direction: column;
+            }
+            .time {
+                width: 50px;
+                direction: ltr;
+                margin: 0 10px;
+
+                input {
+                    text-align: center
+                }
+            }
         }
     }
-
 
     .name-container {
         display: flex;
