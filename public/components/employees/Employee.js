@@ -48,34 +48,34 @@ class Employee extends React.Component {
         let {input, onDelete, classes} = this.props;
         return (
                 <Grid container spacing={24} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                    <Grid item xs={12} sm={3}>
+                    <Grid item xs={6} sm={3}>
                         <Input value={input.value.firstName} placeholder="שם"
                                onChange={(e) => this.onUpdate(e, "firstName")}
                                onBlur={this.onBlur}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={2}>
+                    <Grid item xs={6} sm={2}>
                         <Input value={input.value.uid} placeholder="ת.ז."
                                onChange={(e) => this.onUpdate(e, "uid")}
                                onBlur={this.onBlur}
                                classes={{root: classes.root}}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={1}>
+                    <Grid item xs={6} sm={1}>
                         <Input value={input.value.hourWage} placeholder="שכר שעתי"
                                onChange={(e) => this.onUpdate(e, "hourWage")}
                                onBlur={this.onBlur}
                                classes={{root: classes.root}}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={1}>
+                    <Grid item xs={6} sm={1}>
                         <Input value={input.value.transportation} placeholder="נסיעות"
                                onChange={(e) => this.onUpdate(e, "transportation")}
                                onBlur={this.onBlur}
                                classes={{root: classes.root}}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={2}>
+                    <Grid item xs={2} sm={2}>
                         {this.state.hover &&
                             <Tooltip title="מחיקה" placement="top">
                                 <IconButton onClick={onDelete}><DeleteIcon/></IconButton>
