@@ -101,8 +101,11 @@ class SideBar extends React.Component {
     }
 
     updateRoute(item, index) {
-        let {router} = this.props;
+        let {router, isDesktop, toggleSideBar} = this.props;
         router.push(item.url);
+
+        if (!isDesktop)
+            toggleSideBar();
 
         this.setSelected(index);
     }
