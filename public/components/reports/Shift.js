@@ -128,7 +128,7 @@ class Shift extends React.PureComponent {
                     {showNames &&
                     <div styleName="name">{shift.user && shift.user.firstName}</div>
                     }
-                </div>
+                    </div>
 
                 <div styleName={"shift-members"}>
                     {mode === ReportModes.Report &&

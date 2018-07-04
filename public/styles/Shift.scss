@@ -51,8 +51,14 @@
             padding-top: 5px;
         }
         .name {
-            min-width: 100px;
-            padding-top: 5px;
+            @media (max-width: 576px) {
+                display: flex;
+                align-items: center;
+            }
+            @media (min-width: 577px) {
+                min-width: 100px;
+                padding-top: 5px;
+            }
         }
     }
 
