@@ -27,7 +27,7 @@ class Dashboard extends React.PureComponent {
 
     isOpen = () => {
         if (this.state.open === null)
-            return this.props.isDesktop;
+            return !!this.props.isDesktop;
 
         return this.state.open;
     };
