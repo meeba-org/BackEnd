@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import MenuIcon from '@material-ui/icons/Menu';
 import CSSModules from "react-css-modules";
 import styles from '../styles/AppBar.scss';
 import {connect} from "react-redux";
@@ -27,18 +28,18 @@ class MeebaAppBar extends Component {
     };
 
     render() {
-        let {companyName} = this.props;
+        let {companyName, isDesktop} = this.props;
         return (
             <div styleName="app-bar">
                 <AppBar position="static">
                     <Toolbar styleName="toolbar">
                         <div styleName="logo" onClick={this.onLogoClick}>
                             <IconButton color="inherit" aria-label="Menu">
-                                <AccessTimeIcon/>
+                                {!!isDesktop ? <AccessTimeIcon/> : <MenuIcon/>}
                             </IconButton>
                             <Typography type="title" color="inherit">{companyName}</Typography>
                         </div>
-                        <div styleName="login">
+                        <div styleName="logout">
                             <Button onClick={this.onLogout} color="inherit">יציאה</Button>
                         </div>
                     </Toolbar>
@@ -54,12 +55,12 @@ MeebaAppBar.propTypes = {
     navigateHome: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired,
     companyName: PropTypes.string.isRequired,
-    isDesktop: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {
     return {
         companyName: selectors.getCompanyName(state) || "מיבא",
+        isDesktop: selectors.isDesktop(state)
     };
 }
 

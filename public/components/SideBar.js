@@ -1,7 +1,6 @@
 'use strict';
 import React from "react";
 import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -23,6 +22,7 @@ import CSSModulesStyles from '../styles/SideBar.scss';
 import CSSModules from "react-css-modules";
 import withStyles from '@material-ui/core/styles/withStyles';
 import withTheme from '@material-ui/core/styles/withTheme';
+import SwipeableDrawer from "@material-ui/core/es/SwipeableDrawer/SwipeableDrawer";
 
 const drawerWidth = 200;
 
@@ -119,15 +119,16 @@ class SideBar extends React.Component {
         const {classes, userRole, isDesktop, open, toggleSideBar} = this.props;
         let {items} = this.state;
         let variant = isDesktop ? "permanent" : "temporary";
-
         return (
-            <Drawer
+            <SwipeableDrawer
                     variant={variant}
                     classes={{
                         paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
                     }}
                     open={open}
-                    anchor="right"
+                    onClose={toggleSideBar}
+                    onOpen={toggleSideBar}
+                    anchor="left"
             >
                     <div className={CSSModulesStyles["drawer-header"]}
                          onClick={toggleSideBar}>
@@ -156,7 +157,7 @@ class SideBar extends React.Component {
                             </IfAnyGranted>)
                         )}
                     </List>
-            </Drawer>
+            </SwipeableDrawer>
         );
     }
 }

@@ -14,7 +14,7 @@ import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 class Dashboard extends React.PureComponent {
 
     state = {
-        open: this.props.isDesktop,
+        open: null,
     };
 
     componentWillMount() {
@@ -25,9 +25,16 @@ class Dashboard extends React.PureComponent {
         this.setState({open: !this.state.open});
     };
 
+    isOpen = () => {
+        if (this.state.open === null)
+            return this.props.isDesktop;
+
+        return this.state.open;
+    };
+
     render() {
         let {router, userRole, isDesktop} = this.props;
-        let {open} = this.state;
+        let open = this.isOpen();
 
         return (
             <div styleName="dashboard">
