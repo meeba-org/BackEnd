@@ -23,9 +23,17 @@
             }
         }
 
+
         .signature {
-            a {
-                color: material-color('brown', '100')
+            h5 {
+                flex-direction: row;
+                a {
+                    color: material-color('brown', '100')
+                }
+
+                .like {
+                    padding-right: 10px;
+                }
             }
         }
     }
