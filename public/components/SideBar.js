@@ -56,7 +56,7 @@ class SideBar extends React.Component {
     constructor(props) {
         super(props);
 
-        const {router, isDesktop} = this.props;
+        const {router} = this.props;
 
         this.state = {
             items: [
@@ -171,6 +171,7 @@ SideBar.propTypes = {
     userRole: PropTypes.string,
     classes: PropTypes.object,
     isDesktop: PropTypes.bool.isRequired,
+    open: PropTypes.bool.isRequired,
     toggleSideBar: PropTypes.func.isRequired,
 };
 

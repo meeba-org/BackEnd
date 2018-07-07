@@ -55,6 +55,7 @@ MeebaAppBar.propTypes = {
     navigateHome: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired,
     companyName: PropTypes.string.isRequired,
+    isDesktop: PropTypes.bool,
 };
 
 function mapStateToProps(state) {

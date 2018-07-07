@@ -30,7 +30,8 @@ class AppContainer extends React.Component {
 }
 
 AppContainer.propTypes = {
-    children: PropTypes.object.isRequired
+    children: PropTypes.object.isRequired,
+    handleResize: PropTypes.func,
 };
 
 const mapDispatchToProps = (dispatch) => ({

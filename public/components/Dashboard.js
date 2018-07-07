@@ -63,6 +63,7 @@ Dashboard.propTypes = {
     children: PropTypes.object,
     router: PropTypes.object.isRequired,
     userRole: PropTypes.string,
+    isDesktop: PropTypes.bool
 };
 
 const mapStateToProps = (state) => {
