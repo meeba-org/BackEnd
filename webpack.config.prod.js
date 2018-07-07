@@ -23,7 +23,8 @@ module.exports = {
     },
     devtool: false, // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
     entry: path.resolve(__dirname, 'public/index'),
-    mode: "production",
+    mode: "development",
+    devtool: "eval-source-map",
     target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
     output: {
         path: path.resolve(__dirname, 'dist'),
