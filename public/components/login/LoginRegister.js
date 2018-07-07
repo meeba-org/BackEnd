@@ -49,6 +49,7 @@ class LoginRegister extends Component {
                                        onChange={handleChange}
                                        label="שם משתמש"
                                        name={isLoginMode ? "uid" : "username"}
+                                       autoComplete="username"
                                        autoFocus
                                 />
                                 <Field component={renderTextField}
@@ -57,6 +58,7 @@ class LoginRegister extends Component {
                                        label="סיסמא"
                                        type="password"
                                        name="password"
+                                       autoComplete="current-password"
                                 />
                             {!isLoginMode &&
                                 <Field component={renderTextField}
@@ -68,7 +70,7 @@ class LoginRegister extends Component {
                                 />
                             }
                             {error && <div className={styles["error-msg"]}>{error}</div>}
-                            <div styleName="login-register-footer">
+                            <div className={styles["login-register-footer"]}>
                                 <Button variant="raised" color="primary" type="submit" className={styles["login-button"]}>
                                     <span>{buttonText}</span>
                                     <ArrowBackIcon/>

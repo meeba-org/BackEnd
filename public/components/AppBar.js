@@ -35,7 +35,7 @@ class MeebaAppBar extends Component {
                     <Toolbar styleName="toolbar">
                         <div styleName="logo" onClick={this.onLogoClick}>
                             <IconButton color="inherit" aria-label="Menu">
-                                {!!isDesktop ? <AccessTimeIcon/> : <MenuIcon/>}
+                                {isDesktop ? <AccessTimeIcon/> : <MenuIcon/>}
                             </IconButton>
                             <Typography type="title" color="inherit">{companyName}</Typography>
                         </div>
