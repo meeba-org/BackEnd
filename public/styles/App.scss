@@ -2,7 +2,10 @@ html {
     scroll-behavior: smooth;
 }
 
-html, body, :global(#react-app), :global(#react-app>div) {
-    height: 100%;
+html {
+    min-height: 100%;
+}
+body, :global(#react-app), :global(#react-app>div) {
+    min-height: 100vh;
     margin: 0 auto;
 }
