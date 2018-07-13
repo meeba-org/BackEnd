@@ -21,9 +21,9 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx', '.json']
     },
-    devtool: "source-map", // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
+    devtool: false, // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
     entry: path.resolve(__dirname, 'public/index'),
-    mode: "development",
+    mode: "production",
     target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -33,7 +33,10 @@ module.exports = {
     optimization: {
         splitChunks: {
             chunks: "all"
-        }
+        },
+        minimizer: [
+            new UglifyJsPlugin()
+        ]
     },
     stats: {
         children: false,
@@ -74,8 +77,6 @@ module.exports = {
         new ScriptExtHtmlWebpackPlugin({
             defaultAttribute: 'async'
         }),
-        // Minify JS
-        new UglifyJsPlugin(),
         new BundleAnalyzerPlugin({
             analyzerMode: 'static'
         }),
