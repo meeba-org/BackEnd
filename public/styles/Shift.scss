@@ -22,6 +22,10 @@
 
 
         .date {
+            .hebrew-day {
+                display: flex;
+                align-items: center;
+            }
             display: flex;
             width: 130px;
         }

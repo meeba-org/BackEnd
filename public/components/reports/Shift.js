@@ -133,7 +133,7 @@ class Shift extends React.PureComponent {
                 <div styleName={"shift-members"}>
                     {mode === ReportModes.Report &&
                         <div className={styles["date"]}>
-                            <span>{hebrewDay}'</span>
+                            <div className={styles["hebrew-day"]}>{hebrewDay}'</div>
 
                             <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={shift.clockInTime}
                                         format="DD/MM/YYYY"
