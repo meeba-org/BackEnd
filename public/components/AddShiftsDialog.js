@@ -78,13 +78,14 @@ class AddShiftsDialog extends PureComponent {
 
     render() {
         let {onCancel, open, employees} = this.props;
+        let {startDate, startTime, endTime, employeesToAdd} = this.state;
 
         return (
             <Dialog open={open} onClose={onCancel}>
                 <DialogTitle>הוספת משמרת</DialogTitle>
                 <DialogContent>
                     <DatePicker autoOk onChange={(date) => this.onUpdateDateChange(date)}
-                                value={moment()}
+                                value={startDate}
                                 format="DD/MM/YYYY"
                                 style={{margin: "0 10px"}}
                                 disableFuture
@@ -93,14 +94,14 @@ class AddShiftsDialog extends PureComponent {
                     <TimePicker
                         ampm={false}
                         autoOk
-                        value={this.state.startTime}
+                        value={startTime}
                         onChange={(time) => this.onUpdateStartTime(time)}
                     />
 
                     <TimePicker
                         ampm={false}
                         autoOk
-                        value={moment(this.state.endTime)}
+                        value={moment(endTime)}
                         onChange={(time) => this.onUpdateEndTime(time)}
                     />
 
@@ -111,8 +112,8 @@ class AddShiftsDialog extends PureComponent {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => this.onCreate()} variant="raised" color="primary">
-                        {this.state.employeesToAdd.length > 0 ? `הוסף ל- ` + this.state.employeesToAdd.length + ` אנשים` : "הוסף"}
+                    <Button onClick={() => this.onCreate()} variant="raised" color="primary" disabled={employeesToAdd.length === 0}>
+                        {employeesToAdd.length > 0 ? `הוסף ל- ` + employeesToAdd.length + ` אנשים` : "הוסף"}
                     </Button>
                     <Button onClick={onCancel} color="primary">
                         ביטול
