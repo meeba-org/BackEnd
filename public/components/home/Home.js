@@ -7,6 +7,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Features from "./Features";
 import Statistics from "./Statistics";
+import Movie from "./Movie";
 
 class Home extends Component {
     state = {
@@ -22,6 +23,7 @@ class Home extends Component {
             <div styleName="home">
                 <div styleName="home-bg">
                     <Header setLoginDialogVisibility={this.setLoginDialogVisibility}/>
+                    <Movie />
                     <Features />
                     <Statistics />
                     <Footer />

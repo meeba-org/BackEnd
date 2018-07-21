@@ -1,5 +1,4 @@
 import React from 'react';
-import {hot} from 'react-hot-loader';
 import routes from "./routes";
 import {Provider} from "react-redux";
 import {browserHistory, Router} from "react-router";
@@ -45,4 +44,4 @@ const Root = () =>
         </Provider>
     </MuiThemeProvider>);
 
-export default hot(module)(Root);
+export default Root;

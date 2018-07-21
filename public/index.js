@@ -9,3 +9,13 @@ render(
     document.getElementById('react-app')
 );
 
+if (module.hot) {
+    module.hot.accept('./Root', () => {
+        const RootContainer = require('./Root').default;
+        render(
+            <RootContainer />,
+            document.getElementById('react-app')
+        );
+    });
+}
+
