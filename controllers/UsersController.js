@@ -69,12 +69,19 @@ router.put('/', (req, res) => {
             let user = req.body;
             const companyFromToken = jwtService.getCompanyFromLocals(res);
             user.company = companyFromToken._id;
+            delete user.__v;
 
             UserModel.updateUser(user)
-                .then((user) => res.status(200).json(user))
-                .catch((err) => res.status(500).json({message: err.message}));
+                .then((user) => {
+                    return res.status(200).json(user);
+                })
+                .catch((err) => {
+                    return res.status(500).json({message: err.message});
+                });
         })
-        .catch((err) => res.status(400).json({message: err.array()}));
+        .catch((err) => {
+            return res.status(400).json({message: err.array()})
+        });
 });
 
 //DELETE /users/{id} userUid

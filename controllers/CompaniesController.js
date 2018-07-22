@@ -50,7 +50,11 @@ router.put('/', (req, res) => {
     req.getValidationResult()
         .then(function (result) {
             result.throw();
-            CompanyModel.updateCompany(req.body)
+
+            let newCompany = req.body;
+            delete newCompany.__v;
+
+            CompanyModel.updateCompany(newCompany)
                 .then((company) => res.status(200).json({company: company}))
                 .catch((err) => res.status(500).json({message: err.message}));
         })
