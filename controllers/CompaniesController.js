@@ -52,7 +52,6 @@ router.put('/', (req, res) => {
             result.throw();
 
             let newCompany = req.body;
-            delete newCompany.__v;
 
             CompanyModel.updateCompany(newCompany)
                 .then((company) => res.status(200).json({company: company}))

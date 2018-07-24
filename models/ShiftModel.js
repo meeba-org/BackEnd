@@ -34,8 +34,8 @@ const getByShiftId = (id) => {
 const createShift = (shift) => {
     let newShift = createShiftInstance(shift);
 
-    // Do this way since I didnt find a way to save & populate the user in the same syntax
-    return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true}).populate('user').exec();
+    return newShift.save()
+        .then(shift => Shift.populate(shift, {path: 'user'}));
 };
 
 const updateShift = (shift) => {
@@ -96,7 +96,7 @@ const createOrUpdateShift = (shift) => {
         return createShift(shift);
 };
 
-const shiftsCount = () => Shift.count().exec();
+const shiftsCount = () => Shift.countDocuments().exec();
 
 module.exports = {
     createOrUpdateShift

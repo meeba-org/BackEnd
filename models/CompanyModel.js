@@ -64,7 +64,7 @@ const deleteAllCompanies = (conditions) => {
     return Company.remove(conditions).exec();
 };
 
-const companiesCount = () => Company.count().exec();
+const companiesCount = () => Company.countDocuments().exec();
 
 module.exports = {
     createCompany

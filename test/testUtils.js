@@ -22,7 +22,7 @@ beforeEach(function () {
     if (mongoose.connection.db)
         return clearDB();
 
-    return mongoose.connect(config.dbUrl, {useMongoClient: true})
+    return mongoose.connect(config.dbUrl, {useNewUrlParser: true })
         .then(function() {
             return clearDB();
         })

@@ -63,7 +63,9 @@ router.post('/', (req, res) => {
                 .then((shift) => res.status(200).json(shift))
                 .catch((err) => res.status(500).json({message: err.message}));
         })
-        .catch((err) => res.status(400).json({message: err.array()}));
+        .catch((err) => {
+            return res.status(400).json({message: err.array()})
+        });
 });
 
 //PUT /shifts shift
@@ -74,7 +76,6 @@ router.put('/', (req, res) => {
 
             let newShift = req.body;
             fillMissingShiftData(res, newShift);
-            delete newShift.__v;
 
             ShiftModel.createOrUpdateShift(newShift)
                 .then((shift) => res.status(200).json(shift))

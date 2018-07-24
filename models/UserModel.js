@@ -118,7 +118,7 @@ const usersCount = (ignoreDeleted) => {
     if (ignoreDeleted)
         conditions.deleted = false;
 
-    return User.count(conditions).exec();
+    return User.countDocuments(conditions).exec();
 };
 
 const isEmployee = (user) => user.role === ERoles.EMPLOYEE;

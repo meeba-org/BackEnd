@@ -2,7 +2,7 @@ const EDayType = require('../models/EDayType');
 const expect = require('chai').expect;
 let {isListedHoliday, isHoliday, isHolidayEvening} = require('../managers/HolidayAnalyzer');
 
-describe('"HolidayAnalyzer', function () {
+describe('HolidayAnalyzer', function () {
     it('Yom Kipur evening should be evening holiday', function() {
         expect(isListedHoliday("2017-09-29", EDayType.HolidayEvening)).to.be.true;
         expect(isHolidayEvening("2017-09-29")).to.be.true;

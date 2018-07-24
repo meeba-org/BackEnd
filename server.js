@@ -13,7 +13,9 @@ const compression = require('compression');
 
 // Connect to mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect(config.dbUrl, { useMongoClient: true});
+mongoose.connect(config.dbUrl, {useNewUrlParser: true }, () => {
+    console.log("Connected to DB successfully");
+});
 
 // Init App
 const app = express();

@@ -91,4 +91,26 @@ describe('Shifts', function () {
                 });
         });
     });
+
+    describe('ShiftModel', function () {
+        it('update shift', function () {
+            let newCompany = utils.createMockedCompanyPlainObject("Toluna");
+
+            return CompanyModel.createCompany(newCompany)
+                .then((createdCompany) => {
+                    let mockedShift = utils.createMockedShiftPlainObject(moment(), createdCompany);
+                    return ShiftModel.createShift(mockedShift)
+                })
+                .then((createdShift) => {
+                    expect(createdShift).to.not.be.null;
+                    createdShift.clockInTime = moment('2010-10-20');
+
+                    return ShiftModel.updateShift(createdShift);
+                })
+                .then((updatedShift) => {
+                    expect(updatedShift).to.not.be.null;
+                    expect(moment(updatedShift.clockInTime).isSame('2010-10-20')).to.be.true;
+                })
+        });
+    })
 });

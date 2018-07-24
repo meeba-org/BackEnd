@@ -69,7 +69,6 @@ router.put('/', (req, res) => {
             let user = req.body;
             const companyFromToken = jwtService.getCompanyFromLocals(res);
             user.company = companyFromToken._id;
-            delete user.__v;
 
             UserModel.updateUser(user)
                 .then((user) => {
