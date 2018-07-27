@@ -18,7 +18,7 @@ const config = require('../config');
 const TIMEOUT = 20000;
 
 beforeEach(function () {
-    // this.timeout(TIMEOUT);
+    this.timeout(TIMEOUT);
     if (mongoose.connection.db)
         return clearDB();
 
@@ -91,7 +91,7 @@ function createMockedShiftPlainObject(clockInTime1, company, user) {
     return {
         clockInTime: clockInTime
         , clockOutTime: clockOutTime
-        , user: user || {}
+        , user: user
         , company: company
     };
 }

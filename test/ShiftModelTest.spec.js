@@ -9,8 +9,8 @@ const expect = require('chai').expect;
 describe('Shifts', function () {
     this.timeout(TIMEOUT);
 
-    describe('ShiftModel', function () {
-        it('getShiftsInMonth - should return shifts of a specific month', function () {
+    describe('getShiftsInMonth', function () {
+        it('should return shifts of a specific month', function () {
             let newCompany = utils.createMockedCompanyPlainObject("Toluna");
             const year = 2017;
             const month = 5;
@@ -46,10 +46,7 @@ describe('Shifts', function () {
                     expect(shifts).to.have.length(2);
                 })
         });
-    });
-
-    describe('ShiftModel', function () {
-        it('getShiftsInMonth - should return shifts of a specific month for a specific user', function () {
+        it('should return shifts of a specific month for a specific user', function () {
             let newCompany = utils.createMockedCompanyPlainObject("Toluna");
             let newUser = utils.createMockedUserPlainObject();
             const year = 2017;
@@ -94,18 +91,26 @@ describe('Shifts', function () {
         });
     });
 
-    describe('ShiftModel', function () {
+    describe('ShiftModel - CRUD Operations', function () {
         it('create shift', function () {
             let newCompany = utils.createMockedCompanyPlainObject("Toluna");
+            let time = '2010-10-20 09:30';
+            let someMoment = moment(time);
 
             return CompanyModel.createCompany(newCompany)
                 .then((createdCompany) => {
-                    let mockedShift = utils.createMockedShiftPlainObject(moment('2010-10-20'), createdCompany);
+                    let mockedShift = utils.createMockedShiftPlainObject(someMoment, createdCompany);
                     return ShiftModel.createShift(mockedShift)
                 })
                 .then((createdShift) => {
                     expect(createdShift).to.not.be.null;
-                    expect(moment(createdShift.clockInTime).isSame('2010-10-20')).to.be.true;
+                    expect(moment(createdShift.clockInTime).isSame(time)).to.be.true;
+
+                    // Checking that only one created
+                    return ShiftModel.getShiftsBetween(createdShift.company, moment(someMoment).startOf('day'), moment(someMoment).endOf('day'))
+                })
+                .then((shifts) => {
+                    expect(shifts.length).to.be.equals(1);
                 })
         });
 
