@@ -7,6 +7,8 @@ const AppManager = require('../managers/AppManager');
 const expect = require('chai').expect;
 
 describe('Shifts', function () {
+    this.timeout(TIMEOUT);
+
     describe('ShiftModel', function () {
         it('getShiftsInMonth - should return shifts of a specific month', function () {
             let newCompany = utils.createMockedCompanyPlainObject("Toluna");
@@ -93,6 +95,20 @@ describe('Shifts', function () {
     });
 
     describe('ShiftModel', function () {
+        it('create shift', function () {
+            let newCompany = utils.createMockedCompanyPlainObject("Toluna");
+
+            return CompanyModel.createCompany(newCompany)
+                .then((createdCompany) => {
+                    let mockedShift = utils.createMockedShiftPlainObject(moment('2010-10-20'), createdCompany);
+                    return ShiftModel.createShift(mockedShift)
+                })
+                .then((createdShift) => {
+                    expect(createdShift).to.not.be.null;
+                    expect(moment(createdShift.clockInTime).isSame('2010-10-20')).to.be.true;
+                })
+        });
+
         it('update shift', function () {
             let newCompany = utils.createMockedCompanyPlainObject("Toluna");
 
@@ -110,6 +126,24 @@ describe('Shifts', function () {
                 .then((updatedShift) => {
                     expect(updatedShift).to.not.be.null;
                     expect(moment(updatedShift.clockInTime).isSame('2010-10-20')).to.be.true;
+                })
+        });
+        it('delete shift', function () {
+            let newCompany = utils.createMockedCompanyPlainObject("Toluna");
+
+            return CompanyModel.createCompany(newCompany)
+                .then((createdCompany) => {
+                    let mockedShift = utils.createMockedShiftPlainObject(moment(), createdCompany);
+                    return ShiftModel.createShift(mockedShift)
+                })
+                .then((createdShift) => {
+                    expect(createdShift).to.not.be.null;
+
+                    return ShiftModel.deleteShift(createdShift._id)
+                        .then(() => ShiftModel.getByShiftId(createdShift._id))
+                })
+                .then((deletedShift) => {
+                    expect(deletedShift).to.be.null;
                 })
         });
     })
