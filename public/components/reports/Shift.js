@@ -1,24 +1,16 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-import Delete from '@material-ui/icons/Delete';
-import Home from '@material-ui/icons/Home';
-import Work from '@material-ui/icons/Work';
 import CSSModules from "react-css-modules";
 import {
     convertMomentToTimeStr,
     convertTimeStrToMoment,
     getCurrentTime,
-    isWorking,
-    momentToDay,
     ReportModes
 } from "../../helpers/utils";
 import moment from "moment";
-import WarningIcon from "./WarningIcon";
-import DatePicker from "material-ui-pickers/DatePicker";
-import TimePicker from "material-ui-pickers/TimePicker";
 import styles from "../../styles/Shift.scss";
+import LiveShift from "./LiveShift";
+import ReportShift from "./ReportShift";
 
 class Shift extends React.PureComponent {
 
@@ -108,81 +100,100 @@ class Shift extends React.PureComponent {
         return undefined;
     };
 
+
     render() {
         let {showNames, input, mode} = this.props;
-        let shift = input.value;
-        let icon = isWorking(shift) ?
-            <Tooltip title="בעבודה" placement="right"><Work/></Tooltip> :
-            <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
-        let hebrewDay = momentToDay(shift.clockInTime);
+        const {focus, hover} = this.state;
         let errors = this.getErrors();
-        let classes1 = "shift " + (this.state.focus ? "focus" : "");
+        let classes1 = "shift " + (focus ? "focus" : "");
 
         return (
             <div styleName={classes1} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}
-                 onFocus={this.onFocus} onBlur={this.onBlur}>
-                <div styleName="name-container">
-                    {mode === ReportModes.Live &&
-                    <IconButton styleName="icon">{icon}</IconButton>
-                    }
-                    {showNames &&
-                    <div styleName="name">{shift.user && shift.user.firstName}</div>
-                    }
-                    </div>
-
-                <div styleName={"shift-members"}>
-                    {mode === ReportModes.Report &&
-                        <div className={styles["date"]}>
-                            <div className={styles["hebrew-day"]}>{hebrewDay}'</div>
-
-                            <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={shift.clockInTime}
-                                        format="DD/MM/YYYY"
-                                        style={{margin: "0 10px"}}
-                                        disableFuture
-                            />
-                        </div>
-                    }
-
-                    <div styleName="times">
-                    <TimePicker
-                        className={styles["time"]}
-                        ampm={false}
-                        autoOk
-                        value={shift.clockInTime}
-                        onChange={(time) => this.onUpdateStartTime(time)}
+                      onFocus={this.onFocus} onBlur={this.onBlur}>
+                {mode === ReportModes.Live &&
+                    <LiveShift
+                        showNames={showNames}
+                        shift={input.value}
+                        errors={errors}
+                        hover={hover}
                     />
-
-                    {(mode === ReportModes.Report || !!shift.clockOutTime) &&
-
-                    <TimePicker
-                        className={styles["time"]}
-                        ampm={false}
-                        autoOk
-                        value={shift.clockOutTime}
-                        onChange={(time) => this.onUpdateEndTime(time)}
-                    />
-                    }
-                    </div>
-                </div>
-                {errors &&
-                <div styleName="warning">
-                    <WarningIcon text={errors}/>
-                </div>
                 }
-                {this.state.hover &&
-                <div>
-                    {mode === ReportModes.Live && isWorking(shift) &&
-                    <Tooltip title="סיים משמרת" placement="left">
-                        <IconButton className={styles["elem"]} onClick={() => this.onShiftComplete()}><Home/></IconButton>
-                    </Tooltip>
-                    }
-                    <Tooltip title="מחיקת משמרת" placement="left">
-                        <IconButton className={styles["elem"]} onClick={() => this.onDelete()}><Delete/></IconButton>
-                    </Tooltip>
-                </div>
+                {mode === ReportModes.Report &&
+                    <ReportShift
+                        showNames={showNames}
+                        shift={input.value}
+                        errors={errors}
+                        hover={hover}
+                    />
                 }
             </div>
         );
+
+        // return (
+        //     <div styleName={classes1} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}
+        //          onFocus={this.onFocus} onBlur={this.onBlur}>
+        //         <div styleName="name-container">
+        //             {mode === ReportModes.Live &&
+        //             <IconButton styleName="icon">{icon}</IconButton>
+        //             }
+        //             {showNames &&
+        //             <div styleName="name">{shift.user && shift.user.firstName}</div>
+        //             }
+        //             </div>
+        //
+        //         <div styleName={"shift-members"}>
+        //             {mode === ReportModes.Report &&
+        //                 <div className={styles["date"]}>
+        //                     <div className={styles["hebrew-day"]}>{hebrewDay}'</div>
+        //
+        //                     <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={shift.clockInTime}
+        //                                 format="DD/MM/YYYY"
+        //                                 style={{margin: "0 10px"}}
+        //                                 disableFuture
+        //                     />
+        //                 </div>
+        //             }
+        //
+        //             <div styleName="times">
+        //             <TimePicker
+        //                 className={styles["time"]}
+        //                 ampm={false}
+        //                 autoOk
+        //                 value={shift.clockInTime}
+        //                 onChange={(time) => this.onUpdateStartTime(time)}
+        //             />
+        //
+        //             {(mode === ReportModes.Report || !!shift.clockOutTime) &&
+        //
+        //             <TimePicker
+        //                 className={styles["time"]}
+        //                 ampm={false}
+        //                 autoOk
+        //                 value={shift.clockOutTime}
+        //                 onChange={(time) => this.onUpdateEndTime(time)}
+        //             />
+        //             }
+        //             </div>
+        //         </div>
+        //         {errors &&
+        //         <div styleName="warning">
+        //             <WarningIcon text={errors}/>
+        //         </div>
+        //         }
+        //         {this.state.hover &&
+        //         <div>
+        //             {mode === ReportModes.Live && isWorking(shift) &&
+        //             <Tooltip title="סיים משמרת" placement="left">
+        //                 <IconButton className={styles["elem"]} onClick={() => this.onShiftComplete()}><Home/></IconButton>
+        //             </Tooltip>
+        //             }
+        //             <Tooltip title="מחיקת משמרת" placement="left">
+        //                 <IconButton className={styles["elem"]} onClick={() => this.onDelete()}><Delete/></IconButton>
+        //             </Tooltip>
+        //         </div>
+        //         }
+        //     </div>
+        // );
     }
 }
 
