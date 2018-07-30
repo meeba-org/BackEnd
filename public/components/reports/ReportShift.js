@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import PropTypes from 'prop-types';
 import {momentToDay} from "../../helpers/utils";
 import WarningIcon from "./WarningIcon";
 import styles from "../../styles/ReportShift.scss";
@@ -9,14 +10,14 @@ import DatePicker from "material-ui-pickers/DatePicker";
 import TimePicker from "material-ui-pickers/TimePicker";
 
 const ReportShift = (props) => {
-    let {showNames, shift, errors, hover} = props;
+    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete} = props;
     let hebrewDay = momentToDay(shift.clockInTime);
 
     return (
         <Fragment>
             <div className={styles["name-container"]}>
                 {showNames &&
-                    <div className={styles["name"]}>{shift.user && shift.user.firstName}</div>
+                <div className={styles["name"]}>{shift.user && shift.user.firstName}</div>
                 }
             </div>
 
@@ -24,7 +25,8 @@ const ReportShift = (props) => {
                 <div className={styles["date"]}>
                     <div className={styles["hebrew-day"]}>{hebrewDay}'</div>
 
-                    <DatePicker autoOk onChange={(date) => this.onUpdateStartDate(date)} value={shift.clockInTime}
+                    <DatePicker autoOk onChange={(date) => onUpdateStartDate(date, shift)}
+                                value={shift.clockInTime}
                                 format="DD/MM/YYYY"
                                 style={{margin: "0 10px"}}
                                 disableFuture
@@ -37,7 +39,7 @@ const ReportShift = (props) => {
                         ampm={false}
                         autoOk
                         value={shift.clockInTime}
-                        onChange={(time) => this.onUpdateStartTime(time)}
+                        onChange={(time) => onUpdateStartTime(time, shift)}
                     />
 
                     <TimePicker
@@ -45,24 +47,36 @@ const ReportShift = (props) => {
                         ampm={false}
                         autoOk
                         value={shift.clockOutTime}
-                        onChange={(time) => this.onUpdateEndTime(time)}
+                        onChange={(time) => onUpdateEndTime(time, shift)}
                     />
                 </div>
             </div>
             {errors &&
-                <div className={styles["warning"]}>
-                    <WarningIcon text={errors}/>
-                </div>
+            <div className={styles["warning"]}>
+                <WarningIcon text={errors}/>
+            </div>
             }
             {hover &&
             <div>
                 <Tooltip title="מחיקת משמרת" placement="left">
-                    <IconButton className={styles["elem"]} onClick={() => this.onDelete()}><Delete/></IconButton>
+                    <IconButton className={styles["elem"]} onClick={() => onDelete()}><Delete/></IconButton>
                 </Tooltip>
             </div>
             }
         </Fragment>
     );
 };
+
+ReportShift.propTypes = {
+    showNames: PropTypes.bool.isRequired,
+    shift: PropTypes.object.isRequired,
+    errors: PropTypes.string,
+    hover: PropTypes.bool.isRequired,
+    onUpdateStartDate: PropTypes.func.isRequired,
+    onUpdateStartTime: PropTypes.func.isRequired,
+    onUpdateEndTime: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+};
+ReportShift.defaultProps = {};
 
 export default ReportShift;

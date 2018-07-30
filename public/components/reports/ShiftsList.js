@@ -1,7 +1,7 @@
 import React from "react";
 import Field from "redux-form/es/Field";
 import PropTypes from 'prop-types';
-import Shift from "./Shift";
+import ShiftContainer from "./ShiftContainer";
 import CSSModules from "react-css-modules";
 import NoData from "../NoData";
 import styles from "../../styles/ShiftsList.scss";
@@ -30,7 +30,7 @@ class ShiftsList extends React.PureComponent {
                 {fields && fields.map((shiftName, index) =>
                     (<Fade key={index}>
                             <Field
-                                component={Shift}
+                                component={ShiftContainer}
                                 name={shiftName} key={index}
                                 onDelete={() => this.onDelete(fields, index)}
                                 onUpdate={(shift, input) => this.onUpdate(shift, input)}
