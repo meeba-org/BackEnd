@@ -27,13 +27,14 @@ app.use(compression());
 if (process.env.NODE_ENV === 'production')
     app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
-// Support webpack-dev-server
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:5000");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    next();
-});
+// Support CORS for development env
+if (process.env.NODE_ENV === 'development')
+    app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+        res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        next();
+    });
 
 // Body Parser Middleware
 // parse application/json
