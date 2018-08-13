@@ -7,7 +7,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import DatePicker from "material-ui-pickers/DatePicker";
 import TimePicker from "material-ui-pickers/TimePicker";
-import Comment from "./Comment";
+import Note from "./Note";
 import Warning from "./Warning";
 
 const ReportShift = (props) => {
@@ -53,7 +53,7 @@ const ReportShift = (props) => {
                 </div>
             </div>
             <Warning warning={errors}/>
-            <Comment description={shift.description} />
+            <Note text={shift.note} />
             {hover &&
             <div>
                 <Tooltip title="מחיקת משמרת" placement="left">
