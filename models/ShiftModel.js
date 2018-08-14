@@ -14,6 +14,7 @@ const ShiftSchema = mongoose.Schema({
     dayType: {
         type: Number
     },
+    note: { type: String },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }
     //location

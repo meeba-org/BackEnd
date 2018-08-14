@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {isWorking} from "../../helpers/utils";
-import WarningIcon from "./WarningIcon";
 import styles from "../../styles/LiveShift.scss";
 import Home from '@material-ui/icons/Home';
 import Work from '@material-ui/icons/Work';
@@ -9,6 +8,8 @@ import Delete from '@material-ui/icons/Delete';
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import TimePicker from "material-ui-pickers/TimePicker";
+import Note from "./Note";
+import Warning from "./Warning";
 
 const LiveShift = (props) => {
     let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete} = props;
@@ -32,7 +33,7 @@ const LiveShift = (props) => {
                         ampm={false}
                         autoOk
                         value={shift.clockInTime}
-                        onChange={onUpdateStartTime}
+                        onChange={(time) => onUpdateStartTime(time, shift)}
                     />
 
                     {!!shift.clockOutTime &&
@@ -46,11 +47,8 @@ const LiveShift = (props) => {
                     }
                 </div>
             </div>
-            {errors &&
-            <div className={styles["warning"]}>
-                <WarningIcon text={errors}/>
-            </div>
-            }
+            <Warning warning={errors}/>
+            <Note text={shift.note} />
             {hover &&
             <div>
                 {isWorking(shift) &&
