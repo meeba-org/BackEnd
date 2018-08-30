@@ -15,32 +15,35 @@ let setHeaderColor = function (sheet) {
         };
     });
 };
-const createSheet = (workbook, year, month) => {
-    let sheetTitleDate = createTitleDate(year, month);
-    // create a sheet with the first row and column frozen
-    let sheet = workbook.addWorksheet(sheetTitleDate, {views:[ {state: 'frozen', xSplit: 1, ySplit:1, rightToLeft: true} ]});
 
+function createSummaryColumns(sheet) {
     sheet.columns = [
-        { header: 'שם עובד', key: 'employeeName', width: 30, style: {alignment: {horizontal: 'right'} } },
-        { header: '100% שעות', key: 'regularHours', width: 13, style: {alignment: {horizontal: 'right'} }  },
-        { header: '125% שעות', key: 'extra125Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
-        { header: '150% שעות', key: 'extra150Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
-        { header: '175% שעות', key: 'extra175Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
-        { header: '200% שעות', key: 'extra200Hours', width: 13, style: {alignment: {horizontal: 'right'} }  },
-        { header: 'שכ"ע לשעה', key: 'hourWage', width: 13, style: {alignment: {horizontal: 'right'} }  },
-        { header: 'סה"כ שעות', key: 'overallHours', width: 13, style: {alignment: {horizontal: 'right'} }  },
-        { header: 'משמרות', key: 'shiftsCount', width: 13, style: {alignment: {horizontal: 'right'} }  },
-        { header: 'נסיעות יומי', key: 'transportation', width: 13, style: {alignment: {horizontal: 'right'} }  },
-        { header: 'סה"כ נסיעות', key: 'overallTransportation', width: 13, style: {alignment: {horizontal: 'right'} }  },
-        { header: 'סה"כ שכר', key: 'overallSalary', width: 13, style: {alignment: {horizontal: 'right'} }  },
+        {header: 'שם עובד', key: 'employeeName', width: 30, style: {alignment: {horizontal: 'right'}}},
+        {header: '100% שעות', key: 'regularHours', width: 13, style: {alignment: {horizontal: 'right'}}},
+        {header: '125% שעות', key: 'extra125Hours', width: 13, style: {alignment: {horizontal: 'right'}}},
+        {header: '150% שעות', key: 'extra150Hours', width: 13, style: {alignment: {horizontal: 'right'}}},
+        {header: '175% שעות', key: 'extra175Hours', width: 13, style: {alignment: {horizontal: 'right'}}},
+        {header: '200% שעות', key: 'extra200Hours', width: 13, style: {alignment: {horizontal: 'right'}}},
+        {header: 'שכ"ע לשעה', key: 'hourWage', width: 13, style: {alignment: {horizontal: 'right'}}},
+        {header: 'סה"כ שעות', key: 'overallHours', width: 13, style: {alignment: {horizontal: 'right'}}},
+        {header: 'משמרות', key: 'shiftsCount', width: 13, style: {alignment: {horizontal: 'right'}}},
+        {header: 'נסיעות יומי', key: 'transportation', width: 13, style: {alignment: {horizontal: 'right'}}},
+        {header: 'סה"כ נסיעות', key: 'overallTransportation', width: 13, style: {alignment: {horizontal: 'right'}}},
+        {header: 'סה"כ שכר', key: 'overallSalary', width: 13, style: {alignment: {horizontal: 'right'}}},
     ];
 
     setHeaderColor(sheet);
+}
 
-    return sheet;
+const addSummarySheet = (workbook, company, shifts) => {
+    // create a sheet with the first row and column frozen
+    let sheet = workbook.addWorksheet("סיכום", {views:[ {state: 'frozen', xSplit: 1, ySplit:1, rightToLeft: true} ]});
+
+    createSummaryColumns(sheet);
+    createSummaryContent(sheet, shifts, company.settings);
 };
 
-let createContent = function (worksheet, shifts, settings) {
+let createSummaryContent = function (worksheet, shifts, settings) {
     if (!shifts || shifts.length == 0)
         return;
 
@@ -63,6 +66,48 @@ let createContent = function (worksheet, shifts, settings) {
         });
     });
 };
+
+function createShiftsPerEmployeeColumns(sheet) {
+    sheet.columns = [
+        {header: 'שם עובד', key: 'employeeName', width: 30, style: {alignment: {horizontal: 'right'}}},
+        {header: 'תאריך', key: 'clockInDate', width: 20, style: {alignment: {horizontal: 'right'}}},
+        {header: 'שעת התחלה', key: 'clockInTime', width: 20, style: {alignment: {horizontal: 'right'}}},
+        {header: 'שעת סיום', key: 'clockOutTime', width: 20, style: {alignment: {horizontal: 'right'}}},
+    ];
+
+    setHeaderColor(sheet);
+}
+
+let createShiftsPerEmployeeContent = function (worksheet, shifts, settings) {
+    if (!shifts || shifts.length === 0)
+        return;
+
+    let employees = ShiftAnalyzer.createEmployeeShiftsReports(shifts, settings);
+
+    employees.forEach((employee) => {
+        worksheet.addRow({employeeName: employee.firstName});
+
+        if (employee.shifts) {
+            employees.shifts.forEach((shift) => {
+                worksheet.addRow({
+                    clockInDate: shift.clockInDate,
+                    clockInTime: shift.clockInTime,
+                    clockOutTime: shift.clockOutTime,
+                });
+            });
+        }
+    });
+};
+
+const addShiftsPerEmployeeSheet = (workbook, company, shifts) => {
+    // create a sheet with the first row and column frozen
+    let sheet = workbook.addWorksheet("משמרות לפי עובד", {views:[ {state: 'frozen', xSplit: 1, ySplit:1, rightToLeft: true} ]});
+
+    createShiftsPerEmployeeColumns(sheet);
+    createShiftsPerEmployeeContent(sheet, shifts, company.settings);
+    return sheet;
+};
+
 let createWorkbook = function () {
     const workbook = new Excel.Workbook();
     workbook.creator = 'Meeba';
@@ -72,8 +117,8 @@ let createWorkbook = function () {
 
 const createExcel = (shifts, year, month, company) => {
     const workbook = createWorkbook();
-    let worksheet = createSheet(workbook, year, month);
-    createContent(worksheet, shifts, company.settings);
+    addSummarySheet(workbook, company, shifts, year, month);
+    addShiftsPerEmployeeSheet(workbook, company, shifts, year, month );
 
     return workbook;
 };
