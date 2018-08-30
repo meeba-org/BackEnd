@@ -88,15 +88,36 @@ let createShiftsPerEmployeeContent = function (worksheet, shifts, settings) {
         worksheet.addRow({employeeName: employee.firstName});
 
         if (employee.shifts) {
-            employees.shifts.forEach((shift) => {
+            employee.shifts.forEach((shift) => {
                 worksheet.addRow({
-                    clockInDate: shift.clockInDate,
-                    clockInTime: shift.clockInTime,
-                    clockOutTime: shift.clockOutTime,
+                    clockInDate: calcClockInDate(shift),
+                    clockInTime: calcClockInTime(shift),
+                    clockOutTime: calcClockOutTime(shift),
                 });
             });
         }
     });
+};
+
+const calcClockInDate = (shift) => {
+    if (!shift || !shift.clockInTime)
+        return "-";
+
+    return moment(shift.clockInTime).format("DD/MM/YYYY");
+};
+
+const calcClockInTime = (shift) => {
+    if (!shift || !shift.clockInTime)
+        return "-";
+
+    return moment(shift.clockInTime).format("HH:mm");
+};
+
+const calcClockOutTime = (shift) => {
+    if (!shift || !shift.clockOutTime)
+        return "-";
+
+    return moment(shift.clockOutTime).format("HH:mm");
 };
 
 const addShiftsPerEmployeeSheet = (workbook, company, shifts) => {
