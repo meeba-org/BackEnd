@@ -37,7 +37,7 @@ function createSummaryColumns(sheet) {
 
 const addSummarySheet = (workbook, company, shifts) => {
     // create a sheet with the first row and column frozen
-    let sheet = workbook.addWorksheet("סיכום", {views:[ {state: 'frozen', xSplit: 1, ySplit:1, rightToLeft: true} ]});
+    let sheet = workbook.addWorksheet("שכר", {views:[ {state: 'frozen', xSplit: 1, ySplit:1, rightToLeft: true} ]});
 
     createSummaryColumns(sheet);
     createSummaryContent(sheet, shifts, company.settings);
@@ -87,7 +87,7 @@ let createShiftsPerEmployeeContent = function (worksheet, shifts, settings) {
     employees.forEach((employee) => {
         worksheet.addRow({employeeName: employee.firstName});
 
-        if (employee.shifts) {
+        if (employee.shifts && employee.shifts.length > 0) {
             employee.shifts.forEach((shift) => {
                 worksheet.addRow({
                     clockInDate: calcClockInDate(shift),
@@ -95,6 +95,9 @@ let createShiftsPerEmployeeContent = function (worksheet, shifts, settings) {
                     clockOutTime: calcClockOutTime(shift),
                 });
             });
+        }
+        else {
+            worksheet.addRow({employeeName: "ללא משמרות"});
         }
     });
 };
