@@ -70,6 +70,8 @@ router.post('/', (req, res) => {
 
 //PUT /shifts shift
 router.put('/', (req, res) => {
+    req.checkBody('user', 'user id is required').notEmpty();
+
     req.getValidationResult()
         .then(function (result) {
             result.throw();
