@@ -79,7 +79,7 @@ router.put('/', (req, res) => {
             let newShift = req.body;
             fillMissingShiftData(res, newShift);
 
-            ShiftModel.createOrUpdateShift(newShift)
+            ShiftModel.updateShift(newShift)
                 .then((shift) => res.status(200).json(shift))
                 .catch((err) => res.status(500).json({message: err.message}));
         })
