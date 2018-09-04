@@ -14,4 +14,4 @@ const Note = ({text}) => {
     );
 };
 
-export default Note
+export default Note;

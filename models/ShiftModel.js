@@ -40,6 +40,9 @@ const createShift = (shift) => {
 };
 
 const updateShift = (shift) => {
+    if (!shift._id)
+        throw new Error("[ShiftModel.updateShift] - no valid id");
+
     let newShift = createShiftInstance(shift);
     newShift._id = shift._id;
 

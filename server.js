@@ -40,11 +40,6 @@ if (process.env.NODE_ENV === 'development')
 // parse application/json
 app.use(bodyParser.json());
 app.use(expressValidator());
-// parse application/x-www-form-urlencoded
-// for easier testing with Postman or plain HTML forms
-app.use(bodyParser.urlencoded({
-  extended:true
-}));
 
 // Cookie Parser Middleware
 app.use(cookieParser());

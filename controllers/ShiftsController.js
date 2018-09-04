@@ -1,11 +1,13 @@
 'use strict';
+import {validateErrors} from "./apiManager";
+
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 const ShiftModel = require('../models/ShiftModel');
 const jwtService = require("./jwtService");
 const HolidayAnalyzer = require('../managers/HolidayAnalyzer');
-const { body, validationResult } = require('express-validator/check');
+const { body } = require('express-validator/check');
 
 //GET /shifts shift
 router.get('/', (req, res) => {
@@ -51,10 +53,11 @@ let fillMissingShiftData = function (res, newShift) {
 
 //POST /shifts shift
 router.post('/', [
-    body('user').exists()
+    body('clockInTime').exists(),
+    body('user').exists(),
 ], (req, res) => {
 
-    const errors = validationResult(req);
+    const errors = validateErrors(req);
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
     }
@@ -64,7 +67,7 @@ router.post('/', [
         fillMissingShiftData(res, newShift);
 
         return ShiftModel.createOrUpdateShift(newShift)
-            .then((shift) => res.status(200).json(shift))
+            .then((shift) => res.status(200).json(shift));
     }
     catch (err) {
         return res.status(500).json({message: err.message});
@@ -72,19 +75,30 @@ router.post('/', [
 });
 
 //PUT /shifts shift
-router.put('/', (req, res) => {
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
+router.put('/', [
+    body('clockInTime').exists(),
+    body('user').exists(),
+], (req, res) => {
 
-            let newShift = req.body;
-            fillMissingShiftData(res, newShift);
+    const errors = validateErrors(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
 
-            ShiftModel.createOrUpdateShift(newShift)
-                .then((shift) => res.status(200).json(shift))
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
+    try {
+        let newShift = req.body;
+        fillMissingShiftData(res, newShift);
+
+        ShiftModel.createOrUpdateShift(newShift)
+            .then((shift) => res.status(200).json(shift))
+            .catch((err) =>
+            {
+                return res.status(500).json({message: err.message});
+            });
+    }
+    catch (err) {
+        return res.status(500).json({message: err.message});
+    }
 });
 
 //DELETE /shifts/{id} shiftUid
