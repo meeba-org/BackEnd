@@ -6,6 +6,7 @@ const router = express.Router();
 const { body, param } = require('express-validator/check');
 
 //GET /companies/{id} company
+/* Not in used */
 router.get('/:id',
     [
         param('id').exists(),
@@ -23,6 +24,7 @@ router.get('/:id',
 );
 
 //GET /companies companies
+/* Not in used */
 router.get('/',
     (req, res) => routeWrapper(req, res, (req, res) => {
         return CompanyModel.getAllCompanies();
@@ -30,6 +32,7 @@ router.get('/',
 );
 
 //POST /companies company
+/* Not in used */
 router.post('/',
     (req, res) => routeWrapper(req, res, (req, res) => {
         return CompanyModel.createCompany(req.body);
@@ -49,6 +52,7 @@ router.put('/',
 );
 
 //DELETE /companies/{id} companyId
+/* Not in used */
 router.delete('/:id',
     [
         param('id').exists(),
