@@ -1,5 +1,6 @@
 const moment = require('moment');
 const mongoose = require('mongoose');
+const reject = require("../controllers/apiManager").reject;
 
 // Shift Schema
 const ShiftSchema = mongoose.Schema({
@@ -41,7 +42,7 @@ const createShift = (shift) => {
 
 const updateShift = (shift) => {
     if (!shift._id)
-        throw new Error("[ShiftModel.updateShift] - no valid id");
+        return reject("[ShiftModel.updateShift] - no valid id");
 
     let newShift = createShiftInstance(shift);
     newShift._id = shift._id;
