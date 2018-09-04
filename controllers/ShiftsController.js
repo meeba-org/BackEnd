@@ -5,6 +5,7 @@ const moment = require('moment');
 const ShiftModel = require('../models/ShiftModel');
 const jwtService = require("./jwtService");
 const HolidayAnalyzer = require('../managers/HolidayAnalyzer');
+const { body, validationResult } = require('express-validator/check');
 
 //GET /shifts shift
 router.get('/', (req, res) => {
@@ -49,23 +50,25 @@ let fillMissingShiftData = function (res, newShift) {
 };
 
 //POST /shifts shift
-router.post('/', (req, res) => {
-    req.checkBody('user', 'user id is required').notEmpty();
+router.post('/', [
+    body('user').exists()
+], (req, res) => {
 
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
 
-            let newShift = req.body;
-            fillMissingShiftData(res, newShift);
+    try {
+        let newShift = req.body;
+        fillMissingShiftData(res, newShift);
 
-            ShiftModel.createOrUpdateShift(newShift)
-                .then((shift) => res.status(200).json(shift))
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => {
-            return res.status(400).json({message: err.array()})
-        });
+        return ShiftModel.createOrUpdateShift(newShift)
+            .then((shift) => res.status(200).json(shift))
+    }
+    catch (err) {
+        return res.status(500).json({message: err.message});
+    }
 });
 
 //PUT /shifts shift
