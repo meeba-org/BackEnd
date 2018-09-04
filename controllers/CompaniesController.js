@@ -38,6 +38,9 @@ router.post('/',
 
 //PUT /companies company
 router.put('/',
+    [
+        body('_id').exists()
+    ],
     (req, res) => routeWrapper(req, res, (req, res) => {
         let newCompany = req.body;
 
