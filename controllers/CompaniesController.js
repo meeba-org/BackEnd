@@ -1,6 +1,7 @@
 'use strict';
 const CompanyModel = require('../models/CompanyModel');
 const express = require('express');
+const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const router = express.Router();
 const { body, param } = require('express-validator/check');
@@ -17,8 +18,8 @@ router.get('/:id',
         return CompanyModel.getByCompanyId(id)
             .then((company) => {
                 if (company)
-                    return res.status(200).json(company);
-                return Promise.reject("Company with id " + id + " does not exist");
+                    return resolve(company);
+                return reject("Company with id " + id + " does not exist", 401);
             });
     })
 );
@@ -61,7 +62,7 @@ router.delete('/:id',
         const id = req.params.id;
 
         return CompanyModel.deleteCompany(id)
-            .then(() => res.status(204).send());
+            .then(() => id);
     })
 );
 

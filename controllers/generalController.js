@@ -6,6 +6,7 @@ const UserModel = require("../models/UserModel");
 const CompanyModel = require("../models/CompanyModel");
 const jwtService = require("./jwtService");
 const AppManager = require('../managers/AppManager');
+const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
 
@@ -22,19 +23,22 @@ router.post('/register',
         let retypePassword = req.body.retypePassword;
 
         if (password != retypePassword)
-            return res.status(401).send({message: "סיסמאות אינן תואמות"});
+            return reject("סיסמאות אינן תואמות", 401);
 
         return UserModel.getByUserName(username)
             .then(user => {
                 if (user)
-                    return res.status(401).send({message: "שם משתמש קיים"});
+                    return reject("שם משתמש קיים", 401);
 
                 return AppManager.registerCompanyManager(username, password);
             })
             .then((user) => {
                 // use the jsonwebtoken package to create the token and respond with it
                 let token = jwt.sign(user.toObject(), config.secret);
-                return res.status(200).json({user, token});
+                return resolve({
+                    user,
+                    token
+                });
             })
     })
 );
@@ -52,23 +56,26 @@ router.post('/login',
         return UserModel.getByUserIdentifier(identifier, true)
             .then((user) => {
                 if (!user) {
-                    return res.status(401).send({message: "שם משתמש לא קיים"});
+                    return reject(401, "שם משתמש לא קיים");
                 }
 
                 if (UserModel.isCompanyManager(user)) {
                     if (!password)
-                        return res.status(401).json({message: "אנא הכנס סיסמא"});
+                        return reject(401, "אנא הכנס סיסמא");
 
                     let isMatch = UserModel.comparePassword(password, user.password);
 
                     if (!isMatch) {
-                        return res.status(401).json({message: "סיסמא לא נכונה - נסה שנית"});
+                        return reject(401, "סיסמא לא נכונה - נסה שנית");
                     }
                 }
 
                 // use the jsonwebtoken package to create the token and respond with it
                 let token = jwt.sign(user.toObject(), config.secret);
-                return res.status(200).json({user, token});
+                return resolve({
+                    user,
+                    token
+                });
             })
     })
 );
@@ -80,26 +87,29 @@ router.get('/authenticate',
         // check header or url parameters or post parameters for token
         var token = jwtService.extractTokenFromRequest(req);
         if (!token) {
-            return res.status(401).json({message: '[authenticate] - Must pass token'});
+            return reject("[authenticate] - Must pass token", 401);
         }
 
         // decode token
         // Use process.env.JWT_SECRET instead of config.secret
         return jwt.verify(token, config.secret, function (err, user) {
             if (err)
-                return res.status(401).json({message: '[authenticate] - Token is not valid'});
+                return reject('[authenticate] - Token is not valid', 401);
 
             //return user using the id from w/in JWTToken
-            UserModel.getByUserId(user._id)
+            return UserModel.getByUserId(user._id)
                 .then((user) => {
                     user = UserModel.getCleanUser(user.toObject()); //don't pass password and stuff
 
                     //note: you can renew token by creating new token(i.e. refresh it) w/ new expiration time at this point, but I'm passing the old token back.
                     // var token = utils.generateToken(user);
 
-                    res.status(200).json({user, token});
+                    return resolve({
+                        user,
+                        token
+                    });
                 })
-                .catch(() => res.status(401).json({message: '[authenticate] - User was not found'}));
+                .catch(() => reject('[authenticate] - User was not found', 401));
         });
     })
 );
@@ -111,11 +121,11 @@ router.get('/api/general/meta',
             UserModel.usersCount(),
         ])
         .then((resultArr) => {
-            return res.status(200).json({
+            return Promise.resolve({
                 companiesCount: resultArr[0],
                 usersCount: resultArr[1],
             });
-        })
+        });
     })
 );
 

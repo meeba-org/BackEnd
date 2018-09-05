@@ -3,9 +3,10 @@ const UserModel = require('../models/UserModel');
 const express = require('express');
 const AppManager = require("../managers/AppManager");
 const jwtService = require("./jwtService");
+const {reject, resolve} = require("./apiManager");
 const router = express.Router();
 const routeWrapper = require("./apiManager").routeWrapper;
-const {param } = require('express-validator/check');
+const {param} = require('express-validator/check');
 
 //GET /users/{uid} user
 router.get('/:uid',
@@ -18,9 +19,9 @@ router.get('/:uid',
         return UserModel.getByUserUid(uid)
             .then((user) => {
                 if (user)
-                    return res.status(200).json(user);
-                return Promise.reject("User with uid " + uid + " does not exist");
-            })
+                    return resolve(user);
+                return reject("User with uid " + uid + " does not exist", 400);
+            });
     })
 );
 
@@ -52,7 +53,7 @@ router.put('/',
         const companyFromToken = jwtService.getCompanyFromLocals(res);
         user.company = companyFromToken._id;
 
-        UserModel.updateUser(user)
+        return UserModel.updateUser(user);
     })
 );
 
@@ -65,7 +66,7 @@ router.delete('/:id',
         const id = req.params.id;
 
         return AppManager.removeUser(id)
-            .then(() => res.status(200).send(id))
+            .then(() => id);
     })
 );
 

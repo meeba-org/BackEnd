@@ -4,8 +4,15 @@ function validateErrors(req) {
     return validationResult(req);
 }
 
-function reject(message) {
-    return Promise.reject({message});
+function reject(message, status) {
+    return Promise.reject({
+        message,
+        status: status
+    });
+}
+
+function resolve(data) {
+    return Promise.resolve(data);
 }
 
 function routeWrapper(req, res, body) {
@@ -16,16 +23,21 @@ function routeWrapper(req, res, body) {
 
     try {
         return body(req, res)
-            .then((data) => res.status(200).json(data))
-            .catch((err) => res.status(500).json({message: err.message}));
+            .then((data) => {
+                return res.status(200).send(data)
+            })
+            .catch((err) =>{
+                return res.status(err.status || 500).send({message: err.message || "Error has occurred in async operation!"});
+            });
     }
     catch (err) {
-        return res.status(500).json({message: err.message});
+        return res.status(err.status || 500).send({message: err.message || "Error has been thrown!"});
     }
 }
 
 module.exports = {
     validateErrors,
     reject,
+    resolve,
     routeWrapper
 };

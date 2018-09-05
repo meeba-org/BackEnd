@@ -6,6 +6,7 @@ const moment = require('moment');
 const ShiftModel = require('../models/ShiftModel');
 const jwtService = require("./jwtService");
 const HolidayAnalyzer = require('../managers/HolidayAnalyzer');
+const reject = require("./apiManager").reject;
 const routeWrapper = require("./apiManager").routeWrapper;
 const { body, param } = require('express-validator/check');
 
@@ -16,13 +17,13 @@ router.get('/',
         const userId = req.query.userId;
 
         if (userId && !jwtService.isUserIdValid(userId, req))
-            return res.status(400).json({message: "[ShiftsController.Get] userId is not valid - does not fit token"});
+            return reject("[ShiftsController.Get] userId is not valid - does not fit token", 400);
 
         let endDate = req.query.endDate || moment(startDate).endOf('month');
         endDate = moment(endDate).endOf('day');
 
         if (!moment(startDate).isValid() || !moment(endDate).isValid())
-            return res.status(400).json({message: "moment isValid() failed - startDate || endDate are not valid"});
+            return reject("[ShiftsController.Get] moment isValid() failed - startDate || endDate are not valid", 400);
 
         const company = jwtService.getCompanyFromLocals(res);
 
@@ -68,7 +69,7 @@ router.delete('/:id',
         const id = req.params.id;
 
         return ShiftModel.deleteShift(id)
-            .then(() => res.status(200).send(id));
+            .then(() => id);
     })
 );
 

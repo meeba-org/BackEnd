@@ -51,14 +51,13 @@ router.get('/monthly',
 
         const company = jwtService.getCompanyFromLocals(res);
 
-        ShiftModel.getShiftsInMonth(year, month, company, userId)
+        return ShiftModel.getShiftsInMonth(year, month, company, userId)
             .then((shifts) => {
 
                 if (shifts) {
-                    let employeesMonthlyReports = ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
-                    return res.status(200).json(employeesMonthlyReports);
+                    return ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
                 }
-            })
+            });
     })
 );
 
