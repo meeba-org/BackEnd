@@ -18,7 +18,7 @@ function resolve(data) {
 function routeWrapper(req, res, body) {
     const errors = validateErrors(req);
     if (!errors.isEmpty()) {
-        return res.status(422).json({errors: errors.array()});
+        return res.status(422).json({message: errors.array()});
     }
 
     try {

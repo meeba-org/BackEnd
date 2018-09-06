@@ -56,17 +56,17 @@ router.post('/login',
         return UserModel.getByUserIdentifier(identifier, true)
             .then((user) => {
                 if (!user) {
-                    return reject(401, "שם משתמש לא קיים");
+                    return reject("שם משתמש לא קיים", 401);
                 }
 
                 if (UserModel.isCompanyManager(user)) {
                     if (!password)
-                        return reject(401, "אנא הכנס סיסמא");
+                        return reject("אנא הכנס סיסמא", 401);
 
                     let isMatch = UserModel.comparePassword(password, user.password);
 
                     if (!isMatch) {
-                        return reject(401, "סיסמא לא נכונה - נסה שנית");
+                        return reject("סיסמא לא נכונה - נסה שנית", 401);
                     }
                 }
 
