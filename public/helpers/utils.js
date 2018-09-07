@@ -78,4 +78,19 @@ export const isUserAllowedLogin = (user) => {
     return (user.role === ERoles.COMPANY_MANAGER || user.role === ERoles.SHIFT_MANAGER);
 };
 
-export const fillBlanks = (str) => str.replace(/\s/g, "0");
+const zeroFill = (number, width) => {
+    width -= number.toString().length;
+    if (width > 0) {
+        return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
+    }
+    return number + ""; // always return a string
+};
+
+export const prepareHourToDisplay = (hoursStr) => {
+    let hoursFloat = parseFloat(hoursStr);
+
+    let hourStr = zeroFill(Math.floor(hoursFloat), 2);
+    let minuteStr = zeroFill(Math.floor(hoursFloat % 1 * 60), 2);
+
+    return `${hourStr}:${minuteStr}`;
+}
