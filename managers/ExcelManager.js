@@ -1,3 +1,5 @@
+import {FeatureName, isFeatureEnable} from "./FeaturesManager";
+
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 var Excel = require('exceljs');
@@ -67,7 +69,7 @@ let createSummaryContent = function (worksheet, shifts, settings) {
     });
 };
 
-function createShiftsPerEmployeeColumns(sheet) {
+function createShiftsPerEmployeeColumns(sheet, company) {
     sheet.columns = [
         {header: 'שם עובד', key: 'employeeName', width: 30, style: {alignment: {horizontal: 'right'}}},
         {header: 'תאריך', key: 'clockInDate', width: 20, style: {alignment: {horizontal: 'right'}}},
@@ -75,25 +77,44 @@ function createShiftsPerEmployeeColumns(sheet) {
         {header: 'שעת סיום', key: 'clockOutTime', width: 20, style: {alignment: {horizontal: 'right'}}},
     ];
 
+    if (isFeatureEnable(company, FeatureName.CommuteModule)) {
+        sheet.columns = sheet.columns.concat([
+            {header: 'שעות נסיעה', key: 'commuteHours', width: 10, style: {alignment: {horizontal: 'right'}}},
+            {header: 'ק"מ', key: 'kmDriving', width: 10, style: {alignment: {horizontal: 'right'}}},
+            {header: 'חניה', key: 'parkingCost', width: 10, style: {alignment: {horizontal: 'right'}}},
+        ]);
+    }
+
     setHeaderColor(sheet);
 }
 
-let createShiftsPerEmployeeContent = function (worksheet, shifts, settings) {
+let createShiftsPerEmployeeContent = function (worksheet, shifts, company) {
     if (!shifts || shifts.length === 0)
         return;
 
-    let employees = ShiftAnalyzer.createEmployeeShiftsReports(shifts, settings);
+    let employees = ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
 
     employees.forEach((employee) => {
         worksheet.addRow({employeeName: employee.firstName});
 
         if (employee.shifts && employee.shifts.length > 0) {
             employee.shifts.forEach((shift) => {
-                worksheet.addRow({
+                let row = {
                     clockInDate: calcClockInDate(shift),
                     clockInTime: calcClockInTime(shift),
                     clockOutTime: calcClockOutTime(shift),
-                });
+                };
+
+                if (isFeatureEnable(company, FeatureName.CommuteModule)) {
+                    row = {
+                        ...row,
+                        commuteHours: shift.commuteCost.commuteHours,
+                        kmDriving: shift.commuteCost.kmDriving,
+                        parkingCost: shift.commuteCost.parkingCost,
+                    }
+                }
+
+                worksheet.addRow(row);
             });
         }
         else {
@@ -127,8 +148,8 @@ const addShiftsPerEmployeeSheet = (workbook, company, shifts) => {
     // create a sheet with the first row and column frozen
     let sheet = workbook.addWorksheet("משמרות לפי עובד", {views:[ {state: 'frozen', xSplit: 1, ySplit:1, rightToLeft: true} ]});
 
-    createShiftsPerEmployeeColumns(sheet);
-    createShiftsPerEmployeeContent(sheet, shifts, company.settings);
+    createShiftsPerEmployeeColumns(sheet, company);
+    createShiftsPerEmployeeContent(sheet, shifts, company);
     return sheet;
 };
 

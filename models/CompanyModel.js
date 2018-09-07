@@ -16,7 +16,7 @@ const CompanySchema = mongoose.Schema({
         kmPay: {type: Number, default: 0.75},
         hourCommutePay: {type: Number, default: 18},
     },
-    features: [{ type : ObjectId, ref: 'Feature' }]
+    features: [String]
 });
 
 const Company = mongoose.model('Company', CompanySchema);
