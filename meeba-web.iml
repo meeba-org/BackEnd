@@ -13,5 +13,6 @@
     <orderEntry type="library" name="mocha-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="webpack-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="mongoose-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="@types/react-css-modules" level="application" />
   </component>
 </module>
