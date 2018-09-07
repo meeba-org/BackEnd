@@ -15,7 +15,8 @@ const CompanySchema = mongoose.Schema({
         holidayShiftLength: {type: Number, default: 7},
         kmPay: {type: Number, default: 0.75},
         hourCommutePay: {type: Number, default: 18},
-    }
+    },
+    features: [{ type : ObjectId, ref: 'Feature' }]
 });
 
 const Company = mongoose.model('Company', CompanySchema);
