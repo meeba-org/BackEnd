@@ -223,6 +223,23 @@ function calcExtra50PercentHours(shiftLength, regularHoursInShift) {
 }
 
 
+let calcOverallTransportation = function (user, settings) {
+    let {kmPay, hourCommutePay} = settings;
+
+    let totalCommutePay = 0;
+    let totalKmPay = 0;
+    let totalParkingCost = 0;
+    user.shifts.forEach(shift => {
+        let {commuteHours, kmDriving, parkingCost} = shift.commuteCost;
+
+        totalCommutePay += commuteHours * hourCommutePay;
+        totalKmPay += kmDriving * kmPay;
+        totalParkingCost += parkingCost;
+    });
+
+    return totalCommutePay + totalKmPay + totalParkingCost + user.shifts.length * user.transportation;
+};
+
 function createUserAdditionalInfo(user, settings) {
     if (!user || !user.shifts)
         return user;
@@ -245,7 +262,7 @@ function createUserAdditionalInfo(user, settings) {
     });
 
     info.shiftsCount = user.shifts.length;
-    info.overallTransportation = user.shifts.length * user.transportation;
+    info.overallTransportation = calcOverallTransportation(user, settings);
 
     // Rounding results
     info.overallHours = (info.regularHours + info.extra125Hours * 1.25 + info.extra150Hours * 1.5 + info.extra175Hours * 1.75 + info.extra200Hours * 2).toFixed(2);
