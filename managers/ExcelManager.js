@@ -2,7 +2,7 @@ const {FeatureName, isFeatureEnable} = require("./FeaturesManager");
 
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
-var Excel = require('exceljs');
+const Excel = require('exceljs');
 
 const createTitleDate = function (year, month) {
     return moment().year(year).month(month-1).format('MM-YYYY');
@@ -46,7 +46,7 @@ const addSummarySheet = (workbook, company, shifts) => {
 };
 
 let createSummaryContent = function (worksheet, shifts, settings) {
-    if (!shifts || shifts.length == 0)
+    if (!shifts || shifts.length === 0)
         return;
 
     let employees = ShiftAnalyzer.createEmployeeShiftsReports(shifts, settings);
