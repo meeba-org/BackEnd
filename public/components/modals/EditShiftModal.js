@@ -31,29 +31,26 @@ class EditShiftModal extends Component {
                     margin="normal"
                     onChange={() => {}}
                 >
-                    {entity.note}
+                    {!!entity ? entity.note  : ""}
                 </TextField>
 
                 <TextField
                     label="שעות נסיעה"
                     margin="normal"
                     onChange={() => {}}
-                >
-                </TextField>
+                 />
 
                 <TextField
                     label='כמות ק"מ'
                     margin="normal"
                     onChange={() => {}}
-                >
-                </TextField>
+                 />
 
                 <TextField
                     label="עלות חניה"
                     margin="normal"
                     onChange={() => {}}
-                >
-                </TextField>
+                 />
 
 
                 <DialogActions>

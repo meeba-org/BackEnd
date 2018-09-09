@@ -22,6 +22,18 @@ const muiTheme = createMuiTheme({
             root: {
                 height: "100%"
             }
+        },
+        MuiInputLabel: {
+            root: {
+                transformOrigin: "top right"
+            },
+            shrink: {
+                transformOrigin: "top right"
+            },
+            formControl: {
+                left: "initial",
+                right:0
+            }
         }
     },
     palette: {

@@ -112,8 +112,7 @@ class MonthlyReport extends React.PureComponent {
     };
 
     onEditShift = (shift) => {
-        let value = moment(this.state.startDayOfMonth, "MM-YYYY");
-        this.props.onEditShift(shift, value.format('MM'), value.format('YYYY'));
+        this.props.onEditShift(shift);
     };
 
     render() {
@@ -175,7 +174,7 @@ class MonthlyReport extends React.PureComponent {
                                         />
                                     </Fade>)
                                 )}
-                                {(!fields || (fields.length == 0)) &&
+                                {(!fields || (fields.length === 0)) &&
                                 <NoData text="לא נמצאו משמרות"/>
                                 }
                     </div>

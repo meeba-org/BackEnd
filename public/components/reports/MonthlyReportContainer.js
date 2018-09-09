@@ -89,7 +89,7 @@ function mapDispatchToProps(dispatch) {
         updateShift: (shift, month, year, input) => dispatch(updateShift(shift, dispatch, input, true, month, year)),
         createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
-        editShift: (shift, month, year) => dispatch(showEditShiftModal(shift, dispatch, month, year)),
+        editShift: (shift) => dispatch(showEditShiftModal(shift, dispatch)),
     };
 }
 

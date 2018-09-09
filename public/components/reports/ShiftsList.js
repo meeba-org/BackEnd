@@ -45,7 +45,7 @@ class ShiftsList extends React.PureComponent {
                             />
                     </Fade>)
                 )}
-                {shouldDisplayNoData && (!fields || (fields.length == 0)) &&
+                {shouldDisplayNoData && (!fields || (fields.length === 0)) &&
                 <NoData text="לא נמצאו משמרות"/>
                 }
             </div>
