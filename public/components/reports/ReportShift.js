@@ -57,10 +57,10 @@ const ReportShift = (props) => {
             <Note text={shift.note} />
             {hover &&
             <div>
-                <Tooltip title="עריכה" placement="left">
+                <Tooltip title="עריכה" placement="top">
                     <IconButton className={styles["elem"]} onClick={() => onEdit()}><Edit/></IconButton>
                 </Tooltip>
-                <Tooltip title="מחיקה" placement="left">
+                <Tooltip title="מחיקה" placement="top">
                     <IconButton className={styles["elem"]} onClick={() => onDelete()}><Delete/></IconButton>
                 </Tooltip>
             </div>
