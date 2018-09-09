@@ -1,4 +1,4 @@
-import {FeatureName, isFeatureEnable} from "./FeaturesManager";
+const {FeatureName, isFeatureEnable} = require("./FeaturesManager");
 
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');

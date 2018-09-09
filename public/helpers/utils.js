@@ -93,4 +93,4 @@ export const prepareHourToDisplay = (hoursStr) => {
     let minuteStr = zeroFill(Math.floor(hoursFloat % 1 * 60), 2);
 
     return `${hourStr}:${minuteStr}`;
-}
+};
