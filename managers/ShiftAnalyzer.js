@@ -230,6 +230,9 @@ let calcOverallTransportation = function (user, settings) {
     let totalKmPay = 0;
     let totalParkingCost = 0;
     user.shifts.forEach(shift => {
+        if (!shift.commuteCost)
+            return;
+
         let {commuteHours, kmDriving, parkingCost} = shift.commuteCost;
 
         totalCommutePay += commuteHours * hourCommutePay;

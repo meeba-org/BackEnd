@@ -88,6 +88,10 @@ function createShiftsPerEmployeeColumns(sheet, company) {
     setHeaderColor(sheet);
 }
 
+function shouldAddCommuteData(company, shift) {
+    return isFeatureEnable(company, FeatureName.CommuteModule) && !!shift.commuteCost;
+}
+
 let createShiftsPerEmployeeContent = function (worksheet, shifts, company) {
     if (!shifts || shifts.length === 0)
         return;
@@ -105,7 +109,7 @@ let createShiftsPerEmployeeContent = function (worksheet, shifts, company) {
                     clockOutTime: calcClockOutTime(shift),
                 };
 
-                if (isFeatureEnable(company, FeatureName.CommuteModule)) {
+                if (shouldAddCommuteData(company, shift)) {
                     row = {
                         ...row,
                         commuteHours: shift.commuteCost.commuteHours,

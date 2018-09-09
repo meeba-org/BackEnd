@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {momentToDay} from "../../helpers/utils";
 import styles from "../../styles/ReportShift.scss";
 import Delete from '@material-ui/icons/Delete';
+import Edit from '@material-ui/icons/Edit';
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import DatePicker from "material-ui-pickers/DatePicker";
@@ -11,7 +12,7 @@ import Note from "./Note";
 import Warning from "./Warning";
 
 const ReportShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete} = props;
+    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, onEdit} = props;
     let hebrewDay = momentToDay(shift.clockInTime);
 
     return (
@@ -56,7 +57,10 @@ const ReportShift = (props) => {
             <Note text={shift.note} />
             {hover &&
             <div>
-                <Tooltip title="מחיקת משמרת" placement="left">
+                <Tooltip title="עריכה" placement="left">
+                    <IconButton className={styles["elem"]} onClick={() => onEdit()}><Edit/></IconButton>
+                </Tooltip>
+                <Tooltip title="מחיקה" placement="left">
                     <IconButton className={styles["elem"]} onClick={() => onDelete()}><Delete/></IconButton>
                 </Tooltip>
             </div>
@@ -74,6 +78,7 @@ ReportShift.propTypes = {
     onUpdateStartTime: PropTypes.func.isRequired,
     onUpdateEndTime: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
 };
 ReportShift.defaultProps = {};
 

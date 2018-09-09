@@ -15,6 +15,16 @@ export const hideDeleteEntityModal = () => ({
     }
 });
 
+export const hideEditShiftModal = () => ({
+    type: 'HIDE_MODAL',
+    payload : {
+        modalType: 'EDIT_SHIFT',
+        modalProps: {
+            open: false
+        }
+    }
+});
+
 export const ErrorAction = (err) => ({
     type: Error,
     err

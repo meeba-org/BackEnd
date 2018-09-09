@@ -1,11 +1,13 @@
 import React from "react";
 import DeleteModal from './DeleteModal';
+import EditShiftModal from './EditShiftModal';
 import {connect} from "react-redux";
 import PropTypes from 'prop-types';
 import MovingShiftOutOfMonthModal from "./MovingShiftOutOfMonthModal";
 
 const MODAL_COMPONENTS = {
     "DELETE_ENTITY": DeleteModal,
+    "EDIT_SHIFT": EditShiftModal,
     "MOVING_SHIFT_OUT_OF_MONTH": MovingShiftOutOfMonthModal,
 };
 

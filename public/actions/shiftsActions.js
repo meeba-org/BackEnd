@@ -148,6 +148,19 @@ export const showDeleteShiftModal = (shift, dispatch, month, year) => ({
     }
 });
 
+export const showEditShiftModal = (shift, dispatch, month, year) => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: 'EDIT_SHIFT',
+        modalProps: {
+            entity: shift,
+            month,
+            year,
+            updateShift,
+            open: true
+        }
+    }
+});
 
 export const deleteShift = (shift, dispatch, month, year) => ({
     type: actions.API,

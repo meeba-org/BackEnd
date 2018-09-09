@@ -23,6 +23,11 @@ class ShiftsList extends React.PureComponent {
         this.props.onDelete(entityToDelete);
     }
 
+    onEdit(fields, index) {
+        let entityToEdit = fields.get(index);
+        this.props.onEdit(entityToEdit);
+    }
+
     render() {
         let {fields, showNames, mode, shouldDisplayNoData} = this.props;
         return (
@@ -33,6 +38,7 @@ class ShiftsList extends React.PureComponent {
                                 component={ShiftContainer}
                                 name={shiftName} key={index}
                                 onDelete={() => this.onDelete(fields, index)}
+                                onEdit={() => this.onEdit(fields, index)}
                                 onUpdate={(shift, input) => this.onUpdate(shift, input)}
                                 showNames={showNames}
                                 mode={mode}
@@ -52,6 +58,7 @@ ShiftsList.propTypes = {
     onCreate: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
     shouldDisplayNoData: PropTypes.bool,
     mode: PropTypes.number.isRequired,

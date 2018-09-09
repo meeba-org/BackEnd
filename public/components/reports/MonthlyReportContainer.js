@@ -4,7 +4,7 @@ import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
-import {createShift, showDeleteShiftModal, updateShift} from "../../actions/shiftsActions";
+import {createShift, showDeleteShiftModal, showEditShiftModal, updateShift} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
 import * as selectors from "../../selectors";
 import {fetchMonthlyReport, generateExcelReport} from "../../actions/reportsActions";
@@ -34,13 +34,15 @@ class MonthlyReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, updateShift, createShift, deleteShift, employees, userRole} = this.props;
+        // TODO chen editShift or updateShift?!?!
+        const {handleSubmit, updateShift, editShift, createShift, deleteShift, employees, userRole} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="employeeShiftsReports"
                             component={MonthlyReport}
                             employees={employees}
                             onDeleteShift={deleteShift}
+                            onEditShift={editShift}
                             onUpdateShift={updateShift}
                             onCreateShift={createShift}
                             onDataChange={this.onDataChange}
@@ -63,6 +65,7 @@ MonthlyReportContainer.propTypes = {
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
+    editShift: PropTypes.func.isRequired,
     userRole: PropTypes.string,
 };
 
@@ -86,6 +89,7 @@ function mapDispatchToProps(dispatch) {
         updateShift: (shift, month, year, input) => dispatch(updateShift(shift, dispatch, input, true, month, year)),
         createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
+        editShift: (shift, month, year) => dispatch(showEditShiftModal(shift, dispatch, month, year)),
     };
 }
 

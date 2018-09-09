@@ -13,7 +13,7 @@
         "start-server": "gulp develop",
         "predev": "npm-run-all --parallel start-message",
         "start": "node server.js",
-        "dev": "npm-run-all --parallel open:src lint:watch ",
+        "dev": "npm-run-all --parallel open:src lint:watch start-server",
         "open:src": "babel-node tools/srcServer.js",
         "open:dist": "babel-node tools/distServer.js",
         "lint": "eslint --fix webpack.config.* public tools --color",
