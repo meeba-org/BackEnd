@@ -8,14 +8,52 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import {hideEditShiftModal} from "../../actions/index";
 import PropTypes from 'prop-types';
 
+const moment = require("moment");
+
 class EditShiftModal extends Component {
 
-    handleSave = () => {
-        let {dispatch, editShift, entity, month, year} = this.props;
+    constructor(props) {
+        super(props);
+    }
 
-        dispatch(editShift(entity, dispatch, month, year));
+    componentWillReceiveProps(nextProps, prevState) {
+        const {entity} = this.nextProps;
+        if (!!entity) {
+            if (!!entity.commuteCost) {
+                this.setState({
+                    commuteHours: entity.commuteHours,
+                    kmDriving: entity.kmDriving,
+                    parkingCost: entity.parkingCost
+                });
+            }
+
+            this.setState({note: entity.note});
+        }
+    };
+
+    handleSave = () => {
+        let {dispatch, updateShift, entity} = this.props;
+        const {note, commuteHours, kmDriving, parkingCost} = this.state;
+
+        let updatedShift = {
+            ...entity,
+            note,
+            commuteCost: {
+                commuteHours,
+                kmDriving,
+                parkingCost
+            }
+        };
+
+        let month = moment(entity.clockInDate).format('MM');
+        let year = moment(entity.clockInDate).format('YYYY');
+        dispatch(updateShift(updatedShift, dispatch, month, year));
         dispatch(hideEditShiftModal());
     };
+
+    handleChange = (event) => {
+        this.setState({[event.target.id]: event.target.value});
+    }
 
     handleCancel = () => {
         this.props.dispatch(hideEditShiftModal());
@@ -23,13 +61,15 @@ class EditShiftModal extends Component {
 
     render() {
         let {open, entity} = this.props;
+
         return (
             <Dialog onClose={this.handleCancel} open={open}>
                 <DialogTitle>{"עריכת משמרת"}</DialogTitle>
                 <TextField
                     label="הערות"
+                    id="note"
                     margin="normal"
-                    onChange={() => {}}
+                    onChange={this.handleChange}
                 >
                     {!!entity ? entity.note  : ""}
                 </TextField>
@@ -37,24 +77,27 @@ class EditShiftModal extends Component {
                 <TextField
                     label="שעות נסיעה"
                     margin="normal"
-                    onChange={() => {}}
+                    id="commuteHours"
+                    onChange={this.handleChange}
                  />
 
                 <TextField
                     label='כמות ק"מ'
                     margin="normal"
-                    onChange={() => {}}
+                    id="kmDriving"
+                    onChange={this.handleChange}
                  />
 
                 <TextField
                     label="עלות חניה"
                     margin="normal"
-                    onChange={() => {}}
+                    id="parkingCost"
+                    onChange={this.handleChange}
                  />
 
 
                 <DialogActions>
-                    <Button variant="raised" onClick={() => this.handleSave()} color="primary" autoFocus>
+                    <Button variant="raised" onClick={this.handleSave} color="primary" autoFocus>
                         שמירה
                     </Button>
                     <Button onClick={this.handleCancel} color="secondary">
