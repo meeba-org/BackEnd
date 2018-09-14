@@ -66,9 +66,9 @@ class DailyReport extends React.PureComponent {
         this.props.onCreateShift(shift);
     };
 
-    onUpdateShift = (shift, input) => {
+    onUpdateShift = (shift) => {
         let value = moment(this.state.currentDay, DATE_FORMAT);
-        this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'), input);
+        this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
     hasEmployees = (employees) => {

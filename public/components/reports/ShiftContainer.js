@@ -50,20 +50,21 @@ class ShiftContainer extends React.PureComponent {
             clockOutTime: momentEnd,
         };
 
-        onUpdate(shift, input);
+        input.onChange(shift);
+        onUpdate(shift);
     }
 
     onDelete = () => {
         let {onDelete, input} = this.props;
 
         onDelete(input.value);
-    }
+    };
 
     onEdit = () => {
         let {onEdit, input} = this.props;
 
-        onEdit(input.value);
-    }
+        onEdit(input.value, (editedShift) => input.onChange(editedShift));
+    };
 
     onShiftComplete = () => {
         let {startDateStr, startTimeStr} = convertMomentToTimeStr(this.props.input.value);
