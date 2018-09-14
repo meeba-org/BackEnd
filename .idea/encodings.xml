@@ -59,6 +59,7 @@
     <file url="file://$PROJECT_DIR$/public/components/modals/DeleteModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/ModalRoot.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/MovingShiftOutOfMonthModal.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/CommuteCost.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/DailyReportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/HoursSummary.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/MonthlyReportContainer.js" charset="UTF-8" />
@@ -87,6 +88,7 @@
     <file url="file://$PROJECT_DIR$/public/store/configureStore.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/App.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/AppBar.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/styles/CommuteCost.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/DailyReport.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Dashboard.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/EmployeeFeatureContent.scss" charset="UTF-8" />
