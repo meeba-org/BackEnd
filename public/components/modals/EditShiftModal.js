@@ -5,10 +5,22 @@ import Dialog from "@material-ui/core/Dialog";
 import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
 import {hideEditShiftModal} from "../../actions/index";
 import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const moment = require("moment");
+
+const styles = {
+    dialogActionsRoot: {
+        justifyContent: "center"
+    },
+    dialogContentRoot: {
+        display: "flex",
+        flexDirection: "column"
+    }
+};
 
 class EditShiftModal extends Component {
 
@@ -75,7 +87,7 @@ class EditShiftModal extends Component {
     };
 
     render() {
-        let {open} = this.props;
+        let {open, classes} = this.props;
         let {entity} = this.state;
         let note = "", commuteHours = "", kmDriving = "", parkingCost = "";
         if (entity) {
@@ -91,43 +103,45 @@ class EditShiftModal extends Component {
         return (
             <Dialog onClose={this.handleCancel} open={open}>
                 <DialogTitle>{"עריכת משמרת"}</DialogTitle>
-                <TextField
-                    label="הערות"
-                    id="note"
-                    margin="normal"
-                    onChange={this.handleNoteChange}
-                    value={note}
-                />
+                <DialogContent classes={{root: classes.dialogContentRoot}}>
+                    <TextField
+                        label="הערות"
+                        id="note"
+                        margin="normal"
+                        onChange={this.handleNoteChange}
+                        value={note}
+                    />
 
-                <TextField
-                    label="שעות נסיעה"
-                    margin="normal"
-                    id="commuteHours"
-                    onChange={this.handleCommuteCostChange}
-                    value={commuteHours}
-                 />
+                    <TextField
+                        label="שעות נסיעה"
+                        margin="normal"
+                        id="commuteHours"
+                        onChange={this.handleCommuteCostChange}
+                        value={commuteHours}
+                    />
 
-                <TextField
-                    label='כמות ק"מ'
-                    margin="normal"
-                    id="kmDriving"
-                    onChange={this.handleCommuteCostChange}
-                    value={kmDriving}
-                 />
+                    <TextField
+                        label='כמות ק"מ'
+                        margin="normal"
+                        id="kmDriving"
+                        onChange={this.handleCommuteCostChange}
+                        value={kmDriving}
+                    />
 
-                <TextField
-                    label="עלות חניה"
-                    margin="normal"
-                    id="parkingCost"
-                    onChange={this.handleCommuteCostChange}
-                    value={parkingCost}
-                 />
+                    <TextField
+                        label="עלות חניה"
+                        margin="normal"
+                        id="parkingCost"
+                        onChange={this.handleCommuteCostChange}
+                        value={parkingCost}
+                    />
 
-                <DialogActions>
-                    <Button variant="raised" onClick={this.handleClose} autoFocus>
-                        סגור
-                    </Button>
-                </DialogActions>
+                    <DialogActions classes={{root: classes.dialogActionsRoot}}>
+                        <Button variant="raised" onClick={this.handleClose} autoFocus>
+                            סגור
+                        </Button>
+                    </DialogActions>
+                </DialogContent>
             </Dialog>
         );
     }
@@ -142,4 +156,4 @@ EditShiftModal.propTypes = {
     year: PropTypes.string,
 };
 
-export default connect()(EditShiftModal);
+export default connect()(withStyles(styles)(EditShiftModal));
