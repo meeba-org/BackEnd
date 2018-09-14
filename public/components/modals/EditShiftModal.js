@@ -28,7 +28,7 @@ class EditShiftModal extends Component {
     };
 
     handleNoteChange = (event) => {
-        let {dispatch, entity} = this.props;
+        const {entity} = this.state;
 
         let updatedShift = {
             ...entity,
@@ -39,13 +39,13 @@ class EditShiftModal extends Component {
             entity: updatedShift
         });
 
-        this.updateShift(entity, dispatch, updatedShift);
+        this.updateShift(entity, updatedShift);
     };
 
     handleCommuteCostChange = (event) => {
         let key = event.target.id;
         let value = event.target.value;
-        let {dispatch, entity} = this.props;
+        const {entity} = this.state;
 
         let updatedShift = {
             ...entity,
@@ -59,13 +59,13 @@ class EditShiftModal extends Component {
             entity: updatedShift
         });
 
-        this.updateShift(entity, dispatch, updatedShift);
+        this.updateShift(entity, updatedShift);
     };
 
-    updateShift(entity, dispatch, updatedShift) {
+    updateShift = (entity, updatedShift) => {
         let month = moment(entity.clockInDate).format('MM');
         let year = moment(entity.clockInDate).format('YYYY');
-        let {updateShift} = this.props;
+        let {updateShift, dispatch} = this.props;
 
         dispatch(updateShift(updatedShift, dispatch, false, month, year));
     }

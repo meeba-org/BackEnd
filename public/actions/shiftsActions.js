@@ -106,10 +106,10 @@ export const updateShift = (shift, dispatch, shouldFetchMonthlyReport, month, ye
         };
     }
 
-    return updateShift0(shift, dispatch, shouldFetchMonthlyReport, month, year);
+    return updateShift0(dispatch, shift, shouldFetchMonthlyReport, month, year);
 };
 
-export const updateShift0 = (shift, dispatch, shouldFetchMonthlyReport, month, year) => {
+export const updateShift0 = (dispatch, shift, shouldFetchMonthlyReport, month, year) => {
 
     return {
         type: actions.API,
