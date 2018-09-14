@@ -14,45 +14,60 @@ class EditShiftModal extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            entity: props.entity
+        };
     }
 
-    componentWillReceiveProps(nextProps, prevState) {
-        const {entity} = this.nextProps;
-        if (!!entity) {
-            if (!!entity.commuteCost) {
-                this.setState({
-                    commuteHours: entity.commuteHours,
-                    kmDriving: entity.kmDriving,
-                    parkingCost: entity.parkingCost
-                });
-            }
+    handleClose = () => {
+        let {dispatch, callBack} = this.props;
+        callBack(this.state.entity);
 
-            this.setState({note: entity.note});
-        }
-    };
-
-    handleSave = () => {
-        let {dispatch, updateShift, entity} = this.props;
-        const {note, commuteHours, kmDriving, parkingCost} = this.state;
-
-        let updatedShift = {
-            ...entity,
-            note,
-            commuteCost: {
-                commuteHours,
-                kmDriving,
-                parkingCost
-            }
-        };
-
-        let month = moment(entity.clockInDate).format('MM');
-        let year = moment(entity.clockInDate).format('YYYY');
-        dispatch(updateShift(updatedShift, dispatch, month, year));
         dispatch(hideEditShiftModal());
     };
 
-    handleChange = (event) => {
-        this.setState({[event.target.id]: event.target.value});
+    handleNoteChange = (event) => {
+        let {dispatch, entity} = this.props;
+
+        let updatedShift = {
+            ...entity,
+            note: event.target.value,
+        };
+
+        this.setState({
+            entity: updatedShift
+        });
+
+        this.updateShift(entity, dispatch, updatedShift);
+    };
+
+    handleCommuteCostChange = (event) => {
+        let key = event.target.id;
+        let value = event.target.value;
+        let {dispatch, entity} = this.props;
+
+        let updatedShift = {
+            ...entity,
+            commuteCost: {
+                ...entity.commuteCost,
+                [key]: value
+            }
+        };
+
+        this.setState({
+            entity: updatedShift
+        });
+
+        this.updateShift(entity, dispatch, updatedShift);
+    };
+
+    updateShift(entity, dispatch, updatedShift) {
+        let month = moment(entity.clockInDate).format('MM');
+        let year = moment(entity.clockInDate).format('YYYY');
+        let {updateShift} = this.props;
+
+        dispatch(updateShift(updatedShift, dispatch, false, month, year));
     }
 
     handleCancel = () => {
@@ -60,7 +75,18 @@ class EditShiftModal extends Component {
     };
 
     render() {
-        let {open, entity} = this.props;
+        let {open} = this.props;
+        let {entity} = this.state;
+        let note = "", commuteHours = "", kmDriving = "", parkingCost = "";
+        if (entity) {
+            note = entity.note;
+
+            if (entity.commuteCost) {
+                commuteHours = entity.commuteCost.commuteHours;
+                kmDriving = entity.commuteCost.kmDriving;
+                parkingCost = entity.commuteCost.parkingCost;
+            }
+        }
 
         return (
             <Dialog onClose={this.handleCancel} open={open}>
@@ -69,39 +95,37 @@ class EditShiftModal extends Component {
                     label="הערות"
                     id="note"
                     margin="normal"
-                    onChange={this.handleChange}
-                >
-                    {!!entity ? entity.note  : ""}
-                </TextField>
+                    onChange={this.handleNoteChange}
+                    value={note}
+                />
 
                 <TextField
                     label="שעות נסיעה"
                     margin="normal"
                     id="commuteHours"
-                    onChange={this.handleChange}
+                    onChange={this.handleCommuteCostChange}
+                    value={commuteHours}
                  />
 
                 <TextField
                     label='כמות ק"מ'
                     margin="normal"
                     id="kmDriving"
-                    onChange={this.handleChange}
+                    onChange={this.handleCommuteCostChange}
+                    value={kmDriving}
                  />
 
                 <TextField
                     label="עלות חניה"
                     margin="normal"
                     id="parkingCost"
-                    onChange={this.handleChange}
+                    onChange={this.handleCommuteCostChange}
+                    value={parkingCost}
                  />
 
-
                 <DialogActions>
-                    <Button variant="raised" onClick={this.handleSave} color="primary" autoFocus>
-                        שמירה
-                    </Button>
-                    <Button onClick={this.handleCancel} color="secondary">
-                        ביטול
+                    <Button variant="raised" onClick={this.handleClose} autoFocus>
+                        סגור
                     </Button>
                 </DialogActions>
             </Dialog>

@@ -14,8 +14,8 @@ class ShiftsList extends React.PureComponent {
         this.props.onCreate(newEntity);
     }
 
-    onUpdate(entity, input) {
-        this.props.onUpdate(entity, input);
+    onUpdate(entity) {
+        this.props.onUpdate(entity);
     }
 
     onDelete(fields, index) {
@@ -23,9 +23,8 @@ class ShiftsList extends React.PureComponent {
         this.props.onDelete(entityToDelete);
     }
 
-    onEdit(fields, index) {
-        let entityToEdit = fields.get(index);
-        this.props.onEdit(entityToEdit);
+    onEdit(entity, callBack) {
+        this.props.onEdit(entity, callBack);
     }
 
     render() {
@@ -38,8 +37,8 @@ class ShiftsList extends React.PureComponent {
                                 component={ShiftContainer}
                                 name={shiftName} key={index}
                                 onDelete={() => this.onDelete(fields, index)}
-                                onEdit={() => this.onEdit(fields, index)}
-                                onUpdate={(shift, input) => this.onUpdate(shift, input)}
+                                onEdit={(shift, callBack) => this.onEdit(shift, callBack)}
+                                onUpdate={(shift) => this.onUpdate(shift)}
                                 showNames={showNames}
                                 mode={mode}
                             />

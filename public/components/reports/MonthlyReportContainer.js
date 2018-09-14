@@ -34,7 +34,6 @@ class MonthlyReportContainer extends React.PureComponent {
     }
 
     render() {
-        // TODO chen editShift or updateShift?!?!
         const {handleSubmit, updateShift, editShift, createShift, deleteShift, employees, userRole} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
@@ -86,10 +85,10 @@ function mapDispatchToProps(dispatch) {
         fetchMonthlyReport: (month, year) => dispatch(fetchMonthlyReport(month, year)),
         fetchEmployees: () => dispatch(fetchUsers(true)),
         generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
-        updateShift: (shift, month, year, input) => dispatch(updateShift(shift, dispatch, input, true, month, year)),
+        updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, true, month, year)),
         createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
-        editShift: (shift) => dispatch(showEditShiftModal(shift, dispatch)),
+        editShift: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
     };
 }
 
