@@ -111,12 +111,8 @@ class MonthlyReport extends React.PureComponent {
         this.props.onDeleteShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
-    onEditShift = (shift, callBack) => {
-        this.props.onEditShift(shift, callBack);
-    };
-
     render() {
-        const {fields, employees, userRole} = this.props;
+        const {fields, employees, userRole, openShiftDialog} = this.props;
         let startDayOfMonth = this.state.startDayOfMonth;
         const months = this.generateMonths();
 
@@ -168,7 +164,7 @@ class MonthlyReport extends React.PureComponent {
                                                key={index}
                                                onToggle={(name) => this.onToggle(name)}
                                                onDeleteShift={this.onDeleteShift}
-                                               onEditShift={this.onEditShift}
+                                               openShiftDialog={openShiftDialog}
                                                onUpdateShift={this.onUpdateShift}
                                                onCreateShift={this.onCreateShift}
                                         />
@@ -191,7 +187,7 @@ MonthlyReport.propTypes = {
     onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
-    onEditShift: PropTypes.func.isRequired,
+    openShiftDialog: PropTypes.func.isRequired,
     onStartDayOfMonthChange: PropTypes.func.isRequired,
     onGenerateExcel: PropTypes.func.isRequired,
     userRole: PropTypes.string,

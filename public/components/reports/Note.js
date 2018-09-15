@@ -2,6 +2,7 @@ import React from "react";
 import CommentIcon from '@material-ui/icons/Comment';
 import styles from "../../styles/Note.scss";
 import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from "@material-ui/core/IconButton";
 
 const Note = ({text, onClick}) => {
     if (!text)
@@ -10,7 +11,7 @@ const Note = ({text, onClick}) => {
     return (
         <div className={styles["note"]} onClick={onClick}>
             <Tooltip title={text} placement="top">
-                <CommentIcon className={styles["icon"]}/>
+                <IconButton className={styles["icon"]} onClick={onClick}><CommentIcon/></IconButton>
             </Tooltip>
         </div>
     );

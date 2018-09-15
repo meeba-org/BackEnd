@@ -34,14 +34,14 @@ class MonthlyReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, updateShift, editShift, createShift, deleteShift, employees, userRole} = this.props;
+        const {handleSubmit, updateShift, openShiftDialog, createShift, deleteShift, employees, userRole} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="employeeShiftsReports"
                             component={MonthlyReport}
                             employees={employees}
                             onDeleteShift={deleteShift}
-                            onEditShift={editShift}
+                            openShiftDialog={openShiftDialog}
                             onUpdateShift={updateShift}
                             onCreateShift={createShift}
                             onDataChange={this.onDataChange}
@@ -64,7 +64,7 @@ MonthlyReportContainer.propTypes = {
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
-    editShift: PropTypes.func.isRequired,
+    openShiftDialog: PropTypes.func.isRequired,
     userRole: PropTypes.string,
 };
 
@@ -88,7 +88,7 @@ function mapDispatchToProps(dispatch) {
         updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, true, month, year)),
         createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
-        editShift: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
+        openShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
     };
 }
 

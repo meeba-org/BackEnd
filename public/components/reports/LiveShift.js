@@ -5,14 +5,16 @@ import styles from "../../styles/LiveShift.scss";
 import Home from '@material-ui/icons/Home';
 import Work from '@material-ui/icons/Work';
 import Delete from '@material-ui/icons/Delete';
+import Edit from '@material-ui/icons/Edit';
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import TimePicker from "material-ui-pickers/TimePicker";
 import Note from "./Note";
 import Warning from "./Warning";
+import CommuteCost from "./CommuteCost";
 
 const LiveShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete} = props;
+    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete, openShiftDialog} = props;
     let icon = isWorking(shift) ?
         <Tooltip title="בעבודה" placement="right"><Work/></Tooltip> :
         <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
@@ -48,16 +50,21 @@ const LiveShift = (props) => {
                 </div>
             </div>
             <Warning warning={errors}/>
-            <Note text={shift.note} />
+            <Note text={shift.note} onClick={openShiftDialog}/>
+            <CommuteCost data={shift.commuteCost} onClick={openShiftDialog}/>
+
             {hover &&
             <div>
                 {isWorking(shift) &&
                 <Tooltip title="סיים משמרת" placement="left">
-                    <IconButton className={styles["elem"]} onClick={() => onShiftComplete()}><Home/></IconButton>
+                    <IconButton className={styles["elem"]} onClick={onShiftComplete}><Home/></IconButton>
                 </Tooltip>
                 }
-                <Tooltip title="מחיקת משמרת" placement="left">
-                    <IconButton className={styles["elem"]} onClick={() => onDelete()}><Delete/></IconButton>
+                <Tooltip title="עריכה" placement="left">
+                    <IconButton className={styles["elem"]} onClick={openShiftDialog}><Edit/></IconButton>
+                </Tooltip>
+                <Tooltip title="מחיקה" placement="left">
+                    <IconButton className={styles["elem"]} onClick={onDelete}><Delete/></IconButton>
                 </Tooltip>
             </div>
             }
@@ -74,6 +81,7 @@ LiveShift.propTypes = {
     onUpdateEndTime: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     onShiftComplete: PropTypes.func.isRequired,
+    openShiftDialog: PropTypes.func.isRequired,
 };
 LiveShift.defaultProps = {};
 

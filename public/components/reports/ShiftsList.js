@@ -23,12 +23,8 @@ class ShiftsList extends React.PureComponent {
         this.props.onDelete(entityToDelete);
     }
 
-    onEdit(entity, callBack) {
-        this.props.onEdit(entity, callBack);
-    }
-
     render() {
-        let {fields, showNames, mode, shouldDisplayNoData} = this.props;
+        let {fields, showNames, mode, shouldDisplayNoData, openShiftDialog} = this.props;
         return (
             <div styleName="shifts-list">
                 {fields && fields.map((shiftName, index) =>
@@ -37,7 +33,7 @@ class ShiftsList extends React.PureComponent {
                                 component={ShiftContainer}
                                 name={shiftName} key={index}
                                 onDelete={() => this.onDelete(fields, index)}
-                                onEdit={(shift, callBack) => this.onEdit(shift, callBack)}
+                                openShiftDialog={openShiftDialog}
                                 onUpdate={(shift) => this.onUpdate(shift)}
                                 showNames={showNames}
                                 mode={mode}
@@ -57,9 +53,10 @@ ShiftsList.propTypes = {
     onCreate: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
-    onEdit: PropTypes.func.isRequired,
+    openShiftDialog: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
     shouldDisplayNoData: PropTypes.bool,
     mode: PropTypes.number.isRequired,
 };
+
 export default CSSModules(ShiftsList, styles);

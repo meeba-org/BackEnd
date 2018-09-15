@@ -13,7 +13,7 @@ import CommuteCost from "./CommuteCost";
 import Warning from "./Warning";
 
 const ReportShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, onEdit} = props;
+    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, openShiftDialog} = props;
     let hebrewDay = momentToDay(shift.clockInTime);
 
     return (
@@ -55,12 +55,12 @@ const ReportShift = (props) => {
                 </div>
             </div>
             <Warning warning={errors}/>
-            <Note text={shift.note} onClick={onEdit}/>
-            <CommuteCost data={shift.commuteCost} onClick={onEdit}/>
+            <Note text={shift.note} onClick={openShiftDialog}/>
+            <CommuteCost data={shift.commuteCost} onClick={openShiftDialog}/>
             {hover &&
             <div>
                 <Tooltip title="עריכה" placement="top">
-                    <IconButton className={styles["elem"]} onClick={onEdit}><Edit/></IconButton>
+                    <IconButton className={styles["elem"]} onClick={openShiftDialog}><Edit/></IconButton>
                 </Tooltip>
                 <Tooltip title="מחיקה" placement="top">
                     <IconButton className={styles["elem"]} onClick={onDelete}><Delete/></IconButton>
@@ -80,7 +80,7 @@ ReportShift.propTypes = {
     onUpdateStartTime: PropTypes.func.isRequired,
     onUpdateEndTime: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
-    onEdit: PropTypes.func.isRequired,
+    openShiftDialog: PropTypes.func.isRequired,
 };
 ReportShift.defaultProps = {};
 

@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {createShift, updateShift} from "../../actions";
 import reduxForm from "redux-form/es/reduxForm";
 import PropTypes from 'prop-types';
-import {fetchDailyReport, showDeleteShiftModal} from "../../actions/shiftsActions";
+import {fetchDailyReport, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import DailyReport from "./DailyReport";
 import {fetchUsers} from "../../actions/usersActions";
 
@@ -18,7 +18,7 @@ class DailyReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, updateShift, createShift, deleteShift, shifts, employees, router, isLoading} = this.props;
+        const {handleSubmit, updateShift, createShift, deleteShift, openShiftDialog, shifts, employees, router, isLoading} = this.props;
 
         return (
             <form onSubmit={handleSubmit(() => {})}>
@@ -29,6 +29,7 @@ class DailyReportContainer extends React.PureComponent {
                     onDeleteShift={deleteShift}
                     onUpdateShift={updateShift}
                     onCreateShift={createShift}
+                    openShiftDialog={openShiftDialog}
                     onDayChange={(startDayOfMonth) => this.onDayChange(startDayOfMonth)}
                     router={router}
                     isLoading={isLoading}
@@ -48,6 +49,7 @@ DailyReportContainer.propTypes = {
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
+    openShiftDialog: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
 };
@@ -70,6 +72,7 @@ function mapDispatchToProps(dispatch) {
         updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, false, month, year)),
         createShift: (shift) => dispatch(createShift(shift, dispatch)),
         deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
+        openShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
     };
 }
 
