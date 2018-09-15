@@ -155,7 +155,8 @@ export const showEditShiftModal = (shift, callBack) => ({
             entity: shift,
             callBack,
             updateShift,
-            open: true
+            open: true,
+            key: shift._id
         }
     }
 });

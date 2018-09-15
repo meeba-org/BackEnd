@@ -63,7 +63,6 @@ class ShiftContainer extends React.PureComponent {
     openShiftDialog = () => {
         let {openShiftDialog, input} = this.props;
 
-        // TODO Chen same shift is sent every time... tired...
         openShiftDialog(input.value, (editedShift) => input.onChange(editedShift));
     };
 
