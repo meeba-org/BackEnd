@@ -118,6 +118,7 @@ class EditShiftModal extends Component {
                         id="commuteHours"
                         onChange={this.handleCommuteCostChange}
                         value={commuteHours}
+                        type="number"
                     />
 
                     <TextField
@@ -126,6 +127,7 @@ class EditShiftModal extends Component {
                         id="kmDriving"
                         onChange={this.handleCommuteCostChange}
                         value={kmDriving}
+                        type="number"
                     />
 
                     <TextField
@@ -134,6 +136,7 @@ class EditShiftModal extends Component {
                         id="parkingCost"
                         onChange={this.handleCommuteCostChange}
                         value={parkingCost}
+                        type="number"
                     />
 
                     <DialogActions classes={{root: classes.dialogActionsRoot}}>

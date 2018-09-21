@@ -5,7 +5,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from "@material-ui/core/IconButton";
 
 const isEmpty = (data) => {
-    return data.commuteHours === 0 && data.kmDriving === 0 && data.parkingCost === 0;
+    // TODO commuteHours may hold "0" which is false...   !"0"
+    return !data.commuteHours && !data.kmDriving && !data.parkingCost;
 };
 
 const CommuteCost = ({data, onClick}) => {

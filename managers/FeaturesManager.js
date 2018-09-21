@@ -3,7 +3,7 @@ const FeatureName = {
 }
 
 const isFeatureEnable = (company, featureName) => {
-    return company.features.contain(featureName);
+    return company.features.includes(featureName);
 };
 
 module.exports = {

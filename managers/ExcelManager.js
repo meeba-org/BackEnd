@@ -82,6 +82,7 @@ function createShiftsPerEmployeeColumns(sheet, company) {
             {header: 'שעות נסיעה', key: 'commuteHours', width: 10, style: {alignment: {horizontal: 'right'}}},
             {header: 'ק"מ', key: 'kmDriving', width: 10, style: {alignment: {horizontal: 'right'}}},
             {header: 'חניה', key: 'parkingCost', width: 10, style: {alignment: {horizontal: 'right'}}},
+            {header: 'נסיעות יומי', key: 'commuteCost', width: 10, style: {alignment: {horizontal: 'right'}}},
         ]);
     }
 
@@ -101,6 +102,9 @@ let createShiftsPerEmployeeContent = function (worksheet, shifts, company) {
     employees.forEach((employee) => {
         worksheet.addRow({employeeName: employee.firstName});
 
+        let kmPay = company.settings.kmPay;
+        let hourCommutePay = company.settings.hourCommutePay;
+
         if (employee.shifts && employee.shifts.length > 0) {
             employee.shifts.forEach((shift) => {
                 let row = {
@@ -115,6 +119,7 @@ let createShiftsPerEmployeeContent = function (worksheet, shifts, company) {
                         commuteHours: shift.commuteCost.commuteHours,
                         kmDriving: shift.commuteCost.kmDriving,
                         parkingCost: shift.commuteCost.parkingCost,
+                        commuteCost: shift.commuteCost.commuteHours * hourCommutePay + shift.commuteCost.kmDriving * kmPay + shift.commuteCost.parkingCost
                     }
                 }
 
