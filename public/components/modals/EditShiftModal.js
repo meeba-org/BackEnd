@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -9,6 +9,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import {hideEditShiftModal} from "../../actions/index";
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
+import {FeatureName} from "../../helpers/FeatureName";
+import * as selectors from "../../selectors";
 
 const moment = require("moment");
 
@@ -87,7 +89,7 @@ class EditShiftModal extends Component {
     };
 
     render() {
-        let {open, classes} = this.props;
+        let {open, classes, isCommuteFeatureEnable} = this.props;
         let {entity} = this.state;
         let note = "", commuteHours = "", kmDriving = "", parkingCost = "";
         if (entity) {
@@ -112,32 +114,36 @@ class EditShiftModal extends Component {
                         value={note}
                     />
 
-                    <TextField
-                        label="שעות נסיעה"
-                        margin="normal"
-                        id="commuteHours"
-                        onChange={this.handleCommuteCostChange}
-                        value={commuteHours}
-                        type="number"
-                    />
+                    {isCommuteFeatureEnable &&
+                    <Fragment>
+                        <TextField
+                            label="שעות נסיעה"
+                            margin="normal"
+                            id="commuteHours"
+                            onChange={this.handleCommuteCostChange}
+                            value={commuteHours}
+                            type="number"
+                        />
 
-                    <TextField
-                        label='כמות ק"מ'
-                        margin="normal"
-                        id="kmDriving"
-                        onChange={this.handleCommuteCostChange}
-                        value={kmDriving}
-                        type="number"
-                    />
+                        < TextField
+                            label='כמות ק"מ'
+                            margin="normal"
+                            id="kmDriving"
+                            onChange={this.handleCommuteCostChange}
+                            value={kmDriving}
+                            type="number"
+                        />
 
-                    <TextField
-                        label="עלות חניה"
-                        margin="normal"
-                        id="parkingCost"
-                        onChange={this.handleCommuteCostChange}
-                        value={parkingCost}
-                        type="number"
-                    />
+                        <TextField
+                            label="עלות חניה"
+                            margin="normal"
+                            id="parkingCost"
+                            onChange={this.handleCommuteCostChange}
+                            value={parkingCost}
+                            type="number"
+                        />
+                    </Fragment>
+                    }
 
                     <DialogActions classes={{root: classes.dialogActionsRoot}}>
                         <Button variant="raised" onClick={this.handleClose} autoFocus color="primary">
@@ -159,4 +165,9 @@ EditShiftModal.propTypes = {
     year: PropTypes.string,
 };
 
-export default connect()(withStyles(styles)(EditShiftModal));
+const mapStateToProps = (state) => {
+    return {
+        isCommuteFeatureEnable: selectors.isFeatureEnable(state, FeatureName.CommuteModule),
+    };
+}
+export default connect(mapStateToProps)(withStyles(styles)(EditShiftModal));

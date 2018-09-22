@@ -18,3 +18,8 @@ export const getMeta = (state) => {
 export const isDesktop = (state) => {
     return state.general.isDesktop;
 };
+
+export const isFeatureEnable = (state, feature) => {
+    let company = getCompany(state);
+    return (!company) ? false : company.features.includes(feature);
+};
