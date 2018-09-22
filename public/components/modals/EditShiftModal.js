@@ -63,7 +63,7 @@ class EditShiftModal extends Component {
             ...entity,
             commuteCost: {
                 ...entity.commuteCost,
-                [key]: value
+                [key]: value || 0
             }
         };
 
