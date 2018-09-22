@@ -19,6 +19,7 @@ const ShiftSchema = mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
     commuteCost: {
+        publicTransportation: {type: Number, default: 0, required: true},
         commuteHours: {type: Number, default: 0, required: true},
         kmDriving: {type: Number, default: 0, required: true},
         parkingCost: {type: Number, default: 0, required: true},

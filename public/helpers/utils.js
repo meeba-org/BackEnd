@@ -97,7 +97,8 @@ export const prepareHourToDisplay = (hoursStr) => {
 
 export const isCommuteCostEmpty = (commuteCost) => {
     return !commuteCost
-        || (isCommuteDataEmpty(commuteCost.commuteHours) &&
+        || (isCommuteDataEmpty(commuteCost.publicTransportation) &&
+            isCommuteDataEmpty(commuteCost.commuteHours) &&
             isCommuteDataEmpty(commuteCost.kmDriving) &&
             isCommuteDataEmpty(commuteCost.parkingCost));
 };

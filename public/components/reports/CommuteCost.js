@@ -13,6 +13,7 @@ const CommuteCost = ({data, onClick}) => {
         <div className={styles["note"]}>
             <Tooltip title={
                 <div>
+                    <div>תחבורה ציבורית: {data.publicTransportation}</div>
                     <div>שעות נסיעה: {data.commuteHours}</div>
                     <div>כמות ק"מ: {data.kmDriving}</div>
                     <div>עלות חניה: {data.parkingCost}</div>

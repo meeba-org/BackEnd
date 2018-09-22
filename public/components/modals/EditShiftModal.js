@@ -91,11 +91,12 @@ class EditShiftModal extends Component {
     render() {
         let {open, classes, isCommuteFeatureEnable} = this.props;
         let {entity} = this.state;
-        let note = "", commuteHours = "", kmDriving = "", parkingCost = "";
+        let note = "", publicTransportation = "", commuteHours = "", kmDriving = "", parkingCost = "";
         if (entity) {
             note = entity.note;
 
             if (entity.commuteCost) {
+                publicTransportation = entity.commuteCost.publicTransportation;
                 commuteHours = entity.commuteCost.commuteHours;
                 kmDriving = entity.commuteCost.kmDriving;
                 parkingCost = entity.commuteCost.parkingCost;
@@ -116,6 +117,15 @@ class EditShiftModal extends Component {
 
                     {isCommuteFeatureEnable &&
                     <Fragment>
+                        <TextField
+                            label="תחבורה ציבורית"
+                            margin="normal"
+                            id="publicTransportation"
+                            onChange={this.handleCommuteCostChange}
+                            value={publicTransportation}
+                            type="number"
+                        />
+
                         <TextField
                             label="שעות נסיעה"
                             margin="normal"
@@ -169,5 +179,5 @@ const mapStateToProps = (state) => {
     return {
         isCommuteFeatureEnable: selectors.isFeatureEnable(state, FeatureName.CommuteModule),
     };
-}
+};
 export default connect(mapStateToProps)(withStyles(styles)(EditShiftModal));

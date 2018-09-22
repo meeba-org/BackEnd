@@ -79,6 +79,7 @@ function createShiftsPerEmployeeColumns(sheet, company) {
 
     if (isFeatureEnable(company, FeatureName.CommuteModule)) {
         sheet.columns = sheet.columns.concat([
+            {header: 'תחבורה ציבורית', key: 'publicTransportation', width: 10, style: {alignment: {horizontal: 'right'}}},
             {header: 'שעות נסיעה', key: 'commuteHours', width: 10, style: {alignment: {horizontal: 'right'}}},
             {header: 'ק"מ', key: 'kmDriving', width: 10, style: {alignment: {horizontal: 'right'}}},
             {header: 'חניה', key: 'parkingCost', width: 10, style: {alignment: {horizontal: 'right'}}},
@@ -116,10 +117,14 @@ let createShiftsPerEmployeeContent = function (worksheet, shifts, company) {
                 if (shouldAddCommuteData(company, shift)) {
                     row = {
                         ...row,
+                        publicTransportation: shift.commuteCost.publicTransportation,
                         commuteHours: shift.commuteCost.commuteHours,
                         kmDriving: shift.commuteCost.kmDriving,
                         parkingCost: shift.commuteCost.parkingCost,
-                        commuteCost: shift.commuteCost.commuteHours * hourCommutePay + shift.commuteCost.kmDriving * kmPay + shift.commuteCost.parkingCost
+                        commuteCost: shift.commuteCost.publicTransportation +
+                                        shift.commuteCost.commuteHours * hourCommutePay +
+                                        shift.commuteCost.kmDriving * kmPay +
+                                        shift.commuteCost.parkingCost
                     }
                 }
 

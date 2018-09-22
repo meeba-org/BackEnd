@@ -226,6 +226,7 @@ function calcExtra50PercentHours(shiftLength, regularHoursInShift) {
 let calcOverallTransportation = function (user, settings) {
     let {kmPay, hourCommutePay} = settings;
 
+    let totalPublicTransportation = 0;
     let totalCommutePay = 0;
     let totalKmPay = 0;
     let totalParkingCost = 0;
@@ -233,14 +234,15 @@ let calcOverallTransportation = function (user, settings) {
         if (!shift.commuteCost)
             return;
 
-        let {commuteHours, kmDriving, parkingCost} = shift.commuteCost;
+        let {publicTransportation, commuteHours, kmDriving, parkingCost} = shift.commuteCost;
 
+        totalPublicTransportation += publicTransportation;
         totalCommutePay += commuteHours * hourCommutePay;
         totalKmPay += kmDriving * kmPay;
         totalParkingCost += parkingCost;
     });
 
-    return totalCommutePay + totalKmPay + totalParkingCost + user.shifts.length * user.transportation;
+    return totalPublicTransportation + totalCommutePay + totalKmPay + totalParkingCost + user.shifts.length * user.transportation;
 };
 
 function createUserAdditionalInfo(user, settings) {
