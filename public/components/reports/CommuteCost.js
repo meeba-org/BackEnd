@@ -3,14 +3,10 @@ import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import styles from "../../styles/CommuteCost.scss";
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from "@material-ui/core/IconButton";
-
-const isEmpty = (data) => {
-    // TODO commuteHours may hold "0" which is false...   !"0"
-    return !data.commuteHours && !data.kmDriving && !data.parkingCost;
-};
+import {isCommuteCostEmpty} from "../../helpers/utils";
 
 const CommuteCost = ({data, onClick}) => {
-    if (!data || isEmpty(data))
+    if (!data || isCommuteCostEmpty(data))
         return null;
 
     return (
