@@ -9,8 +9,9 @@ import IconButton from "@material-ui/core/IconButton";
 import DatePicker from "material-ui-pickers/DatePicker";
 import TimePicker from "material-ui-pickers/TimePicker";
 import Note from "./Note";
-import CommuteCost from "./CommuteCost";
+import CarCost from "./CarCost";
 import Warning from "./Warning";
+import BusCost from "./BusCost";
 
 const ReportShift = (props) => {
     let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, openShiftDialog} = props;
@@ -56,7 +57,8 @@ const ReportShift = (props) => {
             </div>
             <Warning warning={errors}/>
             <Note text={shift.note} onClick={openShiftDialog}/>
-            <CommuteCost data={shift.commuteCost} onClick={openShiftDialog}/>
+            <CarCost data={shift.commuteCost} onClick={openShiftDialog}/>
+            <BusCost data={shift.commuteCost} onClick={openShiftDialog}/>
             {hover &&
             <div>
                 <Tooltip title="עריכה" placement="top">

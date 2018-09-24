@@ -3,17 +3,16 @@ import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import styles from "../../styles/CommuteCost.scss";
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from "@material-ui/core/IconButton";
-import {isCommuteCostEmpty} from "../../helpers/utils";
+import {isCarCostEmpty} from "../../helpers/utils";
 
-const CommuteCost = ({data, onClick}) => {
-    if (!data || isCommuteCostEmpty(data))
+const CarCost = ({data, onClick}) => {
+    if (!data || isCarCostEmpty(data))
         return null;
 
     return (
         <div className={styles["note"]}>
             <Tooltip title={
                 <div>
-                    <div>תחבורה ציבורית: {data.publicTransportation}</div>
                     <div>שעות נסיעה: {data.commuteHours}</div>
                     <div>כמות ק"מ: {data.kmDriving}</div>
                     <div>עלות חניה: {data.parkingCost}</div>
@@ -26,4 +25,4 @@ const CommuteCost = ({data, onClick}) => {
     );
 };
 
-export default CommuteCost;
+export default CarCost;

@@ -11,6 +11,11 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {FeatureName} from "../../helpers/FeatureName";
 import * as selectors from "../../selectors";
+import CommentIcon from "@material-ui/icons/Comment";
+import CarIcon from "@material-ui/icons/DirectionsCar";
+import BusIcon from "@material-ui/icons/DirectionsBus";
+import EmptyIcon from "@material-ui/icons/HourglassEmpty";
+import Grid from "@material-ui/core/Grid";
 
 const moment = require("moment");
 
@@ -107,51 +112,90 @@ class EditShiftModal extends Component {
             <Dialog onClose={this.handleCancel} open={open}>
                 <DialogTitle>{"עריכת משמרת"}</DialogTitle>
                 <DialogContent classes={{root: classes.dialogContentRoot}}>
-                    <TextField
-                        label="הערות"
-                        id="note"
-                        margin="normal"
-                        onChange={this.handleNoteChange}
-                        value={note}
-                    />
+                    <Grid container spacing={8} alignItems="flex-end">
+                        <Grid item>
+                            <CommentIcon style={{color: "grey"}}/>
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                label="הערות"
+                                id="note"
+                                margin="normal"
+                                onChange={this.handleNoteChange}
+                                value={note}
+                            />
+                        </Grid>
+                    </Grid>
 
                     {isCommuteFeatureEnable &&
                     <Fragment>
-                        <TextField
-                            label="תחבורה ציבורית"
-                            margin="normal"
-                            id="publicTransportation"
-                            onChange={this.handleCommuteCostChange}
-                            value={publicTransportation}
-                            type="number"
-                        />
+                        <Grid container spacing={8} alignItems="flex-end">
+                            <Grid item>
+                                <BusIcon style={{color: "grey"}}/>
+                            </Grid>
+                            <Grid item>
 
-                        <TextField
-                            label="שעות נסיעה"
-                            margin="normal"
-                            id="commuteHours"
-                            onChange={this.handleCommuteCostChange}
-                            value={commuteHours}
-                            type="number"
-                        />
+                                <TextField
+                                    label="תחבורה ציבורית"
+                                    margin="normal"
+                                    id="publicTransportation"
+                                    onChange={this.handleCommuteCostChange}
+                                    value={publicTransportation}
+                                    type="number"
+                                />
+                            </Grid>
+                        </Grid>
 
-                        < TextField
-                            label='כמות ק"מ'
-                            margin="normal"
-                            id="kmDriving"
-                            onChange={this.handleCommuteCostChange}
-                            value={kmDriving}
-                            type="number"
-                        />
+                        <Grid container spacing={8} alignItems="flex-end">
+                            <Grid item>
+                                <CarIcon style={{color: "grey"}}/>
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    label="שעות נסיעה"
+                                    margin="normal"
+                                    id="commuteHours"
+                                    onChange={this.handleCommuteCostChange}
+                                    value={commuteHours}
+                                    type="number"
+                                />
 
-                        <TextField
-                            label="עלות חניה"
-                            margin="normal"
-                            id="parkingCost"
-                            onChange={this.handleCommuteCostChange}
-                            value={parkingCost}
-                            type="number"
-                        />
+                            </Grid>
+                        </Grid>
+
+                        <Grid container spacing={8} alignItems="flex-end">
+                            <Grid item>
+                                <EmptyIcon style={{color: "transparent"}}/>
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    label='כמות ק"מ'
+                                    margin="normal"
+                                    id="kmDriving"
+                                    onChange={this.handleCommuteCostChange}
+                                    value={kmDriving}
+                                    type="number"
+                                />
+                            </Grid>
+                        </Grid>
+
+                        <Grid container spacing={8} alignItems="flex-end">
+                            <Grid item>
+                                {/*TODO Empty Icon?!?*/}
+                                <EmptyIcon style={{color: "transparent"}}/>
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    label="עלות חניה"
+                                    margin="normal"
+                                    id="parkingCost"
+                                    onChange={this.handleCommuteCostChange}
+                                    value={parkingCost}
+                                    type="number"
+                                />
+                            </Grid>
+                        </Grid>
+
                     </Fragment>
                     }
 
