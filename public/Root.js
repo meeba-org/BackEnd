@@ -20,7 +20,10 @@ const muiTheme = createMuiTheme({
     overrides: {
         MuiIconButton: {
             root: {
-                height: "100%"
+                height: "100%",
+                width: "initial",
+                paddingRight: "10px",
+                paddingLeft: "10px",
             }
         },
         MuiInputLabel: {
