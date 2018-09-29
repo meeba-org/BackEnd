@@ -34,6 +34,11 @@ const muiTheme = createMuiTheme({
                 left: "initial",
                 right:0
             }
+        },
+        MuiTooltip: {
+            tooltip: {
+                fontSize: "15px"
+            }
         }
     },
     palette: {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import TextField from "@material-ui/core/TextField";
+import Tooltip from "@material-ui/core/Tooltip";
 import CSSModules from "react-css-modules";
 import styles from '../../styles/User.scss';
 import NoData from "../NoData";
@@ -64,16 +65,18 @@ class User extends Component {
                             value={user.fullName}
                             onChange={(e) => this.handleUserChange("fullName", e)}
                         />
-                        <TextField
-                            className={styles["long-field"]}
-                            label="דואר אלקטרוני"
-                            type="email"
-                            value={user.email}
-                            onChange={(e) => this.handleUserChange("email", e)}
-                            InputProps={{
-                                className: classes.input
-                            }}
-                        />
+                        <Tooltip title="אנחנו מכבדים את הפרטיות שלך - ובאופן כללי לא מאמינים במיילים! - תכלס זה פה כי אולי נעשה עם זה משהו בעתיד.">
+                            <TextField
+                                className={styles["long-field"]}
+                                label="דואר אלקטרוני"
+                                type="email"
+                                value={user.email}
+                                onChange={(e) => this.handleUserChange("email", e)}
+                                InputProps={{
+                                    className: classes.input
+                                }}
+                            />
+                        </Tooltip>
                     </div>
                     }
                     {!user &&
