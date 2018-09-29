@@ -144,7 +144,7 @@ class DailyReport extends React.PureComponent {
                                     placeholder="הכנס עובד למשמרת"
                                     suggestions={employees && employees.map(employee => ({
                                             ...employee,
-                                            label: employee.firstName
+                                            label: employee.fullName
                                         })
                                     )}
                                     onSelect={this.onClockIn}

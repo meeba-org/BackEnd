@@ -49,8 +49,8 @@ class Employee extends React.Component {
         return (
                 <Grid container spacing={24} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Grid item xs={6} sm={3}>
-                        <Input value={input.value.firstName} placeholder="שם"
-                               onChange={(e) => this.onUpdate(e, "firstName")}
+                        <Input value={input.value.fullName} placeholder="שם"
+                               onChange={(e) => this.onUpdate(e, "fullName")}
                                onBlur={this.onBlur}
                         />
                     </Grid>

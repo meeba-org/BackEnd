@@ -25,7 +25,7 @@ const LiveShift = (props) => {
             <div className={styles["name-container"]}>
                 <IconButton className={styles["icon"]}>{icon}</IconButton>
                 {showNames &&
-                <div className={styles["name"]}>{shift.user && shift.user.firstName}</div>
+                <div className={styles["name"]}>{shift.user && shift.user.fullName}</div>
                 }
             </div>
 

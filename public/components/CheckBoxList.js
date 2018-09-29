@@ -50,7 +50,7 @@ class CheckBoxList extends Component {
                             tabIndex={-1}
                             disableRipple
                         />
-                        <ListItemText primary={item.firstName} />
+                        <ListItemText primary={item.fullName} />
                     </ListItem>
                 ))}
             </List>

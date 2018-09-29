@@ -35,7 +35,7 @@ function restrictEmployee(req, res, next) {
 
     let user = res.locals.user;
     if (!user || UserModel.isEmployee(user)) {
-        let name = (!user || !user.firstName) ? "" : user.firstName;
+        let name = (!user || !user.fullName) ? "" : user.fullName;
         return res.status(403).send("user " + name + " is not authorise");
     }
 

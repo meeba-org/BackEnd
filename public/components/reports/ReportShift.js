@@ -21,7 +21,7 @@ const ReportShift = (props) => {
         <Fragment>
             <div className={styles["name-container"]}>
                 {showNames &&
-                <div className={styles["name"]}>{shift.user && shift.user.firstName}</div>
+                <div className={styles["name"]}>{shift.user && shift.user.fullName}</div>
                 }
             </div>
 

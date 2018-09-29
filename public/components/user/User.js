@@ -51,47 +51,29 @@ class User extends Component {
 
         return (
             <Fragment>
-                <CardHeader title="פרופיל משתמש"/>
+                <CardHeader title="פרטי מנהל"/>
 
                 <CardContent className={styles["card-content"]}>
 
                     {!!user &&
-                    <div>
-                        <div>
-                            <TextField
-                                id="firstName"
-                                label="פרטי"
-                                value={user.firstName}
-                                onChange={(e) => this.handleUserChange("firstName", e)}
-                            />
-                            <TextField
-                                id="lastName"
-                                label="משפחה"
-                                value={user.lastName}
-                                onChange={(e) => this.handleUserChange("lastName", e)}
-                            />
-                        </div>
-                        <div>
-                            <TextField
-                                className={styles["email"]}
-                                label="דואר אלקטרוני"
-                                type="email"
-                                value={user.email}
-                                onChange={(e) => this.handleUserChange("email", e)}
-                                InputProps={{
-                                    className: classes.input
-                                }}
-                            />
-                        </div>
-                        <div>
-                            <TextField
-                                id="uid"
-                                label="ת.ז."
-                                type="number"
-                                value={user.uid}
-                                onChange={(e) => this.handleUserChange("uid", e)}
-                            />
-                        </div>
+                    <div className={styles["user-container"]}>
+                        <TextField
+                            className={styles["long-field"]}
+                            id="fullName"
+                            label="שם מלא"
+                            value={user.fullName}
+                            onChange={(e) => this.handleUserChange("fullName", e)}
+                        />
+                        <TextField
+                            className={styles["long-field"]}
+                            label="דואר אלקטרוני"
+                            type="email"
+                            value={user.email}
+                            onChange={(e) => this.handleUserChange("email", e)}
+                            InputProps={{
+                                className: classes.input
+                            }}
+                        />
                     </div>
                     }
                     {!user &&

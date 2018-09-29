@@ -53,7 +53,7 @@ let createSummaryContent = function (worksheet, shifts, settings) {
 
     employees.forEach((employee) => {
         worksheet.addRow({
-            employeeName: employee.firstName,
+            employeeName: employee.fullName,
             regularHours: employee.regularHours,
             extra125Hours: employee.extra125Hours,
             extra150Hours: employee.extra150Hours,
@@ -101,7 +101,7 @@ let createShiftsPerEmployeeContent = function (worksheet, shifts, company) {
     let employees = ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
 
     employees.forEach((employee) => {
-        worksheet.addRow({employeeName: employee.firstName});
+        worksheet.addRow({employeeName: employee.fullName});
 
         let kmPay = company.settings.kmPay;
         let hourCommutePay = company.settings.hourCommutePay;

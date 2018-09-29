@@ -5,8 +5,7 @@ const ERoles = require("./ERoles");
 // User Schema
 const UserSchema = mongoose.Schema({
     uid: { type: String, index: true },
-    firstName: { type: String },
-    lastName: { type: String },
+    fullName: { type: String },
     username: { type: String },
     email: { type: String },
     password: { type: String },
