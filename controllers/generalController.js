@@ -22,7 +22,7 @@ router.post('/register',
         let password = req.body.password;
         let retypePassword = req.body.retypePassword;
 
-        if (password != retypePassword)
+        if (password !== retypePassword)
             return reject("סיסמאות אינן תואמות", 401);
 
         return UserModel.getByUserName(username)
