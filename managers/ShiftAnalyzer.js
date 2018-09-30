@@ -236,10 +236,10 @@ let calcOverallTransportation = function (user, settings) {
 
         let {publicTransportation, commuteHours, kmDriving, parkingCost} = shift.commuteCost;
 
-        totalPublicTransportation += publicTransportation;
-        totalCommutePay += commuteHours * hourCommutePay;
-        totalKmPay += kmDriving * kmPay;
-        totalParkingCost += parkingCost;
+        totalPublicTransportation += publicTransportation || 0;
+        totalCommutePay += (commuteHours || 0) * hourCommutePay;
+        totalKmPay += (kmDriving || 0) * kmPay;
+        totalParkingCost += parkingCost || 0;
     });
 
     return totalPublicTransportation + totalCommutePay + totalKmPay + totalParkingCost + user.shifts.length * user.transportation;
