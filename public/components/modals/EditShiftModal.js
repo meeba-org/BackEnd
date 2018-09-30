@@ -212,10 +212,12 @@ class EditShiftModal extends Component {
 
 EditShiftModal.propTypes = {
     entity: PropTypes.object,
+    classes: PropTypes.object,
     editShift: PropTypes.func,
     updateShift: PropTypes.func,
     dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
+    isCommuteFeatureEnable: PropTypes.bool,
     month: PropTypes.string,
     year: PropTypes.string,
     callBack: PropTypes.func,
