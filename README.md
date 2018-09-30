@@ -5,8 +5,6 @@
 3. Run `npm install` from the command line (from the source code directory, where `package.json` is located).
 4. Install [WebStorm](https://www.jetbrains.com/webstorm/download/).
 
-
-
 # BackEnd
 BackEnd application for meeba
 The IDE of choice is [WebStorm](https://www.jetbrains.com/webstorm/).
