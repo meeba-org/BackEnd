@@ -289,7 +289,7 @@ const createEmployeeShiftsReports = (shifts, settings) => {
 
 module.exports = {
     createEmployeeShiftsReports,
-    analyzeShiftHours: analyzeShiftHours,
+    analyzeShiftHours,
     REGULAR_SHIFT_LENGTH,
     SHIFT_125_OVERDUE_LENGTH,
 };
