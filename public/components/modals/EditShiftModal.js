@@ -217,6 +217,7 @@ EditShiftModal.propTypes = {
     open: PropTypes.bool.isRequired,
     month: PropTypes.string,
     year: PropTypes.string,
+    callBack: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
