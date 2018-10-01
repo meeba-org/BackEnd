@@ -14,6 +14,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Tooltip from "@material-ui/core/Tooltip";
+import Icon from "@material-ui/core/Icon";
 import Field from "redux-form/es/Field";
 import AddIcon from '@material-ui/icons/Add';
 import NoData from "../NoData";
@@ -39,7 +40,7 @@ class EmployeesList extends React.Component {
     }
 
     render() {
-        const {fields} = this.props;
+        const {fields, showMobileAppModal} = this.props;
         return (
             <Card>
                 <CardHeader title="עובדים"/>
@@ -50,6 +51,10 @@ class EmployeesList extends React.Component {
                         <Tooltip title="הוספת עובד" placement="top">
                             <Button className={styles["action-button"]} variant="raised" color="primary"
                                     onClick={this.onCreate}><AddIcon/></Button>
+                        </Tooltip>
+                        <Tooltip title="לינק לאפליקציית העובד" placement="top">
+                            <Button className={styles["action-button"]} variant="raised" color="primary"
+                                    onClick={() => showMobileAppModal()}><Icon>mobile_screen_share</Icon></Button>
                         </Tooltip>
                     </div>
                     <Divider className={styles["divider"]}/>
@@ -84,6 +89,7 @@ EmployeesList.propTypes = {
     onCreate: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    showMobileAppModal: PropTypes.func.isRequired,
 };
 
 export default CSSModules(EmployeesList, styles);

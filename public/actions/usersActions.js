@@ -109,6 +109,16 @@ export const showDeleteUserModal = (user) => ({
     }
 });
 
+export const showMobileAppModal = () => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: 'MOBILE_APP_LINKS',
+        modalProps: {
+            open: true
+        }
+    }
+});
+
 export const deleteUser = (user) => ({
     type: actions.API,
     payload: {

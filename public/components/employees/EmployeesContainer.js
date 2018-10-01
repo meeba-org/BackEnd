@@ -5,7 +5,7 @@ import EmployeesList from "./EmployeesList";
 import {createUser, fetchUsers, updateUser} from "../../actions";
 import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
-import {showDeleteUserModal} from "../../actions/usersActions";
+import {showDeleteUserModal, showMobileAppModal} from "../../actions/usersActions";
 
 class EmployeesContainer extends React.Component {
     componentDidMount() {
@@ -13,7 +13,7 @@ class EmployeesContainer extends React.Component {
     }
 
     render() {
-        const {handleSubmit, deleteUser, updateUser, createUser} = this.props;
+        const {handleSubmit, deleteUser, updateUser, createUser, showMobileAppModal} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray
@@ -21,7 +21,9 @@ class EmployeesContainer extends React.Component {
                     component={EmployeesList}
                     onDelete={deleteUser}
                     onUpdate={updateUser}
-                    onCreate={createUser}/>
+                    onCreate={createUser}
+                    showMobileAppModal={showMobileAppModal}
+                />
             </form>
         );
     }
@@ -58,6 +60,9 @@ function mapDispatchToProps(dispatch) {
         deleteUser: (employee) => {
             dispatch(showDeleteUserModal(employee));
         },
+        showMobileAppModal: () => {
+            dispatch(showMobileAppModal());
+        }
     };
 }
 

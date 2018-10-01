@@ -25,6 +25,16 @@ export const hideEditShiftModal = () => ({
     }
 });
 
+export const hideMobileAppModal = () => ({
+    type: 'HIDE_MODAL',
+    payload : {
+        modalType: 'MOBILE_APP_LINKS',
+        modalProps: {
+            open: false
+        }
+    }
+});
+
 export const ErrorAction = (err) => ({
     type: Error,
     err
