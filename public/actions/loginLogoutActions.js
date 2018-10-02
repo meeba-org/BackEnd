@@ -5,7 +5,10 @@ import SubmissionError from "redux-form/es/SubmissionError";
 import {isUserAllowedLogin} from "../helpers/utils";
 
 function handleLoginStart() {
-    return {type: actionsTypes.HANDLE_LOGIN_START};
+    // TODO add ga property
+    return {
+        type: actionsTypes.HANDLE_LOGIN_START
+    };
 }
 
 function handleLoginSuccess(response, router) {

@@ -3,10 +3,13 @@ const googleAnalyticsMiddleware = ({dispatch}) => next => action => {
         return next(action);
     }
 
-    let event = action.ga.event;
+    let gaCategory = action.ga.category;
+    let gaAction = action.ga.action;
+    let gaLabel = action.ga.label;
 
     // Call Google Analytics
-    // ga()
+    ga('send', 'event', gaCategory, gaAction, gaLabel);
+
     return next(action);
 };
 
