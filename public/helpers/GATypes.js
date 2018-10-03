@@ -4,5 +4,6 @@ export const GACategory = {
 
 export const GAAction = {
     LOGIN: "login",
-    REGISTER: "register"
+    REGISTER: "register",
+    DOWNLOAD_EXCEL: "download-excel"
 };
