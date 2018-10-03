@@ -14,7 +14,12 @@ const GAMiddleware = ({dispatch}) => next => action => {
 };
 
 const getUser = () => {
-    let activeUser = localStorage.getItem('activeUser');
+    let activeUserStr = localStorage.getItem('activeUser');
+    if (!activeUserStr)
+        return "UNKNOWN_USER";
+
+    let activeUser = JSON.parse(activeUserStr);
+
     if (!activeUser || !activeUser.username)
         return "UNKNOWN_USER";
 

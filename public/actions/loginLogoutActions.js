@@ -107,7 +107,7 @@ export function loadUserFromToken() {
                 throw new Error('user is not allowed to login');
 
             localStorage.setItem('jwtToken', response.data.token);
-            localStorage.setItem('activeUser', user);
+            localStorage.setItem('activeUser', JSON.stringify(user));
             dispatch(meFromTokenSuccess(user));
         }).catch(function () {
             localStorage.removeItem('jwtToken');//remove token from storage
