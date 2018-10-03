@@ -3,15 +3,15 @@ import * as actionsTypes from "./actionTypes";
 import config from "../config";
 import SubmissionError from "redux-form/es/SubmissionError";
 import {isUserAllowedLogin} from "../helpers/utils";
+import {GAAction, GACategory} from "../helpers/GATypes";
 
 function handleLoginStart() {
-    // TODO add ga property
     return {
         type: actionsTypes.HANDLE_LOGIN_START
     };
 }
 
-function handleLoginSuccess(response, router) {
+function handleLoginSuccess(response, router, isLoginMode) {
     let user = response.data.user;
     if (!!user && !isUserAllowedLogin(user))
         throw new Error('אין הרשאות מתאימות');
@@ -19,6 +19,15 @@ function handleLoginSuccess(response, router) {
     localStorage.setItem('jwtToken', response.data.token);
 
     router.push('/dashboard');
+
+    return {
+        type: actionsTypes.HANDLE_LOGIN_SUCCESS,
+        ga: {
+            category: GACategory.GENERAL,
+            action: isLoginMode? GAAction.LOGIN : GAAction.REGISTER,
+            label: user.username
+        }
+    };
 }
 
 export function handleLogin(values, router) {
@@ -27,7 +36,7 @@ export function handleLogin(values, router) {
 
         dispatch(handleLoginStart());
         return axios.post(`${config.ROOT_URL}/${route}`, values)
-            .then((response) => handleLoginSuccess(response, router))
+            .then((response) => dispatch(handleLoginSuccess(response, router, values.isLoginMode)))
             .catch((err) => {
                 let message = 'Unknown Error';
                 if (err) {

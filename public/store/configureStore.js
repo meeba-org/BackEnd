@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 import createDebounce from 'redux-debounced';
 import api from "../middlewares/api";
-import googleAnalyticsMiddleware from "../middlewares/googleAnalyticsMiddleware";
+import GAMiddleware from "../middlewares/GAMiddleware";
 
 function configureStoreProd(initialState) {
     const middlewares = [
@@ -15,7 +15,7 @@ function configureStoreProd(initialState) {
         createDebounce(),
         thunk,
         api,
-        googleAnalyticsMiddleware
+        GAMiddleware
     ];
 
     return createStore(rootReducer, initialState, compose(
@@ -36,7 +36,7 @@ function configureStoreDev(initialState) {
         createDebounce(),
         thunk,
         api,
-        googleAnalyticsMiddleware
+        GAMiddleware
     ];
 
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // add support for Redux dev tools
