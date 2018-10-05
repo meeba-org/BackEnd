@@ -1,6 +1,6 @@
 import * as FileSaver from "file-saver";
 import * as actions from "./actionTypes";
-import {GAAction, GACategory} from "../helpers/GATypes";
+import {GAAction} from "../helpers/GATypes";
 
 export const fetchMonthlyReportSuccess = (payload) => ({
     type: actions.FETCH_MONTHLY_REPORT_SUCCESS,
@@ -22,8 +22,7 @@ export const generateExcelReport = (month, year) => ({
         shouldAuthenticate: true,
     },
     ga: {
-        category: GACategory.GENERAL,
-        action: GAAction.DOWNLOAD_EXCEL,
+        actionType: GAAction.DOWNLOAD_EXCEL,
     }
 });
 

@@ -3,7 +3,8 @@ import * as actionsTypes from "./actionTypes";
 import config from "../config";
 import SubmissionError from "redux-form/es/SubmissionError";
 import {isUserAllowedLogin} from "../helpers/utils";
-import {GAAction, GACategory} from "../helpers/GATypes";
+import {GAAction} from "../helpers/GATypes";
+import {extractCompany, extractUser} from "../middlewares/GAMiddleware";
 
 function handleLoginStart() {
     return {
@@ -23,9 +24,9 @@ function handleLoginSuccess(response, router, isLoginMode) {
     return {
         type: actionsTypes.HANDLE_LOGIN_SUCCESS,
         ga: {
-            category: GACategory.GENERAL,
-            action: isLoginMode? GAAction.LOGIN : GAAction.REGISTER,
-            label: user.username
+            category: extractCompany(user),
+            action: extractUser(user),
+            actionType: isLoginMode? GAAction.LOGIN : GAAction.REGISTER,
         }
     };
 }
