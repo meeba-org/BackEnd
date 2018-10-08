@@ -25,6 +25,16 @@ export const hideEditShiftModal = () => ({
     }
 });
 
+export const hideEditEmployeeModal = () => ({
+    type: 'HIDE_MODAL',
+    payload : {
+        modalType: 'EDIT_EMPLOYEE',
+        modalProps: {
+            open: false
+        }
+    }
+});
+
 export const hideMobileAppModal = () => ({
     type: 'HIDE_MODAL',
     payload : {

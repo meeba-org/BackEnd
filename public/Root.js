@@ -13,7 +13,6 @@ import {create} from 'jss';
 import {createGenerateClassName, jssPreset} from '@material-ui/core/styles';
 
 const muiTheme = createMuiTheme({
-    direction: "rtl",
     typography: {
         fontFamily: '"Assistant", sans-serif'
     },
@@ -33,10 +32,10 @@ const muiTheme = createMuiTheme({
             shrink: {
                 transformOrigin: "top right"
             },
-            formControl: {
-                left: "initial",
-                right:0
-            }
+            // formControl: {
+            //     left: "initial",
+            //     right:0
+            // }
         },
         MuiTooltip: {
             tooltip: {

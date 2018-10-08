@@ -15,7 +15,7 @@ import CarCost from "./CarCost";
 import BusCost from "./BusCost";
 
 const LiveShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete, openShiftDialog} = props;
+    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete, showShiftDialog} = props;
     let icon = isWorking(shift) ?
         <Tooltip title="בעבודה" placement="right"><Work/></Tooltip> :
         <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
@@ -51,9 +51,9 @@ const LiveShift = (props) => {
                 </div>
             </div>
             <Warning warning={errors}/>
-            <Note text={shift.note} onClick={openShiftDialog}/>
-            <CarCost data={shift.commuteCost} onClick={openShiftDialog}/>
-            <BusCost data={shift.commuteCost} onClick={openShiftDialog}/>
+            <Note text={shift.note} onClick={showShiftDialog}/>
+            <CarCost data={shift.commuteCost} onClick={showShiftDialog}/>
+            <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
 
             {hover &&
             <div>
@@ -63,7 +63,7 @@ const LiveShift = (props) => {
                 </Tooltip>
                 }
                 <Tooltip title="עריכה" placement="left">
-                    <IconButton className={styles["elem"]} onClick={openShiftDialog}><Edit/></IconButton>
+                    <IconButton className={styles["elem"]} onClick={showShiftDialog}><Edit/></IconButton>
                 </Tooltip>
                 <Tooltip title="מחיקה" placement="left">
                     <IconButton className={styles["elem"]} onClick={onDelete}><Delete/></IconButton>
@@ -83,7 +83,7 @@ LiveShift.propTypes = {
     onUpdateEndTime: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     onShiftComplete: PropTypes.func.isRequired,
-    openShiftDialog: PropTypes.func.isRequired,
+    showShiftDialog: PropTypes.func.isRequired,
 };
 LiveShift.defaultProps = {};
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import EmployeesList from "./EmployeesList";
-import {createUser, fetchUsers, updateUser} from "../../actions";
+import {createUser, fetchUsers, showEditEmployeeModal, updateUser} from "../../actions";
 import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
 import {showDeleteUserModal, showMobileAppModal} from "../../actions/usersActions";
@@ -13,7 +13,7 @@ class EmployeesContainer extends React.Component {
     }
 
     render() {
-        const {handleSubmit, deleteUser, updateUser, createUser, showMobileAppModal} = this.props;
+        const {handleSubmit, deleteUser, updateUser, createUser, showMobileAppModal, showEmployeeDialog} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray
@@ -23,6 +23,7 @@ class EmployeesContainer extends React.Component {
                     onUpdate={updateUser}
                     onCreate={createUser}
                     showMobileAppModal={showMobileAppModal}
+                    showEmployeeDialog={showEmployeeDialog}
                 />
             </form>
         );
@@ -36,6 +37,8 @@ EmployeesContainer.propTypes = {
     createUser: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
     deleteUser: PropTypes.func.isRequired,
+    showMobileAppModal: PropTypes.func.isRequired,
+    showEmployeeDialog: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -62,7 +65,8 @@ function mapDispatchToProps(dispatch) {
         },
         showMobileAppModal: () => {
             dispatch(showMobileAppModal());
-        }
+        },
+        showEmployeeDialog: (employee, callBack) => dispatch(showEditEmployeeModal(employee, callBack)),
     };
 }
 

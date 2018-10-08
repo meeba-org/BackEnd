@@ -14,7 +14,7 @@ import Warning from "./Warning";
 import BusCost from "./BusCost";
 
 const ReportShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, openShiftDialog} = props;
+    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog} = props;
     let hebrewDay = momentToDay(shift.clockInTime);
 
     return (
@@ -56,13 +56,13 @@ const ReportShift = (props) => {
                 </div>
             </div>
             <Warning warning={errors}/>
-            <Note text={shift.note} onClick={openShiftDialog}/>
-            <CarCost data={shift.commuteCost} onClick={openShiftDialog}/>
-            <BusCost data={shift.commuteCost} onClick={openShiftDialog}/>
+            <Note text={shift.note} onClick={showShiftDialog}/>
+            <CarCost data={shift.commuteCost} onClick={showShiftDialog}/>
+            <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
             {hover &&
             <div>
                 <Tooltip title="עריכה" placement="top">
-                    <IconButton className={styles["elem"]} onClick={openShiftDialog}><Edit/></IconButton>
+                    <IconButton className={styles["elem"]} onClick={showShiftDialog}><Edit/></IconButton>
                 </Tooltip>
                 <Tooltip title="מחיקה" placement="top">
                     <IconButton className={styles["elem"]} onClick={onDelete}><Delete/></IconButton>
@@ -82,7 +82,7 @@ ReportShift.propTypes = {
     onUpdateStartTime: PropTypes.func.isRequired,
     onUpdateEndTime: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
-    openShiftDialog: PropTypes.func.isRequired,
+    showShiftDialog: PropTypes.func.isRequired,
 };
 ReportShift.defaultProps = {};
 

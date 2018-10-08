@@ -6,11 +6,21 @@ import Input from "@material-ui/core/Input";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from '@material-ui/icons/Delete';
 import withStyles from '@material-ui/core/styles/withStyles';
+import CSSModules from "react-css-modules";
+import scssStyles from "../../styles/Employees.scss";
+import Edit from "../../../node_modules/@material-ui/icons/Edit";
 
 const styles = {
     root: {
         display: "block"
     },
+    switchRoot: {
+        direction: "ltr"
+    },
+    switchChecked: {
+        transform: "translateX(20px)"
+    },
+
 };
 
 class Employee extends React.Component {
@@ -30,6 +40,18 @@ class Employee extends React.Component {
         input.onChange(employee);
     }
 
+    handleTransportPayPerChange(e) {
+        let {input, onUpdate} = this.props;
+
+        let employee = {
+            ...input.value,
+            transportPaymentPer: e.target.checked ? 1 : 0,
+        };
+
+        input.onChange(employee);
+        onUpdate(employee);
+    }
+
     onBlur = () => {
         let {input, onUpdate} = this.props;
 
@@ -45,10 +67,10 @@ class Employee extends React.Component {
     };
 
     render() {
-        let {input, onDelete, classes} = this.props;
+        let {input, onDelete, classes, showEmployeeDialog} = this.props;
         return (
                 <Grid container spacing={24} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                    <Grid item xs={6} sm={3}>
+                    <Grid item xs={6} sm={2}>
                         <Input value={input.value.fullName} placeholder="שם"
                                onChange={(e) => this.onUpdate(e, "fullName")}
                                onBlur={this.onBlur}
@@ -68,18 +90,25 @@ class Employee extends React.Component {
                                classes={{root: classes.root}}
                         />
                     </Grid>
-                    <Grid item xs={6} sm={1}>
+                    <Grid item xs={6} sm={2}>
                         <Input value={input.value.transportation} placeholder="נסיעות"
                                onChange={(e) => this.onUpdate(e, "transportation")}
                                onBlur={this.onBlur}
                                classes={{root: classes.root}}
                         />
+                        <div>
+                        </div>
                     </Grid>
                     <Grid item xs={2} sm={2}>
                         {this.state.hover &&
+                        <div>
+                            <Tooltip title="עריכה" placement="top">
+                                <IconButton className={styles["elem"]} onClick={showEmployeeDialog}><Edit/></IconButton>
+                            </Tooltip>
                             <Tooltip title="מחיקה" placement="top">
                                 <IconButton onClick={onDelete}><DeleteIcon/></IconButton>
                             </Tooltip>
+                        </div>
                         }
                     </Grid>
                 </Grid>
@@ -92,7 +121,8 @@ Employee.propTypes = {
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
+    showEmployeeDialog: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(Employee);
+export default withStyles(styles)(CSSModules(Employee, scssStyles));
 

@@ -24,6 +24,7 @@
     <file url="file://$PROJECT_DIR$/managers/ShiftAnalyzer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/CompanyModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/ERoles.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/models/ETransportPaymentPer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/FeatureModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/ShiftModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/UserModel.js" charset="UTF-8" />
@@ -96,6 +97,7 @@
     <file url="file://$PROJECT_DIR$/public/styles/DailyReport.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Dashboard.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/EmployeeFeatureContent.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/styles/Employees.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/EmployeesList.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Feature.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Features.scss" charset="UTF-8" />

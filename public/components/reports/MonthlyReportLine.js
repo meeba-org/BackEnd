@@ -27,7 +27,7 @@ class MonthlyReportLine extends React.PureComponent {
     };
 
     render() {
-        let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift, openShiftDialog} = this.props;
+        let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift, showShiftDialog} = this.props;
         let toggleButton = isCollapsed ?
             <Tooltip title="פרטי משמרות" placement="top"><KeyboardArrowLeft/></Tooltip> :
             <KeyboardArrowDown/>;
@@ -47,7 +47,7 @@ class MonthlyReportLine extends React.PureComponent {
                             name={`${input.name}.shifts`}
                             component={ShiftsList}
                             onDelete={onDeleteShift}
-                            openShiftDialog={openShiftDialog}
+                            showShiftDialog={showShiftDialog}
                             onUpdate={onUpdateShift}
                             onCreate={onCreateShift}
                             showNames={false}
@@ -66,7 +66,7 @@ MonthlyReportLine.propTypes = {
     onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
-    openShiftDialog: PropTypes.func.isRequired,
+    showShiftDialog: PropTypes.func.isRequired,
     onToggle: PropTypes.func.isRequired,
     isCollapsed: PropTypes.bool.isRequired,
 };

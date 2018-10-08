@@ -60,10 +60,10 @@ class ShiftContainer extends React.PureComponent {
         onDelete(input.value);
     };
 
-    openShiftDialog = () => {
-        let {openShiftDialog, input} = this.props;
+    showShiftDialog = () => {
+        let {showShiftDialog, input} = this.props;
 
-        openShiftDialog(input.value, (editedShift) => input.onChange(editedShift));
+        showShiftDialog(input.value, (editedShift) => input.onChange(editedShift));
     };
 
     onShiftComplete = () => {
@@ -122,7 +122,7 @@ class ShiftContainer extends React.PureComponent {
                         onUpdateEndTime={this.onUpdateEndTime}
                         onDelete={this.onDelete}
                         onShiftComplete={this.onShiftComplete}
-                        openShiftDialog={this.openShiftDialog}
+                        showShiftDialog={this.showShiftDialog}
                     />
                 }
                 {mode === ReportModes.Report &&
@@ -135,7 +135,7 @@ class ShiftContainer extends React.PureComponent {
                         onUpdateStartTime={this.onUpdateStartTime}
                         onUpdateEndTime={this.onUpdateEndTime}
                         onDelete={this.onDelete}
-                        openShiftDialog={this.openShiftDialog}
+                        showShiftDialog={this.showShiftDialog}
                     />
                 }
             </div>
@@ -146,7 +146,7 @@ class ShiftContainer extends React.PureComponent {
 ShiftContainer.propTypes = {
     input: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
-    openShiftDialog: PropTypes.func.isRequired,
+    showShiftDialog: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
     mode: PropTypes.number.isRequired,

@@ -18,7 +18,7 @@ class DailyReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, updateShift, createShift, deleteShift, openShiftDialog, shifts, employees, router, isLoading} = this.props;
+        const {handleSubmit, updateShift, createShift, deleteShift, showShiftDialog, shifts, employees, router, isLoading} = this.props;
 
         return (
             <form onSubmit={handleSubmit(() => {})}>
@@ -29,7 +29,7 @@ class DailyReportContainer extends React.PureComponent {
                     onDeleteShift={deleteShift}
                     onUpdateShift={updateShift}
                     onCreateShift={createShift}
-                    openShiftDialog={openShiftDialog}
+                    showShiftDialog={showShiftDialog}
                     onDayChange={(startDayOfMonth) => this.onDayChange(startDayOfMonth)}
                     router={router}
                     isLoading={isLoading}
@@ -49,7 +49,7 @@ DailyReportContainer.propTypes = {
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
-    openShiftDialog: PropTypes.func.isRequired,
+    showShiftDialog: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
 };
@@ -72,7 +72,7 @@ function mapDispatchToProps(dispatch) {
         updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, false, month, year)),
         createShift: (shift) => dispatch(createShift(shift, dispatch)),
         deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
-        openShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
+        showShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
     };
 }
 
