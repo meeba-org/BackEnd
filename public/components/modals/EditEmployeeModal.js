@@ -2,17 +2,15 @@ import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import TextField from "@material-ui/core/TextField";
+import Switch from "@material-ui/core/Switch";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import {hideEditShiftModal} from "../../actions/index";
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import CommentIcon from "@material-ui/icons/Comment";
 import Grid from "@material-ui/core/Grid";
-
-const moment = require("moment");
+import {hideEditEmployeeModal} from "../../actions";
+import TextField from "@material-ui/core/TextField";
 
 const styles = {
     dialogActionsRoot: {
@@ -36,56 +34,27 @@ class EditEmployeeModal extends Component {
 
     handleClose = () => {
         let {dispatch, callBack} = this.props;
-        callBack(this.state.entity);
+        if (callBack)
+            callBack(this.state.entity);
 
-        dispatch(hideEditShiftModal());
+        dispatch(hideEditEmployeeModal());
     };
 
-    handleNoteChange = (event) => {
+    updateEmployee = (event, fieldName) => {
         const {entity} = this.state;
 
-        let updatedShift = {
+        let updatedEmployee = {
             ...entity,
-            note: event.target.value,
+            [fieldName]: event.target.value,
         };
 
         this.setState({
-            entity: updatedShift
+            entity: updatedEmployee
         });
 
-        this.updateShift(entity, updatedShift);
-    };
+        let {updateUser, dispatch} = this.props;
 
-    handleCommuteCostChange = (event) => {
-        let key = event.target.id;
-        let value = event.target.value;
-        const {entity} = this.state;
-
-        let updatedShift = {
-            ...entity,
-            commuteCost: {
-                ...entity.commuteCost,
-                [key]: value || 0
-            }
-        };
-
-        this.setState({
-            entity: updatedShift
-        });
-
-        this.updateShift(entity, updatedShift);
-    };
-
-    updateShift = (entity, updatedShift) => {
-        let month = moment(entity.clockInDate).format('MM');
-        let year = moment(entity.clockInDate).format('YYYY');
-        let {updateShift, dispatch} = this.props;
-
-        dispatch(updateShift(updatedShift, dispatch, false, month, year));
-    }
-
-    handleCancel = () => {
-        this.props.dispatch(hideEditShiftModal());
+        dispatch(updateUser(updatedEmployee));
     };
 
     render() {
@@ -97,19 +66,22 @@ class EditEmployeeModal extends Component {
         }
 
         return (
-            <Dialog onClose={this.handleCancel} open={open}>
+            <Dialog onClose={this.handleClose} open={open}>
                 <DialogTitle>{"עריכת עובד"}</DialogTitle>
                 <DialogContent classes={{root: classes.dialogContentRoot}}>
                     <Grid container spacing={8} alignItems="flex-end">
                         <Grid item>
-                            <CommentIcon style={{color: "grey"}}/>
-                        </Grid>
-                        <Grid item>
                             <TextField
-                                label="נסיעות חודשי / יומי"
-                                id="transportPaymentPer"
-                                margin="normal"
-                                // onChange={this.handleNoteChange}
+                                id="transportation"
+                                label="נסיעות"
+                                placeholder="נסיעות"
+                                value={entity && entity.transportation}
+                                onChange={(e) => this.updateEmployee(e, "transportation")}
+                            />
+
+                            <Switch
+                                onChange={(e) => this.updateEmployee(e, "transportPaymentPer")}
+                                checked={entity && entity.transportPaymentPer}
                                 value={transportPaymentPer}
                             />
                         </Grid>
@@ -130,7 +102,7 @@ EditEmployeeModal.propTypes = {
     entity: PropTypes.object,
     classes: PropTypes.object,
     editShift: PropTypes.func,
-    updateShift: PropTypes.func,
+    updateUser: PropTypes.func,
     dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
     isCommuteFeatureEnable: PropTypes.bool,

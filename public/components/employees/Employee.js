@@ -40,18 +40,6 @@ class Employee extends React.Component {
         input.onChange(employee);
     }
 
-    handleTransportPayPerChange(e) {
-        let {input, onUpdate} = this.props;
-
-        let employee = {
-            ...input.value,
-            transportPaymentPer: e.target.checked ? 1 : 0,
-        };
-
-        input.onChange(employee);
-        onUpdate(employee);
-    }
-
     onBlur = () => {
         let {input, onUpdate} = this.props;
 
@@ -66,8 +54,14 @@ class Employee extends React.Component {
         this.setState({hover: false});
     };
 
+    showEmployeeDialog = () => {
+        let {showEmployeeDialog, input} = this.props;
+
+        showEmployeeDialog(input.value, (editedEmployee) => input.onChange(editedEmployee));
+    };
+
     render() {
-        let {input, onDelete, classes, showEmployeeDialog} = this.props;
+        let {input, onDelete, classes} = this.props;
         return (
                 <Grid container spacing={24} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Grid item xs={6} sm={2}>
@@ -96,14 +90,12 @@ class Employee extends React.Component {
                                onBlur={this.onBlur}
                                classes={{root: classes.root}}
                         />
-                        <div>
-                        </div>
                     </Grid>
                     <Grid item xs={2} sm={2}>
                         {this.state.hover &&
                         <div>
                             <Tooltip title="עריכה" placement="top">
-                                <IconButton className={styles["elem"]} onClick={showEmployeeDialog}><Edit/></IconButton>
+                                <IconButton className={styles["elem"]} onClick={this.showEmployeeDialog}><Edit/></IconButton>
                             </Tooltip>
                             <Tooltip title="מחיקה" placement="top">
                                 <IconButton onClick={onDelete}><DeleteIcon/></IconButton>
