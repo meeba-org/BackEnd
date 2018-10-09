@@ -40,6 +40,7 @@ class EditEmployeeModal extends Component {
         dispatch(hideEditEmployeeModal());
     };
 
+
     updateEmployee = (event, fieldName) => {
         const {entity} = this.state;
 
@@ -48,6 +49,21 @@ class EditEmployeeModal extends Component {
             [fieldName]: event.target.value,
         };
 
+        this.updateUser(updatedEmployee);
+    };
+
+    updateTransportPaymentPer = (event) => {
+        const {entity} = this.state;
+
+        let updatedEmployee = {
+            ...entity,
+            transportPaymentPer: event.target.checked ? 1 : 0,
+        };
+
+        this.updateUser(updatedEmployee);
+    };
+
+    updateUser(updatedEmployee) {
         this.setState({
             entity: updatedEmployee
         });
@@ -55,15 +71,11 @@ class EditEmployeeModal extends Component {
         let {updateUser, dispatch} = this.props;
 
         dispatch(updateUser(updatedEmployee));
-    };
+    }
 
     render() {
         let {open, classes} = this.props;
         let {entity} = this.state;
-        let transportPaymentPer;
-        if (entity) {
-            transportPaymentPer = entity.transportPaymentPer;
-        }
 
         return (
             <Dialog onClose={this.handleClose} open={open}>
@@ -80,9 +92,8 @@ class EditEmployeeModal extends Component {
                             />
 
                             <Switch
-                                onChange={(e) => this.updateEmployee(e, "transportPaymentPer")}
-                                checked={entity && entity.transportPaymentPer}
-                                value={transportPaymentPer}
+                                onChange={(e) => this.updateTransportPaymentPer(e)}
+                                checked={entity && entity.transportPaymentPer === 1}
                             />
                         </Grid>
                     </Grid>

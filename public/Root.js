@@ -41,6 +41,14 @@ const muiTheme = createMuiTheme({
             tooltip: {
                 fontSize: "15px"
             }
+        },
+        MuiSwitch: {
+            root: {
+                direction: "ltr"
+            },
+            checked: {
+                transform: "translateX(20px)"
+            }
         }
     },
     palette: {
