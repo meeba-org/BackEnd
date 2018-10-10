@@ -1,6 +1,7 @@
 const EDayType = require("../models/EDayType");
 const analyzeDayType = require("./HolidayAnalyzer").analyzeDayType;
 const moment = require('moment-timezone');
+const ETransportPaymentPer = require("../models/ETransportPaymentPer");
 moment.tz.setDefault("Asia/Jerusalem");
 
 const REGULAR_SHIFT_LENGTH = 9;
@@ -226,6 +227,9 @@ function calcExtra50PercentHours(shiftLength, regularHoursInShift) {
 let calcOverallTransportation = function (user, settings) {
     let {kmPay, hourCommutePay} = settings;
 
+    if (user.transportPaymentPer === ETransportPaymentPer.MONTHLY)
+        return user.transportation;
+
     let totalPublicTransportation = 0;
     let totalCommutePay = 0;
     let totalKmPay = 0;
@@ -267,6 +271,7 @@ function createUserAdditionalInfo(user, settings) {
     });
 
     info.shiftsCount = user.shifts.length;
+    info.transportation = user.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : user.transportation;
     info.overallTransportation = calcOverallTransportation(user, settings);
 
     // Rounding results
