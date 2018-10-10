@@ -2,7 +2,6 @@ import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import Switch from "@material-ui/core/Switch";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -11,10 +10,12 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from "@material-ui/core/Grid";
 import {hideEditEmployeeModal} from "../../actions";
 import TextField from "@material-ui/core/TextField";
+import MbSwitch from "../MbSwitch";
 
 const styles = {
     dialogActionsRoot: {
-        justifyContent: "center"
+        justifyContent: "center",
+        paddingTop: "20px"
     },
     dialogContentRoot: {
         display: "flex",
@@ -90,8 +91,10 @@ class EditEmployeeModal extends Component {
                                 value={entity && entity.transportation}
                                 onChange={(e) => this.updateEmployee(e, "transportation")}
                             />
-
-                            <Switch
+                        </Grid>
+                        <Grid item>
+                            <MbSwitch
+                                firstLabel="חודשי" secondLabel="למשמרת"
                                 onChange={(e) => this.updateTransportPaymentPer(e)}
                                 checked={entity && entity.transportPaymentPer === 1}
                             />
