@@ -60,7 +60,7 @@ class EmployeesList extends React.Component {
                     <Divider className={styles["divider"]}/>
                         {fields && fields.length > 0 &&
                     <Grid className={styles["header"]} container spacing={24}>
-                        <Grid item xs={6} sm={2} className={styles["header-item"]}>שם</Grid>
+                        <Grid item xs={6} sm={3}>שם</Grid>
                         <Grid item xs={6} sm={2} className={styles["header-item"]}>ת.ז.</Grid>
                         <Grid item xs={6} sm={1} className={styles["header-item"]}>שכר לשעה</Grid>
                         <Grid item xs={6} sm={2} className={styles["header-item"]}>נסיעות</Grid>
