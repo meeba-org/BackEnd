@@ -91,6 +91,12 @@ function createShiftsPerEmployeeColumns(sheet, company) {
         {header: 'יום', key: 'dayInWeek', width: 10, style: {alignment: {horizontal: 'right'}}},
         {header: 'שעת התחלה', key: 'clockInTime', width: 20, style: {alignment: {horizontal: 'right'}}},
         {header: 'שעת סיום', key: 'clockOutTime', width: 20, style: {alignment: {horizontal: 'right'}}},
+        {header: 'שעות', key: 'totalHours', width: 20, style: {alignment: {horizontal: 'right'}}},
+        {header: '100%', key: 'regularHours', width: 20, style: {alignment: {horizontal: 'right'}}},
+        {header: '125%', key: 'extra125Hours', width: 20, style: {alignment: {horizontal: 'right'}}},
+        {header: '150%', key: 'extra150Hours', width: 20, style: {alignment: {horizontal: 'right'}}},
+        {header: '175%', key: 'extra175Hours', width: 20, style: {alignment: {horizontal: 'right'}}},
+        {header: '200%', key: 'extra200Hours', width: 20, style: {alignment: {horizontal: 'right'}}},
     ];
 
     if (isFeatureEnable(company, FeatureName.CommuteModule)) {
@@ -150,10 +156,16 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
         }
 
         row = {
-            date: m.format("DD/MM/YYYY"),
-            dayInWeek: calcDayInWeek(shift),
+            ...row,
             clockInTime: calcClockInTime(shift),
             clockOutTime: calcClockOutTime(shift),
+            totalHours: 1111,
+            regularHours: employee.regularHours,
+            extra125Hours: employee.extra125Hours,
+            extra150Hours: employee.extra150Hours,
+            extra175Hours: employee.extra175Hours,
+            extra200Hours: employee.extra200Hours,
+
         };
 
         if (shouldAddCommuteData(company, shift)) {
@@ -216,11 +228,11 @@ const calcClockInDate = (shift) => {
     return moment(shift.clockInTime).format("DD/MM/YYYY");
 };
 
-const calcDayInWeek = (shift) => {
-    if (!shift || !shift.clockInTime)
+const calcDayInWeek = (m) => {
+    if (!m)
         return "-";
 
-    return moment(shift.clockInTime).format("dddd");
+    return moment(m).format("dddd");
 };
 
 const calcClockInTime = (shift) => {
