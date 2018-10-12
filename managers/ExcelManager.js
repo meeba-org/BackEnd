@@ -36,9 +36,7 @@ let setHeaderColor = function (sheet) {
     let headerRow = sheet.getRow(1);
 
     setRowBold(headerRow);
-    sheet.columns.map(column => {
-        headerRow.getCell(column.key).border = HeaderBorderStyle ;
-    });
+    markBorders(sheet, headerRow, HeaderBorderStyle);
 };
 
 let setRowBold = function (row) {
@@ -47,18 +45,18 @@ let setRowBold = function (row) {
 
 function createSummaryColumns(sheet, company) {
     sheet.columns = [
-        {header: 'שם עובד', key: 'employeeName', width: 30, style: {alignment: {horizontal: 'right'}}},
-        {header: '100% שעות', key: 'regularHours', width: 13, style: {alignment: {horizontal: 'right'}}},
-        {header: '125% שעות', key: 'extra125Hours', width: 13, style: {alignment: {horizontal: 'right'}}},
-        {header: '150% שעות', key: 'extra150Hours', width: 13, style: {alignment: {horizontal: 'right'}}},
-        {header: '175% שעות', key: 'extra175Hours', width: 13, style: {alignment: {horizontal: 'right'}}},
-        {header: '200% שעות', key: 'extra200Hours', width: 13, style: {alignment: {horizontal: 'right'}}},
-        {header: 'שכ"ע לשעה', key: 'hourWage', width: 13, style: {alignment: {horizontal: 'right'}}},
-        {header: 'סה"כ שעות', key: 'overallHours', width: 13, style: {alignment: {horizontal: 'right'}}},
-        {header: 'משמרות', key: 'shiftsCount', width: 13, style: {alignment: {horizontal: 'right'}}},
-        {header: 'נסיעות יומי', key: 'transportation', width: 13, style: {alignment: {horizontal: 'right'}}},
-        {header: 'סה"כ נסיעות', key: 'overallTransportation', width: 13, style: {alignment: {horizontal: 'right'}}},
-        {header: 'סה"כ שכר', key: 'overallSalary', width: 13, style: {alignment: {horizontal: 'right'}}},
+        {header: 'שם עובד', key: 'employeeName', width: 20, style: {alignment: {horizontal: 'right'}}},
+        {header: '100% שעות', key: 'regularHours', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: '125% שעות', key: 'extra125Hours', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: '150% שעות', key: 'extra150Hours', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: '175% שעות', key: 'extra175Hours', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: '200% שעות', key: 'extra200Hours', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שכ"ע לשעה', key: 'hourWage', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'סה"כ שעות', key: 'overallHours', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'משמרות', key: 'shiftsCount', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'נסיעות יומי', key: 'transportation', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'סה"כ נסיעות', key: 'overallTransportation', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'סה"כ שכר', key: 'overallSalary', width: 13, style: {alignment: {horizontal: 'center'}}},
     ];
 
     setSummaryHeaderColor(sheet, company);
@@ -72,10 +70,10 @@ const addSummarySheet = (workbook, company, employees) => {
     createSummaryContent(sheet, employees);
 };
 
-let createSummaryContent = function (worksheet, employees) {
+let createSummaryContent = function (sheet, employees) {
 
     employees.forEach((employee) => {
-        worksheet.addRow({
+        let addedRow = sheet.addRow({
             employeeName: employee.fullName,
             regularHours: employee.regularHours,
             extra125Hours: employee.extra125Hours,
@@ -89,6 +87,8 @@ let createSummaryContent = function (worksheet, employees) {
             overallTransportation: employee.overallTransportation,
             overallSalary: employee.overallSalary,
         });
+
+        markBorders(sheet, addedRow, RowBorderStyle);
     });
 };
 
@@ -230,6 +230,16 @@ let setHolidayName = function (addedRow, holidayName) {
     addedRow.getCell('comment').value = holidayName;
 };
 
+let markWarnings = function (addedRow) {
+    if (addedRow.getCell('clockOutTime').value === '-') {
+        addedRow.getCell('clockOutTime').fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: {argb: 'ffd199'}
+        };
+    }
+};
+
 function addDayRow(sheet, row, day) {
     let addedRow = sheet.addRow(row);
 
@@ -239,11 +249,15 @@ function addDayRow(sheet, row, day) {
         markRowAsHoliday(sheet, addedRow);
     }
 
-    sheet.columns.map(column => {
-        addedRow.getCell(column.key).border = RowBorderStyle;
-    });
+    markWarnings(addedRow);
+    markBorders(sheet, addedRow, RowBorderStyle);
 }
 
+const markBorders = (sheet, row, borderStyle) => {
+    sheet.columns.map(column => {
+        row.getCell(column.key).border = borderStyle;
+    });
+}
 
 function getShift(shifts, m) {
     for (const shift of shifts) {
