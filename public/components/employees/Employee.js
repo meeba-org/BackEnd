@@ -5,6 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from '@material-ui/icons/Delete';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CSSModules from "react-css-modules";
 import scssStyles from "../../styles/Employees.scss";
@@ -12,7 +13,7 @@ import Edit from "../../../node_modules/@material-ui/icons/Edit";
 
 const styles = {
     root: {
-        display: "block"
+        display: "flex"
     },
     switchRoot: {
         direction: "ltr"
@@ -89,6 +90,7 @@ class Employee extends React.Component {
                                onChange={(e) => this.onUpdate(e, "transportation")}
                                onBlur={this.onBlur}
                                classes={{root: classes.root}}
+                               endAdornment={<InputAdornment position="end">{input.value.transportPaymentPer === 0 ? "למשמרת" : "חודשי"}</InputAdornment>}
                         />
                     </Grid>
                     <Grid item xs={2} sm={2}>
