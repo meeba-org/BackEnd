@@ -3,6 +3,7 @@ const {FeatureName, isFeatureEnable} = require("./FeaturesManager");
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 const Excel = require('exceljs');
+const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
 const isHoliday = require("./HolidayAnalyzer").isHoliday;
 const RowBorderStyle = {
@@ -115,6 +116,10 @@ function createShiftsPerEmployeeColumns(sheet, company) {
         ]);
     }
 
+    sheet.columns = sheet.columns.concat([
+        {header: 'הערות', key: 'comment', width: 30, style: {alignment: {horizontal: 'right'}}},
+    ]);
+
     setEmployeeHeaderColor(sheet, company);
 }
 
@@ -157,7 +162,7 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
         let shift = getShift(employee.shifts, m);
 
         if (!shift) {
-            addShiftRow(sheet, row, m);
+            addDayRow(sheet, row, m);
             continue;
         }
 
@@ -178,7 +183,7 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
             row = addCommuteData(company, row, shift);
         }
 
-        addShiftRow(sheet, row, shift.clockInTime);
+        addDayRow(sheet, row, shift.clockInTime);
     }
 };
 
@@ -221,11 +226,18 @@ function markRowAsHoliday(sheet, addedRow) {
     });
 }
 
-function addShiftRow(sheet, row, shift) {
+let setHolidayName = function (addedRow, holidayName) {
+    addedRow.getCell('comment').value = holidayName;
+};
+
+function addDayRow(sheet, row, day) {
     let addedRow = sheet.addRow(row);
 
-    if (isHoliday(shift) || isHolidayEvening(shift))
+    if (isHoliday(day) || isHolidayEvening(day)) {
+        let holidayName = getHolidayName(day);
+        setHolidayName(addedRow, holidayName);
         markRowAsHoliday(sheet, addedRow);
+    }
 
     sheet.columns.map(column => {
         addedRow.getCell(column.key).border = RowBorderStyle;
