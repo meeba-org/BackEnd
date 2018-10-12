@@ -21,7 +21,7 @@ class MobileAppLinksModal extends Component {
         let {open} = this.props;
         return (
             <Dialog onClose={this.handleCancel} open={open}>
-                <DialogTitle>{"שלח לעובדים את הההודעה הבאה:"}</DialogTitle>
+                <DialogTitle>{"העתק הודעה זו ושלח לעובדים:"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         <div className={styles["header"]}>עובד יקר,</div>
