@@ -101,9 +101,9 @@ class MonthlyReport extends React.PureComponent {
         this.props.onCreateShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
-    onUpdateShift = (shift, input) => {
+    onUpdateShift = (shift) => {
         let value = moment(this.state.startDayOfMonth, "MM-YYYY");
-        this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'), input);
+        this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
     onDeleteShift = (shift) => {
@@ -112,7 +112,7 @@ class MonthlyReport extends React.PureComponent {
     };
 
     render() {
-        const {fields, employees, userRole} = this.props;
+        const {fields, employees, userRole, showShiftDialog} = this.props;
         let startDayOfMonth = this.state.startDayOfMonth;
         const months = this.generateMonths();
 
@@ -164,12 +164,13 @@ class MonthlyReport extends React.PureComponent {
                                                key={index}
                                                onToggle={(name) => this.onToggle(name)}
                                                onDeleteShift={this.onDeleteShift}
+                                               showShiftDialog={showShiftDialog}
                                                onUpdateShift={this.onUpdateShift}
                                                onCreateShift={this.onCreateShift}
                                         />
                                     </Fade>)
                                 )}
-                                {(!fields || (fields.length == 0)) &&
+                                {(!fields || (fields.length === 0)) &&
                                 <NoData text="לא נמצאו משמרות"/>
                                 }
                     </div>
@@ -186,6 +187,7 @@ MonthlyReport.propTypes = {
     onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
+    showShiftDialog: PropTypes.func.isRequired,
     onStartDayOfMonthChange: PropTypes.func.isRequired,
     onGenerateExcel: PropTypes.func.isRequired,
     userRole: PropTypes.string,

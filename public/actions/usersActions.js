@@ -67,6 +67,20 @@ export const fetchUser = (userId) => ({
     }
 });
 
+export const showEditEmployeeModal = (employee, callBack) => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: 'EDIT_EMPLOYEE',
+        modalProps: {
+            entity: employee,
+            callBack,
+            updateUser,
+            open: true,
+            key: employee._id
+        }
+    }
+});
+
 export const updateUser = (user) => ({
     type: actions.API,
     payload: {
@@ -104,6 +118,16 @@ export const showDeleteUserModal = (user) => ({
         modalProps: {
             entity: user,
             deleteEntity: deleteUser,
+            open: true
+        }
+    }
+});
+
+export const showMobileAppModal = () => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: 'MOBILE_APP_LINKS',
+        modalProps: {
             open: true
         }
     }

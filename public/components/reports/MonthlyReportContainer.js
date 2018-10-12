@@ -4,7 +4,7 @@ import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
 import MonthlyReport from "./MonthlyReport";
 import PropTypes from 'prop-types';
-import {createShift, showDeleteShiftModal, updateShift} from "../../actions/shiftsActions";
+import {createShift, showDeleteShiftModal, showEditShiftModal, updateShift} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
 import * as selectors from "../../selectors";
 import {fetchMonthlyReport, generateExcelReport} from "../../actions/reportsActions";
@@ -34,13 +34,14 @@ class MonthlyReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, updateShift, createShift, deleteShift, employees, userRole} = this.props;
+        const {handleSubmit, updateShift, showShiftDialog, createShift, deleteShift, employees, userRole} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="employeeShiftsReports"
                             component={MonthlyReport}
                             employees={employees}
                             onDeleteShift={deleteShift}
+                            showShiftDialog={showShiftDialog}
                             onUpdateShift={updateShift}
                             onCreateShift={createShift}
                             onDataChange={this.onDataChange}
@@ -63,6 +64,7 @@ MonthlyReportContainer.propTypes = {
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
+    showShiftDialog: PropTypes.func.isRequired,
     userRole: PropTypes.string,
 };
 
@@ -83,9 +85,10 @@ function mapDispatchToProps(dispatch) {
         fetchMonthlyReport: (month, year) => dispatch(fetchMonthlyReport(month, year)),
         fetchEmployees: () => dispatch(fetchUsers(true)),
         generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
-        updateShift: (shift, month, year, input) => dispatch(updateShift(shift, dispatch, input, true, month, year)),
+        updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, true, month, year)),
         createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
+        showShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
     };
 }
 

@@ -230,5 +230,96 @@ module.exports = [
         "date": "2017-12-20",
         "memo": "The Jewish festival of rededication, also known as the Festival of Lights",
         "hebrew": "חנוכה: יום ח׳"
-    }
+    },
+    {
+        "link": "https://www.hebcal.com/holidays/rosh-hashana",
+        "memo": "The Jewish New Year",
+        "hebrew": "ערב ראש השנה",
+        "category": "holiday",
+        "date": "2018-09-09",
+        "title": "Erev Rosh Hashana",
+        DayType: EDataType.HolidayEvening
+    },
+    {
+        "memo": "The Jewish New Year",
+        "yomtov": true,
+        "link": "https://www.hebcal.com/holidays/rosh-hashana",
+        "title": "Rosh Hashana 5779",
+        "date": "2018-09-10",
+        "category": "holiday",
+        "hebrew": "ראש השנה 5779",
+        DayType: EDataType.Holiday
+    },
+    {
+        "memo": "The Jewish New Year",
+        "date": "2018-09-11",
+        "title": "Rosh Hashana II",
+        "hebrew": "ראש השנה יום ב׳",
+        "yomtov": true,
+        "subcat": "major",
+        "link": "https://www.hebcal.com/holidays/rosh-hashana",
+        "category": "holiday",
+        DayType: EDataType.Holiday
+    },
+    {
+        "memo": "Day of Atonement",
+        "link": "https://www.hebcal.com/holidays/yom-kippur",
+        "category": "holiday",
+        "date": "2018-09-18",
+        "title": "Erev Yom Kippur",
+        "hebrew": "ערב יום כפור",
+        DayType: EDataType.HolidayEvening
+    },
+    {
+        "memo": "Day of Atonement",
+        "date": "2018-09-19",
+        "title": "Yom Kippur",
+        "hebrew": "יום כפור",
+        "yomtov": true,
+        "link": "https://www.hebcal.com/holidays/yom-kippur",
+        "subcat": "major",
+        "category": "holiday",
+        DayType: EDataType.Holiday
+    },
+    {
+        "memo": "Feast of Tabernacles",
+        "link": "https://www.hebcal.com/holidays/sukkot",
+        "date": "2018-09-23",
+        "category": "holiday",
+        "title": "Erev Sukkot",
+        "hebrew": "ערב סוכות",
+        DayType: EDataType.HolidayEvening
+    },
+    {
+        "category": "holiday",
+        "yomtov": true,
+        "subcat": "major",
+        "link": "https://www.hebcal.com/holidays/sukkot",
+        "title": "Sukkot I",
+        "date": "2018-09-24",
+        "hebrew": "סוכות יום א׳",
+        "memo": "Feast of Tabernacles",
+        DayType: EDataType.Holiday
+    },
+    {
+        "date": "2018-09-30",
+        "title": "Sukkot VII (Hoshana Raba)",
+        "category": "holiday",
+        "hebrew": "סוכות יום ז׳ (הושענא רבה)",
+        "memo": "Feast of Tabernacles",
+        "subcat": "major",
+        "link": "https://www.hebcal.com/holidays/sukkot",
+        DayType: EDataType.HolidayEvening
+    },
+    {
+        "title": "Shmini Atzeret",
+        "date": "2018-10-01",
+        "hebrew": "שמיני עצרת",
+        "memo": "Eighth Day of Assembly",
+        "category": "holiday",
+        "yomtov": true,
+        "link": "https://www.hebcal.com/holidays/shmini-atzeret",
+        "subcat": "major",
+        DayType: EDataType.Holiday
+    },
 ];

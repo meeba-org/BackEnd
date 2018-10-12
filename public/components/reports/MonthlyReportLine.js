@@ -27,7 +27,7 @@ class MonthlyReportLine extends React.PureComponent {
     };
 
     render() {
-        let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift} = this.props;
+        let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift, showShiftDialog} = this.props;
         let toggleButton = isCollapsed ?
             <Tooltip title="פרטי משמרות" placement="top"><KeyboardArrowLeft/></Tooltip> :
             <KeyboardArrowDown/>;
@@ -36,7 +36,7 @@ class MonthlyReportLine extends React.PureComponent {
             <div styleName="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div styleName="monthly-report-header" onClick={() => onToggle(input.value.uid)}>
                     <IconButton color="primary" >{toggleButton}</IconButton>
-                    <div styleName="name">{input.value.firstName} {input.value.lastName}</div>
+                    <div styleName="name">{input.value.fullName}</div>
                     <HoursBar {...input.value} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&
@@ -47,6 +47,7 @@ class MonthlyReportLine extends React.PureComponent {
                             name={`${input.name}.shifts`}
                             component={ShiftsList}
                             onDelete={onDeleteShift}
+                            showShiftDialog={showShiftDialog}
                             onUpdate={onUpdateShift}
                             onCreate={onCreateShift}
                             showNames={false}
@@ -65,6 +66,7 @@ MonthlyReportLine.propTypes = {
     onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
+    showShiftDialog: PropTypes.func.isRequired,
     onToggle: PropTypes.func.isRequired,
     isCollapsed: PropTypes.bool.isRequired,
 };

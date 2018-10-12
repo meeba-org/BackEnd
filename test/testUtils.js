@@ -73,8 +73,7 @@ function createMockedUserPlainObject(name = 'Chen') {
     return {
         uid: '031667330'
         , username: 'chenop'
-        , firstName: name
-        , lastName: 'Oppenhaim'
+        , fullName: name
         , email: 'chenop@gmail.com'
         , password: "123456"
         , role: "employee"

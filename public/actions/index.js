@@ -15,6 +15,36 @@ export const hideDeleteEntityModal = () => ({
     }
 });
 
+export const hideEditShiftModal = () => ({
+    type: 'HIDE_MODAL',
+    payload : {
+        modalType: 'EDIT_SHIFT',
+        modalProps: {
+            open: false
+        }
+    }
+});
+
+export const hideEditEmployeeModal = () => ({
+    type: 'HIDE_MODAL',
+    payload : {
+        modalType: 'EDIT_EMPLOYEE',
+        modalProps: {
+            open: false
+        }
+    }
+});
+
+export const hideMobileAppModal = () => ({
+    type: 'HIDE_MODAL',
+    payload : {
+        modalType: 'MOBILE_APP_LINKS',
+        modalProps: {
+            open: false
+        }
+    }
+});
+
 export const ErrorAction = (err) => ({
     type: Error,
     err

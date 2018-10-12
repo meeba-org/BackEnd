@@ -6,11 +6,12 @@ const moment = require('moment');
 const EDayType = require('../models/EDayType');
 
 const isListedHoliday = (date, dayType) => {
-    if (Object.keys(holidays).length === 0) {
-        initHolidays();
-    }
-
     return isHolidayExist(date, dayType);
+};
+
+const getHoliday = (date) => {
+    let dateStr = moment(date).format("YYYY-MM-DD");
+    return holidays[dateStr];
 };
 
 const isHolidayExist = (date, dayType) => {
@@ -42,6 +43,14 @@ const isHolidayEvening = (day) => {
     return momentDay.day() === FRIDAY || isListedHoliday(momentDay, EDayType.HolidayEvening);
 };
 
+const getHolidayName = (day) => {
+    let holiday = getHoliday(day);
+    if (!holiday)
+        return "";
+
+    return holiday.name;
+};
+
 const analyzeDayType = (momentDay) => {
     if (isHoliday(momentDay))
         return EDayType.Holiday;
@@ -51,9 +60,12 @@ const analyzeDayType = (momentDay) => {
         return EDayType.Regular;
 }
 
+initHolidays();
+
 module.exports = {
     analyzeDayType,
     isListedHoliday,
     isHoliday,
     isHolidayEvening,
+    getHolidayName,
 };

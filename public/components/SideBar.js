@@ -85,7 +85,7 @@ class SideBar extends React.Component {
                     icon: <PermContactCalendar/>
                 },
                 {
-                    text: "פרופיל משתמש",
+                    text: "הגדרות",
                     url: "/dashboard/user",
                     allowedRoles: [ERoles.COMPANY_MANAGER],
                     icon: <SettingsApplications/>

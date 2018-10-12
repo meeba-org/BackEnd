@@ -1,5 +1,6 @@
 const moment = require('moment');
 const mongoose = require('mongoose');
+const reject = require("../controllers/apiManager").reject;
 
 // Shift Schema
 const ShiftSchema = mongoose.Schema({
@@ -14,8 +15,15 @@ const ShiftSchema = mongoose.Schema({
     dayType: {
         type: Number
     },
+    note: { type: String },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }
+    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
+    commuteCost: {
+        publicTransportation: {type: Number, default: 0, required: true},
+        commuteHours: {type: Number, default: 0, required: true},
+        kmDriving: {type: Number, default: 0, required: true},
+        parkingCost: {type: Number, default: 0, required: true},
+    }
     //location
 });
 
@@ -39,6 +47,9 @@ const createShift = (shift) => {
 };
 
 const updateShift = (shift) => {
+    if (!shift._id)
+        return reject("[ShiftModel.updateShift] - no valid id");
+
     let newShift = createShiftInstance(shift);
     newShift._id = shift._id;
 

@@ -14,8 +14,8 @@ class ShiftsList extends React.PureComponent {
         this.props.onCreate(newEntity);
     }
 
-    onUpdate(entity, input) {
-        this.props.onUpdate(entity, input);
+    onUpdate(entity) {
+        this.props.onUpdate(entity);
     }
 
     onDelete(fields, index) {
@@ -24,7 +24,7 @@ class ShiftsList extends React.PureComponent {
     }
 
     render() {
-        let {fields, showNames, mode, shouldDisplayNoData} = this.props;
+        let {fields, showNames, mode, shouldDisplayNoData, showShiftDialog} = this.props;
         return (
             <div styleName="shifts-list">
                 {fields && fields.map((shiftName, index) =>
@@ -33,13 +33,14 @@ class ShiftsList extends React.PureComponent {
                                 component={ShiftContainer}
                                 name={shiftName} key={index}
                                 onDelete={() => this.onDelete(fields, index)}
-                                onUpdate={(shift, input) => this.onUpdate(shift, input)}
+                                showShiftDialog={showShiftDialog}
+                                onUpdate={(shift) => this.onUpdate(shift)}
                                 showNames={showNames}
                                 mode={mode}
                             />
                     </Fade>)
                 )}
-                {shouldDisplayNoData && (!fields || (fields.length == 0)) &&
+                {shouldDisplayNoData && (!fields || (fields.length === 0)) &&
                 <NoData text="לא נמצאו משמרות"/>
                 }
             </div>
@@ -52,8 +53,10 @@ ShiftsList.propTypes = {
     onCreate: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    showShiftDialog: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
     shouldDisplayNoData: PropTypes.bool,
     mode: PropTypes.number.isRequired,
 };
+
 export default CSSModules(ShiftsList, styles);

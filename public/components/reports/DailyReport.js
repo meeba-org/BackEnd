@@ -66,9 +66,9 @@ class DailyReport extends React.PureComponent {
         this.props.onCreateShift(shift);
     };
 
-    onUpdateShift = (shift, input) => {
+    onUpdateShift = (shift) => {
         let value = moment(this.state.currentDay, DATE_FORMAT);
-        this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'), input);
+        this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
     hasEmployees = (employees) => {
@@ -80,7 +80,7 @@ class DailyReport extends React.PureComponent {
     };
 
     render() {
-        const {onCreateShift, onDeleteShift, employees, mode, isLoading, classes} = this.props;
+        const {onCreateShift, onDeleteShift, showShiftDialog, employees, mode, isLoading, classes} = this.props;
         let {currentDay} = this.state;
         let {primary, secondary} = this.props.theme.palette.text;
 
@@ -120,6 +120,7 @@ class DailyReport extends React.PureComponent {
                                 onDelete={onDeleteShift}
                                 onUpdate={this.onUpdateShift}
                                 onCreate={onCreateShift}
+                                showShiftDialog={showShiftDialog}
                                 showNames={true}
                                 mode={mode}
                                 shouldDisplayNoData={true}
@@ -143,7 +144,7 @@ class DailyReport extends React.PureComponent {
                                     placeholder="הכנס עובד למשמרת"
                                     suggestions={employees && employees.map(employee => ({
                                             ...employee,
-                                            label: employee.firstName
+                                            label: employee.fullName
                                         })
                                     )}
                                     onSelect={this.onClockIn}
@@ -166,6 +167,7 @@ class DailyReport extends React.PureComponent {
                                 onDelete={onDeleteShift}
                                 onUpdate={this.onUpdateShift}
                                 onCreate={onCreateShift}
+                                showShiftDialog={showShiftDialog}
                                 showNames={true}
                                 mode={mode}
                                 shouldDisplayNoData={false}
@@ -186,6 +188,7 @@ DailyReport.propTypes = {
     onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
+    showShiftDialog: PropTypes.func.isRequired,
     onDayChange: PropTypes.func.isRequired,
     mode: PropTypes.number.isRequired,
     theme: PropTypes.object,

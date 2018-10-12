@@ -1,0 +1,14 @@
+@import "variables";
+
+.commute {
+    display: flex;
+    flex-direction: row;
+    padding-top: 5px;
+    color: material-color('grey', '500');
+
+    .icon {
+        padding-left: 5px;
+        padding-bottom: 5px;
+        color: material-color('grey', '400');
+    }
+}

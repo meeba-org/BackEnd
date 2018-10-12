@@ -2,10 +2,12 @@ import React from "react";
 import PropTypes from 'prop-types';
 import styles from '../styles/HoursBar.scss';
 import CSSModules from "react-css-modules";
+import {prepareHourToDisplay} from "../helpers/utils";
 
 class HoursBar extends React.Component {
+
     render() {
-        let {regularHours, extra125Hours, extra150Hours, extra175Hours, extra200Hours, displayDetails, overallHours} = this.props;
+        let {regularHours, extra125Hours, extra150Hours, extra175Hours, extra200Hours, displayDetails} = this.props;
         const MAX_HOURS_PER_MONTH = 300;
 
         let total = (parseFloat(regularHours) + parseFloat(extra125Hours) + parseFloat(extra150Hours) + parseFloat(extra175Hours) + parseFloat(extra200Hours));
@@ -15,6 +17,7 @@ class HoursBar extends React.Component {
         let extra150HoursPer = Math.floor(extra150Hours / total * 100) * factor ;
         let extra175HoursPer = Math.floor(extra175Hours / total * 100) * factor ;
         let extra200HoursPer = Math.floor(extra200Hours / total * 100) * factor ;
+        let totalDisplay = prepareHourToDisplay(total);
         return (
             <div styleName="stacked-bar-graph">
                 <span style={{width: regularHoursPer + '%'}} styleName="regular-hours-bar" />
@@ -32,7 +35,7 @@ class HoursBar extends React.Component {
                 }
 
                 {displayDetails &&
-                    <div styleName="details">{overallHours} שעות</div>
+                    <div styleName="details">{totalDisplay} שעות</div>
                 }
             </div>
         );

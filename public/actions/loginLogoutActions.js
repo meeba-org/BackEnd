@@ -3,12 +3,16 @@ import * as actionsTypes from "./actionTypes";
 import config from "../config";
 import SubmissionError from "redux-form/es/SubmissionError";
 import {isUserAllowedLogin} from "../helpers/utils";
+import {GAAction} from "../helpers/GATypes";
+import {extractCompany, extractUser} from "../middlewares/GAMiddleware";
 
 function handleLoginStart() {
-    return {type: actionsTypes.HANDLE_LOGIN_START};
+    return {
+        type: actionsTypes.HANDLE_LOGIN_START
+    };
 }
 
-function handleLoginSuccess(response, router) {
+function handleLoginSuccess(response, router, isLoginMode) {
     let user = response.data.user;
     if (!!user && !isUserAllowedLogin(user))
         throw new Error('אין הרשאות מתאימות');
@@ -16,6 +20,15 @@ function handleLoginSuccess(response, router) {
     localStorage.setItem('jwtToken', response.data.token);
 
     router.push('/dashboard');
+
+    return {
+        type: actionsTypes.HANDLE_LOGIN_SUCCESS,
+        ga: {
+            category: extractCompany(user),
+            action: extractUser(user),
+            actionType: isLoginMode? GAAction.LOGIN : GAAction.REGISTER,
+        }
+    };
 }
 
 export function handleLogin(values, router) {
@@ -24,7 +37,7 @@ export function handleLogin(values, router) {
 
         dispatch(handleLoginStart());
         return axios.post(`${config.ROOT_URL}/${route}`, values)
-            .then((response) => handleLoginSuccess(response, router))
+            .then((response) => dispatch(handleLoginSuccess(response, router, values.isLoginMode)))
             .catch((err) => {
                 let message = 'Unknown Error';
                 if (err) {
@@ -95,6 +108,7 @@ export function loadUserFromToken() {
                 throw new Error('user is not allowed to login');
 
             localStorage.setItem('jwtToken', response.data.token);
+            localStorage.setItem('activeUser', JSON.stringify(user));
             dispatch(meFromTokenSuccess(user));
         }).catch(function () {
             localStorage.removeItem('jwtToken');//remove token from storage

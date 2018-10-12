@@ -3,101 +3,71 @@ const UserModel = require('../models/UserModel');
 const express = require('express');
 const AppManager = require("../managers/AppManager");
 const jwtService = require("./jwtService");
+const {reject, resolve} = require("./apiManager");
 const router = express.Router();
+const routeWrapper = require("./apiManager").routeWrapper;
+const {param} = require('express-validator/check');
 
 //GET /users/{uid} user
-router.get('/:uid', (req, res) => {
-    req.checkParams('uid', 'uid is required').notEmpty();
+router.get('/:uid',
+    [
+        param('uid').exists()
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        const uid = req.params.uid;
 
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
-
-            const uid = req.params.uid;
-
-            UserModel.getByUserUid(uid)
-                .then((user) => {
-                    if (user)
-                        return res.status(200).json(user);
-                    return Promise.reject("User with uid " + uid + " does not exist");
-                })
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
-});
+        return UserModel.getByUserUid(uid)
+            .then((user) => {
+                if (user)
+                    return resolve(user);
+                return reject("User with uid " + uid + " does not exist", 400);
+            });
+    })
+);
 
 //GET /users users
-router.get('/', (req, res) => {
-    try {
+router.get('/',
+    (req, res) => routeWrapper(req, res, (req, res) => {
         let company = jwtService.getCompanyFromLocals(res);
         let hideDeleted = req.query.hideDeleted;
 
-        UserModel.getUsers(company, hideDeleted)
-            .then((users) => res.status(200).json(users))
-            .catch((err) => res.status(500).json({message: err.message}));
-    }
-    catch (err) {
-        return res.status(500).json({message: err.message})
-    }
-});
+        return UserModel.getUsers(company, hideDeleted);
+    })
+);
 
 //POST /users user
-router.post('/', (req, res) => {
+router.post('/',
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        let user = req.body;
+        const companyFromToken = jwtService.getCompanyFromLocals(res);
+        user.company = companyFromToken._id;
 
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
-
-            let user = req.body;
-            const companyFromToken = jwtService.getCompanyFromLocals(res);
-            user.company = companyFromToken._id;
-
-            AppManager.addUser(user)
-                .then((user) => res.status(200).json(user))
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
-});
+        return AppManager.addUser(user);
+    })
+);
 
 //PUT /users user
-router.put('/', (req, res) => {
+router.put('/',
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        let user = req.body;
+        const companyFromToken = jwtService.getCompanyFromLocals(res);
+        user.company = companyFromToken._id;
 
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
-
-            let user = req.body;
-            const companyFromToken = jwtService.getCompanyFromLocals(res);
-            user.company = companyFromToken._id;
-
-            UserModel.updateUser(user)
-                .then((user) => {
-                    return res.status(200).json(user);
-                })
-                .catch((err) => {
-                    return res.status(500).json({message: err.message});
-                });
-        })
-        .catch((err) => {
-            return res.status(400).json({message: err.array()})
-        });
-});
+        return UserModel.updateUser(user);
+    })
+);
 
 //DELETE /users/{id} userUid
-router.delete('/:id', (req, res) => {
-    req.checkParams('id', 'int id is required').notEmpty();
+router.delete('/:id',
+    [
+        param('id').exists()
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        const id = req.params.id;
 
-    return req.getValidationResult()
-        .then(function (result) {
-            result.throw();
-
-            const id = req.params.id;
-
-            return AppManager.removeUser(id)
-                .then(() => res.status(200).send(id))
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
-});
+        return AppManager.removeUser(id)
+            .then(() => id);
+    })
+);
 
 module.exports = router;

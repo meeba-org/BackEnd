@@ -1,17 +1,21 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {isWorking} from "../../helpers/utils";
-import WarningIcon from "./WarningIcon";
 import styles from "../../styles/LiveShift.scss";
 import Home from '@material-ui/icons/Home';
 import Work from '@material-ui/icons/Work';
 import Delete from '@material-ui/icons/Delete';
+import Edit from '@material-ui/icons/Edit';
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import TimePicker from "material-ui-pickers/TimePicker";
+import Note from "./Note";
+import Warning from "./Warning";
+import CarCost from "./CarCost";
+import BusCost from "./BusCost";
 
 const LiveShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete} = props;
+    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete, showShiftDialog} = props;
     let icon = isWorking(shift) ?
         <Tooltip title="בעבודה" placement="right"><Work/></Tooltip> :
         <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
@@ -21,7 +25,7 @@ const LiveShift = (props) => {
             <div className={styles["name-container"]}>
                 <IconButton className={styles["icon"]}>{icon}</IconButton>
                 {showNames &&
-                <div className={styles["name"]}>{shift.user && shift.user.firstName}</div>
+                <div className={styles["name"]}>{shift.user && shift.user.fullName}</div>
                 }
             </div>
 
@@ -32,7 +36,7 @@ const LiveShift = (props) => {
                         ampm={false}
                         autoOk
                         value={shift.clockInTime}
-                        onChange={onUpdateStartTime}
+                        onChange={(time) => onUpdateStartTime(time, shift)}
                     />
 
                     {!!shift.clockOutTime &&
@@ -46,20 +50,23 @@ const LiveShift = (props) => {
                     }
                 </div>
             </div>
-            {errors &&
-            <div className={styles["warning"]}>
-                <WarningIcon text={errors}/>
-            </div>
-            }
+            <Warning warning={errors}/>
+            <Note text={shift.note} onClick={showShiftDialog}/>
+            <CarCost data={shift.commuteCost} onClick={showShiftDialog}/>
+            <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
+
             {hover &&
             <div>
                 {isWorking(shift) &&
                 <Tooltip title="סיים משמרת" placement="left">
-                    <IconButton className={styles["elem"]} onClick={() => onShiftComplete()}><Home/></IconButton>
+                    <IconButton className={styles["elem"]} onClick={onShiftComplete}><Home/></IconButton>
                 </Tooltip>
                 }
-                <Tooltip title="מחיקת משמרת" placement="left">
-                    <IconButton className={styles["elem"]} onClick={() => onDelete()}><Delete/></IconButton>
+                <Tooltip title="עריכה" placement="left">
+                    <IconButton className={styles["elem"]} onClick={showShiftDialog}><Edit/></IconButton>
+                </Tooltip>
+                <Tooltip title="מחיקה" placement="left">
+                    <IconButton className={styles["elem"]} onClick={onDelete}><Delete/></IconButton>
                 </Tooltip>
             </div>
             }
@@ -76,6 +83,7 @@ LiveShift.propTypes = {
     onUpdateEndTime: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     onShiftComplete: PropTypes.func.isRequired,
+    showShiftDialog: PropTypes.func.isRequired,
 };
 LiveShift.defaultProps = {};
 

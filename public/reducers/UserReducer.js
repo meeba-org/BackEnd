@@ -11,10 +11,10 @@ export function UserReducer(state = {}, action = null) {
             return { // Empty User
             };
         }
-        case types.FETCH_COMPANY_SUCCESS: {
+        case types.UPDATE_COMPANY_SUCCESS: {
             return {
                 ...state,
-                company: action.payload.company,
+                company: action.payload,
             };
         }
         case types.UPDATE_ACTIVE_USER_SUCCESS: {

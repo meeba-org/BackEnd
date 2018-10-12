@@ -6,64 +6,59 @@ const ShiftModel = require('../models/ShiftModel');
 const ExcelManager = require('../managers/ExcelManager');
 const jwtService = require("./jwtService");
 const ShiftAnalyzer = require("../managers/ShiftAnalyzer");
+const routeWrapper = require("./apiManager").routeWrapper;
+const {param, query } = require('express-validator/check');
 
 //GET /reports/download report
-router.get('/download', (req, res) => {
-    req.checkQuery('year', 'year is required').notEmpty();
-    req.checkQuery('month', 'month is required').notEmpty();
+router.get('/download',
+    [
+        query('year').exists(),
+        query('month').exists(),
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
 
-    const year = req.query.year || moment().format('YYYY');
-    const month = req.query.month || moment().format('MM');
+        const year = req.query.year || moment().format('YYYY');
+        const month = req.query.month || moment().format('MM');
 
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
+        const company = jwtService.getCompanyFromLocals(res);
 
-            const company = jwtService.getCompanyFromLocals(res);
+        return ShiftModel.getShiftsInMonth(year, month, company)
+            .then((shifts) => {
+                let workbook = ExcelManager.createExcel(shifts, year, month, company);
 
-            ShiftModel.getShiftsInMonth(year, month, company)
-                .then((shifts) => {
-                    let workbook = ExcelManager.createExcel(shifts, year, month, company);
-
-                    let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
-                    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                    res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
-                    return workbook.xlsx.write(res)
-                        .then(function() {
-                            res.end();
-                        });
-                })
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
-});
+                let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
+                return workbook.xlsx.write(res)
+                    .then(function () {
+                        res.end();
+                    });
+            })
+    })
+);
 
 //GET /reports/download report
-router.get('/monthly', (req, res) => {
-    req.checkQuery('year', 'year is required').notEmpty();
-    req.checkQuery('month', 'month is required').notEmpty();
-    let userId = req.query.userId;
+router.get('/monthly',
+    [
+        query('year').exists(),
+        query('month').exists(),
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        let userId = req.query.userId;
 
-    const year = req.query.year || moment().format('YYYY');
-    const month = req.query.month || moment().format('MM');
+        const year = req.query.year || moment().format('YYYY');
+        const month = req.query.month || moment().format('MM');
 
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
+        const company = jwtService.getCompanyFromLocals(res);
 
-            const company = jwtService.getCompanyFromLocals(res);
+        return ShiftModel.getShiftsInMonth(year, month, company, userId)
+            .then((shifts) => {
 
-            ShiftModel.getShiftsInMonth(year, month, company, userId)
-                .then((shifts) => {
-
-                    if (shifts) {
-                        let employeesMonthlyReports = ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
-                        return res.status(200).json(employeesMonthlyReports);
-                    }
-                })
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
-});
+                if (shifts) {
+                    return ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
+                }
+            });
+    })
+);
 
 module.exports = router;

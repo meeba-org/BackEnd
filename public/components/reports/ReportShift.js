@@ -1,23 +1,27 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {momentToDay} from "../../helpers/utils";
-import WarningIcon from "./WarningIcon";
 import styles from "../../styles/ReportShift.scss";
 import Delete from '@material-ui/icons/Delete';
+import Edit from '@material-ui/icons/Edit';
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import DatePicker from "material-ui-pickers/DatePicker";
 import TimePicker from "material-ui-pickers/TimePicker";
+import Note from "./Note";
+import CarCost from "./CarCost";
+import Warning from "./Warning";
+import BusCost from "./BusCost";
 
 const ReportShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete} = props;
+    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog} = props;
     let hebrewDay = momentToDay(shift.clockInTime);
 
     return (
         <Fragment>
             <div className={styles["name-container"]}>
                 {showNames &&
-                <div className={styles["name"]}>{shift.user && shift.user.firstName}</div>
+                <div className={styles["name"]}>{shift.user && shift.user.fullName}</div>
                 }
             </div>
 
@@ -51,15 +55,17 @@ const ReportShift = (props) => {
                     />
                 </div>
             </div>
-            {errors &&
-            <div className={styles["warning"]}>
-                <WarningIcon text={errors}/>
-            </div>
-            }
+            <Warning warning={errors}/>
+            <Note text={shift.note} onClick={showShiftDialog}/>
+            <CarCost data={shift.commuteCost} onClick={showShiftDialog}/>
+            <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
             {hover &&
             <div>
-                <Tooltip title="מחיקת משמרת" placement="left">
-                    <IconButton className={styles["elem"]} onClick={() => onDelete()}><Delete/></IconButton>
+                <Tooltip title="עריכה" placement="top">
+                    <IconButton className={styles["elem"]} onClick={showShiftDialog}><Edit/></IconButton>
+                </Tooltip>
+                <Tooltip title="מחיקה" placement="top">
+                    <IconButton className={styles["elem"]} onClick={onDelete}><Delete/></IconButton>
                 </Tooltip>
             </div>
             }
@@ -76,6 +82,7 @@ ReportShift.propTypes = {
     onUpdateStartTime: PropTypes.func.isRequired,
     onUpdateEndTime: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    showShiftDialog: PropTypes.func.isRequired,
 };
 ReportShift.defaultProps = {};
 

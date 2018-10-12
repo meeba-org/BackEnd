@@ -5,7 +5,7 @@ const analyzeHours = require("../managers/ShiftAnalyzer").analyzeShiftHours;
 const expect = require('chai').expect;
 
 function createMockedShift(length) {
-    let clockInTime = moment().day("Monday").startOf('hour');
+    let clockInTime = moment("2018-01-01").startOf('hour');
     return {
         clockInTime: clockInTime,
         clockOutTime: moment(clockInTime).add(length, 'hours')
@@ -42,7 +42,7 @@ describe('ShiftAnalyzer', function () {
     describe('Regular Day', function () {
         it('full regular shift', function () {
             const shift = createMockedShift(REGULAR_SHIFT_LENGTH);
-            const hours = analyzeHours(shift);
+            const hours = analyzeHours(shift, settings);
 
             expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
             expect(hours.extra125Hours).to.be.equal(0);
@@ -52,7 +52,7 @@ describe('ShiftAnalyzer', function () {
 
         it('part regular shift', function () {
             const shift = createMockedShift(4.5);
-            const hours = analyzeHours(shift);
+            const hours = analyzeHours(shift, settings);
 
             expect(hours.regularHours).to.be.equal(4.5);
             expect(hours.extra125Hours).to.be.equal(0);
@@ -62,7 +62,7 @@ describe('ShiftAnalyzer', function () {
 
         it('part overdue 125 shift test1', function () {
             const shift = createMockedShift(REGULAR_SHIFT_LENGTH + 0.5);
-            const hours = analyzeHours(shift);
+            const hours = analyzeHours(shift, settings);
 
             expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
             expect(hours.extra125Hours).to.be.equal(0.5);
@@ -72,7 +72,7 @@ describe('ShiftAnalyzer', function () {
 
         it('part overdue 125 shift test2', function () {
             const shift = createMockedShift(REGULAR_SHIFT_LENGTH + SHIFT_125_OVERDUE_LENGTH);
-            const hours = analyzeHours(shift);
+            const hours = analyzeHours(shift, settings);
 
             expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
             expect(hours.extra125Hours).to.be.equal(SHIFT_125_OVERDUE_LENGTH);
@@ -82,7 +82,7 @@ describe('ShiftAnalyzer', function () {
 
         it('part overdue 150 shift test2', function () {
             const shift = createMockedShift(REGULAR_SHIFT_LENGTH + SHIFT_125_OVERDUE_LENGTH + 3.5);
-            const hours = analyzeHours(shift);
+            const hours = analyzeHours(shift, settings);
 
             expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
             expect(hours.extra125Hours).to.be.equal(SHIFT_125_OVERDUE_LENGTH);
@@ -92,10 +92,10 @@ describe('ShiftAnalyzer', function () {
 
         it('12:00 - 00:00 test', function () {
             const shift = {
-                clockInTime: moment().hour(12).startOf('hour'),
-                clockOutTime: moment().add(1, 'days').startOf('day'),
+                clockInTime: moment("2018-01-01").hour(12).startOf('hour'),
+                clockOutTime: moment("2018-01-01").add(1, 'days').startOf('day'),
             };
-            const hours = analyzeHours(shift);
+            const hours = analyzeHours(shift, settings);
 
             expect(hours.regularHours).to.be.equal(REGULAR_SHIFT_LENGTH);
             expect(hours.extra125Hours).to.be.equal(SHIFT_125_OVERDUE_LENGTH);

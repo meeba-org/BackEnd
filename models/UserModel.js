@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const ERoles = require("./ERoles");
+const ETransportPaymentPer = require("./ETransportPaymentPer");
 
 // User Schema
 const UserSchema = mongoose.Schema({
     uid: { type: String, index: true },
-    firstName: { type: String },
-    lastName: { type: String },
+    fullName: { type: String },
     username: { type: String },
     email: { type: String },
     password: { type: String },
     hourWage: {type: Number, default: 26.7 },
     transportation: {type: Number, default: 11.8 },
+    transportPaymentPer: {type: Number, default: ETransportPaymentPer.SHIFT },
     role: { type: String, default: ERoles.EMPLOYEE},
     shifts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shift' }],
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },

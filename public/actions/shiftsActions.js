@@ -1,5 +1,6 @@
 import * as actions from "./actionTypes";
 import {fetchMonthlyReport} from "./reportsActions";
+import moment from "moment";
 
 export const fetchShiftSuccess = (payload) => ({
     type: actions.FETCH_SHIFT_SUCCESS,
@@ -76,9 +77,9 @@ export const fetchShift = (shiftId) => ({
     }
 });
 
-const isMovingShiftOutOfMonth = (shift, dispatch, orgMonth, orgYear) => {
-    let newYear = shift.clockInTime.format('YYYY');
-    let newMonth = shift.clockInTime.format('MM');
+const isMovingShiftOutOfMonth = (shift, orgMonth, orgYear) => {
+    let newYear = moment(shift.clockInTime).format('YYYY');
+    let newMonth = moment(shift.clockInTime).format('MM');
 
     if (!orgYear || !orgMonth)
         return false;
@@ -87,8 +88,8 @@ const isMovingShiftOutOfMonth = (shift, dispatch, orgMonth, orgYear) => {
     return (orgMonth !== newMonth || orgYear !== newYear);
 };
 
-export const updateShift = (shift, dispatch, input, shouldFetchMonthlyReport, month, year) => {
-    if (isMovingShiftOutOfMonth(shift, dispatch, month, year)) {
+export const updateShift = (shift, dispatch, shouldFetchMonthlyReport, month, year) => {
+    if (isMovingShiftOutOfMonth(shift, month, year)) {
         return {
             type: 'SHOW_MODAL',
             payload: {
@@ -97,7 +98,6 @@ export const updateShift = (shift, dispatch, input, shouldFetchMonthlyReport, mo
                     entity: shift,
                     month,
                     year,
-                    input,
                     shouldFetchMonthlyReport,
                     updateShift: updateShift0,
                     open: true
@@ -106,11 +106,10 @@ export const updateShift = (shift, dispatch, input, shouldFetchMonthlyReport, mo
         };
     }
 
-    return updateShift0(shift, dispatch, input, shouldFetchMonthlyReport, month, year);
+    return updateShift0(dispatch, shift, shouldFetchMonthlyReport, month, year);
 };
 
-export const updateShift0 = (shift, dispatch, input, shouldFetchMonthlyReport, month, year) => {
-    input.onChange(shift); // Updating the field
+export const updateShift0 = (dispatch, shift, shouldFetchMonthlyReport, month, year) => {
 
     return {
         type: actions.API,
@@ -148,6 +147,19 @@ export const showDeleteShiftModal = (shift, dispatch, month, year) => ({
     }
 });
 
+export const showEditShiftModal = (shift, callBack) => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: 'EDIT_SHIFT',
+        modalProps: {
+            entity: shift,
+            callBack,
+            updateShift,
+            open: true,
+            key: shift._id
+        }
+    }
+});
 
 export const deleteShift = (shift, dispatch, month, year) => ({
     type: actions.API,

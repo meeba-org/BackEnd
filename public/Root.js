@@ -13,14 +13,41 @@ import {create} from 'jss';
 import {createGenerateClassName, jssPreset} from '@material-ui/core/styles';
 
 const muiTheme = createMuiTheme({
-    direction: "rtl",
     typography: {
         fontFamily: '"Assistant", sans-serif'
     },
     overrides: {
         MuiIconButton: {
             root: {
-                height: "100%"
+                height: "100%",
+                width: "initial",
+                paddingRight: "10px",
+                paddingLeft: "10px",
+            }
+        },
+        MuiInputLabel: {
+            root: {
+                transformOrigin: "top right"
+            },
+            shrink: {
+                transformOrigin: "top right"
+            },
+            // formControl: {
+            //     left: "initial",
+            //     right:0
+            // }
+        },
+        MuiTooltip: {
+            tooltip: {
+                fontSize: "15px"
+            }
+        },
+        MuiSwitch: {
+            root: {
+                direction: "ltr"
+            },
+            checked: {
+                transform: "translateX(20px)"
             }
         }
     },

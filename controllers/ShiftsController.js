@@ -1,41 +1,77 @@
 'use strict';
+
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 const ShiftModel = require('../models/ShiftModel');
 const jwtService = require("./jwtService");
 const HolidayAnalyzer = require('../managers/HolidayAnalyzer');
+const reject = require("./apiManager").reject;
+const routeWrapper = require("./apiManager").routeWrapper;
+const { body, param } = require('express-validator/check');
 
 //GET /shifts shift
-router.get('/', (req, res) => {
-    const startDate = req.query.startDate || moment().startOf('month');
-    const userId = req.query.userId;
+router.get('/',
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        const startDate = req.query.startDate || moment().startOf('month');
+        const userId = req.query.userId;
 
-    if (userId && !jwtService.isUserIdValid(userId, req))
-        return res.status(400).json({message: "[ShiftsController.Get] userId is not valid - does not fit token"});
+        if (userId && !jwtService.isUserIdValid(userId, req))
+            return reject("[ShiftsController.Get] userId is not valid - does not fit token", 400);
 
-    let endDate = req.query.endDate || moment(startDate).endOf('month');
-    endDate = moment(endDate).endOf('day');
+        let endDate = req.query.endDate || moment(startDate).endOf('month');
+        endDate = moment(endDate).endOf('day');
 
-    if (!moment(startDate).isValid() || !moment(endDate).isValid())
-        return res.status(400).json({message: "moment isValid() failed - startDate || endDate are not valid"});
+        if (!moment(startDate).isValid() || !moment(endDate).isValid())
+            return reject("[ShiftsController.Get] moment isValid() failed - startDate || endDate are not valid", 400);
 
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
+        const company = jwtService.getCompanyFromLocals(res);
 
-            const company = jwtService.getCompanyFromLocals(res);
+        return ShiftModel.getShiftsBetween(company, startDate, endDate, userId);
+    })
+);
 
-            ShiftModel.getShiftsBetween(company, startDate, endDate, userId)
-                .then((shifts) => {
+//POST /shifts shift
+router.post('/',
+    [
+        body('clockInTime').exists(),
+        body('user').exists(),
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        let newShift = req.body;
+        fillMissingShiftData(res, newShift);
 
-                    if (shifts)
-                        return res.status(200).json(shifts);
-                })
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
-});
+        return ShiftModel.createShift(newShift);
+    })
+);
+
+//PUT /shifts shift
+router.put('/',
+    [
+        body('clockInTime').exists(),
+        body('user').exists(),
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
+
+        let newShift = req.body;
+        fillMissingShiftData(res, newShift);
+
+        return ShiftModel.updateShift(newShift);
+    })
+);
+
+//DELETE /shifts/{id} shiftUid
+router.delete('/:id',
+    [
+        param('id').exists(),
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        const id = req.params.id;
+
+        return ShiftModel.deleteShift(id)
+            .then(() => id);
+    })
+);
 
 function fillHolidayData(newShift) {
     newShift.dayType = HolidayAnalyzer.analyzeDayType(newShift.clockInTime);
@@ -47,58 +83,5 @@ let fillMissingShiftData = function (res, newShift) {
 
     fillHolidayData(newShift);
 };
-
-//POST /shifts shift
-router.post('/', (req, res) => {
-    req.checkBody('user', 'user id is required').notEmpty();
-
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
-
-            let newShift = req.body;
-            fillMissingShiftData(res, newShift);
-
-            ShiftModel.createOrUpdateShift(newShift)
-                .then((shift) => res.status(200).json(shift))
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => {
-            return res.status(400).json({message: err.array()})
-        });
-});
-
-//PUT /shifts shift
-router.put('/', (req, res) => {
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
-
-            let newShift = req.body;
-            fillMissingShiftData(res, newShift);
-
-            ShiftModel.createOrUpdateShift(newShift)
-                .then((shift) => res.status(200).json(shift))
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
-});
-
-//DELETE /shifts/{id} shiftUid
-router.delete('/:id', (req, res) => {
-    req.checkParams('id', 'id is required').notEmpty();
-
-    return req.getValidationResult()
-        .then(function (result) {
-            result.throw();
-
-            const id = req.params.id;
-
-            return ShiftModel.deleteShift(id)
-                .then(() => res.status(200).send(id))
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
-});
 
 module.exports = router;

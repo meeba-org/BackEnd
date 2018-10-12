@@ -5,15 +5,14 @@
   For more info on ejs, see http://www.embeddedjs.com/. For examples of using it with htmlWebpackPlugin, see https://github.com/jaketrent/html-webpack-template/blob/master/index.ejs
   -->
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113133547-1"></script>
+    <!-- Google Analytics -->
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-113133547-1');
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'UA-113133547-1', 'auto');
+        ga('send', 'pageview');
     </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
 
     <!--
       The htmlWebpackPlugin will parse the logic below so that trackJS is only added to the production version of index.html (since only webpack.config.prod.js provides the trackJS token)
@@ -21,15 +20,15 @@
       To track JavaScript errors via TrackJS, sign up for a free trial at TrackJS.com and enter your token in /webpack.config.prod.js on line 55.
      -->
     <% if (htmlWebpackPlugin.options.trackJSToken) { %>
-    <script>window._trackJs = {token: '<%= htmlWebpackPlugin.options.trackJSToken %>'};</script>
-    <script src="https://d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js"></script>
+        <script>window._trackJs = {token: '<%= htmlWebpackPlugin.options.trackJSToken %>'};</script>
+        <script src="https://d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js"></script>
     <% } %>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <meta charset="utf-8"/>
     <title>מיבא - שעון נוכחות ומחשבון שכר לעסקים קטנים</title>
-    <meta name="description" content="שעון נוכחות חינמי ומחשבון שכר לעובדים שעתיים. שעון ביקורת נוכחות. שעון נוכחות אינרנטי." />
+    <meta name="description" content="שעון נוכחות חינמי ומחשבון שכר לעובדים שעתיים. שעון ביקורת נוכחות. שעון נוכחות אינטרנטי." />
     <meta property="og:title" content="שעון נוכחות לעסקים קטנים" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.meeba.org.il" />
@@ -52,23 +51,27 @@
         "priceCurrency": "ILS"
       }
     }
+
     </script>
     <!-- Schema.org - END -->
 
     <!-- Facebook Customer Chat Plugin -->
     <script>
-        window.fbAsyncInit = function() {
+        window.fbAsyncInit = function () {
             FB.init({
-                appId            : 'your-app-id',
-                autoLogAppEvents : true,
-                xfbml            : true,
-                version          : 'v2.12'
+                appId: 'your-app-id',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v2.12'
             });
         };
-        (function(d, s, id){
+        (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
             js.src = "https://connect.facebook.net/he_IL/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
@@ -82,8 +85,28 @@
     </div>
     <!-- Facebook Customer Chat Plugin - END -->
 
+    <!-- WalkMe - START -->
+    <script type="text/javascript">(function () {
+            var walkme = document.createElement('script');
+            walkme.type = 'text/javascript';
+            walkme.async = true;
+            walkme.src = 'https://cdn.walkme.com/users/4d8254542a094c44ae1d9553b3b2554a/walkme_4d8254542a094c44ae1d9553b3b2554a_https.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(walkme, s);
+            window._walkmeConfig = {smartLoad: true};
+        })();
+    </script>
+    <!-- WalkMe - END -->
 </head>
 <body dir="rtl">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TL6X6F4"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+
 <div id="react-app"></div>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link href='https://fonts.googleapis.com/css?family=Assistant&subset=hebrew' rel='stylesheet' type='text/css'>

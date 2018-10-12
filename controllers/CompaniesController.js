@@ -1,84 +1,69 @@
 'use strict';
 const CompanyModel = require('../models/CompanyModel');
 const express = require('express');
+const {reject, resolve} = require("./apiManager");
+const routeWrapper = require("./apiManager").routeWrapper;
 const router = express.Router();
+const { body, param } = require('express-validator/check');
 
 //GET /companies/{id} company
-router.get('/:id', (req, res) => {
-    req.checkParams('id', 'id is required').notEmpty();
+/* Not in used */
+router.get('/:id',
+    [
+        param('id').exists(),
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        const id = req.params.id;
 
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
-
-            const id = req.params.id;
-
-            CompanyModel.getByCompanyId(id)
-                .then((company) => {
-                    if (company)
-                        return res.status(200).json(company);
-                    return Promise.reject("Company with id " + id + " does not exist");
-                })
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
-});
+        return CompanyModel.getByCompanyId(id)
+            .then((company) => {
+                if (company)
+                    return resolve(company);
+                return reject("Company with id " + id + " does not exist", 401);
+            });
+    })
+);
 
 //GET /companies companies
-router.get('/', (req, res) => {
-    CompanyModel.getAllCompanies()
-        .then((companies) => res.status(200).json({companies: companies}))
-        .catch((err) => res.status(500).json({message: err.message}));
-});
+/* Not in used */
+router.get('/',
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        return CompanyModel.getAllCompanies();
+    })
+);
 
 //POST /companies company
-router.post('/', (req, res) => {
-
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
-            CompanyModel.createCompany(req.body)
-                .then((company) => res.status(200).json({company: company}))
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
-});
+/* Not in used */
+router.post('/',
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        return CompanyModel.createCompany(req.body);
+    })
+);
 
 //PUT /companies company
-router.put('/', (req, res) => {
+router.put('/',
+    [
+        body('_id').exists()
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        let newCompany = req.body;
 
-    req.getValidationResult()
-        .then(function (result) {
-            result.throw();
-
-            let newCompany = req.body;
-
-            CompanyModel.updateCompany(newCompany)
-                .then((company) => res.status(200).json({company: company}))
-                .catch((err) => res.status(500).json({message: err.message}));
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
-});
+        return CompanyModel.updateCompany(newCompany);
+    })
+);
 
 //DELETE /companies/{id} companyId
-router.delete('/:id', (req, res) => {
-    req.checkParams('id', 'int id is required').notEmpty().isInt();
+/* Not in used */
+router.delete('/:id',
+    [
+        param('id').exists(),
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        const id = req.params.id;
 
-    return req.getValidationResult()
-        .then(function (result) {
-            result.throw();
-
-            const id = req.params.id;
-
-            return CompanyModel.deleteCompany(id)
-                .then(() => {
-                    return res.status(204).send();
-                })
-                .catch((err) => {
-                    return res.status(500).json({message: err.message});
-                });
-        })
-        .catch((err) => res.status(400).json({message: err.array()}));
-});
+        return CompanyModel.deleteCompany(id)
+            .then(() => id);
+    })
+);
 
 module.exports = router;

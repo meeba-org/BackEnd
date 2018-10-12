@@ -18,12 +18,12 @@ describe('AppManager', function () {
                     return AppManager.addUser(newUser);
                 })
                 .then((createdUser) => {
-                    expect(createdUser.firstName).to.exist;
+                    expect(createdUser.fullName).to.exist;
                     expect(createdUser.company).to.exist;
                     return CompanyModel.getByCompanyId(createdUser.company)
                         .then((updatedCompany) => {
                             expect(updatedCompany.users).to.have.length(1);
-                            expect(updatedCompany.users[0].firstName === createdUser.firstName);
+                            expect(updatedCompany.users[0].fullName === createdUser.fullName);
                             return Promise.resolve();
                         });
                 });
