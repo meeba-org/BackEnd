@@ -7,6 +7,7 @@ moment.tz.setDefault("Asia/Jerusalem");
 const REGULAR_SHIFT_LENGTH = 9;
 const SHIFT_125_OVERDUE_LENGTH = 2;
 const EmptyAdditionalInfo = {
+    shiftLength: 0,
     regularHours : 0,
     extra125Hours: 0,
     extra150Hours: 0,
@@ -65,16 +66,34 @@ const analyzeShiftHours = (shift, settings) => {
     if (!isShiftValid(clockIn, clockOut))
         return EmptyAdditionalInfo;
 
+    let analyzedHours;
     let dayType = analyzeDayType(clockIn);
     switch (dayType) {
         case EDayType.Holiday:
-            return analyzeHolidayShiftHours(clockIn, clockOut, settings);
+            analyzedHours = analyzeHolidayShiftHours(clockIn, clockOut, settings);
+            break;
         case EDayType.HolidayEvening:
-            return analyzeHolidayEveningShiftHours(clockIn, clockOut, settings);
+            analyzedHours = analyzeHolidayEveningShiftHours(clockIn, clockOut, settings);
+            break;
         case EDayType.Regular:
         default:
-            return analyzeRegularDayShiftHours(clockIn, clockOut, settings, REGULAR_SHIFT_LENGTH);
+            analyzedHours = analyzeRegularDayShiftHours(clockIn, clockOut, settings, REGULAR_SHIFT_LENGTH);
+            break;
     }
+
+    return roundAnalyzedHours(analyzedHours);
+};
+
+const roundAnalyzedHours = (analyzedHours) => {
+    // Using the + before the variable to avoid changing number to string  https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
+    return {
+        shiftLength: +analyzedHours.shiftLength.toFixed(2),
+        regularHours: +analyzedHours.regularHours.toFixed(2),
+        extra125Hours: +analyzedHours.extra125Hours.toFixed(2),
+        extra150Hours: +analyzedHours.extra150Hours.toFixed(2),
+        extra175Hours: +analyzedHours.extra175Hours.toFixed(2),
+        extra200Hours: +analyzedHours.extra200Hours.toFixed(2),
+    };
 };
 
 const isShiftValid = (clockIn, clockOut) => {
@@ -169,11 +188,15 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
 const analyzeRegularDayShiftHours = (clockIn, clockOut, settings, regularHoursInShift) => {
     let shiftLength = clockOut.diff(clockIn, 'hours', true);
 
+    if (!shiftLength)
+        return EmptyAdditionalInfo;
+
+    let analyzedHours = Object.assign({}, EmptyAdditionalInfo, {shiftLength: shiftLength});
     if (shiftLength <= regularHoursInShift) {
-        return Object.assign({}, EmptyAdditionalInfo, {regularHours: shiftLength});
+        return Object.assign({}, analyzedHours, {regularHours: shiftLength});
     }
     else {
-        return Object.assign({}, EmptyAdditionalInfo, {
+        return Object.assign({}, analyzedHours, {
             regularHours: regularHoursInShift,
             extra125Hours: calcExtra25PercentHours(shiftLength, regularHoursInShift),
             extra150Hours: calcExtra50PercentHours(shiftLength, regularHoursInShift),
@@ -186,11 +209,15 @@ const analyzeRegularDayShiftHours = (clockIn, clockOut, settings, regularHoursIn
 const analyzeWholeShiftInHolidayHours = (clockIn, clockOut, settings) => {
     let shiftLength = clockOut.diff(clockIn, 'hours', true);
 
+    if (!shiftLength)
+        return EmptyAdditionalInfo;
+
+    let analyzedHours = Object.assign({}, EmptyAdditionalInfo, {shiftLength: shiftLength});
     if (shiftLength <= settings.holidayShiftLength) {
-        return Object.assign({}, EmptyAdditionalInfo, {extra150Hours: shiftLength});
+        return Object.assign({}, analyzedHours, {extra150Hours: shiftLength});
     }
     else {
-        return Object.assign({}, EmptyAdditionalInfo, {
+        return Object.assign({}, analyzedHours, {
             extra150Hours: settings.holidayShiftLength,
             extra175Hours: calcExtra25PercentHours(shiftLength, settings.holidayShiftLength),
             extra200Hours: calcExtra50PercentHours(shiftLength, settings.holidayShiftLength),
@@ -254,6 +281,7 @@ function createUserAdditionalInfo(user, settings) {
         return user;
 
     let info = {
+        shiftLength: 0,
         regularHours : 0,
         extra125Hours: 0,
         extra150Hours: 0,
@@ -262,12 +290,14 @@ function createUserAdditionalInfo(user, settings) {
     };
 
     user.shifts.forEach((shift) => {
-        let hours = analyzeShiftHours(shift, settings);
-        info.regularHours += hours.regularHours;
-        info.extra125Hours += hours.extra125Hours;
-        info.extra150Hours += hours.extra150Hours;
-        info.extra175Hours += hours.extra175Hours;
-        info.extra200Hours += hours.extra200Hours;
+        let hoursAnalysis = analyzeShiftHours(shift, settings);
+        info.shiftLength += hoursAnalysis.shiftLength;
+        info.regularHours += hoursAnalysis.regularHours;
+        info.extra125Hours += hoursAnalysis.extra125Hours;
+        info.extra150Hours += hoursAnalysis.extra150Hours;
+        info.extra175Hours += hoursAnalysis.extra175Hours;
+        info.extra200Hours += hoursAnalysis.extra200Hours;
+        shift.hoursAnalysis = hoursAnalysis;
     });
 
     info.shiftsCount = user.shifts.length;

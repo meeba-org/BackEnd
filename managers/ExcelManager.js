@@ -5,7 +5,18 @@ const moment = require('moment');
 const Excel = require('exceljs');
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
 const isHoliday = require("./HolidayAnalyzer").isHoliday;
-
+const RowBorderStyle = {
+    top: { style: "hair" },
+    left: { style: "medium" },
+    bottom: { style: "hair" },
+    right: { style: "medium" }
+};
+const HeaderBorderStyle = {
+    top: { style: "medium" },
+    left: { style: "medium" },
+    bottom: { style: "medium" },
+    right: { style: "medium" }
+};
 moment.locale('he');
 
 const createTitleDate = function (year, month) {
@@ -13,25 +24,24 @@ const createTitleDate = function (year, month) {
 };
 
 setSummaryHeaderColor = function(sheet) {
-    let columns = ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'H1', 'I1', 'J1', 'K1', 'L1'];
-
-    setHeaderColor(sheet, columns);
+    setHeaderColor(sheet);
 };
 
 setEmployeeHeaderColor = function(sheet) {
-    let columns = ['A1', 'B1', 'C1', 'D1'];
-
-    setHeaderColor(sheet, columns);
+    setHeaderColor(sheet);
 };
 
-let setHeaderColor = function (sheet, columns) {
-    columns.map(key => {
-        sheet.getCell(key).fill = {
-            type: 'pattern',
-            pattern: 'solid',
-            fgColor: {argb: 'cccccc'}
-        };
+let setHeaderColor = function (sheet) {
+    let headerRow = sheet.getRow(1);
+
+    setRowBold(headerRow);
+    sheet.columns.map(column => {
+        headerRow.getCell(column.key).border = HeaderBorderStyle ;
     });
+};
+
+let setRowBold = function (row) {
+    row.font = {bold: true};
 };
 
 function createSummaryColumns(sheet, company) {
@@ -53,19 +63,15 @@ function createSummaryColumns(sheet, company) {
     setSummaryHeaderColor(sheet, company);
 }
 
-const addSummarySheet = (workbook, company, shifts) => {
+const addSummarySheet = (workbook, company, employees) => {
     // create a sheet with the first row and column frozen
-    let sheet = workbook.addWorksheet("שכר", {views:[ {state: 'frozen', xSplit: 1, ySplit:1, rightToLeft: true} ]});
+    let sheet = addWorksheet(workbook, "שכר");
 
     createSummaryColumns(sheet, company);
-    createSummaryContent(sheet, shifts, company.settings);
+    createSummaryContent(sheet, employees);
 };
 
-let createSummaryContent = function (worksheet, shifts, settings) {
-    if (!shifts || shifts.length === 0)
-        return;
-
-    let employees = ShiftAnalyzer.createEmployeeShiftsReports(shifts, settings);
+let createSummaryContent = function (worksheet, employees) {
 
     employees.forEach((employee) => {
         worksheet.addRow({
@@ -87,25 +93,25 @@ let createSummaryContent = function (worksheet, shifts, settings) {
 
 function createShiftsPerEmployeeColumns(sheet, company) {
     sheet.columns = [
-        {header: 'תאריך', key: 'date', width: 20, style: {alignment: {horizontal: 'right'}}},
-        {header: 'יום', key: 'dayInWeek', width: 10, style: {alignment: {horizontal: 'right'}}},
-        {header: 'שעת התחלה', key: 'clockInTime', width: 20, style: {alignment: {horizontal: 'right'}}},
-        {header: 'שעת סיום', key: 'clockOutTime', width: 20, style: {alignment: {horizontal: 'right'}}},
-        {header: 'שעות', key: 'totalHours', width: 20, style: {alignment: {horizontal: 'right'}}},
-        {header: '100%', key: 'regularHours', width: 20, style: {alignment: {horizontal: 'right'}}},
-        {header: '125%', key: 'extra125Hours', width: 20, style: {alignment: {horizontal: 'right'}}},
-        {header: '150%', key: 'extra150Hours', width: 20, style: {alignment: {horizontal: 'right'}}},
-        {header: '175%', key: 'extra175Hours', width: 20, style: {alignment: {horizontal: 'right'}}},
-        {header: '200%', key: 'extra200Hours', width: 20, style: {alignment: {horizontal: 'right'}}},
+        {header: 'תאריך', key: 'date', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'יום', key: 'dayInWeek', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שעת התחלה', key: 'clockInTime', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שעת סיום', key: 'clockOutTime', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שעות (עשרוני)', key: 'shiftLength', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: '100%', key: 'regularHours', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: '125%', key: 'extra125Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: '150%', key: 'extra150Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: '175%', key: 'extra175Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: '200%', key: 'extra200Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
     ];
 
     if (isFeatureEnable(company, FeatureName.CommuteModule)) {
         sheet.columns = sheet.columns.concat([
-            {header: 'תחבורה ציבורית', key: 'publicTransportation', width: 10, style: {alignment: {horizontal: 'right'}}},
-            {header: 'שעות נסיעה', key: 'commuteHours', width: 10, style: {alignment: {horizontal: 'right'}}},
-            {header: 'ק"מ', key: 'kmDriving', width: 10, style: {alignment: {horizontal: 'right'}}},
-            {header: 'חניה', key: 'parkingCost', width: 10, style: {alignment: {horizontal: 'right'}}},
-            {header: 'נסיעות יומי', key: 'commuteCost', width: 10, style: {alignment: {horizontal: 'right'}}},
+            {header: 'תחבורה ציבורית', key: 'publicTransportation', width: 10, style: {alignment: {horizontal: 'center'}}},
+            {header: 'שעות נסיעה', key: 'commuteHours', width: 10, style: {alignment: {horizontal: 'center'}}},
+            {header: 'ק"מ', key: 'kmDriving', width: 10, style: {alignment: {horizontal: 'center'}}},
+            {header: 'חניה', key: 'parkingCost', width: 10, style: {alignment: {horizontal: 'center'}}},
+            {header: 'נסיעות יומי', key: 'commuteCost', width: 10, style: {alignment: {horizontal: 'center'}}},
         ]);
     }
 
@@ -155,17 +161,17 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
             continue;
         }
 
+        let hoursAnalysis = shift.hoursAnalysis;
         row = {
             ...row,
             clockInTime: calcClockInTime(shift),
             clockOutTime: calcClockOutTime(shift),
-            totalHours: 1111,
-            regularHours: employee.regularHours,
-            extra125Hours: employee.extra125Hours,
-            extra150Hours: employee.extra150Hours,
-            extra175Hours: employee.extra175Hours,
-            extra200Hours: employee.extra200Hours,
-
+            shiftLength: hoursAnalysis.shiftLength || "",
+            regularHours: hoursAnalysis.regularHours || "",
+            extra125Hours: hoursAnalysis.extra125Hours || "",
+            extra150Hours: hoursAnalysis.extra150Hours || "",
+            extra175Hours: hoursAnalysis.extra175Hours || "",
+            extra200Hours: hoursAnalysis.extra200Hours || "",
         };
 
         if (shouldAddCommuteData(company, shift)) {
@@ -174,32 +180,43 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
 
         addShiftRow(sheet, row, shift.clockInTime);
     }
-
-    // employee.shifts.forEach((shift) => {
-    //     let row = {
-    //         clockInDate: calcClockInDate(shift),
-    //         dayInWeek: calcDayInWeek(shift),
-    //         clockInTime: calcClockInTime(shift),
-    //         clockOutTime: calcClockOutTime(shift),
-    //     };
-    //
-    //     if (shouldAddCommuteData(company, shift)) {
-    //         row = addCommuteData(company, row, shift);
-    //     }
-    //
-    //     sheet.addRow(row);
-    // });
 };
 
-function markRowAsHoliday(addedRow) {
-    // TODO Need a different definition here
-    let columns = ['date', 'dayInWeek'];
+const createShiftsPerEmployeeTotalSection = (sheet, employee) => {
+    let totalRowData = {
+        clockOutTime: 'סה"כ:',
+        shiftLength: employee.shiftLength || "",
+        regularHours: employee.regularHours || "",
+        extra125Hours: employee.extra125Hours || "",
+        extra150Hours: employee.extra150Hours || "",
+        extra175Hours: employee.extra175Hours || "",
+        extra200Hours: employee.extra200Hours || "",
+    }
 
-    columns.map(key => {
-        addedRow.getCell(key).fill = {
+    let totalRow = sheet.addRow(totalRowData);
+    setRowBold(totalRow);
+
+    let transportationData = {
+        clockOutTime: 'נסיעות:',
+        shiftLength: employee.overallTransportation ,
+    }
+    let transportationRow = sheet.addRow(transportationData);
+    setRowBold(transportationRow);
+
+    let salaryData = {
+        clockOutTime: 'שכר:',
+        shiftLength: employee.overallSalary ,
+    }
+    let salaryRow = sheet.addRow(salaryData);
+    setRowBold(salaryRow);
+};
+
+function markRowAsHoliday(sheet, addedRow) {
+    sheet.columns.map(column => {
+        addedRow.getCell(column.key).fill = {
             type: 'pattern',
             pattern: 'solid',
-            fgColor: {argb: 'cccccc'}
+            fgColor: {argb: 'e6e6e6'}
         };
     });
 }
@@ -208,7 +225,11 @@ function addShiftRow(sheet, row, shift) {
     let addedRow = sheet.addRow(row);
 
     if (isHoliday(shift) || isHolidayEvening(shift))
-        markRowAsHoliday(addedRow);
+        markRowAsHoliday(sheet, addedRow);
+
+    sheet.columns.map(column => {
+        addedRow.getCell(column.key).border = RowBorderStyle;
+    });
 }
 
 
@@ -249,19 +270,25 @@ const calcClockOutTime = (shift) => {
     return moment(shift.clockOutTime).format("HH:mm");
 };
 
-const addShiftsPerEmployeeSheets = (workbook, company, shifts, year, month ) => {
-    if (!shifts || shifts.length === 0)
-        return;
+let addWorksheet = function (workbook, title) {
+    return workbook.addWorksheet(title, {
+        views: [{
+            state: 'frozen',
+            xSplit: 1,
+            ySplit: 1,
+            rightToLeft: true
+        }]
+    });
+};
 
-    // TODO need to extract this out of this method
-    let employees = ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
-
+const addShiftsPerEmployeeSheets = (workbook, company, employees, year, month) => {
     employees.forEach((employee) => {
         // create a sheet with the first row and column frozen
-        let sheet = workbook.addWorksheet(employee.fullName, {views:[ {state: 'frozen', xSplit: 1, ySplit:1, rightToLeft: true} ]});
+        let sheet = addWorksheet(workbook, employee.fullName);
 
         createShiftsPerEmployeeColumns(sheet, company);
         createShiftsPerEmployeeContent(sheet, employee, company, year, month );
+        createShiftsPerEmployeeTotalSection(sheet, employee);
     });
 
 }
@@ -273,11 +300,18 @@ let createWorkbook = function () {
     return workbook;
 };
 
+const processShiftsToEmployees = function (shifts, company) {
+    if (!shifts || shifts.length === 0)
+        return [];
+    return ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
+};
+
 const createExcel = (shifts, year, month, company) => {
     const workbook = createWorkbook();
-    addSummarySheet(workbook, company, shifts, year, month);
-    addShiftsPerEmployeeSheets(workbook, company, shifts, year, month );
+    let employees = processShiftsToEmployees(shifts, company);
 
+    addSummarySheet(workbook, company, employees);
+    addShiftsPerEmployeeSheets(workbook, company, employees, year, month);
 
     return workbook;
 };
