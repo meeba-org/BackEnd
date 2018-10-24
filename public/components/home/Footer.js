@@ -20,7 +20,7 @@ class Footer extends Component {
                         <h5>©2017 - נוצר ע"י <a target="_blank" href="https://www.linkedin.com/in/chenop/">
                             חן אופנהיים
                         </a>
-                            <div className="fb-like" styleName="like" data-href="https://www.meeba.org.il" data-layout="button_count" data-action="like" data-size="large" data-show-faces="false" data-share="false" />
+                            <div className="fb-like" styleName="like" data-href="https://www.facebook.com/meebaOnFace" data-layout="button_count" data-action="like" data-size="large" data-show-faces="false" data-share="false" />
                         </h5>
                     </div>
                 </div>
