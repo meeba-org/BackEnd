@@ -4,7 +4,7 @@ import config from "../config";
 import SubmissionError from "redux-form/es/SubmissionError";
 import {isUserAllowedLogin} from "../helpers/utils";
 import {GAAction} from "../helpers/GATypes";
-import {extractCompany, extractUser} from "../middlewares/GAMiddleware";
+import {extractCompany, extractUser} from "../middlewares/gaMiddleware";
 
 function handleLoginStart() {
     return {
