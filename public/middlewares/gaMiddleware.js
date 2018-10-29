@@ -1,6 +1,6 @@
 const UNKNOWN_USER = "UNKNOWN_USER";
 
-const GAMiddleware = ({dispatch}) => next => action => {
+const gaMiddleware = ({dispatch}) => next => action => {
     if (!action.ga) {
         return next(action);
     }
@@ -74,4 +74,4 @@ const extractAction = (actionType, actionInfo) => {
     return action;
 };
 
-export default GAMiddleware;
+export default gaMiddleware;
