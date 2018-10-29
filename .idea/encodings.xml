@@ -33,6 +33,7 @@
     <file url="file://$PROJECT_DIR$/public/Root.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/actions/actionTypes.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/actions/companyActions.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/actions/generalActions.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/actions/index.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/actions/loginLogoutActions.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/actions/reportsActions.js" charset="UTF-8" />

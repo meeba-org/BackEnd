@@ -5,6 +5,10 @@ const GAMiddleware = ({dispatch}) => next => action => {
         return next(action);
     }
 
+    // We want to track only production
+    if (localStorage.getItem('isDevEnv') === "true")
+        return next(action);
+
     let activeUser = localStorage.getItem('activeUser');
 
     let gaCategory = action.ga.category || extractCompanyFromJson(activeUser);

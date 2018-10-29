@@ -19,6 +19,10 @@ export const isDesktop = (state) => {
     return state.general.isDesktop;
 };
 
+export const isDevEnv = (state) => {
+    return state.general.isDevEnv;
+};
+
 export const isFeatureEnable = (state, feature) => {
     let company = getCompany(state);
     return (!company) ? false : company.features.includes(feature);
