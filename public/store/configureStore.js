@@ -3,7 +3,7 @@ import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 import createDebounce from 'redux-debounced';
-import api from "../middlewares/api";
+import apiMiddleware from "../middlewares/apiMiddleware";
 import gaMiddleware from "../middlewares/gaMiddleware";
 
 function configureStoreProd(initialState) {
@@ -14,7 +14,7 @@ function configureStoreProd(initialState) {
         // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
         createDebounce(),
         thunk,
-        api,
+        apiMiddleware,
         gaMiddleware
     ];
 
@@ -35,7 +35,7 @@ function configureStoreDev(initialState) {
         // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
         createDebounce(),
         thunk,
-        api,
+        apiMiddleware,
         gaMiddleware
     ];
 

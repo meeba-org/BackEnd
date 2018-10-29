@@ -3,7 +3,7 @@ import config from "../config";
 import axios from "axios";
 import {ErrorAction, HideLoading, ShowLoading} from "../actions/index";
 
-const api = ({dispatch}) => next => action => {
+const apiMiddleware = ({dispatch}) => next => action => {
     if (action.type !== actionTypes.API) {
         return next(action);
     }
@@ -40,4 +40,4 @@ const api = ({dispatch}) => next => action => {
     return next(action);
 };
 
-export default api;
+export default apiMiddleware;
