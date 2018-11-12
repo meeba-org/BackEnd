@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {convertTimeStrToMoment2, createShift} from "../helpers/utils";
+import {convertTimeStrToMoment2, createShift, DATE_FORMAT} from "../helpers/utils";
 import moment from "moment";
 import CheckBoxList from "./CheckBoxList";
 import PropTypes from 'prop-types';
@@ -18,7 +18,7 @@ class AddShiftsDialog extends PureComponent {
         super(props);
         this.state = {
             employeesToAdd: [],
-            startDate: moment(),
+            startDate: null,
             startTime: moment(8, "HH"),
             endTime: moment(8, "HH").add(8, 'hours')
         };
@@ -72,20 +72,26 @@ class AddShiftsDialog extends PureComponent {
     }
 
     createShift(employee) {
-        let {momentStart, momentEnd} = convertTimeStrToMoment2(this.state);
+        let timeObj = {
+            startDate: this.state.startDate || this.props.defaultStartDate,
+            startTime: this.state.startTime,
+            endTime: this.state.endTime,
+        };
+        let {momentStart, momentEnd} = convertTimeStrToMoment2(timeObj);
         return createShift(employee, momentStart, momentEnd);
     }
 
     render() {
-        let {onCancel, open, employees} = this.props;
+        let {onCancel, open, employees, defaultStartDate} = this.props;
         let {startDate, startTime, endTime, employeesToAdd} = this.state;
+        let defaultStartDateMoment = moment(defaultStartDate, DATE_FORMAT);
 
         return (
             <Dialog open={open} onClose={onCancel}>
                 <DialogTitle>הוספת משמרת</DialogTitle>
                 <DialogContent>
                     <DatePicker autoOk onChange={(date) => this.onUpdateDateChange(date)}
-                                value={startDate}
+                                value={startDate || defaultStartDateMoment}
                                 format="DD/MM/YYYY"
                                 style={{margin: "0 10px"}}
                                 disableFuture

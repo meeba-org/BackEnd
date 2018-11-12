@@ -109,6 +109,7 @@ class DailyReport extends React.PureComponent {
                                     onCreate={onCreateShift}
                                     onCancel={() => this.handleRequestClose()}
                                     employees={employees}
+                                    defaultStartDate={currentDay}
                                 />
                             </div>
 

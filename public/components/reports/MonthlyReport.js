@@ -21,6 +21,8 @@ import AddShiftsDialog from "../AddShiftsDialog";
 import {IfGranted} from "react-authorization";
 import * as ERoles from "../../helpers/ERoles";
 import Fade from "../Fade";
+import {DATE_FORMAT} from "../../helpers/utils";
+
 
 class MonthlyReport extends React.PureComponent {
     constructor(props) {
@@ -28,7 +30,7 @@ class MonthlyReport extends React.PureComponent {
 
         this.state = {
             collapsed: null,
-            startDayOfMonth: moment().startOf('month').format('MM-YYYY'),
+            startDayOfMonth: moment().startOf('month').format(DATE_FORMAT),
             open: false,
         };
     }
@@ -47,7 +49,7 @@ class MonthlyReport extends React.PureComponent {
         this.setState({collapsed: newCollapsedelement});
     }
 
-    generateMonthStr = (month, year) => moment().year(year).month(month).startOf('month').format('MM-YYYY');
+    generateMonthStr = (month, year) => moment().year(year).month(month).startOf('month').format(DATE_FORMAT);
 
     generateMonths() {
         return [
@@ -71,7 +73,7 @@ class MonthlyReport extends React.PureComponent {
     }
 
     handleGenerateExcelClick = () => {
-        let value = moment(this.state.startDayOfMonth, "MM-YYYY");
+        let value = moment(this.state.startDayOfMonth, DATE_FORMAT);
 
         this.props.onGenerateExcel(value.format('MM'), value.format('YYYY'));
     };
@@ -84,7 +86,7 @@ class MonthlyReport extends React.PureComponent {
     }
 
     onStartDayOfMonthChange(selectedMonth) {
-        let value = moment(selectedMonth, "MM-YYYY");
+        let value = moment(selectedMonth, DATE_FORMAT);
         this.props.onStartDayOfMonthChange(value.format('MM'), value.format('YYYY'));
     }
 
@@ -97,17 +99,17 @@ class MonthlyReport extends React.PureComponent {
     }
 
     onCreateShift = (shift) => {
-        let value = moment(this.state.startDayOfMonth, "MM-YYYY");
+        let value = moment(this.state.startDayOfMonth, DATE_FORMAT);
         this.props.onCreateShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
     onUpdateShift = (shift) => {
-        let value = moment(this.state.startDayOfMonth, "MM-YYYY");
+        let value = moment(this.state.startDayOfMonth, DATE_FORMAT);
         this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
     onDeleteShift = (shift) => {
-        let value = moment(this.state.startDayOfMonth, "MM-YYYY");
+        let value = moment(this.state.startDayOfMonth, DATE_FORMAT);
         this.props.onDeleteShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
@@ -129,6 +131,7 @@ class MonthlyReport extends React.PureComponent {
                                 onCreate={this.onCreateShift}
                                 onCancel={() => this.handleCloseAddDialog()}
                                 employees={employees}
+                                defaultStartDate={startDayOfMonth}
                             />
 
                             <Select
