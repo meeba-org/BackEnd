@@ -90,7 +90,7 @@ class ShiftContainer extends React.PureComponent {
     };
 
     getErrors = () => {
-        let {input, getIntersectShift} = this.props;
+        let {input, getIntersectShift, mode} = this.props;
         let shift = input.value;
         let {clockInTime, clockOutTime} = shift;
         let isShiftTooLong = moment(clockOutTime).diff(moment(clockInTime), 'hours', true) > 12;
@@ -100,9 +100,11 @@ class ShiftContainer extends React.PureComponent {
             return "משמרת מעל 12 שעות " + clockOutTimeStr + " - " + clockInTimeStr;
         }
 
-        let intersectedShift = getIntersectShift(shift);
-        if (intersectedShift) {
-            return "קיימת משמרת חופפת";
+        if (mode === ReportModes.Report) { // check relevant only for Report mode
+            let intersectedShift = getIntersectShift(shift);
+            if (intersectedShift) {
+                return "קיימת משמרת חופפת";
+            }
         }
 
         return undefined;
