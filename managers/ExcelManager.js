@@ -159,31 +159,37 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
             dayInWeek: calcDayInWeek(m),
         };
 
-        let shift = getShift(employee.shifts, m);
+        let shifts = getShifts(employee.shifts, m);
 
-        if (!shift) {
+        if (!shifts || shifts.length === 0) {
             addDayRow(sheet, row, m);
             continue;
         }
 
-        let hoursAnalysis = shift.hoursAnalysis;
-        row = {
-            ...row,
-            clockInTime: calcClockInTime(shift),
-            clockOutTime: calcClockOutTime(shift),
-            shiftLength: hoursAnalysis.shiftLength || "",
-            regularHours: hoursAnalysis.regularHours || "",
-            extra125Hours: hoursAnalysis.extra125Hours || "",
-            extra150Hours: hoursAnalysis.extra150Hours || "",
-            extra175Hours: hoursAnalysis.extra175Hours || "",
-            extra200Hours: hoursAnalysis.extra200Hours || "",
-        };
+        for (let i = 0 ; i < shifts.length ; i++)
+        {
+            let shift = shifts[i];
 
-        if (shouldAddCommuteData(company, shift)) {
-            row = addCommuteData(company, row, shift);
+            let hoursAnalysis = shift.hoursAnalysis;
+            row = {
+                date: i === 0 ? row.date : "",
+                dayInWeek: i === 0 ? row.dayInWeek : "",
+                clockInTime: calcClockInTime(shift),
+                clockOutTime: calcClockOutTime(shift),
+                shiftLength: hoursAnalysis.shiftLength || "",
+                regularHours: hoursAnalysis.regularHours || "",
+                extra125Hours: hoursAnalysis.extra125Hours || "",
+                extra150Hours: hoursAnalysis.extra150Hours || "",
+                extra175Hours: hoursAnalysis.extra175Hours || "",
+                extra200Hours: hoursAnalysis.extra200Hours || "",
+            };
+
+            if (shouldAddCommuteData(company, shift)) {
+                row = addCommuteData(company, row, shift);
+            }
+
+            addDayRow(sheet, row, shift.clockInTime);
         }
-
-        addDayRow(sheet, row, shift.clockInTime);
     }
 };
 
@@ -259,13 +265,14 @@ const markBorders = (sheet, row, borderStyle) => {
     });
 }
 
-function getShift(shifts, m) {
+function getShifts(shifts, m) {
+    let relevantShifts = [];
     for (const shift of shifts) {
         if (moment(shift.clockInTime).isSame(m, "day"))
-            return shift;
+            relevantShifts.push(shift);
     }
 
-    return null;
+    return relevantShifts;
 }
 
 const calcClockInDate = (shift) => {
