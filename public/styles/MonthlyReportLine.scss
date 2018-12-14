@@ -10,6 +10,10 @@
         flex-direction: row;
         align-items: baseline;
 
+        .toggle-button {
+            padding-left: 0px;
+        }
+
         .base-element {
             padding: 0 10px 0 10px;
             height: 35px;
@@ -28,7 +32,6 @@
     }
 
     .monthly-report-body {
-
-        padding-right: 60px;
+        padding-right: 45px;
     }
 }

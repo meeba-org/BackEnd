@@ -19,11 +19,11 @@ const ReportShift = (props) => {
 
     return (
         <Fragment>
+            {showNames &&
             <div className={styles["name-container"]}>
-                {showNames &&
                 <div className={styles["name"]}>{shift.user && shift.user.fullName}</div>
-                }
             </div>
+            }
 
             <div className={styles["shift-members"]}>
                 <div className={styles["date"]}>
@@ -32,28 +32,26 @@ const ReportShift = (props) => {
                     <DatePicker autoOk onChange={(date) => onUpdateStartDate(date, shift)}
                                 value={shift.clockInTime}
                                 format="DD/MM/YYYY"
-                                style={{margin: "0 10px"}}
+                                style={{margin: "0 10px 0 0"}}
                                 disableFuture
                     />
                 </div>
 
-                <div className={styles["times"]}>
-                    <TimePicker
-                        className={styles["time"]}
-                        ampm={false}
-                        autoOk
-                        value={shift.clockInTime}
-                        onChange={(time) => onUpdateStartTime(time, shift)}
-                    />
+                <TimePicker
+                    className={styles["time"]}
+                    ampm={false}
+                    autoOk
+                    value={shift.clockInTime}
+                    onChange={(time) => onUpdateStartTime(time, shift)}
+                />
 
-                    <TimePicker
-                        className={styles["time"]}
-                        ampm={false}
-                        autoOk
-                        value={shift.clockOutTime}
-                        onChange={(time) => onUpdateEndTime(time, shift)}
-                    />
-                </div>
+                <TimePicker
+                    className={styles["time"]}
+                    ampm={false}
+                    autoOk
+                    value={shift.clockOutTime}
+                    onChange={(time) => onUpdateEndTime(time, shift)}
+                />
             </div>
             <Warning warning={errors}/>
             <Note text={shift.note} onClick={showShiftDialog}/>

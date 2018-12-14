@@ -6,12 +6,10 @@
 
 .shift-members {
     display: flex;
-    @media (max-width: 576px) {
-        flex-direction: column;
-    }
-    @media (min-width: 577px) {
-        flex-direction: row;
-    }
+    justify-content: space-between;
+    width: 100%;
+    max-width: 140px;
+    flex-direction: row;
 
     .date {
         .hebrew-day {
@@ -23,20 +21,13 @@
         width: 130px;
     }
 
-    .times {
-        @media (max-width: 576px) {
-            margin: 0 10px;
-            display: flex;
-            flex-direction: column;
-        }
-        .time {
-            width: 50px;
-            direction: ltr;
-            margin: 0 10px;
+    .time {
+        width: 50px;
+        direction: ltr;
+        margin: 0 10px;
 
-            input {
-                text-align: center
-            }
+        input {
+            text-align: center
         }
     }
 }

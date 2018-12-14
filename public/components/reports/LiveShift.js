@@ -30,25 +30,23 @@ const LiveShift = (props) => {
             </div>
 
             <div className={styles["shift-members"]}>
-                <div className={styles["times"]}>
-                    <TimePicker
-                        className={styles["time"]}
-                        ampm={false}
-                        autoOk
-                        value={shift.clockInTime}
-                        onChange={(time) => onUpdateStartTime(time, shift)}
-                    />
+                <TimePicker
+                    className={styles["time"]}
+                    ampm={false}
+                    autoOk
+                    value={shift.clockInTime}
+                    onChange={(time) => onUpdateStartTime(time, shift)}
+                />
 
-                    {!!shift.clockOutTime &&
-                    <TimePicker
-                        className={styles["time"]}
-                        ampm={false}
-                        autoOk
-                        value={shift.clockOutTime}
-                        onChange={(time) => onUpdateEndTime(time, shift)}
-                    />
-                    }
-                </div>
+                {!!shift.clockOutTime &&
+                <TimePicker
+                    className={styles["time"]}
+                    ampm={false}
+                    autoOk
+                    value={shift.clockOutTime}
+                    onChange={(time) => onUpdateEndTime(time, shift)}
+                />
+                }
             </div>
             <Warning warning={errors}/>
             <Note text={shift.note} onClick={showShiftDialog}/>
