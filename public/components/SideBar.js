@@ -131,7 +131,7 @@ class SideBar extends React.Component {
                     open={open}
                     onClose={toggleSideBar}
                     onOpen={toggleSideBar}
-                    anchor="left"
+                    anchor="right"
             >
                     <div className={CSSModulesStyles["drawer-header"]}
                          onClick={toggleSideBar}>
