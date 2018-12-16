@@ -10,9 +10,9 @@
     align-items: center;
 
     .footer-container {
-        @media (min-width: $mobileWidth) {
-            width: 768px;
-        }
+        //@media (min-width: $mobileWidth) {
+        //    width: 768px;
+        //}
 
         .weak {
             color: material-color('brown', '100')
