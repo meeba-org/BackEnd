@@ -30,7 +30,7 @@ class ShiftsList extends React.PureComponent {
         for (let i = 0; i < fields.length; i++) {
             let s = fields.get(i);
 
-            if (!this.isSameShift(shift, s) && this.isShiftsIntersect(shift, s))
+            if (!this.isSameShift(shift, s) && this.isSameUser(shift, s) && this.isShiftsIntersect(shift, s))
                 return s;
         }
 
@@ -39,6 +39,10 @@ class ShiftsList extends React.PureComponent {
 
     isSameShift(s1, s2) {
         return s1._id === s2._id;
+    }
+
+    isSameUser(s1, s2) {
+        return s1.user._id === s2.user._id;
     }
 
     isShiftsIntersect(s1, s2) {
