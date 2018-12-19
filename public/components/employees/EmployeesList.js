@@ -6,7 +6,6 @@ import React from 'react';
 import CSSModules from "react-css-modules";
 import styles from "../../styles/EmployeesList.scss";
 import PropTypes from 'prop-types';
-import Employee from "./Employee";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -19,6 +18,7 @@ import Field from "redux-form/es/Field";
 import AddIcon from '@material-ui/icons/Add';
 import NoData from "../NoData";
 import Fade from "../Fade";
+import EmployeeContainer from "./EmployeeContainer";
 
 class EmployeesList extends React.Component {
 
@@ -40,7 +40,7 @@ class EmployeesList extends React.Component {
     }
 
     render() {
-        const {fields, showMobileAppModal, showEmployeeDialog} = this.props;
+        const {fields, showMobileAppModal, showEmployeeDialog, isDesktop} = this.props;
         return (
             <Card>
                 <CardHeader title="עובדים"/>
@@ -58,24 +58,26 @@ class EmployeesList extends React.Component {
                         </Tooltip>
                     </div>
                     <Divider className={styles["divider"]}/>
-                        {fields && fields.length > 0 &&
+                        {fields && fields.length > 0 && isDesktop &&
                     <Grid className={styles["header"]} container spacing={24}>
-                        <Grid item xs={6} sm={3}>שם</Grid>
-                        <Grid item xs={6} sm={2} className={styles["header-item"]}>ת.ז.</Grid>
-                        <Grid item xs={6} sm={1} className={styles["header-item"]}>שכר לשעה</Grid>
-                        <Grid item xs={6} sm={2} className={styles["header-item"]}>נסיעות</Grid>
+                        <Grid item sm={3}>שם</Grid>
+                        <Grid item sm={2} className={styles["header-item"]}>ת.ז.</Grid>
+                        <Grid item sm={1} className={styles["header-item"]}>שכר לשעה</Grid>
+                        <Grid item sm={2} className={styles["header-item"]}>נסיעות</Grid>
                     </Grid>
                     }
                     {fields && fields.map((employeeIndex, index) =>
                         (<Fade key={index}>
-                            <Field component={Employee} name={employeeIndex} key={index}
+                            <Field component={EmployeeContainer}
+                                   name={employeeIndex}
+                                   index={index}
                                    onDelete={() => this.onDelete(fields, index)}
                                    onUpdate={(employee) => this.onUpdate(employee)}
                                    showEmployeeDialog={showEmployeeDialog}
                             />
                         </Fade>)
                     )}
-                    {(!fields || (fields.length == 0)) &&
+                    {(!fields || (fields.length === 0)) &&
                     <NoData text="אין עובדים - בוא ננסה להוסיף!"/>
                     }
 
@@ -93,6 +95,7 @@ EmployeesList.propTypes = {
     onDelete: PropTypes.func.isRequired,
     showMobileAppModal: PropTypes.func.isRequired,
     showEmployeeDialog: PropTypes.func.isRequired,
+    isDesktop: PropTypes.bool,
 };
 
 export default CSSModules(EmployeesList, styles);

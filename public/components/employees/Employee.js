@@ -30,23 +30,6 @@ class Employee extends React.Component {
         hover: false
     };
 
-    onUpdate(e, name) {
-        let {input} = this.props;
-
-        let employee = {
-            ...input.value,
-            [name]: e.target.value,
-        };
-
-        input.onChange(employee);
-    }
-
-    onBlur = () => {
-        let {input, onUpdate} = this.props;
-
-        onUpdate(input.value);
-    };
-
     onMouseEnter = () => {
         this.setState({hover: true});
     };
@@ -62,38 +45,39 @@ class Employee extends React.Component {
     };
 
     render() {
-        let {input, onDelete, classes} = this.props;
+        let {input, onDelete, classes, onBlur, onUpdate} = this.props;
         return (
                 <Grid container spacing={24} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                    <Grid item xs={6} sm={3}>
+                    <Grid item sm={3}>
                         <Input value={input.value.fullName} placeholder="שם"
-                               onChange={(e) => this.onUpdate(e, "fullName")}
-                               onBlur={this.onBlur}
+                               onChange={(e) => onUpdate(e, "fullName")}
+                               onBlur={onBlur}
+                               classes={{root: classes.root}}
                         />
                     </Grid>
-                    <Grid item xs={6} sm={2}>
+                    <Grid item sm={2}>
                         <Input value={input.value.uid} placeholder="ת.ז."
-                               onChange={(e) => this.onUpdate(e, "uid")}
-                               onBlur={this.onBlur}
+                               onChange={(e) => onUpdate(e, "uid")}
+                               onBlur={onBlur}
                                classes={{root: classes.root}}
                         />
                     </Grid>
-                    <Grid item xs={6} sm={1}>
+                    <Grid item sm={1}>
                         <Input value={input.value.hourWage} placeholder="שכר שעתי"
-                               onChange={(e) => this.onUpdate(e, "hourWage")}
-                               onBlur={this.onBlur}
+                               onChange={(e) => onUpdate(e, "hourWage")}
+                               onBlur={onBlur}
                                classes={{root: classes.root}}
                         />
                     </Grid>
-                    <Grid item xs={6} sm={2}>
+                    <Grid item sm={2}>
                         <Input value={input.value.transportation} placeholder="נסיעות"
-                               onChange={(e) => this.onUpdate(e, "transportation")}
-                               onBlur={this.onBlur}
+                               onChange={(e) => onUpdate(e, "transportation")}
+                               onBlur={onBlur}
                                classes={{root: classes.root}}
                                endAdornment={<InputAdornment position="end">{input.value.transportPaymentPer === 0 ? "למשמרת" : "חודשי"}</InputAdornment>}
                         />
                     </Grid>
-                    <Grid item xs={2} sm={2}>
+                    <Grid item sm={2}>
                         {this.state.hover &&
                         <div>
                             <Tooltip title="עריכה" placement="top">

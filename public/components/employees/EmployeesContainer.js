@@ -6,6 +6,7 @@ import {createUser, fetchUsers, showEditEmployeeModal, updateUser} from "../../a
 import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
 import {showDeleteUserModal, showMobileAppModal} from "../../actions/usersActions";
+import * as selectors from "../../selectors";
 
 class EmployeesContainer extends React.Component {
     componentDidMount() {
@@ -13,7 +14,7 @@ class EmployeesContainer extends React.Component {
     }
 
     render() {
-        const {handleSubmit, deleteUser, updateUser, createUser, showMobileAppModal, showEmployeeDialog} = this.props;
+        const {handleSubmit, deleteUser, updateUser, createUser, showMobileAppModal, showEmployeeDialog, isDesktop} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray
@@ -24,6 +25,7 @@ class EmployeesContainer extends React.Component {
                     onCreate={createUser}
                     showMobileAppModal={showMobileAppModal}
                     showEmployeeDialog={showEmployeeDialog}
+                    isDesktop={isDesktop}
                 />
             </form>
         );
@@ -45,7 +47,8 @@ function mapStateToProps(state) {
     return {
         initialValues: {
             employees: state.users
-        }
+        },
+        isDesktop: selectors.isDesktop(state)
     };
 }
 
