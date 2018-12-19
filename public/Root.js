@@ -11,7 +11,6 @@ import orange from '@material-ui/core/colors/orange';
 import JssProvider from 'react-jss/lib/JssProvider';
 import {create} from 'jss';
 import {createGenerateClassName, jssPreset} from '@material-ui/core/styles';
-import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 const muiTheme = createMuiTheme({
     typography: {
@@ -61,10 +60,6 @@ const jss = create(jssPreset());
 
 const Root = () =>
     (<MuiThemeProvider theme={muiTheme}>
-        <MessengerCustomerChat
-            pageId="2039324052970425"
-            appId="976991712448032"
-        />
         <Provider store={store}>
             <JssProvider jss={jss} generateClassName={generateClassName}>
                 <Router history={history} routes={routes}/>
