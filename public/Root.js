@@ -33,10 +33,6 @@ const muiTheme = createMuiTheme({
             shrink: {
                 transformOrigin: "top right"
             },
-            // formControl: {
-            //     left: "initial",
-            //     right:0
-            // }
         },
         MuiTooltip: {
             tooltip: {
