@@ -55,6 +55,7 @@ class EmployeeMobile extends React.Component {
                                onChange={(e) => onUpdate(e, "hourWage")}
                                onBlur={onBlur}
                                classes={{root: classes.root}}
+                               endAdornment={<InputAdornment position="end">לשעה</InputAdornment>}
                         />
                     </Grid>
                     <Grid item xs={6}>
