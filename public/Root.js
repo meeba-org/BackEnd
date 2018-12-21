@@ -45,6 +45,11 @@ const muiTheme = createMuiTheme({
             checked: {
                 transform: "translateX(20px)"
             }
+        },
+        MuiPickersTimePicker: {
+            hourMinuteLabel: {
+                direction: "ltr"
+            }
         }
     },
     palette: {
