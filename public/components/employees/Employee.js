@@ -9,7 +9,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CSSModules from "react-css-modules";
 import scssStyles from "../../styles/Employees.scss";
-import Edit from "../../../node_modules/@material-ui/icons/Edit";
+import Settings from '@material-ui/icons/Settings';
 
 const styles = {
     root: {
@@ -80,8 +80,8 @@ class Employee extends React.Component {
                     <Grid item sm={2}>
                         {this.state.hover &&
                         <div>
-                            <Tooltip title="עריכה" placement="top">
-                                <IconButton className={styles["elem"]} onClick={this.showEmployeeDialog}><Edit/></IconButton>
+                            <Tooltip title="הגדרות נוספות" placement="top">
+                                <IconButton className={styles["elem"]} onClick={this.showEmployeeDialog}><Settings/></IconButton>
                             </Tooltip>
                             <Tooltip title="מחיקה" placement="top">
                                 <IconButton onClick={onDelete}><DeleteIcon/></IconButton>
