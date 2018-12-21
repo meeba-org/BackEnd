@@ -7,6 +7,8 @@ import scssStyles from "../../styles/Employees.scss";
 import Button from "@material-ui/core/Button";
 import withStyles from '@material-ui/core/styles/withStyles';
 import CSSModules from "react-css-modules";
+import DeleteIcon from '@material-ui/icons/Delete';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const styles = {
     root: {
@@ -64,8 +66,12 @@ class EmployeeMobile extends React.Component {
                         />
                     </Grid>
                     <Grid item xs={12} className={scssStyles["buttons-container"]} >
-                            <Button variant="raised" color="primary" onClick={this.showEmployeeDialog}>הגדרות</Button>
-                            <Button color="primary" onClick={onDelete}>מחיקה</Button>
+                            <Button color="primary" onClick={this.showEmployeeDialog}>
+                                <SettingsIcon />
+                            </Button>
+                            <Button color="primary" onClick={onDelete}>
+                                <DeleteIcon />
+                            </Button>
                     </Grid>
                 </Grid>
             );
