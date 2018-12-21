@@ -10,7 +10,8 @@ import CSSModules from "react-css-modules";
 
 const styles = {
     root: {
-        display: "flex"
+        display: "flex",
+        margin: "10px"
     },
     switchRoot: {
         direction: "ltr"
@@ -32,7 +33,7 @@ class EmployeeMobile extends React.Component {
     render() {
         let {input, onDelete, classes, onBlur, onUpdate, index} = this.props;
         return (
-                <Grid container spacing={24} className={scssStyles[index % 2 === 0 ? "odd" : "even" ]}>
+                <Grid container className={scssStyles[index % 2 === 0 ? "odd" : "even" ]}>
                     <Grid item xs={12}>
                         <Input value={input.value.fullName} placeholder="שם"
                                onChange={(e) => onUpdate(e, "fullName")}
@@ -67,7 +68,7 @@ class EmployeeMobile extends React.Component {
                             <Button color="primary" onClick={onDelete}>מחיקה</Button>
                     </Grid>
                 </Grid>
-        );
+            );
     }
 }
 
