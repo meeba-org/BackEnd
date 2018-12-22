@@ -74,22 +74,31 @@
 <body dir="rtl">
 
     <!-- Facebook Customer Chat Plugin -->
-    <!-- Load Facebook SDK for JavaScript -->
     <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = 'https://connect.facebook.net/he_IL/sdk/xfbml.customerchat.js';
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-
-    <!-- Your customer chat code -->
     <div class="fb-customerchat"
          attribution=setup_tool
          page_id="2039324052970425"
-         theme_color="#ff7e29">
+         theme_color="#20cef5"
+         logged_in_greeting="Bạn có muốn hỏi gì không?"
+         logged_out_greeting="Bạn có muốn hỏi gì không?">
     </div>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId            : '976991712448032',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v3.2'
+            });
+        };
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     <!-- Facebook Customer Chat Plugin - END -->
 
 <div id="react-app"></div>
