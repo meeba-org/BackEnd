@@ -12,9 +12,10 @@ import Note from "./Note";
 import CarCost from "./CarCost";
 import Warning from "./Warning";
 import BusCost from "./BusCost";
+import Map from "./Map";
 
 const ReportShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog, isDesktop} = props;
+    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog, showMapDialog, isDesktop} = props;
     let hebrewDay = momentToDay(shift.clockInTime);
 
     return (
@@ -59,7 +60,8 @@ const ReportShift = (props) => {
                     <Note text={shift.note} onClick={showShiftDialog}/>
                     <CarCost data={shift.commuteCost} onClick={showShiftDialog}/>
                     <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
-                </Fragment>
+                    <Map location={shift.location} onClick={showMapDialog} />
+                 </Fragment>
             }
             {hover && isDesktop &&
             <div>

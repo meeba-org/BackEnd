@@ -161,6 +161,19 @@ export const showEditShiftModal = (shift, callBack) => ({
     }
 });
 
+export const showMapModal = (shift, callBack) => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: 'MAP',
+        modalProps: {
+            entity: shift,
+            callBack,
+            open: true,
+            key: shift._id
+        }
+    }
+});
+
 export const deleteShift = (shift, dispatch, month, year) => ({
     type: actions.API,
     payload: {
