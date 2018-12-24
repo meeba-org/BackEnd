@@ -6,6 +6,8 @@ import moment from "moment";
 import styles from "../../styles/Shift.scss";
 import LiveShift from "./LiveShift";
 import ReportShift from "./ReportShift";
+import * as selectors from "../../selectors";
+import connect from "react-redux/es/connect/connect";
 
 class ShiftContainer extends React.PureComponent {
 
@@ -112,7 +114,7 @@ class ShiftContainer extends React.PureComponent {
 
 
     render() {
-        let {showNames, input, mode} = this.props;
+        let {showNames, input, mode, isDesktop} = this.props;
         const {focus, hover} = this.state;
         let errors = this.getErrors();
         let classes1 = "shift " + (focus ? "focus" : "");
@@ -144,6 +146,7 @@ class ShiftContainer extends React.PureComponent {
                         onUpdateEndTime={this.onUpdateEndTime}
                         onDelete={this.onDelete}
                         showShiftDialog={this.showShiftDialog}
+                        isDesktop={isDesktop}
                     />
                 }
             </div>
@@ -160,4 +163,10 @@ ShiftContainer.propTypes = {
     mode: PropTypes.number.isRequired,
 };
 
-export default CSSModules(ShiftContainer, styles, {allowMultiple: true});
+const mapStateToProps = (state) => {
+    return {
+        isDesktop: selectors.isDesktop(state)
+    };
+};
+
+export default connect(mapStateToProps)(CSSModules(ShiftContainer, styles, {allowMultiple: true}));
