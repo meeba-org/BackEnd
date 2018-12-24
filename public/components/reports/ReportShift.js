@@ -14,7 +14,7 @@ import Warning from "./Warning";
 import BusCost from "./BusCost";
 
 const ReportShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog} = props;
+    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog, isDesktop} = props;
     let hebrewDay = momentToDay(shift.clockInTime);
 
     return (
@@ -53,11 +53,15 @@ const ReportShift = (props) => {
                     onChange={(time) => onUpdateEndTime(time, shift)}
                 />
             </div>
-            <Warning warning={errors}/>
-            <Note text={shift.note} onClick={showShiftDialog}/>
-            <CarCost data={shift.commuteCost} onClick={showShiftDialog}/>
-            <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
-            {hover &&
+            {isDesktop &&
+                <Fragment>
+                    <Warning warning={errors}/>
+                    <Note text={shift.note} onClick={showShiftDialog}/>
+                    <CarCost data={shift.commuteCost} onClick={showShiftDialog}/>
+                    <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
+                </Fragment>
+            }
+            {hover && isDesktop &&
             <div>
                 <Tooltip title="עריכה" placement="top">
                     <IconButton className={styles["elem"]} onClick={showShiftDialog}><Edit/></IconButton>
