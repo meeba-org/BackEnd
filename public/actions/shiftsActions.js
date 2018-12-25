@@ -161,10 +161,10 @@ export const showEditShiftModal = (shift, callBack) => ({
     }
 });
 
-export const showMapModal = (shift, callBack) => ({
+export const showLocationModal = (shift, callBack) => ({
     type: 'SHOW_MODAL',
     payload: {
-        modalType: 'MAP',
+        modalType: 'LOCATION_MODAL',
         modalProps: {
             entity: shift,
             callBack,

@@ -68,8 +68,10 @@ class ShiftContainer extends React.PureComponent {
         showShiftDialog(input.value, (editedShift) => input.onChange(editedShift));
     };
 
-    showMapModal = () => {
-        console.log("what?")
+    showLocationModal = () => {
+        let {showLocationModal, input} = this.props;
+
+        showLocationModal(input.value);
     };
 
     onShiftComplete = () => {
@@ -150,7 +152,7 @@ class ShiftContainer extends React.PureComponent {
                         onUpdateEndTime={this.onUpdateEndTime}
                         onDelete={this.onDelete}
                         showShiftDialog={this.showShiftDialog}
-                        showMapModal={this.showMapModal}
+                        showLocationModal={this.showLocationModal}
                         isDesktop={isDesktop}
                     />
                 }

@@ -15,10 +15,10 @@ export const hideDeleteEntityModal = () => ({
     }
 });
 
-export const hideMapModal = () => ({
+export const hideLocationModal = () => ({
     type: 'HIDE_MODAL',
     payload : {
-        modalType: 'MAP',
+        modalType: 'LOCATION_MODAL',
         modalProps: {
             open: false
         }

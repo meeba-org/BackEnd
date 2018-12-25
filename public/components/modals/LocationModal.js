@@ -3,13 +3,13 @@ import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
-import {hideMapModal} from "../../actions/index";
+import {hideLocationModal} from "../../actions/index";
 import PropTypes from 'prop-types';
 
-class MapModal extends Component {
+class LocationModal extends Component {
 
     handleClose = () => {
-        this.props.dispatch(hideMapModal());
+        this.props.dispatch(hideLocationModal());
     };
 
     render() {
@@ -26,10 +26,10 @@ class MapModal extends Component {
     }
 }
 
-MapModal.propTypes = {
+LocationModal.propTypes = {
     entity: PropTypes.object,
     dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
 };
 
-export default connect()(MapModal);
+export default connect()(LocationModal);
