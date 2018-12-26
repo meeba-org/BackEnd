@@ -16,9 +16,9 @@ const MbGoogleMap = compose(
 )((props) =>
     (<GoogleMap
         defaultZoom={17}
-        defaultCenter={{ lat: Number(props.location.latitude), lng: Number(props.location.longitude) }}
+        defaultCenter={{ lat: parseFloat(props.location.latitude), lng: parseFloat(props.location.longitude) }}
     >
-        <Marker position={{ lat: Number(props.location.latitude), lng: Number(props.location.longitude) }}  />
+        <Marker position={{ lat: parseFloat(props.location.latitude), lng: parseFloat(props.location.longitude) }}  />
     </GoogleMap>)
 );
 
