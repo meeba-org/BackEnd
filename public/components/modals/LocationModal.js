@@ -7,6 +7,14 @@ import {hideLocationModal} from "../../actions/index";
 import PropTypes from 'prop-types';
 import DialogContent from '@material-ui/core/DialogContent';
 import MbGoogleMap from "../MbGoogleMap";
+import withStyles from "@material-ui/core/styles/withStyles";
+
+const styles = {
+    dialogContentRoot: {
+        display: "flex",
+        width: "100%"
+    }
+};
 
 class LocationModal extends Component {
 
@@ -15,10 +23,10 @@ class LocationModal extends Component {
     };
 
     render() {
-        let {open, entity} = this.props;
+        let {open, entity, classes} = this.props;
         return (
-            <Dialog onClose={this.handleClose} open={open}>
-                <DialogContent>
+            <Dialog onClose={this.handleClose} open={open} classes={{paper: classes.dialogContentRoot}}>
+                <DialogContent >
                     {entity && entity.location &&
                         <MbGoogleMap location={entity.location}/>
                     }
@@ -39,4 +47,4 @@ LocationModal.propTypes = {
     open: PropTypes.bool.isRequired,
 };
 
-export default connect()(LocationModal);
+export default connect()(withStyles(styles)(LocationModal));
