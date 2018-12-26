@@ -13,6 +13,9 @@ const styles = {
     dialogContentRoot: {
         display: "flex",
         width: "100%"
+    },
+    dialogActions: {
+        justifyContent: "center"
     }
 };
 
@@ -31,7 +34,7 @@ class LocationModal extends Component {
                         <MbGoogleMap location={entity.location}/>
                     }
                 </DialogContent>
-                <DialogActions>
+                <DialogActions classes={{root: classes.dialogActions}}>
                     <Button onClick={this.handleClose} color="primary">
                         סגור
                     </Button>
