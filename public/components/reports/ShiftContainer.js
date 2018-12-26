@@ -71,7 +71,8 @@ class ShiftContainer extends React.PureComponent {
     showLocationModal = () => {
         let {showLocationModal, input} = this.props;
 
-        showLocationModal(input.value);
+        if (input.value.location)
+            showLocationModal(input.value);
     };
 
     onShiftComplete = () => {
