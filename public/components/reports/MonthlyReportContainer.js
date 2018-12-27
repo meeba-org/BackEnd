@@ -8,6 +8,7 @@ import {createShift, showDeleteShiftModal, showEditShiftModal, updateShift} from
 import {fetchUsers} from "../../actions/usersActions";
 import * as selectors from "../../selectors";
 import {fetchMonthlyReport, generateExcelReport} from "../../actions/reportsActions";
+import {showLocationModal} from "../../actions";
 
 class MonthlyReportContainer extends React.PureComponent {
 
@@ -34,7 +35,7 @@ class MonthlyReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, updateShift, showShiftDialog, createShift, deleteShift, employees, userRole} = this.props;
+        const {handleSubmit, updateShift, showShiftDialog, showLocationModal, createShift, deleteShift, employees, userRole} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="employeeShiftsReports"
@@ -42,6 +43,7 @@ class MonthlyReportContainer extends React.PureComponent {
                             employees={employees}
                             onDeleteShift={deleteShift}
                             showShiftDialog={showShiftDialog}
+                            showLocationModal={showLocationModal}
                             onUpdateShift={updateShift}
                             onCreateShift={createShift}
                             onDataChange={this.onDataChange}
@@ -65,6 +67,7 @@ MonthlyReportContainer.propTypes = {
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
+    showLocationModal: PropTypes.func.isRequired,
     userRole: PropTypes.string,
 };
 
@@ -89,6 +92,7 @@ function mapDispatchToProps(dispatch) {
         createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
         showShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
+        showLocationModal: (shift, callBack) => dispatch(showLocationModal(shift, callBack)),
     };
 }
 

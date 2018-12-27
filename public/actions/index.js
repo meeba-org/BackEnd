@@ -15,6 +15,16 @@ export const hideDeleteEntityModal = () => ({
     }
 });
 
+export const hideLocationModal = () => ({
+    type: 'HIDE_MODAL',
+    payload : {
+        modalType: 'LOCATION_MODAL',
+        modalProps: {
+            open: false
+        }
+    }
+});
+
 export const hideEditShiftModal = () => ({
     type: 'HIDE_MODAL',
     payload : {
