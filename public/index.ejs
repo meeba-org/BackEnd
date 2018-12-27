@@ -74,14 +74,8 @@
 <body dir="rtl">
 
     <!-- Facebook Customer Chat Plugin -->
+    <!-- Load Facebook SDK for JavaScript -->
     <div id="fb-root"></div>
-    <div class="fb-customerchat"
-         attribution=setup_tool
-         page_id="2039324052970425"
-         theme_color="#20cef5"
-         logged_in_greeting="Bạn có muốn hỏi gì không?"
-         logged_out_greeting="Bạn có muốn hỏi gì không?">
-    </div>
     <script>
         window.fbAsyncInit = function() {
             FB.init({
@@ -95,10 +89,18 @@
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s); js.id = id;
-            js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+            js.src = 'https://connect.facebook.net/he_IL/sdk/xfbml.customerchat.js';
             fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+    <!-- Your customer chat code -->
+    <div class="fb-customerchat"
+         attribution=setup_tool
+         page_id="2039324052970425"
+         theme_color="#ff7e29"
+         logged_in_greeting="הי, זהו מענה אנושי מאויש 24 שעות, נסה אותי!"
+         logged_out_greeting="הי, זהו מענה אנושי מאויש 24 שעות, נסה אותי!">
+    </div>
     <!-- Facebook Customer Chat Plugin - END -->
 
 <div id="react-app"></div>
