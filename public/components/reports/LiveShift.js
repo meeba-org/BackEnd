@@ -13,9 +13,10 @@ import Note from "./Note";
 import Warning from "./Warning";
 import CarCost from "./CarCost";
 import BusCost from "./BusCost";
+import Location from "./Location";
 
 const LiveShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete, showShiftDialog} = props;
+    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete, showShiftDialog, showLocationModal, isDesktop} = props;
     let icon = isWorking(shift) ?
         <Tooltip title="בעבודה" placement="right"><Work/></Tooltip> :
         <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
@@ -52,8 +53,9 @@ const LiveShift = (props) => {
             <Note text={shift.note} onClick={showShiftDialog}/>
             <CarCost data={shift.commuteCost} onClick={showShiftDialog}/>
             <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
+            <Location location={shift.location} onClick={showLocationModal} />
 
-            {hover &&
+            {hover && isDesktop &&
             <div>
                 {isWorking(shift) &&
                 <Tooltip title="סיים משמרת" placement="left">
@@ -82,6 +84,7 @@ LiveShift.propTypes = {
     onDelete: PropTypes.func.isRequired,
     onShiftComplete: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
+    showLocationModal: PropTypes.func.isRequired,
 };
 LiveShift.defaultProps = {};
 

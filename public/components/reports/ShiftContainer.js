@@ -69,10 +69,25 @@ class ShiftContainer extends React.PureComponent {
     };
 
     showLocationModal = () => {
-        let {showLocationModal, input} = this.props;
+        let {showLocationModal, input, isDesktop} = this.props;
 
-        if (input.value.location)
+        if (!input.value.location)
+            return;
+
+        if (isDesktop)
             showLocationModal(input.value);
+        else
+            this.showMapInBrowser(input.value.location)
+    };
+
+    showMapInBrowser = (location) => {
+        if /* if we're on iOS, open in Apple Maps */
+        ((navigator.platform.indexOf("iPhone") !== -1) ||
+            (navigator.platform.indexOf("iPad") !== -1) ||
+            (navigator.platform.indexOf("iPod") !== -1))
+            window.open(`maps://maps.google.com/maps?daddr=${location.latitude},${location.longitude}&amp;ll=`);
+        else /* else use Google */
+            window.open(`https://maps.google.com/maps?daddr=${location.latitude},${location.longitude}&amp;ll=`);
     };
 
     onShiftComplete = () => {
@@ -140,6 +155,8 @@ class ShiftContainer extends React.PureComponent {
                         onDelete={this.onDelete}
                         onShiftComplete={this.onShiftComplete}
                         showShiftDialog={this.showShiftDialog}
+                        showLocationModal={this.showLocationModal}
+                        isDesktop={isDesktop}
                     />
                 }
                 {mode === ReportModes.Report &&
