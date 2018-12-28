@@ -9,6 +9,7 @@ import DailyReportContainer from "./components/reports/DailyReportContainer";
 import {ReportModes} from "./helpers/utils";
 import UserContainer from "./components/user/UserContainer";
 import Home from "./components/home/Home";
+import FAQContainer from "./components/faq/FAQContainer";
 
 export default (
     <Route path="/" component={AppContainer}>
@@ -19,13 +20,14 @@ export default (
             <IndexRedirect to="/dashboard/report" />
             <Route path="employees" component={EmployeesContainer} />
             <Route path="user" component={UserContainer} />
-            <Route path="report" >
+            <Route path="report"  >
                 <IndexRedirect to="/dashboard/report/live" />
-                <Route path="monthly" component={MonthlyReportContainer} />
-                <Route path="daily" component={DailyReportContainer} mode={ReportModes.Report}/>
-                <Route path="live" component={DailyReportContainer} mode={ReportModes.Live}/>
+                <Route path="monthly" component={MonthlyReportContainer}  />
+                <Route path="daily" component={DailyReportContainer} mode={ReportModes.Report} />
+                <Route path="live" component={DailyReportContainer} mode={ReportModes.Live} />
             </Route>
         </Route>
+        <Route path="faq" component={FAQContainer} sideBarVisible={false}/>
     </Route>
 );
 

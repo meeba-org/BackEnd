@@ -77,7 +77,7 @@ class ShiftContainer extends React.PureComponent {
         if (isDesktop)
             showLocationModal(input.value);
         else
-            this.showMapInBrowser(input.value.location)
+            this.showMapInBrowser(input.value.location);
     };
 
     showMapInBrowser = (location) => {
