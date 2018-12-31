@@ -7,6 +7,7 @@ import MovingShiftOutOfMonthModal from "./MovingShiftOutOfMonthModal";
 import MobileAppLinksModal from "./MobileAppLinksModal";
 import EditEmployeeModal from "./EditEmployeeModal";
 import LocationModal from "./LocationModal";
+import LoginRegister from "../login/LoginRegister";
 
 const MODAL_COMPONENTS = {
     "DELETE_ENTITY": DeleteModal,
@@ -14,7 +15,8 @@ const MODAL_COMPONENTS = {
     "EDIT_EMPLOYEE": EditEmployeeModal,
     "MOVING_SHIFT_OUT_OF_MONTH": MovingShiftOutOfMonthModal,
     "MOBILE_APP_LINKS": MobileAppLinksModal,
-    "LOCATION_MODAL": LocationModal
+    "LOCATION_MODAL": LocationModal,
+    "LOGIN_REGISTER": LoginRegister
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {

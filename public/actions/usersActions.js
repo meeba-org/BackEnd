@@ -1,4 +1,5 @@
 import * as actions from "./actionTypes";
+import {handleLogin} from "./index";
 
 export const fetchUserSuccess = (payload) => ({
     type: actions.FETCH_USER_SUCCESS,
@@ -77,6 +78,18 @@ export const showEditEmployeeModal = (employee, callBack) => ({
             updateUser,
             open: true,
             key: employee._id
+        }
+    }
+});
+
+export const showLoginRegisterDialog = (dispatch, router) => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: 'LOGIN_REGISTER',
+        modalProps: {
+            // handleSubmit: (value, router) => handleLogin(value, router),
+            onSubmit: values => dispatch(handleLogin(values)),
+            open: true,
         }
     }
 });

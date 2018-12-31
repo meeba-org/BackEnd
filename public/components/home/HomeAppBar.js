@@ -8,6 +8,8 @@ import facebookImage from "../../styles/images/facebook.png";
 import React, {Component, Fragment} from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {Link} from "react-router";
+import {showLoginRegisterDialog} from "../../actions";
+import {connect} from 'react-redux';
 
 const styles = {
     colorPrimary: {
@@ -30,7 +32,7 @@ const styles = {
 
 class HomeAppBar extends Component {
     render() {
-        let {setLoginDialogVisibility, classes} = this.props;
+        let {showLoginRegisterDialog, classes} = this.props;
 
         return (
             <AppBar position="fixed" classes={{ colorPrimary: classes.colorPrimary}}>
@@ -50,7 +52,7 @@ class HomeAppBar extends Component {
                     </div>
                     <div>
                         <Button color="inherit"><Link to="/faq" className={classes.link}>שאלות ותשובות</Link></Button>
-                        <Button color="inherit" onClick={() => setLoginDialogVisibility(true)}>כניסה</Button>
+                        <Button color="inherit" onClick={showLoginRegisterDialog}>כניסה</Button>
                     </div>
                 </Toolbar>
             </AppBar>
@@ -58,4 +60,10 @@ class HomeAppBar extends Component {
     }
 }
 
-export default withStyles(styles)(HomeAppBar);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showLoginRegisterDialog: () => {dispatch(showLoginRegisterDialog(dispatch))},
+    };
+};
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(HomeAppBar));

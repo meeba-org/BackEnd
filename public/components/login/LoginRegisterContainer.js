@@ -9,7 +9,7 @@ class LoginRegisterContainer extends Component {
         let { handleLoginSubmit, router, onCancel, visible } = this.props;
 
         return (
-            <LoginRegister onSubmit={values => handleLoginSubmit(values, router)} onCancel={onCancel} visible={visible}/>
+            <LoginRegister onSubmit={values => handleLoginSubmit(values, router)} onCancel={onCancel} open={visible}/>
         );
     }
 }

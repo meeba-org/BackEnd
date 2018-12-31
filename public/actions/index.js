@@ -45,6 +45,16 @@ export const hideEditEmployeeModal = () => ({
     }
 });
 
+export const hideLoginRegisterModal = () => ({
+    type: 'HIDE_MODAL',
+    payload : {
+        modalType: 'LOGIN_REGISTER',
+        modalProps: {
+            open: false
+        }
+    }
+});
+
 export const hideMobileAppModal = () => ({
     type: 'HIDE_MODAL',
     payload : {

@@ -14,6 +14,7 @@ import {renderTextField} from '../material-ui-wrappers';
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from "../../styles/LoginRegister.scss";
+import {hideLoginRegisterModal} from "../../actions";
 
 class LoginRegister extends Component {
 
@@ -26,8 +27,14 @@ class LoginRegister extends Component {
         this.props.change('isLoginMode', !this.state.isLoginMode);
     }
 
+    handleClose = () => {
+        let {dispatch} = this.props;
+
+        dispatch(hideLoginRegisterModal())
+    };
+
     render() {
-        let {handleSubmit, handleChange, error, onCancel, visible} = this.props;
+        let {handleSubmit, handleChange, error, open} = this.props;
         let {isLoginMode} = this.state;
 
         let buttonText = isLoginMode ? "היכנס" : "הירשם";
@@ -35,7 +42,7 @@ class LoginRegister extends Component {
         let changeModeText = isLoginMode ? "הירשם כעת" : "היכנס עכשיו";
 
         return (
-            <Dialog open={visible} onClose={onCancel}>
+            <Dialog open={open} onClose={this.handleClose}>
                 <div className={styles["login-register"]}>
                         <div className={styles["title"]}>
                             <div className={styles["title-text"]}>
@@ -90,8 +97,6 @@ class LoginRegister extends Component {
 LoginRegister.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     handleChange: PropTypes.func,
-    onCancel: PropTypes.func.isRequired,
-    visible: PropTypes.bool.isRequired,
     error: PropTypes.string,
     change: PropTypes.func,
 };
