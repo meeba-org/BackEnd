@@ -10,7 +10,7 @@ const UserSchema = mongoose.Schema({
     username: { type: String },
     email: { type: String },
     password: { type: String },
-    hourWage: {type: Number, default: 26.7 },
+    hourWage: {type: Number, default: 29.12 },
     transportation: {type: Number, default: 11.8 },
     transportPaymentPer: {type: Number, default: ETransportPaymentPer.SHIFT },
     role: { type: String, default: ERoles.EMPLOYEE},

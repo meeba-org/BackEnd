@@ -37,7 +37,7 @@ router.get('/download',
     })
 );
 
-//GET /reports/download report
+//GET /reports/monthly report
 router.get('/monthly',
     [
         query('year').exists(),
