@@ -1,43 +1,19 @@
 import React, {Component} from 'react';
 import styles from "../../styles/Header.scss";
 import CSSModules from "react-css-modules/dist/index";
-import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import PropTypes from 'prop-types';
 import playStoreImage from '../../styles/images/playStore.svg';
-import facebookImage from '../../styles/images/facebook.png';
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import HomeAppBar from './HomeAppBar';
 
 class Header extends Component {
     render() {
         let {setLoginDialogVisibility} = this.props;
         return (
             <div id="header1" styleName="header">
-                <AppBar position="fixed" className={styles["app-bar"]}>
-                    <Toolbar>
-                        <IconButton  aria-label="Menu" color="inherit">
-                            <AccessTimeIcon/>
-                        </IconButton>
-                        <Typography type="title" color="inherit">
-                            מיבא
-                        </Typography>
-                        <div className={styles["right-buttons-group"]}>
-                            <Button href="#header1" color="inherit">בית</Button>
-                            <Button href="#features1" color="inherit">איך זה עובד?</Button>
-                            <Button href="https://www.facebook.com/meebaOnFace/" color="inherit" target="_blank">
-                                <img src={facebookImage} />
-                            </Button>
-                        </div>
-                        <div>
-                            <Button color="inherit" onClick={() => setLoginDialogVisibility(true)}>כניסה</Button>
-                        </div>
-                    </Toolbar>
-                </AppBar>
+                <HomeAppBar setLoginDialogVisibility={setLoginDialogVisibility}/>
                 <div className={styles["content"]}>
                     <div className={styles["middle-content"]}>
                         <div className={styles["title"]}>

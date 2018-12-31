@@ -22,21 +22,6 @@
         max-width: 1140px;
     }
 
-
-    .app-bar {
-        background-color: transparent;
-        box-shadow: none;
-        color: white;
-
-        @media (max-width: $mobileWidth) {
-            display: none;
-        }
-
-        .right-buttons-group {
-            flex-grow: 1;
-        }
-    }
-
     .content {
         display: flex;
         flex-direction: column;

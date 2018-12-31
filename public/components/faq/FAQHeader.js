@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import CSSModules from "react-css-modules";
 import styles from "../../styles/FAQHeader.scss";
+import HomeAppBar from '../home/HomeAppBar';
 
 class FAQHeader extends Component {
 
@@ -8,6 +9,7 @@ class FAQHeader extends Component {
         return (
             <div styleName="header">
                 <div styleName="header-bg">
+                    <HomeAppBar />
                     <div styleName="title">
                         שאלות ותשובות
                     </div>

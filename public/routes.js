@@ -27,7 +27,7 @@ export default (
                 <Route path="live" component={DailyReportContainer} mode={ReportModes.Live} />
             </Route>
         </Route>
-        <Route path="faq" component={FAQContainer} sideBarVisible={false}/>
+        <Route path="faq" component={FAQContainer} />
     </Route>
 );
 

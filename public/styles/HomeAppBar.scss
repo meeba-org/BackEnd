@@ -1,0 +1,15 @@
+@import "variables";
+
+.app-bar {
+    background-color: transparent;
+    box-shadow: none;
+    color: white;
+
+    @media (max-width: $mobileWidth) {
+        display: none;
+    }
+
+    .right-buttons-group {
+        flex-grow: 1;
+    }
+}
