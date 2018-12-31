@@ -108,18 +108,13 @@ LoginRegister.propTypes = {
     error: PropTypes.string,
     change: PropTypes.func,
 };
-LoginRegister.defaultProps = {};
-
-// Decorate with reduxForm(). It will read the initialValues prop provided by connect()
-LoginRegister = reduxForm({
-    form: 'loginRegisterForm' // a unique identifier for this form
-})(LoginRegister);
 
 // You have to connect() to any reducers that you wish to connect to yourself
-LoginRegister = connect(
+export default connect(
     state => ({
         initialValues: {isLoginMode: true} // pull initial values from account reducer
     })
-)(withRouter(CSSModules(LoginRegister, styles)));
+)(reduxForm({
+    form: 'loginRegisterForm' // a unique identifier for this form
+})(withRouter(CSSModules(LoginRegister, styles))));
 
-export default LoginRegister;

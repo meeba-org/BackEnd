@@ -67,7 +67,7 @@ class Header extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        showLoginRegisterDialog: () => {dispatch(showLoginRegisterDialog())},
+        showLoginRegisterDialog: () => {dispatch(showLoginRegisterDialog());},
     };
 };
 

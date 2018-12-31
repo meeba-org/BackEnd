@@ -62,7 +62,7 @@ class HomeAppBar extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        showLoginRegisterDialog: () => {dispatch(showLoginRegisterDialog())},
+        showLoginRegisterDialog: () => {dispatch(showLoginRegisterDialog());},
     };
 };
 
