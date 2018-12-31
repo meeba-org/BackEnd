@@ -14,7 +14,8 @@ import {renderTextField} from '../material-ui-wrappers';
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
 import styles from "../../styles/LoginRegister.scss";
-import {hideLoginRegisterModal} from "../../actions";
+import {handleLogin, hideLoginRegisterModal} from "../../actions";
+import {withRouter} from "react-router";
 
 class LoginRegister extends Component {
 
@@ -30,7 +31,14 @@ class LoginRegister extends Component {
     handleClose = () => {
         let {dispatch} = this.props;
 
-        dispatch(hideLoginRegisterModal())
+        dispatch(hideLoginRegisterModal());
+    };
+
+    handleSubmit = (values) => {
+        let {dispatch, router} = this.props;
+
+        dispatch(handleLogin(values, router));
+        dispatch(hideLoginRegisterModal());
     };
 
     render() {
@@ -49,7 +57,7 @@ class LoginRegister extends Component {
                             ברוך הבא!
                             </div>
                         </div>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit(this.handleSubmit)}>
                                 <Field
                                        fullWidth={true}
                                        component={renderTextField}
@@ -102,14 +110,16 @@ LoginRegister.propTypes = {
 };
 LoginRegister.defaultProps = {};
 
-export default connect(
-    // mapStateToProps
-)(reduxForm({
-    form: 'loginRegisterForm',
-    fields: ['isLoginMode'],
-    initialValues: {
-        isLoginMode: true
-    }
-})(CSSModules(LoginRegister, styles)));
+// Decorate with reduxForm(). It will read the initialValues prop provided by connect()
+LoginRegister = reduxForm({
+    form: 'loginRegisterForm' // a unique identifier for this form
+})(LoginRegister);
 
+// You have to connect() to any reducers that you wish to connect to yourself
+LoginRegister = connect(
+    state => ({
+        initialValues: {isLoginMode: true} // pull initial values from account reducer
+    })
+)(withRouter(CSSModules(LoginRegister, styles)));
 
+export default LoginRegister;

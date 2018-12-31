@@ -3,17 +3,18 @@ import styles from "../../styles/Header.scss";
 import CSSModules from "react-css-modules/dist/index";
 import Button from "@material-ui/core/Button";
 import ArrowBack from "@material-ui/icons/ArrowBack";
-import PropTypes from 'prop-types';
 import playStoreImage from '../../styles/images/playStore.svg';
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import HomeAppBar from './HomeAppBar';
+import {showLoginRegisterDialog} from "../../actions";
+import {connect} from 'react-redux';
 
 class Header extends Component {
     render() {
-        let {setLoginDialogVisibility} = this.props;
+        const {showLoginRegisterDialog} = this.props;
         return (
             <div id="header1" styleName="header">
-                <HomeAppBar setLoginDialogVisibility={setLoginDialogVisibility}/>
+                <HomeAppBar/>
                 <div className={styles["content"]}>
                     <div className={styles["middle-content"]}>
                         <div className={styles["title"]}>
@@ -27,8 +28,7 @@ class Header extends Component {
                             <div className={styles["sub-title"]}>
                                 שעון נוכחות חינמי
                             </div>
-                            <Button className={styles["login-button"]} variant="raised" color="primary"
-                                    onClick={() => setLoginDialogVisibility(true)}>
+                            <Button className={styles["login-button"]} variant="raised" color="primary" onClick={showLoginRegisterDialog}>
                                 <span>כניסה</span>
                                 <ArrowBack style={{"paddingTop": "5px"}}/>
                             </Button>
@@ -65,9 +65,10 @@ class Header extends Component {
     }
 }
 
-Header.propTypes = {
-    setLoginDialogVisibility: PropTypes.func.isRequired
+const mapDispatchToProps = (dispatch) => {
+    return {
+        showLoginRegisterDialog: () => {dispatch(showLoginRegisterDialog())},
+    };
 };
-Header.defaultProps = {};
 
-export default CSSModules(Header, styles);
+export default connect(null, mapDispatchToProps)(CSSModules(Header, styles));

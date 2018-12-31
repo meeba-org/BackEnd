@@ -20,13 +20,12 @@ function handleLoginSuccess(response, router, isLoginMode) {
     localStorage.setItem('jwtToken', response.data.token);
 
     router.push('/dashboard');
-
     return {
         type: actionsTypes.HANDLE_LOGIN_SUCCESS,
         ga: {
             category: extractCompany(user),
             action: extractUser(user),
-            actionType: isLoginMode? GAAction.LOGIN : GAAction.REGISTER,
+            actionType: isLoginMode ? GAAction.LOGIN : GAAction.REGISTER,
         }
     };
 }

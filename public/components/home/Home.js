@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import styles from "../../styles/Home.scss";
 import CSSModules from "react-css-modules";
-import LoginRegisterContainer from "../login/LoginRegisterContainer";
 import PropTypes from 'prop-types';
 import Header from "./Header";
 import Footer from "./Footer";
@@ -14,25 +13,16 @@ class Home extends Component {
         visible: false
     };
 
-    setLoginDialogVisibility = (visible) => {
-        this.setState({visible});
-    };
-
     render() {
         return (
             <div styleName="home">
                 <div styleName="home-bg">
-                    <Header setLoginDialogVisibility={this.setLoginDialogVisibility}/>
+                    <Header />
                     <Movie />
                     <Features />
                     <Statistics />
                     <Footer />
                 </div>
-                <LoginRegisterContainer
-                    visible={this.state.visible}
-                    router={this.props.router}
-                    onCancel={() => this.setLoginDialogVisibility(false)}
-                />
             </div>
         );
     }
