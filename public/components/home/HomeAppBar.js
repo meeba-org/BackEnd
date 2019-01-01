@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import facebookImage from "../../styles/images/facebook.png";
 import React, {Component, Fragment} from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {Link} from "react-router";
+import {Link, withRouter} from "react-router";
 import {showLoginRegisterDialog} from "../../actions";
 import {connect} from 'react-redux';
 import * as selectors from "../../selectors";
@@ -44,7 +44,7 @@ const styles = {
 
 class HomeAppBar extends Component {
     render() {
-        let {showLoginRegisterDialog, classes, isDesktop} = this.props;
+        let {showLoginRegisterDialog, classes, location} = this.props;
 
         return (
             <AppBar position="fixed" classes={{ colorPrimary: classes.colorPrimary}}>
@@ -65,8 +65,10 @@ class HomeAppBar extends Component {
                         </Button>
                     </div>
                     <div>
+                        {location.pathname !== '/faq' &&
                         <Button color="inherit"><Link to="/faq" className={classes.faq}>שאלות ותשובות</Link></Button>
-                        {isDesktop &&
+                        }
+                        {location.pathname === '/faq' &&
                         <Button color="inherit" onClick={showLoginRegisterDialog}>כניסה</Button>
                         }
                     </div>
@@ -88,4 +90,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(HomeAppBar));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(HomeAppBar)));
