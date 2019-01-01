@@ -17,8 +17,9 @@ class FAQContainer extends Component {
             },
             {
                 q: "איך זה עובד?",
-                a: "המנהל עובד מול האתר www.meeba.org.il, מזין עובדים, מעדכן שעות ועוד.\n" +
-                    "העובד מוריד את האפליקציה לסלולרי ומדווח כניסה ויציאה."
+                a: `\n\n**המנהל** עובד מול [האתר](https://www.meeba.org.il), מזין עובדים, מעדכן שעות ועוד.
+\n\n**העובד** מוריד את [האפליקציה](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) לסלולרי ומדווח כניסה ויציאה.
+`
             },
             {
                 q: "כמה זה עולה?",
