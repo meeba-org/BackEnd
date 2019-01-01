@@ -5,6 +5,7 @@ import SubmissionError from "redux-form/es/SubmissionError";
 import {isUserAllowedLogin} from "../helpers/utils";
 import {GAAction} from "../helpers/GATypes";
 import {extractCompany, extractUser} from "../middlewares/gaMiddleware";
+import {hideLoginRegisterModal} from "./index";
 
 function handleLoginStart() {
     return {
@@ -36,7 +37,10 @@ export function handleLogin(values, router) {
 
         dispatch(handleLoginStart());
         return axios.post(`${config.ROOT_URL}/${route}`, values)
-            .then((response) => dispatch(handleLoginSuccess(response, router, values.isLoginMode)))
+            .then((response) => {
+                dispatch(handleLoginSuccess(response, router, values.isLoginMode))
+                dispatch(hideLoginRegisterModal());
+            })
             .catch((err) => {
                 let message = 'Unknown Error';
                 if (err) {

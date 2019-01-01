@@ -35,7 +35,7 @@ const createMockedHolidayShift = (overallLength, holidayHoursLength) => {
 const settings = {
     eveningHolidayStartHour: 18,
     holidayEndHour: 19,
-    holidayShiftLength: 7
+    holidayShiftLength: 9
 };
 
 describe('ShiftAnalyzer', function () {
@@ -170,16 +170,16 @@ describe('ShiftAnalyzer', function () {
             expect(hours.extra200Hours).to.be.equal(4);
         });
 
-        it('evening holiday 17:30 to 03:00', function () {
+        it('evening holiday 17:30 to 05:00', function () {
             const shift = {
                 clockInTime: moment('01/12/2017 17:30', 'DD/MM/YYYY HH:mm'),
-                clockOutTime: moment('02/12/2017 03:00', 'DD/MM/YYYY HH:mm'),
+                clockOutTime: moment('02/12/2017 05:00', 'DD/MM/YYYY HH:mm'),
             };
 
             const hours = analyzeHours(shift, settings);
 
             expect(hours.regularHours).to.be.equal(0.5);
-            expect(hours.extra150Hours).to.be.equal(6.5);
+            expect(hours.extra150Hours).to.be.equal(8.5);
             expect(hours.extra175Hours).to.be.equal(2);
             expect(hours.extra200Hours).to.be.equal(0.5);
         });
@@ -248,15 +248,15 @@ describe('ShiftAnalyzer', function () {
             expect(hours.extra175Hours).to.be.equal(2);
         });
 
-        it('holiday 17:30 to 03:00', function () {
+        it('holiday 17:30 to 05:00', function () {
             const shift = {
                 clockInTime: moment('02/12/2017 17:30', 'DD/MM/YYYY HH:mm'),
-                clockOutTime: moment('03/12/2017 03:00', 'DD/MM/YYYY HH:mm'),
+                clockOutTime: moment('03/12/2017 05:00', 'DD/MM/YYYY HH:mm'),
             };
 
             const hours = analyzeHours(shift, settings);
 
-            expect(hours.regularHours).to.be.equal(5.5);
+            expect(hours.regularHours).to.be.equal(7.5);
             expect(hours.extra125Hours).to.be.equal(2);
             expect(hours.extra150Hours).to.be.equal(2);
         });

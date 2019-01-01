@@ -18,7 +18,7 @@ const EmptyAdditionalInfo = {
 const EmptySettings = {
     eveningHolidayStartHour: 18,
     holidayEndHour: 19,
-    holidayShiftLength: 7
+    holidayShiftLength: 9
 };
 
 let processUsersToShifts = function (shifts) {

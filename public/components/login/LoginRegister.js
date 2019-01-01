@@ -26,7 +26,7 @@ class LoginRegister extends Component {
     toggleLoginMode= () => {
         this.setState({isLoginMode: !this.state.isLoginMode});
         this.props.change('isLoginMode', !this.state.isLoginMode);
-    }
+    };
 
     handleClose = () => {
         let {dispatch} = this.props;
@@ -37,8 +37,7 @@ class LoginRegister extends Component {
     handleSubmit = (values) => {
         let {dispatch, router} = this.props;
 
-        dispatch(handleLogin(values, router));
-        dispatch(hideLoginRegisterModal());
+        return dispatch(handleLogin(values, router));
     };
 
     render() {
