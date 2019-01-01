@@ -69,6 +69,12 @@ class MonthlyReport extends React.PureComponent {
             {startDay: this.generateMonthStr(9, 2018), name: "אוקטובר 2018"},
             {startDay: this.generateMonthStr(10, 2018), name: "נובמבר 2018"},
             {startDay: this.generateMonthStr(11, 2018), name: "דצמבר 2018"},
+            {startDay: this.generateMonthStr(0, 2019), name: "ינואר 2019"},
+            {startDay: this.generateMonthStr(1, 2019), name: "פברואר 2019"},
+            {startDay: this.generateMonthStr(2, 2019), name: "מרץ 2019"},
+            {startDay: this.generateMonthStr(3, 2019), name: "אפריל 2019"},
+            {startDay: this.generateMonthStr(4, 2019), name: "מאי 2019"},
+            {startDay: this.generateMonthStr(5, 2019), name: "יוני 2019"},
         ];
     }
 
