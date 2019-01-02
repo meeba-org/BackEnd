@@ -41,11 +41,9 @@ class QuestionAndAnswer extends Component {
             <div>
                 <Question text={question.q} onClick={this.toggleCollapse} collapse={collapse}/>
 
-                {!this.state.collapse &&
-                <Fade>
+                <Fade isVisible={!this.state.collapse}>
                     <Answer text={question.a}/>
                 </Fade>
-                }
             </div>
         );
     }

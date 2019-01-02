@@ -166,7 +166,7 @@ class MonthlyReport extends React.PureComponent {
                         <Divider className={styles["divider"]}/>
 
                                 {fields && fields.map((employeeShiftsReport, index) =>
-                                    (<Fade key={index}>
+                                    (<Fade key={index} isVisible>
                                         <Field component={MonthlyReportLine}
                                                name={employeeShiftsReport}
                                                isCollapsed={this.isCollapsed(fields, index)}

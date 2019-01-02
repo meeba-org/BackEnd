@@ -61,7 +61,7 @@ class ShiftsList extends React.PureComponent {
         return (
             <div styleName="shifts-list">
                 {fields && fields.map((shiftName, index) =>
-                    (<Fade key={index}>
+                    (<Fade key={index} isVisible>
                             <Field
                                 component={ShiftContainer}
                                 name={shiftName} key={index}

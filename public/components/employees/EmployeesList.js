@@ -67,7 +67,7 @@ class EmployeesList extends React.Component {
                     </Grid>
                     }
                     {fields && fields.map((employeeIndex, index) =>
-                        (<Fade key={index}>
+                        (<Fade key={index} isVisible>
                             <Field component={EmployeeContainer}
                                    name={employeeIndex}
                                    index={index}
