@@ -85,6 +85,12 @@ class SideBar extends React.Component {
                     icon: <PermContactCalendar/>
                 },
                 {
+                    text: "משימות",
+                    url: "/dashboard/employees",
+                    allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
+                    icon: <PermContactCalendar/>
+                },
+                {
                     text: "הגדרות",
                     url: "/dashboard/user",
                     allowedRoles: [ERoles.COMPANY_MANAGER],
@@ -95,7 +101,7 @@ class SideBar extends React.Component {
 
         this.state.items.forEach(item => {
             // Setting the selected menu according the url
-            if (item.url == router.location.pathname)
+            if (item.url === router.location.pathname)
                 item.selected = true;
         });
     }

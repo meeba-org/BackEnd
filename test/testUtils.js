@@ -14,6 +14,7 @@ const mongoose = require("mongoose");
 //console.log("process.env.NODE_ENV: " + process.env.NODE_ENV);
 process.env.NODE_ENV = 'test';
 const config = require('../config');
+const TaskModel = require("../models/TaskModel");
 
 const TIMEOUT = 20000;
 
@@ -38,6 +39,7 @@ function clearDB() {
         CompanyModel.companiesCount(),
         UserModel.usersCount(),
         ShiftModel.shiftsCount(),
+        TaskModel.tasksCount()
     ])
     .then((responses) => {
         responses.forEach(response => {
@@ -49,6 +51,7 @@ function clearDB() {
             CompanyModel.deleteAllCompanies(),
             UserModel.deleteAllUsers(),
             ShiftModel.deleteAllShifts(),
+            TaskModel.deleteAllTasks()
         ]);
     });
 }
