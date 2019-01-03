@@ -7,13 +7,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import CSSModules from "react-css-modules";
 import styles from '../../styles/User.scss';
 import NoData from "../NoData";
-import withStyles from '@material-ui/core/styles/withStyles';
-
-const cssStyles = {
-    input: {
-        minWidth: "318px"
-    }
-};
+import Grid from "@material-ui/core/Grid";
 
 class User extends Component {
     handleUserChange = (field, e) => {
@@ -46,59 +40,100 @@ class User extends Component {
         onUpdateCompany(user.company);
     };
 
+    handleCompanySettingsChange = (field, e) => {
+        const {onUpdateCompany, input} = this.props;
+        const value = e.target.value;
+
+        let user = {
+            ...input.value,
+            company: {
+                ...input.value.company,
+                settings: {
+                    ...input.value.company.settings,
+                    [field]: value
+                }
+            },
+        };
+
+        input.onChange(user);
+        onUpdateCompany(user.company);
+    };
+
     render() {
-        const {input, classes} = this.props;
+        const {input} = this.props;
         const user = input.value;
 
+        if (!user || !user.company)
+            return <NoData/>;
+
         return (
-            <Fragment>
+            <div className={styles["user-container"]}>
                 <CardHeader title="פרטי מנהל"/>
 
-                <CardContent className={styles["card-content"]}>
-
-                    {!!user &&
-                    <div className={styles["user-container"]}>
-                        <TextField
-                            className={styles["long-field"]}
-                            id="fullName"
-                            label="שם מלא"
-                            value={user.fullName}
-                            onChange={(e) => this.handleUserChange("fullName", e)}
-                        />
-                        <Tooltip title="אנחנו מכבדים את הפרטיות שלך - ובאופן כללי לא מאמינים במיילים! - תכלס זה פה כי אולי נעשה עם זה משהו בעתיד.">
+                <CardContent>
+                    <Grid container>
+                        <Grid item sm={12}>
                             <TextField
                                 className={styles["long-field"]}
-                                label="דואר אלקטרוני"
-                                type="email"
-                                value={user.email}
-                                onChange={(e) => this.handleUserChange("email", e)}
-                                InputProps={{
-                                    className: classes.input
-                                }}
+                                id="fullName"
+                                label="שם מלא"
+                                value={user.fullName}
+                                onChange={(e) => this.handleUserChange("fullName", e)}
                             />
-                        </Tooltip>
-                    </div>
-                    }
-                    {!user &&
-                    <NoData/>
-                    }
+                        </Grid>
+                        <Grid item sm={12}>
+                            <Tooltip
+                                title="אנחנו מכבדים את הפרטיות שלך - ובאופן כללי לא מאמינים במיילים! - תכלס זה פה כי אולי נעשה עם זה משהו בעתיד.">
+                                <TextField
+                                    className={styles["long-field"]}
+                                    label="דואר אלקטרוני"
+                                    type="email"
+                                    value={user.email}
+                                    onChange={(e) => this.handleUserChange("email", e)}
+                                />
+                            </Tooltip>
+                        </Grid>
+                    </Grid>
                 </CardContent>
 
-                {!!user.company &&
-                <div>
-                    <CardHeader title="חברה"/>
+                <CardHeader title="חברה"/>
 
-                    <CardContent className={styles["card-content"]}>
+                <CardContent>
+                    <TextField
+                        id="company-name"
+                        label="שם"
+                        value={user.company.name}
+                        onChange={(e) => this.handleCompanyChange("name", e)}
+                        className={styles["long-field"]}
+                    />
+
+                    <div className={styles["company-settings"]}>
                         <TextField
-                            id="company-name"
-                            label="שם"
-                            value={user.company.name}
-                            onChange={(e) => this.handleCompanyChange("name", e)}
+                            id="holiday-start"
+                            label="כניסת שבת/חג"
+                            value={user.company.settings.eveningHolidayStartHour}
+                            onChange={(e) => this.handleCompanySettingsChange("eveningHolidayStartHour", e)}
+                            className={styles["short-field"]}
                         />
-                    </CardContent>
-                </div>
-                }
-            </Fragment>
+
+                        <TextField
+                            id="holiday-end"
+                            label="יציאת שבת/חג"
+                            value={user.company.settings.holidayEndHour}
+                            onChange={(e) => this.handleCompanySettingsChange("holidayEndHour", e)}
+                            className={styles["short-field"]}
+                        />
+                        <TextField
+                            id="holiday-shift-length"
+                            label="אורך משמרת בשבת/חג"
+                            value={user.company.settings.holidayShiftLength}
+                            onChange={(e) => this.handleCompanySettingsChange("holidayShiftLength", e)}
+                            className={styles["short-field"]}
+                        />
+
+                    </div>
+                </CardContent>
+            </div>
         );
     }
 }
@@ -110,5 +145,5 @@ User.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(cssStyles)(CSSModules(User, styles));
+export default CSSModules(User, styles);
 
