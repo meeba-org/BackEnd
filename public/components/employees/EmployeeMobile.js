@@ -21,7 +21,11 @@ const styles = {
     switchChecked: {
         transform: "translateX(20px)"
     },
-
+    error: {
+        color: "red",
+        paddingTop: "6px",
+        textAlign: "center"
+    }
 };
 
 class EmployeeMobile extends React.Component {
@@ -33,7 +37,7 @@ class EmployeeMobile extends React.Component {
     };
 
     render() {
-        let {input, onDelete, classes, onBlur, onUpdate, index} = this.props;
+        let {input, onDelete, classes, onBlur, onUpdate, index, error} = this.props;
         return (
                 <Grid container className={scssStyles[index % 2 === 0 ? "odd" : "even" ]}>
                     <Grid item xs={12}>
@@ -66,6 +70,11 @@ class EmployeeMobile extends React.Component {
                                endAdornment={<InputAdornment position="end">{input.value.transportPaymentPer === 0 ? "למשמרת" : "חודשי"}</InputAdornment>}
                         />
                     </Grid>
+                    {error &&
+                    <Grid item xs={12}>
+                        <div className={classes.error}>{error}</div>
+                    </Grid>
+                    }
                     <Grid item xs={12} className={scssStyles["buttons-container"]} >
                             <Button color="primary" onClick={this.showEmployeeDialog}>
                                 <SettingsIcon />
@@ -85,6 +94,7 @@ EmployeeMobile.propTypes = {
     onUpdate: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     showEmployeeDialog: PropTypes.func.isRequired,
+    error: PropTypes.string,
 };
 
 export default withStyles(styles)(CSSModules(EmployeeMobile, scssStyles));

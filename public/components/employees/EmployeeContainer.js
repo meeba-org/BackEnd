@@ -24,13 +24,14 @@ class EmployeeContainer extends Component {
     };
 
     render() {
-        const {isDesktop, onDelete, input, showEmployeeDialog, index} = this.props;
+        const {isDesktop, onDelete, input, showEmployeeDialog, index, meta: {error}} = this.props;
         return isDesktop ?
             <Employee
                 onUpdate={this.onUpdate}
                 onDelete={onDelete}
                 onBlur={this.onBlur}
                 input={input}
+                error={error}
                 showEmployeeDialog={showEmployeeDialog}
             /> :
             <EmployeeMobile
@@ -38,6 +39,7 @@ class EmployeeContainer extends Component {
                 onDelete={onDelete}
                 onBlur={this.onBlur}
                 input={input}
+                error={error}
                 showEmployeeDialog={showEmployeeDialog}
                 index={index}
             />;

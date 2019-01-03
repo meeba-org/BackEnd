@@ -21,7 +21,10 @@ const styles = {
     switchChecked: {
         transform: "translateX(20px)"
     },
-
+    error: {
+        color: "red",
+        paddingTop: "6px"
+    }
 };
 
 class Employee extends React.Component {
@@ -45,7 +48,7 @@ class Employee extends React.Component {
     };
 
     render() {
-        let {input, onDelete, classes, onBlur, onUpdate} = this.props;
+        let {input, onDelete, classes, onBlur, onUpdate, error} = this.props;
         return (
                 <Grid container spacing={24} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Grid item sm={3}>
@@ -77,6 +80,11 @@ class Employee extends React.Component {
                                endAdornment={<InputAdornment position="end">{input.value.transportPaymentPer === 0 ? "למשמרת" : "חודשי"}</InputAdornment>}
                         />
                     </Grid>
+                    {error &&
+                    <Grid item sm={2}>
+                        <div className={classes.error}>{error}</div>
+                    </Grid>
+                    }
                     <Grid item sm={2}>
                         {this.state.hover &&
                         <div>
@@ -100,6 +108,7 @@ Employee.propTypes = {
     onUpdate: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     showEmployeeDialog: PropTypes.func.isRequired,
+    error: PropTypes.string,
 };
 
 export default withStyles(styles)(CSSModules(Employee, scssStyles));

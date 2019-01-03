@@ -19,6 +19,7 @@ import AddIcon from '@material-ui/icons/Add';
 import NoData from "../NoData";
 import Fade from "../Fade";
 import EmployeeContainer from "./EmployeeContainer";
+import {isIsraeliIdValid} from "../../helpers/utils";
 
 class EmployeesList extends React.Component {
 
@@ -37,6 +38,15 @@ class EmployeesList extends React.Component {
     onDelete(fields, index) {
         let employeeToDelete = fields.get(index);
         this.props.onDelete(employeeToDelete);
+    }
+
+    validateEmployee = value => {
+        if (!value || !value.uid)
+            return undefined;
+
+        if (!isIsraeliIdValid(value.uid))
+            return "ת.ז. לא תקינה";
+        return undefined;
     }
 
     render() {
@@ -73,6 +83,7 @@ class EmployeesList extends React.Component {
                                    index={index}
                                    onDelete={() => this.onDelete(fields, index)}
                                    onUpdate={(employee) => this.onUpdate(employee)}
+                                   validate={this.validateEmployee}
                                    showEmployeeDialog={showEmployeeDialog}
                             />
                         </Fade>)
