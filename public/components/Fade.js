@@ -8,7 +8,7 @@ const Fade = (props) => (
             in={props.isVisible}
             appear
             unmountOnExit
-            timeout={500}
+            timeout={400}
             classNames={{...animation}}
         >
             <Fragment>
