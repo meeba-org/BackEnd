@@ -20,7 +20,7 @@ function createTaskInstance(task) {
     return newTask;
 }
 
-const getAllCompanies = () => {
+const getAllTasks = () => {
     return Task.find().exec();
 };
 

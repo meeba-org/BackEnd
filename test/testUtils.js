@@ -105,9 +105,19 @@ function createMockedCompanyPlainObject(name) {
     };
 }
 
+function createMockedTaskPlainObject(name, company, parent, children) {
+    return {
+        name,
+        company,
+        parent,
+        children
+    };
+}
+
 module.exports = {
     createMockedUserPlainObject
     , createMockedCompanyPlainObject
+    , createMockedTaskPlainObject
     , createMockedShiftPlainObject
     , TIMEOUT
     , getAdminUser
