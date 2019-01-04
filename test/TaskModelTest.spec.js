@@ -19,6 +19,22 @@ describe('Tasks', function () {
         })
     });
 
+    describe('Get', function () {
+        it('should get a new task', function () {
+            let rootTask = utils.createMockedTaskPlainObject("Development", null, []);
+
+            return TaskModel.createTask(rootTask)
+                .then(task => {
+                    expect(task).to.not.be.null;
+                    return task;
+                })
+                .then(createdTask => TaskModel.getByTaskId(createdTask.id))
+                .then(fetchedTask => {
+                    expect(fetchedTask).to.not.be.null;
+                })
+        })
+    });
+
     describe('Put', function () {
         it('should update a task', function () {
             let rootTask = utils.createMockedTaskPlainObject("Development", null, []);
@@ -30,28 +46,31 @@ describe('Tasks', function () {
                     task.name = "QA";
                     return TaskModel.updateTask(task)
                         .then(updatedTask => {
-                            expect(task.name).to.be.equal("QA");
+                            expect(updatedTask.name).to.be.equal("QA");
                         })
                 })
         })
     });
 
-    describe('Delet', function () {
+    describe('Delete', function () {
         it('should delete a task', function () {
-            let rootTask = utils.createMockedTaskPlainObject("Development", null, []);
+            let task = utils.createMockedTaskPlainObject("Development", null, []);
 
-            return TaskModel.createTask(rootTask)
-                .then(task => {
-                    expect(task).to.not.be.null;
-
-                    return TaskModel.deleteTask(task._id)
-                        .then(updatedTask => {
-                            TaskModel.deleteTask(task._id)
-                        })
-                        .then(deletedTask => {
-                            expect(task).to.be.undefined;
-                        })
+            return TaskModel.createTask(task)
+                .then(createdTask => {
+                    expect(createdTask).to.not.be.null;
+                    return createdTask;
                 })
+                .then(createdTask => {
+                    TaskModel.deleteTask(createdTask.id)
+                    return createdTask;
+                })
+                .then((deletedTask) => {
+                    return TaskModel.getByTaskId(deletedTask.id)
+                })
+                .then(retrievedTask => {
+                    expect(retrievedTask).to.be.null;
+                });
         })
     });
 });
