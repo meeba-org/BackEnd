@@ -35,4 +35,23 @@ describe('Tasks', function () {
                 })
         })
     });
+
+    describe('Delet', function () {
+        it('should delete a task', function () {
+            let rootTask = utils.createMockedTaskPlainObject("Development", null, []);
+
+            return TaskModel.createTask(rootTask)
+                .then(task => {
+                    expect(task).to.not.be.null;
+
+                    return TaskModel.deleteTask(task._id)
+                        .then(updatedTask => {
+                            TaskModel.deleteTask(task._id)
+                        })
+                        .then(deletedTask => {
+                            expect(task).to.be.undefined;
+                        })
+                })
+        })
+    });
 });
