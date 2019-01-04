@@ -14,8 +14,25 @@ describe('Tasks', function () {
             return TaskModel.createTask(rootTask)
                 .then(task => {
                     expect(task).to.not.be.null;
-                    expect(task.name).to.be.equall("Development");
+                    expect(task.name).to.be.equal("Development");
                 })
         })
-    })
+    });
+
+    describe('Put', function () {
+        it('should update a task', function () {
+            let rootTask = utils.createMockedTaskPlainObject("Development", null, []);
+
+            return TaskModel.createTask(rootTask)
+                .then(task => {
+                    expect(task).to.not.be.null;
+
+                    task.name = "QA";
+                    return TaskModel.updateTask(task)
+                        .then(updatedTask => {
+                            expect(task.name).to.be.equal("QA");
+                        })
+                })
+        })
+    });
 });
