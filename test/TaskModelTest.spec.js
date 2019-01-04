@@ -9,12 +9,12 @@ describe('Tasks', function () {
 
     describe('Post', function () {
         it('should insert new root task', function () {
-            let rootTask = utils.createMockedTaskPlainObject("Development", "Toluna", null, []);
+            let rootTask = utils.createMockedTaskPlainObject("Development", null, []);
 
             return TaskModel.createTask(rootTask)
                 .then(task => {
                     expect(task).to.not.be.null;
-                    // expect(task).to.have.length(2);
+                    expect(task.name).to.be.equall("Development");
                 })
         })
     })

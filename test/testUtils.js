@@ -105,10 +105,10 @@ function createMockedCompanyPlainObject(name) {
     };
 }
 
-function createMockedTaskPlainObject(name, company, parent, children) {
+function createMockedTaskPlainObject(name, parent, children) {
     return {
         name,
-        company,
+        company: require('mongoose').Types.ObjectId(),
         parent,
         children
     };
