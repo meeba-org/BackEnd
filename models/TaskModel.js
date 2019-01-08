@@ -8,7 +8,7 @@ const TaskSchema = mongoose.Schema({
         required: true,
     },
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
-    parent: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
+    isRoot: {type: Boolean, default: false},
     children: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
 });
 
