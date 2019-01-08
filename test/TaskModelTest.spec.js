@@ -11,7 +11,7 @@ describe('Tasks', function () {
 
         describe('Post', function () {
             it('should insert new root task', function () {
-                let rootTask = utils.createMockedTaskPlainObject("Development", []);
+                let rootTask = utils.createMockedTaskPlainObject("Development");
 
                 return TaskModel.createTask(rootTask)
                     .then(task => {
@@ -23,7 +23,7 @@ describe('Tasks', function () {
 
         describe('Get', function () {
             it('should get a new task', function () {
-                let rootTask = utils.createMockedTaskPlainObject("Development", []);
+                let rootTask = utils.createMockedTaskPlainObject("Development");
 
                 return TaskModel.createTask(rootTask)
                     .then(task => {
@@ -39,7 +39,7 @@ describe('Tasks', function () {
 
         describe('Put', function () {
             it('should update a task', function () {
-                let rootTask = utils.createMockedTaskPlainObject("Development", []);
+                let rootTask = utils.createMockedTaskPlainObject("Development");
 
                 return TaskModel.createTask(rootTask)
                     .then(task => {
@@ -56,7 +56,7 @@ describe('Tasks', function () {
 
         describe('Delete', function () {
             it('should delete a task', function () {
-                let task = utils.createMockedTaskPlainObject("Development", null, []);
+                let task = utils.createMockedTaskPlainObject("Development");
 
                 return TaskModel.createTask(task)
                     .then(createdTask => {
@@ -79,14 +79,16 @@ describe('Tasks', function () {
 
     describe('Tree tasks', function () {
         it('should create a tree of tasks', function () {
-            return Promise.all([
-                TaskModel.createTask(utils.createMockedTaskPlainObject("task1Level1", [])),
-                TaskModel.createTask(utils.createMockedTaskPlainObject("task2Level1", [])),
-            ])
-                .then(childTasks => TaskModel.createTask(utils.createMockedTaskPlainObject("Root", childTasks, true)))
+            return TaskModel.createTask(utils.createMockedTaskPlainObject("Root"))
                 .then(rootTask => {
-                    expect(rootTask).not.to.be.null;
-                    expect(rootTask.children).to.have.length(2);
+                    return Promise.all([
+                        TaskModel.createTask(utils.createMockedTaskPlainObject("task1Level1", rootTask)),
+                        TaskModel.createTask(utils.createMockedTaskPlainObject("task2Level1", rootTask)),
+                    ])
+                        .then(childTasks => {
+                            expect(childTasks).not.to.be.null;
+                            expect(childTasks).to.have.length(2);
+                        });
                 });
         });
     });
