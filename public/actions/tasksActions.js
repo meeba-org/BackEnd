@@ -9,14 +9,14 @@ export const fetchTasksSuccess = (payload) => {
 
 export const updateTaskSuccess = (payload) => {
     return {
-        type: actions.UPDATE_TASKS_SUCCESS,
+        type: actions.UPDATE_TASK_SUCCESS,
         payload
     };
 };
 
 export const deleteTaskSuccess = (payload) => {
     return {
-        type: actions.DELETE_TASKS_SUCCESS,
+        type: actions.DELETE_TASK_SUCCESS,
         payload
     };
 };
@@ -38,7 +38,7 @@ export const updateTask = (task) => ({
     payload: {
         url: "/tasks",
         method: "put",
-        data: user,
+        data: task,
         success: updateTaskSuccess,
     },
     meta: {

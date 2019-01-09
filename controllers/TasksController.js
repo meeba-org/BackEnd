@@ -5,6 +5,7 @@ const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const router = express.Router();
 const { body, param } = require('express-validator/check');
+const jwtService = require("./jwtService");
 
 //GET /tasks/{id} task
 router.get('/:id',
@@ -24,13 +25,10 @@ router.get('/:id',
 );
 
 //GET /company/:companyId tasks
-router.get('/company/:companyId',
-    [
-        param('companyId').exists(),
-    ],
+router.get('/',
     (req, res) => routeWrapper(req, res, (req, res) => {
-        let companyId = req.params.getByCompanyId();
-        return TaskModel.getByCompanyId(companyId);
+        let company = jwtService.getCompanyFromLocals(res);
+        return TaskModel.getByCompanyId(company._id);
     })
 );
 

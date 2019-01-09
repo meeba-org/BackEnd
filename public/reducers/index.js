@@ -8,12 +8,14 @@ import {ReportsReducer} from "./ReportsReducer";
 import {LoaderReducer} from "./LoaderReducer";
 import {GeneralReducer} from "./GeneralReducer";
 import reducer from "redux-form/es/reducer";
+import {TasksReducer} from "./TasksReducer";
 
 const rootReducer = combineReducers({
     loader: LoaderReducer,
     routing: routerReducer,
     users: UsersReducer,
     shifts: ShiftsReducer,
+    tasks: TasksReducer,
     user: UserReducer,
     modal: ModalReducer,
     reports: ReportsReducer,

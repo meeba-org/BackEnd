@@ -85,6 +85,7 @@
     <file url="file://$PROJECT_DIR$/public/components/reports/TimeMaskCustom.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Warning.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/TasksContainer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/tasks/TasksTree.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/UserContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/config.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/ERoles.js" charset="UTF-8" />
@@ -100,6 +101,7 @@
     <file url="file://$PROJECT_DIR$/public/reducers/ModalReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/ReportsReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/ShiftsReducer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/reducers/TasksReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/UserReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/UsersReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/index.js" charset="UTF-8" />
