@@ -41,6 +41,7 @@
     <file url="file://$PROJECT_DIR$/public/actions/loginLogoutActions.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/actions/reportsActions.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/actions/shiftsActions.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/actions/tasksActions.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/actions/usersActions.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/AddShiftsDialog.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/AppContainer.js" charset="UTF-8" />
@@ -83,6 +84,7 @@
     <file url="file://$PROJECT_DIR$/public/components/reports/ShiftsList.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/TimeMaskCustom.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Warning.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/tasks/TasksContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/UserContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/config.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/ERoles.js" charset="UTF-8" />

@@ -86,7 +86,7 @@ class SideBar extends React.Component {
                 },
                 {
                     text: "משימות",
-                    url: "/dashboard/employees",
+                    url: "/dashboard/tasks",
                     allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
                     icon: <PermContactCalendar/>
                 },
