@@ -11,6 +11,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "../../../node_modules/@material-ui/icons/Add";
 import Divider from "@material-ui/core/Divider";
+import MbCard from "../MbCard";
 
 class TasksContainer extends React.Component {
 
@@ -19,7 +20,7 @@ class TasksContainer extends React.Component {
     }
 
     onCreate = () => {
-        this.props.createTask({});
+        this.props.openCreateTaskModal({});
     };
 
     onDoubleClickTask = (task) => {
@@ -30,28 +31,24 @@ class TasksContainer extends React.Component {
         const {tasks} = this.props;
 
         return (
-            <Card>
-                <CardHeader title="משימות / אירועים"/>
+            <MbCard title="משימות / אירועים">
+                <div className={styles["controls-line"]}>
+                    <Tooltip title="הוספת משימה" placement="top">
+                        <Button className={styles["action-button"]}
+                                variant="raised" color="primary"
+                                onClick={this.onCreate}><AddIcon/>
+                        </Button>
+                    </Tooltip>
+                </div>
 
-                <CardContent>
-                    <div className={styles["controls-line"]}>
-                        <Tooltip title="הוספת משימה" placement="top">
-                            <Button className={styles["action-button"]}
-                                    variant="raised" color="primary"
-                                    onClick={this.onCreate}><AddIcon/>
-                            </Button>
-                        </Tooltip>
-                    </div>
+                <Divider className={styles["divider"]}/>
 
-                    <Divider className={styles["divider"]}/>
-
-                    {/*<BreadCrumb />*/}
-                    {tasks && tasks.map(task =>
-                        <div>{task.name}</div>
-                    )}
-                    <TasksTree tasks={tasks} />
-                </CardContent>
-            </Card>
+                {/*<BreadCrumb />*/}
+                {tasks && tasks.map(task =>
+                    <div>{task.name}</div>
+                )}
+                <TasksTree tasks={tasks}/>
+            </MbCard>
         );
     }
 }
@@ -70,7 +67,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchTasks: () => dispatch(fetchTasks())
+        fetchTasks: () => dispatch(fetchTasks()),
+        openCreateTaskModal: () => dispatch(openCreateTaskModal())
     };
 }
 

@@ -7,6 +7,13 @@ export const fetchTasksSuccess = (payload) => {
     };
 };
 
+export const createTasksSuccess = (payload) => {
+    return {
+        type: actions.CREATE_TASK_SUCCESS,
+        payload
+    };
+};
+
 export const updateTaskSuccess = (payload) => {
     return {
         type: actions.UPDATE_TASK_SUCCESS,
@@ -27,6 +34,19 @@ export const fetchTasks = () => ({
         url: "/tasks",
         method: "get",
         success: fetchTasksSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+    }
+});
+
+export const createTask = (task) => ({
+    type: actions.API,
+    payload: {
+        url: "/tasks",
+        method: "post",
+        data: task,
+        success: createTasksSuccess,
     },
     meta: {
         shouldAuthenticate: true,
@@ -57,3 +77,14 @@ export const deleteTask = (task) => ({
         shouldAuthenticate: true,
     }
 });
+
+export const openCreateTaskModal = () => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: 'CREATE_TASK',
+        modalProps: {
+            createTask,
+            open: true
+        }
+    }
+})

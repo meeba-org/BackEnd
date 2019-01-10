@@ -16,7 +16,8 @@ const MODAL_COMPONENTS = {
     "MOVING_SHIFT_OUT_OF_MONTH": MovingShiftOutOfMonthModal,
     "MOBILE_APP_LINKS": MobileAppLinksModal,
     "LOCATION_MODAL": LocationModal,
-    "LOGIN_REGISTER": LoginRegister
+    "LOGIN_REGISTER": LoginRegister,
+    "CREATE_TASK": CreateTaskModal,
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {
