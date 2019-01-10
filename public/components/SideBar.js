@@ -14,6 +14,7 @@ import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn';
 import Assessment from '@material-ui/icons/Assessment';
 import DateRange from '@material-ui/icons/DateRange';
 import PermContactCalendar from '@material-ui/icons/PermContactCalendar';
+import ListIcon from '@material-ui/icons/List';
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import {IfAnyGranted} from "react-authorization";
 import * as ERoles from "../helpers/ERoles";
@@ -88,7 +89,7 @@ class SideBar extends React.Component {
                     text: "משימות",
                     url: "/dashboard/tasks",
                     allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
-                    icon: <PermContactCalendar/>
+                    icon: <ListIcon/>
                 },
                 {
                     text: "הגדרות",

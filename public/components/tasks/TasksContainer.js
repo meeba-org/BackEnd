@@ -6,12 +6,25 @@ import {TasksTree} from "./TasksTree";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
+import styles from "../../styles/EmployeesList.scss";
+import Tooltip from "@material-ui/core/Tooltip";
+import Button from "@material-ui/core/Button";
+import AddIcon from "../../../node_modules/@material-ui/icons/Add";
+import Divider from "@material-ui/core/Divider";
 
 class TasksContainer extends React.Component {
 
     componentDidMount() {
         this.props.fetchTasks();
     }
+
+    onCreate = () => {
+        this.props.createTask({});
+    };
+
+    onDoubleClickTask = (task) => {
+        this.props.openTask();
+    };
 
     render() {
         const {tasks} = this.props;
@@ -21,6 +34,17 @@ class TasksContainer extends React.Component {
                 <CardHeader title="משימות / אירועים"/>
 
                 <CardContent>
+                    <div className={styles["controls-line"]}>
+                        <Tooltip title="הוספת משימה" placement="top">
+                            <Button className={styles["action-button"]}
+                                    variant="raised" color="primary"
+                                    onClick={this.onCreate}><AddIcon/>
+                            </Button>
+                        </Tooltip>
+                    </div>
+
+                    <Divider className={styles["divider"]}/>
+
                     {/*<BreadCrumb />*/}
                     {tasks && tasks.map(task =>
                         <div>{task.name}</div>
