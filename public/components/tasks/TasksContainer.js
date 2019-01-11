@@ -1,17 +1,15 @@
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import reduxForm from "redux-form/es/reduxForm";
-import {fetchTasks} from "../../actions/tasksActions";
+import {fetchTasks, openTaskModal} from "../../actions/tasksActions";
 import {TasksTree} from "./TasksTree";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
 import styles from "../../styles/EmployeesList.scss";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import AddIcon from "../../../node_modules/@material-ui/icons/Add";
 import Divider from "@material-ui/core/Divider";
 import MbCard from "../MbCard";
+import * as selectors from "../../selectors";
 
 class TasksContainer extends React.Component {
 
@@ -20,7 +18,10 @@ class TasksContainer extends React.Component {
     }
 
     onCreate = () => {
-        this.props.openCreateTaskModal({});
+         let newTask = {
+             company: this.props.company
+         };
+        this.props.openTaskModal(newTask);
     };
 
     onDoubleClickTask = (task) => {
@@ -45,7 +46,7 @@ class TasksContainer extends React.Component {
 
                 {/*<BreadCrumb />*/}
                 {tasks && tasks.map(task =>
-                    <div>{task.name}</div>
+                    <div>{task.title}</div>
                 )}
                 <TasksTree tasks={tasks}/>
             </MbCard>
@@ -59,6 +60,7 @@ TasksContainer.propTypes = {
 function mapStateToProps(state) {
     return {
         tasks: state.tasks,
+        company: selectors.getCompany(state),
         initialValues: {
             user: state.user
         }
@@ -68,7 +70,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchTasks: () => dispatch(fetchTasks()),
-        openCreateTaskModal: () => dispatch(openCreateTaskModal())
+        openTaskModal: (task) => dispatch(openTaskModal(task))
     };
 }
 

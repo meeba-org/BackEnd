@@ -8,6 +8,7 @@ import MobileAppLinksModal from "./MobileAppLinksModal";
 import EditEmployeeModal from "./EditEmployeeModal";
 import LocationModal from "./LocationModal";
 import LoginRegister from "../login/LoginRegister";
+import CreateTaskModal from "./CreateTaskModal";
 
 const MODAL_COMPONENTS = {
     "DELETE_ENTITY": DeleteModal,

@@ -78,13 +78,14 @@ export const deleteTask = (task) => ({
     }
 });
 
-export const openCreateTaskModal = () => ({
+export const openTaskModal = (task) => ({
     type: 'SHOW_MODAL',
     payload: {
         modalType: 'CREATE_TASK',
         modalProps: {
             createTask,
+            task,
             open: true
         }
     }
-})
+});

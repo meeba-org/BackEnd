@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // Group Schema
 const TaskSchema = mongoose.Schema({
-    name: {
+    title: {
         type: String,
         index: true,
         required: true,

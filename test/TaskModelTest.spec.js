@@ -13,7 +13,7 @@ describe('Tasks', function () {
             it('should insert new root task', function () {
                 let rootTask = utils.createMockedTaskPlainObject("Development");
 
-                return TaskModel.openCreateTaskModal(rootTask)
+                return TaskModel.openTaskModal(rootTask)
                     .then(task => {
                         expect(task).to.not.be.null;
                         expect(task.name).to.be.equal("Development");
@@ -25,7 +25,7 @@ describe('Tasks', function () {
             it('should get a new task', function () {
                 let rootTask = utils.createMockedTaskPlainObject("Development");
 
-                return TaskModel.openCreateTaskModal(rootTask)
+                return TaskModel.openTaskModal(rootTask)
                     .then(task => {
                         expect(task).to.not.be.null;
                         return task;
@@ -41,7 +41,7 @@ describe('Tasks', function () {
             it('should update a task', function () {
                 let rootTask = utils.createMockedTaskPlainObject("Development");
 
-                return TaskModel.openCreateTaskModal(rootTask)
+                return TaskModel.openTaskModal(rootTask)
                     .then(task => {
                         expect(task).to.not.be.null;
 
@@ -58,7 +58,7 @@ describe('Tasks', function () {
             it('should delete a task', function () {
                 let task = utils.createMockedTaskPlainObject("Development");
 
-                return TaskModel.openCreateTaskModal(task)
+                return TaskModel.openTaskModal(task)
                     .then(createdTask => {
                         expect(createdTask).to.not.be.null;
                         return createdTask;
@@ -79,11 +79,11 @@ describe('Tasks', function () {
 
     describe('Tree tasks', function () {
         it('should create a tree of tasks', function () {
-            return TaskModel.openCreateTaskModal(utils.createMockedTaskPlainObject("Root"))
+            return TaskModel.openTaskModal(utils.createMockedTaskPlainObject("Root"))
                 .then(rootTask => {
                     return Promise.all([
-                        TaskModel.openCreateTaskModal(utils.createMockedTaskPlainObject("task1Level1", rootTask)),
-                        TaskModel.openCreateTaskModal(utils.createMockedTaskPlainObject("task2Level1", rootTask)),
+                        TaskModel.openTaskModal(utils.createMockedTaskPlainObject("task1Level1", rootTask)),
+                        TaskModel.openTaskModal(utils.createMockedTaskPlainObject("task2Level1", rootTask)),
                     ])
                         .then(childTasks => {
                             expect(childTasks).not.to.be.null;
