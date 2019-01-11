@@ -69,12 +69,12 @@
     <file url="file://$PROJECT_DIR$/public/components/login/LoginRegister.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/login/LoginRegisterContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/material-ui-wrappers/index.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/modals/CreateTaskModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/DeleteModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/LocationModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/MobileAppLinksModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/ModalRoot.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/MovingShiftOutOfMonthModal.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/modals/TaskModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/BusCost.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/CarCost.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/DailyReportContainer.js" charset="UTF-8" />

@@ -8,7 +8,7 @@ import MobileAppLinksModal from "./MobileAppLinksModal";
 import EditEmployeeModal from "./EditEmployeeModal";
 import LocationModal from "./LocationModal";
 import LoginRegister from "../login/LoginRegister";
-import CreateTaskModal from "./CreateTaskModal";
+import TaskModal from "./TaskModal";
 
 const MODAL_COMPONENTS = {
     "DELETE_ENTITY": DeleteModal,
@@ -18,7 +18,7 @@ const MODAL_COMPONENTS = {
     "MOBILE_APP_LINKS": MobileAppLinksModal,
     "LOCATION_MODAL": LocationModal,
     "LOGIN_REGISTER": LoginRegister,
-    "CREATE_TASK": CreateTaskModal,
+    "TASK_MODAL": TaskModal,
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {

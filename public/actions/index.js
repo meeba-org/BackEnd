@@ -15,10 +15,10 @@ export const hideDeleteEntityModal = () => ({
     }
 });
 
-export const hideCreateTaskModal = () => ({
+export const hideTaskModal = () => ({
     type: 'HIDE_MODAL',
     payload : {
-        modalType: 'CREATE_TASK',
+        modalType: 'TASK_MODAL',
         modalProps: {
             open: false
         }
