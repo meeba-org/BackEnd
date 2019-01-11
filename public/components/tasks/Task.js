@@ -29,7 +29,7 @@ class Task extends Component {
     };
 
     render() {
-        const {data, openTaskModal, onDelete, classes} = this.props;
+        const {data, onAdd, onDelete, classes} = this.props;
 
         return (
             <ListItem classes={{root: classes.listItem}} button onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
@@ -42,10 +42,10 @@ class Task extends Component {
                         <Grid item xs={3}>
                             <Tooltip title="הגדרות נוספות" placement="top">
                                 <IconButton className={styles["elem"]}
-                                            onClick={() => openTaskModal(data)}><SettingsIcon/></IconButton>
+                                            onClick={() => onAdd(data)}><SettingsIcon/></IconButton>
                             </Tooltip>
                             <Tooltip title="מחיקה" placement="top">
-                                <IconButton onClick={onDelete}><DeleteIcon/></IconButton>
+                                <IconButton onClick={() => onDelete(data)}><DeleteIcon/></IconButton>
                             </Tooltip>
                         </Grid>
                         }
@@ -58,7 +58,7 @@ class Task extends Component {
 
 Task.propTypes = {
     data: PropTypes.object.isRequired,
-    openTaskModal: PropTypes.func.isRequired,
+    onAdd: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
 
 };

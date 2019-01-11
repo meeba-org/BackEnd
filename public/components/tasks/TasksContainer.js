@@ -6,7 +6,7 @@ import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import reduxForm from "redux-form/es/reduxForm";
 import List from "../../../node_modules/@material-ui/core/List/List";
-import {fetchTasks, openTaskModal} from "../../actions/tasksActions";
+import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
 import * as selectors from "../../selectors";
 import styles from "../../styles/EmployeesList.scss";
 import MbCard from "../MbCard";
@@ -30,7 +30,7 @@ class TasksContainer extends React.Component {
     };
 
     render() {
-        const {tasks, openTaskModal} = this.props;
+        const {tasks, openTaskModal, showDeleteTaskModal} = this.props;
 
         return (
             <MbCard title="משימות / אירועים">
@@ -51,8 +51,8 @@ class TasksContainer extends React.Component {
                     (<Task
                         key={index}
                         data={task}
-                        openTaskModal={openTaskModal}
-                        onDelete={() => {}}
+                        onAdd={openTaskModal}
+                        onDelete={showDeleteTaskModal}
                     />)
                 )}
                 </List>
@@ -78,7 +78,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchTasks: () => dispatch(fetchTasks()),
-        openTaskModal: (task) => dispatch(openTaskModal(task))
+        openTaskModal: (task) => dispatch(openTaskModal(task)),
+        showDeleteTaskModal: (task) => dispatch(showDeleteTaskModal(task)),
     };
 }
 

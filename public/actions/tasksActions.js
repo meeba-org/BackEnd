@@ -21,10 +21,10 @@ export const updateTaskSuccess = (payload) => {
     };
 };
 
-export const deleteTaskSuccess = (payload) => {
+export const deleteTaskSuccess = (id) => {
     return {
         type: actions.DELETE_TASK_SUCCESS,
-        payload
+        id
     };
 };
 
@@ -63,6 +63,18 @@ export const updateTask = (task) => ({
     },
     meta: {
         shouldAuthenticate: true,
+    }
+});
+
+export const showDeleteTaskModal = (entity) => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: 'DELETE_ENTITY',
+        modalProps: {
+            entity: entity,
+            deleteEntity: deleteTask,
+            open: true
+        }
     }
 });
 
