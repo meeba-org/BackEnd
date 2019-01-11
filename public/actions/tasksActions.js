@@ -84,8 +84,9 @@ export const openTaskModal = (task) => ({
         modalType: 'TASK_MODAL',
         modalProps: {
             createTask,
-            task,
-            open: true
+            entity: task,
+            open: true,
+            key: task._id
         }
     }
 });

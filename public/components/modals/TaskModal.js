@@ -1,25 +1,29 @@
-import React, {Component} from 'react';
-import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import PropTypes from 'prop-types';
-import {hideTaskModal} from "../../actions";
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField/TextField";
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
+import {connect} from "react-redux";
+import {hideTaskModal} from "../../actions";
 
 class TaskModal extends Component {
 
-    state = {
-        title: ""
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            entity: props.entity
+        };
+    }
 
     handleCreateTask = () => {
-        let {dispatch, createTask, task} = this.props;
+        let {dispatch, createTask, entity} = this.props;
 
         let updatedTask = {
-            ...task,
+            ...entity,
             title: this.state.title
         };
 
@@ -32,8 +36,10 @@ class TaskModal extends Component {
     };
 
     render() {
-        let {open, task} = this.props;
-        let defaultTitle = (!task || !task.title) ? "" : task.title;
+        let {open} = this.props;
+        let {entity} = this.state;
+
+        let defaultTitle = (!entity || !entity.title) ? "" : entity.title;
         return (
             <Dialog onClose={this.handleCancel} open={open}>
                 <DialogTitle>{"משימה חדשה"}</DialogTitle>

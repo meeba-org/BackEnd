@@ -1,15 +1,16 @@
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import Tooltip from "@material-ui/core/Tooltip";
+import AddIcon from "@material-ui/icons/Add";
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import reduxForm from "redux-form/es/reduxForm";
+import List from "../../../node_modules/@material-ui/core/List/List";
 import {fetchTasks, openTaskModal} from "../../actions/tasksActions";
-import {TasksTree} from "./TasksTree";
-import styles from "../../styles/EmployeesList.scss";
-import Tooltip from "@material-ui/core/Tooltip";
-import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
-import Divider from "@material-ui/core/Divider";
-import MbCard from "../MbCard";
 import * as selectors from "../../selectors";
+import styles from "../../styles/EmployeesList.scss";
+import MbCard from "../MbCard";
+import Task from "./Task";
 
 class TasksContainer extends React.Component {
 
@@ -29,7 +30,7 @@ class TasksContainer extends React.Component {
     };
 
     render() {
-        const {tasks} = this.props;
+        const {tasks, openTaskModal} = this.props;
 
         return (
             <MbCard title="משימות / אירועים">
@@ -45,10 +46,17 @@ class TasksContainer extends React.Component {
                 <Divider className={styles["divider"]}/>
 
                 {/*<BreadCrumb />*/}
-                {tasks && tasks.map(task =>
-                    <div>{task.title}</div>
+                <List>
+                {tasks && tasks.map((task, index) =>
+                    (<Task
+                        key={index}
+                        data={task}
+                        openTaskModal={openTaskModal}
+                        onDelete={() => {}}
+                    />)
                 )}
-                <TasksTree tasks={tasks}/>
+                </List>
+                {/*<TasksTree tasks={tasks}/>*/}
             </MbCard>
         );
     }
