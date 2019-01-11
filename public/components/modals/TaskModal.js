@@ -19,16 +19,24 @@ class TaskModal extends Component {
         };
     }
 
-    handleCreateTask = () => {
-        let {dispatch, createTask, entity} = this.props;
+    handleCreateOrUpdateTask = () => {
+        let {dispatch, createTask, updateTask, entity} = this.props;
 
         let updatedTask = {
             ...entity,
             title: this.state.title
         };
 
-        dispatch(createTask(updatedTask));
+        if (this.isNewTask(entity))
+            dispatch(createTask(updatedTask));
+        else
+            dispatch(updateTask(updatedTask));
+
         dispatch(hideTaskModal());
+    };
+
+    isNewTask = (task) => {
+        return !task._id;
     };
 
     handleCancel = () => {
@@ -39,7 +47,7 @@ class TaskModal extends Component {
         let {open} = this.props;
         let {entity} = this.state;
 
-        let defaultTitle = (!entity || !entity.title) ? "" : entity.title;
+        let defaultTitle = (!entity || this.isNewTask(entity)) ? "" : entity.title;
         return (
             <Dialog onClose={this.handleCancel} open={open}>
                 <DialogTitle>{"משימה חדשה"}</DialogTitle>
@@ -50,7 +58,7 @@ class TaskModal extends Component {
                            onChange={(e) => this.setState({title: e.target.value})}/>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="raised" onClick={() => this.handleCreateTask()}
+                    <Button variant="raised" onClick={() => this.handleCreateOrUpdateTask()}
                             color="primary" autoFocus
                             disabled={!this.state.title}
                     >

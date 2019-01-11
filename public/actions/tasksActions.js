@@ -90,15 +90,16 @@ export const deleteTask = (task) => ({
     }
 });
 
-export const openTaskModal = (task) => ({
+export const openTaskModal = (entity) => ({
     type: 'SHOW_MODAL',
     payload: {
         modalType: 'TASK_MODAL',
         modalProps: {
             createTask,
-            entity: task,
+            updateTask,
+            entity,
             open: true,
-            key: task._id
+            key: entity._id
         }
     }
 });
