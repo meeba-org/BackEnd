@@ -1,13 +1,19 @@
+import Grid from "@material-ui/core/Grid/Grid";
 import IconButton from "@material-ui/core/IconButton";
+import ListItem from "@material-ui/core/ListItem/ListItem";
+import ListItemText from "@material-ui/core/ListItemText/ListItemText";
+import withStyles from '@material-ui/core/styles/withStyles';
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
-import CSSModules from "react-css-modules";
-import ListItem from "../../../node_modules/@material-ui/core/ListItem/ListItem";
-import ListItemText from "../../../node_modules/@material-ui/core/ListItemText/ListItemText";
-import styles from "../../styles/Employees.scss";
+
+const styles = {
+    listItem: {
+        textAlign: "right"
+    }
+};
 
 class Task extends Component {
     state = {
@@ -23,15 +29,17 @@ class Task extends Component {
     };
 
     render() {
-        const {data, openTaskModal, onDelete} = this.props;
+        const {data, openTaskModal, onDelete, classes} = this.props;
 
         return (
-            <ListItem button onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+            <ListItem classes={{root: classes.listItem}} button onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <ListItemText primary={
-                    <Fragment>
-                        {data.title}
+                    <Grid container spacing={8}>
+                        <Grid item xs={2}>
+                            {data.title}
+                        </Grid>
                         {this.state.hover &&
-                        <Fragment>
+                        <Grid item xs={3}>
                             <Tooltip title="הגדרות נוספות" placement="top">
                                 <IconButton className={styles["elem"]}
                                             onClick={() => openTaskModal(data)}><SettingsIcon/></IconButton>
@@ -39,9 +47,9 @@ class Task extends Component {
                             <Tooltip title="מחיקה" placement="top">
                                 <IconButton onClick={onDelete}><DeleteIcon/></IconButton>
                             </Tooltip>
-                        </Fragment>
+                        </Grid>
                         }
-                    </Fragment>
+                    </Grid>
                 }/>
             </ListItem>
         );
@@ -56,5 +64,5 @@ Task.propTypes = {
 };
 Task.defaultProps = {};
 
-export default CSSModules(Task, styles);
+export default withStyles(styles)(Task);
 
