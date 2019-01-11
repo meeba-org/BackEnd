@@ -6,7 +6,7 @@ import {TasksTree} from "./TasksTree";
 import styles from "../../styles/EmployeesList.scss";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
-import AddIcon from "../../../node_modules/@material-ui/icons/Add";
+import AddIcon from "@material-ui/icons/Add";
 import Divider from "@material-ui/core/Divider";
 import MbCard from "../MbCard";
 import * as selectors from "../../selectors";
