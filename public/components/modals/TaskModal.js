@@ -43,6 +43,12 @@ class TaskModal extends Component {
         this.props.dispatch(hideTaskModal());
     };
 
+    onKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            this.handleCreateOrUpdateTask();
+        }
+    };
+
     render() {
         let {open} = this.props;
         let {entity} = this.state;
@@ -55,10 +61,12 @@ class TaskModal extends Component {
                     <TextField type="text" placeholder={"המשימה שלי"}
                            defaultValue={defaultTitle}
                            value={this.state.title}
-                           onChange={(e) => this.setState({title: e.target.value})}/>
+                           onChange={(e) => this.setState({title: e.target.value})}
+                           onKeyPress={this.onKeyPress}
+                    />
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="raised" onClick={() => this.handleCreateOrUpdateTask()}
+                    <Button variant="raised" onClick={this.handleCreateOrUpdateTask}
                             color="primary" autoFocus
                             disabled={!this.state.title}
                     >
