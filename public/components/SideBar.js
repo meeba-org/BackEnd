@@ -1,30 +1,30 @@
 'use strict';
-import React from "react";
 import Divider from '@material-ui/core/Divider';
+import SwipeableDrawer from "@material-ui/core/es/SwipeableDrawer/SwipeableDrawer";
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import {withRouter} from 'react-router';
-import PropTypes from 'prop-types';
-import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn';
-import Assessment from '@material-ui/icons/Assessment';
-import DateRange from '@material-ui/icons/DateRange';
-import PermContactCalendar from '@material-ui/icons/PermContactCalendar';
-import ListIcon from '@material-ui/icons/List';
-import SettingsApplications from '@material-ui/icons/SettingsApplications';
-import {IfAnyGranted} from "react-authorization";
-import * as ERoles from "../helpers/ERoles";
-import classNames from 'classnames';
-import CSSModulesStyles from '../styles/SideBar.scss';
-import CSSModules from "react-css-modules";
 import withStyles from '@material-ui/core/styles/withStyles';
 import withTheme from '@material-ui/core/styles/withTheme';
-import SwipeableDrawer from "@material-ui/core/es/SwipeableDrawer/SwipeableDrawer";
-import {Feature, isFeatureEnable} from "../../managers/FeaturesManager";
+import Assessment from '@material-ui/icons/Assessment';
+import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import DateRange from '@material-ui/icons/DateRange';
+import ListIcon from '@material-ui/icons/List';
+import PermContactCalendar from '@material-ui/icons/PermContactCalendar';
+import SettingsApplications from '@material-ui/icons/SettingsApplications';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from "react";
+import {IfAnyGranted} from "react-authorization";
+import CSSModules from "react-css-modules";
+import {withRouter} from 'react-router';
+import * as ERoles from "../helpers/ERoles";
+import CSSModulesStyles from '../styles/SideBar.scss';
+
 const drawerWidth = 200;
 
 const styles = theme => ({
@@ -105,14 +105,15 @@ class SideBar extends React.Component {
         const { isTasksFeatureEnable} = this.props;
         if (isTasksFeatureEnable && !prevProps.isTasksFeatureEnable) {
             let items = [...this.state.items];
-            items.push({
+            // Insert task item in the 4th place
+            items.splice(4, 0, {
                 text: "משימות",
                 url: "/dashboard/tasks",
                 allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
                 icon: <ListIcon/>
             });
 
-            this.setState({items: items});
+            this.setState({items});
         }
     }
 
