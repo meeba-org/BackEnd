@@ -7,6 +7,11 @@ export const fetchTasksSuccess = (payload) => {
     };
 };
 
+export const filterTasks = (parent) => ({
+    type: actions.FILTER_TASKS,
+    parent
+});
+
 export const createTasksSuccess = (payload) => {
     return {
         type: actions.CREATE_TASK_SUCCESS,

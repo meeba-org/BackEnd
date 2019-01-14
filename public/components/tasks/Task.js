@@ -7,7 +7,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PropTypes from 'prop-types';
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 
 const styles = {
     listItem: {
@@ -29,10 +29,10 @@ class Task extends Component {
     };
 
     render() {
-        const {data, onAdd, onDelete, classes} = this.props;
+        const {data, onEdit, onDelete, onDoubleClick, classes} = this.props;
 
         return (
-            <ListItem classes={{root: classes.listItem}} button onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+            <ListItem classes={{root: classes.listItem}} button onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onDoubleClick={() => onDoubleClick(data)}>
                 <ListItemText primary={
                     <Grid container spacing={8}>
                         <Grid item xs={2}>
@@ -42,7 +42,7 @@ class Task extends Component {
                         <Grid item xs={3}>
                             <Tooltip title="הגדרות נוספות" placement="top">
                                 <IconButton className={styles["elem"]}
-                                            onClick={() => onAdd(data)}><SettingsIcon/></IconButton>
+                                            onClick={() => onEdit(data)}><SettingsIcon/></IconButton>
                             </Tooltip>
                             <Tooltip title="מחיקה" placement="top">
                                 <IconButton onClick={() => onDelete(data)}><DeleteIcon/></IconButton>
@@ -58,8 +58,9 @@ class Task extends Component {
 
 Task.propTypes = {
     data: PropTypes.object.isRequired,
-    onAdd: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    onDoubleClick: PropTypes.func.isRequired,
 
 };
 Task.defaultProps = {};

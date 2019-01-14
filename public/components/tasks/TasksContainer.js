@@ -2,11 +2,11 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
-import React, {Fragment} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import reduxForm from "redux-form/es/reduxForm";
 import List from "../../../node_modules/@material-ui/core/List/List";
-import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
+import {fetchTasks, filterTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
 import * as selectors from "../../selectors";
 import styles from "../../styles/EmployeesList.scss";
 import MbCard from "../MbCard";
@@ -16,17 +16,21 @@ class TasksContainer extends React.Component {
 
     componentDidMount() {
         this.props.fetchTasks();
+        this.props.filterTasks();
     }
 
     onCreate = () => {
          let newTask = {
-             company: this.props.company
+             company: this.props.company,
+             parent: this.state.parent,
          };
         this.props.openTaskModal(newTask);
     };
 
     onDoubleClickTask = (task) => {
-        this.props.openTask();
+        this.setState({parent: task._id});
+        // This change the tasks state! need something that will work on local state
+        this.props.filterTasks(task._id);
     };
 
     render() {
@@ -51,8 +55,9 @@ class TasksContainer extends React.Component {
                     (<Task
                         key={index}
                         data={task}
-                        onAdd={openTaskModal}
+                        onEdit={openTaskModal}
                         onDelete={showDeleteTaskModal}
+                        onDoubleClick={this.onDoubleClickTask}
                     />)
                 )}
                 </List>
@@ -78,8 +83,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchTasks: () => dispatch(fetchTasks()),
+        filterTasks: (parent) => dispatch(filterTasks(parent)),
         openTaskModal: (task) => dispatch(openTaskModal(task)),
         showDeleteTaskModal: (task) => dispatch(showDeleteTaskModal(task)),
+
     };
 }
 

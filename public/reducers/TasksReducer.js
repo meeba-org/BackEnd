@@ -19,6 +19,10 @@ export function TasksReducer(state = [], action = null) {
         case types.DELETE_TASK_SUCCESS: {
             return state.filter(task => task._id !== action.id);
         }
+        case types.FILTER_TASKS: {
+            return state.filter(task => !!task.parent === !!action.parent);
+        }
+
         default:
             return state;
     }
