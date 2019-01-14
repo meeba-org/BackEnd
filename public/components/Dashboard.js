@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from "react-css-modules";
+import {Feature} from "../../managers/FeaturesManager";
 import styles from "../styles/Dashboard.scss";
 import SideBar from "./SideBar";
 import Paper from "@material-ui/core/Paper";
@@ -33,7 +34,7 @@ class Dashboard extends React.PureComponent {
     };
 
     render() {
-        let {router, userRole, isDesktop} = this.props;
+        let {router, userRole, isDesktop, isTasksFeatureEnable} = this.props;
         let open = this.isOpen();
 
         return (
@@ -44,7 +45,13 @@ class Dashboard extends React.PureComponent {
                     </div>
                     <div styleName="grid-container">
                         <Paper styleName={"sideBar-container" + (isDesktop ? " isDesktop" : "")}>
-                            <SideBar userRole={userRole} isDesktop={!!isDesktop} open={open} toggleSideBar={this.toggleDrawer}/>
+                            <SideBar
+                                userRole={userRole}
+                                isDesktop={!!isDesktop}
+                                open={open}
+                                toggleSideBar={this.toggleDrawer}
+                                isTasksFeatureEnable={isTasksFeatureEnable}
+                            />
                         </Paper>
                         <Paper styleName="main-container">
                             <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -69,7 +76,8 @@ Dashboard.propTypes = {
 const mapStateToProps = (state) => {
     return {
         userRole: selectors.getUserRole(state),
-        isDesktop: selectors.isDesktop(state)
+        isDesktop: selectors.isDesktop(state),
+        isTasksFeatureEnable: selectors.isFeatureEnable(state, Feature.Tasks)
     };
 };
 

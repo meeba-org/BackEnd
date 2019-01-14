@@ -1,4 +1,4 @@
-const {FeatureName, isFeatureEnable} = require("./FeaturesManager");
+const {Feature, isFeatureEnable} = require("./FeaturesManager");
 
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
@@ -106,7 +106,7 @@ function createShiftsPerEmployeeColumns(sheet, company) {
         {header: '200%', key: 'extra200Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
     ];
 
-    if (isFeatureEnable(company, FeatureName.CommuteModule)) {
+    if (isFeatureEnable(company, Feature.CommuteModule)) {
         sheet.columns = sheet.columns.concat([
             {header: 'תחבורה ציבורית', key: 'publicTransportation', width: 10, style: {alignment: {horizontal: 'center'}}},
             {header: 'שעות נסיעה', key: 'commuteHours', width: 10, style: {alignment: {horizontal: 'center'}}},
@@ -124,7 +124,7 @@ function createShiftsPerEmployeeColumns(sheet, company) {
 }
 
 function shouldAddCommuteData(company, shift) {
-    return isFeatureEnable(company, FeatureName.CommuteModule) && !!shift.commuteCost;
+    return isFeatureEnable(company, Feature.CommuteModule) && !!shift.commuteCost;
 }
 
 function addCommuteData(company, row, shift) {

@@ -24,7 +24,7 @@ import CSSModules from "react-css-modules";
 import withStyles from '@material-ui/core/styles/withStyles';
 import withTheme from '@material-ui/core/styles/withTheme';
 import SwipeableDrawer from "@material-ui/core/es/SwipeableDrawer/SwipeableDrawer";
-
+import {Feature, isFeatureEnable} from "../../managers/FeaturesManager";
 const drawerWidth = 200;
 
 const styles = theme => ({
@@ -57,7 +57,7 @@ class SideBar extends React.Component {
     constructor(props) {
         super(props);
 
-        const {router} = this.props;
+        const {router} = props;
 
         this.state = {
             items: [
@@ -86,12 +86,6 @@ class SideBar extends React.Component {
                     icon: <PermContactCalendar/>
                 },
                 {
-                    text: "משימות",
-                    url: "/dashboard/tasks",
-                    allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
-                    icon: <ListIcon/>
-                },
-                {
                     text: "הגדרות",
                     url: "/dashboard/user",
                     allowedRoles: [ERoles.COMPANY_MANAGER],
@@ -105,6 +99,21 @@ class SideBar extends React.Component {
             if (item.url === router.location.pathname)
                 item.selected = true;
         });
+    }
+
+    componentDidUpdate(prevProps) {
+        const { isTasksFeatureEnable} = this.props;
+        if (isTasksFeatureEnable && !prevProps.isTasksFeatureEnable) {
+            let items = [...this.state.items];
+            items.push({
+                text: "משימות",
+                url: "/dashboard/tasks",
+                allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
+                icon: <ListIcon/>
+            });
+
+            this.setState({items: items});
+        }
     }
 
     updateRoute(item, index) {
@@ -178,6 +187,7 @@ SideBar.propTypes = {
     userRole: PropTypes.string,
     classes: PropTypes.object,
     isDesktop: PropTypes.bool.isRequired,
+    isTasksFeatureEnable: PropTypes.bool.isRequired,
     open: PropTypes.bool.isRequired,
     toggleSideBar: PropTypes.func.isRequired,
 };
