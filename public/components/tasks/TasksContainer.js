@@ -9,10 +9,15 @@ import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/task
 import * as selectors from "../../selectors";
 import styles from "../../styles/EmployeesList.scss";
 import MbCard from "../MbCard";
+import {BreadCrumb} from "./BreadCrumb";
 import {filterTasks} from "./TaskService";
 import TasksList from "./TasksList";
 
 class TasksContainer extends React.Component {
+
+    state = {
+        breadcrumbTasks: []
+    };
 
     componentDidMount() {
         this.props.fetchTasks();
@@ -26,8 +31,21 @@ class TasksContainer extends React.Component {
         this.props.openTaskModal(newTask);
     };
 
+    onSelectTask = (selectedTask) => {
+        let breadcrumbTasks = [];
+        const {tasks} = this.props;
+
+        while (!!selectedTask) {
+            breadcrumbTasks.push(selectedTask);
+            selectedTask = tasks.find(task=> task._id === selectedTask.parent); // Go up one level
+        }
+
+        this.setState({breadcrumbTasks});
+    };
+
     render() {
         const {tasks, openTaskModal, showDeleteTaskModal} = this.props;
+        let {breadcrumbTasks} = this.state;
 
         return (
             <MbCard title="משימות / אירועים">
@@ -43,11 +61,12 @@ class TasksContainer extends React.Component {
                 <Divider className={styles["divider"]}/>
 
 
-                {/*<BreadCrumb />*/}
+                <BreadCrumb data={breadcrumbTasks}/>
                 <TasksList
                     tasks={tasks}
                     onEdit={openTaskModal}
                     onDelete={showDeleteTaskModal}
+                    onDoubleClick={this.onSelectTask}
                 />
             </MbCard>
         );

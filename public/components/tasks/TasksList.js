@@ -9,8 +9,10 @@ class TasksList extends Component {
     };
 
     onDoubleClick = (task) => {
-        const {tasks} = this.props;
+        const {tasks, onDoubleClick} = this.props;
         this.setState({tasks: filterTasks(tasks, task._id)});
+
+        onDoubleClick(task);
     };
 
     render() {
