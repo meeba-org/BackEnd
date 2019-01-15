@@ -5,18 +5,17 @@ import AddIcon from "@material-ui/icons/Add";
 import React from 'react';
 import {connect} from 'react-redux';
 import reduxForm from "redux-form/es/reduxForm";
-import List from "../../../node_modules/@material-ui/core/List/List";
-import {fetchTasks, filterTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
+import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
 import * as selectors from "../../selectors";
 import styles from "../../styles/EmployeesList.scss";
 import MbCard from "../MbCard";
-import Task from "./Task";
+import {filterTasks} from "./TaskService";
+import TasksList from "./TasksList";
 
 class TasksContainer extends React.Component {
 
     componentDidMount() {
         this.props.fetchTasks();
-        this.props.filterTasks();
     }
 
     onCreate = () => {
@@ -25,12 +24,6 @@ class TasksContainer extends React.Component {
              parent: this.state.parent,
          };
         this.props.openTaskModal(newTask);
-    };
-
-    onDoubleClickTask = (task) => {
-        this.setState({parent: task._id});
-        // This change the tasks state! need something that will work on local state
-        this.props.filterTasks(task._id);
     };
 
     render() {
@@ -49,19 +42,13 @@ class TasksContainer extends React.Component {
 
                 <Divider className={styles["divider"]}/>
 
+
                 {/*<BreadCrumb />*/}
-                <List>
-                {tasks && tasks.map((task, index) =>
-                    (<Task
-                        key={index}
-                        data={task}
-                        onEdit={openTaskModal}
-                        onDelete={showDeleteTaskModal}
-                        onDoubleClick={this.onDoubleClickTask}
-                    />)
-                )}
-                </List>
-                {/*<TasksTree tasks={tasks}/>*/}
+                <TasksList
+                    tasks={tasks}
+                    onEdit={openTaskModal}
+                    onDelete={showDeleteTaskModal}
+                />
             </MbCard>
         );
     }
