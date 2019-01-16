@@ -25,9 +25,10 @@ class TasksContainer extends React.Component {
     }
 
     onCreate = () => {
-         let newTask = {
+        let parent = (!this.state.selectedParent) ? null : this.state.selectedParent._id;
+        let newTask = {
              company: this.props.company,
-             parent: this.state.parent,
+             parent: parent,
          };
         this.props.openTaskModal(newTask);
     };
