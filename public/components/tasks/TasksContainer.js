@@ -16,7 +16,8 @@ import TasksList from "./TasksList";
 class TasksContainer extends React.Component {
 
     state = {
-        breadcrumbTasks: []
+        breadcrumbTasks: [],
+        selectedParent: null,
     };
 
     componentDidMount() {
@@ -34,8 +35,9 @@ class TasksContainer extends React.Component {
     onSelectTask = (selectedTask) => {
         let breadcrumbTasks = [];
         const {tasks} = this.props;
+        this.setState({selectedParent: selectedTask});
 
-        while (!!selectedTask) {
+        while (selectedTask) {
             breadcrumbTasks.push(selectedTask);
             selectedTask = tasks.find(task=> task._id === selectedTask.parent); // Go up one level
         }
@@ -44,8 +46,9 @@ class TasksContainer extends React.Component {
     };
 
     render() {
-        const {tasks, openTaskModal, showDeleteTaskModal} = this.props;
-        let {breadcrumbTasks} = this.state;
+        const {openTaskModal, showDeleteTaskModal} = this.props;
+        let {breadcrumbTasks, selectedParent} = this.state;
+        let tasks = filterTasks(this.props.tasks, selectedParent);
 
         return (
             <MbCard title="משימות / אירועים">
@@ -61,13 +64,18 @@ class TasksContainer extends React.Component {
                 <Divider className={styles["divider"]}/>
 
 
-                <BreadCrumb data={breadcrumbTasks}/>
+                <BreadCrumb
+                    data={breadcrumbTasks}
+                    onSelectTask={this.onSelectTask}
+                />
+                {tasks && tasks.length > 0 && 
                 <TasksList
                     tasks={tasks}
                     onEdit={openTaskModal}
                     onDelete={showDeleteTaskModal}
                     onDoubleClick={this.onSelectTask}
                 />
+                }
             </MbCard>
         );
     }
@@ -89,7 +97,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchTasks: () => dispatch(fetchTasks()),
-        filterTasks: (parent) => dispatch(filterTasks(parent)),
         openTaskModal: (task) => dispatch(openTaskModal(task)),
         showDeleteTaskModal: (task) => dispatch(showDeleteTaskModal(task)),
 

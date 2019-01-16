@@ -1,3 +1,4 @@
 export const filterTasks = (tasks, parent) => {
-    return tasks.filter(task => task.parent === parent);
+    let id = (!parent) ? null : parent._id;
+    return tasks.filter(task => task.parent === id);
 };
