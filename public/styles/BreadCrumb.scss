@@ -1,0 +1,43 @@
+@import "variables";
+
+.breadcrumb {
+    display: flex;
+    padding-top: 5px;
+    color: material-color('grey', '600');
+    justify-content: flex-start;
+    align-items: center;
+
+
+    .home {
+        padding: 5px;
+    }
+
+    .items {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+
+        .item {
+            display: flex;
+            align-items: center;
+
+            .arrow {
+                display: flex;
+                color: material-color('grey', '600');
+            }
+
+        }
+    }
+
+    .item-text {
+        border-radius: 8px;
+        padding: 6px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: material-color('orange', '100');
+        }
+    }
+
+}
+

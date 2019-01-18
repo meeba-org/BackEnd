@@ -9,7 +9,7 @@ import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/task
 import * as selectors from "../../selectors";
 import styles from "../../styles/EmployeesList.scss";
 import MbCard from "../MbCard";
-import {BreadCrumb} from "./BreadCrumb";
+import BreadCrumb from "./BreadCrumb";
 import {filterTasks} from "./TaskService";
 import TasksList from "./TasksList";
 

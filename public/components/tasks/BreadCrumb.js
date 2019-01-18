@@ -1,17 +1,23 @@
 import HomeIcon from "@material-ui/icons/Home";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
-import React, {Fragment} from "react";
+import React from "react";
+import CSSModules from "react-css-modules";
+import styles from "../../styles/BreadCrumb.scss";
 
-export const BreadCrumb = ({data, onSelectTask}) => {
+const BreadCrumb = ({data, onSelectTask}) => {
     return (
-        <Fragment>
-            <HomeIcon style={{color: "grey"}} onClick={() => onSelectTask()}/>
-            {data && data.map((task) => (
-                <Fragment>
-                    <KeyboardArrowLeftIcon style={{color: "grey"}}/>
-                    <span onClick={() => onSelectTask(task)}>{task.title}</span>
-                </Fragment>
-            ))}
-        </Fragment>
+        <div styleName="breadcrumb">
+            <HomeIcon styleName="item-text" onClick={() => onSelectTask()}/>
+            <div styleName="items">
+                {data && data.map((task, index) => (
+                    <div key={index} styleName="item">
+                        <div styleName="arrow"><KeyboardArrowLeftIcon/></div>
+                        <div styleName={0 === index ? "": "item-text"} onClick={() => onSelectTask(task)}>{task.title}</div>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 };
+
+export default CSSModules(BreadCrumb, styles);
