@@ -5,38 +5,61 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField/TextField";
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 import {hideTaskModal} from "../../actions";
 
+export const TaskModalContent = ({entity, isNewTask, onKeyPress, onOk, onCancel, onChangeTitle}) => {
+    return (
+        <Fragment>
+            <DialogTitle>{"משימה חדשה"}</DialogTitle>
+            <DialogContent>
+                <TextField type="text" placeholder={"המשימה שלי"}
+                           value={entity.title}
+                           onChange={(e) => onChangeTitle(e.target.value)}
+                           onKeyPress={onKeyPress}
+                           autoFocus
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button variant="raised" onClick={onOk}
+                        color="primary" autoFocus
+                        disabled={!entity.title}
+                >
+                    {isNewTask ? "חדש" : "עדכן"}
+                </Button>
+                <Button onClick={onCancel} color="primary">
+                    ביטול
+                </Button>
+            </DialogActions>
+        </Fragment>
+    );
+};
+
 class TaskModal extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            entity: props.entity
-        };
-    }
+    state = {
+        entity: {}
+    };
 
     handleCreateOrUpdateTask = () => {
-        let {dispatch, createTask, updateTask, entity} = this.props;
+        let {dispatch, createTask, updateTask} = this.props;
+        const {entity} = this.state;
 
-        let updatedTask = {
-            ...entity,
-            title: this.state.title
-        };
-
-        if (this.isNewTask(entity))
-            dispatch(createTask(updatedTask));
+        if (this.isNewTask())
+            dispatch(createTask(entity));
         else
-            dispatch(updateTask(updatedTask));
+            dispatch(updateTask(entity));
 
         dispatch(hideTaskModal());
     };
 
-    isNewTask = (task) => {
-        return !task._id;
+    isNewTask = () => {
+        let entity = this.props.entity;
+
+        if (!entity)
+            return false;
+        return !entity._id;
     };
 
     handleCancel = () => {
@@ -49,33 +72,31 @@ class TaskModal extends Component {
         }
     };
 
+    onChangeTitle = (title) => {
+        this.setState({entity: {
+                ...this.state.entity,
+                title
+            }});
+    };
+
     render() {
         let {open} = this.props;
         let {entity} = this.state;
 
-        let defaultTitle = (!entity || this.isNewTask(entity)) ? "" : entity.title;
         return (
-            <Dialog onClose={this.handleCancel} open={open}>
-                <DialogTitle>{"משימה חדשה"}</DialogTitle>
-                <DialogContent>
-                    <TextField type="text" placeholder={"המשימה שלי"}
-                           defaultValue={defaultTitle}
-                           value={this.state.title}
-                           onChange={(e) => this.setState({title: e.target.value})}
-                           onKeyPress={this.onKeyPress}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="raised" onClick={this.handleCreateOrUpdateTask}
-                            color="primary" autoFocus
-                            disabled={!this.state.title}
-                    >
-                        {!defaultTitle ? "חדש" : "עדכן"}
-                    </Button>
-                    <Button onClick={this.handleCancel} color="primary">
-                        ביטול
-                    </Button>
-                </DialogActions>
+            <Dialog onClose={this.handleCancel} open={open}
+                    onEnter={() => {
+                        this.setState({entity: this.props.entity});
+                    }}
+            >
+                <TaskModalContent
+                    entity={entity}
+                    isNewTask={this.isNewTask()}
+                    onOk={this.handleCreateOrUpdateTask}
+                    onKeyPress={this.onKeyPress}
+                    onCancel={this.handleCancel}
+                    onChangeTitle={this.onChangeTitle}
+                />
             </Dialog>
         );
     }
