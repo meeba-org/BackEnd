@@ -1,21 +1,21 @@
-import React, {Component, Fragment} from 'react';
-import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import {hideEditShiftModal} from "../../actions/index";
-import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
-import {FeatureName} from "../../helpers/FeatureName";
-import * as selectors from "../../selectors";
-import CommentIcon from "@material-ui/icons/Comment";
-import CarIcon from "@material-ui/icons/DirectionsCar";
-import BusIcon from "@material-ui/icons/DirectionsBus";
-import EmptyIcon from "@material-ui/icons/HourglassEmpty";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
+import withStyles from '@material-ui/core/styles/withStyles';
+import TextField from "@material-ui/core/TextField";
+import CommentIcon from "@material-ui/icons/Comment";
+import BusIcon from "@material-ui/icons/DirectionsBus";
+import CarIcon from "@material-ui/icons/DirectionsCar";
+import EmptyIcon from "@material-ui/icons/HourglassEmpty";
+import PropTypes from 'prop-types';
+import React, {Component, Fragment} from 'react';
+import {connect} from "react-redux";
+import {Feature} from "../../../managers/FeaturesManager";
+import {hideEditShiftModal} from "../../actions/index";
+import * as selectors from "../../selectors";
 
 const moment = require("moment");
 
@@ -225,7 +225,7 @@ EditShiftModal.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        isCommuteFeatureEnable: selectors.isFeatureEnable(state, FeatureName.CommuteModule),
+        isCommuteFeatureEnable: selectors.isFeatureEnable(state, Feature.CommuteModule),
     };
 };
 export default connect(mapStateToProps)(withStyles(styles)(EditShiftModal));
