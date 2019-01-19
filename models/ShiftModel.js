@@ -27,7 +27,8 @@ const ShiftSchema = mongoose.Schema({
     location: {
         latitude: {type: Number},
         longitude: {type: Number}
-    }
+    },
+    task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
 });
 
 const Shift = mongoose.model('Shift', ShiftSchema);
@@ -76,7 +77,7 @@ const getShiftsBetween = (company, startDate, endDate, userId) => {
     if (userId)
         condition.user = userId;
 
-    return Shift.find(condition).populate('user').lean()
+    return Shift.find(condition).populate('user task').lean()
         .then((shifts) => shifts.sort((s1, s2) => s1.clockInTime - s2.clockInTime));
 };
 

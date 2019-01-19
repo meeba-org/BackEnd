@@ -1,5 +1,4 @@
 const {Feature, isFeatureEnable} = require("./FeaturesManager");
-
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 const Excel = require('exceljs');
@@ -116,6 +115,12 @@ function createShiftsPerEmployeeColumns(sheet, company) {
         ]);
     }
 
+    if (isFeatureEnable(company, Feature.Tasks)) {
+        sheet.columns = sheet.columns.concat([
+            {header: 'משימה', key: 'task', width: 10, style: {alignment: {horizontal: 'center'}}},
+        ]);
+    }
+
     sheet.columns = sheet.columns.concat([
         {header: 'הערות', key: 'comment', width: 30, style: {alignment: {horizontal: 'right'}}},
     ]);
@@ -125,6 +130,10 @@ function createShiftsPerEmployeeColumns(sheet, company) {
 
 function shouldAddCommuteData(company, shift) {
     return isFeatureEnable(company, Feature.CommuteModule) && !!shift.commuteCost;
+}
+
+function shouldAddTasksData(company, shift) {
+    return isFeatureEnable(company, Feature.Tasks) && !!shift.task;
 }
 
 function addCommuteData(company, row, shift) {
@@ -144,6 +153,19 @@ function addCommuteData(company, row, shift) {
     };
 
     return row;
+}
+
+function addTasksData(company, row, shift) {
+    row = {
+        ...row,
+        task: formatTask(shift.task),
+    };
+
+    return row;
+}
+
+function formatTask(task) {
+    return task.title;
 }
 
 let createShiftsPerEmployeeContent = function (sheet, employee, company, year, month ) {
@@ -186,6 +208,10 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
 
             if (shouldAddCommuteData(company, shift)) {
                 row = addCommuteData(company, row, shift);
+            }
+
+            if (shouldAddTasksData(company, shift)) {
+                row = addTasksData(company, row, shift);
             }
 
             addDayRow(sheet, row, shift.clockInTime);

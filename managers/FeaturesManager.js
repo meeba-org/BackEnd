@@ -21,6 +21,6 @@ const isFeatureEnable = (company, feature) => {
 };
 
 module.exports = {
-    Feature: Feature,
+    Feature,
     isFeatureEnable
 };
