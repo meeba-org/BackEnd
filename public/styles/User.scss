@@ -7,13 +7,27 @@
         width: 100%;
     }
 
-    .company-settings {
+    .settings {
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        flex-direction: column;
 
-        .short-field {
-            max-width: 88px;
+        .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            height: 48px;
+
+
+            .short-field {
+                max-width: 88px;
+            }
+
+            .transportation{
+                display: flex;
+                a {
+                    text-decoration: underline;
+                }
+            }
         }
     }
 }

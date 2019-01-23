@@ -8,6 +8,15 @@ import CSSModules from "react-css-modules";
 import styles from '../../styles/User.scss';
 import NoData from "../NoData";
 import Grid from "@material-ui/core/Grid";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+import withStyles from "@material-ui/core/styles/withStyles";
+
+const styles1 = () => ({
+    label: {
+        color: "red"
+    },
+});
 
 class User extends Component {
     handleUserChange = (field, e) => {
@@ -60,7 +69,7 @@ class User extends Component {
     };
 
     render() {
-        const {input} = this.props;
+        const {input, classes} = this.props;
         const user = input.value;
 
         if (!user || !user.company)
@@ -107,32 +116,58 @@ class User extends Component {
                         className={styles["long-field"]}
                     />
 
-                    <div className={styles["company-settings"]}>
-                        <TextField
-                            id="holiday-start"
-                            label="כניסת שבת/חג"
-                            value={user.company.settings.eveningHolidayStartHour}
-                            onChange={(e) => this.handleCompanySettingsChange("eveningHolidayStartHour", e)}
-                            className={styles["short-field"]}
-                        />
+                </CardContent>
 
-                        <TextField
-                            id="holiday-end"
-                            label="יציאת שבת/חג"
-                            value={user.company.settings.holidayEndHour}
-                            onChange={(e) => this.handleCompanySettingsChange("holidayEndHour", e)}
-                            className={styles["short-field"]}
-                        />
-                        <TextField
-                            id="holiday-shift-length"
-                            label="אורך משמרת בשבת/חג"
-                            value={user.company.settings.holidayShiftLength}
-                            onChange={(e) => this.handleCompanySettingsChange("holidayShiftLength", e)}
-                            className={styles["short-field"]}
-                        />
+                <CardHeader title="הגדרות"/>
 
+                <CardContent>
+                    <div className={styles["settings"]}>
+                        <div className={styles["row"]}>
+                            <TextField
+                                id="holiday-start"
+                                label="כניסת שבת/חג"
+                                value={user.company.settings.eveningHolidayStartHour}
+                                onChange={(e) => this.handleCompanySettingsChange("eveningHolidayStartHour", e)}
+                                className={styles["short-field"]}
+                                inputProps={{"style": {textAlign: "center"}}}
+                            />
+
+                            <TextField
+                                id="holiday-end"
+                                label="יציאת שבת/חג"
+                                value={user.company.settings.holidayEndHour}
+                                onChange={(e) => this.handleCompanySettingsChange("holidayEndHour", e)}
+                                className={styles["short-field"]}
+                                inputProps={{"style": {textAlign: "center"}}}
+                            />
+                            <TextField
+                                id="holiday-shift-length"
+                                label="אורך משמרת בשבת/חג"
+                                value={user.company.settings.holidayShiftLength}
+                                onChange={(e) => this.handleCompanySettingsChange("holidayShiftLength", e)}
+                                className={styles["short-field"]}
+                                inputProps={{"style": {textAlign: "center"}}}
+                            />
+
+                        </div>
+
+                        <div className={styles["row"]}>
+                            <FormControlLabel
+                                classes={{label: classes.label}}
+                                control={
+                                    <Switch
+                                        // checked={user.company.settings.displayTransportation}
+                                        onChange={(e) => this.handleCompanySettingsChange("holidayShiftLength", e)}
+                                        value={user.company.settings.displayTransportation}
+                                        color="primary"
+                                    />
+                                }
+                                label={<div>החזר נסיעות <a>מה זה</a></div>}
+                            />
+                        </div>
                     </div>
                 </CardContent>
+
             </div>
         );
     }
@@ -145,5 +180,5 @@ User.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default CSSModules(User, styles);
+export default CSSModules(withStyles(styles1)(User), styles);
 
