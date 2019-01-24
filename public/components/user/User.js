@@ -11,10 +11,18 @@ import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import withStyles from "@material-ui/core/styles/withStyles";
+import FormControl from "@material-ui/core/FormControl/FormControl";
+import InputLabel from "@material-ui/core/InputLabel/InputLabel";
+import Input from "@material-ui/core/Input/Input";
 
 const styles1 = () => ({
-    label: {
-        color: "red"
+    root: {
+        marginRight: "0px"
+    },
+    formControl: {
+        height: "68px",
+        margin: "8px",
+        width: "100%"
     },
 });
 
@@ -49,9 +57,8 @@ class User extends Component {
         onUpdateCompany(user.company);
     };
 
-    handleCompanySettingsChange = (field, e) => {
+    handleCompanySettingsChange = (field, value) => {
         const {onUpdateCompany, input} = this.props;
-        const value = e.target.value;
 
         let user = {
             ...input.value,
@@ -127,7 +134,7 @@ class User extends Component {
                                 id="holiday-start"
                                 label="כניסת שבת/חג"
                                 value={user.company.settings.eveningHolidayStartHour}
-                                onChange={(e) => this.handleCompanySettingsChange("eveningHolidayStartHour", e)}
+                                onChange={(e) => this.handleCompanySettingsChange("eveningHolidayStartHour", e.target.value)}
                                 className={styles["short-field"]}
                                 inputProps={{"style": {textAlign: "center"}}}
                             />
@@ -136,7 +143,7 @@ class User extends Component {
                                 id="holiday-end"
                                 label="יציאת שבת/חג"
                                 value={user.company.settings.holidayEndHour}
-                                onChange={(e) => this.handleCompanySettingsChange("holidayEndHour", e)}
+                                onChange={(e) => this.handleCompanySettingsChange("holidayEndHour", e.target.value)}
                                 className={styles["short-field"]}
                                 inputProps={{"style": {textAlign: "center"}}}
                             />
@@ -144,7 +151,7 @@ class User extends Component {
                                 id="holiday-shift-length"
                                 label="אורך משמרת בשבת/חג"
                                 value={user.company.settings.holidayShiftLength}
-                                onChange={(e) => this.handleCompanySettingsChange("holidayShiftLength", e)}
+                                onChange={(e) => this.handleCompanySettingsChange("holidayShiftLength", e.target.value)}
                                 className={styles["short-field"]}
                                 inputProps={{"style": {textAlign: "center"}}}
                             />
@@ -152,13 +159,20 @@ class User extends Component {
                         </div>
 
                         <div className={styles["row"]}>
+                            <FormControl className={classes.formControl} disabled>
+                                <InputLabel htmlFor="name-disabled">אורך הפסקה (דק') - בקרוב...</InputLabel>
+                                <Input id="break-length" value={30} onChange={() => {}} />
+                            </FormControl>
+                        </div>
+
+                        <div className={styles["row"]}>
                             <FormControlLabel
-                                classes={{label: classes.label}}
+                                classes={{root: classes.root}}
                                 control={
                                     <Switch
-                                        // checked={user.company.settings.displayTransportation}
-                                        onChange={(e) => this.handleCompanySettingsChange("holidayShiftLength", e)}
-                                        value={user.company.settings.displayTransportation}
+                                        checked={user.company.settings.enableCommuteSection}
+                                        onChange={(e) => this.handleCompanySettingsChange("enableCommuteSection", e.target.checked)}
+                                        value={user.company.settings.enableCommuteSection}
                                         color="primary"
                                     />
                                 }

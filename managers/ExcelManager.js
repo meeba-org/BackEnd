@@ -55,7 +55,7 @@ function createSummaryColumns(sheet, company) {
         {header: 'סה"כ שעות', key: 'overallHours', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'משמרות', key: 'shiftsCount', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'נסיעות יומי', key: 'transportation', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'סה"כ נסיעות', key: 'overallTransportation', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'סה"כ נסיעות', key: 'monthlyCommuteCost', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'סה"כ שכר', key: 'overallSalary', width: 13, style: {alignment: {horizontal: 'center'}}},
     ];
 
@@ -84,7 +84,7 @@ let createSummaryContent = function (sheet, employees) {
             hourWage: employee.hourWage,
             shiftsCount: employee.shiftsCount,
             transportation: employee.transportation,
-            overallTransportation: employee.overallTransportation,
+            monthlyCommuteCost: employee.monthlyCommuteCost,
             overallSalary: employee.overallSalary,
         });
 
@@ -209,7 +209,7 @@ const createShiftsPerEmployeeTotalSection = (sheet, employee) => {
 
     let transportationData = {
         clockOutTime: 'נסיעות:',
-        shiftLength: employee.overallTransportation ,
+        shiftLength: employee.monthlyCommuteCost ,
     }
     let transportationRow = sheet.addRow(transportationData);
     setRowBold(transportationRow);

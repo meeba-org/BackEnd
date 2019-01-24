@@ -251,7 +251,7 @@ function calcExtra50PercentHours(shiftLength, regularHoursInShift) {
 }
 
 
-let calcOverallTransportation = function (user, settings) {
+let calcMonthlyCommuteCost = function (user, settings) {
     let {kmPay, hourCommutePay} = settings;
 
     if (user.transportPaymentPer === ETransportPaymentPer.MONTHLY)
@@ -302,7 +302,7 @@ function createUserAdditionalInfo(user, settings) {
 
     info.shiftsCount = user.shifts.length;
     info.transportation = user.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : user.transportation;
-    info.overallTransportation = calcOverallTransportation(user, settings);
+    info.monthlyCommuteCost = calcMonthlyCommuteCost(user, settings);
 
     // Rounding results
     info.overallHours = (info.regularHours + info.extra125Hours * 1.25 + info.extra150Hours * 1.5 + info.extra175Hours * 1.75 + info.extra200Hours * 2).toFixed(2);
@@ -311,7 +311,7 @@ function createUserAdditionalInfo(user, settings) {
     info.extra150Hours = info.extra150Hours.toFixed(2);
     info.extra175Hours = info.extra175Hours.toFixed(2);
     info.extra200Hours = info.extra200Hours.toFixed(2);
-    info.overallSalary = (info.overallHours * user.hourWage + info.overallTransportation).toFixed(2);
+    info.overallSalary = (info.overallHours * user.hourWage + info.monthlyCommuteCost).toFixed(2);
     return info;
 }
 
