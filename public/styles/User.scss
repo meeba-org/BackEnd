@@ -15,8 +15,8 @@
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            height: 48px;
-
+            min-height: 40px;
+            padding-bottom: 8px;
 
             .short-field {
                 max-width: 88px;

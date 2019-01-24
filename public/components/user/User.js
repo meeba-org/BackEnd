@@ -16,12 +16,10 @@ import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import Input from "@material-ui/core/Input/Input";
 
 const styles1 = () => ({
-    root: {
+    switch: {
         marginRight: "0px"
     },
     formControl: {
-        height: "68px",
-        margin: "8px",
         width: "100%"
     },
 });
@@ -167,16 +165,31 @@ class User extends Component {
 
                         <div className={styles["row"]}>
                             <FormControlLabel
-                                classes={{root: classes.root}}
+                                classes={{root: classes.switch}}
                                 control={
                                     <Switch
-                                        checked={user.company.settings.enableCommuteSection}
-                                        onChange={(e) => this.handleCompanySettingsChange("enableCommuteSection", e.target.checked)}
-                                        value={user.company.settings.enableCommuteSection}
+                                        checked={user.company.settings.enableCommute}
+                                        onChange={(e) => this.handleCompanySettingsChange("enableCommute", e.target.checked)}
+                                        value={user.company.settings.enableCommute}
                                         color="primary"
                                     />
                                 }
                                 label={<div>החזר נסיעות <a>מה זה</a></div>}
+                            />
+                        </div>
+
+                        <div className={styles["row"]}>
+                            <FormControlLabel
+                                classes={{root: classes.switch}}
+                                control={
+                                    <Switch
+                                        checked={user.company.settings.enableTasks}
+                                        onChange={(e) => this.handleCompanySettingsChange("enableTasks", e.target.checked)}
+                                        value={user.company.settings.enableTasks}
+                                        color="primary"
+                                    />
+                                }
+                                label={<div>משימות <a>מה זה</a></div>}
                             />
                         </div>
                     </div>

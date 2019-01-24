@@ -15,7 +15,8 @@ const CompanySchema = mongoose.Schema({
         holidayShiftLength: {type: Number, default: 9},
         kmPay: {type: Number, default: 0.75},
         hourCommutePay: {type: Number, default: 18},
-        enableCommuteSection: {type: Boolean, default: false}
+        enableCommute: {type: Boolean, default: false},
+        enableTasks: {type: Boolean, default: false},
     },
     features: [String]
 });
