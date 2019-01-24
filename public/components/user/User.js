@@ -74,7 +74,7 @@ class User extends Component {
     };
 
     render() {
-        const {input, classes} = this.props;
+        const {input, classes, isCommuteFeatureEnable} = this.props;
         const user = input.value;
 
         if (!user || !user.company)
@@ -174,7 +174,24 @@ class User extends Component {
                                         color="primary"
                                     />
                                 }
-                                label={<div>החזר נסיעות <a>מה זה</a></div>}
+                                label={<div>  הזנת החזר נסיעות ע"י העובד<a>מה זה</a></div>}
+                                disabled={!isCommuteFeatureEnable}
+                            />
+                        </div>
+
+                        <div className={styles["row"]}>
+                            <FormControlLabel
+                                classes={{root: classes.switch}}
+                                control={
+                                    <Switch
+                                        checked={user.company.settings.enablePrivateCarCommute}
+                                        onChange={(e) => this.handleCompanySettingsChange("enablePrivateCarCommute", e.target.checked)}
+                                        value={user.company.settings.enablePrivateCarCommute}
+                                        color="primary"
+                                    />
+                                }
+                                label={<div>הזנת החזר נסיעות רכב פרטי <a>מה זה</a></div>}
+                                disabled={!isCommuteFeatureEnable}
                             />
                         </div>
 

@@ -16,6 +16,7 @@ const CompanySchema = mongoose.Schema({
         kmPay: {type: Number, default: 0.75},
         hourCommutePay: {type: Number, default: 18},
         enableCommute: {type: Boolean, default: false},
+        enablePrivateCarCommute: {type: Boolean, default: false},
         enableTasks: {type: Boolean, default: false},
     },
     features: [String]
