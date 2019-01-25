@@ -14,6 +14,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import FormControl from "@material-ui/core/FormControl/FormControl";
 import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import Input from "@material-ui/core/Input/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 const styles1 = () => ({
     switch: {
@@ -134,7 +135,9 @@ class User extends Component {
                                 value={user.company.settings.eveningHolidayStartHour}
                                 onChange={(e) => this.handleCompanySettingsChange("eveningHolidayStartHour", e.target.value)}
                                 className={styles["short-field"]}
-                                inputProps={{"style": {textAlign: "center"}}}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start">00:</InputAdornment>
+                                }}
                             />
 
                             <TextField
@@ -143,7 +146,9 @@ class User extends Component {
                                 value={user.company.settings.holidayEndHour}
                                 onChange={(e) => this.handleCompanySettingsChange("holidayEndHour", e.target.value)}
                                 className={styles["short-field"]}
-                                inputProps={{"style": {textAlign: "center"}}}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start">00:</InputAdornment>
+                                }}
                             />
                             <TextField
                                 id="holiday-shift-length"
@@ -159,7 +164,7 @@ class User extends Component {
                         <div className={styles["row"]}>
                             <FormControl className={classes.formControl} disabled>
                                 <InputLabel htmlFor="name-disabled">אורך הפסקה (דק') - בקרוב...</InputLabel>
-                                <Input id="break-length" value={30} onChange={() => {}} />
+                                <Input id="break-length" value={0} onChange={() => {}} />
                             </FormControl>
                         </div>
 
