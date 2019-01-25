@@ -179,21 +179,21 @@ class User extends Component {
                             />
                         </div>
 
-                        <div className={styles["row"]}>
-                            <FormControlLabel
-                                classes={{root: classes.switch}}
-                                control={
-                                    <Switch
-                                        checked={user.company.settings.enablePrivateCarCommute}
-                                        onChange={(e) => this.handleCompanySettingsChange("enablePrivateCarCommute", e.target.checked)}
-                                        value={user.company.settings.enablePrivateCarCommute}
-                                        color="primary"
-                                    />
-                                }
-                                label={<div>הזנת החזר נסיעות רכב פרטי <a>מה זה</a></div>}
-                                disabled={!isCommuteFeatureEnable}
-                            />
-                        </div>
+                        {/*<div className={styles["row"]}>*/}
+                            {/*<FormControlLabel*/}
+                                {/*classes={{root: classes.switch}}*/}
+                                {/*control={*/}
+                                    {/*<Switch*/}
+                                        {/*checked={user.company.settings.enablePrivateCarCommute}*/}
+                                        {/*onChange={(e) => this.handleCompanySettingsChange("enablePrivateCarCommute", e.target.checked)}*/}
+                                        {/*value={user.company.settings.enablePrivateCarCommute}*/}
+                                        {/*color="primary"*/}
+                                    {/*/>*/}
+                                {/*}*/}
+                                {/*label={<div>הזנת החזר נסיעות רכב פרטי <a>מה זה</a></div>}*/}
+                                {/*disabled={!isCommuteFeatureEnable}*/}
+                            {/*/>*/}
+                        {/*</div>*/}
 
                         <div className={styles["row"]}>
                             <FormControlLabel
@@ -204,9 +204,10 @@ class User extends Component {
                                         onChange={(e) => this.handleCompanySettingsChange("enableTasks", e.target.checked)}
                                         value={user.company.settings.enableTasks}
                                         color="primary"
+                                        disabled
                                     />
                                 }
-                                label={<div>משימות <a>מה זה</a></div>}
+                                label={<div>משימות - בקרוב...</div>}
                             />
                         </div>
                     </div>
