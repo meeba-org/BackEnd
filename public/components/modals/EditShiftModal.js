@@ -92,7 +92,7 @@ class EditShiftModal extends Component {
     };
 
     render() {
-        let {open, classes, isCommuteFeatureEnable} = this.props;
+        let {open, classes, isCommuteFeatureEnable, enableCommute} = this.props;
         let {entity} = this.state;
         let note = "", publicTransportation = "", commuteHours = "", kmDriving = "", parkingCost = "";
         if (entity) {
@@ -100,9 +100,9 @@ class EditShiftModal extends Component {
 
             if (entity.commuteCost) {
                 publicTransportation = entity.commuteCost.publicTransportation;
-                commuteHours = entity.commuteCost.commuteHours;
-                kmDriving = entity.commuteCost.kmDriving;
-                parkingCost = entity.commuteCost.parkingCost;
+                // commuteHours = entity.commuteCost.commuteHours;
+                // kmDriving = entity.commuteCost.kmDriving;
+                // parkingCost = entity.commuteCost.parkingCost;
             }
         }
 
@@ -125,7 +125,7 @@ class EditShiftModal extends Component {
                         </Grid>
                     </Grid>
 
-                    {isCommuteFeatureEnable &&
+                    {isCommuteFeatureEnable && enableCommute &&
                     <Fragment>
                         <Grid container spacing={8} alignItems="flex-end">
                             <Grid item>
@@ -165,6 +165,7 @@ EditShiftModal.propTypes = {
     dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
     isCommuteFeatureEnable: PropTypes.bool,
+    enableCommute: PropTypes.bool,
     month: PropTypes.string,
     year: PropTypes.string,
     callBack: PropTypes.func,
@@ -173,6 +174,7 @@ EditShiftModal.propTypes = {
 const mapStateToProps = (state) => {
     return {
         isCommuteFeatureEnable: selectors.isFeatureEnable(state, FeatureName.CommuteModule),
+        enableCommute: selectors.getCompanySettings(state).enableCommute,
     };
 };
 export default connect(mapStateToProps)(withStyles(styles)(EditShiftModal));
