@@ -54,7 +54,7 @@ app.use('/', require('./controllers'));
 
 //------------------------------------------------------------------//
 // Set Port
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 3000);
 
 app.get('*', (req, res) => {
     res.sendFile(`${__dirname}/dist/index.html`);
