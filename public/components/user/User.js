@@ -22,7 +22,7 @@ const styles1 = () => ({
     },
     formControl: {
         width: "100%"
-    },
+    }
 });
 
 class User extends Component {
@@ -179,7 +179,7 @@ class User extends Component {
                                         color="primary"
                                     />
                                 }
-                                label={<div>  הזנת החזר נסיעות ע"י העובד<a>מה זה</a></div>}
+                                label={<div>  הזנת החזר נסיעות ע"י העובד <a style={{color:"blue", textDecoration: "underline", fontSize: "0.7rem"}}>מה זה?</a></div>}
                                 disabled={!isCommuteFeatureEnable}
                             />
                         </div>
