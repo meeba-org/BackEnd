@@ -22,7 +22,7 @@ const styles1 = () => ({
     },
     formControl: {
         width: "100%"
-    },
+    }
 });
 
 class User extends Component {
@@ -179,11 +179,16 @@ class User extends Component {
                                         color="primary"
                                     />
                                 }
-                                label={<div>  הזנת החזר נסיעות ע"י העובד<a>מה זה</a></div>}
+                                label={<div>הזנת החזר נסיעות ע"י העובד</div>}
                                 disabled={!isCommuteFeatureEnable}
                             />
+                            <div className={styles["whatisit"]}>
+                                <a style={{fontSize: "0.7rem"}}
+                                   target="_blank"
+                                   href={"https://www.ynet.co.il"}
+                                >מה זה?</a>
+                            </div>
                         </div>
-
                         {/*<div className={styles["row"]}>*/}
                             {/*<FormControlLabel*/}
                                 {/*classes={{root: classes.switch}}*/}
