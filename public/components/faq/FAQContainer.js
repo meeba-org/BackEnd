@@ -38,15 +38,25 @@ class FAQContainer extends Component {
                 a: `1. להיכנס ולצאת ממשמרת
 2. לראות פרטי משמרות עבור חודש מסוים`
             },
+            {
+                id: "commute",
+                q: "מה לגבי החזר נסיעות?",
+                a: `נסיעות ניתן למלא באחת או יותר מהדרכים הבאות:
+
+1. תשלום נסיעות קבוע על בסיס יומי או חודשי - נקבע בממשק המנהל --> [עובדים](dashboard/employees/)
+2. תשלום נסיעות משתנה למשמרת - מוזן על ידי העובד, יש לאפשר אופציה זו ב[הגדרות](/dashboard/user)`
+            },
         ]
     };
 
     render() {
         const {data} = this.state;
+        const {params} = this.props;
+
         return (
             <div styleName="faq">
                 <FAQHeader />
-                <FAQContent data={data}/>
+                <FAQContent data={data} expandQuestionId={params.id}/>
             </div>
         );
     }

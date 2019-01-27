@@ -6,6 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Add from '@material-ui/icons/Add';
 import Minus from '@material-ui/icons/Remove';
 import ReactMarkdown from "react-markdown";
+import PropTypes from "prop-types";
 
 const Question = CSSModules(({text, onClick, collapse}) => {
     return (
@@ -34,14 +35,13 @@ class QuestionAndAnswer extends Component {
     };
 
     render() {
-        const {question} = this.props;
-        const {collapse} = this.state;
+        const {question, collapse} = this.props;
 
         return (
-            <div>
+            <div id={question.id}>
                 <Question text={question.q} onClick={this.toggleCollapse} collapse={collapse}/>
 
-                <Fade isVisible={!this.state.collapse}>
+                <Fade isVisible={!collapse}>
                     <Answer text={question.a}/>
                 </Fade>
             </div>
@@ -50,20 +50,35 @@ class QuestionAndAnswer extends Component {
 }
 
 class FAQContent extends Component {
+    calcCollapse = (question, expandQuestionId) => {
+        if (!expandQuestionId || !question.id)
+            return true;
+
+        return question.id !== expandQuestionId;
+    };
+
+    componentDidUpdate() {
+        const element = document.getElementById(this.props.expandQuestionId);
+
+        element.scrollIntoView({behavior: 'smooth'});
+    }
+
     render() {
-        const {data} = this.props;
-        
+        const {data, expandQuestionId} = this.props;
+
         return (
             <div styleName="content">
                 {data && data.map((question, index) =>
-                    <QuestionAndAnswer question={question} key={index}/>
+                    <QuestionAndAnswer question={question} key={index} collapse={this.calcCollapse(question, expandQuestionId)}/>
                 )}
             </div>
         );
     }
 }
 
-FAQContent.propTypes = {};
+FAQContent.propTypes = {
+    expandQuestionId: PropTypes.string,
+};
 FAQContent.defaultProps = {};
 
 export default CSSModules(FAQContent, styles);

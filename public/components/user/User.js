@@ -15,6 +15,7 @@ import FormControl from "@material-ui/core/FormControl/FormControl";
 import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import Input from "@material-ui/core/Input/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import {Link} from "react-router";
 
 const styles1 = () => ({
     switch: {
@@ -22,7 +23,11 @@ const styles1 = () => ({
     },
     formControl: {
         width: "100%"
-    }
+    },
+    link: {
+        textDecoration: "underline",
+        fontSize: "0.7rem"
+    },
 });
 
 class User extends Component {
@@ -183,10 +188,7 @@ class User extends Component {
                                 disabled={!isCommuteFeatureEnable}
                             />
                             <div className={styles["whatisit"]}>
-                                <a style={{fontSize: "0.7rem"}}
-                                   target="_blank"
-                                   href={"https://www.ynet.co.il"}
-                                >מה זה?</a>
+                                <Link to="/faq/commute" className={classes.link} target="_blank">מה זה?</Link>
                             </div>
                         </div>
                         {/*<div className={styles["row"]}>*/}
