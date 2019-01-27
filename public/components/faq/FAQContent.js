@@ -6,7 +6,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Add from '@material-ui/icons/Add';
 import Minus from '@material-ui/icons/Remove';
 import ReactMarkdown from "react-markdown";
-import PropTypes from "prop-types";
 
 const Question = CSSModules(({text, onClick, collapse}) => {
     return (
@@ -26,20 +25,13 @@ const Answer = CSSModules(({text}) => {
 }, styles);
 
 class QuestionAndAnswer extends Component {
-    state = {
-        collapse: true
-    };
-
-    toggleCollapse = () => {
-        this.setState({collapse: !this.state.collapse});
-    };
-
     render() {
-        const {question, collapse} = this.props;
+        const {question, onClick} = this.props;
+        const collapse = question.collapse;
 
         return (
-            <div id={question.id}>
-                <Question text={question.q} onClick={this.toggleCollapse} collapse={collapse}/>
+            <div id={question.name}>
+                <Question text={question.q} onClick={() => onClick(question.id)} collapse={collapse}/>
 
                 <Fade isVisible={!collapse}>
                     <Answer text={question.a}/>
@@ -50,30 +42,27 @@ class QuestionAndAnswer extends Component {
 }
 
 class FAQContent extends Component {
-    calcCollapse = (question, expandQuestionId) => {
-        if (!expandQuestionId || !question.id)
-            return true;
-
-        return question.id !== expandQuestionId;
-    };
-
     componentDidUpdate() {
-        const {expandQuestionId} = this.props;
-        if (!expandQuestionId)
+        const {scrollToId} = this.props;
+        if (!scrollToId)
             return;
 
-        const element = document.getElementById(expandQuestionId);
+        const element = document.getElementById(scrollToId);
 
         element.scrollIntoView({behavior: 'smooth'});
     }
 
     render() {
-        const {data, expandQuestionId} = this.props;
+        const {data, toggleCollapse} = this.props;
 
         return (
             <div styleName="content">
                 {data && data.map((question, index) =>
-                    <QuestionAndAnswer question={question} key={index} collapse={this.calcCollapse(question, expandQuestionId)}/>
+                    <QuestionAndAnswer
+                        question={question}
+                        key={index}
+                        onClick={toggleCollapse}
+                    />
                 )}
             </div>
         );
@@ -81,7 +70,6 @@ class FAQContent extends Component {
 }
 
 FAQContent.propTypes = {
-    expandQuestionId: PropTypes.string,
 };
 FAQContent.defaultProps = {};
 
