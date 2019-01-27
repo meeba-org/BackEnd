@@ -58,7 +58,11 @@ class FAQContent extends Component {
     };
 
     componentDidUpdate() {
-        const element = document.getElementById(this.props.expandQuestionId);
+        const {expandQuestionId} = this.props;
+        if (!expandQuestionId)
+            return;
+
+        const element = document.getElementById(expandQuestionId);
 
         element.scrollIntoView({behavior: 'smooth'});
     }
