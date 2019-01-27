@@ -27,3 +27,7 @@ export const isFeatureEnable = (state, feature) => {
     let company = getCompany(state);
     return (!company) ? false : company.features.includes(feature);
 };
+
+export const getCompanySettings = (state) => {
+    return getCompany(state).settings;
+};

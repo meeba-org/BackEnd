@@ -12,9 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {FeatureName} from "../../helpers/FeatureName";
 import * as selectors from "../../selectors";
 import CommentIcon from "@material-ui/icons/Comment";
-import CarIcon from "@material-ui/icons/DirectionsCar";
 import BusIcon from "@material-ui/icons/DirectionsBus";
-import EmptyIcon from "@material-ui/icons/HourglassEmpty";
 import Grid from "@material-ui/core/Grid";
 
 const moment = require("moment");
@@ -94,7 +92,7 @@ class EditShiftModal extends Component {
     };
 
     render() {
-        let {open, classes, isCommuteFeatureEnable} = this.props;
+        let {open, classes, isCommuteFeatureEnable, enableCommute} = this.props;
         let {entity} = this.state;
         let note = "", publicTransportation = "", commuteHours = "", kmDriving = "", parkingCost = "";
         if (entity) {
@@ -102,9 +100,9 @@ class EditShiftModal extends Component {
 
             if (entity.commuteCost) {
                 publicTransportation = entity.commuteCost.publicTransportation;
-                commuteHours = entity.commuteCost.commuteHours;
-                kmDriving = entity.commuteCost.kmDriving;
-                parkingCost = entity.commuteCost.parkingCost;
+                // commuteHours = entity.commuteCost.commuteHours;
+                // kmDriving = entity.commuteCost.kmDriving;
+                // parkingCost = entity.commuteCost.parkingCost;
             }
         }
 
@@ -127,7 +125,7 @@ class EditShiftModal extends Component {
                         </Grid>
                     </Grid>
 
-                    {isCommuteFeatureEnable &&
+                    {isCommuteFeatureEnable && enableCommute &&
                     <Fragment>
                         <Grid container spacing={8} alignItems="flex-end">
                             <Grid item>
@@ -136,7 +134,7 @@ class EditShiftModal extends Component {
                             <Grid item>
 
                                 <TextField
-                                    label="תחבורה ציבורית"
+                                    label="נסיעות"
                                     margin="normal"
                                     id="publicTransportation"
                                     onChange={this.handleCommuteCostChange}
@@ -145,57 +143,6 @@ class EditShiftModal extends Component {
                                 />
                             </Grid>
                         </Grid>
-
-                        <Grid container spacing={8} alignItems="flex-end">
-                            <Grid item>
-                                <CarIcon style={{color: "grey"}}/>
-                            </Grid>
-                            <Grid item>
-                                <TextField
-                                    label="שעות נסיעה"
-                                    margin="normal"
-                                    id="commuteHours"
-                                    onChange={this.handleCommuteCostChange}
-                                    value={commuteHours}
-                                    type="number"
-                                />
-
-                            </Grid>
-                        </Grid>
-
-                        <Grid container spacing={8} alignItems="flex-end">
-                            <Grid item>
-                                <EmptyIcon style={{color: "transparent"}}/>
-                            </Grid>
-                            <Grid item>
-                                <TextField
-                                    label='כמות ק"מ'
-                                    margin="normal"
-                                    id="kmDriving"
-                                    onChange={this.handleCommuteCostChange}
-                                    value={kmDriving}
-                                    type="number"
-                                />
-                            </Grid>
-                        </Grid>
-
-                        <Grid container spacing={8} alignItems="flex-end">
-                            <Grid item>
-                                {/*TODO Empty Icon?!?*/}
-                                <EmptyIcon style={{color: "transparent"}}/>
-                            </Grid>
-                            <Grid item>
-                                <TextField
-                                    label="עלות חניה"
-                                    margin="normal"
-                                    id="parkingCost"
-                                    onChange={this.handleCommuteCostChange}
-                                    value={parkingCost}
-                                    type="number"
-                                />
-                            </Grid>
-                        </Grid>
-
                     </Fragment>
                     }
 
@@ -218,6 +165,7 @@ EditShiftModal.propTypes = {
     dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
     isCommuteFeatureEnable: PropTypes.bool,
+    enableCommute: PropTypes.bool,
     month: PropTypes.string,
     year: PropTypes.string,
     callBack: PropTypes.func,
@@ -226,6 +174,7 @@ EditShiftModal.propTypes = {
 const mapStateToProps = (state) => {
     return {
         isCommuteFeatureEnable: selectors.isFeatureEnable(state, FeatureName.CommuteModule),
+        enableCommute: selectors.getCompanySettings(state).enableCommute,
     };
 };
 export default connect(mapStateToProps)(withStyles(styles)(EditShiftModal));

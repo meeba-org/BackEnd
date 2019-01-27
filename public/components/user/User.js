@@ -7,13 +7,23 @@ import Tooltip from "@material-ui/core/Tooltip";
 import CSSModules from "react-css-modules";
 import styles from '../../styles/User.scss';
 import NoData from "../NoData";
-import withStyles from '@material-ui/core/styles/withStyles';
+import Grid from "@material-ui/core/Grid";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+import withStyles from "@material-ui/core/styles/withStyles";
+import FormControl from "@material-ui/core/FormControl/FormControl";
+import InputLabel from "@material-ui/core/InputLabel/InputLabel";
+import Input from "@material-ui/core/Input/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
-const cssStyles = {
-    input: {
-        minWidth: "318px"
+const styles1 = () => ({
+    switch: {
+        marginRight: "0px"
+    },
+    formControl: {
+        width: "100%"
     }
-};
+});
 
 class User extends Component {
     handleUserChange = (field, e) => {
@@ -46,59 +56,174 @@ class User extends Component {
         onUpdateCompany(user.company);
     };
 
+    handleCompanySettingsChange = (field, value) => {
+        const {onUpdateCompany, input} = this.props;
+
+        let user = {
+            ...input.value,
+            company: {
+                ...input.value.company,
+                settings: {
+                    ...input.value.company.settings,
+                    [field]: value
+                }
+            },
+        };
+
+        input.onChange(user);
+        onUpdateCompany(user.company);
+    };
+
     render() {
-        const {input, classes} = this.props;
+        const {input, classes, isCommuteFeatureEnable} = this.props;
         const user = input.value;
 
+        if (!user || !user.company)
+            return <NoData/>;
+
         return (
-            <Fragment>
+            <div className={styles["user-container"]}>
                 <CardHeader title="פרטי מנהל"/>
 
-                <CardContent className={styles["card-content"]}>
-
-                    {!!user &&
-                    <div className={styles["user-container"]}>
-                        <TextField
-                            className={styles["long-field"]}
-                            id="fullName"
-                            label="שם מלא"
-                            value={user.fullName}
-                            onChange={(e) => this.handleUserChange("fullName", e)}
-                        />
-                        <Tooltip title="אנחנו מכבדים את הפרטיות שלך - ובאופן כללי לא מאמינים במיילים! - תכלס זה פה כי אולי נעשה עם זה משהו בעתיד.">
+                <CardContent>
+                    <Grid container>
+                        <Grid item sm={12}>
                             <TextField
                                 className={styles["long-field"]}
-                                label="דואר אלקטרוני"
-                                type="email"
-                                value={user.email}
-                                onChange={(e) => this.handleUserChange("email", e)}
-                                InputProps={{
-                                    className: classes.input
-                                }}
+                                id="fullName"
+                                label="שם מלא"
+                                value={user.fullName}
+                                onChange={(e) => this.handleUserChange("fullName", e)}
                             />
-                        </Tooltip>
-                    </div>
-                    }
-                    {!user &&
-                    <NoData/>
-                    }
+                        </Grid>
+                        <Grid item sm={12}>
+                            <Tooltip
+                                title="אנחנו מכבדים את הפרטיות שלך - ובאופן כללי לא מאמינים במיילים! - תכלס זה פה כי אולי נעשה עם זה משהו בעתיד.">
+                                <TextField
+                                    className={styles["long-field"]}
+                                    label="דואר אלקטרוני"
+                                    type="email"
+                                    value={user.email}
+                                    onChange={(e) => this.handleUserChange("email", e)}
+                                />
+                            </Tooltip>
+                        </Grid>
+                    </Grid>
                 </CardContent>
 
-                {!!user.company &&
-                <div>
-                    <CardHeader title="חברה"/>
+                <CardHeader title="חברה"/>
 
-                    <CardContent className={styles["card-content"]}>
-                        <TextField
-                            id="company-name"
-                            label="שם"
-                            value={user.company.name}
-                            onChange={(e) => this.handleCompanyChange("name", e)}
-                        />
-                    </CardContent>
-                </div>
-                }
-            </Fragment>
+                <CardContent>
+                    <TextField
+                        id="company-name"
+                        label="שם"
+                        value={user.company.name}
+                        onChange={(e) => this.handleCompanyChange("name", e)}
+                        className={styles["long-field"]}
+                    />
+
+                </CardContent>
+
+                <CardHeader title="הגדרות"/>
+
+                <CardContent>
+                    <div className={styles["settings"]}>
+                        <div className={styles["row"]}>
+                            <TextField
+                                id="holiday-start"
+                                label="כניסת שבת/חג"
+                                value={user.company.settings.eveningHolidayStartHour}
+                                onChange={(e) => this.handleCompanySettingsChange("eveningHolidayStartHour", e.target.value)}
+                                className={styles["short-field"]}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start">00:</InputAdornment>
+                                }}
+                            />
+
+                            <TextField
+                                id="holiday-end"
+                                label="יציאת שבת/חג"
+                                value={user.company.settings.holidayEndHour}
+                                onChange={(e) => this.handleCompanySettingsChange("holidayEndHour", e.target.value)}
+                                className={styles["short-field"]}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start">00:</InputAdornment>
+                                }}
+                            />
+                            <TextField
+                                id="holiday-shift-length"
+                                label="אורך משמרת בשבת/חג"
+                                value={user.company.settings.holidayShiftLength}
+                                onChange={(e) => this.handleCompanySettingsChange("holidayShiftLength", e.target.value)}
+                                className={styles["short-field"]}
+                                inputProps={{"style": {textAlign: "center"}}}
+                            />
+
+                        </div>
+
+                        <div className={styles["row"]}>
+                            <FormControl className={classes.formControl} disabled>
+                                <InputLabel htmlFor="name-disabled">אורך הפסקה (דק') - בקרוב...</InputLabel>
+                                <Input id="break-length" value={0} onChange={() => {}} />
+                            </FormControl>
+                        </div>
+
+                        <div className={styles["row"]}>
+                            <FormControlLabel
+                                classes={{root: classes.switch}}
+                                control={
+                                    <Switch
+                                        checked={user.company.settings.enableCommute}
+                                        onChange={(e) => this.handleCompanySettingsChange("enableCommute", e.target.checked)}
+                                        value={user.company.settings.enableCommute}
+                                        color="primary"
+                                    />
+                                }
+                                label={<div>הזנת החזר נסיעות ע"י העובד</div>}
+                                disabled={!isCommuteFeatureEnable}
+                            />
+                            <div className={styles["whatisit"]}>
+                                <a style={{fontSize: "0.7rem"}}
+                                   target="_blank"
+                                   href={"https://www.ynet.co.il"}
+                                >מה זה?</a>
+                            </div>
+                        </div>
+                        {/*<div className={styles["row"]}>*/}
+                            {/*<FormControlLabel*/}
+                                {/*classes={{root: classes.switch}}*/}
+                                {/*control={*/}
+                                    {/*<Switch*/}
+                                        {/*checked={user.company.settings.enablePrivateCarCommute}*/}
+                                        {/*onChange={(e) => this.handleCompanySettingsChange("enablePrivateCarCommute", e.target.checked)}*/}
+                                        {/*value={user.company.settings.enablePrivateCarCommute}*/}
+                                        {/*color="primary"*/}
+                                    {/*/>*/}
+                                {/*}*/}
+                                {/*label={<div>הזנת החזר נסיעות רכב פרטי <a>מה זה</a></div>}*/}
+                                {/*disabled={!isCommuteFeatureEnable}*/}
+                            {/*/>*/}
+                        {/*</div>*/}
+
+                        <div className={styles["row"]}>
+                            <FormControlLabel
+                                classes={{root: classes.switch}}
+                                control={
+                                    <Switch
+                                        checked={user.company.settings.enableTasks}
+                                        onChange={(e) => this.handleCompanySettingsChange("enableTasks", e.target.checked)}
+                                        value={user.company.settings.enableTasks}
+                                        color="primary"
+                                        disabled
+                                    />
+                                }
+                                label={<div>משימות - בקרוב...</div>}
+                            />
+                        </div>
+                    </div>
+                </CardContent>
+
+            </div>
         );
     }
 }
@@ -110,5 +235,5 @@ User.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(cssStyles)(CSSModules(User, styles));
+export default CSSModules(withStyles(styles1)(User), styles);
 

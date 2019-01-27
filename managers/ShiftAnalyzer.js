@@ -251,29 +251,24 @@ function calcExtra50PercentHours(shiftLength, regularHoursInShift) {
 }
 
 
-let calcOverallTransportation = function (user, settings) {
-    let {kmPay, hourCommutePay} = settings;
-
-    if (user.transportPaymentPer === ETransportPaymentPer.MONTHLY)
-        return user.transportation;
-
+let calcMonthlyCommuteCost = function (user, settings) {
     let totalPublicTransportation = 0;
-    let totalCommutePay = 0;
-    let totalKmPay = 0;
-    let totalParkingCost = 0;
+
     user.shifts.forEach(shift => {
         if (!shift.commuteCost)
             return;
 
-        let {publicTransportation, commuteHours, kmDriving, parkingCost} = shift.commuteCost;
+        let {publicTransportation} = shift.commuteCost;
 
         totalPublicTransportation += publicTransportation || 0;
-        totalCommutePay += (commuteHours || 0) * hourCommutePay;
-        totalKmPay += (kmDriving || 0) * kmPay;
-        totalParkingCost += parkingCost || 0;
     });
 
-    return totalPublicTransportation + totalCommutePay + totalKmPay + totalParkingCost + user.shifts.length * user.transportation;
+    // Calculate overall monthly transportation fees according to employees settings
+    let monthlyTransportationCost = user.transportPaymentPer === ETransportPaymentPer.MONTHLY ?
+        user.transportation :
+        user.shifts.length * user.transportation;
+
+    return totalPublicTransportation + monthlyTransportationCost;
 };
 
 function createUserAdditionalInfo(user, settings) {
@@ -302,7 +297,7 @@ function createUserAdditionalInfo(user, settings) {
 
     info.shiftsCount = user.shifts.length;
     info.transportation = user.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : user.transportation;
-    info.overallTransportation = calcOverallTransportation(user, settings);
+    info.monthlyCommuteCost = calcMonthlyCommuteCost(user, settings);
 
     // Rounding results
     info.overallHours = (info.regularHours + info.extra125Hours * 1.25 + info.extra150Hours * 1.5 + info.extra175Hours * 1.75 + info.extra200Hours * 2).toFixed(2);
@@ -311,7 +306,7 @@ function createUserAdditionalInfo(user, settings) {
     info.extra150Hours = info.extra150Hours.toFixed(2);
     info.extra175Hours = info.extra175Hours.toFixed(2);
     info.extra200Hours = info.extra200Hours.toFixed(2);
-    info.overallSalary = (info.overallHours * user.hourWage + info.overallTransportation).toFixed(2);
+    info.overallSalary = (info.overallHours * user.hourWage + info.monthlyCommuteCost).toFixed(2);
     return info;
 }
 
