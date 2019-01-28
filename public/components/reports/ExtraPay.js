@@ -11,7 +11,9 @@ const ExtraPay = ({extraPay, onClick}) => {
 
     return (
         <div className={styles["shift-icon"]}>
-            <Tooltip title="תוספת תשלום" placement="top">
+            <Tooltip
+                title={<div>תוספת תשלום: {extraPay} ש"ח</div>}
+                placement="top">
                 <IconButton className={styles["icon"]} onClick={onClick}><ExtraPayIcon/></IconButton>
             </Tooltip>
         </div>
