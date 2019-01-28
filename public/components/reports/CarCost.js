@@ -11,7 +11,7 @@ const CarCost = ({data, onClick}) => {
         return null;
 
     return (
-        <div className={styles["shift-icon"]}>
+        <div className={styles["commute"]}>
             <Tooltip title={
                 <div>
                     <div>שעות נסיעה: {data.commuteHours}</div>

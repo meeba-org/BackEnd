@@ -10,7 +10,7 @@ const Location = ({location, onClick}) => {
         return null;
 
     return (
-        <div className={styles["shift-icon"]}>
+        <div className={styles["commute"]}>
             <Tooltip title="מיקום בזמן כניסה למשמרת" placement="top">
                 <IconButton className={styles["icon"]} onClick={onClick}><PlaceIcon/></IconButton>
             </Tooltip>
