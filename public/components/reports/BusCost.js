@@ -11,7 +11,7 @@ const BusCost = ({data, onClick}) => {
         return null;
 
     return (
-        <div className={styles["shift-icon"]}>
+        <div className={styles["commute"]}>
             <Tooltip title={
                 <div>
                     <div>החזר נסיעות: {data.publicTransportation} ש"ח</div>
