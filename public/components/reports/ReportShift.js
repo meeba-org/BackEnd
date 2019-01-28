@@ -13,6 +13,7 @@ import CarCost from "./CarCost";
 import Warning from "./Warning";
 import BusCost from "./BusCost";
 import Location from "./Location";
+import ExtraPay from "./ExtraPay";
 
 const ReportShift = (props) => {
     let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog, showLocationModal, isDesktop} = props;
@@ -61,6 +62,7 @@ const ReportShift = (props) => {
                     <CarCost data={shift.commuteCost} onClick={showShiftDialog}/>
                     <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
                     <Location location={shift.location} onClick={showLocationModal} />
+                    <ExtraPay extraPay={shift.extraPay} onClick={showShiftDialog}/>
                  </Fragment>
             }
             {hover && isDesktop &&

@@ -12,6 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {FeatureName} from "../../helpers/FeatureName";
 import * as selectors from "../../selectors";
 import CommentIcon from "@material-ui/icons/Comment";
+import ExtraFeeIcon from "@material-ui/icons/CardGiftcard";
 import BusIcon from "@material-ui/icons/DirectionsBus";
 import Grid from "@material-ui/core/Grid";
 
@@ -59,6 +60,21 @@ class EditShiftModal extends Component {
         this.updateShift(entity, updatedShift);
     };
 
+    handleExtraPayChange = (event) => {
+        const {entity} = this.state;
+
+        let updatedShift = {
+            ...entity,
+            extraPay: event.target.value,
+        };
+
+        this.setState({
+            entity: updatedShift
+        });
+
+        this.updateShift(entity, updatedShift);
+    };
+
     handleCommuteCostChange = (event) => {
         let key = event.target.id;
         let value = event.target.value;
@@ -85,7 +101,7 @@ class EditShiftModal extends Component {
         let {updateShift, dispatch} = this.props;
 
         dispatch(updateShift(updatedShift, dispatch, false, month, year));
-    }
+    };
 
     handleCancel = () => {
         this.props.dispatch(hideEditShiftModal());
@@ -94,15 +110,13 @@ class EditShiftModal extends Component {
     render() {
         let {open, classes, isCommuteFeatureEnable, enableCommute} = this.props;
         let {entity} = this.state;
-        let note = "", publicTransportation = "", commuteHours = "", kmDriving = "", parkingCost = "";
+        let note = "", publicTransportation = "", extraPay = "";
         if (entity) {
             note = entity.note;
+            extraPay = entity.extraPay;
 
             if (entity.commuteCost) {
                 publicTransportation = entity.commuteCost.publicTransportation;
-                // commuteHours = entity.commuteCost.commuteHours;
-                // kmDriving = entity.commuteCost.kmDriving;
-                // parkingCost = entity.commuteCost.parkingCost;
             }
         }
 
@@ -125,8 +139,22 @@ class EditShiftModal extends Component {
                         </Grid>
                     </Grid>
 
+                    <Grid container spacing={8} alignItems="flex-end">
+                        <Grid item>
+                            <ExtraFeeIcon style={{color: "grey"}}/>
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                label="תוספת תשלום"
+                                id="extra-pay"
+                                margin="normal"
+                                onChange={this.handleExtraPayChange}
+                                value={extraPay}
+                            />
+                        </Grid>
+                    </Grid>
+
                     {isCommuteFeatureEnable && enableCommute &&
-                    <Fragment>
                         <Grid container spacing={8} alignItems="flex-end">
                             <Grid item>
                                 <BusIcon style={{color: "grey"}}/>
@@ -143,7 +171,6 @@ class EditShiftModal extends Component {
                                 />
                             </Grid>
                         </Grid>
-                    </Fragment>
                     }
 
                     <DialogActions classes={{root: classes.dialogActionsRoot}}>
