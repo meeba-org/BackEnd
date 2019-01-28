@@ -14,7 +14,7 @@ const BusCost = ({data, onClick}) => {
         <div className={styles["commute"]}>
             <Tooltip title={
                 <div>
-                    <div>תחבורה ציבורית: {data.publicTransportation}</div>
+                    <div>החזר נסיעות: {data.publicTransportation}</div>
                 </div>
             }
             placement="top">
