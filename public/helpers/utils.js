@@ -20,10 +20,14 @@ export const createShiftForClockIn = (employee) => {
 };
 export const convertTimeStrToMoment = (startDateStr, startTimeStr, endTimeStr) => {
     let momentStart = moment(startDateStr + ' ' + startTimeStr, DATE_AND_TIME_FORMAT);
-    let momentEnd = moment(startDateStr + ' ' + endTimeStr, DATE_AND_TIME_FORMAT);
+    let momentEnd = null;
 
-    if (momentEnd.isBefore(momentStart)) {
-        momentEnd.add(1, 'days');
+    if (endTimeStr) {
+        momentEnd = moment(startDateStr + ' ' + endTimeStr, DATE_AND_TIME_FORMAT);
+
+        if (momentEnd.isBefore(momentStart)) {
+            momentEnd.add(1, 'days');
+        }
     }
     return {momentStart, momentEnd};
 };
@@ -47,7 +51,7 @@ export const convertMomentToTimeStr = (shift) => {
     let {clockInTime, clockOutTime} = shift;
     let startDateStr = moment(clockInTime).format(DATE_FORMAT);
     let startTimeStr = moment(clockInTime).format(TIME_FORMAT);
-    let endTimeStr = clockOutTime == null ? "" : moment(clockOutTime).format(TIME_FORMAT);
+    let endTimeStr = clockOutTime == null ? null : moment(clockOutTime).format(TIME_FORMAT);
     return {startDateStr, startTimeStr, endTimeStr};
 };
 
