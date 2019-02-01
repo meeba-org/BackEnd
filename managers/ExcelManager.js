@@ -65,7 +65,7 @@ function createSummaryColumns(sheet, company) {
 
 const addSummarySheet = (workbook, company, employees) => {
     // create a sheet with the first row and column frozen
-    let sheet = addWorksheet(workbook, "שכר");
+    let sheet = addWorksheet(workbook, "סיכום");
 
     createSummaryColumns(sheet, company);
     createSummaryContent(sheet, employees);
