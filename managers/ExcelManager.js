@@ -110,15 +110,16 @@ function createShiftsPerEmployeeColumns(sheet, company) {
 
     if (isFeatureEnable(company, FeatureName.CommuteModule)) {
         sheet.columns = sheet.columns.concat([
-            {header: 'תחבורה ציבורית', key: 'publicTransportation', width: 10, style: {alignment: {horizontal: 'center'}}},
-            {header: 'שעות נסיעה', key: 'commuteHours', width: 10, style: {alignment: {horizontal: 'center'}}},
-            {header: 'ק"מ', key: 'kmDriving', width: 10, style: {alignment: {horizontal: 'center'}}},
-            {header: 'חניה', key: 'parkingCost', width: 10, style: {alignment: {horizontal: 'center'}}},
-            {header: 'נסיעות יומי', key: 'commuteCost', width: 10, style: {alignment: {horizontal: 'center'}}},
+            {header: 'החזר נסיעות', key: 'publicTransportation', width: 10, style: {alignment: {horizontal: 'center'}}},
+            // {header: 'שעות נסיעה', key: 'commuteHours', width: 10, style: {alignment: {horizontal: 'center'}}},
+            // {header: 'ק"מ', key: 'kmDriving', width: 10, style: {alignment: {horizontal: 'center'}}},
+            // {header: 'חניה', key: 'parkingCost', width: 10, style: {alignment: {horizontal: 'center'}}},
+            // {header: 'נסיעות יומי', key: 'commuteCost', width: 10, style: {alignment: {horizontal: 'center'}}},
         ]);
     }
 
     sheet.columns = sheet.columns.concat([
+        {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'הערות', key: 'comment', width: 30, style: {alignment: {horizontal: 'right'}}},
     ]);
 
@@ -130,19 +131,19 @@ function shouldAddCommuteData(company, shift) {
 }
 
 function addCommuteData(company, row, shift) {
-    let kmPay = company.settings.kmPay;
-    let hourCommutePay = company.settings.hourCommutePay;
+    // let kmPay = company.settings.kmPay;
+    // let hourCommutePay = company.settings.hourCommutePay;
 
     row = {
         ...row,
         publicTransportation: shift.commuteCost.publicTransportation,
-        commuteHours: shift.commuteCost.commuteHours,
-        kmDriving: shift.commuteCost.kmDriving,
-        parkingCost: shift.commuteCost.parkingCost,
-        commuteCost: shift.commuteCost.publicTransportation +
-            shift.commuteCost.commuteHours * hourCommutePay +
-            shift.commuteCost.kmDriving * kmPay +
-            shift.commuteCost.parkingCost
+        // commuteHours: shift.commuteCost.commuteHours,
+        // kmDriving: shift.commuteCost.kmDriving,
+        // parkingCost: shift.commuteCost.parkingCost,
+        // commuteCost: shift.commuteCost.publicTransportation
+            // shift.commuteCost.commuteHours * hourCommutePay +
+            // shift.commuteCost.kmDriving * kmPay +
+            // shift.commuteCost.parkingCost
     };
 
     return row;
@@ -184,6 +185,7 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
                 extra150Hours: hoursAnalysis.extra150Hours || "",
                 extra175Hours: hoursAnalysis.extra175Hours || "",
                 extra200Hours: hoursAnalysis.extra200Hours || "",
+                monthlyExtraPay: shift.extraPay || "",
             };
 
             if (shouldAddCommuteData(company, shift)) {

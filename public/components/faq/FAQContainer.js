@@ -54,7 +54,7 @@ class FAQContainer extends Component {
         };
 
         this.initData();
-    };
+    }
 
     initData() {
         let id = 0;

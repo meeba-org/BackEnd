@@ -34,7 +34,10 @@ class QuestionAndAnswer extends Component {
                 <Question text={question.q} onClick={() => onClick(question.id)} collapse={collapse}/>
 
                 <Fade isVisible={!collapse}>
-                    <Answer text={question.a}/>
+                    <Fragment>
+                        <Answer text={question.a}/>
+                        {/*<FAQFooter />*/}
+                    </Fragment>
                 </Fade>
             </div>
         );
@@ -58,11 +61,11 @@ class FAQContent extends Component {
         return (
             <div styleName="content">
                 {data && data.map((question, index) =>
-                    <QuestionAndAnswer
+                    (<QuestionAndAnswer
                         question={question}
                         key={index}
                         onClick={toggleCollapse}
-                    />
+                    />)
                 )}
             </div>
         );

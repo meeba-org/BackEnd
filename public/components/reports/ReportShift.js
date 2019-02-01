@@ -9,7 +9,6 @@ import IconButton from "@material-ui/core/IconButton";
 import DatePicker from "material-ui-pickers/DatePicker";
 import TimePicker from "material-ui-pickers/TimePicker";
 import Note from "./Note";
-import CarCost from "./CarCost";
 import Warning from "./Warning";
 import BusCost from "./BusCost";
 import Location from "./Location";
@@ -59,7 +58,7 @@ const ReportShift = (props) => {
                 <Fragment>
                     <Warning warning={errors}/>
                     <Note text={shift.note} onClick={showShiftDialog}/>
-                    <CarCost data={shift.commuteCost} onClick={showShiftDialog}/>
+                    {/*<CarCost data={shift.commuteCost} onClick={showShiftDialog}/>*/}
                     <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
                     <Location location={shift.location} onClick={showLocationModal} />
                     <ExtraPay extraPay={shift.extraPay} onClick={showShiftDialog}/>
