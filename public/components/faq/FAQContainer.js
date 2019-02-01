@@ -35,12 +35,18 @@ class FAQContainer extends Component {
 2. דוח יומי וחודשי
 3. לערוך שעות עובדים
 4. לראות מיקום העובד בכניסה
-5. לנהל פרטי עובדים`
+5. לנהל פרטי עובדים
+
+איפה הוא עושה את כל זה? ב[אתר](https://www.meeba.org.il)!
+
+מה לגבי מובייל? ה[אתר](https://www.meeba.org.il) מותאם גם למובייל - כלומר, בסלולרי שלכם פתחו את הדפדפן וגילשו ל-https://meeba.org.il`
                 },
                 {
                     q: "מה העובד יכול לעשות?",
                     a: `1. להיכנס ולצאת ממשמרת
-2. לראות פרטי משמרות עבור חודש מסוים`
+2. לראות פרטי משמרות עבור חודש מסוים
+
+איפה הוא עושה את כל זה? בסלולרי: [אנדרו איד](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1), אייפון בשלבי הקמה`
                 },
                 {
                     name: "commute",
