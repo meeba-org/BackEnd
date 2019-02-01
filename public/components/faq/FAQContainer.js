@@ -46,7 +46,7 @@ class FAQContainer extends Component {
                     a: `1. להיכנס ולצאת ממשמרת
 2. לראות פרטי משמרות עבור חודש מסוים
 
-איפה הוא עושה את כל זה? בסלולרי: [אנדרו איד](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1), אייפון בשלבי הקמה`
+איפה הוא עושה את כל זה? בסלולרי: [אנדרואיד](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1), אייפון בשלבי הקמה`
                 },
                 {
                     name: "commute",
