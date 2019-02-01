@@ -34,5 +34,12 @@
         justify-content: flex-start;
         color: material-color('grey', '700');
         font-size: 20px;
+
+    }
+
+    .answer-footer {
+        @extend .answer;
+        color: material-color('grey', '500');
+        font-size: 12px;
     }
 }

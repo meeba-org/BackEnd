@@ -24,6 +24,14 @@ const Answer = CSSModules(({text}) => {
     );
 }, styles);
 
+const AnswerFooter = CSSModules(() => {
+    return (
+        <div styleName="answer-footer">
+            לא מספיק ברור? מחכים לשאלות שלכם ב<a href={"https://m.me/meebaOnFace"}>צ'אט</a>
+        </div>
+    );
+}, styles);
+
 class QuestionAndAnswer extends Component {
     render() {
         const {question, onClick} = this.props;
@@ -34,10 +42,8 @@ class QuestionAndAnswer extends Component {
                 <Question text={question.q} onClick={() => onClick(question.id)} collapse={collapse}/>
 
                 <Fade isVisible={!collapse}>
-                    <Fragment>
-                        <Answer text={question.a}/>
-                        {/*<FAQFooter />*/}
-                    </Fragment>
+                    <Answer text={question.a}/>
+                    <AnswerFooter />
                 </Fade>
             </div>
         );
