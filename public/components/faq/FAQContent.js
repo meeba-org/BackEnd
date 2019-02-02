@@ -42,8 +42,10 @@ class QuestionAndAnswer extends Component {
                 <Question text={question.q} onClick={() => onClick(question.id)} collapse={collapse}/>
 
                 <Fade isVisible={!collapse}>
-                    <Answer text={question.a}/>
-                    <AnswerFooter />
+                    <div>
+                        <Answer text={question.a}/>
+                        <AnswerFooter />
+                    </div>
                 </Fade>
             </div>
         );
