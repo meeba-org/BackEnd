@@ -21,9 +21,9 @@ class FAQContainer extends Component {
                 },
                 {
                     q: "איך זה עובד?",
-                    a: `\n\n**המנהל** עובד מול [האתר](https://www.meeba.org.il), מזין עובדים, מעדכן שעות ועוד.
-\n\n**העובד** מוריד את [האפליקציה](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) לסלולרי ומדווח כניסה ויציאה.
-`
+                    a: `**המנהל** עובד מול [האתר](https://www.meeba.org.il), מזין עובדים, מעדכן שעות ועוד.
+
+**העובד** מוריד את [האפליקציה](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) לסלולרי ומדווח כניסה ויציאה.`
                 },
                 {
                     q: "כמה זה עולה?",
@@ -51,11 +51,10 @@ class FAQContainer extends Component {
                 {
                     name: "commute",
                     q: "מה לגבי החזר נסיעות?",
-                    a: `נסיעות ניתן למלא באחת או יותר מהדרכים הבאות:
-
-1. תשלום נסיעות קבוע על בסיס יומי או חודשי - נקבע בממשק המנהל --> [עובדים](/dashboard/employees)
-2. תשלום נסיעות משתנה למשמרת - מוזן על ידי העובד, יש לאפשר אופציה זו ב[הגדרות](/dashboard/user)`
-                },
+                    a: "נסיעות ניתן למלא באחת או יותר מהדרכים הבאות:\n" +
+                        "\n" +
+                        "1. תשלום נסיעות קבוע על בסיס יומי או חודשי - נקבע בממשק המנהל --> [עובדים](/dashboard/employees)\n" +
+                        "2. תשלום נסיעות משתנה למשמרת - מוזן על ידי העובד, יש לאפשר אופציה זו ב[הגדרות](/dashboard/user)\n"                },
             ]
         };
 
