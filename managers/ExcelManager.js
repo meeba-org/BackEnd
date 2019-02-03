@@ -46,18 +46,19 @@ let setRowBold = function (row) {
 function createSummaryColumns(sheet, company) {
     sheet.columns = [
         {header: 'שם עובד', key: 'employeeName', width: 20, style: {alignment: {horizontal: 'right'}}},
-        {header: '100% שעות', key: 'regularHours', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: '125% שעות', key: 'extra125Hours', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: '150% שעות', key: 'extra150Hours', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: '175% שעות', key: 'extra175Hours', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: '200% שעות', key: 'extra200Hours', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'שכ"ע לשעה', key: 'hourWage', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'סה"כ שעות', key: 'overallHours', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'משמרות', key: 'shiftsCount', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'נסיעות יומי', key: 'transportation', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'סה"כ נסיעות', key: 'monthlyCommuteCost', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'תוספות', key: 'monthlyExtraPay', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'סה"כ שכר', key: 'overallSalary', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'ת.ז.', key: 'employeeUid', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: '100% שעות', key: 'regularHours', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: '125% שעות', key: 'extra125Hours', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: '150% שעות', key: 'extra150Hours', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: '175% שעות', key: 'extra175Hours', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: '200% שעות', key: 'extra200Hours', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שכ"ע לשעה', key: 'hourWage', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'סה"כ שעות', key: 'overallHours', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'משמרות', key: 'shiftsCount', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'נסיעות יומי', key: 'transportation', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'סה"כ נסיעות', key: 'monthlyCommuteCost', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'תוספות', key: 'monthlyExtraPay', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'סה"כ שכר', key: 'overallSalary', width: 11, style: {alignment: {horizontal: 'center'}}},
     ];
 
     setSummaryHeaderColor(sheet, company);
@@ -76,6 +77,7 @@ let createSummaryContent = function (sheet, employees) {
     employees.forEach((employee) => {
         let addedRow = sheet.addRow({
             employeeName: employee.fullName,
+            employeeUid: employee.uid,
             regularHours: employee.regularHours,
             extra125Hours: employee.extra125Hours,
             extra150Hours: employee.extra150Hours,
