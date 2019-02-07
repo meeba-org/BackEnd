@@ -58,11 +58,11 @@ class FAQContent extends Component {
         return (
             <div styleName="content">
                 {data && data.map((question, index) =>
-                    <QuestionAndAnswer
+                    (<QuestionAndAnswer
                         question={question}
                         key={index}
                         onClick={toggleCollapse}
-                    />
+                    />)
                 )}
             </div>
         );
