@@ -21,9 +21,9 @@ class FAQContainer extends Component {
                 },
                 {
                     q: "איך זה עובד?",
-                    a: `\n\n**המנהל** עובד מול [האתר](https://www.meeba.org.il), מזין עובדים, מעדכן שעות ועוד.
-\n\n**העובד** מוריד את [האפליקציה](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) לסלולרי ומדווח כניסה ויציאה.
-`
+                    a: `**המנהל** עובד מול [האתר](https://www.meeba.org.il), מזין עובדים, מעדכן שעות ועוד.
+
+**העובד** מוריד את [האפליקציה](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) לסלולרי ומדווח כניסה ויציאה.`
                 },
                 {
                     q: "כמה זה עולה?",
@@ -35,26 +35,31 @@ class FAQContainer extends Component {
 2. דוח יומי וחודשי
 3. לערוך שעות עובדים
 4. לראות מיקום העובד בכניסה
-5. לנהל פרטי עובדים`
+5. לנהל פרטי עובדים
+
+איפה הוא עושה את כל זה? ב[אתר](https://www.meeba.org.il)!
+
+מה לגבי מובייל? ה[אתר](https://www.meeba.org.il) מותאם גם למובייל - כלומר, בסלולרי שלכם פתחו את הדפדפן וגילשו ל-https://meeba.org.il`
                 },
                 {
                     q: "מה העובד יכול לעשות?",
                     a: `1. להיכנס ולצאת ממשמרת
-2. לראות פרטי משמרות עבור חודש מסוים`
+2. לראות פרטי משמרות עבור חודש מסוים
+
+איפה הוא עושה את כל זה? בסלולרי: [אנדרואיד](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1), אייפון בשלבי הקמה`
                 },
                 {
                     name: "commute",
                     q: "מה לגבי החזר נסיעות?",
-                    a: `נסיעות ניתן למלא באחת או יותר מהדרכים הבאות:
-
-1. תשלום נסיעות קבוע על בסיס יומי או חודשי - נקבע בממשק המנהל --> [עובדים](/dashboard/employees)
-2. תשלום נסיעות משתנה למשמרת - מוזן על ידי העובד, יש לאפשר אופציה זו ב[הגדרות](/dashboard/user)`
+                    a: "נסיעות ניתן למלא באחת או יותר מהדרכים הבאות:\n" +
+                        "\n" +
+                        "1. תשלום נסיעות קבוע על בסיס יומי או חודשי - נקבע בממשק המנהל --> [עובדים](/dashboard/employees)\n" +
+                        "2. תשלום נסיעות משתנה למשמרת - מוזן על ידי העובד, יש לאפשר אופציה זו ב[הגדרות](/dashboard/user)\n"
                 },
                 {
                     q: "יש גיבוי?",
                     a: `גיבוי אוטומאטי מתבצע בכל יום שישי בשעה 16:00`
                 },
-
             ]
         };
 

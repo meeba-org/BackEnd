@@ -60,6 +60,7 @@ class HomeAppBar extends Component {
                     <div className={classes.rightButtonsGroup}>
                         {/*<Button className={classes.button}><Link to="/home#header1" className={classes.link}>בית</Link></Button>*/}
                         {/*<Button className={classes.button}><Link to="/home#features1" className={classes.link}>איך זה עובד?</Link></Button>*/}
+                        <Button color="inherit" href={"https://m.me/meebaOnFace"}>צ'אט</Button>
                         <Button href="https://www.facebook.com/meebaOnFace/" className={classes.facebookLogo} target="_blank">
                             <img src={facebookImage}/>
                         </Button>

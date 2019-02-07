@@ -12,13 +12,13 @@ const Fade = (props) => (
             classNames={{...animation}}
         >
             <Fragment>
-                {React.cloneElement(props.children, {...props})}
+                {React.Children.map(props.children, (child => React.cloneElement(child, {...props})))}
             </Fragment>
         </CSSTransition>
 );
 
 Fade.propTypes = {
-    children: PropTypes.object.isRequired,
+    // children: PropTypes.object.isRequired,
     isVisible: PropTypes.bool.isRequired
 };
 
