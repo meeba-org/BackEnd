@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import playStoreImage from '../../styles/images/playStore.svg';
 import appStoreImage from '../../styles/images/appStore.svg';
-import mobileImage from '../../styles/images/1.jpg';
+import mobileImage from '../../styles/images/1.png';
 import styles from '../../styles/EmployeeFeatureContent.scss';
 import CSSModules from "react-css-modules";
 
