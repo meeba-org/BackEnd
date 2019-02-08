@@ -46,7 +46,7 @@ class MonthlyReportContainer extends React.PureComponent {
                             showLocationModal={showLocationModal}
                             onUpdateShift={updateShift}
                             onCreateShift={createShift}
-                            onDataChange={this.onDataChange}
+                            onMonthChange={this.onDataChange}
                             onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
                             onGenerateExcel={(month, year) => this.onGenerateExcel(month, year)}
                             userRole={userRole}

@@ -31,12 +31,19 @@ class MonthlyReport extends React.PureComponent {
         this.state = {
             collapsed: null,
             startDayOfMonth: moment().startOf('month').format(DATE_FORMAT),
+            selectedMonth: moment().month() + 1,
+            selectedYear: moment().year(),
             open: false,
         };
     }
 
     componentDidMount() {
-        this.onStartDayOfMonthChange(this.state.startDayOfMonth);
+        // this.onStartDayOfMonthChange(this.state.startDayOfMonth);
+
+        const {selectedMonth, selectedYear} = this.state;
+        const {onMonthChange} = this.props;
+
+        onMonthChange(selectedMonth, selectedYear)
     }
 
     isCollapsed(fields, index) {
@@ -49,7 +56,7 @@ class MonthlyReport extends React.PureComponent {
         this.setState({collapsed: newCollapsedelement});
     }
 
-    generateMonthStr = (month, year) => moment().year(year).month(month).startOf('month').format(DATE_FORMAT);
+    generateMonthStr = (month, year) => moment().year(year).month(month-1).startOf('month').format(DATE_FORMAT);
 
     generateMonths() {
         return [
@@ -79,22 +86,41 @@ class MonthlyReport extends React.PureComponent {
     }
 
     handleGenerateExcelClick = () => {
-        let value = moment(this.state.startDayOfMonth, DATE_FORMAT);
+        // let value = moment(this.state.startDayOfMonth, DATE_FORMAT);
+        const {selectedMonth, selectedYear} = this.state;
 
-        this.props.onGenerateExcel(value.format('MM'), value.format('YYYY'));
+        this.props.onGenerateExcel(selectedMonth, selectedYear);
     };
 
     handleMonthChange(event)  {
-        let startDayOfMonth = event.target.value;
+        let selectedMonth = event.target.value;
+        const {selectedYear} = this.state;
+        const {onMonthChange} = this.props;
 
-        this.setState({startDayOfMonth});
-        this.onStartDayOfMonthChange(startDayOfMonth);
+        this.setState({selectedMonth});
+        onMonthChange(selectedMonth, selectedYear);
     }
 
-    onStartDayOfMonthChange(selectedMonth) {
-        let value = moment(selectedMonth, DATE_FORMAT);
-        this.props.onStartDayOfMonthChange(value.format('MM'), value.format('YYYY'));
+    handleYearChange(event)  {
+        let newSelectedYear = event.target.value;
+        let {selectedMonth, selectedYear} = this.state;
+        const {onMonthChange} = this.props;
+
+        if (newSelectedYear > selectedYear) { // year was increased
+            selectedMonth = 1;
+        }
+        else if (newSelectedYear < selectedYear) {
+            selectedMonth = 12;
+        }
+
+        this.setState({selectedYear: newSelectedYear, selectedMonth});
+        onMonthChange(selectedMonth, newSelectedYear);
     }
+
+    // onStartDayOfMonthChange(selectedMonth) {
+    //     let value = moment(selectedMonth, DATE_FORMAT);
+    //     this.props.onStartDayOfMonthChange(value.format('MM'), value.format('YYYY'));
+    // }
 
     handleOpenAddDialog() {
         this.setState({open: true});
@@ -105,25 +131,39 @@ class MonthlyReport extends React.PureComponent {
     }
 
     onCreateShift = (shift) => {
-        let value = moment(this.state.startDayOfMonth, DATE_FORMAT);
-        this.props.onCreateShift(shift, value.format('MM'), value.format('YYYY'));
+        const {selectedYear, selectedMonth} = this.state;
+
+        this.props.onCreateShift(shift, selectedMonth, selectedYear);
     };
 
     onUpdateShift = (shift) => {
-        let value = moment(this.state.startDayOfMonth, DATE_FORMAT);
+        const {selectedYear, selectedMonth} = this.state;
+
+        let value = moment().year(selectedYear).month(selectedMonth - 1);
         this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
     onDeleteShift = (shift) => {
-        let value = moment(this.state.startDayOfMonth, DATE_FORMAT);
-        this.props.onDeleteShift(shift, value.format('MM'), value.format('YYYY'));
+        const {selectedYear, selectedMonth} = this.state;
+
+        this.props.onDeleteShift(shift, selectedMonth, selectedYear);
     };
 
+    createMenuItems = () => {
+        let res = [];
+        // If current year create only months that exist
+
+        for (let i = 1; i <= 12; i++) {
+            res.push(<MenuItem key={i} value={i}>{i}</MenuItem>)
+        }
+
+        return res;
+    };
     render() {
         const {fields, employees, userRole, showShiftDialog, showLocationModal} = this.props;
         let startDayOfMonth = this.state.startDayOfMonth;
-        const months = this.generateMonths();
-
+        const {selectedYear, selectedMonth} = this.state;
+        // const months = this.generateMonths();
         return (
             <Card>
                 <CardHeader title="דוח חודשי"/>
@@ -137,18 +177,40 @@ class MonthlyReport extends React.PureComponent {
                                 onCreate={this.onCreateShift}
                                 onCancel={() => this.handleCloseAddDialog()}
                                 employees={employees}
-                                defaultStartDate={startDayOfMonth}
+                                defaultStartDate={moment().year(selectedYear).month(selectedMonth - 1).startOf('month').format(DATE_FORMAT)}
                             />
 
                             <Select
                                 className={styles["select"]}
-                                value={startDayOfMonth}
+                                value={selectedMonth}
                                 onChange={(event) => this.handleMonthChange(event)}
                                 input={<Input />}
                             >
-                                {months.map((month) =>
-                                    <MenuItem key={month.name} value={month.startDay}>{month.name}</MenuItem>
-                                )}
+                                {
+                                    this.createMenuItems()
+                                }
+                                {/*<MenuItem key={2} value={1}>פברואר</MenuItem>*/}
+                                {/*<MenuItem disabled key={2} value={3}>מרץ</MenuItem>*/}
+                                {/*<MenuItem disabled key={3} value={4}>אפריל</MenuItem>*/}
+                                {/*<MenuItem key={5} value={4}>מאי</MenuItem>*/}
+                                {/*<MenuItem key={6} value={5}>יוני</MenuItem>*/}
+                                {/*<MenuItem key={7} value={6}>יולי</MenuItem>*/}
+                                {/*<MenuItem key={8} value={7}>אוגוסט</MenuItem>*/}
+                                {/*<MenuItem key={9} value={8}>ספטמבר</MenuItem>*/}
+                                {/*<MenuItem key={10} value={9}>אוקטובר</MenuItem>*/}
+                                {/*<MenuItem key={11} value={10}>נובמבר</MenuItem>*/}
+                                {/*<MenuItem key={12} value={11}>דצמבר</MenuItem>*/}
+                            </Select>
+
+                            <Select
+                                className={styles["select"]}
+                                value={selectedYear}
+                                onChange={(event) => this.handleYearChange(event)}
+                                input={<Input />}
+                            >
+                                <MenuItem key={2019} value={2019}>2019</MenuItem>
+                                <MenuItem key={2018} value={2018}>2018</MenuItem>
+                                <MenuItem key={2017} value={2017}>2017</MenuItem>
                             </Select>
 
                             <Tooltip title="הוספת משמרת" placement="top">
