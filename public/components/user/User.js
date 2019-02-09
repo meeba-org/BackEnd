@@ -167,9 +167,9 @@ class User extends Component {
                         </div>
 
                         <div className={styles["row"]}>
-                            <FormControl className={classes.formControl} disabled>
-                                <InputLabel htmlFor="name-disabled">אורך הפסקה (דק') - בקרוב...</InputLabel>
-                                <Input id="break-length" value={0} onChange={() => {}} />
+                            <FormControl className={classes.formControl}>
+                                <InputLabel htmlFor="name-disabled">אורך הפסקה (דק')</InputLabel>
+                                <Input id="break-length" value={0} onChange={(e) => this.handleCompanySettingsChange("breakLength", e.target.value)} />
                             </FormControl>
                         </div>
 

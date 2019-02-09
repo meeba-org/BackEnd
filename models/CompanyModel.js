@@ -18,6 +18,7 @@ const CompanySchema = mongoose.Schema({
         enableCommute: {type: Boolean, default: false},
         enablePrivateCarCommute: {type: Boolean, default: false},
         enableTasks: {type: Boolean, default: false},
+        breakLength: {type: Number, default: 0},
     },
     features: [String]
 });

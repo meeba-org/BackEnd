@@ -62,6 +62,7 @@ function processUsersAdditionalInfo(userMap, settings) {
 const analyzeShiftHours = (shift, settings) => {
     let clockOut = moment(shift.clockOutTime);
     let clockIn = moment(shift.clockInTime);
+    const breakLength = shift.breakLength;
 
     if (!isShiftValid(clockIn, clockOut))
         return EmptyAdditionalInfo;
@@ -77,7 +78,7 @@ const analyzeShiftHours = (shift, settings) => {
             break;
         case EDayType.Regular:
         default:
-            analyzedHours = analyzeRegularDayShiftHours(clockIn, clockOut, settings, REGULAR_SHIFT_LENGTH);
+            analyzedHours = analyzeRegularDayShiftHours(clockIn, clockOut, breakLength, settings, REGULAR_SHIFT_LENGTH);
             break;
     }
 
@@ -185,8 +186,15 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
     return holidayAdditionalInfo;
 };
 
-const analyzeRegularDayShiftHours = (clockIn, clockOut, settings, regularHoursInShift) => {
+function getBreakLength(shiftBreakLength, companyBreakLength) {
+    return !!shiftBreakLength ? shiftBreakLength : companyBreakLength;
+}
+
+const analyzeRegularDayShiftHours = (clockIn, clockOut, shiftBreakLength, settings, regularHoursInShift) => {
     let shiftLength = clockOut.diff(clockIn, 'hours', true);
+    const breakLength = getBreakLength(shiftBreakLength, settings.breakLength);
+
+    shiftLength = shiftLength - breakLength; // Deduct break time if exist TODO need debugging
 
     if (!shiftLength)
         return EmptyAdditionalInfo;
