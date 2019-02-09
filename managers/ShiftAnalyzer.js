@@ -6,6 +6,7 @@ moment.tz.setDefault("Asia/Jerusalem");
 
 const REGULAR_SHIFT_LENGTH = 9;
 const SHIFT_125_OVERDUE_LENGTH = 2;
+const MINIMUM_SHIFT_LENGTH_FOR_BREAK = 6;
 const EmptyAdditionalInfo = {
     shiftLength: 0,
     regularHours : 0,
@@ -62,7 +63,7 @@ function processUsersAdditionalInfo(userMap, settings) {
 const analyzeShiftHours = (shift, settings) => {
     let clockOut = moment(shift.clockOutTime);
     let clockIn = moment(shift.clockInTime);
-    const breakLength = shift.breakLength;
+    let breakLength = calcBreakLength(shift.breakLength, settings.breakLength);
 
     if (!isShiftValid(clockIn, clockOut))
         return EmptyAdditionalInfo;
@@ -71,10 +72,10 @@ const analyzeShiftHours = (shift, settings) => {
     let dayType = analyzeDayType(clockIn);
     switch (dayType) {
         case EDayType.Holiday:
-            analyzedHours = analyzeHolidayShiftHours(clockIn, clockOut, settings);
+            analyzedHours = analyzeHolidayShiftHours(clockIn, clockOut, breakLength, settings);
             break;
         case EDayType.HolidayEvening:
-            analyzedHours = analyzeHolidayEveningShiftHours(clockIn, clockOut, settings);
+            analyzedHours = analyzeHolidayEveningShiftHours(clockIn, clockOut, breakLength, settings);
             break;
         case EDayType.Regular:
         default:
@@ -103,13 +104,13 @@ const isShiftValid = (clockIn, clockOut) => {
     return true;
 };
 
-const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
+const analyzeHolidayShiftHours = (clockIn, clockOut, breakLength, settings) => {
     let holidayEndHour = moment(clockIn).hour(settings.holidayEndHour).startOf('hour');
 
-    let regularHoursAdditionalInfo = analyzeRegularDayShiftHours(clockIn, clockOut, settings, settings.holidayShiftLength);
+    let regularHoursAdditionalInfo = analyzeRegularDayShiftHours(clockIn, clockOut, breakLength, settings, settings.holidayShiftLength);
 
     if (holidayEndHour.isAfter(clockOut))
-        return analyzeWholeShiftInHolidayHours(clockIn, clockOut, settings);
+        return analyzeWholeShiftInHolidayHours(clockIn, clockOut, breakLength, settings);
 
     if (holidayEndHour.isBefore(clockIn))
         return regularHoursAdditionalInfo;
@@ -144,16 +145,16 @@ const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
     return regularHoursAdditionalInfo;
 };
 
-const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
+const analyzeHolidayEveningShiftHours = (clockIn, clockOut, breakLength, settings) => {
     let eveningHolidayStartHour = moment(clockIn).hour(settings.eveningHolidayStartHour).startOf('hour');
 
-    let holidayAdditionalInfo = analyzeWholeShiftInHolidayHours(clockIn, clockOut, settings);
+    let holidayAdditionalInfo = analyzeWholeShiftInHolidayHours(clockIn, clockOut, breakLength, settings);
 
     if (eveningHolidayStartHour.isBefore(clockIn))
         return holidayAdditionalInfo;
 
     if (eveningHolidayStartHour.isAfter(clockOut))
-        return analyzeRegularDayShiftHours(clockIn, clockOut, settings, settings.holidayShiftLength);
+        return analyzeRegularDayShiftHours(clockIn, clockOut, breakLength, settings, settings.holidayShiftLength);
 
     let regularHoursShiftLength = eveningHolidayStartHour.diff(clockIn, 'hours', true);
 
@@ -186,15 +187,28 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
     return holidayAdditionalInfo;
 };
 
-function getBreakLength(shiftBreakLength, companyBreakLength) {
-    return !!shiftBreakLength ? shiftBreakLength : companyBreakLength;
+function calcBreakLength(shiftBreakLength, companyBreakLength) {
+    let breakLength = !!shiftBreakLength ? shiftBreakLength : companyBreakLength;
+    return breakLength / 60;
 }
 
-const analyzeRegularDayShiftHours = (clockIn, clockOut, shiftBreakLength, settings, regularHoursInShift) => {
-    let shiftLength = clockOut.diff(clockIn, 'hours', true);
-    const breakLength = getBreakLength(shiftBreakLength, settings.breakLength);
+/**
+ * Substract break from shiftLength
+ * https://www.kolzchut.org.il/he/%D7%94%D7%A4%D7%A1%D7%A7%D7%95%D7%AA_%D7%91%D7%A2%D7%91%D7%95%D7%93%D7%94
+ * @param shiftLength
+ * @param breakLength
+ * @returns {*}
+ */
+function substractBreak(shiftLength, breakLength) {
+    if (shiftLength > MINIMUM_SHIFT_LENGTH_FOR_BREAK)
+        shiftLength -= breakLength;
 
-    shiftLength = shiftLength - breakLength; // Deduct break time if exist TODO need debugging
+    return shiftLength;
+}
+
+const analyzeRegularDayShiftHours = (clockIn, clockOut, breakLength, settings, regularHoursInShift) => {
+    let shiftLength = clockOut.diff(clockIn, 'hours', true);
+    shiftLength = substractBreak(shiftLength, breakLength);
 
     if (!shiftLength)
         return EmptyAdditionalInfo;
@@ -214,8 +228,9 @@ const analyzeRegularDayShiftHours = (clockIn, clockOut, shiftBreakLength, settin
     }
 };
 
-const analyzeWholeShiftInHolidayHours = (clockIn, clockOut, settings) => {
+const analyzeWholeShiftInHolidayHours = (clockIn, clockOut, breakLength, settings) => {
     let shiftLength = clockOut.diff(clockIn, 'hours', true);
+    shiftLength = substractBreak(shiftLength, breakLength);
 
     if (!shiftLength)
         return EmptyAdditionalInfo;
