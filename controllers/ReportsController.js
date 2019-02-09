@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 const ShiftModel = require('../models/ShiftModel');
+const CompanyModel = require('../models/CompanyModel');
 const ExcelManager = require('../managers/ExcelManager');
 const jwtService = require("./jwtService");
 const ShiftAnalyzer = require("../managers/ShiftAnalyzer");
@@ -20,9 +21,10 @@ router.get('/download',
         const year = req.query.year || moment().format('YYYY');
         const month = req.query.month || moment().format('MM');
 
-        const company = jwtService.getCompanyFromLocals(res);
-
-        return ShiftModel.getShiftsInMonth(year, month, company)
+        // const company = jwtService.getCompanyFromLocals(res);
+        let user = jwtService.getUserFromLocals(res);
+        return CompanyModel.getByCompanyId(user.company.id)
+            .then(company => ShiftModel.getShiftsInMonth(year, month, company))
             .then((shifts) => {
                 let workbook = ExcelManager.createExcel(shifts, year, month, company);
 

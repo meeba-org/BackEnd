@@ -103,6 +103,7 @@ function createShiftsPerEmployeeColumns(sheet, company) {
         {header: 'שעת התחלה', key: 'clockInTime', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'שעת סיום', key: 'clockOutTime', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'שעות (עשרוני)', key: 'shiftLength', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'הפסקה', key: 'breakLength', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: '100%', key: 'regularHours', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: '125%', key: 'extra125Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: '150%', key: 'extra150Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
@@ -151,6 +152,17 @@ function addCommuteData(company, row, shift) {
     return row;
 }
 
+function calcBreakLength(shiftBreakLength, companyBreakLength) {
+    let breakLength;
+    if (Number.isInteger(shiftBreakLength))
+        breakLength = shiftBreakLength;
+    else {
+        breakLength = companyBreakLength;
+    }
+
+    return breakLength / 60;
+}
+
 let createShiftsPerEmployeeContent = function (sheet, employee, company, year, month ) {
     if (!employee.shifts || employee.shifts.length === 0)
         return;
@@ -181,6 +193,7 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
                 dayInWeek: i === 0 ? row.dayInWeek : "",
                 clockInTime: calcClockInTime(shift),
                 clockOutTime: calcClockOutTime(shift),
+                breakLength: calcBreakLength(shift.breakLength, company.settings.breakLength),
                 shiftLength: hoursAnalysis.shiftLength || "",
                 regularHours: hoursAnalysis.regularHours || "",
                 extra125Hours: hoursAnalysis.extra125Hours || "",
