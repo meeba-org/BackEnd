@@ -188,6 +188,9 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, breakLength, setting
 };
 
 function calcBreakLength(shiftBreakLength, companyBreakLength) {
+    // if (shiftLength > MINIMUM_SHIFT_LENGTH_FOR_BREAK)
+    //     shiftLength -= breakLength;
+
     let breakLength = !!shiftBreakLength ? shiftBreakLength : companyBreakLength;
     return breakLength / 60;
 }
@@ -208,6 +211,12 @@ function substractBreak(shiftLength, breakLength) {
 
 const analyzeRegularDayShiftHours = (clockIn, clockOut, breakLength, settings, regularHoursInShift) => {
     let shiftLength = clockOut.diff(clockIn, 'hours', true);
+    /** TODO 2 bugs:
+     * 1. in the report shift that is shorter than 6 still has a break displayed
+     * 2. 150% got -2...
+     * @type {*}
+     */
+
     shiftLength = substractBreak(shiftLength, breakLength);
 
     if (!shiftLength)

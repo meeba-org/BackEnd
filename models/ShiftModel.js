@@ -29,7 +29,7 @@ const ShiftSchema = mongoose.Schema({
         latitude: {type: Number},
         longitude: {type: Number}
     },
-    breakLength: {type: Number, default: null}
+    breakLength: {type: Number, default: 0}
 });
 
 const Shift = mongoose.model('Shift', ShiftSchema);

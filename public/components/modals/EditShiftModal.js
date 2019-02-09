@@ -13,6 +13,7 @@ import {FeatureName} from "../../helpers/FeatureName";
 import * as selectors from "../../selectors";
 import CommentIcon from "@material-ui/icons/Comment";
 import ExtraFeeIcon from "@material-ui/icons/CardGiftcard";
+import BreakIcon from "@material-ui/icons/FreeBreakfast";
 import BusIcon from "@material-ui/icons/DirectionsBus";
 import Grid from "@material-ui/core/Grid";
 
@@ -75,6 +76,21 @@ class EditShiftModal extends Component {
         this.updateShift(entity, updatedShift);
     };
 
+    handleShiftChange = (field, value) => {
+        const {entity} = this.state;
+
+        let updatedShift = {
+            ...entity,
+            [field]: value,
+        };
+
+        this.setState({
+            entity: updatedShift
+        });
+
+        this.updateShift(entity, updatedShift);
+    };
+
     handleCommuteCostChange = (event) => {
         let key = event.target.id;
         let value = event.target.value;
@@ -109,16 +125,8 @@ class EditShiftModal extends Component {
 
     render() {
         let {open, classes, isCommuteFeatureEnable, enableCommute} = this.props;
-        let {entity} = this.state;
-        let note = "", publicTransportation = "", extraPay = "";
-        if (entity) {
-            note = entity.note;
-            extraPay = entity.extraPay;
-
-            if (entity.commuteCost) {
-                publicTransportation = entity.commuteCost.publicTransportation;
-            }
-        }
+        let {note, extraPay, breakLength, commuteCost} = this.state.entity || {};
+        let {publicTransportation} = commuteCost || {};
 
         return (
             <Dialog onClose={this.handleCancel} open={open}>
@@ -133,7 +141,7 @@ class EditShiftModal extends Component {
                                 label="הערות"
                                 id="note"
                                 margin="normal"
-                                onChange={this.handleNoteChange}
+                                onChange={(e) => this.handleShiftChange("note", e.target.value)}
                                 value={note}
                             />
                         </Grid>
@@ -148,7 +156,7 @@ class EditShiftModal extends Component {
                                 label="תוספת תשלום"
                                 id="extra-pay"
                                 margin="normal"
-                                onChange={this.handleExtraPayChange}
+                                onChange={(e) => this.handleShiftChange("extraPay", e.target.value)}
                                 value={extraPay}
                             />
                         </Grid>
@@ -172,6 +180,21 @@ class EditShiftModal extends Component {
                             </Grid>
                         </Grid>
                     }
+
+                    <Grid container spacing={8} alignItems="flex-end">
+                        <Grid item>
+                            <BreakIcon style={{color: "grey"}}/>
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                label="הפסקה (דקות)"
+                                id="break-length"
+                                margin="normal"
+                                onChange={(e) => this.handleShiftChange("breakLength", e.target.value)}
+                                value={breakLength}
+                            />
+                        </Grid>
+                    </Grid>
 
                     <DialogActions classes={{root: classes.dialogActionsRoot}}>
                         <Button variant="raised" onClick={this.handleClose} autoFocus color="primary">
