@@ -195,6 +195,10 @@ function calcBreakLength(shiftBreakLength, companyBreakLength) {
     return breakLength / 60;
 }
 
+function shouldHaveBreak (shiftLength) {
+    return shiftLength > MINIMUM_SHIFT_LENGTH_FOR_BREAK;
+}
+
 /**
  * Substract break from shiftLength
  * https://www.kolzchut.org.il/he/%D7%94%D7%A4%D7%A1%D7%A7%D7%95%D7%AA_%D7%91%D7%A2%D7%91%D7%95%D7%93%D7%94
@@ -202,8 +206,8 @@ function calcBreakLength(shiftBreakLength, companyBreakLength) {
  * @param breakLength
  * @returns {*}
  */
-function substractBreak(shiftLength, breakLength) {
-    if (shiftLength > MINIMUM_SHIFT_LENGTH_FOR_BREAK)
+function subtractBreak(shiftLength, breakLength) {
+    if (shouldHaveBreak(shiftLength))
         shiftLength -= breakLength;
 
     return shiftLength;
@@ -217,12 +221,13 @@ const analyzeRegularDayShiftHours = (clockIn, clockOut, breakLength, settings, r
      * @type {*}
      */
 
-    shiftLength = substractBreak(shiftLength, breakLength);
+    shiftLength = subtractBreak(shiftLength, breakLength);
 
     if (!shiftLength)
         return EmptyAdditionalInfo;
 
-    let analyzedHours = Object.assign({}, EmptyAdditionalInfo, {shiftLength: shiftLength});
+    // TODO breakLengh should be on he analyzedHours that reach the report
+    let analyzedHours = Object.assign({}, EmptyAdditionalInfo, {shiftLength, breakLength});
     if (shiftLength <= regularHoursInShift) {
         return Object.assign({}, analyzedHours, {regularHours: shiftLength});
     }
@@ -239,12 +244,12 @@ const analyzeRegularDayShiftHours = (clockIn, clockOut, breakLength, settings, r
 
 const analyzeWholeShiftInHolidayHours = (clockIn, clockOut, breakLength, settings) => {
     let shiftLength = clockOut.diff(clockIn, 'hours', true);
-    shiftLength = substractBreak(shiftLength, breakLength);
+    shiftLength = subtractBreak(shiftLength, breakLength);
 
     if (!shiftLength)
         return EmptyAdditionalInfo;
 
-    let analyzedHours = Object.assign({}, EmptyAdditionalInfo, {shiftLength: shiftLength});
+    let analyzedHours = Object.assign({}, EmptyAdditionalInfo, {shiftLength, breakLength});
     if (shiftLength <= settings.holidayShiftLength) {
         return Object.assign({}, analyzedHours, {extra150Hours: shiftLength});
     }
@@ -368,4 +373,5 @@ module.exports = {
     analyzeShiftHours,
     REGULAR_SHIFT_LENGTH,
     SHIFT_125_OVERDUE_LENGTH,
+    shouldHaveBreak,
 };

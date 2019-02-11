@@ -1,11 +1,11 @@
 const {FeatureName, isFeatureEnable} = require("./FeaturesManager");
-
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 const Excel = require('exceljs');
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
 const isHoliday = require("./HolidayAnalyzer").isHoliday;
+const shouldHaveBreak = require("./ShiftAnalyzer").shouldHaveBreak;
 const RowBorderStyle = {
     top: { style: "hair" },
     left: { style: "medium" },
@@ -152,17 +152,6 @@ function addCommuteData(company, row, shift) {
     return row;
 }
 
-function calcBreakLength(shiftBreakLength, companyBreakLength) {
-    let breakLength;
-    if (Number.isInteger(shiftBreakLength))
-        breakLength = shiftBreakLength;
-    else {
-        breakLength = companyBreakLength;
-    }
-
-    return breakLength / 60;
-}
-
 let createShiftsPerEmployeeContent = function (sheet, employee, company, year, month ) {
     if (!employee.shifts || employee.shifts.length === 0)
         return;
@@ -193,7 +182,7 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
                 dayInWeek: i === 0 ? row.dayInWeek : "",
                 clockInTime: calcClockInTime(shift),
                 clockOutTime: calcClockOutTime(shift),
-                breakLength: calcBreakLength(shift.breakLength, company.settings.breakLength),
+                breakLength: hoursAnalysis.breakLength,
                 shiftLength: hoursAnalysis.shiftLength || "",
                 regularHours: hoursAnalysis.regularHours || "",
                 extra125Hours: hoursAnalysis.extra125Hours || "",
