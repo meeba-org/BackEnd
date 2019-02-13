@@ -9,6 +9,7 @@ const SHIFT_125_OVERDUE_LENGTH = 2;
 const MINIMUM_SHIFT_LENGTH_FOR_BREAK = 6;
 const EmptyAdditionalInfo = {
     shiftLength: 0,
+    breakLength: 0,
     regularHours : 0,
     extra125Hours: 0,
     extra150Hours: 0,
@@ -63,7 +64,7 @@ function processUsersAdditionalInfo(userMap, settings) {
 const analyzeShiftHours = (shift, settings) => {
     let clockOut = moment(shift.clockOutTime);
     let clockIn = moment(shift.clockInTime);
-    let breakLength = calcBreakLength(shift.breakLength, settings.breakLength);
+    let breakLength = calcBreakLength(shift, settings.breakLength);
 
     if (!isShiftValid(clockIn, clockOut))
         return EmptyAdditionalInfo;
@@ -90,6 +91,7 @@ const roundAnalyzedHours = (analyzedHours) => {
     // Using the + before the variable to avoid changing number to string  https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
     return {
         shiftLength: +analyzedHours.shiftLength.toFixed(2),
+        breakLength: +analyzedHours.breakLength.toFixed(2),
         regularHours: +analyzedHours.regularHours.toFixed(2),
         extra125Hours: +analyzedHours.extra125Hours.toFixed(2),
         extra150Hours: +analyzedHours.extra150Hours.toFixed(2),
@@ -187,10 +189,16 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, breakLength, setting
     return holidayAdditionalInfo;
 };
 
-function calcBreakLength(shiftBreakLength, companyBreakLength) {
-    // if (shiftLength > MINIMUM_SHIFT_LENGTH_FOR_BREAK)
-    //     shiftLength -= breakLength;
+function calcBreakLength(shift, companyBreakLength) {
+    let clockOut = moment(shift.clockOutTime);
+    let clockIn = moment(shift.clockInTime);
+    let shiftLength = calcShiftLength(clockOut, clockIn);
 
+    // If user define break for this shift we take it into account
+    if (!shift.breakLength && !shouldHaveBreak(shiftLength))
+        return 0;
+
+    let shiftBreakLength = shift.breakLength;
     let breakLength = !!shiftBreakLength ? shiftBreakLength : companyBreakLength;
     return breakLength / 60;
 }
@@ -207,27 +215,30 @@ function shouldHaveBreak (shiftLength) {
  * @returns {*}
  */
 function subtractBreak(shiftLength, breakLength) {
-    if (shouldHaveBreak(shiftLength))
-        shiftLength -= breakLength;
+    // Stupid user protection - Does not make sense to have breakLength > shiftLength
+    if (breakLength > shiftLength)
+        return 0;
 
-    return shiftLength;
+    return shiftLength - breakLength;
+}
+
+function calcShiftLength(clockOut, clockIn) {
+    return clockOut.diff(clockIn, 'hours', true);
+}
+
+function getEmptyAdditionalInfo(breakLength) {
+    return Object.assign({}, EmptyAdditionalInfo, {breakLength})
 }
 
 const analyzeRegularDayShiftHours = (clockIn, clockOut, breakLength, settings, regularHoursInShift) => {
-    let shiftLength = clockOut.diff(clockIn, 'hours', true);
-    /** TODO 2 bugs:
-     * 1. in the report shift that is shorter than 6 still has a break displayed
-     * 2. 150% got -2...
-     * @type {*}
-     */
-
+    let shiftLength = calcShiftLength(clockOut, clockIn);
     shiftLength = subtractBreak(shiftLength, breakLength);
 
+    let emptyAdditionalInfo = getEmptyAdditionalInfo(breakLength);
     if (!shiftLength)
-        return EmptyAdditionalInfo;
+        return emptyAdditionalInfo;
 
-    // TODO breakLengh should be on he analyzedHours that reach the report
-    let analyzedHours = Object.assign({}, EmptyAdditionalInfo, {shiftLength, breakLength});
+    let analyzedHours = Object.assign({}, emptyAdditionalInfo, {shiftLength});
     if (shiftLength <= regularHoursInShift) {
         return Object.assign({}, analyzedHours, {regularHours: shiftLength});
     }
@@ -243,13 +254,14 @@ const analyzeRegularDayShiftHours = (clockIn, clockOut, breakLength, settings, r
 };
 
 const analyzeWholeShiftInHolidayHours = (clockIn, clockOut, breakLength, settings) => {
-    let shiftLength = clockOut.diff(clockIn, 'hours', true);
+    let shiftLength = calcShiftLength(clockOut, clockIn);
     shiftLength = subtractBreak(shiftLength, breakLength);
 
+    let emptyAdditionalInfo = getEmptyAdditionalInfo(breakLength);
     if (!shiftLength)
-        return EmptyAdditionalInfo;
+        return emptyAdditionalInfo;
 
-    let analyzedHours = Object.assign({}, EmptyAdditionalInfo, {shiftLength, breakLength});
+    let analyzedHours = Object.assign({}, emptyAdditionalInfo, {shiftLength});
     if (shiftLength <= settings.holidayShiftLength) {
         return Object.assign({}, analyzedHours, {extra150Hours: shiftLength});
     }
