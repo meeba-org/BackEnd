@@ -1,26 +1,16 @@
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
-import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from "@material-ui/core/TextField";
+import ExtraFeeIcon from "@material-ui/icons/CardGiftcard";
 import CommentIcon from "@material-ui/icons/Comment";
 import BusIcon from "@material-ui/icons/DirectionsBus";
-import CarIcon from "@material-ui/icons/DirectionsCar";
-import EmptyIcon from "@material-ui/icons/HourglassEmpty";
-import PropTypes from 'prop-types';
-import React, {Component, Fragment} from 'react';
-import {connect} from "react-redux";
-import {Feature} from "../../../managers/FeaturesManager";
-import {hideEditShiftModal} from "../../actions/index";
-import * as selectors from "../../selectors";
-import ExtraFeeIcon from "@material-ui/icons/CardGiftcard";
 import BreakIcon from "@material-ui/icons/FreeBreakfast";
-import BusIcon from "@material-ui/icons/DirectionsBus";
-import Grid from "@material-ui/core/Grid";
+import React, {Component, Fragment} from 'react';
+import {hideEditShiftModal} from "../../actions/index";
 
 const moment = require("moment");
 
@@ -153,7 +143,6 @@ class EditShiftModal extends Component {
                     </Grid>
 
                     {isCommuteFeatureEnable &&
-                    <Fragment>
                         <Grid container spacing={8} alignItems="flex-end">
                             <Grid item>
                                 <BusIcon style={{color: "grey"}}/>
@@ -170,6 +159,7 @@ class EditShiftModal extends Component {
                                 />
                             </Grid>
                         </Grid>
+                    }
 
                     <Grid container spacing={8} alignItems="flex-end">
                         <Grid item>
