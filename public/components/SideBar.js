@@ -102,18 +102,24 @@ class SideBar extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { isTasksFeatureEnable} = this.props;
-        if (isTasksFeatureEnable && !prevProps.isTasksFeatureEnable) {
-            let items = [...this.state.items];
-            // Insert task item in the 4th place
-            items.splice(4, 0, {
-                text: "משימות",
-                url: "/dashboard/tasks",
-                allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
-                icon: <ListIcon/>
-            });
+        const {isTasksFeatureEnable} = this.props;
+        const {items} = this.state;
 
-            this.setState({items});
+        let modifiedItems = [...items];
+
+        if (isTasksFeatureEnable !== prevProps.isTasksFeatureEnable) {
+            if (isTasksFeatureEnable) {
+                // Insert task item in the 4th place
+                modifiedItems.splice(4, 0, {
+                    text: "משימות",
+                    url: "/dashboard/tasks",
+                    allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
+                    icon: <ListIcon/>
+                });
+            } else {
+                modifiedItems.splice(4, 1);
+            }
+            this.setState({items: modifiedItems})
         }
     }
 

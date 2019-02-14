@@ -1,16 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import CSSModules from "react-css-modules";
-import {Feature} from "../../managers/FeaturesManager";
-import styles from "../styles/Dashboard.scss";
-import SideBar from "./SideBar";
 import Paper from "@material-ui/core/Paper";
-import AppBar from "./AppBar";
+import MomentUtils from 'material-ui-pickers/utils/moment-utils';
+import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsProvider";
+import PropTypes from 'prop-types';
+import React from 'react';
+import CSSModules from "react-css-modules";
 import {connect} from "react-redux";
 import {loadUserFromToken} from "../actions/index";
 import * as selectors from "../selectors";
-import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsProvider";
-import MomentUtils from 'material-ui-pickers/utils/moment-utils';
+import styles from "../styles/Dashboard.scss";
+import AppBar from "./AppBar";
+import SideBar from "./SideBar";
 
 class Dashboard extends React.PureComponent {
 
@@ -77,7 +76,7 @@ const mapStateToProps = (state) => {
     return {
         userRole: selectors.getUserRole(state),
         isDesktop: selectors.isDesktop(state),
-        isTasksFeatureEnable: selectors.isFeatureEnable(state, Feature.Tasks)
+        isTasksFeatureEnable: selectors.isTasksFeatureEnable(state),
     };
 };
 

@@ -1,4 +1,5 @@
 import * as FeaturesManager from "../managers/FeaturesManager";
+import {Feature} from "../managers/FeaturesManager";
 
 export const getCompany = (state) => {
     return (!state.user) ? null : state.user.company;
@@ -32,4 +33,8 @@ export const isFeatureEnable = (state, feature) => {
 
 export const getCompanySettings = (state) => {
     return getCompany(state).settings;
+};
+
+export const isTasksFeatureEnable = (state) => {
+    return isFeatureEnable(state, Feature.Tasks) && getCompany(state).settings.enableTasks
 };
