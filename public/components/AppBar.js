@@ -12,6 +12,7 @@ import {connect} from "react-redux";
 import * as selectors from "../selectors";
 import {handleLogout, navigateHome} from "../actions/index";
 import PropTypes from 'prop-types';
+import {Link} from "react-router";
 
 class MeebaAppBar extends Component {
     onLogout = () => {
@@ -40,6 +41,7 @@ class MeebaAppBar extends Component {
                             <Typography type="title" color="inherit">{companyName}</Typography>
                         </div>
                         <div styleName="logout">
+                            <Button color="inherit"><Link style={{color: "inherit", textDecoration: 'none'}} to="/faq">שאלות ותשובות</Link></Button>
                             <Button onClick={this.onLogout} color="inherit">יציאה</Button>
                         </div>
                     </Toolbar>

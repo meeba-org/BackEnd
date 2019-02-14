@@ -29,3 +29,7 @@ export const isFeatureEnable = (state, feature) => {
     let company = getCompany(state);
     return (!company) ? false : FeaturesManager.isFeatureEnable(company, feature);
 };
+
+export const getCompanySettings = (state) => {
+    return getCompany(state).settings;
+};

@@ -1,9 +1,38 @@
 .user-container {
     display: flex;
     flex-direction: column;
+    max-width: 318px;
 
     .long-field {
-        width: 318px;
+        width: 100%;
+    }
+
+    .settings {
+        display: flex;
+        flex-direction: column;
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            min-height: 40px;
+            padding-bottom: 8px;
+
+            .short-field {
+                max-width: 88px;
+            }
+
+            .transportation{
+                display: flex;
+                a {
+                    text-decoration: underline;
+                }
+            }
+
+            .whatisit {
+                padding-top: 7px;
+            }
+        }
     }
 }
 

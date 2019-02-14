@@ -135,7 +135,7 @@ AddShiftsDialog.propTypes = {
     onCreate: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     employees: PropTypes.array.isRequired,
-
+    defaultStartDate: PropTypes.string.isRequired,
 };
 AddShiftsDialog.defaultProps = {};
 

@@ -31,8 +31,18 @@
     }
 
     .answer {
+        display: flex;
+        flex-direction: column;
         justify-content: flex-start;
         color: material-color('grey', '700');
         font-size: 20px;
+
+    }
+
+    .answer-footer {
+        @extend .answer;
+        flex-direction: row;
+        color: material-color('grey', '500');
+        font-size: 12px;
     }
 }

@@ -11,7 +11,6 @@ import IconButton from "@material-ui/core/IconButton";
 import TimePicker from "material-ui-pickers/TimePicker";
 import Note from "./Note";
 import Warning from "./Warning";
-import CarCost from "./CarCost";
 import BusCost from "./BusCost";
 import Location from "./Location";
 
@@ -51,7 +50,7 @@ const LiveShift = (props) => {
             </div>
             <Warning warning={errors}/>
             <Note text={shift.note} onClick={showShiftDialog}/>
-            <CarCost data={shift.commuteCost} onClick={showShiftDialog}/>
+            {/*<CarCost data={shift.commuteCost} onClick={showShiftDialog}/>*/}
             <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
             <Location location={shift.location} onClick={showLocationModal} />
 

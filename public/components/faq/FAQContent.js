@@ -24,25 +24,28 @@ const Answer = CSSModules(({text}) => {
     );
 }, styles);
 
+const AnswerFooter = CSSModules(() => {
+    return (
+        <div styleName="answer-footer">
+            לא מספיק ברור? מחכים לשאלות שלכם ב<a href={"https://m.me/meebaOnFace"}>צ'אט</a>
+        </div>
+    );
+}, styles);
+
 class QuestionAndAnswer extends Component {
-    state = {
-        collapse: true
-    };
-
-    toggleCollapse = () => {
-        this.setState({collapse: !this.state.collapse});
-    };
-
     render() {
-        const {question} = this.props;
-        const {collapse} = this.state;
+        const {question, onClick} = this.props;
+        const collapse = question.collapse;
 
         return (
-            <div>
-                <Question text={question.q} onClick={this.toggleCollapse} collapse={collapse}/>
+            <div id={question.name}>
+                <Question text={question.q} onClick={() => onClick(question.id)} collapse={collapse}/>
 
-                <Fade isVisible={!this.state.collapse}>
-                    <Answer text={question.a}/>
+                <Fade isVisible={!collapse}>
+                    <div>
+                        <Answer text={question.a}/>
+                        <AnswerFooter />
+                    </div>
                 </Fade>
             </div>
         );
@@ -50,20 +53,35 @@ class QuestionAndAnswer extends Component {
 }
 
 class FAQContent extends Component {
+    componentDidUpdate() {
+        const {scrollToId} = this.props;
+        if (!scrollToId)
+            return;
+
+        const element = document.getElementById(scrollToId);
+
+        element.scrollIntoView({behavior: 'smooth'});
+    }
+
     render() {
-        const {data} = this.props;
-        
+        const {data, toggleCollapse} = this.props;
+
         return (
             <div styleName="content">
                 {data && data.map((question, index) =>
-                    <QuestionAndAnswer question={question} key={index}/>
+                    (<QuestionAndAnswer
+                        question={question}
+                        key={index}
+                        onClick={toggleCollapse}
+                    />)
                 )}
             </div>
         );
     }
 }
 
-FAQContent.propTypes = {};
+FAQContent.propTypes = {
+};
 FAQContent.defaultProps = {};
 
 export default CSSModules(FAQContent, styles);

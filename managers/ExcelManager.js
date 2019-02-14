@@ -5,6 +5,7 @@ const Excel = require('exceljs');
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
 const isHoliday = require("./HolidayAnalyzer").isHoliday;
+const shouldHaveBreak = require("./ShiftAnalyzer").shouldHaveBreak;
 const RowBorderStyle = {
     top: { style: "hair" },
     left: { style: "medium" },
@@ -45,17 +46,19 @@ let setRowBold = function (row) {
 function createSummaryColumns(sheet, company) {
     sheet.columns = [
         {header: 'שם עובד', key: 'employeeName', width: 20, style: {alignment: {horizontal: 'right'}}},
-        {header: '100% שעות', key: 'regularHours', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: '125% שעות', key: 'extra125Hours', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: '150% שעות', key: 'extra150Hours', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: '175% שעות', key: 'extra175Hours', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: '200% שעות', key: 'extra200Hours', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'שכ"ע לשעה', key: 'hourWage', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'סה"כ שעות', key: 'overallHours', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'משמרות', key: 'shiftsCount', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'נסיעות יומי', key: 'transportation', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'סה"כ נסיעות', key: 'overallTransportation', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'סה"כ שכר', key: 'overallSalary', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'ת.ז.', key: 'employeeUid', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: '100% שעות', key: 'regularHours', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: '125% שעות', key: 'extra125Hours', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: '150% שעות', key: 'extra150Hours', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: '175% שעות', key: 'extra175Hours', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: '200% שעות', key: 'extra200Hours', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שכ"ע לשעה', key: 'hourWage', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'סה"כ שעות', key: 'overallHours', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'משמרות', key: 'shiftsCount', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'נסיעות יומי', key: 'transportation', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'סה"כ נסיעות', key: 'monthlyCommuteCost', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'תוספות', key: 'monthlyExtraPay', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'סה"כ שכר', key: 'overallSalary', width: 11, style: {alignment: {horizontal: 'center'}}},
     ];
 
     setSummaryHeaderColor(sheet, company);
@@ -63,7 +66,7 @@ function createSummaryColumns(sheet, company) {
 
 const addSummarySheet = (workbook, company, employees) => {
     // create a sheet with the first row and column frozen
-    let sheet = addWorksheet(workbook, "שכר");
+    let sheet = addWorksheet(workbook, "סיכום");
 
     createSummaryColumns(sheet, company);
     createSummaryContent(sheet, employees);
@@ -74,6 +77,7 @@ let createSummaryContent = function (sheet, employees) {
     employees.forEach((employee) => {
         let addedRow = sheet.addRow({
             employeeName: employee.fullName,
+            employeeUid: employee.uid,
             regularHours: employee.regularHours,
             extra125Hours: employee.extra125Hours,
             extra150Hours: employee.extra150Hours,
@@ -83,7 +87,8 @@ let createSummaryContent = function (sheet, employees) {
             hourWage: employee.hourWage,
             shiftsCount: employee.shiftsCount,
             transportation: employee.transportation,
-            overallTransportation: employee.overallTransportation,
+            monthlyCommuteCost: employee.monthlyCommuteCost,
+            monthlyExtraPay: employee.monthlyExtraPay,
             overallSalary: employee.overallSalary,
         });
 
@@ -97,6 +102,7 @@ function createShiftsPerEmployeeColumns(sheet, company) {
         {header: 'יום', key: 'dayInWeek', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'שעת התחלה', key: 'clockInTime', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'שעת סיום', key: 'clockOutTime', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'הפסקה', key: 'breakLength', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'שעות (עשרוני)', key: 'shiftLength', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: '100%', key: 'regularHours', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: '125%', key: 'extra125Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
@@ -107,11 +113,11 @@ function createShiftsPerEmployeeColumns(sheet, company) {
 
     if (isFeatureEnable(company, Feature.CommuteModule)) {
         sheet.columns = sheet.columns.concat([
-            {header: 'תחבורה ציבורית', key: 'publicTransportation', width: 10, style: {alignment: {horizontal: 'center'}}},
-            {header: 'שעות נסיעה', key: 'commuteHours', width: 10, style: {alignment: {horizontal: 'center'}}},
-            {header: 'ק"מ', key: 'kmDriving', width: 10, style: {alignment: {horizontal: 'center'}}},
-            {header: 'חניה', key: 'parkingCost', width: 10, style: {alignment: {horizontal: 'center'}}},
-            {header: 'נסיעות יומי', key: 'commuteCost', width: 10, style: {alignment: {horizontal: 'center'}}},
+            {header: 'החזר נסיעות', key: 'publicTransportation', width: 10, style: {alignment: {horizontal: 'center'}}},
+            // {header: 'שעות נסיעה', key: 'commuteHours', width: 10, style: {alignment: {horizontal: 'center'}}},
+            // {header: 'ק"מ', key: 'kmDriving', width: 10, style: {alignment: {horizontal: 'center'}}},
+            // {header: 'חניה', key: 'parkingCost', width: 10, style: {alignment: {horizontal: 'center'}}},
+            // {header: 'נסיעות יומי', key: 'commuteCost', width: 10, style: {alignment: {horizontal: 'center'}}},
         ]);
     }
 
@@ -122,6 +128,7 @@ function createShiftsPerEmployeeColumns(sheet, company) {
     }
 
     sheet.columns = sheet.columns.concat([
+        {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'הערות', key: 'comment', width: 30, style: {alignment: {horizontal: 'right'}}},
     ]);
 
@@ -137,19 +144,19 @@ function shouldAddTasksData(company, shift) {
 }
 
 function addCommuteData(company, row, shift) {
-    let kmPay = company.settings.kmPay;
-    let hourCommutePay = company.settings.hourCommutePay;
+    // let kmPay = company.settings.kmPay;
+    // let hourCommutePay = company.settings.hourCommutePay;
 
     row = {
         ...row,
         publicTransportation: shift.commuteCost.publicTransportation,
-        commuteHours: shift.commuteCost.commuteHours,
-        kmDriving: shift.commuteCost.kmDriving,
-        parkingCost: shift.commuteCost.parkingCost,
-        commuteCost: shift.commuteCost.publicTransportation +
-            shift.commuteCost.commuteHours * hourCommutePay +
-            shift.commuteCost.kmDriving * kmPay +
-            shift.commuteCost.parkingCost
+        // commuteHours: shift.commuteCost.commuteHours,
+        // kmDriving: shift.commuteCost.kmDriving,
+        // parkingCost: shift.commuteCost.parkingCost,
+        // commuteCost: shift.commuteCost.publicTransportation
+            // shift.commuteCost.commuteHours * hourCommutePay +
+            // shift.commuteCost.kmDriving * kmPay +
+            // shift.commuteCost.parkingCost
     };
 
     return row;
@@ -198,12 +205,14 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
                 dayInWeek: i === 0 ? row.dayInWeek : "",
                 clockInTime: calcClockInTime(shift),
                 clockOutTime: calcClockOutTime(shift),
+                breakLength: hoursAnalysis.breakLength,
                 shiftLength: hoursAnalysis.shiftLength || "",
                 regularHours: hoursAnalysis.regularHours || "",
                 extra125Hours: hoursAnalysis.extra125Hours || "",
                 extra150Hours: hoursAnalysis.extra150Hours || "",
                 extra175Hours: hoursAnalysis.extra175Hours || "",
                 extra200Hours: hoursAnalysis.extra200Hours || "",
+                monthlyExtraPay: shift.extraPay || "",
             };
 
             if (shouldAddCommuteData(company, shift)) {
@@ -235,10 +244,17 @@ const createShiftsPerEmployeeTotalSection = (sheet, employee) => {
 
     let transportationData = {
         clockOutTime: 'נסיעות:',
-        shiftLength: employee.overallTransportation ,
+        shiftLength: employee.monthlyCommuteCost ,
     }
     let transportationRow = sheet.addRow(transportationData);
     setRowBold(transportationRow);
+
+    let extraPayData = {
+        clockOutTime: 'תוספות:',
+        shiftLength: employee.monthlyExtraPay ,
+    }
+    let extraPayDataRow = sheet.addRow(extraPayData);
+    setRowBold(extraPayDataRow);
 
     let salaryData = {
         clockOutTime: 'שכר:',

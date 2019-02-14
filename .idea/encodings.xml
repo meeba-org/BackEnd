@@ -60,6 +60,7 @@
     <file url="file://$PROJECT_DIR$/public/components/home/Feature.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/Home.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/HomeAppBar.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/home/MobileImageContent.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/Movie.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/ReportFeatureContent.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/StatisticsCell.js" charset="UTF-8" />
@@ -77,6 +78,7 @@
     <file url="file://$PROJECT_DIR$/public/components/reports/BusCost.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/CarCost.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/DailyReportContainer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/ExtraPay.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/HoursSummary.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Location.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/MonthlyReportContainer.js" charset="UTF-8" />

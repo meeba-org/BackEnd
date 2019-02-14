@@ -6,11 +6,13 @@ import reduxForm from "redux-form/es/reduxForm";
 import User from "./User";
 import {updateActiveUser} from "../../actions/usersActions";
 import {updateCompany} from "../../actions/companyActions";
+import {FeatureName} from "../../helpers/FeatureName";
+import * as selectors from "../../selectors";
 
 class UserContainer extends React.Component {
 
     render() {
-        const {handleSubmit, updateUser, updateCompany} = this.props;
+        const {handleSubmit, updateUser, updateCompany, isCommuteFeatureEnable} = this.props;
 
         return (
             <form onSubmit={handleSubmit(() => {})}>
@@ -19,6 +21,7 @@ class UserContainer extends React.Component {
                     name="user"
                     onUpdateUser={updateUser}
                     onUpdateCompany={updateCompany}
+                    isCommuteFeatureEnable={isCommuteFeatureEnable}
                 />
             </form>
         );
@@ -36,7 +39,8 @@ function mapStateToProps(state) {
         user: state.user,
         initialValues: {
             user: state.user
-        }
+        },
+        isCommuteFeatureEnable: selectors.isFeatureEnable(state, FeatureName.CommuteModule),
     };
 }
 

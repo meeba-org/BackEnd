@@ -6,8 +6,10 @@ moment.tz.setDefault("Asia/Jerusalem");
 
 const REGULAR_SHIFT_LENGTH = 9;
 const SHIFT_125_OVERDUE_LENGTH = 2;
+const MINIMUM_SHIFT_LENGTH_FOR_BREAK = 6;
 const EmptyAdditionalInfo = {
     shiftLength: 0,
+    breakLength: 0,
     regularHours : 0,
     extra125Hours: 0,
     extra150Hours: 0,
@@ -62,6 +64,7 @@ function processUsersAdditionalInfo(userMap, settings) {
 const analyzeShiftHours = (shift, settings) => {
     let clockOut = moment(shift.clockOutTime);
     let clockIn = moment(shift.clockInTime);
+    let breakLength = calcBreakLength(shift, settings.breakLength);
 
     if (!isShiftValid(clockIn, clockOut))
         return EmptyAdditionalInfo;
@@ -70,14 +73,14 @@ const analyzeShiftHours = (shift, settings) => {
     let dayType = analyzeDayType(clockIn);
     switch (dayType) {
         case EDayType.Holiday:
-            analyzedHours = analyzeHolidayShiftHours(clockIn, clockOut, settings);
+            analyzedHours = analyzeHolidayShiftHours(clockIn, clockOut, breakLength, settings);
             break;
         case EDayType.HolidayEvening:
-            analyzedHours = analyzeHolidayEveningShiftHours(clockIn, clockOut, settings);
+            analyzedHours = analyzeHolidayEveningShiftHours(clockIn, clockOut, breakLength, settings);
             break;
         case EDayType.Regular:
         default:
-            analyzedHours = analyzeRegularDayShiftHours(clockIn, clockOut, settings, REGULAR_SHIFT_LENGTH);
+            analyzedHours = analyzeRegularDayShiftHours(clockIn, clockOut, breakLength, settings, REGULAR_SHIFT_LENGTH);
             break;
     }
 
@@ -88,6 +91,7 @@ const roundAnalyzedHours = (analyzedHours) => {
     // Using the + before the variable to avoid changing number to string  https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
     return {
         shiftLength: +analyzedHours.shiftLength.toFixed(2),
+        breakLength: +analyzedHours.breakLength.toFixed(2),
         regularHours: +analyzedHours.regularHours.toFixed(2),
         extra125Hours: +analyzedHours.extra125Hours.toFixed(2),
         extra150Hours: +analyzedHours.extra150Hours.toFixed(2),
@@ -102,13 +106,13 @@ const isShiftValid = (clockIn, clockOut) => {
     return true;
 };
 
-const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
+const analyzeHolidayShiftHours = (clockIn, clockOut, breakLength, settings) => {
     let holidayEndHour = moment(clockIn).hour(settings.holidayEndHour).startOf('hour');
 
-    let regularHoursAdditionalInfo = analyzeRegularDayShiftHours(clockIn, clockOut, settings, settings.holidayShiftLength);
+    let regularHoursAdditionalInfo = analyzeRegularDayShiftHours(clockIn, clockOut, breakLength, settings, settings.holidayShiftLength);
 
     if (holidayEndHour.isAfter(clockOut))
-        return analyzeWholeShiftInHolidayHours(clockIn, clockOut, settings);
+        return analyzeWholeShiftInHolidayHours(clockIn, clockOut, breakLength, settings);
 
     if (holidayEndHour.isBefore(clockIn))
         return regularHoursAdditionalInfo;
@@ -143,16 +147,16 @@ const analyzeHolidayShiftHours = (clockIn, clockOut, settings) => {
     return regularHoursAdditionalInfo;
 };
 
-const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
+const analyzeHolidayEveningShiftHours = (clockIn, clockOut, breakLength, settings) => {
     let eveningHolidayStartHour = moment(clockIn).hour(settings.eveningHolidayStartHour).startOf('hour');
 
-    let holidayAdditionalInfo = analyzeWholeShiftInHolidayHours(clockIn, clockOut, settings);
+    let holidayAdditionalInfo = analyzeWholeShiftInHolidayHours(clockIn, clockOut, breakLength, settings);
 
     if (eveningHolidayStartHour.isBefore(clockIn))
         return holidayAdditionalInfo;
 
     if (eveningHolidayStartHour.isAfter(clockOut))
-        return analyzeRegularDayShiftHours(clockIn, clockOut, settings, settings.holidayShiftLength);
+        return analyzeRegularDayShiftHours(clockIn, clockOut, breakLength, settings, settings.holidayShiftLength);
 
     let regularHoursShiftLength = eveningHolidayStartHour.diff(clockIn, 'hours', true);
 
@@ -185,13 +189,56 @@ const analyzeHolidayEveningShiftHours = (clockIn, clockOut, settings) => {
     return holidayAdditionalInfo;
 };
 
-const analyzeRegularDayShiftHours = (clockIn, clockOut, settings, regularHoursInShift) => {
-    let shiftLength = clockOut.diff(clockIn, 'hours', true);
+function calcBreakLength(shift, companyBreakLength) {
+    let clockOut = moment(shift.clockOutTime);
+    let clockIn = moment(shift.clockInTime);
+    let shiftLength = calcShiftLength(clockOut, clockIn);
 
+    // If user define break for this shift we take it into account
+    if (!shift.breakLength && !shouldHaveBreak(shiftLength))
+        return 0;
+
+    let shiftBreakLength = shift.breakLength;
+    let breakLength = !!shiftBreakLength ? shiftBreakLength : companyBreakLength;
+    return breakLength / 60;
+}
+
+function shouldHaveBreak (shiftLength) {
+    return shiftLength > MINIMUM_SHIFT_LENGTH_FOR_BREAK;
+}
+
+/**
+ * Substract break from shiftLength
+ * https://www.kolzchut.org.il/he/%D7%94%D7%A4%D7%A1%D7%A7%D7%95%D7%AA_%D7%91%D7%A2%D7%91%D7%95%D7%93%D7%94
+ * @param shiftLength
+ * @param breakLength
+ * @returns {*}
+ */
+function subtractBreak(shiftLength, breakLength) {
+    // Stupid user protection - Does not make sense to have breakLength > shiftLength
+    if (breakLength > shiftLength)
+        return 0;
+
+    return shiftLength - breakLength;
+}
+
+function calcShiftLength(clockOut, clockIn) {
+    return clockOut.diff(clockIn, 'hours', true);
+}
+
+function getEmptyAdditionalInfo(breakLength) {
+    return Object.assign({}, EmptyAdditionalInfo, {breakLength})
+}
+
+const analyzeRegularDayShiftHours = (clockIn, clockOut, breakLength, settings, regularHoursInShift) => {
+    let shiftLength = calcShiftLength(clockOut, clockIn);
+    shiftLength = subtractBreak(shiftLength, breakLength);
+
+    let emptyAdditionalInfo = getEmptyAdditionalInfo(breakLength);
     if (!shiftLength)
-        return EmptyAdditionalInfo;
+        return emptyAdditionalInfo;
 
-    let analyzedHours = Object.assign({}, EmptyAdditionalInfo, {shiftLength: shiftLength});
+    let analyzedHours = Object.assign({}, emptyAdditionalInfo, {shiftLength});
     if (shiftLength <= regularHoursInShift) {
         return Object.assign({}, analyzedHours, {regularHours: shiftLength});
     }
@@ -206,13 +253,15 @@ const analyzeRegularDayShiftHours = (clockIn, clockOut, settings, regularHoursIn
     }
 };
 
-const analyzeWholeShiftInHolidayHours = (clockIn, clockOut, settings) => {
-    let shiftLength = clockOut.diff(clockIn, 'hours', true);
+const analyzeWholeShiftInHolidayHours = (clockIn, clockOut, breakLength, settings) => {
+    let shiftLength = calcShiftLength(clockOut, clockIn);
+    shiftLength = subtractBreak(shiftLength, breakLength);
 
+    let emptyAdditionalInfo = getEmptyAdditionalInfo(breakLength);
     if (!shiftLength)
-        return EmptyAdditionalInfo;
+        return emptyAdditionalInfo;
 
-    let analyzedHours = Object.assign({}, EmptyAdditionalInfo, {shiftLength: shiftLength});
+    let analyzedHours = Object.assign({}, emptyAdditionalInfo, {shiftLength});
     if (shiftLength <= settings.holidayShiftLength) {
         return Object.assign({}, analyzedHours, {extra150Hours: shiftLength});
     }
@@ -251,30 +300,38 @@ function calcExtra50PercentHours(shiftLength, regularHoursInShift) {
 }
 
 
-let calcOverallTransportation = function (user, settings) {
-    let {kmPay, hourCommutePay} = settings;
-
-    if (user.transportPaymentPer === ETransportPaymentPer.MONTHLY)
-        return user.transportation;
-
+let calcMonthlyCommuteCost = function (user) {
     let totalPublicTransportation = 0;
-    let totalCommutePay = 0;
-    let totalKmPay = 0;
-    let totalParkingCost = 0;
+
     user.shifts.forEach(shift => {
         if (!shift.commuteCost)
             return;
 
-        let {publicTransportation, commuteHours, kmDriving, parkingCost} = shift.commuteCost;
+        let {publicTransportation} = shift.commuteCost;
 
         totalPublicTransportation += publicTransportation || 0;
-        totalCommutePay += (commuteHours || 0) * hourCommutePay;
-        totalKmPay += (kmDriving || 0) * kmPay;
-        totalParkingCost += parkingCost || 0;
     });
 
-    return totalPublicTransportation + totalCommutePay + totalKmPay + totalParkingCost + user.shifts.length * user.transportation;
+    // Calculate overall monthly transportation fees according to employees settings
+    let monthlyTransportationCost = user.transportPaymentPer === ETransportPaymentPer.MONTHLY ?
+        user.transportation :
+        user.shifts.length * user.transportation;
+
+    return totalPublicTransportation + monthlyTransportationCost;
 };
+
+function calcMonthlyExtraPay(user) {
+    let monthlyExtraPay = 0;
+
+    user.shifts.forEach(shift => {
+        if (!shift.extraPay)
+            return;
+
+        monthlyExtraPay += shift.extraPay;
+    });
+
+    return monthlyExtraPay;
+}
 
 function createUserAdditionalInfo(user, settings) {
     if (!user || !user.shifts)
@@ -302,7 +359,8 @@ function createUserAdditionalInfo(user, settings) {
 
     info.shiftsCount = user.shifts.length;
     info.transportation = user.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : user.transportation;
-    info.overallTransportation = calcOverallTransportation(user, settings);
+    info.monthlyCommuteCost = calcMonthlyCommuteCost(user, settings);
+    info.monthlyExtraPay = calcMonthlyExtraPay(user);
 
     // Rounding results
     info.overallHours = (info.regularHours + info.extra125Hours * 1.25 + info.extra150Hours * 1.5 + info.extra175Hours * 1.75 + info.extra200Hours * 2).toFixed(2);
@@ -311,7 +369,7 @@ function createUserAdditionalInfo(user, settings) {
     info.extra150Hours = info.extra150Hours.toFixed(2);
     info.extra175Hours = info.extra175Hours.toFixed(2);
     info.extra200Hours = info.extra200Hours.toFixed(2);
-    info.overallSalary = (info.overallHours * user.hourWage + info.overallTransportation).toFixed(2);
+    info.overallSalary = (info.overallHours * user.hourWage + info.monthlyCommuteCost + info.monthlyExtraPay).toFixed(2);
     return info;
 }
 
@@ -327,4 +385,5 @@ module.exports = {
     analyzeShiftHours,
     REGULAR_SHIFT_LENGTH,
     SHIFT_125_OVERDUE_LENGTH,
+    shouldHaveBreak,
 };

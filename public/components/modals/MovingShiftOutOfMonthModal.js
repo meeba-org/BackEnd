@@ -6,6 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import {hideDeleteEntityModal} from "../../actions/index";
 import PropTypes from 'prop-types';
+import moment from "moment";
 
 class MovingShiftOutOfMonthModal extends Component {
 
@@ -22,7 +23,7 @@ class MovingShiftOutOfMonthModal extends Component {
 
     render() {
         let {open, entity} = this.props;
-        let month = entity.clockInTime.format('MM/YYYY');
+        let month = moment(entity.clockInTime).format('MM/YYYY');
 
 
         return (

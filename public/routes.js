@@ -29,7 +29,7 @@ export default (
                 <Route path="live" component={DailyReportContainer} mode={ReportModes.Live} />
             </Route>
         </Route>
-        <Route path="faq" component={FAQContainer} />
+        <Route path="faq(/:name)" component={FAQContainer} />
     </Route>
 );
 

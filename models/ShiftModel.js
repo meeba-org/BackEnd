@@ -24,11 +24,13 @@ const ShiftSchema = mongoose.Schema({
         kmDriving: {type: Number, default: 0, required: true},
         parkingCost: {type: Number, default: 0, required: true},
     },
+    extraPay: {type: Number, default: 0, required: true},
     location: {
         latitude: {type: Number},
         longitude: {type: Number}
     },
     task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
+    breakLength: {type: Number, default: 0}
 });
 
 const Shift = mongoose.model('Shift', ShiftSchema);
