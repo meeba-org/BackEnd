@@ -87,7 +87,7 @@ class SideBar extends React.Component {
                 },
                 {
                     text: "הגדרות",
-                    url: "/dashboard/user",
+                    url: "/dashboard/settings",
                     allowedRoles: [ERoles.COMPANY_MANAGER],
                     icon: <SettingsApplications/>
                 },
@@ -110,16 +110,16 @@ class SideBar extends React.Component {
         if (isTasksFeatureEnable !== prevProps.isTasksFeatureEnable) {
             if (isTasksFeatureEnable) {
                 // Insert task item in the 4th place
-                modifiedItems.splice(4, 0, {
-                    text: "משימות",
+                modifiedItems.splice(3, 0, {
+                    text: 'דו"ח משימות',
                     url: "/dashboard/tasks",
                     allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
                     icon: <ListIcon/>
                 });
             } else {
-                modifiedItems.splice(4, 1);
+                modifiedItems.splice(3, 1);
             }
-            this.setState({items: modifiedItems})
+            this.setState({items: modifiedItems});
         }
     }
 

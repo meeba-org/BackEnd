@@ -36,7 +36,7 @@ UserContainer.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        user: state.user,
+        // user: state.user,
         initialValues: {
             user: state.user
         },

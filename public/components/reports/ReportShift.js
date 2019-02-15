@@ -1,18 +1,19 @@
-import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
-import {momentToDay} from "../../helpers/utils";
-import styles from "../../styles/ReportShift.scss";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
 import DatePicker from "material-ui-pickers/DatePicker";
 import TimePicker from "material-ui-pickers/TimePicker";
-import Note from "./Note";
-import Warning from "./Warning";
+import PropTypes from 'prop-types';
+import React, {Fragment} from 'react';
+import {momentToDay} from "../../helpers/utils";
+import styles from "../../styles/ReportShift.scss";
 import BusCost from "./BusCost";
-import Location from "./Location";
 import ExtraPay from "./ExtraPay";
+import Location from "./Location";
+import Note from "./Note";
+import TaskIndicator from "./TaskIndicator";
+import Warning from "./Warning";
 
 const ReportShift = (props) => {
     let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog, showLocationModal, isDesktop} = props;
@@ -62,6 +63,7 @@ const ReportShift = (props) => {
                     <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
                     <Location location={shift.location} onClick={showLocationModal} />
                     <ExtraPay extraPay={shift.extraPay} onClick={showShiftDialog}/>
+                    <TaskIndicator task={shift.task} onClick={showShiftDialog}/>
                  </Fragment>
             }
             {hover && isDesktop &&

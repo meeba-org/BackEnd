@@ -36,5 +36,5 @@ export const getCompanySettings = (state) => {
 };
 
 export const isTasksFeatureEnable = (state) => {
-    return isFeatureEnable(state, Feature.Tasks) && getCompany(state).settings.enableTasks
+    return isFeatureEnable(state, Feature.Tasks) && getCompany(state).settings.enableTasks;
 };

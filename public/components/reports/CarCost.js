@@ -1,17 +1,17 @@
-import React from "react";
-import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
-import styles from "../../styles/CommuteCost.scss";
-import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from "@material-ui/core/IconButton";
-import {isCarCostEmpty} from "../../helpers/utils";
+import Tooltip from '@material-ui/core/Tooltip';
+import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import PropTypes from "prop-types";
+import React from "react";
+import {isCarCostEmpty} from "../../helpers/utils";
+import styles from "../../styles/CommuteCost.scss";
 
 const CarCost = ({data, onClick}) => {
     if (!data || isCarCostEmpty(data))
         return null;
 
     return (
-        <div className={styles["commute"]}>
+        <div className={styles["shift-indicator"]}>
             <Tooltip title={
                 <div>
                     <div>שעות נסיעה: {data.commuteHours}</div>

@@ -190,6 +190,8 @@ class User extends Component {
                             <div className={styles["whatisit"]}>
                                 <Link to="/faq/commute" className={classes.link} target="_blank">מה זה?</Link>
                             </div>
+
+
                         </div>
 
                         <div className={styles["row"]}>
@@ -209,6 +211,8 @@ class User extends Component {
                                 <Link to="/faq/tasks" className={classes.link} target="_blank">מה זה?</Link>
                             </div>
                         </div>
+
+
                     </div>
                 </CardContent>
 

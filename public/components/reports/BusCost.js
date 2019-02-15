@@ -1,17 +1,17 @@
-import React from "react";
-import DirectionsBusIcon from '@material-ui/icons/DirectionsBus';
-import styles from "../../styles/CommuteCost.scss";
-import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from "@material-ui/core/IconButton";
-import {isBusCostEmpty} from "../../helpers/utils";
+import Tooltip from '@material-ui/core/Tooltip';
+import DirectionsBusIcon from '@material-ui/icons/DirectionsBus';
 import PropTypes from "prop-types";
+import React from "react";
+import {isBusCostEmpty} from "../../helpers/utils";
+import styles from "../../styles/CommuteCost.scss";
 
 const BusCost = ({data, onClick}) => {
     if (!data || isBusCostEmpty(data))
         return null;
 
     return (
-        <div className={styles["commute"]}>
+        <div className={styles["shift-indicator"]}>
             <Tooltip title={
                 <div>
                     <div>החזר נסיעות: {data.publicTransportation} ש"ח</div>

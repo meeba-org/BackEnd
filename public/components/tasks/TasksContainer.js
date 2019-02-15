@@ -109,7 +109,7 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(reduxForm({
-    form: 'userForm',
+    form: 'tasksForm',
     enableReinitialize: true,
 })(TasksContainer));
 

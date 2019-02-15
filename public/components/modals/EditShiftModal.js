@@ -147,25 +147,6 @@ class EditShiftModal extends Component {
                         </Grid>
                     </Grid>
 
-                    {isCommuteFeatureEnable &&
-                        <Grid container spacing={8} alignItems="flex-end">
-                            <Grid item>
-                                <BusIcon style={{color: "grey"}}/>
-                            </Grid>
-                            <Grid item>
-
-                                <TextField
-                                    label="תחבורה ציבורית"
-                                    margin="normal"
-                                    id="publicTransportation"
-                                    onChange={this.handleCommuteCostChange}
-                                    value={publicTransportation}
-                                    type="number"
-                                />
-                            </Grid>
-                        </Grid>
-                    }
-
                     <Grid container spacing={8} alignItems="flex-end">
                         <Grid item>
                             <ExtraFeeIcon style={{color: "grey"}}/>
@@ -187,7 +168,6 @@ class EditShiftModal extends Component {
                                 <BusIcon style={{color: "grey"}}/>
                             </Grid>
                             <Grid item>
-
                                 <TextField
                                     label="נסיעות"
                                     margin="normal"
