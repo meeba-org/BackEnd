@@ -29,14 +29,14 @@ class TasksSelectionContainer extends React.Component {
         const {onChange} = this.props;
         this.setState({selectedParent: selectedTask});
 
-        onChange(selectedTask._id);
+        onChange(selectedTask);
     };
 
     render() {
         let breadcrumbTasks = [];
         const {classes, task, tasks} = this.props;
         let currentLevelTasks = filterTasks(this.props.tasks, task);
-        let currTask = tasks.find(t => t._id === task);
+        let currTask = {...task};
 
         while (currTask) {
             breadcrumbTasks.push(currTask);
