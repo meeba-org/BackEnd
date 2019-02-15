@@ -65,36 +65,6 @@ class EditShiftModal extends Component {
         dispatch(hideEditShiftModal());
     };
 
-    handleNoteChange = (event) => {
-        const {entity} = this.state;
-
-        let updatedShift = {
-            ...entity,
-            note: event.target.value,
-        };
-
-        this.setState({
-            entity: updatedShift
-        });
-
-        this.updateShift(entity, updatedShift);
-    };
-
-    handleExtraPayChange = (event) => {
-        const {entity} = this.state;
-
-        let updatedShift = {
-            ...entity,
-            extraPay: event.target.value,
-        };
-
-        this.setState({
-            entity: updatedShift
-        });
-
-        this.updateShift(entity, updatedShift);
-    };
-
     handleShiftChange = (field, value) => {
         const {entity} = this.state;
 
@@ -144,7 +114,7 @@ class EditShiftModal extends Component {
 
     render() {
         let {open, classes, isCommuteFeatureEnable} = this.props;
-        let {note, extraPay, breakLength, commuteCost} = this.state.entity || {};
+        let {note, extraPay, breakLength, commuteCost, task} = this.state.entity || {};
         let {publicTransportation} = commuteCost || {};
 
         return (
@@ -179,13 +149,13 @@ class EditShiftModal extends Component {
 
                     <ESMTextInput
                         onChange={(e) => this.handleShiftChange("breakLength", e.target.value)}
-                        value={breakLength}
+                        value={breakLength || ""}
                         type={"number"}
                         TIIcon={BreakIcon}
                         label={"הפסקה (דקות)"}
                     />
 
-                    <TasksSelectionContainer/>
+                    <TasksSelectionContainer task={task} onChange={(task) => this.handleShiftChange("task" ,task)}/>
 
                     <DialogActions classes={{root: classes.dialogActionsRoot}}>
                         <Button variant="raised" onClick={this.handleClose} autoFocus color="primary">

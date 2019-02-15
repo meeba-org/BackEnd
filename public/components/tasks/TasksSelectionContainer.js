@@ -3,8 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import reduxForm from "redux-form/es/reduxForm";
-import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
-import * as selectors from "../../selectors";
+import {fetchTasks} from "../../actions/tasksActions";
 import BreadCrumb from "./BreadCrumb";
 import {filterTasks} from "./TaskService";
 import TasksList from "./TasksList";
@@ -27,22 +26,22 @@ class TasksSelectionContainer extends React.Component {
     }
 
     onSelectTask = (selectedTask) => {
-        let breadcrumbTasks = [];
-        const {tasks} = this.props;
+        const {onChange} = this.props;
         this.setState({selectedParent: selectedTask});
 
-        while (selectedTask) {
-            breadcrumbTasks.push(selectedTask);
-            selectedTask = tasks.find(task=> task._id === selectedTask.parent); // Go up one level
-        }
-
-        this.setState({breadcrumbTasks});
+        onChange(selectedTask._id);
     };
 
     render() {
-        let {breadcrumbTasks, selectedParent} = this.state;
-        const {classes} = this.props;
-        let tasks = filterTasks(this.props.tasks, selectedParent);
+        let breadcrumbTasks = [];
+        const {classes, task, tasks} = this.props;
+        let currentLevelTasks = filterTasks(this.props.tasks, task);
+        let currTask = tasks.find(t => t._id === task);
+
+        while (currTask) {
+            breadcrumbTasks.push(currTask);
+            currTask = tasks.find(t=> t._id === currTask.parent); // Go up one level
+        }
 
         return (
             <Fragment>
@@ -51,9 +50,9 @@ class TasksSelectionContainer extends React.Component {
                     data={breadcrumbTasks}
                     onSelectTask={this.onSelectTask}
                 />
-                {tasks && tasks.length > 0 && 
+                {currentLevelTasks && currentLevelTasks.length > 0 &&
                 <TasksList
-                    tasks={tasks}
+                    tasks={currentLevelTasks}
                     onClick={this.onSelectTask}
                     selectMode
                 />
@@ -74,19 +73,12 @@ TasksSelectionContainer.defaultProps = {
 function mapStateToProps(state) {
     return {
         tasks: state.tasks,
-        company: selectors.getCompany(state),
-        initialValues: {
-            user: state.user
-        }
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         fetchTasks: () => dispatch(fetchTasks()),
-        openTaskModal: (task) => dispatch(openTaskModal(task)),
-        showDeleteTaskModal: (task) => dispatch(showDeleteTaskModal(task)),
-
     };
 }
 
