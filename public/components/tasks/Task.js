@@ -11,7 +11,12 @@ import React, {Component} from 'react';
 
 const styles = {
     listItem: {
-        textAlign: "right"
+        textAlign: "right",
+    },
+    listItemSelectionMode: {
+        textAlign: "right",
+        paddingTop: "4px",
+        paddingBottom: "4px",
     }
 };
 
@@ -29,16 +34,20 @@ class Task extends Component {
     };
 
     render() {
-        const {data, onEdit, onDelete, onDoubleClick, classes} = this.props;
+        const {data, onEdit, onDelete, onDoubleClick, onClick, classes, selectMode} = this.props;
 
         return (
-            <ListItem classes={{root: classes.listItem}} button onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onDoubleClick={() => onDoubleClick(data)}>
+            <ListItem classes={{root: selectMode ? classes.listItemSelectionMode : classes.listItem}} button onMouseEnter={this.onMouseEnter}
+                      onMouseLeave={this.onMouseLeave}
+                      onDoubleClick={() => onDoubleClick(data)}
+                      onClick={() => onClick(data)}
+            >
                 <ListItemText primary={
                     <Grid container spacing={8}>
                         <Grid item xs={2}>
                             {data.title}
                         </Grid>
-                        {this.state.hover &&
+                        {this.state.hover && !selectMode &&
                         <Grid item xs={3}>
                             <Tooltip title="הגדרות נוספות" placement="top">
                                 <IconButton className={styles["elem"]}
@@ -58,12 +67,11 @@ class Task extends Component {
 
 Task.propTypes = {
     data: PropTypes.object.isRequired,
-    onEdit: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired,
-    onDoubleClick: PropTypes.func.isRequired,
-
+    onEdit: PropTypes.func,
+    onDelete: PropTypes.func,
+    onClick: PropTypes.func,
+    onDoubleClick: PropTypes.func,
 };
-Task.defaultProps = {};
 
 export default withStyles(styles)(Task);
 

@@ -15,6 +15,7 @@ import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {hideEditShiftModal} from "../../actions/index";
 import * as selectors from "../../selectors";
+import TasksSelectionContainer from "../tasks/TasksSelectionContainer";
 
 const moment = require("moment");
 
@@ -184,7 +185,7 @@ class EditShiftModal extends Component {
                         label={"הפסקה (דקות)"}
                     />
 
-
+                    <TasksSelectionContainer/>
 
                     <DialogActions classes={{root: classes.dialogActionsRoot}}>
                         <Button variant="raised" onClick={this.handleClose} autoFocus color="primary">

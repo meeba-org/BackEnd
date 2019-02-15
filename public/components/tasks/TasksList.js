@@ -5,7 +5,7 @@ import Task from "./Task";
 class TasksList extends Component {
 
     render() {
-        const {tasks, onDoubleClick, onEdit, onDelete} = this.props;
+        const {tasks, onClick, onDoubleClick, onEdit, onDelete, selectMode} = this.props;
 
         return (
             <List>
@@ -15,12 +15,19 @@ class TasksList extends Component {
                         data={task}
                         onEdit={onEdit}
                         onDelete={onDelete}
+                        onClick={(task) => onClick(task)}
                         onDoubleClick={(task) => onDoubleClick(task)}
+                        selectMode={selectMode}
                     />)
                 )}
             </List>
         );
     }
 }
+
+TasksList.defaultProps = {
+    onDoubleClick: () => {},
+    onClick: () => {},
+};
 
 export default TasksList;
