@@ -13,7 +13,6 @@ import BreakIcon from "@material-ui/icons/FreeBreakfast";
 import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
-import {Feature} from "../../../managers/FeaturesManager";
 import {hideEditShiftModal} from "../../actions/index";
 import * as selectors from "../../selectors";
 
@@ -27,6 +26,25 @@ const styles = {
         display: "flex",
         flexDirection: "column"
     }
+};
+
+export const ESMTextInput = ({TIIcon, value, onChange, type, label}) => {
+    return (
+        <Grid container spacing={8} alignItems="flex-end">
+            <Grid item>
+                <TIIcon style={{color: "grey"}}/>
+            </Grid>
+            <Grid item>
+                <TextField
+                    label={label}
+                    margin="normal"
+                    onChange={onChange}
+                    value={value}
+                    type={type}
+                />
+            </Grid>
+        </Grid>
+    );
 };
 
 class EditShiftModal extends Component {
@@ -124,7 +142,7 @@ class EditShiftModal extends Component {
     };
 
     render() {
-        let {open, classes, isCommuteFeatureEnable, enableCommute} = this.props;
+        let {open, classes, isCommuteFeatureEnable} = this.props;
         let {note, extraPay, breakLength, commuteCost} = this.state.entity || {};
         let {publicTransportation} = commuteCost || {};
 
@@ -132,68 +150,41 @@ class EditShiftModal extends Component {
             <Dialog onClose={this.handleCancel} open={open}>
                 <DialogTitle>{"עריכת משמרת"}</DialogTitle>
                 <DialogContent classes={{root: classes.dialogContentRoot}}>
-                    <Grid container spacing={8} alignItems="flex-end">
-                        <Grid item>
-                            <CommentIcon style={{color: "grey"}}/>
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                label="הערות"
-                                id="note"
-                                margin="normal"
-                                onChange={(e) => this.handleShiftChange("note", e.target.value)}
-                                value={note}
-                            />
-                        </Grid>
-                    </Grid>
+                    <ESMTextInput
+                        onChange={(e) => this.handleShiftChange("note", e.target.value)}
+                        value={note}
+                        type={"text"}
+                        TIIcon={CommentIcon}
+                        label={"הערות"}
+                        />
 
-                    <Grid container spacing={8} alignItems="flex-end">
-                        <Grid item>
-                            <ExtraFeeIcon style={{color: "grey"}}/>
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                label="תוספת תשלום"
-                                id="extra-pay"
-                                margin="normal"
-                                onChange={(e) => this.handleShiftChange("extraPay", e.target.value)}
-                                value={extraPay}
-                            />
-                        </Grid>
-                    </Grid>
+                    <ESMTextInput
+                        onChange={(e) => this.handleShiftChange("extraPay", e.target.value)}
+                        value={extraPay}
+                        type={"number"}
+                        TIIcon={ExtraFeeIcon}
+                        label={"תוספת תשלום"}
+                        />
 
-                    {isCommuteFeatureEnable && enableCommute &&
-                        <Grid container spacing={8} alignItems="flex-end">
-                            <Grid item>
-                                <BusIcon style={{color: "grey"}}/>
-                            </Grid>
-                            <Grid item>
-                                <TextField
-                                    label="נסיעות"
-                                    margin="normal"
-                                    id="publicTransportation"
-                                    onChange={this.handleCommuteCostChange}
-                                    value={publicTransportation}
-                                    type="number"
-                                />
-                            </Grid>
-                        </Grid>
+                    {isCommuteFeatureEnable &&
+                        <ESMTextInput
+                            onChange={this.handleCommuteCostChange}
+                            value={publicTransportation}
+                            type={"number"}
+                            TIIcon={BusIcon}
+                            label={"נסיעות"}
+                        />
                     }
 
-                    <Grid container spacing={8} alignItems="flex-end">
-                        <Grid item>
-                            <BreakIcon style={{color: "grey"}}/>
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                label="הפסקה (דקות)"
-                                id="break-length"
-                                margin="normal"
-                                onChange={(e) => this.handleShiftChange("breakLength", e.target.value)}
-                                value={breakLength}
-                            />
-                        </Grid>
-                    </Grid>
+                    <ESMTextInput
+                        onChange={(e) => this.handleShiftChange("breakLength", e.target.value)}
+                        value={breakLength}
+                        type={"number"}
+                        TIIcon={BreakIcon}
+                        label={"הפסקה (דקות)"}
+                    />
+
+
 
                     <DialogActions classes={{root: classes.dialogActionsRoot}}>
                         <Button variant="raised" onClick={this.handleClose} autoFocus color="primary">
@@ -214,7 +205,6 @@ EditShiftModal.propTypes = {
     dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
     isCommuteFeatureEnable: PropTypes.bool,
-    enableCommute: PropTypes.bool,
     month: PropTypes.string,
     year: PropTypes.string,
     callBack: PropTypes.func,
@@ -222,8 +212,8 @@ EditShiftModal.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        isCommuteFeatureEnable: selectors.isFeatureEnable(state, Feature.CommuteModule),
-        enableCommute: selectors.getCompanySettings(state).enableCommute,
+        isCommuteFeatureEnable: selectors.isCommuteFeatureEnable(state),
+
     };
 };
 export default connect(mapStateToProps)(withStyles(styles)(EditShiftModal));

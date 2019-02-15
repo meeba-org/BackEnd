@@ -35,6 +35,10 @@ export const getCompanySettings = (state) => {
     return getCompany(state).settings;
 };
 
+export const isCommuteFeatureEnable = (state) => {
+    return isFeatureEnable(state, Feature.CommuteModule) && getCompanySettings(state).enableCommute;
+};
+
 export const isTasksFeatureEnable = (state) => {
-    return isFeatureEnable(state, Feature.Tasks) && getCompany(state).settings.enableTasks;
+    return isFeatureEnable(state, Feature.Tasks) && getCompanySettings(state).enableTasks;
 };
