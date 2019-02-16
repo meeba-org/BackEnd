@@ -91,7 +91,7 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(reduxForm({
-    form: 'tasksForm',
+    form: 'tasksSelectionForm',
     enableReinitialize: true,
 })(withStyles(styles)(TasksSelectionContainer)));
 

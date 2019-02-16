@@ -75,7 +75,7 @@ class TasksContainer extends React.Component {
                     tasks={tasks}
                     onEdit={openTaskModal}
                     onDelete={showDeleteTaskModal}
-                    onDoubleClick={this.onSelectTask}
+                    onClick={this.onSelectTask}
                 />
                 }
             </MbCard>
@@ -90,9 +90,6 @@ function mapStateToProps(state) {
     return {
         tasks: state.tasks,
         company: selectors.getCompany(state),
-        initialValues: {
-            user: state.user
-        }
     };
 }
 

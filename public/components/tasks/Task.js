@@ -33,8 +33,18 @@ class Task extends Component {
         this.setState({hover: false});
     };
 
+    onDelete = (e, data) => {
+        e.stopPropagation();
+        this.props.onDelete(data);
+    };
+
+    onEdit = (e, data) => {
+        e.stopPropagation();
+        this.props.onEdit(data);
+    };
+
     render() {
-        const {data, onEdit, onDelete, onDoubleClick, onClick, classes, selectMode} = this.props;
+        const {data, onDoubleClick, onClick, classes, selectMode} = this.props;
 
         return (
             <ListItem classes={{root: selectMode ? classes.listItemSelectionMode : classes.listItem}} button onMouseEnter={this.onMouseEnter}
@@ -51,10 +61,10 @@ class Task extends Component {
                         <Grid item xs={3}>
                             <Tooltip title="הגדרות נוספות" placement="top">
                                 <IconButton className={styles["elem"]}
-                                            onClick={() => onEdit(data)}><SettingsIcon/></IconButton>
+                                            onClick={(e) => this.onEdit(e, data)}><SettingsIcon/></IconButton>
                             </Tooltip>
                             <Tooltip title="מחיקה" placement="top">
-                                <IconButton onClick={() => onDelete(data)}><DeleteIcon/></IconButton>
+                                <IconButton onClick={(e) => this.onDelete(e, data)}><DeleteIcon/></IconButton>
                             </Tooltip>
                         </Grid>
                         }
