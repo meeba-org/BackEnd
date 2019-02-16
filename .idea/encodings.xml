@@ -87,6 +87,7 @@
     <file url="file://$PROJECT_DIR$/public/components/reports/Note.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/ShiftsList.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/TaskIndicator.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/TasksReportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/TimeMaskCustom.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Warning.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/BreadCrumb.js" charset="UTF-8" />

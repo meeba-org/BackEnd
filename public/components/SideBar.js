@@ -112,7 +112,7 @@ class SideBar extends React.Component {
                 // Insert task item in the 4th place
                 modifiedItems.splice(3, 0, {
                     text: 'דו"ח משימות',
-                    url: "/dashboard/tasks",
+                    url: "/dashboard/report/tasks",
                     allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
                     icon: <ListIcon/>
                 });

@@ -8,8 +8,8 @@ import Home from "./components/home/Home";
 import LoginContainer from "./components/login/LoginContainer";
 import DailyReportContainer from "./components/reports/DailyReportContainer";
 import MonthlyReportContainer from "./components/reports/MonthlyReportContainer";
+import TasksReportContainer from "./components/reports/TasksReportContainer";
 import Settings from "./components/Settings";
-import TasksContainer from "./components/tasks/TasksContainer";
 import {ReportModes} from "./helpers/utils";
 
 export default (
@@ -21,11 +21,11 @@ export default (
             <IndexRedirect to="/dashboard/report" />
             <Route path="employees" component={EmployeesContainer} />
             <Route path="settings" component={Settings} />
-            <Route path="tasks" component={TasksContainer} />
             <Route path="report"  >
                 <IndexRedirect to="/dashboard/report/live" />
                 <Route path="monthly" component={MonthlyReportContainer}  />
                 <Route path="daily" component={DailyReportContainer} mode={ReportModes.Report} />
+                <Route path="tasks" component={TasksReportContainer} />
                 <Route path="live" component={DailyReportContainer} mode={ReportModes.Live} />
             </Route>
         </Route>
