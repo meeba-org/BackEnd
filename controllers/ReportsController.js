@@ -60,6 +60,8 @@ router.get('/monthly',
                 if (shifts) {
                     return ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
                 }
+                else
+                    return [];
             });
     })
 );
@@ -82,8 +84,11 @@ router.get('/tasks',
             .then((shifts) => {
 
                 if (shifts) {
-                    return ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
+                    return ShiftAnalyzer.createTasksReport(shifts, company.settings);
                 }
+                else
+                    return [];
+
             });
     })
 );

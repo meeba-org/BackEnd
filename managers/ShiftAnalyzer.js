@@ -56,6 +56,9 @@ const mapTasksToShifts = function (shifts) {
         return tasksToShiftsMap;
 
     shifts.forEach((shift) => {
+        if (!shift.task || !shift.task._id)
+            return;
+
         let clonedShift = Object.assign({}, shift);
 
         if (tasksToShiftsMap[clonedShift.task._id]) {
@@ -415,6 +418,7 @@ const createTasksReport = (shifts, settings) => {
 
 module.exports = {
     createEmployeeShiftsReports,
+    createTasksReport,
     analyzeShiftHours,
     REGULAR_SHIFT_LENGTH,
     SHIFT_125_OVERDUE_LENGTH,
