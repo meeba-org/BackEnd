@@ -7,6 +7,11 @@ export const fetchMonthlyReportSuccess = (payload) => ({
     payload
 });
 
+export const fetchTasksReportSuccess = (payload) => ({
+    type: actions.FETCH_TASKS_REPORT_SUCCESS,
+    payload
+});
+
 export const generateExcelReport = (month, year) => ({
     type: actions.API,
     payload: {
@@ -32,6 +37,18 @@ export const fetchMonthlyReport = (month, year) => ({
         url: "/reports/monthly?year=" + year + "&month=" + month,
         method: "get",
         success: fetchMonthlyReportSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+    }
+});
+
+export const fetchTasksReport = (month, year) => ({
+    type: actions.API,
+    payload: {
+        url: "/reports/tasks?year=" + year + "&month=" + month,
+        method: "get",
+        success: fetchTasksReportSuccess,
     },
     meta: {
         shouldAuthenticate: true,

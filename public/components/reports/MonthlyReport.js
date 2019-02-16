@@ -40,13 +40,12 @@ class MonthlyReport extends React.PureComponent {
     }
 
     isCollapsed(fields, index) {
-        let employee = fields.get(index);
-        return this.state.collapsed !== employee.uid;
+        return this.state.collapsed !== index;
     }
 
-    onToggle(name) {
-        let newCollapsedelement = this.state.collapsed === name ? null : name;
-        this.setState({collapsed: newCollapsedelement});
+    onToggle(index) {
+        let newCollapsedIndex = this.state.collapsed === index ? null : index;
+        this.setState({collapsed: newCollapsedIndex});
     }
 
     generateMonthStr = (month, year) => moment().year(year).month(month).startOf('month').format(DATE_FORMAT);
@@ -120,7 +119,7 @@ class MonthlyReport extends React.PureComponent {
     };
 
     render() {
-        const {fields, employees, userRole, showShiftDialog, showLocationModal} = this.props;
+        const {fields, employees, userRole, showShiftDialog, showLocationModal, reportLineComponent} = this.props;
         let startDayOfMonth = this.state.startDayOfMonth;
         const months = this.generateMonths();
 
@@ -167,10 +166,10 @@ class MonthlyReport extends React.PureComponent {
 
                                 {fields && fields.map((employeeShiftsReport, index) =>
                                     (<Fade key={index} isVisible>
-                                        <Field component={MonthlyReportLine}
+                                        <Field component={reportLineComponent}
                                                name={employeeShiftsReport}
                                                isCollapsed={this.isCollapsed(fields, index)}
-                                               key={index}
+                                               index={index}
                                                onToggle={(name) => this.onToggle(name)}
                                                onDeleteShift={this.onDeleteShift}
                                                showShiftDialog={showShiftDialog}

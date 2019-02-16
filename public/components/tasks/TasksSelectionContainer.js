@@ -34,7 +34,7 @@ class TasksSelectionContainer extends React.Component {
 
     buildBreadcrumb(task, tasks) {
         let breadcrumbTasks = [];
-        let currTask = !!task ? {...task} : null;
+        let currTask = task ? {...task} : null;
 
         while (currTask) {
             breadcrumbTasks.push(currTask);

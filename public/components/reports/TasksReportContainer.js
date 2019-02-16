@@ -1,36 +1,68 @@
 import PropTypes from 'prop-types';
 import React from "react";
 import {connect} from "react-redux";
+import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
 import {createShift, showLocationModal, updateShift} from "../../actions";
-import {fetchDailyReport, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
+import {fetchTasksReport, generateExcelReport} from "../../actions/reportsActions";
+import {showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
+import MonthlyReport from "./MonthlyReport";
+import TaskReportLine from "./TaskReportLine";
 
-class DailyReportContainer extends React.PureComponent {
+class TasksReportContainer extends React.PureComponent {
 
-    onDayChange(startDateOfMonth) {
-        if (!startDateOfMonth)
-            return;
-
-        this.props.fetchDailyReport(startDateOfMonth);
+    componentDidMount() {
         this.props.fetchEmployees();
     }
 
-    render() {
-        const {handleSubmit, updateShift, createShift, deleteShift, showShiftDialog, showLocationModal, shifts, employees, router, isLoading} = this.props;
+    onStartDayOfMonthChange(month, year) {
+        if (!month || !year)
+            return;
 
+        this.props.fetchTasksReport(month, year);
+    }
+
+    onDataChange = (month, year) => {
+        this.props.fetchTasksReport(month, year);
+    };
+
+    onGenerateExcel(month, year) {
+        if (!month || !year)
+            return;
+
+        this.props.generateExcelReport(month, year);
+    }
+
+    render() {
+        const {handleSubmit, updateShift, showShiftDialog, showLocationModal, createShift, deleteShift, employees, userRole} = this.props;
         return (
-            <h1>Tasks Report</h1>
+            <form onSubmit={handleSubmit(() => {})}>
+                <FieldArray name="tasksReports"
+                            component={MonthlyReport}
+                            employees={employees}
+                            onDeleteShift={deleteShift}
+                            showShiftDialog={showShiftDialog}
+                            showLocationModal={showLocationModal}
+                            onUpdateShift={updateShift}
+                            onCreateShift={createShift}
+                            onDataChange={this.onDataChange}
+                            onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
+                            onGenerateExcel={(month, year) => this.onGenerateExcel(month, year)}
+                            userRole={userRole}
+                            reportLineComponent={TaskReportLine}
+                />
+            </form>
         );
     }
 }
 
-DailyReportContainer.propTypes = {
+TasksReportContainer.propTypes = {
     shifts: PropTypes.array,
     employees: PropTypes.array,
     route: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
-    fetchDailyReport: PropTypes.func.isRequired,
+    fetchTasksReport: PropTypes.func.isRequired,
     fetchEmployees: PropTypes.func.isRequired,
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
@@ -43,10 +75,9 @@ DailyReportContainer.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        shifts: state.shifts,
         employees: state.users,
         initialValues: {
-            shifts: state.shifts
+            tasksReports: state.reports.tasksReports
         },
         isLoading: state.loader.isLoading
     };
@@ -54,11 +85,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchDailyReport: (startDate) => {dispatch( fetchDailyReport(startDate)); },
+        fetchTasksReport: (month, year) => dispatch(fetchTasksReport(month, year)),
         fetchEmployees: () => dispatch(fetchUsers(true)),
-        updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, false, month, year)),
-        createShift: (shift) => dispatch(createShift(shift, dispatch)),
-        deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
+        generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
+        updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, true, month, year)),
+        createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
+        deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
         showShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
         showLocationModal: (shift, callBack) => dispatch(showLocationModal(shift, callBack)),
     };
@@ -67,7 +99,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps, mapDispatchToProps
 )(reduxForm({
-    form: 'dailyReportForm',
+    form: 'taskReportForm',
     enableReinitialize: true,
-})(DailyReportContainer));
+})(TasksReportContainer));
 
