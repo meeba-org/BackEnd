@@ -64,4 +64,28 @@ router.get('/monthly',
     })
 );
 
+//GET /reports/tasks report
+router.get('/tasks',
+    [
+        query('year').exists(),
+        query('month').exists(),
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        let userId = req.query.userId;
+
+        const year = req.query.year || moment().format('YYYY');
+        const month = req.query.month || moment().format('MM');
+
+        const company = jwtService.getCompanyFromLocals(res);
+
+        return ShiftModel.getShiftsInMonth(year, month, company, userId)
+            .then((shifts) => {
+
+                if (shifts) {
+                    return ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
+                }
+            });
+    })
+);
+
 module.exports = router;

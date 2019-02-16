@@ -23,7 +23,7 @@ const EmptySettings = {
     holidayShiftLength: 9
 };
 
-let processUsersToShifts = function (shifts) {
+const mapUsersToShifts = function (shifts) {
     let usersToShiftsMap = {};
 
     if (!shifts || shifts.length === 0)
@@ -47,6 +47,32 @@ let processUsersToShifts = function (shifts) {
     });
     const keys = Object.keys(usersToShiftsMap);
     return keys.map((key) => usersToShiftsMap[key]); // return the users
+};
+
+const mapTasksToShifts = function (shifts) {
+    let tasksToShiftsMap = {};
+
+    if (!shifts || shifts.length === 0)
+        return tasksToShiftsMap;
+
+    shifts.forEach((shift) => {
+        let clonedShift = Object.assign({}, shift);
+
+        if (tasksToShiftsMap[clonedShift.task._id]) {
+            const id = clonedShift.task._id;
+            clonedShift.task = clonedShift.task._id;
+            tasksToShiftsMap[id].shifts.push(clonedShift);
+        }
+        else {
+            let clonedTask = Object.assign({}, shift.task);
+
+            clonedShift.task = clonedShift.task._id;
+            clonedTask.shifts = [clonedShift];
+            tasksToShiftsMap[clonedTask._id] = clonedTask;
+        }
+    });
+    const keys = Object.keys(tasksToShiftsMap);
+    return keys.map((key) => tasksToShiftsMap[key]); // return the users
 };
 
 function processUsersAdditionalInfo(userMap, settings) {
@@ -375,9 +401,16 @@ function createUserAdditionalInfo(user, settings) {
 
 const createEmployeeShiftsReports = (shifts, settings) => {
     settings = settings || EmptySettings;
-    let map = processUsersToShifts(shifts);
+    let map = mapUsersToShifts(shifts);
     let usersArray = processUsersAdditionalInfo(map, settings);
     return usersArray;
+};
+
+const createTasksReport = (shifts, settings) => {
+    // settings = settings || EmptySettings;
+    let map = mapTasksToShifts(shifts);
+    // let usersArray = processUsersAdditionalInfo(map, settings);
+    return map;
 };
 
 module.exports = {
