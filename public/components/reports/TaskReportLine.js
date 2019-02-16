@@ -1,17 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import PropTypes from 'prop-types';
+import React from 'react';
+import CSSModules from "react-css-modules";
 import FieldArray from "redux-form/es/FieldArray";
+import {ReportModes} from "../../helpers/utils";
+import styles from "../../styles/MonthlyReportLine.scss";
 import TaskHoursBar from "../TaskHoursBar";
 import ShiftsList from "./ShiftsList";
-import CSSModules from "react-css-modules";
-import HoursBar from '../HoursBar';
-import {ReportModes} from "../../helpers/utils";
-import HoursSummary from "./HoursSummary";
-import styles from "../../styles/MonthlyReportLine.scss";
 
 
 class MonthlyReportLine extends React.PureComponent {
@@ -38,7 +36,7 @@ class MonthlyReportLine extends React.PureComponent {
                 <div styleName="monthly-report-header" onClick={() => onToggle(index)}>
                     <IconButton className={styles["toggle-button"]} color="primary" >{toggleButton}</IconButton>
                     <div styleName="name">{input.value.title}</div>
-                    <TaskHoursBar totalHours={120} displayDetails={this.state.hover}/>
+                    <TaskHoursBar {...input.value} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&
                 <div styleName="monthly-report-body">

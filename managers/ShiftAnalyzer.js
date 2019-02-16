@@ -78,29 +78,16 @@ const mapTasksToShifts = function (shifts) {
     return keys.map((key) => tasksToShiftsMap[key]); // return the users
 };
 
-function processUsersAdditionalInfo(userMap, settings) {
-    if (Object.keys(userMap).length === 0)
+function processAdditionalInfo(map, settings) {
+    if (Object.keys(map).length === 0)
         return [];
 
-    const usersWithAdditionalInfo = userMap.map((user) => {
-        let userAdditionalInfo = createUserAdditionalInfo(user, settings);
-        return Object.assign({}, user, userAdditionalInfo);
+    const additionalInfos = map.map((entity) => {
+        let additionalInfo = createAdditionalInfo(entity, settings);
+        return Object.assign({}, entity, additionalInfo);
     });
 
-    return usersWithAdditionalInfo;
-}
-
-function processTasksAdditionalInfo(tasksMap, settings) {
-    if (Object.keys(tasksMap).length === 0)
-        return [];
-
-    const usersWithAdditionalInfo = tasksMap.map((task) => {
-        // TODO Do I really need specia createTaskAdditionalInfo? what about the excel dont I need the whole shift analysis?
-        let userAdditionalInfo = createTaskAdditionalInfo(task, settings);
-        return Object.assign({}, task, userAdditionalInfo);
-    });
-
-    return usersWithAdditionalInfo;
+    return additionalInfos;
 }
 
 const analyzeShiftHours = (shift, settings) => {
@@ -375,9 +362,9 @@ function calcMonthlyExtraPay(user) {
     return monthlyExtraPay;
 }
 
-function createUserAdditionalInfo(user, settings) {
-    if (!user || !user.shifts)
-        return user;
+function createAdditionalInfo(entity, settings) {
+    if (!entity || !entity.shifts)
+        return entity;
 
     let info = {
         shiftLength: 0,
@@ -388,7 +375,7 @@ function createUserAdditionalInfo(user, settings) {
         extra200Hours: 0,
     };
 
-    user.shifts.forEach((shift) => {
+    entity.shifts.forEach((shift) => {
         let hoursAnalysis = analyzeShiftHours(shift, settings);
         info.shiftLength += hoursAnalysis.shiftLength;
         info.regularHours += hoursAnalysis.regularHours;
@@ -399,10 +386,10 @@ function createUserAdditionalInfo(user, settings) {
         shift.hoursAnalysis = hoursAnalysis;
     });
 
-    info.shiftsCount = user.shifts.length;
-    info.transportation = user.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : user.transportation;
-    info.monthlyCommuteCost = calcMonthlyCommuteCost(user, settings);
-    info.monthlyExtraPay = calcMonthlyExtraPay(user);
+    info.shiftsCount = entity.shifts.length;
+    info.transportation = entity.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : entity.transportation;
+    info.monthlyCommuteCost = calcMonthlyCommuteCost(entity, settings);
+    info.monthlyExtraPay = calcMonthlyExtraPay(entity);
 
     // Rounding results
     info.overallHours = (info.regularHours + info.extra125Hours * 1.25 + info.extra150Hours * 1.5 + info.extra175Hours * 1.75 + info.extra200Hours * 2).toFixed(2);
@@ -411,21 +398,21 @@ function createUserAdditionalInfo(user, settings) {
     info.extra150Hours = info.extra150Hours.toFixed(2);
     info.extra175Hours = info.extra175Hours.toFixed(2);
     info.extra200Hours = info.extra200Hours.toFixed(2);
-    info.overallSalary = (info.overallHours * user.hourWage + info.monthlyCommuteCost + info.monthlyExtraPay).toFixed(2);
+    info.overallSalary = (info.overallHours * entity.hourWage + info.monthlyCommuteCost + info.monthlyExtraPay).toFixed(2);
     return info;
 }
 
 const createEmployeeShiftsReports = (shifts, settings) => {
     settings = settings || EmptySettings;
     let map = mapUsersToShifts(shifts);
-    let usersArray = processUsersAdditionalInfo(map, settings);
+    let usersArray = processAdditionalInfo(map, settings);
     return usersArray;
 };
 
 const createTasksReport = (shifts, settings) => {
     // settings = settings || EmptySettings;
     let map = mapTasksToShifts(shifts);
-    let mapWithAdditionalInfo = processTasksAdditionalInfo(map, settings);
+    let mapWithAdditionalInfo = processAdditionalInfo(map, settings);
     return mapWithAdditionalInfo;
 };
 
