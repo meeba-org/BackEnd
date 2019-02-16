@@ -41,7 +41,7 @@ class MonthlyReportLine extends React.PureComponent {
                 </div>
                 {!isCollapsed &&
                 <div styleName="monthly-report-body">
-                        <HoursSummary data={input.value}/>
+                        {/*<HoursSummary data={input.value}/>*/}
 
                         <FieldArray
                             name={`${input.name}.shifts`}

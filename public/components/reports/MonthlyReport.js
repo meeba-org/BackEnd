@@ -119,13 +119,13 @@ class MonthlyReport extends React.PureComponent {
     };
 
     render() {
-        const {fields, employees, userRole, showShiftDialog, showLocationModal, reportLineComponent} = this.props;
+        const {fields, employees, userRole, showShiftDialog, showLocationModal, reportLineComponent, title} = this.props;
         let startDayOfMonth = this.state.startDayOfMonth;
         const months = this.generateMonths();
 
         return (
             <Card>
-                <CardHeader title="דוח חודשי"/>
+                <CardHeader title={title}/>
 
                 <CardContent className={styles["card-content"]}>
 

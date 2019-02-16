@@ -52,6 +52,7 @@ class MonthlyReportContainer extends React.PureComponent {
                             onGenerateExcel={(month, year) => this.onGenerateExcel(month, year)}
                             userRole={userRole}
                             reportLineComponent={MonthlyReportLine}
+                            title={'דו"ח חודשי'}
                 />
             </form>
         );

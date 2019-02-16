@@ -51,6 +51,7 @@ class TasksReportContainer extends React.PureComponent {
                             onGenerateExcel={(month, year) => this.onGenerateExcel(month, year)}
                             userRole={userRole}
                             reportLineComponent={TaskReportLine}
+                            title={'דו"ח משימות'}
                 />
             </form>
         );
