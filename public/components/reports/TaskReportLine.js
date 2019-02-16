@@ -5,6 +5,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import FieldArray from "redux-form/es/FieldArray";
+import TaskHoursBar from "../TaskHoursBar";
 import ShiftsList from "./ShiftsList";
 import CSSModules from "react-css-modules";
 import HoursBar from '../HoursBar';
@@ -37,7 +38,7 @@ class MonthlyReportLine extends React.PureComponent {
                 <div styleName="monthly-report-header" onClick={() => onToggle(index)}>
                     <IconButton className={styles["toggle-button"]} color="primary" >{toggleButton}</IconButton>
                     <div styleName="name">{input.value.title}</div>
-                    {/*<HoursBar {...input.value} displayDetails={this.state.hover}/>*/}
+                    <TaskHoursBar totalHours={120} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&
                 <div styleName="monthly-report-body">
@@ -51,7 +52,7 @@ class MonthlyReportLine extends React.PureComponent {
                             showLocationModal={showLocationModal}
                             onUpdate={onUpdateShift}
                             onCreate={onCreateShift}
-                            showNames={false}
+                            showNames={true}
                             mode={ReportModes.Report}
                             shouldDisplayNoData={true}
                         />

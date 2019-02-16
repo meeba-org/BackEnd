@@ -90,6 +90,19 @@ function processUsersAdditionalInfo(userMap, settings) {
     return usersWithAdditionalInfo;
 }
 
+function processTasksAdditionalInfo(tasksMap, settings) {
+    if (Object.keys(tasksMap).length === 0)
+        return [];
+
+    const usersWithAdditionalInfo = tasksMap.map((task) => {
+        // TODO Do I really need specia createTaskAdditionalInfo? what about the excel dont I need the whole shift analysis?
+        let userAdditionalInfo = createTaskAdditionalInfo(task, settings);
+        return Object.assign({}, task, userAdditionalInfo);
+    });
+
+    return usersWithAdditionalInfo;
+}
+
 const analyzeShiftHours = (shift, settings) => {
     let clockOut = moment(shift.clockOutTime);
     let clockIn = moment(shift.clockInTime);
@@ -412,8 +425,8 @@ const createEmployeeShiftsReports = (shifts, settings) => {
 const createTasksReport = (shifts, settings) => {
     // settings = settings || EmptySettings;
     let map = mapTasksToShifts(shifts);
-    // let usersArray = processUsersAdditionalInfo(map, settings);
-    return map;
+    let mapWithAdditionalInfo = processTasksAdditionalInfo(map, settings);
+    return mapWithAdditionalInfo;
 };
 
 module.exports = {
