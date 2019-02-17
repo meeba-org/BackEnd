@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -28,7 +28,7 @@ const styles = {
         flexDirection: "column"
     }
 };
-
+// Comment testing CI
 class EditShiftModal extends Component {
 
     constructor(props) {
