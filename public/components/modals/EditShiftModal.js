@@ -28,7 +28,7 @@ const styles = {
         flexDirection: "column"
     }
 };
-// Comment testing CI
+
 class EditShiftModal extends Component {
 
     constructor(props) {
