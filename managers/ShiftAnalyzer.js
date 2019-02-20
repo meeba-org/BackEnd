@@ -78,13 +78,37 @@ const mapTasksToShifts = function (shifts) {
     return keys.map((key) => tasksToShiftsMap[key]); // return the users
 };
 
-function processAdditionalInfo(map, settings) {
+let createEmployeeAdditionalInfo = function (entity, settings) {
+    let additionalInfo = createAdditionalInfo(entity, settings);
+
+    // Add Employee specific additional info
+    return additionalInfo;
+};
+
+function processEmployeeAdditionalInfo(map, settings) {
     if (Object.keys(map).length === 0)
         return [];
 
     const additionalInfos = map.map((entity) => {
-        let additionalInfo = createAdditionalInfo(entity, settings);
-        return Object.assign({}, entity, additionalInfo);
+        return createEmployeeAdditionalInfo(entity, settings);
+    });
+
+    return additionalInfos;
+}
+
+let createTaskAdditionalInfo = function (entity, settings) {
+    let additionalInfo = createAdditionalInfo(entity, settings);
+
+    // Add Task specific additional info
+    return additionalInfo;
+};
+
+function processTaskAdditionalInfo(map, settings) {
+    if (Object.keys(map).length === 0)
+        return [];
+
+    const additionalInfos = map.map((entity) => {
+        return createTaskAdditionalInfo(entity, settings);
     });
 
     return additionalInfos;
@@ -399,20 +423,21 @@ function createAdditionalInfo(entity, settings) {
     info.extra175Hours = info.extra175Hours.toFixed(2);
     info.extra200Hours = info.extra200Hours.toFixed(2);
     info.overallSalary = (info.overallHours * entity.hourWage + info.monthlyCommuteCost + info.monthlyExtraPay).toFixed(2);
-    return info;
+
+    return Object.assign({}, entity, info);
 }
 
 const createEmployeeShiftsReports = (shifts, settings) => {
     settings = settings || EmptySettings;
     let map = mapUsersToShifts(shifts);
-    let usersArray = processAdditionalInfo(map, settings);
+    let usersArray = processEmployeeAdditionalInfo(map, settings);
     return usersArray;
 };
 
 const createTasksReport = (shifts, settings) => {
     // settings = settings || EmptySettings;
     let map = mapTasksToShifts(shifts);
-    let mapWithAdditionalInfo = processAdditionalInfo(map, settings);
+    let mapWithAdditionalInfo = processTaskAdditionalInfo(map, settings);
     return mapWithAdditionalInfo;
 };
 
