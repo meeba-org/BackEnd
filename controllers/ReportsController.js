@@ -56,12 +56,7 @@ router.get('/monthly',
 
         return ShiftModel.getShiftsInMonth(year, month, company, userId)
             .then((shifts) => {
-
-                if (shifts) {
-                    return ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
-                }
-                else
-                    return [];
+                return ShiftAnalyzer.createEmployeeReports(shifts, company.settings);
             });
     })
 );
@@ -82,13 +77,7 @@ router.get('/tasks',
 
         return ShiftModel.getShiftsInMonth(year, month, company, userId)
             .then((shifts) => {
-
-                if (shifts) {
-                    return ShiftAnalyzer.createTasksReport(shifts, company.settings);
-                }
-                else
-                    return [];
-
+                return ShiftAnalyzer.createTasksReport(shifts, company.settings);
             });
     })
 );

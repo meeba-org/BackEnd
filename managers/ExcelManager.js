@@ -368,6 +368,19 @@ const addShiftsPerEmployeeSheets = (workbook, company, employees, year, month) =
 
 }
 
+const addShiftsPerTaskSheets = (workbook, company, tasks, year, month) => {
+    // TODO need to implement... shouldn't be so hard...
+    tasks.forEach((task) => {
+        // create a sheet with the first row and column frozen
+        let sheet = addWorksheet(workbook, task.title);
+
+        createShiftsPerEmployeeColumns(sheet, company);
+        createShiftsPerEmployeeContent(sheet, task, company, year, month );
+        createShiftsPerEmployeeTotalSection(sheet, task);
+    });
+
+}
+
 let createWorkbook = function () {
     const workbook = new Excel.Workbook();
     workbook.creator = 'Meeba';
@@ -375,18 +388,26 @@ let createWorkbook = function () {
     return workbook;
 };
 
-const processShiftsToEmployees = function (shifts, company) {
+const processShiftsForEmployees = function (shifts, company) {
     if (!shifts || shifts.length === 0)
         return [];
-    return ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
+    return ShiftAnalyzer.createEmployeeReports(shifts, company.settings);
+};
+
+const processShiftsForTasks = function (shifts, company) {
+    if (!shifts || shifts.length === 0)
+        return [];
+    return ShiftAnalyzer.createTasksReport(shifts, company.settings);
 };
 
 const createExcel = (shifts, year, month, company) => {
     const workbook = createWorkbook();
-    let employees = processShiftsToEmployees(shifts, company);
+    let employees = processShiftsForEmployees(shifts, company);
+    let tasks = processShiftsForTasks(shifts, company);
 
     addSummarySheet(workbook, company, employees);
     addShiftsPerEmployeeSheets(workbook, company, employees, year, month);
+    addShiftsPerTaskSheets(workbook, company, tasks, year, month);
 
     return workbook;
 };

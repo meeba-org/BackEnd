@@ -82,6 +82,10 @@ let createEmployeeAdditionalInfo = function (entity, settings) {
     let additionalInfo = createAdditionalInfo(entity, settings);
 
     // Add Employee specific additional info
+    additionalInfo.transportation = entity.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : entity.transportation;
+    additionalInfo.monthlyCommuteCost = calcMonthlyCommuteCost(entity, settings);
+    additionalInfo.monthlyExtraPay = calcMonthlyExtraPay(entity);
+
     return additionalInfo;
 };
 
@@ -411,9 +415,6 @@ function createAdditionalInfo(entity, settings) {
     });
 
     info.shiftsCount = entity.shifts.length;
-    info.transportation = entity.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : entity.transportation;
-    info.monthlyCommuteCost = calcMonthlyCommuteCost(entity, settings);
-    info.monthlyExtraPay = calcMonthlyExtraPay(entity);
 
     // Rounding results
     info.overallHours = (info.regularHours + info.extra125Hours * 1.25 + info.extra150Hours * 1.5 + info.extra175Hours * 1.75 + info.extra200Hours * 2).toFixed(2);
@@ -427,7 +428,10 @@ function createAdditionalInfo(entity, settings) {
     return Object.assign({}, entity, info);
 }
 
-const createEmployeeShiftsReports = (shifts, settings) => {
+const createEmployeeReports = (shifts, settings) => {
+    if (!shifts)
+        return [];
+
     settings = settings || EmptySettings;
     let map = mapUsersToShifts(shifts);
     let usersArray = processEmployeeAdditionalInfo(map, settings);
@@ -435,6 +439,9 @@ const createEmployeeShiftsReports = (shifts, settings) => {
 };
 
 const createTasksReport = (shifts, settings) => {
+    if (!shifts)
+        return [];
+
     // settings = settings || EmptySettings;
     let map = mapTasksToShifts(shifts);
     let mapWithAdditionalInfo = processTaskAdditionalInfo(map, settings);
@@ -442,7 +449,7 @@ const createTasksReport = (shifts, settings) => {
 };
 
 module.exports = {
-    createEmployeeShiftsReports,
+    createEmployeeReports,
     createTasksReport,
     analyzeShiftHours,
     REGULAR_SHIFT_LENGTH,
