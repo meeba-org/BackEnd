@@ -7,12 +7,12 @@ import styles from '../styles/HoursBar.scss';
 class TaskHoursBar extends React.Component {
 
     render() {
-        let {totalHours, displayDetails} = this.props;
+        let {overallHours, displayDetails} = this.props;
         const MAX_HOURS_PER_MONTH = 300;
 
-        const factor = totalHours / MAX_HOURS_PER_MONTH;
+        const factor = overallHours / MAX_HOURS_PER_MONTH;
         let totalHoursPer = Math.floor(100) * factor ;
-        let totalDisplay = prepareHourToDisplay(totalHours);
+        let totalDisplay = prepareHourToDisplay(overallHours);
         return (
             <div styleName="stacked-bar-graph">
                 <span style={{width: totalHoursPer + '%'}} styleName="regular-hours-bar" />
@@ -26,7 +26,7 @@ class TaskHoursBar extends React.Component {
 }
 
 TaskHoursBar.propTypes = {
-    totalHours: PropTypes.string.isRequired,
+    overallHours: PropTypes.string.isRequired,
     displayDetails: PropTypes.bool.isRequired,
 };
 

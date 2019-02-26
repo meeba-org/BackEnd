@@ -8,7 +8,8 @@ import CSSModules from "react-css-modules";
 import FieldArray from "redux-form/es/FieldArray";
 import {ReportModes} from "../../helpers/utils";
 import styles from "../../styles/MonthlyReportLine.scss";
-import TaskHoursBar from "../TaskHoursBar";
+import HoursBar from "../HoursBar";
+import HoursSummary from "./HoursSummary";
 import ShiftsList from "./ShiftsList";
 
 
@@ -36,11 +37,11 @@ class MonthlyReportLine extends React.PureComponent {
                 <div styleName="monthly-report-header" onClick={() => onToggle(index)}>
                     <IconButton className={styles["toggle-button"]} color="primary" >{toggleButton}</IconButton>
                     <div styleName="name">{input.value.title}</div>
-                    <TaskHoursBar {...input.value} displayDetails={this.state.hover}/>
+                    <HoursBar {...input.value} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&
                 <div styleName="monthly-report-body">
-                        {/*<HoursSummary data={input.value}/>*/}
+                        <HoursSummary data={input.value}/>
 
                         <FieldArray
                             name={`${input.name}.shifts`}
