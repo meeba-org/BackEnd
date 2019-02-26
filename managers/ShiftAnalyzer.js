@@ -85,6 +85,7 @@ let createEmployeeAdditionalInfo = function (entity, settings) {
     additionalInfo.transportation = entity.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : entity.transportation;
     additionalInfo.monthlyCommuteCost = calcMonthlyCommuteCost(entity, settings);
     additionalInfo.monthlyExtraPay = calcMonthlyExtraPay(entity);
+    additionalInfo.overallSalary = (additionalInfo.overallHours * entity.hourWage + additionalInfo.monthlyCommuteCost + additionalInfo.monthlyExtraPay).toFixed(2);
 
     return additionalInfo;
 };
@@ -423,7 +424,6 @@ function createAdditionalInfo(entity, settings) {
     info.extra150Hours = info.extra150Hours.toFixed(2);
     info.extra175Hours = info.extra175Hours.toFixed(2);
     info.extra200Hours = info.extra200Hours.toFixed(2);
-    info.overallSalary = (info.overallHours * entity.hourWage + info.monthlyCommuteCost + info.monthlyExtraPay).toFixed(2);
 
     return Object.assign({}, entity, info);
 }
