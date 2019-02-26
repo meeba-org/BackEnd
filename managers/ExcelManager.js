@@ -66,7 +66,7 @@ function createSummaryColumns(sheet, company) {
 
 const addSummarySheet = (workbook, company, employees) => {
     // create a sheet with the first row and column frozen
-    let sheet = addWorksheet(workbook, "סיכום", "black");
+    let sheet = addWorksheet(workbook, "סיכום");
 
     createSummaryColumns(sheet, company);
     createSummaryContent(sheet, employees);
@@ -392,22 +392,22 @@ const calcClockOutTime = (shift) => {
 
 let addWorksheet = function (workbook, title, color) {
     return workbook.addWorksheet(title, {
+        properties: {
+            tabColor:{argb: color}
+        },
         views: [{
             state: 'frozen',
             xSplit: 1,
             ySplit: 1,
             rightToLeft: true
-        }],
-        properties: {
-            tabColor:{argb: color}
-        }
+        }]
     });
 };
 
 const addShiftsPerEmployeeSheets = (workbook, company, employees, year, month) => {
     employees.forEach((employee) => {
         // create a sheet with the first row and column frozen
-        let sheet = addWorksheet(workbook, employee.fullName, "green");
+        let sheet = addWorksheet(workbook, employee.fullName, "54A759");
 
         createShiftsPerEmployeeColumns(sheet, company);
         createShiftsPerEmployeesContent(sheet, employee, company, year, month );
@@ -419,7 +419,7 @@ const addShiftsPerEmployeeSheets = (workbook, company, employees, year, month) =
 const addShiftsPerTaskSheets = (workbook, company, tasks, year, month) => {
     tasks.forEach((task) => {
         // create a sheet with the first row and column frozen
-        let sheet = addWorksheet(workbook, task.title, "orange");
+        let sheet = addWorksheet(workbook, task.title, "D49B6A");
 
         createShiftsPerTaskColumns(sheet, company);
         createShiftsPerTasksContent(sheet, task, company, year, month );
