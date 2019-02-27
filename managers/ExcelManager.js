@@ -259,7 +259,7 @@ function addTotalTransportation(employee, sheet) {
     setRowBold(transportationRow);
 }
 
-function addtotalExtraPay(employee, sheet) {
+function addTotalExtraPay(employee, sheet) {
     let extraPayData = {
         clockOutTime: 'תוספות:',
         shiftLength: employee.monthlyExtraPay,
@@ -279,14 +279,14 @@ function addTotalSalary(entity, sheet) {
 }
 
 const createTasksTotalSection = (sheet, employee) => {
-    createBasicTotalSection(sheet, employee, false, false)
+    createBasicTotalSection(sheet, employee, false, false, false)
 };
 
 const createEmployeesTotalSection = (sheet, employee) => {
-    createBasicTotalSection(sheet, employee, true, true)
+    createBasicTotalSection(sheet, employee, true, true, true)
 };
 
-const createBasicTotalSection = (sheet, employee, shouldAddTransportation, shouldAddExtraPay) => {
+const createBasicTotalSection = (sheet, employee, shouldAddTransportation, shouldAddExtraPay, shouldAddOverallSalary) => {
     let totalRowData = {
         clockOutTime: 'סה"כ:',
         shiftLength: employee.shiftLength || "",
@@ -304,9 +304,10 @@ const createBasicTotalSection = (sheet, employee, shouldAddTransportation, shoul
         addTotalTransportation(employee, sheet);
 
     if (shouldAddExtraPay)
-        addtotalExtraPay(employee, sheet);
+        addTotalExtraPay(employee, sheet);
 
-    addTotalSalary(employee, sheet);
+    if (shouldAddOverallSalary)
+        addTotalSalary(employee, sheet);
 };
 
 function markRowAsHoliday(sheet, addedRow) {
