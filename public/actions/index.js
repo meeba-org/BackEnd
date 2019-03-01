@@ -4,6 +4,7 @@ export * from "./companyActions";
 export * from "./shiftsActions";
 export * from "./usersActions";
 export * from "./loginLogoutActions";
+export * from "./tasksActions";
 
 export const hideDeleteEntityModal = () => ({
     type: 'HIDE_MODAL',
