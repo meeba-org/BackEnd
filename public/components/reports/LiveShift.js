@@ -9,7 +9,9 @@ import Edit from '@material-ui/icons/Edit';
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import TimePicker from "material-ui-pickers/TimePicker";
+import ExtraPay from "./ExtraPay";
 import Note from "./Note";
+import TaskIndicator from "./TaskIndicator";
 import Warning from "./Warning";
 import BusCost from "./BusCost";
 import Location from "./Location";
@@ -53,6 +55,8 @@ const LiveShift = (props) => {
             {/*<CarCost data={shift.commuteCost} onClick={showShiftDialog}/>*/}
             <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
             <Location location={shift.location} onClick={showLocationModal} />
+            <ExtraPay extraPay={shift.extraPay} onClick={showShiftDialog}/>
+            <TaskIndicator task={shift.task} onClick={showShiftDialog}/>
 
             {hover && isDesktop &&
             <div>
