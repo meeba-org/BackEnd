@@ -167,10 +167,13 @@ class User extends Component {
                         </div>
 
                         <div className={styles["row"]}>
-                            <FormControl className={classes.formControl}>
+                            <FormControl >
                                 <InputLabel htmlFor="name-disabled">אורך הפסקה (דק')</InputLabel>
                                 <Input id="break-length" value={user.company.settings.breakLength} onChange={(e) => this.handleCompanySettingsChange("breakLength", e.target.value)} />
                             </FormControl>
+                            <div style={{alignSelf: "flex-end"}}>
+                                <Link to="/faq/break" className={classes.link} target="_blank">מה זה?</Link>
+                            </div>
                         </div>
 
                         <div className={styles["row"]}>
