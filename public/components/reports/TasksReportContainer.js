@@ -7,6 +7,7 @@ import {createShift, showLocationModal, updateShift} from "../../actions";
 import {fetchTasksReport, generateExcelReport} from "../../actions/reportsActions";
 import {showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
+import * as selectors from "../../selectors";
 import MonthlyReport from "./MonthlyReport";
 import TaskReportLine from "./TaskReportLine";
 
@@ -80,6 +81,7 @@ function mapStateToProps(state) {
         initialValues: {
             tasksReports: state.reports.tasksReports
         },
+        userRole: selectors.getUserRole(state),
         isLoading: state.loader.isLoading
     };
 }

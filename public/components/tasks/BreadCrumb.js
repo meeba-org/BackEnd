@@ -7,7 +7,7 @@ import styles from "../../styles/BreadCrumb.scss";
 const BreadCrumb = ({data, onSelectTask}) => {
     return (
         <div styleName="breadcrumb">
-            <HomeIcon styleName="item-text" onClick={() => onSelectTask()}/>
+            <HomeIcon styleName="item-text" onClick={() => onSelectTask(null)}/>
             <div styleName="items">
                 {data && data.map((task, index) => (
                     <div key={index} styleName="item">
