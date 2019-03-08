@@ -154,19 +154,9 @@ function shouldAddTasksData(company, shift) {
 }
 
 function addCommuteData(company, row, shift) {
-    // let kmPay = company.settings.kmPay;
-    // let hourCommutePay = company.settings.hourCommutePay;
-
     row = {
         ...row,
         publicTransportation: shift.commuteCost.publicTransportation,
-        // commuteHours: shift.commuteCost.commuteHours,
-        // kmDriving: shift.commuteCost.kmDriving,
-        // parkingCost: shift.commuteCost.parkingCost,
-        // commuteCost: shift.commuteCost.publicTransportation
-            // shift.commuteCost.commuteHours * hourCommutePay +
-            // shift.commuteCost.kmDriving * kmPay +
-            // shift.commuteCost.parkingCost
     };
 
     return row;

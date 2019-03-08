@@ -99,13 +99,6 @@ export const prepareHourToDisplay = (hoursStr) => {
     return `${hourStr}:${minuteStr}`;
 };
 
-export const isCarCostEmpty = (commuteCost) => {
-    return !commuteCost
-        || (isCommuteDataEmpty(commuteCost.commuteHours) &&
-            isCommuteDataEmpty(commuteCost.kmDriving) &&
-            isCommuteDataEmpty(commuteCost.parkingCost));
-};
-
 export const isBusCostEmpty = (commuteCost) => {
     return !commuteCost
         || (isCommuteDataEmpty(commuteCost.publicTransportation));
