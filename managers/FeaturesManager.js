@@ -4,7 +4,7 @@ const Feature = {
     Tasks: "Tasks"
 };
 
-const GlobalFeatures = [Feature.CommuteModule];
+const GlobalFeatures = [Feature.CommuteModule, Feature.Tasks];
 const PremiumFeatures = [Feature.CommuteModule];
 
 const hasFeature = (company, feature) => {
