@@ -1,8 +1,8 @@
 import React, {Component, Fragment} from 'react';
-import FAQHeader from "./FAQHeader";
 import CSSModules from "react-css-modules";
 import styles from "../../styles/FAQContainer.scss";
 import FAQContent from "./FAQContent";
+import FAQHeader from "./FAQHeader";
 
 class FAQContainer extends Component {
 
@@ -80,7 +80,16 @@ class FAQContainer extends Component {
 לכל משימה ותת משימה שתגדירו יהיה טאב נוסף באקסל עם כל המשמרות ששויכו אליה.  
 עובד יכול לשייך את המשמרת שלו לאירוע / משימה.  
 
-דוגמאות כיצד יכול להיראות עץ המשימות שלכם:  
+### כיצד אני מאפשר משימות?
+הגדרות --> משימות - שים לב שכעת התווסף בתוך הגדרות טאב חדש "משימות"   
+--> היכנס והגדר את המשימות
+
+### היכן אני רואה דוח לפי משימות?
+לאחר אפשור משימות - מצד ימין נוסף לתפריט "דוח משימות"    
+
+
+### דוגמאות 
+כיצד יכול להיראות עץ המשימות שלכם:  
 #### אולם אירועים:
  - בר מצווה משה כהן 
  - חתונה יעל וגל
