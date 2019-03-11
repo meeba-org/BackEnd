@@ -1,28 +1,29 @@
 'use strict';
-import React from "react";
 import Divider from '@material-ui/core/Divider';
+import SwipeableDrawer from "@material-ui/core/es/SwipeableDrawer/SwipeableDrawer";
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import {withRouter} from 'react-router';
-import PropTypes from 'prop-types';
-import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn';
-import Assessment from '@material-ui/icons/Assessment';
-import DateRange from '@material-ui/icons/DateRange';
-import PermContactCalendar from '@material-ui/icons/PermContactCalendar';
-import SettingsApplications from '@material-ui/icons/SettingsApplications';
-import {IfAnyGranted} from "react-authorization";
-import * as ERoles from "../helpers/ERoles";
-import classNames from 'classnames';
-import CSSModulesStyles from '../styles/SideBar.scss';
-import CSSModules from "react-css-modules";
 import withStyles from '@material-ui/core/styles/withStyles';
 import withTheme from '@material-ui/core/styles/withTheme';
-import SwipeableDrawer from "@material-ui/core/es/SwipeableDrawer/SwipeableDrawer";
+import Assessment from '@material-ui/icons/Assessment';
+import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import DateRange from '@material-ui/icons/DateRange';
+import ListIcon from '@material-ui/icons/List';
+import PermContactCalendar from '@material-ui/icons/PermContactCalendar';
+import SettingsApplications from '@material-ui/icons/SettingsApplications';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from "react";
+import {IfAnyGranted} from "react-authorization";
+import CSSModules from "react-css-modules";
+import {withRouter} from 'react-router';
+import * as ERoles from "../helpers/ERoles";
+import CSSModulesStyles from '../styles/SideBar.scss';
 
 const drawerWidth = 200;
 
@@ -56,7 +57,7 @@ class SideBar extends React.Component {
     constructor(props) {
         super(props);
 
-        const {router} = this.props;
+        const {router} = props;
 
         this.state = {
             items: [
@@ -86,7 +87,7 @@ class SideBar extends React.Component {
                 },
                 {
                     text: "הגדרות",
-                    url: "/dashboard/user",
+                    url: "/dashboard/settings",
                     allowedRoles: [ERoles.COMPANY_MANAGER],
                     icon: <SettingsApplications/>
                 },
@@ -95,9 +96,31 @@ class SideBar extends React.Component {
 
         this.state.items.forEach(item => {
             // Setting the selected menu according the url
-            if (item.url == router.location.pathname)
+            if (item.url === router.location.pathname)
                 item.selected = true;
         });
+    }
+
+    componentDidUpdate(prevProps) {
+        const {isTasksFeatureEnable} = this.props;
+        const {items} = this.state;
+
+        let modifiedItems = [...items];
+
+        if (isTasksFeatureEnable !== prevProps.isTasksFeatureEnable) {
+            if (isTasksFeatureEnable) {
+                // Insert task item in the 4th place
+                modifiedItems.splice(3, 0, {
+                    text: 'דו"ח משימות',
+                    url: "/dashboard/report/tasks",
+                    allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
+                    icon: <ListIcon/>
+                });
+            } else {
+                modifiedItems.splice(3, 1);
+            }
+            this.setState({items: modifiedItems});
+        }
     }
 
     updateRoute(item, index) {
@@ -171,6 +194,7 @@ SideBar.propTypes = {
     userRole: PropTypes.string,
     classes: PropTypes.object,
     isDesktop: PropTypes.bool.isRequired,
+    isTasksFeatureEnable: PropTypes.bool.isRequired,
     open: PropTypes.bool.isRequired,
     toggleSideBar: PropTypes.func.isRequired,
 };

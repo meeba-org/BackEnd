@@ -8,6 +8,10 @@ export function ReportsReducer(state = initialState, action) {
             return {
                 employeesMonthlyReports: action.payload
             };
+        case types.FETCH_TASKS_REPORT_SUCCESS:
+            return {
+                tasksReports: action.payload
+            };
         default:
             return state;
     }

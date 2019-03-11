@@ -1,21 +1,21 @@
-import React, {Component, Fragment} from 'react';
-import PropTypes from 'prop-types';
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
-import TextField from "@material-ui/core/TextField";
-import Tooltip from "@material-ui/core/Tooltip";
-import CSSModules from "react-css-modules";
-import styles from '../../styles/User.scss';
-import NoData from "../NoData";
-import Grid from "@material-ui/core/Grid";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import withStyles from "@material-ui/core/styles/withStyles";
 import FormControl from "@material-ui/core/FormControl/FormControl";
-import InputLabel from "@material-ui/core/InputLabel/InputLabel";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import InputLabel from "@material-ui/core/InputLabel/InputLabel";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Switch from "@material-ui/core/Switch";
+import TextField from "@material-ui/core/TextField";
+import Tooltip from "@material-ui/core/Tooltip";
+import PropTypes from 'prop-types';
+import React, {Component, Fragment} from 'react';
+import CSSModules from "react-css-modules";
 import {Link} from "react-router";
+import styles from '../../styles/User.scss';
+import NoData from "../NoData";
 
 const styles1 = () => ({
     switch: {
@@ -167,10 +167,13 @@ class User extends Component {
                         </div>
 
                         <div className={styles["row"]}>
-                            <FormControl className={classes.formControl} disabled>
-                                <InputLabel htmlFor="name-disabled">אורך הפסקה (דק') - בקרוב...</InputLabel>
-                                <Input id="break-length" value={0} onChange={() => {}} />
+                            <FormControl >
+                                <InputLabel htmlFor="name-disabled">אורך הפסקה (דק')</InputLabel>
+                                <Input id="break-length" value={user.company.settings.breakLength} onChange={(e) => this.handleCompanySettingsChange("breakLength", e.target.value)} />
                             </FormControl>
+                            <div style={{alignSelf: "flex-end"}}>
+                                <Link to="/faq/break" className={classes.link} target="_blank">מה זה?</Link>
+                            </div>
                         </div>
 
                         <div className={styles["row"]}>
@@ -190,22 +193,9 @@ class User extends Component {
                             <div className={styles["whatisit"]}>
                                 <Link to="/faq/commute" className={classes.link} target="_blank">מה זה?</Link>
                             </div>
+
+
                         </div>
-                        {/*<div className={styles["row"]}>*/}
-                            {/*<FormControlLabel*/}
-                                {/*classes={{root: classes.switch}}*/}
-                                {/*control={*/}
-                                    {/*<Switch*/}
-                                        {/*checked={user.company.settings.enablePrivateCarCommute}*/}
-                                        {/*onChange={(e) => this.handleCompanySettingsChange("enablePrivateCarCommute", e.target.checked)}*/}
-                                        {/*value={user.company.settings.enablePrivateCarCommute}*/}
-                                        {/*color="primary"*/}
-                                    {/*/>*/}
-                                {/*}*/}
-                                {/*label={<div>הזנת החזר נסיעות רכב פרטי <a>מה זה</a></div>}*/}
-                                {/*disabled={!isCommuteFeatureEnable}*/}
-                            {/*/>*/}
-                        {/*</div>*/}
 
                         <div className={styles["row"]}>
                             <FormControlLabel
@@ -216,12 +206,16 @@ class User extends Component {
                                         onChange={(e) => this.handleCompanySettingsChange("enableTasks", e.target.checked)}
                                         value={user.company.settings.enableTasks}
                                         color="primary"
-                                        disabled
                                     />
                                 }
-                                label={<div>משימות - בקרוב...</div>}
+                                label={<div>משימות</div>}
                             />
+                            <div className={styles["whatisit"]}>
+                                <Link to="/faq/tasks" className={classes.link} target="_blank">מה זה?</Link>
+                            </div>
                         </div>
+
+
                     </div>
                 </CardContent>
 

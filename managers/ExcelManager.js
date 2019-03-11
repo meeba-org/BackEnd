@@ -1,11 +1,11 @@
-const {FeatureName, isFeatureEnable} = require("./FeaturesManager");
-
+const {Feature, isFeatureEnable} = require("./FeaturesManager");
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 const Excel = require('exceljs');
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
 const isHoliday = require("./HolidayAnalyzer").isHoliday;
+const shouldHaveBreak = require("./ShiftAnalyzer").shouldHaveBreak;
 const RowBorderStyle = {
     top: { style: "hair" },
     left: { style: "medium" },
@@ -97,11 +97,37 @@ let createSummaryContent = function (sheet, employees) {
 };
 
 function createShiftsPerEmployeeColumns(sheet, company) {
+    createBasicShiftsColumns(sheet, company)
+
+    if (isFeatureEnable(company, Feature.Tasks)) {
+        sheet.columns = sheet.columns.concat([
+            {header: 'משימה', key: 'task', width: 10, style: {alignment: {horizontal: 'center'}}},
+        ]);
+    }
+
+    sheet.columns = sheet.columns.concat([
+        {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: 'הערות', key: 'comment', width: 30, style: {alignment: {horizontal: 'right'}}},
+    ]);
+}
+
+function createShiftsPerTaskColumns(sheet, company) {
+    createBasicShiftsColumns(sheet, company)
+
+    sheet.columns = sheet.columns.concat([
+        {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שם עובד', key: 'userName', width: 20, style: {alignment: {horizontal: 'right'}}},
+        {header: 'הערות', key: 'comment', width: 30, style: {alignment: {horizontal: 'right'}}},
+    ]);
+}
+
+function createBasicShiftsColumns(sheet, company) {
     sheet.columns = [
         {header: 'תאריך', key: 'date', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'יום', key: 'dayInWeek', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'שעת התחלה', key: 'clockInTime', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'שעת סיום', key: 'clockOutTime', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'הפסקה', key: 'breakLength', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'שעות (עשרוני)', key: 'shiftLength', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: '100%', key: 'regularHours', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: '125%', key: 'extra125Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
@@ -110,48 +136,56 @@ function createShiftsPerEmployeeColumns(sheet, company) {
         {header: '200%', key: 'extra200Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
     ];
 
-    if (isFeatureEnable(company, FeatureName.CommuteModule)) {
+    if (isFeatureEnable(company, Feature.CommuteModule)) {
         sheet.columns = sheet.columns.concat([
             {header: 'החזר נסיעות', key: 'publicTransportation', width: 10, style: {alignment: {horizontal: 'center'}}},
-            // {header: 'שעות נסיעה', key: 'commuteHours', width: 10, style: {alignment: {horizontal: 'center'}}},
-            // {header: 'ק"מ', key: 'kmDriving', width: 10, style: {alignment: {horizontal: 'center'}}},
-            // {header: 'חניה', key: 'parkingCost', width: 10, style: {alignment: {horizontal: 'center'}}},
-            // {header: 'נסיעות יומי', key: 'commuteCost', width: 10, style: {alignment: {horizontal: 'center'}}},
         ]);
     }
 
-    sheet.columns = sheet.columns.concat([
-        {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
-        {header: 'הערות', key: 'comment', width: 30, style: {alignment: {horizontal: 'right'}}},
-    ]);
-
-    setEmployeeHeaderColor(sheet, company);
+    setEmployeeHeaderColor(sheet);
 }
 
 function shouldAddCommuteData(company, shift) {
-    return isFeatureEnable(company, FeatureName.CommuteModule) && !!shift.commuteCost;
+    return isFeatureEnable(company, Feature.CommuteModule) && !!shift.commuteCost;
+}
+
+function shouldAddTasksData(company, shift) {
+    return isFeatureEnable(company, Feature.Tasks) && !!shift.task;
 }
 
 function addCommuteData(company, row, shift) {
-    // let kmPay = company.settings.kmPay;
-    // let hourCommutePay = company.settings.hourCommutePay;
-
     row = {
         ...row,
         publicTransportation: shift.commuteCost.publicTransportation,
-        // commuteHours: shift.commuteCost.commuteHours,
-        // kmDriving: shift.commuteCost.kmDriving,
-        // parkingCost: shift.commuteCost.parkingCost,
-        // commuteCost: shift.commuteCost.publicTransportation
-            // shift.commuteCost.commuteHours * hourCommutePay +
-            // shift.commuteCost.kmDriving * kmPay +
-            // shift.commuteCost.parkingCost
     };
 
     return row;
 }
 
-let createShiftsPerEmployeeContent = function (sheet, employee, company, year, month ) {
+function addTasksData(company, row, shift) {
+    row = {
+        ...row,
+        task: formatTask(shift.task),
+    };
+
+    return row;
+}
+
+function formatTask(task) {
+    return task.title;
+}
+
+const createShiftsPerTasksContent = function (sheet, employee, company, year, month ) {
+    createBasicShiftsContent(sheet, employee, company, year, month );
+
+};
+
+const createShiftsPerEmployeesContent = function (sheet, employee, company, year, month ) {
+    createBasicShiftsContent(sheet, employee, company, year, month );
+
+};
+
+const createBasicShiftsContent = function (sheet, employee, company, year, month ) {
     if (!employee.shifts || employee.shifts.length === 0)
         return;
 
@@ -181,6 +215,7 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
                 dayInWeek: i === 0 ? row.dayInWeek : "",
                 clockInTime: calcClockInTime(shift),
                 clockOutTime: calcClockOutTime(shift),
+                breakLength: hoursAnalysis.breakLength,
                 shiftLength: hoursAnalysis.shiftLength || "",
                 regularHours: hoursAnalysis.regularHours || "",
                 extra125Hours: hoursAnalysis.extra125Hours || "",
@@ -188,10 +223,15 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
                 extra175Hours: hoursAnalysis.extra175Hours || "",
                 extra200Hours: hoursAnalysis.extra200Hours || "",
                 monthlyExtraPay: shift.extraPay || "",
+                userName: shift.user.fullName
             };
 
             if (shouldAddCommuteData(company, shift)) {
                 row = addCommuteData(company, row, shift);
+            }
+
+            if (shouldAddTasksData(company, shift)) {
+                row = addTasksData(company, row, shift);
             }
 
             addDayRow(sheet, row, shift.clockInTime);
@@ -199,7 +239,44 @@ let createShiftsPerEmployeeContent = function (sheet, employee, company, year, m
     }
 };
 
-const createShiftsPerEmployeeTotalSection = (sheet, employee) => {
+function addTotalTransportation(employee, sheet) {
+    let transportationData = {
+        clockOutTime: 'נסיעות:',
+        shiftLength: employee.monthlyCommuteCost,
+    };
+
+    let transportationRow = sheet.addRow(transportationData);
+    setRowBold(transportationRow);
+}
+
+function addTotalExtraPay(employee, sheet) {
+    let extraPayData = {
+        clockOutTime: 'תוספות:',
+        shiftLength: employee.monthlyExtraPay,
+    };
+
+    let extraPayDataRow = sheet.addRow(extraPayData);
+    setRowBold(extraPayDataRow);
+}
+
+function addTotalSalary(entity, sheet) {
+    let salaryData = {
+        clockOutTime: 'שכר:',
+        shiftLength: entity.overallSalary,
+    };
+    let salaryRow = sheet.addRow(salaryData);
+    setRowBold(salaryRow);
+}
+
+const createTasksTotalSection = (sheet, employee) => {
+    createBasicTotalSection(sheet, employee, false, false, false)
+};
+
+const createEmployeesTotalSection = (sheet, employee) => {
+    createBasicTotalSection(sheet, employee, true, true, true)
+};
+
+const createBasicTotalSection = (sheet, employee, shouldAddTransportation, shouldAddExtraPay, shouldAddOverallSalary) => {
     let totalRowData = {
         clockOutTime: 'סה"כ:',
         shiftLength: employee.shiftLength || "",
@@ -208,31 +285,19 @@ const createShiftsPerEmployeeTotalSection = (sheet, employee) => {
         extra150Hours: employee.extra150Hours || "",
         extra175Hours: employee.extra175Hours || "",
         extra200Hours: employee.extra200Hours || "",
-    }
+    };
 
     let totalRow = sheet.addRow(totalRowData);
     setRowBold(totalRow);
 
-    let transportationData = {
-        clockOutTime: 'נסיעות:',
-        shiftLength: employee.monthlyCommuteCost ,
-    }
-    let transportationRow = sheet.addRow(transportationData);
-    setRowBold(transportationRow);
+    if (shouldAddTransportation)
+        addTotalTransportation(employee, sheet);
 
-    let extraPayData = {
-        clockOutTime: 'תוספות:',
-        shiftLength: employee.monthlyExtraPay ,
-    }
-    let extraPayDataRow = sheet.addRow(extraPayData);
-    setRowBold(extraPayDataRow);
+    if (shouldAddExtraPay)
+        addTotalExtraPay(employee, sheet);
 
-    let salaryData = {
-        clockOutTime: 'שכר:',
-        shiftLength: employee.overallSalary ,
-    }
-    let salaryRow = sheet.addRow(salaryData);
-    setRowBold(salaryRow);
+    if (shouldAddOverallSalary)
+        addTotalSalary(employee, sheet);
 };
 
 function markRowAsHoliday(sheet, addedRow) {
@@ -316,8 +381,11 @@ const calcClockOutTime = (shift) => {
     return moment(shift.clockOutTime).format("HH:mm");
 };
 
-let addWorksheet = function (workbook, title) {
+let addWorksheet = function (workbook, title, color) {
     return workbook.addWorksheet(title, {
+        properties: {
+            tabColor:{argb: color}
+        },
         views: [{
             state: 'frozen',
             xSplit: 1,
@@ -330,11 +398,23 @@ let addWorksheet = function (workbook, title) {
 const addShiftsPerEmployeeSheets = (workbook, company, employees, year, month) => {
     employees.forEach((employee) => {
         // create a sheet with the first row and column frozen
-        let sheet = addWorksheet(workbook, employee.fullName);
+        let sheet = addWorksheet(workbook, employee.fullName, "54A759");
 
         createShiftsPerEmployeeColumns(sheet, company);
-        createShiftsPerEmployeeContent(sheet, employee, company, year, month );
-        createShiftsPerEmployeeTotalSection(sheet, employee);
+        createShiftsPerEmployeesContent(sheet, employee, company, year, month );
+        createEmployeesTotalSection(sheet, employee);
+    });
+
+}
+
+const addShiftsPerTaskSheets = (workbook, company, tasks, year, month) => {
+    tasks.forEach((task) => {
+        // create a sheet with the first row and column frozen
+        let sheet = addWorksheet(workbook, task.title, "D49B6A");
+
+        createShiftsPerTaskColumns(sheet, company);
+        createShiftsPerTasksContent(sheet, task, company, year, month );
+        createTasksTotalSection(sheet, task);
     });
 
 }
@@ -346,18 +426,26 @@ let createWorkbook = function () {
     return workbook;
 };
 
-const processShiftsToEmployees = function (shifts, company) {
+const processShiftsForEmployees = function (shifts, company) {
     if (!shifts || shifts.length === 0)
         return [];
-    return ShiftAnalyzer.createEmployeeShiftsReports(shifts, company.settings);
+    return ShiftAnalyzer.createEmployeeReports(shifts, company.settings);
+};
+
+const processShiftsForTasks = function (shifts, company) {
+    if (!shifts || shifts.length === 0)
+        return [];
+    return ShiftAnalyzer.createTasksReport(shifts, company.settings);
 };
 
 const createExcel = (shifts, year, month, company) => {
     const workbook = createWorkbook();
-    let employees = processShiftsToEmployees(shifts, company);
+    let employees = processShiftsForEmployees(shifts, company);
+    let tasks = processShiftsForTasks(shifts, company);
 
     addSummarySheet(workbook, company, employees);
     addShiftsPerEmployeeSheets(workbook, company, employees, year, month);
+    addShiftsPerTaskSheets(workbook, company, tasks, year, month);
 
     return workbook;
 };

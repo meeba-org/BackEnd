@@ -35,7 +35,8 @@ const createMockedHolidayShift = (overallLength, holidayHoursLength) => {
 const settings = {
     eveningHolidayStartHour: 18,
     holidayEndHour: 19,
-    holidayShiftLength: 9
+    holidayShiftLength: 9,
+    breakLength: 0
 };
 
 describe('ShiftAnalyzer', function () {

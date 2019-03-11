@@ -1,3 +1,6 @@
+import * as FeaturesManager from "../managers/FeaturesManager";
+import {Feature} from "../managers/FeaturesManager";
+
 export const getCompany = (state) => {
     return (!state.user) ? null : state.user.company;
 };
@@ -25,9 +28,17 @@ export const isDevEnv = (state) => {
 
 export const isFeatureEnable = (state, feature) => {
     let company = getCompany(state);
-    return (!company) ? false : company.features.includes(feature);
+    return (!company) ? false : FeaturesManager.isFeatureEnable(company, feature);
 };
 
 export const getCompanySettings = (state) => {
     return getCompany(state).settings;
+};
+
+export const isCommuteFeatureEnable = (state) => {
+    return isFeatureEnable(state, Feature.CommuteModule) && getCompanySettings(state).enableCommute;
+};
+
+export const isTasksFeatureEnable = (state) => {
+    return isFeatureEnable(state, Feature.Tasks) && getCompanySettings(state).enableTasks;
 };

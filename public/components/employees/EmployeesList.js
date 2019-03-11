@@ -21,7 +21,7 @@ import Fade from "../Fade";
 import EmployeeContainer from "./EmployeeContainer";
 import {isIsraeliIdValid} from "../../helpers/utils";
 
-class EmployeesList extends React.Component {
+class EmployeesList extends React.PureComponent {
 
     constructor(props) {
         super(props);

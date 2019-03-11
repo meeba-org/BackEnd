@@ -20,15 +20,14 @@ const ShiftSchema = mongoose.Schema({
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
     commuteCost: {
         publicTransportation: {type: Number, default: 0, required: true},
-        commuteHours: {type: Number, default: 0, required: true},
-        kmDriving: {type: Number, default: 0, required: true},
-        parkingCost: {type: Number, default: 0, required: true},
     },
     extraPay: {type: Number, default: 0, required: true},
     location: {
         latitude: {type: Number},
         longitude: {type: Number}
-    }
+    },
+    task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
+    breakLength: {type: Number, default: 0}
 });
 
 const Shift = mongoose.model('Shift', ShiftSchema);
@@ -58,7 +57,7 @@ const updateShift = (shift) => {
     newShift._id = shift._id;
 
     newShift = newShift.toObject();
-    return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true}).populate('user').exec();
+    return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true}).populate('user task').exec();
 };
 
 const deleteShift = (id) => {
@@ -77,7 +76,7 @@ const getShiftsBetween = (company, startDate, endDate, userId) => {
     if (userId)
         condition.user = userId;
 
-    return Shift.find(condition).populate('user').lean()
+    return Shift.find(condition).populate('user task').lean()
         .then((shifts) => shifts.sort((s1, s2) => s1.clockInTime - s2.clockInTime));
 };
 

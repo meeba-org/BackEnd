@@ -4,11 +4,22 @@ export * from "./companyActions";
 export * from "./shiftsActions";
 export * from "./usersActions";
 export * from "./loginLogoutActions";
+export * from "./tasksActions";
 
 export const hideDeleteEntityModal = () => ({
     type: 'HIDE_MODAL',
     payload : {
         modalType: 'DELETE_ENTITY',
+        modalProps: {
+            open: false
+        }
+    }
+});
+
+export const hideTaskModal = () => ({
+    type: 'HIDE_MODAL',
+    payload : {
+        modalType: 'TASK_MODAL',
         modalProps: {
             open: false
         }

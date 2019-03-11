@@ -1,8 +1,8 @@
 import React, {Component, Fragment} from 'react';
-import FAQHeader from "./FAQHeader";
 import CSSModules from "react-css-modules";
 import styles from "../../styles/FAQContainer.scss";
 import FAQContent from "./FAQContent";
+import FAQHeader from "./FAQHeader";
 
 class FAQContainer extends Component {
 
@@ -23,7 +23,7 @@ class FAQContainer extends Component {
                     q: "איך זה עובד?",
                     a: `**המנהל** עובד מול [האתר](https://www.meeba.org.il), מזין עובדים, מעדכן שעות ועוד.
 
-**העובד** מוריד את [האפליקציה](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) לסלולרי ומדווח כניסה ויציאה.`
+**העובד** מוריד את האפליקציה ([אנדרואיד](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) / [אייפון](https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8)) לסלולרי ומדווח כניסה ויציאה.`
                 },
                 {
                     q: "כמה זה עולה?",
@@ -46,7 +46,7 @@ class FAQContainer extends Component {
                     a: `1. להיכנס ולצאת ממשמרת
 2. לראות פרטי משמרות עבור חודש מסוים
 
-איפה הוא עושה את כל זה? בסלולרי: [אנדרואיד](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1), אייפון בשלבי הקמה`
+איפה הוא עושה את כל זה? בסלולרי: [אנדרואיד](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1), [אייפון](https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8)`
                 },
                 {
                     name: "commute",
@@ -54,7 +54,60 @@ class FAQContainer extends Component {
                     a: "נסיעות ניתן למלא באחת או יותר מהדרכים הבאות:\n" +
                         "\n" +
                         "1. תשלום נסיעות קבוע על בסיס יומי או חודשי - נקבע בממשק המנהל --> [עובדים](/dashboard/employees)\n" +
-                        "2. תשלום נסיעות משתנה למשמרת - מוזן על ידי העובד, יש לאפשר אופציה זו ב[הגדרות](/dashboard/user)\n"                },
+                        "2. תשלום נסיעות משתנה למשמרת - מוזן על ידי העובד, יש לאפשר אופציה זו ב[הגדרות](/dashboard/user)\n"
+                },
+                {
+                    q: "גיבויים",
+                    a: `גיבוי אוטומאטי מתבצע בכל יום שישי בשעה 16:00`
+                },
+                {
+                    name: "break",
+                    q: "הפסקות",
+                    a: `[החוק](https://www.kolzchut.org.il/he/%D7%94%D7%A4%D7%A1%D7%A7%D7%95%D7%AA_%D7%91%D7%A2%D7%91%D7%95%D7%93%D7%94) מחייב מתן הפסקות במשמרות מעל אורך מסוים.  
+מיבא תומכת במקרה הבסיסי בלבד שהוא ניכוי הפסקה במשמרת שאורכה מעל 6 שעות.  
+- את אורך ההפסקה ניתן לקבוע ב: הגדרות --> אורך הפסקה (דק')
+- עבור משמרת ספיצפית - ניתן להזין אורך הפסקה אחר במסך עריכת משמרת
+- בדוח ניתן לראות את זמן ההפסקה לכל משמרת ביחידות עשרוניות - לדוגמא 0.5 עבור 30 דקות.
+- זמן ההפסקה כמובן מנוכה מאורך המשמרת
+`
+                },
+                {
+                    name: "tasks",
+                    q: "משימות",
+                    a: `משימה היא בעצם אפשרות נוספת לסווג משמרות לקבוצות.  
+משימה יכולה להיות אירוע חד פעמי או קטיגוריה.  
+ניתן להגדיר משימות ולכל משימה תתי משימות.  
+לכל משימה ותת משימה שתגדירו יהיה טאב נוסף באקסל עם כל המשמרות ששויכו אליה.  
+עובד יכול לשייך את המשמרת שלו לאירוע / משימה.  
+
+### כיצד אני מאפשר משימות?
+הגדרות --> משימות - שים לב שכעת התווסף בתוך הגדרות טאב חדש "משימות"   
+--> היכנס והגדר את המשימות
+
+### היכן אני רואה דוח לפי משימות?
+לאחר אפשור משימות - מצד ימין נוסף לתפריט "דוח משימות"    
+
+
+### דוגמאות 
+כיצד יכול להיראות עץ המשימות שלכם:  
+#### אולם אירועים:
+ - בר מצווה משה כהן 
+ - חתונה יעל וגל
+ - ברית יוסי ישראלי
+
+#### חברת תכנה:
+ - צוות FrontEnd  
+   - Testing  
+   - Development
+ - צוות Backend
+   - Testing
+   - Development
+
+#### סיווג ללקוחות:
+- תנובה
+- אסם
+- שטראוס`
+                }
             ]
         };
 

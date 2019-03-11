@@ -5,6 +5,7 @@ const general = require('./generalController');
 const users = require('./UsersController');
 const shifts = require('./ShiftsController');
 const companies = require('./CompaniesController');
+const tasks = require('./TasksController');
 const reports = require('./ReportsController');
 const config = require('../config');
 const jwtService = require("./jwtService");
@@ -16,6 +17,7 @@ router.use('/api', ejwt({secret: config.secret}));
 router.use('/api', extractUserMiddleware);
 router.use('/api/shifts', shifts);
 router.use('/api/reports', reports);
+router.use('/api/tasks', tasks);
 router.use('/api', restrictEmployee); // Beyond here api is not allowed for employees
 router.use('/api/users', users);
 router.use('/api/companies', companies);
@@ -36,7 +38,7 @@ function restrictEmployee(req, res, next) {
     let user = res.locals.user;
     if (!user || UserModel.isEmployee(user)) {
         let name = (!user || !user.fullName) ? "" : user.fullName;
-        return res.status(403).send("user " + name + " is not authorise");
+        return res.status(403).send("user " + name + " is not authorized");
     }
 
     return next();

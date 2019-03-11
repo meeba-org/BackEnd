@@ -1,15 +1,16 @@
 import React from "react";
 import {IndexRedirect, Route} from "react-router";
 import AppContainer from "./components/AppContainer";
-import EmployeesContainer from "./components/employees/EmployeesContainer";
-import LoginContainer from "./components/login/LoginContainer";
 import Dashboard from "./components/Dashboard";
-import MonthlyReportContainer from "./components/reports/MonthlyReportContainer";
-import DailyReportContainer from "./components/reports/DailyReportContainer";
-import {ReportModes} from "./helpers/utils";
-import UserContainer from "./components/user/UserContainer";
-import Home from "./components/home/Home";
+import EmployeesContainer from "./components/employees/EmployeesContainer";
 import FAQContainer from "./components/faq/FAQContainer";
+import Home from "./components/home/Home";
+import LoginContainer from "./components/login/LoginContainer";
+import DailyReportContainer from "./components/reports/DailyReportContainer";
+import MonthlyReportContainer from "./components/reports/MonthlyReportContainer";
+import TasksReportContainer from "./components/reports/TasksReportContainer";
+import Settings from "./components/Settings";
+import {ReportModes} from "./helpers/utils";
 
 export default (
     <Route path="/" component={AppContainer}>
@@ -19,11 +20,12 @@ export default (
         <Route path="/dashboard" component={Dashboard} onEnter={requireAuth}>
             <IndexRedirect to="/dashboard/report" />
             <Route path="employees" component={EmployeesContainer} />
-            <Route path="user" component={UserContainer} />
+            <Route path="settings" component={Settings} />
             <Route path="report"  >
                 <IndexRedirect to="/dashboard/report/live" />
                 <Route path="monthly" component={MonthlyReportContainer}  />
                 <Route path="daily" component={DailyReportContainer} mode={ReportModes.Report} />
+                <Route path="tasks" component={TasksReportContainer} />
                 <Route path="live" component={DailyReportContainer} mode={ReportModes.Live} />
             </Route>
         </Route>

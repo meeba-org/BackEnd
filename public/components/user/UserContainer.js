@@ -1,13 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {connect} from 'react-redux';
 import Field from "redux-form/es/Field";
 import reduxForm from "redux-form/es/reduxForm";
-import User from "./User";
-import {updateActiveUser} from "../../actions/usersActions";
+import {Feature} from "../../../managers/FeaturesManager";
 import {updateCompany} from "../../actions/companyActions";
-import {FeatureName} from "../../helpers/FeatureName";
+import {updateActiveUser} from "../../actions/usersActions";
 import * as selectors from "../../selectors";
+import User from "./User";
 
 class UserContainer extends React.Component {
 
@@ -36,11 +36,11 @@ UserContainer.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        user: state.user,
+        // user: state.user,
         initialValues: {
             user: state.user
         },
-        isCommuteFeatureEnable: selectors.isFeatureEnable(state, FeatureName.CommuteModule),
+        isCommuteFeatureEnable: selectors.isFeatureEnable(state, Feature.CommuteModule),
     };
 }
 

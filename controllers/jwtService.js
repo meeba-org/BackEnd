@@ -26,10 +26,15 @@ function getUserFromToken(req) {
     return jwt.verify(token, config.secret);
 }
 
-function getCompanyFromLocals(res) {
+function getUserFromLocals(res) {
     const user = res.locals.user;
     if (!user)
         throw new Error("[jwtService.getCompanyFromLocals] - user was not initialize from token in res.locals");
+    return user;
+}
+
+function getCompanyFromLocals(res) {
+    const user = getUserFromLocals(res);
     return user.company;
 }
 
@@ -42,5 +47,6 @@ module.exports = {
     extractTokenFromRequest,
     getUserFromToken,
     getCompanyFromLocals,
+    getUserFromLocals,
     isUserIdValid
 };

@@ -16,6 +16,5 @@
     <orderEntry type="library" name="@types/react" level="application" />
     <orderEntry type="library" name="@types/webpack" level="application" />
     <orderEntry type="library" name="analytics" level="application" />
-    <orderEntry type="library" name="node_modules" level="project" />
   </component>
 </module>

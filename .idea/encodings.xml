@@ -11,6 +11,7 @@
     <file url="file://$PROJECT_DIR$/controllers/CompaniesController.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/ReportsController.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/ShiftsController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/controllers/TasksController.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/UsersController.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/apiManager.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/generalController.js" charset="UTF-8" />
@@ -25,8 +26,8 @@
     <file url="file://$PROJECT_DIR$/models/CompanyModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/ERoles.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/ETransportPaymentPer.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/models/FeatureModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/ShiftModel.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/models/TaskModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/UserModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/node_modules/material-ui-pickers/package.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/package-lock.json" charset="UTF-8" />
@@ -39,6 +40,7 @@
     <file url="file://$PROJECT_DIR$/public/actions/loginLogoutActions.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/actions/reportsActions.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/actions/shiftsActions.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/actions/tasksActions.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/actions/usersActions.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/AddShiftsDialog.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/AppContainer.js" charset="UTF-8" />
@@ -47,8 +49,11 @@
     <file url="file://$PROJECT_DIR$/public/components/Dashboard.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/Fade.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/HoursBar.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/MbCard.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/MbGoogleMap.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/NoData.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/Settings.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/TaskHoursBar.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/employees/EmployeeContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/employees/EmployeesContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/faq/FAQContainer.js" charset="UTF-8" />
@@ -57,6 +62,7 @@
     <file url="file://$PROJECT_DIR$/public/components/home/Feature.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/Home.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/HomeAppBar.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/home/MobileImageContent.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/Movie.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/ReportFeatureContent.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/StatisticsCell.js" charset="UTF-8" />
@@ -70,6 +76,7 @@
     <file url="file://$PROJECT_DIR$/public/components/modals/MobileAppLinksModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/ModalRoot.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/MovingShiftOutOfMonthModal.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/modals/TaskModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/BusCost.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/CarCost.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/DailyReportContainer.js" charset="UTF-8" />
@@ -80,12 +87,20 @@
     <file url="file://$PROJECT_DIR$/public/components/reports/MonthlyReportLine.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Note.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/ShiftsList.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/TaskIndicator.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/TaskReportLine.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/TasksReportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/TimeMaskCustom.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Warning.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/tasks/BreadCrumb.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/tasks/Task.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/tasks/TaskService.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/tasks/TasksContainer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/tasks/TasksList.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/tasks/TasksSelectionContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/UserContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/config.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/ERoles.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/helpers/FeatureName.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/GATypes.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/utils.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/index.ejs" charset="UTF-8" />
@@ -97,6 +112,7 @@
     <file url="file://$PROJECT_DIR$/public/reducers/ModalReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/ReportsReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/ShiftsReducer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/reducers/TasksReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/UserReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/UsersReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/index.js" charset="UTF-8" />
@@ -106,6 +122,7 @@
     <file url="file://$PROJECT_DIR$/public/styles/Animation.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/App.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/AppBar.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/styles/BreadCrumb.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/CommuteCost.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/DailyReport.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Dashboard.scss" charset="UTF-8" />
@@ -147,6 +164,7 @@
     <file url="file://$PROJECT_DIR$/test/HolidayAnalyzer.spec.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test/ShiftAnalyzer.spec.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test/ShiftModelTest.spec.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test/TaskModelTest.spec.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test/testUtils.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tools/analyzeBundle.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tools/build.js" charset="UTF-8" />

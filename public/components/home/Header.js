@@ -4,6 +4,7 @@ import CSSModules from "react-css-modules/dist/index";
 import Button from "@material-ui/core/Button";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import playStoreImage from '../../styles/images/playStore.svg';
+import appStoreImage from '../../styles/images/appStore.svg';
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import HomeAppBar from './HomeAppBar';
 import {showLoginRegisterDialog} from "../../actions";
@@ -41,13 +42,13 @@ class Header extends Component {
                                              src={playStoreImage}/>
                                     </a>
                                 </div>
-                                {/*<div className={styles["badge"]}>*/}
-                                    {/*<a target="_blank"*/}
-                                       {/*href="https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8">*/}
-                                        {/*<img alt=" Apple Store כעת ב-"*/}
-                                             {/*src={appStoreImage}/>*/}
-                                    {/*</a>*/}
-                                {/*</div>*/}
+                                <div className={styles["badge"]}>
+                                    <a target="_blank"
+                                       href="https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8">
+                                        <img alt=" Apple Store כעת ב-"
+                                             src={appStoreImage}/>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

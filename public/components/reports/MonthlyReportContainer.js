@@ -9,6 +9,7 @@ import {fetchUsers} from "../../actions/usersActions";
 import * as selectors from "../../selectors";
 import {fetchMonthlyReport, generateExcelReport} from "../../actions/reportsActions";
 import {showLocationModal} from "../../actions";
+import MonthlyReportLine from "./MonthlyReportLine";
 
 class MonthlyReportContainer extends React.PureComponent {
 
@@ -50,6 +51,8 @@ class MonthlyReportContainer extends React.PureComponent {
                             onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
                             onGenerateExcel={(month, year) => this.onGenerateExcel(month, year)}
                             userRole={userRole}
+                            reportLineComponent={MonthlyReportLine}
+                            title={'דו"ח חודשי'}
                 />
             </form>
         );
