@@ -25,7 +25,6 @@ class MonthPicker extends Component {
         10: "אוקטובר",
         11: "נובמבר",
         12: "דצמבר",
-
     };
 
     createMonthMenuItems = () => {
