@@ -175,8 +175,8 @@ function formatTask(task) {
     return task.title;
 }
 
-const createShiftsPerTasksContent = function (sheet, employee, company, year, month ) {
-    createBasicShiftsContent(sheet, employee, company, year, month );
+const createShiftsPerTasksContent = function (sheet, task, company, year, month ) {
+    createBasicShiftsContent(sheet, task, company, year, month );
 
 };
 
@@ -185,8 +185,8 @@ const createShiftsPerEmployeesContent = function (sheet, employee, company, year
 
 };
 
-const createBasicShiftsContent = function (sheet, employee, company, year, month ) {
-    if (!employee.shifts || employee.shifts.length === 0)
+const createBasicShiftsContent = function (sheet, entity, company, year, month ) {
+    if (!entity.shifts || entity.shifts.length === 0)
         return;
 
     let startOfMonth = moment().year(year).month(month - 1).startOf('month');
@@ -198,15 +198,14 @@ const createBasicShiftsContent = function (sheet, employee, company, year, month
             dayInWeek: calcDayInWeek(m),
         };
 
-        let shifts = getShifts(employee.shifts, m);
+        let shifts = getShifts(entity.shifts, m);
 
         if (!shifts || shifts.length === 0) {
             addDayRow(sheet, row, m);
             continue;
         }
 
-        for (let i = 0 ; i < shifts.length ; i++)
-        {
+        for (let i = 0; i < shifts.length; i++) {
             let shift = shifts[i];
 
             let hoursAnalysis = shift.hoursAnalysis;
