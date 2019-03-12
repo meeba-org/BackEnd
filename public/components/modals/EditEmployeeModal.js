@@ -1,15 +1,15 @@
-import React, {Component, Fragment} from 'react';
-import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
-import {hideEditEmployeeModal} from "../../actions";
+import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from "@material-ui/core/TextField";
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
+import {connect} from "react-redux";
+import {hideEditEmployeeModal} from "../../actions";
 import MbSwitch from "../MbSwitch";
 
 const styles = {

@@ -1,16 +1,16 @@
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import facebookImage from "../../styles/images/facebook.png";
-import React, {Component, Fragment} from "react";
+import IconButton from "@material-ui/core/IconButton";
 import withStyles from "@material-ui/core/styles/withStyles";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import React, {Component} from "react";
+import {connect} from 'react-redux';
 import {Link, withRouter} from "react-router";
 import {showLoginRegisterDialog} from "../../actions";
-import {connect} from 'react-redux';
 import * as selectors from "../../selectors";
+import facebookImage from "../../styles/images/facebook.png";
 
 const styles = {
     colorPrimary: {

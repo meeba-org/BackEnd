@@ -1,9 +1,9 @@
-import React, {Component, Fragment} from 'react';
-import * as selectors from "../../selectors";
+import PropTypes from "prop-types";
+import React, {Component} from 'react';
 import connect from "react-redux/es/connect/connect";
+import * as selectors from "../../selectors";
 import Employee from "./Employee";
 import EmployeeMobile from "./EmployeeMobile";
-import PropTypes from "prop-types";
 
 class EmployeeContainer extends Component {
     onUpdate = (e, name) => {

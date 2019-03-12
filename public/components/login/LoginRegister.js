@@ -2,20 +2,20 @@
  * Created by Chen on 16/07/2017.
  */
 
-import React, {Component} from 'react';
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import Field from "redux-form/es/Field";
-import reduxForm from "redux-form/es/reduxForm";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
+import CSSModules from "react-css-modules";
 
 import {connect} from "react-redux";
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {renderTextField} from '../material-ui-wrappers';
-import PropTypes from 'prop-types';
-import CSSModules from "react-css-modules";
-import styles from "../../styles/LoginRegister.scss";
-import {handleLogin, hideLoginRegisterModal} from "../../actions";
 import {withRouter} from "react-router";
+import Field from "redux-form/es/Field";
+import reduxForm from "redux-form/es/reduxForm";
+import {handleLogin, hideLoginRegisterModal} from "../../actions";
+import styles from "../../styles/LoginRegister.scss";
+import {renderTextField} from '../material-ui-wrappers';
 
 class LoginRegister extends Component {
 
@@ -110,7 +110,7 @@ LoginRegister.propTypes = {
 
 // You have to connect() to any reducers that you wish to connect to yourself
 export default connect(
-    state => ({
+    () => ({
         initialValues: {isLoginMode: true} // pull initial values from account reducer
     })
 )(reduxForm({

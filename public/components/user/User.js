@@ -11,7 +11,7 @@ import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
 import PropTypes from 'prop-types';
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import CSSModules from "react-css-modules";
 import {Link} from "react-router";
 import styles from '../../styles/User.scss';

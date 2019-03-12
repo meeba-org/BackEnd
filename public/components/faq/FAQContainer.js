@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import CSSModules from "react-css-modules";
 import styles from "../../styles/FAQContainer.scss";
 import FAQContent from "./FAQContent";
@@ -114,6 +114,23 @@ class FAQContainer extends Component {
         this.initData();
     }
 
+    componentDidMount() {
+        this.expandQuestionIfNeeded();
+    }
+
+    expandQuestionIfNeeded = () => {
+        const {data} = this.state;
+        const {params} = this.props;
+        let name = params.name;
+        if (!name)
+            return;
+
+        let question = data.find(q => q.name === name);
+        question.collapse = false;
+        data.map(q => q.name === name ? question: q);
+        this.setState({data});
+    };
+
     initData() {
         let id = 0;
 
@@ -132,23 +149,6 @@ class FAQContainer extends Component {
 
         this.setState({data});
     };
-
-    expandQuestionIfNeeded = () => {
-        const {data} = this.state;
-        const {params} = this.props;
-        let name = params.name;
-        if (!name)
-            return;
-
-        let question = data.find(q => q.name === name);
-        question.collapse = false;
-        data.map(q => q.name === name ? question: q);
-        this.setState({data});
-    };
-
-    componentDidMount() {
-        this.expandQuestionIfNeeded();
-    }
 
     render() {
         const {data} = this.state;

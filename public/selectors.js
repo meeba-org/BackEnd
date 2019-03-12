@@ -1,5 +1,4 @@
-import * as FeaturesManager from "../managers/FeaturesManager";
-import {Feature} from "../managers/FeaturesManager";
+import FeaturesManager, {Feature} from "../managers/FeaturesManager";
 
 export const getCompany = (state) => {
     return (!state.user) ? null : state.user.company;

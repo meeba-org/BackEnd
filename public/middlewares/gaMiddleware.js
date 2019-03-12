@@ -1,6 +1,6 @@
 const UNKNOWN_USER = "UNKNOWN_USER";
 
-const gaMiddleware = ({dispatch}) => next => action => {
+const gaMiddleware = () => next => action => {
     if (!action.ga) {
         return next(action);
     }

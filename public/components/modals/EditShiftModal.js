@@ -11,7 +11,7 @@ import CommentIcon from "@material-ui/icons/Comment";
 import BusIcon from "@material-ui/icons/DirectionsBus";
 import BreakIcon from "@material-ui/icons/FreeBreakfast";
 import PropTypes from 'prop-types';
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {hideEditShiftModal} from "../../actions/index";
 import * as selectors from "../../selectors";

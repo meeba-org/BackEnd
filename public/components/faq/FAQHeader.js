@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import CSSModules from "react-css-modules";
 import styles from "../../styles/FAQHeader.scss";
 import HomeAppBar from '../home/HomeAppBar';

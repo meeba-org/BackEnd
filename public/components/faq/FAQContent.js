@@ -1,11 +1,11 @@
-import React, {Component, Fragment} from 'react';
-import CSSModules from "react-css-modules";
-import styles from "../../styles/FAQContent.scss";
-import Fade from "../Fade";
 import IconButton from "@material-ui/core/IconButton";
 import Add from '@material-ui/icons/Add';
 import Minus from '@material-ui/icons/Remove';
+import React, {Component} from 'react';
+import CSSModules from "react-css-modules";
 import ReactMarkdown from "react-markdown";
+import styles from "../../styles/FAQContent.scss";
+import Fade from "../Fade";
 
 const Question = CSSModules(({text, onClick, collapse}) => {
     return (
