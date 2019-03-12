@@ -1,25 +1,24 @@
-import React from "react";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 import Divider from "@material-ui/core/Divider";
 import Tooltip from "@material-ui/core/Tooltip";
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
 import AddIcon from '@material-ui/icons/Add';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import MonthlyReportLine from "./MonthlyReportLine";
-import Field from "redux-form/es/Field";
-import PropTypes from 'prop-types';
-import CSSModules from "react-css-modules";
-import styles from '../../styles/MonthlyReport.scss';
 import moment from 'moment';
-import NoData from "../NoData";
-import AddShiftsDialog from "../AddShiftsDialog";
+import PropTypes from 'prop-types';
+import React from "react";
 import {IfGranted} from "react-authorization";
+import CSSModules from "react-css-modules";
+import Field from "redux-form/es/Field";
 import * as ERoles from "../../helpers/ERoles";
-import Fade from "../Fade";
 import {DATE_FORMAT} from "../../helpers/utils";
+import styles from '../../styles/MonthlyReport.scss';
+import AddShiftsDialog from "../AddShiftsDialog";
+import Fade from "../Fade";
 import MonthPicker from "../MonthPicker";
+import NoData from "../NoData";
 
 
 class MonthlyReport extends React.PureComponent {
@@ -52,7 +51,6 @@ class MonthlyReport extends React.PureComponent {
     }
 
     handleGenerateExcelClick = () => {
-        // let value = moment(this.state.startDayOfMonth, DATE_FORMAT);
         const {selectedMonth, selectedYear} = this.state;
 
         this.props.onGenerateExcel(selectedMonth, selectedYear);

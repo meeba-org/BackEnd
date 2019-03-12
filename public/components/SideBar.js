@@ -13,7 +13,7 @@ import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DateRange from '@material-ui/icons/DateRange';
-import ListIcon from '@material-ui/icons/List';
+import LabelIcon from '@material-ui/icons/Label';
 import PermContactCalendar from '@material-ui/icons/PermContactCalendar';
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import classNames from 'classnames';
@@ -114,7 +114,7 @@ class SideBar extends React.Component {
                     text: 'דו"ח משימות',
                     url: "/dashboard/report/tasks",
                     allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
-                    icon: <ListIcon/>
+                    icon: <LabelIcon/>
                 });
             } else {
                 modifiedItems.splice(3, 1);
