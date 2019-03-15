@@ -81,7 +81,6 @@ class EditShiftModal extends Component {
     };
 
     handleCommuteCostChange = (event) => {
-        let key = event.target.id;
         let value = event.target.value;
         const {entity} = this.state;
 
@@ -89,7 +88,7 @@ class EditShiftModal extends Component {
             ...entity,
             commuteCost: {
                 ...entity.commuteCost,
-                [key]: value || 0
+                publicTransportation: value || 0
             }
         };
 
@@ -108,17 +107,13 @@ class EditShiftModal extends Component {
         dispatch(updateShift(updatedShift, dispatch, false, month, year));
     };
 
-    handleCancel = () => {
-        this.props.dispatch(hideEditShiftModal());
-    };
-
     render() {
         let {open, classes, isCommuteFeatureEnable} = this.props;
         let {note, extraPay, breakLength, commuteCost, task} = this.state.entity || {};
         let {publicTransportation} = commuteCost || {};
 
         return (
-            <Dialog onClose={this.handleCancel} open={open}>
+            <Dialog onClose={this.handleClose} open={open}>
                 <DialogTitle>{"עריכת משמרת"}</DialogTitle>
                 <DialogContent classes={{root: classes.dialogContentRoot}}>
                     <ESMTextInput
