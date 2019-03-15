@@ -9,7 +9,7 @@ import {loadUserFromToken} from "../actions/index";
 import * as selectors from "../selectors";
 import styles from "../styles/Dashboard.scss";
 import AppBar from "./AppBar";
-import SideBar from "./SideBar";
+import SideBarContainer from "./SideBarContainer";
 
 class Dashboard extends React.PureComponent {
 
@@ -44,7 +44,7 @@ class Dashboard extends React.PureComponent {
                     </div>
                     <div styleName="grid-container">
                         <Paper styleName={"sideBar-container" + (isDesktop ? " isDesktop" : "")}>
-                            <SideBar
+                            <SideBarContainer
                                 userRole={userRole}
                                 isDesktop={!!isDesktop}
                                 open={open}

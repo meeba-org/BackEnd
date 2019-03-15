@@ -72,7 +72,7 @@
         "react/jsx-wrap-multilines": 1,
         "react/no-danger": 1,
         "react/no-did-mount-set-state": 1,
-        "react/no-did-update-set-state": 1,
+        "react/no-did-update-set-state": 0,
         "react/no-direct-mutation-state": 1,
         "react/no-set-state": 0,
         "react/no-unknown-property": 1,
