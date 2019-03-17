@@ -108,7 +108,7 @@ class EditShiftModal extends Component {
     };
 
     render() {
-        let {open, classes, isCommuteFeatureEnable} = this.props;
+        let {open, classes, isCommuteFeatureEnable, isTasksFeatureEnable} = this.props;
         let {note, extraPay, breakLength, commuteCost, task} = this.state.entity || {};
         let {publicTransportation} = commuteCost || {};
 
@@ -150,7 +150,9 @@ class EditShiftModal extends Component {
                         label={"הפסקה (דקות)"}
                     />
 
-                    <TasksSelectionContainer task={task} onChange={(task) => this.handleShiftChange("task" ,task)}/>
+                    {isTasksFeatureEnable &&
+                    <TasksSelectionContainer task={task} onChange={(task) => this.handleShiftChange("task", task)}/>
+                    }
 
                     <DialogActions classes={{root: classes.dialogActionsRoot}}>
                         <Button variant="raised" onClick={this.handleClose} autoFocus color="primary">
@@ -179,7 +181,7 @@ EditShiftModal.propTypes = {
 const mapStateToProps = (state) => {
     return {
         isCommuteFeatureEnable: selectors.isCommuteFeatureEnable(state),
-
-    };
+        isTasksFeatureEnable: selectors.isTasksFeatureEnable(state),
+};
 };
 export default connect(mapStateToProps)(withStyles(styles)(EditShiftModal));
