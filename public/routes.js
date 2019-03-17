@@ -1,5 +1,5 @@
 import React from "react";
-import {IndexRedirect, Route} from "react-router";
+import {IndexRedirect, Redirect, Route} from "react-router";
 import AppContainer from "./components/AppContainer";
 import Dashboard from "./components/Dashboard";
 import EmployeesContainer from "./components/employees/EmployeesContainer";
@@ -20,6 +20,7 @@ export default (
             <Route path="settings" component={Settings} />
             <Route path="report" component={Report} />
             <Route path="live" component={() => <DailyReportContainer mode={ReportModes.Live} />} />
+            <Redirect from="*" to="/dashboard/live" />
         </Route>
         <Route path="faq(/:name)" component={FAQContainer} />
     </Route>

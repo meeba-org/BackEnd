@@ -1,8 +1,5 @@
-'use strict';
 import Assessment from '@material-ui/icons/Assessment';
 import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn';
-import DateRange from '@material-ui/icons/DateRange';
-import LabelIcon from '@material-ui/icons/Label';
 import PermContactCalendar from '@material-ui/icons/PermContactCalendar';
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import PropTypes from 'prop-types';
