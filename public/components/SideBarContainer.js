@@ -17,17 +17,6 @@ class SideBarContainer extends Component {
         items: this.generateItems(false)
     };
 
-    componentDidUpdate(prevProps) {
-        if (this.props.isTasksFeatureEnable === prevProps.isTasksFeatureEnable)
-            return;
-
-        // isTasksFeatureEnable was changed
-        const {isTasksFeatureEnable} = this.props;
-
-        const generateItems = this.generateItems(isTasksFeatureEnable);
-        this.setState({items: generateItems});
-    }
-
     setSelected(newIndex) {
         let items = this.state.items;
         items.forEach(item => item.selected = false); // set selected=false for all items
@@ -46,27 +35,21 @@ class SideBarContainer extends Component {
         this.setSelected(index);
     };
 
-    generateItems(isTasksFeatureEnable) {
+    generateItems() {
         const {router} = this.props;
 
         let items = [
             {
                 text: "מצב משמרת",
-                url: "/dashboard/report/live",
+                url: "/dashboard/live",
                 allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
                 icon: <AssignmentTurnedIn/>
             },
             {
-                text: "דו\"ח חודשי",
-                url: "/dashboard/report/monthly",
+                text: "משמרות",
+                url: "/dashboard/report",
                 allowedRoles: [ERoles.COMPANY_MANAGER],
                 icon: <Assessment/>
-            },
-            {
-                text: "דו\"ח יומי",
-                url: "/dashboard/report/daily",
-                allowedRoles: [ERoles.COMPANY_MANAGER],
-                icon: <DateRange/>
             },
             {
                 text: "עובדים",
@@ -82,16 +65,6 @@ class SideBarContainer extends Component {
             },
         ];
 
-        if (isTasksFeatureEnable) {
-            // Insert task item in the 4th place
-            items.splice(3, 0, {
-                text: 'דו"ח משימות',
-                url: "/dashboard/report/tasks",
-                allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
-                icon: <LabelIcon/>
-            });
-        }
-
         items.forEach(item => {
             // Setting the selected menu according the url
             if (item.url === router.location.pathname)
@@ -102,14 +75,13 @@ class SideBarContainer extends Component {
     }
 
     render() {
-        const {userRole, isDesktop, open, toggleSideBar, isTasksFeatureEnable} = this.props;
+        const {userRole, isDesktop, open, toggleSideBar} = this.props;
         let {items} = this.state;
 
         return (
             <SideBar
                 items={items}
                 isDesktop={isDesktop}
-                isTasksFeatureEnable={isTasksFeatureEnable}
                 userRole={userRole}
                 open={open}
                 toggleSideBar={toggleSideBar}
@@ -124,7 +96,6 @@ SideBarContainer.propTypes = {
     userRole: PropTypes.string,
     classes: PropTypes.object,
     isDesktop: PropTypes.bool.isRequired,
-    isTasksFeatureEnable: PropTypes.bool.isRequired,
     open: PropTypes.bool.isRequired,
     toggleSideBar: PropTypes.func.isRequired,
 };

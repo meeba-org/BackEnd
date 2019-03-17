@@ -25,6 +25,7 @@ import Warning from "@material-ui/icons/Warning";
 import DatePicker from "material-ui-pickers/DatePicker";
 import withStyles from '@material-ui/core/styles/withStyles';
 import withTheme from '@material-ui/core/styles/withTheme';
+import {withRouter} from "react-router";
 
 const styles1 = {
     root: {
@@ -201,5 +202,5 @@ DailyReport.propTypes = {
     isLoading: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles1)(CSSModules(withTheme()(DailyReport), styles));
+export default withStyles(styles1)(CSSModules(withTheme()(withRouter(DailyReport)), styles));
 

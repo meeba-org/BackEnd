@@ -18,13 +18,13 @@ class DailyReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, updateShift, createShift, deleteShift, showShiftDialog, showLocationModal, shifts, employees, router, isLoading} = this.props;
+        const {handleSubmit, updateShift, createShift, deleteShift, showShiftDialog, showLocationModal, shifts, employees, isLoading, mode} = this.props;
 
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <DailyReport
                     shifts={shifts}
-                    mode={this.props.route.mode}
+                    mode={mode}
                     employees={employees}
                     onDeleteShift={deleteShift}
                     onUpdateShift={updateShift}
@@ -32,7 +32,6 @@ class DailyReportContainer extends React.PureComponent {
                     showShiftDialog={showShiftDialog}
                     showLocationModal={showLocationModal}
                     onDayChange={(startDayOfMonth) => this.onDayChange(startDayOfMonth)}
-                    router={router}
                     isLoading={isLoading}
                 />
             </form>
@@ -52,7 +51,6 @@ DailyReportContainer.propTypes = {
     deleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     showLocationModal: PropTypes.func.isRequired,
-    router: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
 };
 
