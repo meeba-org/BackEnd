@@ -113,7 +113,7 @@ class EditShiftModal extends Component {
         let {publicTransportation} = commuteCost || {};
 
         return (
-            <Dialog onClose={this.handleClose} open={open}>
+            <Dialog onClose={this.handleClose} open={open} >
                 <DialogTitle>{"עריכת משמרת"}</DialogTitle>
                 <DialogContent classes={{root: classes.dialogContentRoot}}>
                     <ESMTextInput

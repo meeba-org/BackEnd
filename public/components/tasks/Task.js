@@ -53,8 +53,8 @@ class Task extends Component {
                       onClick={() => onClick(data)}
             >
                 <ListItemText primary={
-                    <Grid container spacing={8}>
-                        <Grid item xs={2}>
+                    <Grid container>
+                        <Grid item xs={selectMode ? 12 : 9}>
                             {data.title}
                         </Grid>
                         {this.state.hover && !selectMode &&
