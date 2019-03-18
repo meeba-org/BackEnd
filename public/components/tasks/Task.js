@@ -13,6 +13,9 @@ const styles = {
     listItem: {
         textAlign: "right",
     },
+    listItemText: {
+        height: "30px"
+    },
     listItemSelectionMode: {
         textAlign: "right",
         paddingTop: "4px",
@@ -52,7 +55,7 @@ class Task extends Component {
                       onDoubleClick={() => onDoubleClick(data)}
                       onClick={() => onClick(data)}
             >
-                <ListItemText primary={
+                <ListItemText classes={{root: classes.listItemText}} primary={
                     <Grid container>
                         <Grid item xs={selectMode ? 12 : 9}>
                             {data.title}
