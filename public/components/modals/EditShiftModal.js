@@ -155,7 +155,7 @@ class EditShiftModal extends Component {
                     }
 
                     <DialogActions classes={{root: classes.dialogActionsRoot}}>
-                        <Button variant="raised" onClick={this.handleClose} autoFocus color="primary">
+                        <Button variant="contained" onClick={this.handleClose} autoFocus color="primary">
                             סגור
                         </Button>
                     </DialogActions>

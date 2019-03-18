@@ -3,7 +3,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import PlaceIcon from "@material-ui/icons/Place";
 import PropTypes from "prop-types";
 import React from "react";
-import styles from "../../styles/CommuteCost.scss";
+import styles from "../../styles/ShiftIndicator.scss";
 
 const Location = ({location, onClick}) => {
     if (!location)

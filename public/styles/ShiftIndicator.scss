@@ -1,10 +1,11 @@
 @import "variables";
 
-.note {
+.shift-indicator {
     display: flex;
     flex-direction: row;
-    padding-top: 5px;
+    //padding-top: 5px;
     color: material-color('grey', '500');
+    margin-left: 5px;
 
     .icon {
         padding-left: 5px;

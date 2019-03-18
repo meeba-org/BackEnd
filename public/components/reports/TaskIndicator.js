@@ -4,7 +4,7 @@ import LabelIcon from "@material-ui/icons/Label";
 import PropTypes from "prop-types";
 import React from "react";
 import CSSModules from "react-css-modules";
-import styles from "../../styles/CommuteCost.scss";
+import styles from "../../styles/ShiftIndicator.scss";
 
 const TaskIndicator = ({task, onClick}) => {
     if (!task || !task.title)

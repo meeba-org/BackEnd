@@ -7,10 +7,16 @@
         .logo{
             cursor: pointer;
             display: inline-flex;
+            align-items: center;
         }
 
         .logout {
             margin-right: auto;
+
+            button {
+                padding: 8px 16px;
+            }
+
             @media (max-width: 576px) {
                 padding-left: 0px;
             }

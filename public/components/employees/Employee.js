@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
-import Tooltip from "@material-ui/core/Tooltip";
-import DeleteIcon from '@material-ui/icons/Delete';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Tooltip from "@material-ui/core/Tooltip";
+import DeleteIcon from '@material-ui/icons/Delete';
+import Settings from '@material-ui/icons/Settings';
+import PropTypes from 'prop-types';
+import React, {Fragment} from 'react';
 import CSSModules from "react-css-modules";
 import scssStyles from "../../styles/Employees.scss";
-import Settings from '@material-ui/icons/Settings';
 
 const styles = {
     root: {
@@ -24,6 +24,10 @@ const styles = {
     error: {
         color: "red",
         paddingTop: "6px"
+    },
+    options: {
+        display: "flex",
+        justifyContent: "space-evenly"
     }
 };
 
@@ -85,16 +89,16 @@ class Employee extends React.Component {
                         <div className={classes.error}>{error}</div>
                     </Grid>
                     }
-                    <Grid item sm={2}>
+                    <Grid item sm={2} className={classes.options}>
                         {this.state.hover &&
-                        <div>
+                        <Fragment>
                             <Tooltip title="הגדרות נוספות" placement="top">
                                 <IconButton className={styles["elem"]} onClick={this.showEmployeeDialog}><Settings/></IconButton>
                             </Tooltip>
                             <Tooltip title="מחיקה" placement="top">
                                 <IconButton onClick={onDelete}><DeleteIcon/></IconButton>
                             </Tooltip>
-                        </div>
+                        </Fragment>
                         }
                     </Grid>
                 </Grid>

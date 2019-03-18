@@ -4,7 +4,7 @@ import ExtraPayIcon from "@material-ui/icons/CardGiftcard";
 import PropTypes from "prop-types";
 import React from "react";
 import CSSModules from "react-css-modules";
-import styles from "../../styles/CommuteCost.scss";
+import styles from "../../styles/ShiftIndicator.scss";
 
 const ExtraPay = ({extraPay, onClick}) => {
     if (!extraPay)

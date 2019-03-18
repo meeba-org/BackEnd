@@ -1,19 +1,20 @@
-import React from 'react';
-import routes from "./routes";
-import {Provider} from "react-redux";
-import {browserHistory, Router} from "react-router";
-import createStore from "./store/configureStore";
-import {syncHistoryWithStore} from "react-router-redux";
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import brown from '@material-ui/core/colors/brown';
 import orange from '@material-ui/core/colors/orange';
-import JssProvider from 'react-jss/lib/JssProvider';
-import {create} from 'jss';
 import {createGenerateClassName, jssPreset} from '@material-ui/core/styles';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import {create} from 'jss';
+import React from 'react';
+import JssProvider from 'react-jss/lib/JssProvider';
+import {Provider} from "react-redux";
+import {browserHistory, Router} from "react-router";
+import {syncHistoryWithStore} from "react-router-redux";
+import routes from "./routes";
+import createStore from "./store/configureStore";
 
 const muiTheme = createMuiTheme({
     typography: {
+        useNextVariants: true,
         fontFamily: '"Assistant", sans-serif'
     },
     overrides: {
@@ -21,8 +22,7 @@ const muiTheme = createMuiTheme({
             root: {
                 height: "100%",
                 width: "initial",
-                paddingRight: "10px",
-                paddingLeft: "10px",
+                padding: "3px",
             }
         },
         MuiInputLabel: {
@@ -42,8 +42,8 @@ const muiTheme = createMuiTheme({
             root: {
                 direction: "ltr"
             },
-            checked: {
-                transform: "translateX(20px)"
+            "&$checked": {
+                "transform": "translateX(20px)"
             }
         },
         MuiPickersTimePicker: {

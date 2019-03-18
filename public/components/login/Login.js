@@ -2,19 +2,19 @@
  * Created by Chen on 16/07/2017.
  */
 
-import React, {Component} from 'react';
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
+import CSSModules from "react-css-modules";
+import {connect} from "react-redux";
 import Field from "redux-form/es/Field";
 import reduxForm from "redux-form/es/reduxForm";
-import {connect} from "react-redux";
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {renderTextField} from '../material-ui-wrappers';
-import PropTypes from 'prop-types';
-import CSSModules from "react-css-modules";
 import styles from "../../styles/Login.scss";
+import {renderTextField} from '../material-ui-wrappers';
 
 class Login extends Component {
     render() {
@@ -41,7 +41,7 @@ class Login extends Component {
                                         />
                                     </Grid>
                                     {error && <div styleName="error-msg">{error}</div>}
-                                    <Button variant="raised" color="primary" type="submit" styleName="submit-button"><ArrowBackIcon/>היכנס</Button>
+                                    <Button variant="contained" color="primary" type="submit" styleName="submit-button"><ArrowBackIcon/>היכנס</Button>
                                 </form>
                             </div>
                         </Paper>

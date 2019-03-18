@@ -1,15 +1,15 @@
-import React, {PureComponent} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {convertTimeStrToMoment2, createShift, DATE_FORMAT} from "../helpers/utils";
-import moment from "moment";
-import CheckBoxList from "./CheckBoxList";
-import PropTypes from 'prop-types';
 import DatePicker from "material-ui-pickers/DatePicker";
 import TimePicker from "material-ui-pickers/TimePicker";
+import moment from "moment";
+import PropTypes from 'prop-types';
+import React, {PureComponent} from 'react';
+import {convertTimeStrToMoment2, createShift, DATE_FORMAT} from "../helpers/utils";
+import CheckBoxList from "./CheckBoxList";
 
 
 class AddShiftsDialog extends PureComponent {
@@ -118,7 +118,7 @@ class AddShiftsDialog extends PureComponent {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => this.onCreate()} variant="raised" color="primary" disabled={employeesToAdd.length === 0}>
+                    <Button onClick={() => this.onCreate()} variant="contained" color="primary" disabled={employeesToAdd.length === 0}>
                         {employeesToAdd.length > 0 ? `הוסף ל- ` + employeesToAdd.length + ` אנשים` : "הוסף"}
                     </Button>
                     <Button onClick={onCancel} color="primary">

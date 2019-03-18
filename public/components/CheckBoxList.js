@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 
 class CheckBoxList extends Component {
     constructor(props) {
@@ -41,7 +41,7 @@ class CheckBoxList extends Component {
                 {items.map((item, index) => (
                     <ListItem
                         key={index}
-                        variant="raised"
+                        variant="contained"
                         button
                         onClick={() => this.handleToggle(item)}
                     >

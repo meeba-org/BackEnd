@@ -1,17 +1,20 @@
-import React, {Fragment} from "react";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import Divider from "@material-ui/core/Divider";
+import withStyles from '@material-ui/core/styles/withStyles';
+import withTheme from '@material-ui/core/styles/withTheme';
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from '@material-ui/icons/Add';
-import FieldArray from "redux-form/es/FieldArray";
+import Warning from "@material-ui/icons/Warning";
+import DatePicker from "material-ui-pickers/DatePicker";
+import moment from "moment/moment";
 import PropTypes from 'prop-types';
+import React, {Fragment} from "react";
 import CSSModules from "react-css-modules";
-import styles from '../../styles/DailyReport.scss';
-import ShiftsList from "./ShiftsList";
-import AddShiftsDialog from "../AddShiftsDialog";
+import {withRouter} from "react-router";
+import FieldArray from "redux-form/es/FieldArray";
 import {
     calculateCurrentDay,
     calculateCurrentTime,
@@ -19,13 +22,10 @@ import {
     DATE_FORMAT,
     ReportModes
 } from "../../helpers/utils";
+import styles from '../../styles/DailyReport.scss';
+import AddShiftsDialog from "../AddShiftsDialog";
 import AutoComplete from "../AutoComplete";
-import moment from "moment/moment";
-import Warning from "@material-ui/icons/Warning";
-import DatePicker from "material-ui-pickers/DatePicker";
-import withStyles from '@material-ui/core/styles/withStyles';
-import withTheme from '@material-ui/core/styles/withTheme';
-import {withRouter} from "react-router";
+import ShiftsList from "./ShiftsList";
 
 const styles1 = {
     root: {
@@ -102,7 +102,7 @@ class DailyReport extends React.PureComponent {
                                 />
 
                                 <Tooltip title="הוספת משמרת" placement="top">
-                                    <Button className={styles["action-button"]} variant="raised" color="primary"
+                                    <Button className={styles["action-button"]} variant="contained" color="primary"
                                         onClick={() => this.handleClickOpen()}><AddIcon/></Button>
                                 </Tooltip>
                                 <AddShiftsDialog

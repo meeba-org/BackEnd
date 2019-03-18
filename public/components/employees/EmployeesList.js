@@ -2,24 +2,24 @@
  * Created by Chen on 16/07/2017.
  */
 
-import React from 'react';
-import CSSModules from "react-css-modules";
-import styles from "../../styles/EmployeesList.scss";
-import PropTypes from 'prop-types';
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
-import Tooltip from "@material-ui/core/Tooltip";
 import Icon from "@material-ui/core/Icon";
-import Field from "redux-form/es/Field";
+import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from '@material-ui/icons/Add';
-import NoData from "../NoData";
-import Fade from "../Fade";
-import EmployeeContainer from "./EmployeeContainer";
+import PropTypes from 'prop-types';
+import React from 'react';
+import CSSModules from "react-css-modules";
+import Field from "redux-form/es/Field";
 import {isIsraeliIdValid} from "../../helpers/utils";
+import styles from "../../styles/EmployeesList.scss";
+import Fade from "../Fade";
+import NoData from "../NoData";
+import EmployeeContainer from "./EmployeeContainer";
 
 class EmployeesList extends React.PureComponent {
 
@@ -59,11 +59,11 @@ class EmployeesList extends React.PureComponent {
 
                     <div className={styles["controls-line"]}>
                         <Tooltip title="הוספת עובד" placement="top">
-                            <Button className={styles["action-button"]} variant="raised" color="primary"
+                            <Button className={styles["action-button"]} variant="contained" color="primary"
                                     onClick={this.onCreate}><AddIcon/></Button>
                         </Tooltip>
                         <Tooltip title="לינק לאפליקציית העובד" placement="top">
-                            <Button className={styles["action-button"]} variant="raised" color="primary"
+                            <Button className={styles["action-button"]} variant="contained" color="primary"
                                     onClick={() => showMobileAppModal()}><Icon>mobile_screen_share</Icon></Button>
                         </Tooltip>
                     </div>

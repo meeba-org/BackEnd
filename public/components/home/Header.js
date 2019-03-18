@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
-import styles from "../../styles/Header.scss";
-import CSSModules from "react-css-modules/dist/index";
 import Button from "@material-ui/core/Button";
 import ArrowBack from "@material-ui/icons/ArrowBack";
-import playStoreImage from '../../styles/images/playStore.svg';
-import appStoreImage from '../../styles/images/appStore.svg';
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import HomeAppBar from './HomeAppBar';
-import {showLoginRegisterDialog} from "../../actions";
+import React, {Component} from 'react';
+import CSSModules from "react-css-modules/dist/index";
 import {connect} from 'react-redux';
+import {showLoginRegisterDialog} from "../../actions";
+import styles from "../../styles/Header.scss";
+import appStoreImage from '../../styles/images/appStore.svg';
+import playStoreImage from '../../styles/images/playStore.svg';
+import HomeAppBar from './HomeAppBar';
 
 class Header extends Component {
     render() {
@@ -29,7 +29,7 @@ class Header extends Component {
                             <div className={styles["sub-title"]}>
                                 שעון נוכחות חינמי
                             </div>
-                            <Button className={styles["login-button"]} variant="raised" color="primary" onClick={showLoginRegisterDialog}>
+                            <Button className={styles["login-button"]} variant="contained" color="primary" onClick={showLoginRegisterDialog}>
                                 <span>כניסה</span>
                                 <ArrowBack style={{"paddingTop": "5px"}}/>
                             </Button>

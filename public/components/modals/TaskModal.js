@@ -22,7 +22,7 @@ export const TaskModalContent = ({entity, isNewTask, onKeyPress, onOk, onCancel,
                 />
             </DialogContent>
             <DialogActions>
-                <Button variant="raised" onClick={onOk}
+                <Button variant="contained" onClick={onOk}
                         color="primary" autoFocus
                         disabled={!entity.title}
                 >

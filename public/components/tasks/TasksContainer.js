@@ -57,7 +57,7 @@ class TasksContainer extends React.Component {
                 <div className={styles["controls-line"]}>
                     <Tooltip title="הוספת משימה" placement="top">
                         <Button className={styles["action-button"]}
-                                variant="raised" color="primary"
+                                variant="contained" color="primary"
                                 onClick={this.onCreate}><AddIcon/>
                         </Button>
                     </Tooltip>

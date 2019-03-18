@@ -116,13 +116,13 @@ class MonthlyReport extends React.PureComponent {
                             />
 
                            <Tooltip title="הוספת משמרת" placement="top">
-                                <Button className={styles["action-button"]} variant="raised" color="primary"
+                                <Button className={styles["action-button"]} variant="contained" color="primary"
                                         onClick={() => this.handleOpenAddDialog()}><AddIcon/></Button>
                             </Tooltip>
 
                             <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
                                 <Tooltip title="ייצוא דוח חודשי לאקסל" placement="top">
-                                    <Button className={styles["action-button"]} variant="raised" color="primary"
+                                    <Button className={styles["action-button"]} variant="contained" color="primary"
                                             onClick={() => this.handleGenerateExcelClick()}><AssignmentIcon/></Button>
                                 </Tooltip>
                             </IfGranted>
