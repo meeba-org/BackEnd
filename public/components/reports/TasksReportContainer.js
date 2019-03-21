@@ -71,7 +71,6 @@ TasksReportContainer.propTypes = {
     deleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     showLocationModal: PropTypes.func.isRequired,
-    router: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
 };
 
