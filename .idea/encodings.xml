@@ -149,13 +149,13 @@
     <file url="file://$PROJECT_DIR$/public/styles/MonthlyReportLine.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Movie.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/NoData.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/Note.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ReportFeatureContent.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ReportShift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Shift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ShiftIndicator.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ShiftsList.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/SideBar.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/styles/Statistics.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/User.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Warning.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/variables.scss" charset="UTF-8" />

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import playStoreImage from '../../styles/images/playStore.svg';
-import appStoreImage from '../../styles/images/appStore.svg';
-import mobileImage from '../../styles/images/1.png';
-import styles from '../../styles/EmployeeFeatureContent.scss';
 import CSSModules from "react-css-modules";
+import styles from '../../styles/EmployeeFeatureContent.scss';
+import mobileImage from '../../styles/images/1.png';
+import appStoreImage from '../../styles/images/appStore.svg';
+import playStoreImage from '../../styles/images/playStore.svg';
 
 class EmployeeFeatureContent extends Component {
     render() {
@@ -11,7 +11,7 @@ class EmployeeFeatureContent extends Component {
             <div styleName="employee-content">
                 <div styleName="employee-content-container">
                     <div styleName="mobile-sc">
-                        <img src={mobileImage}/>
+                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src={mobileImage}/>
                     </div>
                     <div styleName="badges">
                         <div styleName="badge">
