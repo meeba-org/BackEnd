@@ -75,7 +75,7 @@ module.exports = {
 
         // https://github.com/numical/script-ext-html-webpack-plugin
         new ScriptExtHtmlWebpackPlugin({
-            defaultAttribute: 'async'
+            defaultAttribute: 'defer'
         }),
         new BundleAnalyzerPlugin({
             analyzerMode: 'static'
