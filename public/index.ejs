@@ -84,7 +84,18 @@
 
 <div id="react-app"></div>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link href='https://fonts.googleapis.com/css?family=Assistant&subset=hebrew' rel='stylesheet' type='text/css'>
+<script>
+    WebFontConfig = {
+        google: { families: [ 'Assistant:hebrew' ] }
+    };
+
+    (function (d) {
+        var wf = d.createElement('script'), s = d.scripts[0];
+        wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
+        wf.async = true;
+        s.parentNode.insertBefore(wf, s);
+    })(document);
+</script>
 </body>
 <!-- Facebook Customer Chat Plugin -->
 <!-- Load Facebook SDK for JavaScript -->
