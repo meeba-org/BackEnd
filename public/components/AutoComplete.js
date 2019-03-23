@@ -1,187 +1,221 @@
-/* eslint-disable flowtype/require-valid-file-annotation */
-/* eslint-disable react/no-array-index-key */
-
-import React from 'react';
-import PropTypes from 'prop-types';
-import Autosuggest from 'react-autosuggest';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
+import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
-import match from 'autosuggest-highlight/match';
-import parse from 'autosuggest-highlight/parse';
-import withStyles from '@material-ui/core/styles/withStyles';
+import NoSsr from '@material-ui/core/NoSsr';
+import Paper from '@material-ui/core/Paper';
+import {withStyles} from '@material-ui/core/styles';
+import {emphasize} from '@material-ui/core/styles/colorManipulator';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import CancelIcon from '@material-ui/icons/Cancel';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import Select from 'react-select';
 
-function renderInput(inputProps) {
-    const { classes, autoFocus, value, ref, ...other } = inputProps;
+const styles = theme => ({
+    root: {
+    },
+    input: {
+        display: 'flex',
+        padding: 0,
+    },
+    valueContainer: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        flex: 1,
+        alignItems: 'center',
+        overflow: 'hidden',
+    },
+    chip: {
+        margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
+    },
+    chipFocused: {
+        backgroundColor: emphasize(
+            theme.palette.type === 'light' ? theme.palette.grey[300] : theme.palette.grey[700],
+            0.08,
+        ),
+    },
+    noOptionsMessage: {
+        padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+    },
+    singleValue: {
+        fontSize: 16,
+    },
+    placeholder: {
+        fontSize: 16,
+    },
+    paper: {
+        position: 'absolute',
+        zIndex: 1,
+        marginTop: theme.spacing.unit,
+        left: 0,
+        right: 0,
+    },
+    divider: {
+        height: theme.spacing.unit * 2,
+    },
+});
 
+function NoOptionsMessage(props) {
+    return (
+        <Typography
+            color="textSecondary"
+            className={props.selectProps.classes.noOptionsMessage}
+            {...props.innerProps}
+        >
+            {props.children}
+        </Typography>
+    );
+}
+
+function inputComponent({ inputRef, ...props }) {
+    return <div ref={inputRef} {...props} />;
+}
+
+function Control(props) {
     return (
         <TextField
-            autoFocus={autoFocus}
-            className={classes.textField}
-            value={value}
-            inputRef={ref}
+            fullWidth
             InputProps={{
-                classes: {
-                    input: classes.input,
+                inputComponent,
+                inputProps: {
+                    className: props.selectProps.classes.input,
+                    inputRef: props.innerRef,
+                    children: props.children,
+                    ...props.innerProps,
                 },
-                ...other,
             }}
+            {...props.selectProps.textFieldProps}
         />
     );
 }
 
-function renderSuggestion(suggestion, { query, isHighlighted }) {
-    const matches = match(suggestion.label, query);
-    const parts = parse(suggestion.label, matches);
-
+function Option(props) {
     return (
-        <MenuItem selected={isHighlighted} component="div">
-            <div>
-                {parts.map((part, index) => {
-                    return part.highlight ? (
-                        <span key={index} style={{ fontWeight: 300 }}>
-              {part.text}
-            </span>
-                    ) : (
-                        <strong key={index} style={{ fontWeight: 500 }}>
-                            {part.text}
-                        </strong>
-                    );
-                })}
-            </div>
+        <MenuItem
+            buttonRef={props.innerRef}
+            selected={props.isFocused}
+            component="div"
+            style={{
+                fontWeight: props.isSelected ? 500 : 400,
+            }}
+            {...props.innerProps}
+        >
+            {props.children}
         </MenuItem>
     );
 }
 
-function renderSuggestionsContainer(options) {
-    const { containerProps, children } = options;
-
+function Placeholder(props) {
     return (
-        <Paper {...containerProps} square>
-            {children}
+        <Typography
+            color="textSecondary"
+            className={props.selectProps.classes.placeholder}
+            {...props.innerProps}
+        >
+            {props.children}
+        </Typography>
+    );
+}
+
+function SingleValue(props) {
+    return (
+        <Typography className={props.selectProps.classes.singleValue} {...props.innerProps}>
+            {props.children}
+        </Typography>
+    );
+}
+
+function ValueContainer(props) {
+    return <div className={props.selectProps.classes.valueContainer}>{props.children}</div>;
+}
+
+function MultiValue(props) {
+    return (
+        <Chip
+            tabIndex={-1}
+            label={props.children}
+            className={classNames(props.selectProps.classes.chip, {
+                [props.selectProps.classes.chipFocused]: props.isFocused,
+            })}
+            onDelete={props.removeProps.onClick}
+            deleteIcon={<CancelIcon {...props.removeProps} />}
+        />
+    );
+}
+
+function Menu(props) {
+    return (
+        <Paper square className={props.selectProps.classes.paper} {...props.innerProps}>
+            {props.children}
         </Paper>
     );
 }
 
-function getSuggestionValue(suggestion) {
-    return suggestion.label;
-}
+const components = {
+    Control,
+    Menu,
+    MultiValue,
+    NoOptionsMessage,
+    Option,
+    Placeholder,
+    SingleValue,
+    ValueContainer,
+};
 
-function getSuggestions(value, suggestions) {
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
-    let count = 0;
-
-    return inputLength === 0
-        ? []
-        : suggestions.filter(suggestion => {
-            const keep =
-                count < 5 && suggestion.label.toLowerCase().slice(0, inputLength) === inputValue;
-
-            if (keep) {
-                count += 1;
-            }
-
-            return keep;
-        });
-}
-
-const styles = theme => ({
-    container: {
-        flexGrow: 1,
-        position: 'relative',
-    },
-    suggestionsContainerOpen: {
-        position: 'absolute',
-        marginTop: theme.spacing.unit,
-        marginBottom: theme.spacing.unit * 3,
-        left: 0,
-        right: 0,
-        "z-index": 1
-    },
-    suggestion: {
-        display: 'block',
-    },
-    suggestionsList: {
-        margin: 0,
-        padding: 0,
-        listStyleType: 'none',
-    },
-    textField: {
-        width: '100%',
-    },
-});
-
-class AutoComplete extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: '',
-            suggestions: props.suggestions,
-        };
-    }
-
-    handleSuggestionsFetchRequested = ({ value }) => {
-        let allSuggestions = this.props.suggestions;
-        this.setState({
-            suggestions: getSuggestions(value, allSuggestions),
-        });
+class IntegrationReactSelect extends React.Component {
+    state = {
+        single: null,
     };
 
-    handleSuggestionsClearRequested = () => {
+    handleChange = name => value => {
         this.setState({
-            suggestions: [],
+            [name]: '',
         });
-    };
 
-    handleChange = (event, { newValue }) => {
-        this.setState({
-            value: newValue,
-        });
-    };
-
-    handleSelect = (event, { suggestion}) => {
-        this.props.onSelect(suggestion);
+        this.props.onSelect(value);
     };
 
     render() {
-        const { classes, placeholder, disabled } = this.props;
+        const { classes, theme, suggestions, placeholder, disabled } = this.props;
+
+        const selectStyles = {
+            input: base => ({
+                ...base,
+                color: theme.palette.text.primary,
+                '& input': {
+                    font: 'inherit',
+                },
+            }),
+        };
 
         return (
-            <Autosuggest
-                theme={{
-                    container: classes.container,
-                    suggestionsContainerOpen: classes.suggestionsContainerOpen,
-                    suggestionsList: classes.suggestionsList,
-                    suggestion: classes.suggestion,
-                }}
-                renderInputComponent={renderInput}
-                suggestions={this.state.suggestions}
-                onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
-                renderSuggestionsContainer={renderSuggestionsContainer}
-                getSuggestionValue={getSuggestionValue}
-                renderSuggestion={renderSuggestion}
-                onSuggestionSelected={this.handleSelect}
-                inputProps={{
-                    autoFocus: true,
-                    classes,
-                    placeholder,
-                    value: this.state.value,
-                    onChange: this.handleChange,
-                    disabled: disabled
-                }}
-            />
+            <div className={classes.root}>
+                <NoSsr>
+                    <Select
+                        classes={classes}
+                        styles={selectStyles}
+                        options={suggestions}
+                        components={components}
+                        value={this.state.single}
+                        onChange={this.handleChange('single')}
+                        placeholder={placeholder}
+                        isClearable
+                        isDisabled={disabled}
+                        isRtl={true}
+                        noOptionsMessage={() => "לא נמצאו עובדים"}
+                        autoFocus
+                    />
+                    <div className={classes.divider} />
+                </NoSsr>
+            </div>
         );
     }
 }
 
-AutoComplete.propTypes = {
+IntegrationReactSelect.propTypes = {
     classes: PropTypes.object.isRequired,
-    suggestions: PropTypes.array.isRequired,
-    placeholder: PropTypes.string,
-    onSelect: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired
+    theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AutoComplete);
+export default withStyles(styles, { withTheme: true })(IntegrationReactSelect);
