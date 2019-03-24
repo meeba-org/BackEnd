@@ -13,7 +13,7 @@ import HoursSummary from "./HoursSummary";
 import ShiftsList from "./ShiftsList";
 
 
-class MonthlyReportLine extends React.PureComponent {
+class TaskReportLine extends React.PureComponent {
     state = {
         hover: false
     };
@@ -62,7 +62,7 @@ class MonthlyReportLine extends React.PureComponent {
     }
 }
 
-MonthlyReportLine.propTypes = {
+TaskReportLine.propTypes = {
     input: PropTypes.object.isRequired,
     onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
@@ -73,5 +73,5 @@ MonthlyReportLine.propTypes = {
     isCollapsed: PropTypes.bool.isRequired,
 };
 
-export default CSSModules(MonthlyReportLine, styles);
+export default CSSModules(TaskReportLine, styles);
 

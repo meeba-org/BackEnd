@@ -438,12 +438,26 @@ const createEmployeeReports = (shifts, settings) => {
     return usersArray;
 };
 
-const createTasksReport = (shifts, settings) => {
+function generateTaskBreadcrumb(task, tasks) {
+    return [];
+}
+
+function generateTasksBreadcrumb(map, tasks) {
+    if (!tasks)
+        return;
+
+    map.forEach(task => {
+        task.taskBreadCrumb = generateTaskBreadcrumb(task, tasks);
+    })
+}
+
+const createTasksReport = (shifts, settings, tasks) => {
     if (!shifts)
         return [];
 
     // settings = settings || EmptySettings;
     let map = mapTasksToShifts(shifts);
+    generateTasksBreadcrumb(map, tasks);
     let mapWithAdditionalInfo = processTaskAdditionalInfo(map, settings);
     return mapWithAdditionalInfo;
 };

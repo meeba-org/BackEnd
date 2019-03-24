@@ -7,6 +7,7 @@ const CompanyModel = require('../models/CompanyModel');
 const ExcelManager = require('../managers/ExcelManager');
 const jwtService = require("./jwtService");
 const ShiftAnalyzer = require("../managers/ShiftAnalyzer");
+const TaskModel = require("../models/TaskModel");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {param, query } = require('express-validator/check');
 
@@ -75,9 +76,15 @@ router.get('/tasks',
 
         const company = jwtService.getCompanyFromLocals(res);
 
-        return ShiftModel.getShiftsInMonth(year, month, company, userId)
-            .then((shifts) => {
-                return ShiftAnalyzer.createTasksReport(shifts, company.settings);
+        return Promise.all([
+            ShiftModel.getShiftsInMonth(year, month, company, userId),
+            TaskModel.getByCompanyId(company._id)
+            ])
+            .then((results) => {
+                let shifts = results[0];
+                let tasks = results[1];
+
+                return ShiftAnalyzer.createTasksReport(shifts, company.settings, tasks);
             });
     })
 );
