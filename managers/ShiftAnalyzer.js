@@ -438,8 +438,15 @@ const createEmployeeReports = (shifts, settings) => {
     return usersArray;
 };
 
-function generateTaskBreadcrumb(task, tasks) {
-    return [];
+function buildBreadcrumb(task, tasks) {
+    let breadcrumbTasks = [];
+    let currTask = task ? {...task} : null;
+
+    while (currTask) {
+        breadcrumbTasks.push(currTask);
+        currTask = tasks.find(t => t._id === currTask.parent); // Go up one level
+    }
+    return breadcrumbTasks;
 }
 
 function generateTasksBreadcrumb(map, tasks) {
@@ -447,7 +454,7 @@ function generateTasksBreadcrumb(map, tasks) {
         return;
 
     map.forEach(task => {
-        task.taskBreadCrumb = generateTaskBreadcrumb(task, tasks);
+        task.taskBreadCrumb = buildBreadcrumb(task, tasks);
     })
 }
 
