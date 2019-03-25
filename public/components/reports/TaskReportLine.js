@@ -26,6 +26,22 @@ class TaskReportLine extends React.PureComponent {
         this.setState({hover: false});
     };
 
+    renderTaskTitle = (task) => {
+        let result;
+
+        if (!task || !task.taskBreadCrumb)
+            return "";
+
+        task.taskBreadCrumb.forEach((t, index) => {
+            if (index === 0)
+                result = t.title;
+            else
+                result += " --> " + t.title;
+        });
+
+        return result;
+    };
+
     render() {
         let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift, showShiftDialog, showLocationModal, index} = this.props;
         let toggleButton = isCollapsed ?
@@ -36,7 +52,7 @@ class TaskReportLine extends React.PureComponent {
             <div styleName="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div styleName="monthly-report-header" onClick={() => onToggle(index)}>
                     <IconButton className={styles["toggle-button"]} color="primary" >{toggleButton}</IconButton>
-                    <div styleName="name">{input.value.title}</div>
+                    <div styleName="name">{this.renderTaskTitle(input.value)}</div>
                     <HoursBar {...input.value} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&

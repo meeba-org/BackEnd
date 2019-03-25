@@ -444,7 +444,7 @@ function buildBreadcrumb(task, tasks) {
 
     while (currTask) {
         breadcrumbTasks.push(currTask);
-        currTask = tasks.find(t => t._id === currTask.parent); // Go up one level
+        currTask = tasks.find(t => !!t._id && !!currTask.parent && t._id.toString() === currTask.parent.toString()); // Go up one level
     }
     return breadcrumbTasks;
 }
