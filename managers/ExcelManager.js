@@ -314,9 +314,14 @@ let setHolidayName = function (addedRow, holidayName) {
 };
 
 const addTextToCell = (row, cellId, newValue, delimiter) => {
-    const cellValue = row.getCell(cellId).value;
+    const currentCellValue = row.getCell(cellId).value;
 
-    let newCellValue = (!cellValue) ? newValue : cellValue + delimiter + newValue;
+    let newCellValue = currentCellValue;
+    if (!!currentCellValue && !!newValue) // has old and new values
+        newCellValue += delimiter + newValue;
+    else if (!currentCellValue && !!newValue) // only new value
+        newCellValue = newValue;
+
     row.getCell(cellId).value = newCellValue;
 };
 
