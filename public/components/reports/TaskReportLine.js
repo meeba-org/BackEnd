@@ -2,8 +2,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Fragment} from 'react';
 import CSSModules from "react-css-modules";
 import FieldArray from "redux-form/es/FieldArray";
 import {ReportModes} from "../../helpers/utils";
@@ -26,22 +27,6 @@ class TaskReportLine extends React.PureComponent {
         this.setState({hover: false});
     };
 
-    renderTaskTitle = (task) => {
-        let result;
-
-        if (!task || !task.taskBreadCrumb)
-            return "";
-
-        task.taskBreadCrumb.forEach((t, index) => {
-            if (index === 0)
-                result = t.title;
-            else
-                result += " --> " + t.title;
-        });
-
-        return result;
-    };
-
     render() {
         let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift, showShiftDialog, showLocationModal, index} = this.props;
         let toggleButton = isCollapsed ?
@@ -52,7 +37,17 @@ class TaskReportLine extends React.PureComponent {
             <div styleName="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div styleName="monthly-report-header" onClick={() => onToggle(index)}>
                     <IconButton className={styles["toggle-button"]} color="primary" >{toggleButton}</IconButton>
-                    <div styleName="name">{this.renderTaskTitle(input.value)}</div>
+                    <div styleName="name">
+                        {input.value.breadcrumbTasks.map((t, index) => (
+                            <Fragment>
+                            {index === 0 ?
+                                <span>{t.title}</span> :
+                                <span><KeyboardArrowLeftIcon/>{t.title}</span>
+                            }
+                            </Fragment>
+                        ))
+                        }
+                    </div>
                     <HoursBar {...input.value} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&
