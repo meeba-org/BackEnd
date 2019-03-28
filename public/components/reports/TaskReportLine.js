@@ -2,8 +2,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import ArrowBack from '@material-ui/icons/KeyboardArrowLeft';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Fragment} from 'react';
 import CSSModules from "react-css-modules";
 import FieldArray from "redux-form/es/FieldArray";
 import {ReportModes} from "../../helpers/utils";
@@ -12,6 +13,24 @@ import HoursBar from "../HoursBar";
 import HoursSummary from "./HoursSummary";
 import ShiftsList from "./ShiftsList";
 
+const TaskBreadCrumb = CSSModules(({taskBreadCrumb}) => {
+    if (!taskBreadCrumb)
+        return null;
+
+    return (
+        <div styleName="name">
+            {taskBreadCrumb.map((t, index) => (
+                <Fragment>
+                    {index === 0 ?
+                        <div styleName="crumb">{t.title}</div> :
+                        <div styleName="crumb"><ArrowBack styleName="icon"/>{t.title}</div>
+                    }
+                </Fragment>
+            ))
+            }
+        </div>
+    );
+}, styles);
 
 class TaskReportLine extends React.PureComponent {
     state = {
@@ -36,7 +55,7 @@ class TaskReportLine extends React.PureComponent {
             <div styleName="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div styleName="monthly-report-header" onClick={() => onToggle(index)}>
                     <IconButton className={styles["toggle-button"]} color="primary" >{toggleButton}</IconButton>
-                    <div styleName="name">{input.value.title}</div>
+                    <TaskBreadCrumb taskBreadCrumb={input.value.taskBreadCrumb} />
                     <HoursBar {...input.value} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&

@@ -21,13 +21,17 @@
             display: inline-flex;
         }
 
-        .uid {
-            @extend .base-element;
-            min-width: 80px;
-        }
         .name {
             @extend .base-element;
-            min-width: 100px;
+            min-width: 120px;
+
+            .crumb {
+                display: flex;
+
+                .icon {
+                    color: material-color('grey', '400');
+                }
+            }
         }
     }
 
