@@ -5,7 +5,6 @@ const Excel = require('exceljs');
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
 const isHoliday = require("./HolidayAnalyzer").isHoliday;
-const shouldHaveBreak = require("./ShiftAnalyzer").shouldHaveBreak;
 const RowBorderStyle = {
     top: { style: "hair" },
     left: { style: "medium" },
@@ -107,7 +106,7 @@ function createShiftsPerEmployeeColumns(sheet, company) {
 
     sheet.columns = sheet.columns.concat([
         {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
-        {header: 'הערות', key: 'comment', width: 30, style: {alignment: {horizontal: 'right'}}},
+        {header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}},
     ]);
 }
 
@@ -117,7 +116,7 @@ function createShiftsPerTaskColumns(sheet, company) {
     sheet.columns = sheet.columns.concat([
         {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'שם עובד', key: 'userName', width: 20, style: {alignment: {horizontal: 'right'}}},
-        {header: 'הערות', key: 'comment', width: 30, style: {alignment: {horizontal: 'right'}}},
+        {header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}},
     ]);
 }
 
@@ -222,7 +221,8 @@ const createBasicShiftsContent = function (sheet, entity, company, year, month )
                 extra175Hours: hoursAnalysis.extra175Hours || "",
                 extra200Hours: hoursAnalysis.extra200Hours || "",
                 monthlyExtraPay: shift.extraPay || "",
-                userName: shift.user.fullName
+                userName: shift.user.fullName,
+                notes: shift.note
             };
 
             if (shouldAddCommuteData(company, shift)) {
@@ -310,7 +310,19 @@ function markRowAsHoliday(sheet, addedRow) {
 }
 
 let setHolidayName = function (addedRow, holidayName) {
-    addedRow.getCell('comment').value = holidayName;
+    addTextToCell(addedRow, 'notes', holidayName, ", ");
+};
+
+const addTextToCell = (row, cellId, newValue, delimiter) => {
+    const currentCellValue = row.getCell(cellId).value;
+
+    let newCellValue = currentCellValue;
+    if (!!currentCellValue && !!newValue) // has old and new values
+        newCellValue += delimiter + newValue;
+    else if (!currentCellValue && !!newValue) // only new value
+        newCellValue = newValue;
+
+    row.getCell(cellId).value = newCellValue;
 };
 
 let markWarnings = function (addedRow) {
