@@ -428,6 +428,16 @@ function createAdditionalInfo(entity, settings) {
     return Object.assign({}, entity, info);
 }
 
+function sortEmployees(usersArray) {
+    usersArray.sort((u1, u2) => {
+        if (u1.fullName < u2.fullName)
+            return -1;
+        if (u1.fullName > u2.fullName)
+            return 1;
+        return 0;
+    });
+}
+
 const createEmployeeReports = (shifts, settings) => {
     if (!shifts)
         return [];
@@ -435,6 +445,8 @@ const createEmployeeReports = (shifts, settings) => {
     settings = settings || EmptySettings;
     let map = mapUsersToShifts(shifts);
     let usersArray = processEmployeeAdditionalInfo(map, settings);
+    sortEmployees(usersArray);
+
     return usersArray;
 };
 
@@ -459,6 +471,16 @@ function generateTasksBreadcrumb(map, tasks) {
     })
 }
 
+function sortTasks(tasksArrayAdditionalInfo) {
+    tasksArrayAdditionalInfo.sort((t1, t2) => {
+        if (t1.title < t2.title)
+            return -1;
+        if (t1.title > t2.title)
+            return 1;
+        return 0;
+    });
+}
+
 const createTasksReport = (shifts, settings, tasks) => {
     if (!shifts)
         return [];
@@ -466,8 +488,10 @@ const createTasksReport = (shifts, settings, tasks) => {
     // settings = settings || EmptySettings;
     let map = mapTasksToShifts(shifts);
     generateTasksBreadcrumb(map, tasks);
-    let mapWithAdditionalInfo = processTaskAdditionalInfo(map, settings);
-    return mapWithAdditionalInfo;
+    let tasksArrayAdditionalInfo = processTaskAdditionalInfo(map, settings);
+    sortTasks(tasksArrayAdditionalInfo);
+
+    return tasksArrayAdditionalInfo;
 };
 
 module.exports = {
