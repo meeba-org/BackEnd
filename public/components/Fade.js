@@ -1,12 +1,12 @@
-import React, {Fragment} from "react";
-import animation from "../styles/Animation.scss";
-import {CSSTransition} from "react-transition-group";
 import PropTypes from "prop-types";
+import React, {Fragment} from "react";
+import {CSSTransition} from "react-transition-group";
+import animation from "../styles/Animation.scss";
 
 const Fade = (props) => {
     const { isVisible, ...rest } = props;
 
-    return <CSSTransition
+    return (<CSSTransition
         in={isVisible}
         appear
         unmountOnExit
@@ -16,7 +16,7 @@ const Fade = (props) => {
         <Fragment>
             {React.Children.map(props.children, (child => React.cloneElement(child, {...rest})))}
         </Fragment>
-    </CSSTransition>
+    </CSSTransition>);
 };
 
 Fade.propTypes = {
