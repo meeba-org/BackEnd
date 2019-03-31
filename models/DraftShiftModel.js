@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const reject = require("../controllers/apiManager").reject;
+const resolve = require("../controllers/apiManager").resolve;
 
 // Draft Shift Schema
 const DraftShiftSchema = mongoose.Schema({
@@ -32,16 +33,19 @@ const getByDraftShiftId = (id) => {
     return DraftShift.findById(id);
 };
 
-const createDraftShift = (shift) => {
-    if (!shift)
-        return null;
+const createDraftShift = (draftShift) => {
+    if (!draftShift)
+        return resolve(null);
 
-    let newShift = createShiftInstance(shift);
+    let newShift = createShiftInstance(draftShift);
 
     return newShift.save();
 };
 
 const updateDraftShift = (draftShift) => {
+    if (!draftShift)
+        return resolve(null);
+
     if (!draftShift._id)
         return reject("[DraftShiftModel.updateDraftShift] - no valid id");
 
@@ -62,21 +66,10 @@ const deleteAllDraftShifts = (conditions) => {
     return DraftShift.remove(conditions).exec();
 };
 
-const createOrUpdateDraftShift = (shift) => {
-    if (!shift)
-        throw new Error('Shift is not valid');
-
-    if (shift._id)
-        return updateDraftShift(shift);
-    else
-        return createDraftShift(shift);
-};
-
 const draftShiftsCount = () => DraftShift.countDocuments().exec();
 
 module.exports = {
-    createOrUpdateDraftShift
-    , deleteAllDraftShifts
+    deleteAllDraftShifts
     , getByDraftShiftId
     , createDraftShift
     , updateDraftShift

@@ -40,7 +40,7 @@ function createShiftInstance(shift) {
     return newShift;
 }
 
-const getByDraftShiftId = (id) => {
+const getByShiftId = (id) => {
     return Shift.findById(id);
 };
 
@@ -130,7 +130,7 @@ module.exports = {
     createOrUpdateShift
     , deleteAllShifts
     , getShiftsBetween
-    , getByDraftShiftId
+    , getByShiftId
     , createShift
     , updateShift
     , deleteShift
