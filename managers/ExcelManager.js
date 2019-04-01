@@ -17,6 +17,7 @@ const HeaderBorderStyle = {
     bottom: { style: "medium" },
     right: { style: "medium" }
 };
+const EXCEL_SHEET_NAME_LIMIT = 31;
 moment.locale('he');
 
 const createTitleDate = function (year, month) {
@@ -418,10 +419,25 @@ const addShiftsPerEmployeeSheets = (workbook, company, employees, year, month) =
 
 }
 
+function generateTaskName(task) {
+    if (!task.taskBreadCrumb || task.taskBreadCrumb.length === 0)
+        return task.title;
+
+    let name = '';
+    for (let i = 0 ; i < task.taskBreadCrumb.length ; i++) {
+        let b = task.taskBreadCrumb[i];
+        if (i === 0)
+            name += b.title;
+        else
+            name += "-->" + b.title;
+    }
+    return name.substring(0, EXCEL_SHEET_NAME_LIMIT);
+}
+
 const addShiftsPerTaskSheets = (workbook, company, tasks, year, month) => {
     tasks.forEach((task) => {
         // create a sheet with the first row and column frozen
-        let sheet = addWorksheet(workbook, task.title, "D49B6A");
+        let sheet = addWorksheet(workbook, generateTaskName(task), "D49B6A");
 
         createShiftsPerTaskColumns(sheet, company);
         createShiftsPerTasksContent(sheet, task, company, year, month );
@@ -443,16 +459,16 @@ const processShiftsForEmployees = function (shifts, company) {
     return ShiftAnalyzer.createEmployeeReports(shifts, company.settings);
 };
 
-const processShiftsForTasks = function (shifts, company) {
+const processShiftsForTasks = function (shifts, company, tasks) {
     if (!shifts || shifts.length === 0)
         return [];
-    return ShiftAnalyzer.createTasksReport(shifts, company.settings);
+    return ShiftAnalyzer.createTasksReport(shifts, company.settings, tasks);
 };
 
-const createExcel = (shifts, year, month, company) => {
+const createExcel = (shifts, year, month, company, rawTasks) => {
     const workbook = createWorkbook();
     let employees = processShiftsForEmployees(shifts, company);
-    let tasks = processShiftsForTasks(shifts, company);
+    let tasks = processShiftsForTasks(shifts, company, rawTasks);
 
     addSummarySheet(workbook, company, employees);
     addShiftsPerEmployeeSheets(workbook, company, employees, year, month);

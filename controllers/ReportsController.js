@@ -25,9 +25,15 @@ router.get('/download',
         let user = jwtService.getUserFromLocals(res);
         return CompanyModel.getByCompanyId(user.company._id)
             .then(company => {
-                return ShiftModel.getShiftsInMonth(year, month, company)
-                    .then((shifts) => {
-                        let workbook = ExcelManager.createExcel(shifts, year, month, company);
+                return Promise.all([
+                    ShiftModel.getShiftsInMonth(year, month, company),
+                    TaskModel.getByCompanyId(company._id)
+                ])
+                    .then((results) => {
+                        let shifts = results[0];
+                        let tasks = results[1];
+
+                        let workbook = ExcelManager.createExcel(shifts, year, month, company, tasks);
 
                         let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
                         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
