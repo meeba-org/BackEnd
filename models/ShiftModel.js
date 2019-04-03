@@ -61,7 +61,7 @@ const updateShift = (shift) => {
     if (!shift._id)
         return reject("[ShiftModel.updateShift] - no valid id");
 
-    return DraftShiftModel.updateDraftShift(shift.draftShift)
+    return DraftShiftModel.createOrUpdateDraftShift(shift.draftShift)
         .then(draftShift => {
             if (draftShift)
                 shift.draftShift = draftShift;

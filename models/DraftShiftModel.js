@@ -66,10 +66,21 @@ const deleteAllDraftShifts = (conditions) => {
     return DraftShift.remove(conditions).exec();
 };
 
+const createOrUpdateDraftShift = (draftShift) => {
+    if (!draftShift)
+        return resolve(null);
+
+    if (draftShift._id)
+        return updateDraftShift(draftShift);
+    else
+        return createDraftShift(draftShift);
+};
+
 const draftShiftsCount = () => DraftShift.countDocuments().exec();
 
 module.exports = {
-    deleteAllDraftShifts
+    createOrUpdateDraftShift
+    , deleteAllDraftShifts
     , getByDraftShiftId
     , createDraftShift
     , updateDraftShift
