@@ -30,6 +30,7 @@ const ShiftSchema = mongoose.Schema({
     task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
     breakLength: {type: Number, default: 0},
     draftShift: { type: mongoose.Schema.Types.ObjectId, ref: 'DraftShift' },
+    status: {type: Number, default: 0},
 });
 
 const Shift = mongoose.model('Shift', ShiftSchema);
