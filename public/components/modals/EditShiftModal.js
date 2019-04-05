@@ -11,9 +11,10 @@ import CommentIcon from "@material-ui/icons/Comment";
 import BusIcon from "@material-ui/icons/DirectionsBus";
 import BreakIcon from "@material-ui/icons/FreeBreakfast";
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {hideEditShiftModal} from "../../actions/index";
+import {EShiftStatus} from "../../helpers/EShiftStatus";
 import * as selectors from "../../selectors";
 import TasksSelectionContainer from "../tasks/TasksSelectionContainer";
 
@@ -21,11 +22,12 @@ const moment = require("moment");
 
 const styles = {
     dialogActionsRoot: {
-        justifyContent: "center"
+        justifyContent: "center",
+        minWidth: "15vw"
     },
     dialogContentRoot: {
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
     }
 };
 
@@ -109,19 +111,22 @@ class EditShiftModal extends Component {
 
     render() {
         let {open, classes, isCommuteFeatureEnable, isTasksFeatureEnable} = this.props;
-        let {note, extraPay, breakLength, commuteCost, task} = this.state.entity || {};
+        let {note, extraPay, breakLength, commuteCost, task, status} = this.state.entity || {};
         let {publicTransportation} = commuteCost || {};
+
 
         return (
             <Dialog onClose={this.handleClose} open={open} >
-                <DialogTitle>{"עריכת משמרת"}</DialogTitle>
+                <DialogTitle>{status === EShiftStatus.PENDING ? "אישור משמרת": "עריכת משמרת"}</DialogTitle>
                 <DialogContent classes={{root: classes.dialogContentRoot}}>
+
                     <ESMTextInput
                         onChange={(e) => this.handleShiftChange("note", e.target.value)}
                         value={note}
                         type={"text"}
                         TIIcon={CommentIcon}
                         label={"הערות"}
+
                         />
 
                     <ESMTextInput
@@ -155,9 +160,22 @@ class EditShiftModal extends Component {
                     }
 
                     <DialogActions classes={{root: classes.dialogActionsRoot}}>
-                        <Button variant="contained" onClick={this.handleClose} autoFocus color="primary">
-                            סגור
-                        </Button>
+                        <Fragment>
+                            <Button variant="contained" onClick={this.handleClose} autoFocus color="primary">
+                                סגור
+                            </Button>
+                            {status === EShiftStatus.PENDING &&
+                            <Fragment>
+                                <Button variant="contained" onClick={this.handleClose} autoFocus color="primary">
+                                    אשר
+                                </Button>
+                                <Button variant="contained" onClick={this.handleClose} autoFocus color="primary">
+                                    דחה
+                                </Button>
+                            </Fragment>
+                            }
+                        </Fragment>
+
                     </DialogActions>
                 </DialogContent>
             </Dialog>
@@ -182,6 +200,6 @@ const mapStateToProps = (state) => {
     return {
         isCommuteFeatureEnable: selectors.isCommuteFeatureEnable(state),
         isTasksFeatureEnable: selectors.isTasksFeatureEnable(state),
-};
+    };
 };
 export default connect(mapStateToProps)(withStyles(styles)(EditShiftModal));

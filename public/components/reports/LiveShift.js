@@ -1,20 +1,21 @@
-import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
-import {isWorking} from "../../helpers/utils";
-import styles from "../../styles/LiveShift.scss";
-import Home from '@material-ui/icons/Home';
-import Work from '@material-ui/icons/Work';
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
+import Home from '@material-ui/icons/Home';
+import Work from '@material-ui/icons/Work';
 import TimePicker from "material-ui-pickers/TimePicker";
+import PropTypes from 'prop-types';
+import React, {Fragment} from 'react';
+import {isWorking} from "../../helpers/utils";
+import styles from "../../styles/LiveShift.scss";
+import withShiftLogic from "../withShiftLogic";
+import BusCost from "./BusCost";
 import ExtraPay from "./ExtraPay";
+import Location from "./Location";
 import Note from "./Note";
 import TaskIndicator from "./TaskIndicator";
 import Warning from "./Warning";
-import BusCost from "./BusCost";
-import Location from "./Location";
 
 const LiveShift = (props) => {
     let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete, showShiftDialog, showLocationModal, isDesktop} = props;
@@ -91,4 +92,4 @@ LiveShift.propTypes = {
 };
 LiveShift.defaultProps = {};
 
-export default LiveShift;
+export default  withShiftLogic(LiveShift);

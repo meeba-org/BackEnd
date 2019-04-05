@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 import {momentToDay} from "../../helpers/utils";
 import styles from "../../styles/ReportShift.scss";
+import withShiftLogic from "../withShiftLogic";
 import BusCost from "./BusCost";
 import ExtraPay from "./ExtraPay";
 import Location from "./Location";
@@ -94,4 +95,4 @@ ReportShift.propTypes = {
 };
 ReportShift.defaultProps = {};
 
-export default ReportShift;
+export default withShiftLogic(ReportShift);
