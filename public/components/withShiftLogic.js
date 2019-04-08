@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import {connect} from "react-redux";
+import {createShift, showDeleteShiftModal, updateShift} from "../actions";
 import {convertMomentToTimeStr, convertTimeStrToMoment, getCurrentTime} from "../helpers/utils";
+import moment from "./reports/MonthlyReport";
 
 function withShiftLogic(WrappedComponent) {
     class WithShiftLogic extends Component {
@@ -26,7 +29,7 @@ function withShiftLogic(WrappedComponent) {
         };
 
         onUpdate = (startDateStr, startTimeStr, endTimeStr) => {
-            let {shift, onUpdate} = this.props;
+            let {shift, updateShift} = this.props;
 
             let {momentStart, momentEnd} = convertTimeStrToMoment(startDateStr, startTimeStr, endTimeStr);
 
@@ -36,13 +39,16 @@ function withShiftLogic(WrappedComponent) {
                 clockOutTime: momentEnd,
             };
 
-            onUpdate(updatedShift);
+            const {selectedYear, selectedMonth} = this.props; // TODO Chen need to be drilled ...
+
+            let value = moment().year(selectedYear).month(selectedMonth - 1);
+            updateShift(updatedShift, value.format('MM'), value.format('YYYY'));
         };
 
         onDelete = () => {
-            let {onDelete, shift} = this.props;
+            let {deleteShift, shift} = this.props;
 
-            onDelete(shift);
+            deleteShift(shift);
         };
 
         onShiftComplete = () => {
@@ -71,7 +77,15 @@ function withShiftLogic(WrappedComponent) {
         onUpdate: PropTypes.func.isRequired,
     };
 
-    return WithShiftLogic;
+    function mapDispatchToProps(dispatch) {
+        return {
+            createShift: (shift) => dispatch(createShift(shift, dispatch)),
+            updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, true, month, year)),
+            deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
+        };
+    }
+
+    return connect(null, mapDispatchToProps)(WithShiftLogic);
 }
 
 export default withShiftLogic;

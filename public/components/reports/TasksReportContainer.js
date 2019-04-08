@@ -3,7 +3,7 @@ import React from "react";
 import {connect} from "react-redux";
 import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
-import {createShift, showLocationModal, updateShift} from "../../actions";
+import {createShift, showLocationModal} from "../../actions";
 import {fetchTasksReport, generateExcelReport} from "../../actions/reportsActions";
 import {showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
@@ -36,7 +36,7 @@ class TasksReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, updateShift, showShiftDialog, showLocationModal, createShift, deleteShift, employees, userRole} = this.props;
+        const {handleSubmit, showShiftDialog, showLocationModal, createShift, deleteShift, employees, userRole} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="tasksReports"
@@ -45,7 +45,6 @@ class TasksReportContainer extends React.PureComponent {
                             onDeleteShift={deleteShift}
                             showShiftDialog={showShiftDialog}
                             showLocationModal={showLocationModal}
-                            onUpdateShift={updateShift}
                             onCreateShift={createShift}
                             onMonthChange={this.onDataChange}
                             onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
@@ -90,7 +89,6 @@ function mapDispatchToProps(dispatch) {
         fetchTasksReport: (month, year) => dispatch(fetchTasksReport(month, year)),
         fetchEmployees: () => dispatch(fetchUsers(true)),
         generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
-        updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, true, month, year)),
         createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
         showShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
