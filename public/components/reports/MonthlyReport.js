@@ -159,7 +159,6 @@ MonthlyReport.propTypes = {
     fields: PropTypes.object,
     employees: PropTypes.array,
     onCreateShift: PropTypes.func.isRequired,
-    onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     showLocationModal: PropTypes.func.isRequired,

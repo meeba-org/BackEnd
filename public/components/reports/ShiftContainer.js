@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from "react";
 import CSSModules from "react-css-modules";
 import connect from "react-redux/es/connect/connect";
-import {convertMomentToTimeStr, getCurrentTime, ReportModes} from "../../helpers/utils";
+import {ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import styles from "../../styles/Shift.scss";
 import LiveShift from "./LiveShift";
@@ -18,34 +18,6 @@ class ShiftContainer extends React.PureComponent {
             hover: false,
             focus: false,
         };
-    }
-
-    onUpdateStartDate = (date, shift) => {
-        let {startTimeStr, endTimeStr} = convertMomentToTimeStr(shift);
-        let newStartDateStr = date.format("YYYY-MM-DD");
-
-        this.onUpdate(newStartDateStr, startTimeStr, endTimeStr);
-    }
-
-    onUpdateStartTime = (time, shift) => {
-        let {startDateStr, endTimeStr} = convertMomentToTimeStr(shift);
-        let newStartTimeStr = time.format("HH:mm");
-
-        this.onUpdate(startDateStr, newStartTimeStr, endTimeStr);
-    }
-
-    onUpdateEndTime = (time, shift) => {
-        let {startDateStr, startTimeStr} = convertMomentToTimeStr(shift);
-        let newEndTimeStr = time.format("HH:mm");
-
-        this.onUpdate(startDateStr, startTimeStr, newEndTimeStr);
-    }
-
-    onUpdate = (shift) => {
-        let {input, onUpdate} = this.props;
-
-        input.onChange(shift);
-        onUpdate(shift);
     }
 
     onDelete = () => {
@@ -80,13 +52,6 @@ class ShiftContainer extends React.PureComponent {
             window.open(`maps://maps.google.com/maps?q=${location.latitude},${location.longitude}`);
         else /* else use Google */
             window.open(`https://maps.google.com/maps?q=${location.latitude},${location.longitude}`);
-    };
-
-    onShiftComplete = () => {
-        let {startDateStr, startTimeStr} = convertMomentToTimeStr(this.props.input.value);
-        let newEndTimeStr = getCurrentTime();
-
-        this.onUpdate(startDateStr, startTimeStr, newEndTimeStr);
     };
 
     onMouseEnter = () => {
@@ -128,7 +93,7 @@ class ShiftContainer extends React.PureComponent {
 
 
     render() {
-        let {showNames, input, mode, isDesktop, onUpdate, onDelete} = this.props;
+        let {showNames, input, mode, isDesktop, onDelete} = this.props;
         const {focus, hover} = this.state;
         let errors = this.getErrors();
         let classes1 = "shift " + (focus ? "focus" : "");
@@ -145,7 +110,6 @@ class ShiftContainer extends React.PureComponent {
                         showShiftDialog={this.showShiftDialog}
                         showLocationModal={this.showLocationModal}
                         isDesktop={isDesktop}
-                        onUpdate={this.onUpdate}
                         onDelete={onDelete}
                     />
                 }
@@ -158,7 +122,6 @@ class ShiftContainer extends React.PureComponent {
                         showShiftDialog={this.showShiftDialog}
                         showLocationModal={this.showLocationModal}
                         isDesktop={isDesktop}
-                        onUpdate={this.onUpdate}
                         onDelete={onDelete}
                     />
                 }
@@ -171,7 +134,6 @@ ShiftContainer.propTypes = {
     input: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
     mode: PropTypes.number.isRequired,
 };

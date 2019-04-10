@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types';
+import moment from "moment";
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {createShift, showDeleteShiftModal, updateShift} from "../actions";
 import {convertMomentToTimeStr, convertTimeStrToMoment, getCurrentTime} from "../helpers/utils";
-import moment from "./reports/MonthlyReport";
 
 function withShiftLogic(WrappedComponent) {
     class WithShiftLogic extends Component {
@@ -33,16 +32,15 @@ function withShiftLogic(WrappedComponent) {
 
             let {momentStart, momentEnd} = convertTimeStrToMoment(startDateStr, startTimeStr, endTimeStr);
 
+
             let updatedShift = {
                 ...shift,
                 clockInTime: momentStart,
                 clockOutTime: momentEnd,
             };
 
-            const {selectedYear, selectedMonth} = this.props; // TODO Chen need to be drilled ...
-
-            let value = moment().year(selectedYear).month(selectedMonth - 1);
-            updateShift(updatedShift, value.format('MM'), value.format('YYYY'));
+            let mShift = moment(shift); // Passing the original month & year
+            updateShift(updatedShift, mShift.format('MM'), mShift.format('YYYY'));
         };
 
         onDelete = () => {
@@ -73,8 +71,6 @@ function withShiftLogic(WrappedComponent) {
     }
 
     WithShiftLogic.propTypes = {
-        onDelete: PropTypes.func.isRequired,
-        onUpdate: PropTypes.func.isRequired,
     };
 
     function mapDispatchToProps(dispatch) {

@@ -53,7 +53,7 @@ class ShiftsList extends React.PureComponent {
 
     render() {
 
-        let {fields, showNames, mode, shouldDisplayNoData, showShiftDialog, showLocationModal, onUpdate} = this.props;
+        let {fields, showNames, mode, shouldDisplayNoData, showShiftDialog, showLocationModal} = this.props;
         return (
             <div styleName="shifts-list">
                 {fields && fields.map((shiftName, index) =>
@@ -64,7 +64,6 @@ class ShiftsList extends React.PureComponent {
                                 onDelete={() => this.onDelete(fields, index)}
                                 showShiftDialog={showShiftDialog}
                                 showLocationModal={showLocationModal}
-                                onUpdate={onUpdate}
                                 showNames={showNames}
                                 mode={mode}
                                 getIntersectShift={this.getIntersectShift}
@@ -82,7 +81,6 @@ class ShiftsList extends React.PureComponent {
 ShiftsList.propTypes = {
     fields: PropTypes.object.isRequired,
     onCreate: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     showLocationModal: PropTypes.func.isRequired,
