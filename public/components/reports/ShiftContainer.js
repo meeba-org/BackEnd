@@ -6,6 +6,7 @@ import connect from "react-redux/es/connect/connect";
 import {ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import styles from "../../styles/Shift.scss";
+import withShiftLogic from "../withShiftLogic";
 import LiveShift from "./LiveShift";
 import ReportShift from "./ReportShift";
 
@@ -70,6 +71,33 @@ class ShiftContainer extends React.PureComponent {
         this.setState({focus: false});
     };
 
+    onUpdateStartDate = (date, shift) => {
+        const {onUpdateStartDate} = this.props;
+        let updatedShift = onUpdateStartDate(date, shift);
+
+        this.onUpdate(updatedShift);
+    };
+
+    onUpdateStartTime = (time, shift) => {
+        const {onUpdateStartTime} = this.props;
+        let updatedShift = onUpdateStartTime(time, shift);
+
+        this.onUpdate(updatedShift);
+    };
+
+    onUpdateEndTime = (time, shift) => {
+        const {onUpdateEndTime} = this.props;
+        let updatedShift = onUpdateEndTime(time, shift);
+
+        this.onUpdate(updatedShift);
+    };
+
+    onUpdate = (updatedShift) => {
+        let {input} = this.props;
+
+        input.onChange(updatedShift);
+    };
+
     getErrors = () => {
         let {input, getIntersectShift, mode} = this.props;
         let shift = input.value;
@@ -91,7 +119,6 @@ class ShiftContainer extends React.PureComponent {
         return undefined;
     };
 
-
     render() {
         let {showNames, input, mode, isDesktop, onDelete} = this.props;
         const {focus, hover} = this.state;
@@ -107,10 +134,14 @@ class ShiftContainer extends React.PureComponent {
                         shift={input.value}
                         errors={errors}
                         hover={hover}
+                        onUpdate={this.onUpdate}
                         showShiftDialog={this.showShiftDialog}
                         showLocationModal={this.showLocationModal}
                         isDesktop={isDesktop}
                         onDelete={onDelete}
+                        onUpdateStartTime={this.onUpdateStartTime}
+                        onUpdateEndTime={this.onUpdateEndTime}
+                        onShiftComplete={this.onShiftComplete}
                     />
                 }
                 {mode === ReportModes.Report &&
@@ -119,6 +150,9 @@ class ShiftContainer extends React.PureComponent {
                         shift={input.value}
                         errors={errors}
                         hover={hover}
+                        onUpdateStartDate={this.onUpdateStartDate}
+                        onUpdateStartTime={this.onUpdateStartTime}
+                        onUpdateEndTime={this.onUpdateEndTime}
                         showShiftDialog={this.showShiftDialog}
                         showLocationModal={this.showLocationModal}
                         isDesktop={isDesktop}
@@ -136,6 +170,9 @@ ShiftContainer.propTypes = {
     showShiftDialog: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
     mode: PropTypes.number.isRequired,
+    onUpdateStartDate: PropTypes.func.isRequired,
+    onUpdateStartTime: PropTypes.func.isRequired,
+    onUpdateEndTime: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -144,4 +181,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(CSSModules(ShiftContainer, styles, {allowMultiple: true}));
+export default connect(mapStateToProps)(withShiftLogic(CSSModules(ShiftContainer, styles, {allowMultiple: true})));

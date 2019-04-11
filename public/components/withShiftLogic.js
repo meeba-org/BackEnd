@@ -10,37 +10,38 @@ function withShiftLogic(WrappedComponent) {
             let {startTimeStr, endTimeStr} = convertMomentToTimeStr(shift);
             let newStartDateStr = date.format("YYYY-MM-DD");
 
-            this.onUpdate(newStartDateStr, startTimeStr, endTimeStr);
+            return this.onUpdate(shift, newStartDateStr, startTimeStr, endTimeStr);
         };
 
         onUpdateStartTime = (time, shift) => {
             let {startDateStr, endTimeStr} = convertMomentToTimeStr(shift);
             let newStartTimeStr = time.format("HH:mm");
 
-            this.onUpdate(startDateStr, newStartTimeStr, endTimeStr);
+            return this.onUpdate(shift, startDateStr, newStartTimeStr, endTimeStr);
         };
 
         onUpdateEndTime = (time, shift) => {
             let {startDateStr, startTimeStr} = convertMomentToTimeStr(shift);
             let newEndTimeStr = time.format("HH:mm");
 
-            this.onUpdate(startDateStr, startTimeStr, newEndTimeStr);
+            return this.onUpdate(shift, startDateStr, startTimeStr, newEndTimeStr);
         };
 
-        onUpdate = (startDateStr, startTimeStr, endTimeStr) => {
-            let {shift, updateShift} = this.props;
+        onUpdate = (orgShift, startDateStr, startTimeStr, endTimeStr) => {
+            let {updateShift} = this.props;
 
             let {momentStart, momentEnd} = convertTimeStrToMoment(startDateStr, startTimeStr, endTimeStr);
 
 
             let updatedShift = {
-                ...shift,
+                ...orgShift,
                 clockInTime: momentStart,
                 clockOutTime: momentEnd,
             };
 
-            let mShift = moment(shift); // Passing the original month & year
+            let mShift = moment(orgShift.clockInTime); // Passing the original month & year
             updateShift(updatedShift, mShift.format('MM'), mShift.format('YYYY'));
+            return updatedShift;
         };
 
         onDelete = () => {

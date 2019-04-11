@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 import {isWorking} from "../../helpers/utils";
 import styles from "../../styles/LiveShift.scss";
-import withShiftLogic from "../withShiftLogic";
 import BusCost from "./BusCost";
 import ExtraPay from "./ExtraPay";
 import Location from "./Location";
@@ -92,4 +91,4 @@ LiveShift.propTypes = {
 };
 LiveShift.defaultProps = {};
 
-export default  withShiftLogic(LiveShift);
+export default LiveShift;
