@@ -11,6 +11,7 @@ import CommentIcon from "@material-ui/icons/Comment";
 import BusIcon from "@material-ui/icons/DirectionsBus";
 import BreakIcon from "@material-ui/icons/FreeBreakfast";
 import DatePicker from "material-ui-pickers/DatePicker";
+import TimePicker from "material-ui-pickers/TimePicker";
 import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
@@ -111,8 +112,33 @@ class EditShiftModal extends Component {
         dispatch(updateShift(updatedShift, dispatch, false, month, year));
     };
 
+    onUpdateStartDate = (date, shift) => {
+        const {onUpdateStartDate} = this.props;
+
+        shift = onUpdateStartDate(date, shift); // Self assigning updated shift
+        this.onUpdate(shift);
+    };
+
+    onUpdateStartTime = (date, shift) => {
+        const {onUpdateStartTime} = this.props;
+
+        shift = onUpdateStartTime(date, shift); // Self assigning updated shift
+        this.onUpdate(shift);
+    };
+
+    onUpdateEndTime = (date, shift) => {
+        const {onUpdateEndTime} = this.props;
+
+        shift = onUpdateEndTime(date, shift); // Self assigning updated shift
+        this.onUpdate(shift);
+    };
+
+    onUpdate(shift) {
+        this.setState({entity: shift});
+    }
+
     render() {
-        let {open, classes, isCommuteFeatureEnable, isTasksFeatureEnable, onUpdateStartDate} = this.props;
+        let {open, classes, isCommuteFeatureEnable, isTasksFeatureEnable, onUpdateStartDate, onUpdateStartTime, onUpdateEndTime} = this.props;
         let shift = this.state.entity;
         let {note, extraPay, breakLength, commuteCost, task, status} = shift || {};
         let {publicTransportation} = commuteCost || {};
@@ -122,11 +148,27 @@ class EditShiftModal extends Component {
             <Dialog onClose={this.handleClose} open={open} >
                 <DialogTitle>{status === EShiftStatus.PENDING ? "אישור משמרת": "עריכת משמרת"}</DialogTitle>
                 <DialogContent classes={{root: classes.dialogContentRoot}}>
-                    <DatePicker autoOk onChange={(date) => onUpdateStartDate(date, shift)}
-                                value={shift.clockInTime}
-                                format="DD/MM/YYYY"
-                                style={{margin: "0 10px 0 0"}}
-                                disableFuture
+                    <DatePicker
+                        autoOk
+                        onChange={(date) => this.onUpdateStartDate(date, shift)}
+                        value={shift.clockInTime}
+                        format="DD/MM/YYYY"
+                        style={{margin: "0 10px 0 0"}}
+                        disableFuture
+                    />
+
+                    <TimePicker
+                        ampm={false}
+                        autoOk
+                        value={shift.clockInTime}
+                        onChange={(time) => this.onUpdateStartTime(time, shift)}
+                    />
+
+                    <TimePicker
+                        ampm={false}
+                        autoOk
+                        value={shift.clockOutTime}
+                        onChange={(time) => this.onUpdateEndTime(time, shift)}
                     />
 
                     <ESMTextInput

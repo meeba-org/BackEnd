@@ -1,6 +1,4 @@
-import MomentUtils from "@date-io/moment";
 import Paper from "@material-ui/core/Paper";
-import MuiPickersUtilsProvider from "material-ui-pickers/MuiPickersUtilsProvider";
 import PropTypes from 'prop-types';
 import React from 'react';
 import CSSModules from "react-css-modules";
@@ -53,9 +51,7 @@ class Dashboard extends React.PureComponent {
                             />
                         </Paper>
                         <Paper styleName="main-container">
-                            <MuiPickersUtilsProvider utils={MomentUtils}>
                             {this.props.children}
-                            </MuiPickersUtilsProvider>
                         </Paper>
                     </div>
                 </div>
