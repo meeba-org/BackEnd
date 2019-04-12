@@ -30,7 +30,7 @@ class ShiftContainer extends React.PureComponent {
     showShiftDialog = () => {
         let {showShiftDialog, input} = this.props;
 
-        showShiftDialog(input.value, (editedShift) => input.onChange(editedShift));
+        showShiftDialog(input.value); //, (editedShift) => input.onChange(editedShift));
     };
 
     showLocationModal = () => {

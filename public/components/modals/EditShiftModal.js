@@ -3,6 +3,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from "@material-ui/core/Grid";
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from "@material-ui/core/TextField";
@@ -31,12 +32,15 @@ const styles = {
     dialogContentRoot: {
         display: "flex",
         flexDirection: "column",
+    },
+    helperText: {
+        color: "orange"
     }
 };
 
-export const ESMTextInput = ({TIIcon, value, onChange, type, label}) => {
+export const ESMTextInput = ({TIIcon, value, onChange, type, label, helperText}) => {
     return (
-        <Grid container spacing={8} alignItems="flex-end">
+        <Grid container spacing={8} alignItems={!!helperText ? "center" : "flex-end"}>
             <Grid item>
                 <TIIcon style={{color: "grey"}}/>
             </Grid>
@@ -47,6 +51,7 @@ export const ESMTextInput = ({TIIcon, value, onChange, type, label}) => {
                     onChange={onChange}
                     value={value}
                     type={type}
+                    helperText={helperText}
                 />
             </Grid>
         </Grid>
@@ -65,7 +70,9 @@ class EditShiftModal extends Component {
 
     handleClose = () => {
         let {dispatch, callBack} = this.props;
-        callBack(this.state.entity);
+
+        if (callBack)
+            callBack(this.state.entity);
 
         dispatch(hideEditShiftModal());
     };
@@ -107,9 +114,9 @@ class EditShiftModal extends Component {
     updateShift = (entity, updatedShift) => {
         let month = moment(entity.clockInTime).format('MM');
         let year = moment(entity.clockInTime).format('YYYY');
-        let {updateShift, dispatch} = this.props;
+        let {updateShift} = this.props;
 
-        dispatch(updateShift(updatedShift, dispatch, false, month, year));
+        updateShift(updatedShift, month, year);
     };
 
     onUpdateStartDate = (date, shift) => {
@@ -137,12 +144,25 @@ class EditShiftModal extends Component {
         this.setState({entity: shift});
     }
 
+    calcDraftPublicTransportation = (draftShift) => {
+        if (!draftShift || !draftShift.commuteCost)
+            return null;
+
+        const {classes} = this.props;
+        let draftPublicTransportation = draftShift.commuteCost.publicTransportation;
+        return <FormHelperText classes={{root: classes.helperText}}>ערך קודם: {draftPublicTransportation}</FormHelperText>;
+    };
+
     render() {
         let {open, classes, isCommuteFeatureEnable, isTasksFeatureEnable} = this.props;
         let shift = this.state.entity;
+
+        if (!shift)
+            return null;
+
         let {note, extraPay, breakLength, commuteCost, task, status} = shift || {};
         let {publicTransportation} = commuteCost || {};
-
+        let draftPublicTransportation = this.calcDraftPublicTransportation(shift.draftShift);
 
         return (
             <Dialog onClose={this.handleClose} open={open} >
@@ -195,6 +215,7 @@ class EditShiftModal extends Component {
                             type={"number"}
                             TIIcon={BusIcon}
                             label={"נסיעות"}
+                            helperText={draftPublicTransportation}
                         />
                     }
 
