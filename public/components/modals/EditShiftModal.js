@@ -38,7 +38,30 @@ const styles = {
     }
 };
 
-export const ESMTextInput = ({TIIcon, value, onChange, type, label, helperText}) => {
+const pickerStyle = {
+    container: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start"
+    },
+    datePicker: {
+        margin: 0
+    },
+};
+
+const ESMDatePicker = withStyles(pickerStyle)(({helperText, classes, ...other}) => {
+
+    return (
+        <div className={classes.container}>
+            <DatePicker classes={{root: classes.datePicker}} {...other} />
+            {helperText &&
+                helperText
+            }
+        </div>
+    )
+});
+
+const ESMTextInput = ({TIIcon, value, onChange, type, label, helperText}) => {
     return (
         <Grid container spacing={8} alignItems={!!helperText ? "center" : "flex-end"}>
             <Grid item>
@@ -168,13 +191,14 @@ class EditShiftModal extends Component {
             <Dialog onClose={this.handleClose} open={open} >
                 <DialogTitle>{status === EShiftStatus.PENDING ? "אישור משמרת": "עריכת משמרת"}</DialogTitle>
                 <DialogContent classes={{root: classes.dialogContentRoot}}>
-                    <DatePicker
+                    <ESMDatePicker
                         autoOk
                         onChange={(date) => this.onUpdateStartDate(date, shift)}
                         value={shift.clockInTime}
                         format="DD/MM/YYYY"
                         style={{margin: "0 10px 0 0"}}
                         disableFuture
+                        helperText={<FormHelperText classes={{root: classes.helperText}}>ערך קודם: {55}</FormHelperText>}
                     />
 
                     <TimePicker
