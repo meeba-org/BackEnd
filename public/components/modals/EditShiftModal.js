@@ -138,7 +138,7 @@ class EditShiftModal extends Component {
     }
 
     render() {
-        let {open, classes, isCommuteFeatureEnable, isTasksFeatureEnable, onUpdateStartDate, onUpdateStartTime, onUpdateEndTime} = this.props;
+        let {open, classes, isCommuteFeatureEnable, isTasksFeatureEnable} = this.props;
         let shift = this.state.entity;
         let {note, extraPay, breakLength, commuteCost, task, status} = shift || {};
         let {publicTransportation} = commuteCost || {};
