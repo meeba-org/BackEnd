@@ -26,7 +26,6 @@ const moment = require("moment");
 
 const styles = {
     dialogActionsRoot: {
-        justifyContent: "center",
         minWidth: "15vw"
     },
     dialogContentRoot: {
@@ -225,10 +224,11 @@ class EditShiftModal extends Component {
         let draftDate = this.calcDraftDate(shift.draftShift);
         let draftClockInTime = this.calcDraftClockInTime(shift.draftShift);
         let draftClockOutTime = this.calcDraftClockOutTime(shift.draftShift);
+        let isStatusPending = status === EShiftStatus.PENDING;
 
         return (
             <Dialog onClose={this.handleClose} open={open} >
-                <DialogTitle>{status === EShiftStatus.PENDING ? "אישור משמרת": "עריכת משמרת"}</DialogTitle>
+                <DialogTitle>{isStatusPending ? "אישור משמרת": "עריכת משמרת"}</DialogTitle>
                 <DialogContent classes={{root: classes.dialogContentRoot}}>
                     <ESMDatePicker
                         autoOk
@@ -296,23 +296,22 @@ class EditShiftModal extends Component {
                     <TasksSelectionContainer task={task} onChange={(task) => this.handleShiftChange("task", task)}/>
                     }
 
-                    <DialogActions classes={{root: classes.dialogActionsRoot}}>
+                    <DialogActions classes={{root: classes.dialogActionsRoot}} style={{justifyContent: isStatusPending ? "space-between" : "center"}}>
                         <Fragment>
-                            <Button variant="contained" onClick={this.handleClose} autoFocus color="primary">
-                                סגור
-                            </Button>
-                            {status === EShiftStatus.PENDING &&
+                            {isStatusPending &&
                             <Fragment>
-                                <Button variant="contained" onClick={this.handleClose} autoFocus color="primary">
+                                <Button variant="contained" onClick={this.handleClose} autoFocus color="secondary">
                                     אשר
                                 </Button>
-                                <Button variant="contained" onClick={this.handleClose} autoFocus color="primary">
+                                <Button variant="contained" onClick={this.handleClose} autoFocus >
                                     דחה
                                 </Button>
                             </Fragment>
                             }
+                            <Button variant="contained" onClick={this.handleClose} autoFocus color="primary">
+                                סגור
+                            </Button>
                         </Fragment>
-
                     </DialogActions>
                 </DialogContent>
             </Dialog>
