@@ -32,9 +32,6 @@ const styles = {
     dialogContentRoot: {
         display: "flex",
         flexDirection: "column",
-    },
-    helperText: {
-        color: "orange"
     }
 };
 
@@ -47,6 +44,9 @@ const pickerStyle = {
     datePicker: {
         margin: 0
     },
+    helperText: {
+        color: "orange"
+    }
 };
 
 const ESMDatePicker = withStyles(pickerStyle)(({helperText, classes, ...other}) => {
@@ -55,15 +55,15 @@ const ESMDatePicker = withStyles(pickerStyle)(({helperText, classes, ...other}) 
         <div className={classes.container}>
             <DatePicker classes={{root: classes.datePicker}} {...other} />
             {helperText &&
-                helperText
+                <FormHelperText classes={{root: classes.helperText}}>{helperText}</FormHelperText>
             }
         </div>
-    )
+    );
 });
 
-const ESMTextInput = ({TIIcon, value, onChange, type, label, helperText}) => {
+const ESMTextInput = withStyles(pickerStyle)(({classes, TIIcon, value, onChange, type, label, helperText}) => {
     return (
-        <Grid container spacing={8} alignItems={!!helperText ? "center" : "flex-end"}>
+        <Grid container spacing={8} alignItems={helperText ? "center" : "flex-end"}>
             <Grid item>
                 <TIIcon style={{color: "grey"}}/>
             </Grid>
@@ -74,12 +74,12 @@ const ESMTextInput = ({TIIcon, value, onChange, type, label, helperText}) => {
                     onChange={onChange}
                     value={value}
                     type={type}
-                    helperText={helperText}
+                    helperText={<FormHelperText classes={{root: classes.helperText}}>{helperText}</FormHelperText>}
                 />
             </Grid>
         </Grid>
     );
-};
+});
 
 class EditShiftModal extends Component {
 
@@ -171,9 +171,8 @@ class EditShiftModal extends Component {
         if (!draftShift || !draftShift.commuteCost)
             return null;
 
-        const {classes} = this.props;
         let draftPublicTransportation = draftShift.commuteCost.publicTransportation;
-        return <FormHelperText classes={{root: classes.helperText}}>ערך קודם: {draftPublicTransportation}</FormHelperText>;
+        return <label>ערך קודם: {draftPublicTransportation}</label>;
     };
 
     render() {
@@ -198,7 +197,7 @@ class EditShiftModal extends Component {
                         format="DD/MM/YYYY"
                         style={{margin: "0 10px 0 0"}}
                         disableFuture
-                        helperText={<FormHelperText classes={{root: classes.helperText}}>ערך קודם: {55}</FormHelperText>}
+                        helperText={<label>ערך קודם: {55}</label>}
                     />
 
                     <TimePicker
