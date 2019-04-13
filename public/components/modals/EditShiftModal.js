@@ -112,6 +112,41 @@ class EditShiftModal extends Component {
         dispatch(hideEditShiftModal());
     };
 
+    onApproval = () => {
+        const {entity} = this.state;
+
+        let updatedShift = {
+            ...entity,
+            ...entity.draftShift, // overriding with the draft values
+            _id: entity._id,
+            status: EShiftStatus.APPROVED,
+            draftShift: null
+        };
+
+        this.setState({
+            entity: updatedShift
+        });
+
+        this.updateShift(entity, updatedShift);
+        this.handleClose()
+    };
+
+    onDecline = () => {
+        const {entity} = this.state;
+
+        let updatedShift = {
+            ...entity,
+            status: EShiftStatus.DECLINED,
+            draftShift: null
+        };
+
+        this.setState({
+            entity: updatedShift
+        });
+
+        this.updateShift(entity, updatedShift);
+    };
+
     handleShiftChange = (field, value) => {
         const {entity} = this.state;
 
@@ -300,10 +335,10 @@ class EditShiftModal extends Component {
                         <Fragment>
                             {isStatusPending &&
                             <Fragment>
-                                <Button variant="contained" onClick={this.handleClose} autoFocus color="secondary">
+                                <Button variant="contained" onClick={this.onApproval} autoFocus color="secondary">
                                     אשר
                                 </Button>
-                                <Button variant="contained" onClick={this.handleClose} autoFocus >
+                                <Button variant="contained" onClick={this.onDecline} autoFocus >
                                     דחה
                                 </Button>
                             </Fragment>
