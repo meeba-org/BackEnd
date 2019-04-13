@@ -39,10 +39,11 @@ const pickerStyle = {
     container: {
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-start"
+        alignItems: "flex-start",
+        marginRight: "32px"
     },
     datePicker: {
-        margin: 0
+        margin: "0 !important"
     },
     helperText: {
         color: "orange"
@@ -86,7 +87,7 @@ const ESMTextInput = withStyles(pickerStyle)(({classes, TIIcon, value, onChange,
                     onChange={onChange}
                     value={value}
                     type={type}
-                    helperText={<FormHelperText classes={{root: classes.helperText}}>{helperText}</FormHelperText>}
+                    helperText={helperText && <label className={classes.helperText}>{helperText}</label>}
                 />
             </Grid>
         </Grid>
