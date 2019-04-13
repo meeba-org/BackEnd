@@ -49,6 +49,18 @@ const pickerStyle = {
     }
 };
 
+const ESMTimePicker = withStyles(pickerStyle)(({helperText, classes, ...other}) => {
+
+    return (
+        <div className={classes.container}>
+            <TimePicker classes={{root: classes.datePicker}} {...other} />
+            {helperText &&
+                <FormHelperText classes={{root: classes.helperText}}>{helperText}</FormHelperText>
+            }
+        </div>
+    );
+});
+
 const ESMDatePicker = withStyles(pickerStyle)(({helperText, classes, ...other}) => {
 
     return (
@@ -175,6 +187,30 @@ class EditShiftModal extends Component {
         return <label>ערך קודם: {draftPublicTransportation}</label>;
     };
 
+    calcDraftDate = (draftShift) => {
+        if (!draftShift || !draftShift.clockInTime)
+            return null;
+
+        let draftClockInTime = moment(draftShift.clockInTime).format("DD/MM/YYYY");
+        return <label>ערך קודם: {draftClockInTime}</label>;
+    };
+
+    calcDraftClockInTime = (draftShift) => {
+        if (!draftShift || !draftShift.clockInTime)
+            return null;
+
+        let draftClockInTime = moment(draftShift.clockInTime).format("HH:mm");
+        return <label>ערך קודם: {draftClockInTime}</label>;
+    };
+
+    calcDraftClockOutTime = (draftShift) => {
+        if (!draftShift || !draftShift.clockOutTime)
+            return null;
+
+        let draftClockOutTime = moment(draftShift.clockOutTime).format("HH:mm");
+        return <label>ערך קודם: {draftClockOutTime}</label>;
+    };
+
     render() {
         let {open, classes, isCommuteFeatureEnable, isTasksFeatureEnable} = this.props;
         let shift = this.state.entity;
@@ -185,6 +221,9 @@ class EditShiftModal extends Component {
         let {note, extraPay, breakLength, commuteCost, task, status} = shift || {};
         let {publicTransportation} = commuteCost || {};
         let draftPublicTransportation = this.calcDraftPublicTransportation(shift.draftShift);
+        let draftDate = this.calcDraftDate(shift.draftShift);
+        let draftClockInTime = this.calcDraftClockInTime(shift.draftShift);
+        let draftClockOutTime = this.calcDraftClockOutTime(shift.draftShift);
 
         return (
             <Dialog onClose={this.handleClose} open={open} >
@@ -197,21 +236,23 @@ class EditShiftModal extends Component {
                         format="DD/MM/YYYY"
                         style={{margin: "0 10px 0 0"}}
                         disableFuture
-                        helperText={<label>ערך קודם: {55}</label>}
+                        helperText={draftDate}
                     />
 
-                    <TimePicker
+                    <ESMTimePicker
                         ampm={false}
                         autoOk
                         value={shift.clockInTime}
                         onChange={(time) => this.onUpdateStartTime(time, shift)}
+                        helperText={draftClockInTime}
                     />
 
-                    <TimePicker
+                    <ESMTimePicker
                         ampm={false}
                         autoOk
                         value={shift.clockOutTime}
                         onChange={(time) => this.onUpdateEndTime(time, shift)}
+                        helperText={draftClockOutTime}
                     />
 
                     <ESMTextInput
