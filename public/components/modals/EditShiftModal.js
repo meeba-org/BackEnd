@@ -114,11 +114,11 @@ class EditShiftModal extends Component {
 
     onApproval = () => {
         const {entity} = this.state;
+        let {_id, ...draftShift} = entity.draftShift; // Excluding the id
 
         let updatedShift = {
             ...entity,
-            ...entity.draftShift, // overriding with the draft values
-            _id: entity._id,
+            ...draftShift, // overriding with the draft values
             status: EShiftStatus.APPROVED,
             draftShift: null
         };
