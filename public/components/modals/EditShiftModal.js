@@ -151,7 +151,7 @@ class EditShiftModal extends Component {
         const {entity} = this.state;
 
         let updatedShift;
-        if (shift.draftShift && shift.draftShift.extraPay) {
+        if (entity.draftShift && entity.draftShift.extraPay) {
             updatedShift = {
                 ...entity,
                 draftShift: {
@@ -193,13 +193,27 @@ class EditShiftModal extends Component {
         let value = event.target.value;
         const {entity} = this.state;
 
-        let updatedShift = {
-            ...entity,
-            commuteCost: {
-                ...entity.commuteCost,
-                publicTransportation: value || 0
-            }
-        };
+        let updatedShift;
+        if (this.isDraftPublicTransportationExist(entity)) {
+            updatedShift = {
+                ...entity,
+                draftShift: {
+                    ...entity.draftShift,
+                    commuteCost: {
+                        publicTransportation: value || 0
+                    }
+                }
+            };
+        }
+        else {
+            updatedShift = {
+                ...entity,
+                commuteCost: {
+                    ...entity.commuteCost,
+                    publicTransportation: value || 0
+                }
+            };
+        }
 
         this.setState({
             entity: updatedShift
@@ -253,36 +267,80 @@ class EditShiftModal extends Component {
         this.setState({entity: shift});
     }
 
-    calcPublicTransportationHelperText = (shift) => {
-        if (!shift || !shift.commuteCost)
-            return null;
+    isDraftClockInTimeExist(shift) {
+        return shift.draftShift && shift.draftShift.clockInTime;
+    }
 
-        let publicTransportation = shift.commuteCost.publicTransportation;
-        return <label>היה: {publicTransportation}</label>;
+    isDraftClockOutTimeExist(shift) {
+        return shift.draftShift && shift.draftShift.clockOutTime;
+    }
+
+    isDraftPublicTransportationExist(shift) {
+        return shift.draftShift && shift.draftShift.commuteCost && shift.draftShift.commuteCost.publicTransportation;
+    }
+
+    calcDate = (shift) => {
+        if (this.isDraftClockInTimeExist(shift))
+            return shift.draftShift.clockInTime;
+        else
+            return shift.clockInTime;
     };
 
     calcDateHelperText = (shift) => {
-        if (!shift || !shift.clockInTime)
+        if (!this.isDraftClockInTimeExist(shift))
             return null;
 
         let date = moment(shift.clockInTime).format("DD/MM/YYYY");
         return <label>היה: {date}</label>;
     };
 
+    calcClockInTime = (shift) => {
+        if (this.isDraftClockInTimeExist(shift))
+            return shift.draftShift.clockInTime;
+        else
+            return shift.clockInTime;
+    };
+
     calcClockInTimeHelperTet = (shift) => {
-        if (!shift || !shift.clockInTime)
+        if (!this.isDraftClockInTimeExist(shift))
             return null;
 
         let clockInTime = moment(shift.clockInTime).format("HH:mm");
         return <label>היה: {clockInTime}</label>;
     };
 
+    calcClockOutTime = (shift) => {
+        if (this.isDraftClockOutTimeExist(shift))
+            return shift.draftShift.clockOutTime;
+        else
+            return shift.clockOutTime
+    };
+
     calcClockOutTimeHelperText = (shift) => {
-        if (!shift || !shift.clockOutTime)
+        if (!this.isDraftClockOutTimeExist(shift))
             return null;
 
         let clockOutTime = moment(shift.clockOutTime).format("HH:mm");
         return <label><span style={{ color: "lightgray"}}>היה: </span>{clockOutTime}</label>;
+    };
+
+    calcPublicTransportation = (shift) => {
+        if (this.isDraftPublicTransportationExist())
+            return shift.draftShift.commuteCost.publicTransportation;
+        else {
+            if (!shift.commuteCost)
+                return undefined;
+
+            return shift.commuteCost.publicTransportation;
+        }
+    };
+
+    calcPublicTransportationHelperText = (shift) => {
+        if (!this.isDraftPublicTransportationExist())
+            return null;
+
+        let publicTransportation = shift.commuteCost.publicTransportation;
+        return <label>היה: {publicTransportation}</label>;
     };
 
     render() {
@@ -293,11 +351,14 @@ class EditShiftModal extends Component {
             return null;
 
         let {note, extraPay, breakLength, commuteCost, task, status} = shift || {};
-        let {publicTransportation} = commuteCost || {};
-        let publicTransportationHelperText = this.calcPublicTransportationHelperText(shift);
+        let date = this.calcDate(shift);
         let dateHelperText = this.calcDateHelperText(shift);
+        let clockInTime = this.calcClockInTime(shift);
         let clockInTimeHelperText = this.calcClockInTimeHelperTet(shift);
+        let clockOutTime = this.calcClockOutTime(shift);
         let clockOutTimeHelperText = this.calcClockOutTimeHelperText(shift);
+        let publicTransportation = this.calcPublicTransportation(shift);
+        let publicTransportationHelperText = this.calcPublicTransportationHelperText(shift);
         let isStatusPending = status === EShiftStatus.PENDING;
 
         return (
@@ -307,7 +368,7 @@ class EditShiftModal extends Component {
                     <ESMDatePicker
                         autoOk
                         onChange={(date) => this.onUpdateStartDate(date, shift)}
-                        value={shift.clockInTime}
+                        value={date}
                         format="DD/MM/YYYY"
                         style={{margin: "0 10px 0 0"}}
                         disableFuture
@@ -317,7 +378,7 @@ class EditShiftModal extends Component {
                     <ESMTimePicker
                         ampm={false}
                         autoOk
-                        value={shift.clockInTime}
+                        value={clockInTime}
                         onChange={(time) => this.onUpdateStartTime(time, shift)}
                         helperText={clockInTimeHelperText}
                     />
@@ -325,7 +386,7 @@ class EditShiftModal extends Component {
                     <ESMTimePicker
                         ampm={false}
                         autoOk
-                        value={shift.clockOutTime}
+                        value={clockOutTime}
                         onChange={(time) => this.onUpdateEndTime(time, shift)}
                         helperText={clockOutTimeHelperText}
                     />
@@ -340,7 +401,7 @@ class EditShiftModal extends Component {
                         />
 
                     <ESMTextInput
-                        onChange={(e) => this.handleExtraPayChange(e.target.value)}
+                        onChange={(e) => this.handleShiftChange("extraPay", e.target.value)}
                         value={extraPay}
                         type={"number"}
                         TIIcon={ExtraFeeIcon}
