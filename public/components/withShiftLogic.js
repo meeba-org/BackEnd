@@ -13,11 +13,25 @@ function withShiftLogic(WrappedComponent) {
             return this.onUpdate(shift, newStartDateStr, startTimeStr, endTimeStr);
         };
 
+        onDraftUpdateStartDate = (date, shift) => {
+            let {startTimeStr, endTimeStr} = convertMomentToTimeStr(shift.draftShift);
+            let newStartDateStr = date.format("YYYY-MM-DD");
+
+            return this.onUpdate(shift, newStartDateStr, startTimeStr, endTimeStr);
+        };
+
         onUpdateStartTime = (time, shift) => {
             let {startDateStr, endTimeStr} = convertMomentToTimeStr(shift);
             let newStartTimeStr = time.format("HH:mm");
 
             return this.onUpdate(shift, startDateStr, newStartTimeStr, endTimeStr);
+        };
+
+        onDraftUpdateStartTime = (time, shift) => {
+            let {startDateStr, endTimeStr} = convertMomentToTimeStr(shift.draftShift);
+            let newStartTimeStr = time.format("HH:mm");
+
+            return this.onDraftUpdate(shift, startDateStr, newStartTimeStr, endTimeStr);
         };
 
         onUpdateEndTime = (time, shift) => {
@@ -27,11 +41,36 @@ function withShiftLogic(WrappedComponent) {
             return this.onUpdate(shift, startDateStr, startTimeStr, newEndTimeStr);
         };
 
-        onUpdate = (orgShift, startDateStr, startTimeStr, endTimeStr) => {
+        onDraftUpdateEndTime = (time, shift) => {
+            let {startDateStr, startTimeStr} = convertMomentToTimeStr(shift.draftShift);
+            let newEndTimeStr = time.format("HH:mm");
+
+            return this.onDraftUpdate(shift, startDateStr, startTimeStr, newEndTimeStr);
+        };
+
+        onDraftUpdate = (orgShift, startDateStr, startTimeStr, endTimeStr) => {
             let {updateShift} = this.props;
 
             let {momentStart, momentEnd} = convertTimeStrToMoment(startDateStr, startTimeStr, endTimeStr);
 
+            let updatedShift = {
+                ...orgShift,
+                draftShift: {
+                    ...orgShift.draftShift,
+                    clockInTime: momentStart,
+                    clockOutTime: momentEnd,
+                }
+            };
+
+            let mShift = moment(orgShift.clockInTime); // Passing the original month & year
+            updateShift(updatedShift, mShift.format('MM'), mShift.format('YYYY'));
+            return updatedShift;
+        };
+
+        onUpdate = (orgShift, startDateStr, startTimeStr, endTimeStr) => {
+            let {updateShift} = this.props;
+
+            let {momentStart, momentEnd} = convertTimeStrToMoment(startDateStr, startTimeStr, endTimeStr);
 
             let updatedShift = {
                 ...orgShift,
@@ -66,6 +105,10 @@ function withShiftLogic(WrappedComponent) {
                 onUpdateEndTime={this.onUpdateEndTime}
                 onDelete={this.onDelete}
                 onShiftComplete={this.onShiftComplete}
+                onDraftUpdateStartDate={this.onDraftUpdateStartDate}
+                onDraftUpdateStartTime={this.onDraftUpdateStartTime}
+                onDraftUpdateEndTime={this.onDraftUpdateEndTime}
+
                 {...otherProps}
             />);
         }
