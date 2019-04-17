@@ -313,7 +313,7 @@ class EditShiftModal extends Component {
         if (this.isDraftClockOutTimeExist(shift))
             return shift.draftShift.clockOutTime;
         else
-            return shift.clockOutTime
+            return shift.clockOutTime;
     };
 
     calcClockOutTimeHelperText = (shift) => {
@@ -325,7 +325,7 @@ class EditShiftModal extends Component {
     };
 
     calcPublicTransportation = (shift) => {
-        if (this.isDraftPublicTransportationExist())
+        if (this.isDraftPublicTransportationExist(shift))
             return shift.draftShift.commuteCost.publicTransportation;
         else {
             if (!shift.commuteCost)
@@ -336,7 +336,7 @@ class EditShiftModal extends Component {
     };
 
     calcPublicTransportationHelperText = (shift) => {
-        if (!this.isDraftPublicTransportationExist())
+        if (!this.isDraftPublicTransportationExist(shift))
             return null;
 
         let publicTransportation = shift.commuteCost.publicTransportation;
@@ -350,7 +350,7 @@ class EditShiftModal extends Component {
         if (!shift)
             return null;
 
-        let {note, extraPay, breakLength, commuteCost, task, status} = shift || {};
+        let {note, extraPay, breakLength, task, status} = shift || {};
         let date = this.calcDate(shift);
         let dateHelperText = this.calcDateHelperText(shift);
         let clockInTime = this.calcClockInTime(shift);
