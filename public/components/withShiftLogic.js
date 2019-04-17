@@ -10,6 +10,7 @@ function withShiftLogic(WrappedComponent) {
             let {startTimeStr, endTimeStr} = convertMomentToTimeStr(shift);
             let newStartDateStr = date.format("YYYY-MM-DD");
 
+``            // TOOD Chen how does the update differentiate between draft and shift?
             return this.onUpdate(shift, newStartDateStr, startTimeStr, endTimeStr);
         };
 

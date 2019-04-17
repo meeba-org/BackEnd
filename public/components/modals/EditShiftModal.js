@@ -26,7 +26,10 @@ const moment = require("moment");
 
 const styles = {
     dialogActionsRoot: {
-        minWidth: "15vw"
+        minWidth: "15vw",
+        justifyContent: "center",
+        marginTop: "20px"
+
     },
     dialogContentRoot: {
         display: "flex",
@@ -39,7 +42,8 @@ const pickerStyle = {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        marginRight: "32px"
+        marginRight: "32px",
+        marginBottom: "12px"
     },
     datePicker: {
         margin: "0 !important"
@@ -147,33 +151,6 @@ class EditShiftModal extends Component {
         this.updateShift(entity, updatedShift);
     };
 
-    handleExtraPayChange = (value) => {
-        const {entity} = this.state;
-
-        let updatedShift;
-        if (entity.draftShift && entity.draftShift.extraPay) {
-            updatedShift = {
-                ...entity,
-                draftShift: {
-                    ...entity.draftShift,
-                    extraPay: value,
-                }
-            };
-        }
-        else {
-            updatedShift = {
-                ...entity,
-                extraPay: value,
-            };
-        }
-
-        this.setState({
-            entity: updatedShift
-        });
-
-        this.updateShift(entity, updatedShift);
-    };
-
     handleShiftChange = (field, value) => {
         const {entity} = this.state;
 
@@ -233,7 +210,7 @@ class EditShiftModal extends Component {
     onUpdateStartDate = (date, shift) => {
         const {onUpdateStartDate, onDraftUpdateStartDate} = this.props;
 
-        if (shift.draftShift && shift.draftShift.clockInTime)
+        if (this.isDraftClockInTimeExist(shift))
             shift = onDraftUpdateStartDate(date, shift); // Updating the draft shift
         else
             shift = onUpdateStartDate(date, shift); // Updating the shift
@@ -244,7 +221,7 @@ class EditShiftModal extends Component {
     onUpdateStartTime = (date, shift) => {
         const {onUpdateStartTime, onDraftUpdateStartTime} = this.props;
 
-        if (shift.draftShift && shift.draftShift.clockInTime)
+        if (this.isDraftClockInTimeExist(shift))
             shift = onDraftUpdateStartTime(date, shift); // Updating the draft shift
         else
             shift = onUpdateStartTime(date, shift); // Updating the shift
@@ -255,7 +232,7 @@ class EditShiftModal extends Component {
     onUpdateEndTime = (date, shift) => {
         const {onUpdateEndTime, onDraftUpdateEndTime} = this.props;
 
-        if (shift.draftShift && shift.draftShift.clockOutTime)
+        if (this.isDraftClockOutTimeExist(shift))
             shift = onDraftUpdateEndTime(date, shift); // Updating the draft shift
         else
             shift = onUpdateEndTime(date, shift); // Updating the shift
@@ -363,7 +340,7 @@ class EditShiftModal extends Component {
 
         return (
             <Dialog onClose={this.handleClose} open={open} >
-                <DialogTitle>{isStatusPending ? "אישור משמרת": "עריכת משמרת"}</DialogTitle>
+                <DialogTitle>{isStatusPending ? "אישור שינוי משמרת": "עריכת משמרת"}</DialogTitle>
                 <DialogContent classes={{root: classes.dialogContentRoot}}>
                     <ESMDatePicker
                         autoOk
@@ -373,6 +350,7 @@ class EditShiftModal extends Component {
                         style={{margin: "0 10px 0 0"}}
                         disableFuture
                         helperText={dateHelperText}
+                        label={"תאריך"}
                     />
 
                     <ESMTimePicker
@@ -381,6 +359,7 @@ class EditShiftModal extends Component {
                         value={clockInTime}
                         onChange={(time) => this.onUpdateStartTime(time, shift)}
                         helperText={clockInTimeHelperText}
+                        label={"שעת כניסה"}
                     />
 
                     <ESMTimePicker
@@ -389,6 +368,7 @@ class EditShiftModal extends Component {
                         value={clockOutTime}
                         onChange={(time) => this.onUpdateEndTime(time, shift)}
                         helperText={clockOutTimeHelperText}
+                        label={"שעת יציאה"}
                     />
 
                     <ESMTextInput
@@ -397,7 +377,6 @@ class EditShiftModal extends Component {
                         type={"text"}
                         TIIcon={CommentIcon}
                         label={"הערות"}
-
                         />
 
                     <ESMTextInput
@@ -431,21 +410,23 @@ class EditShiftModal extends Component {
                     <TasksSelectionContainer task={task} onChange={(task) => this.handleShiftChange("task", task)}/>
                     }
 
-                    <DialogActions classes={{root: classes.dialogActionsRoot}} style={{justifyContent: isStatusPending ? "space-between" : "center"}}>
+                    <DialogActions classes={{root: classes.dialogActionsRoot}} >
                         <Fragment>
-                            {isStatusPending &&
-                            <Fragment>
-                                <Button variant="contained" onClick={this.onApproval} autoFocus color="secondary">
-                                    אשר
+                            <div style={{flex: isStatusPending ? 0.5 : 1}}>
+                                <Button onClick={this.handleClose} autoFocus color="primary">
+                                    סגור
                                 </Button>
+                            </div>
+                            {isStatusPending &&
+                            <div style={{display: "flex", flex: 0.5, justifyContent: "space-between"}}>
                                 <Button variant="contained" onClick={this.onDecline} autoFocus >
                                     דחה
                                 </Button>
-                            </Fragment>
+                                <Button variant="contained" onClick={this.onApproval} autoFocus color="primary">
+                                    אשר
+                                </Button>
+                            </div>
                             }
-                            <Button variant="contained" onClick={this.handleClose} autoFocus color="primary">
-                                סגור
-                            </Button>
                         </Fragment>
                     </DialogActions>
                 </DialogContent>
