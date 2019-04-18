@@ -17,7 +17,7 @@ function withShiftLogic(WrappedComponent) {
             let {startTimeStr, endTimeStr} = convertMomentToTimeStr(shift.draftShift);
             let newStartDateStr = date.format("YYYY-MM-DD");
 
-            return this.onUpdate(shift, newStartDateStr, startTimeStr, endTimeStr);
+            return this.onDraftUpdate(shift, newStartDateStr, startTimeStr, endTimeStr);
         };
 
         onUpdateStartTime = (time, shift) => {
