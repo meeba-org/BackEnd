@@ -2,7 +2,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import ArrowBack from '@material-ui/icons/KeyboardArrowLeft';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 import CSSModules from "react-css-modules";
@@ -23,7 +22,7 @@ const TaskBreadCrumb = CSSModules(({taskBreadCrumb}) => {
                 <Fragment>
                     {index === 0 ?
                         <div styleName="crumb">{t.title}</div> :
-                        <div styleName="crumb"><ArrowBack styleName="icon"/>{t.title}</div>
+                        <div styleName="crumb"><KeyboardArrowLeft styleName="icon"/>{t.title}</div>
                     }
                 </Fragment>
             ))
