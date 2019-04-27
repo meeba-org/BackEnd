@@ -18,6 +18,7 @@ import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {hideEditShiftModal} from "../../actions/index";
 import {EShiftStatus} from "../../helpers/EShiftStatus";
+import {TIME_FORMAT} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import TasksSelectionContainer from "../tasks/TasksSelectionContainer";
 import withShiftLogic from "../withShiftLogic";
@@ -118,7 +119,7 @@ class EditShiftModal extends Component {
 
     onApproval = () => {
         const {entity} = this.state;
-        let {_id, ...draftShift} = entity.draftShift; // Excluding the id
+        let draftShift = this.extractDraftShift(entity);
 
         let updatedShift = {
             ...entity,
@@ -134,6 +135,18 @@ class EditShiftModal extends Component {
         this.updateShift(entity, updatedShift);
         this.handleClose();
     };
+
+    extractDraftShift(entity) {
+        let {_id, ...draftShift} = entity.draftShift; // Excluding the id
+
+        // Deleting null values
+        for (let key in draftShift) {
+            if (!draftShift[key])
+                delete draftShift[key];
+        }
+
+        return draftShift;
+    }
 
     onDecline = () => {
         const {entity} = this.state;
@@ -258,13 +271,16 @@ class EditShiftModal extends Component {
 
     calcDate = (shift) => {
         if (this.isDraftClockInTimeExist(shift))
-            return shift.draftShift.clockInTime;
+               return shift.draftShift.clockInTime;
         else
             return shift.clockInTime;
     };
 
     calcDateHelperText = (shift) => {
         if (!this.isDraftClockInTimeExist(shift))
+            return null;
+
+        if (moment(shift.clockInTime).isSame(moment(shift.draftShift.clockInTime), 'day')) // same date on draft
             return null;
 
         let date = moment(shift.clockInTime).format("DD/MM/YYYY");
@@ -282,7 +298,10 @@ class EditShiftModal extends Component {
         if (!this.isDraftClockInTimeExist(shift))
             return null;
 
-        let clockInTime = moment(shift.clockInTime).format("HH:mm");
+        if (moment(shift.clockInTime).format(TIME_FORMAT) === moment(shift.draftShift.clockInTime).format(TIME_FORMAT)) // same time on draft
+            return null;
+
+        let clockInTime = moment(shift.clockInTime).format(TIME_FORMAT);
         return <label>היה: {clockInTime}</label>;
     };
 
@@ -297,7 +316,10 @@ class EditShiftModal extends Component {
         if (!this.isDraftClockOutTimeExist(shift))
             return null;
 
-        let clockOutTime = moment(shift.clockOutTime).format("HH:mm");
+        if (moment(shift.clockOutTime).format(TIME_FORMAT) === moment(shift.draftShift.clockOutTime).format(TIME_FORMAT)) // same time on draft
+            return null;
+
+        let clockOutTime = moment(shift.clockOutTime).format(TIME_FORMAT);
         return <label><span style={{ color: "lightgray"}}>היה: </span>{clockOutTime}</label>;
     };
 
