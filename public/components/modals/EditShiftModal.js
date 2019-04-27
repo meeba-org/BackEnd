@@ -162,6 +162,7 @@ class EditShiftModal extends Component {
         });
 
         this.updateShift(entity, updatedShift);
+        this.handleClose();
     };
 
     handleShiftChange = (field, value) => {
