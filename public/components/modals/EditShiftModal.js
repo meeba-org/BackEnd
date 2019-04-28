@@ -14,7 +14,7 @@ import BreakIcon from "@material-ui/icons/FreeBreakfast";
 import DatePicker from "material-ui-pickers/DatePicker";
 import TimePicker from "material-ui-pickers/TimePicker";
 import PropTypes from 'prop-types';
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {hideEditShiftModal} from "../../actions/index";
 import {EShiftStatus} from "../../helpers/EShiftStatus";
@@ -26,11 +26,14 @@ import withShiftLogic from "../withShiftLogic";
 const moment = require("moment");
 
 const styles = {
-    dialogActionsRoot: {
+    dialogActionsWhilePending: {
         minWidth: "15vw",
+        justifyContent: "space-between",
+        marginTop: "20px"
+    },
+    dialogActions: {
         justifyContent: "center",
         marginTop: "20px"
-
     },
     dialogContentRoot: {
         display: "flex",
@@ -433,15 +436,14 @@ class EditShiftModal extends Component {
                     <TasksSelectionContainer task={task} onChange={(task) => this.handleShiftChange("task", task)}/>
                     }
 
-                    <DialogActions classes={{root: classes.dialogActionsRoot}} >
-                        <Fragment>
-                            <div style={{flex: isStatusPending ? 0.5 : 1}}>
+                    <DialogActions classes={{root: isStatusPending ? classes.dialogActionsWhilePending :  classes.dialogActions}} >
+                            <div style={{flex: isStatusPending ? 0.45 : 1, justifyContent: isStatusPending ? "flex-start" : "center", display: "flex"}}>
                                 <Button onClick={this.handleClose} autoFocus color="primary">
                                     סגור
                                 </Button>
                             </div>
                             {isStatusPending &&
-                            <div style={{display: "flex", flex: 0.5, justifyContent: "space-between"}}>
+                            <div style={{display: "flex", flex: 0.55, justifyContent: "space-between"}}>
                                 <Button variant="contained" onClick={this.onDecline} autoFocus >
                                     דחה
                                 </Button>
@@ -450,7 +452,6 @@ class EditShiftModal extends Component {
                                 </Button>
                             </div>
                             }
-                        </Fragment>
                     </DialogActions>
                 </DialogContent>
             </Dialog>
