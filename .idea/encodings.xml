@@ -87,6 +87,8 @@
     <file url="file://$PROJECT_DIR$/public/components/reports/MonthlyReportLine.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Note.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/PendingApprovalIndicator.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/PendingReport.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/PendingReportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Report.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/ShiftsList.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/TaskIndicator.js" charset="UTF-8" />

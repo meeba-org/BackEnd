@@ -9,12 +9,6 @@ import NoData from "../NoData";
 import ShiftContainer from "./ShiftContainer";
 
 class ShiftsList extends React.PureComponent {
-    onCreate(fields) {
-        let newEntity = {};
-        fields.push(newEntity);
-        this.props.onCreate(newEntity);
-    }
-
     onDelete(fields, index) {
         let entityToDelete = fields.get(index);
         this.props.onDelete(entityToDelete);
@@ -80,7 +74,6 @@ class ShiftsList extends React.PureComponent {
 
 ShiftsList.propTypes = {
     fields: PropTypes.object.isRequired,
-    onCreate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     showLocationModal: PropTypes.func.isRequired,

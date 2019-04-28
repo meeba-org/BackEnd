@@ -6,12 +6,14 @@ import {ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import DailyReportContainer from "./DailyReportContainer";
 import MonthlyReportContainer from "./MonthlyReportContainer";
+import PendingReportContainer from "./PendingReportContainer";
 import TasksReportContainer from "./TasksReportContainer";
 
 const EReportType = {
     MONTHLY: 0,
     DAILY: 1,
     TASKS: 2,
+    PENDING: 3
 };
 class Report extends Component {
     state = {
@@ -29,15 +31,17 @@ class Report extends Component {
         return (
             <Fragment>
                 <Tabs value={selectedTab} onChange={this.handleChange}>
-                    <Tab label="חודשי" />
-                    <Tab label="יומי" />
+                    <Tab value={EReportType.MONTHLY} label="חודשי" />
+                    <Tab value={EReportType.DAILY} label="יומי" />
                     {isTasksFeatureEnable &&
-                    <Tab label="משימות" />
+                    <Tab value={EReportType.TASKS} label="משימות" />
                     }
+                    <Tab value={EReportType.PENDING} label="ממתינות לאישור" />
                 </Tabs>
-                {selectedTab === 0 && <MonthlyReportContainer/>}
-                {selectedTab === 1 && <DailyReportContainer mode={ReportModes.Report} />}
-                {selectedTab === 2 && <TasksReportContainer />}
+                {selectedTab === EReportType.MONTHLY && <MonthlyReportContainer/>}
+                {selectedTab === EReportType.DAILY && <DailyReportContainer mode={ReportModes.Report} />}
+                {selectedTab === EReportType.TASKS && <TasksReportContainer />}
+                {selectedTab === EReportType.PENDING && <PendingReportContainer />}
             </Fragment>
         );
     }

@@ -9,7 +9,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from '@material-ui/icons/Add';
 import Warning from "@material-ui/icons/Warning";
 import DatePicker from "material-ui-pickers/DatePicker";
-import moment from "moment/moment";
+import moment from "moment";
 import PropTypes from 'prop-types';
 import React, {Fragment} from "react";
 import CSSModules from "react-css-modules";
@@ -121,7 +121,6 @@ class DailyReport extends React.PureComponent {
                                 component={ShiftsList}
                                 onDelete={onDeleteShift}
                                 onUpdate={this.onUpdateShift}
-                                onCreate={onCreateShift}
                                 showShiftDialog={showShiftDialog}
                                 showLocationModal={showLocationModal}
                                 showNames={true}
@@ -169,7 +168,6 @@ class DailyReport extends React.PureComponent {
                                 component={ShiftsList}
                                 onDelete={onDeleteShift}
                                 onUpdate={this.onUpdateShift}
-                                onCreate={onCreateShift}
                                 showShiftDialog={showShiftDialog}
                                 showNames={true}
                                 mode={mode}

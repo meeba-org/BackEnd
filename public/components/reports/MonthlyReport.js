@@ -140,7 +140,6 @@ class MonthlyReport extends React.PureComponent {
                                                showShiftDialog={showShiftDialog}
                                                showLocationModal={showLocationModal}
                                                onUpdateShift={this.onUpdateShift}
-                                               onCreateShift={this.onCreateShift}
                                         />
                                     </Fade>)
                                 )}
