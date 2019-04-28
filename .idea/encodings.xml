@@ -155,6 +155,7 @@
     <file url="file://$PROJECT_DIR$/public/styles/MonthlyReportLine.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Movie.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/NoData.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/styles/PendingApprovalInicator.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ReportFeatureContent.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ReportShift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Shift.scss" charset="UTF-8" />

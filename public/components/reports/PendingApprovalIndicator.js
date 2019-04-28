@@ -4,14 +4,14 @@ import PropTypes from "prop-types";
 import React from "react";
 import CSSModules from "react-css-modules";
 import {EShiftStatus} from "../../helpers/EShiftStatus";
-import styles from "../../styles/Warning.scss";
+import styles from "../../styles/PendingApprovalInicator.scss";
 
 const PendingApprovalIndicator = ({status, onClick}) => {
     if (status !== EShiftStatus.PENDING)
         return null;
 
     return (
-        <div className={styles["warning"]} onClick={onClick}>
+        <div className={styles["pending"]} onClick={onClick}>
             <Tooltip title={"משמרת ממתינה לאישור"} placement="top">
                 <EyeIcon/>
             </Tooltip>

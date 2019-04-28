@@ -139,7 +139,7 @@ class EditShiftModal extends Component {
     extractDraftShift(entity) {
         let {_id, ...draftShift} = entity.draftShift; // Excluding the id
 
-        // Deleting null values
+        // Deleting null / undefined values
         for (let key in draftShift) {
             if (!draftShift[key])
                 delete draftShift[key];
