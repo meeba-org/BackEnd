@@ -1,15 +1,16 @@
 import React, {PureComponent} from 'react';
 import {connect} from "react-redux";
+import reduxForm from "redux-form/es/reduxForm";
 import {
-    fetchDailyReport,
-    fetchUsers, showDeleteShiftModal,
+    fetchPendingShifts,
+    fetchUsers,
+    showDeleteShiftModal,
     showEditShiftModal,
     showLocationModal,
     updateShift
 } from "../../actions";
 import {ReportModes} from "../../helpers/utils";
 import PendingReport from "./PendingReport";
-import reduxForm from "redux-form/es/reduxForm";
 
 class PendingReportContainer extends PureComponent {
     state = {
@@ -17,7 +18,7 @@ class PendingReportContainer extends PureComponent {
     };
 
     componentDidMount() {
-        this.props.fetchDailyReport("2019-04-12");
+        this.props.fetchPendingShifts();
     }
 
     render() {
@@ -54,8 +55,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchDailyReport: (startDate) => {dispatch( fetchDailyReport(startDate)); },
-        fetchEmployees: () => dispatch(fetchUsers(true)),
+        fetchPendingShifts: (startDate) => {dispatch( fetchPendingShifts(startDate)); },
         deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
         updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, false, month, year)),
         showShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),

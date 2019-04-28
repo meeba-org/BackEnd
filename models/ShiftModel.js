@@ -79,6 +79,16 @@ const deleteShift = (id) => {
     return Shift.remove({_id: id}).exec();
 };
 
+const getPendingShifts = (company) => {
+    let condition = {
+        $and: [{draftShift: {$exists : true}}, {draftShift: { $ne: null }}],
+        company: company._id
+    };
+
+    return Shift.find(condition).populate('user task draftShift').lean()
+        .then((shifts) => shifts.sort((s1, s2) => s1.clockInTime - s2.clockInTime));
+};
+
 const getShiftsBetween = (company, startDate, endDate, userId) => {
     let condition = {
         clockInTime: {
@@ -131,6 +141,7 @@ module.exports = {
     createOrUpdateShift
     , deleteAllShifts
     , getShiftsBetween
+    , getPendingShifts
     , getByShiftId
     , createShift
     , updateShift

@@ -53,10 +53,27 @@ function prepareFetchShiftsUrl(startDate, endDate) {
 
     return url;
 }
+
+function prepareFetchPendingShiftsUrl() {
+    return '/shifts?pending=true';
+}
+
 export const fetchShifts = (startDate, endDate) => ({
     type: actions.API,
     payload: {
         url: prepareFetchShiftsUrl(startDate, endDate),
+        method: "get",
+        success: fetchShiftsSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+    }
+});
+
+export const fetchPendingShifts = () => ({
+    type: actions.API,
+    payload: {
+        url: prepareFetchPendingShiftsUrl(),
         method: "get",
         success: fetchShiftsSuccess,
     },
