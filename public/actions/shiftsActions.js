@@ -155,6 +155,7 @@ export const updateShift0 = (dispatch, shift, shouldFetchMonthlyReport, month, y
                 if (shouldFetchMonthlyReport && !!month && !!year) {
                     dispatch(fetchMonthlyReport(month, year));
                 }
+                dispatch(hasPendingShifts()); // Checking if we have pending shifts for every shift update ... not that efficient... maybe will change it later
                 return dispatch(updateShiftSuccess(data));
             },
         },

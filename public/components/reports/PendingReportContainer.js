@@ -2,12 +2,12 @@ import React, {PureComponent} from 'react';
 import {connect} from "react-redux";
 import reduxForm from "redux-form/es/reduxForm";
 import {
+    fetchPendingShifts,
     hasPendingShifts,
-    fetchUsers,
     showDeleteShiftModal,
     showEditShiftModal,
     showLocationModal,
-    updateShift, fetchPendingShifts
+    updateShift
 } from "../../actions";
 import {ReportModes} from "../../helpers/utils";
 import PendingReport from "./PendingReport";
@@ -21,17 +21,6 @@ class PendingReportContainer extends PureComponent {
         this.props.fetchPendingShifts();
     }
 
-    showShiftDialog = (shift, callBack) => {
-        let {showShiftDialog, hasPendingShifts} = this.props;
-
-        showShiftDialog(shift, () => {
-            hasPendingShifts();
-            if (callBack)
-                callBack()
-        })
-    };
-
-
     render() {
         const {handleSubmit, updateShift, deleteShift, showShiftDialog, showLocationModal, shifts, isLoading} = this.props;
 
@@ -42,7 +31,7 @@ class PendingReportContainer extends PureComponent {
                     mode={ReportModes.Report}
                     onDeleteShift={deleteShift}
                     onUpdateShift={updateShift}
-                    showShiftDialog={this.showShiftDialog}
+                    showShiftDialog={showShiftDialog}
                     showLocationModal={showLocationModal}
                     isLoading={isLoading}
                 />
