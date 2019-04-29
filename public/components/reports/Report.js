@@ -1,7 +1,9 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
+import {withStyles} from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
+import Badge from '@material-ui/core/Badge';
 import {ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import DailyReportContainer from "./DailyReportContainer";
@@ -15,6 +17,13 @@ const EReportType = {
     TASKS: 2,
     PENDING: 3
 };
+
+const styles = () => ({
+    padding: {
+        paddingRight: "10px",
+    },
+});
+
 class Report extends Component {
     state = {
         selectedTab: EReportType.MONTHLY
@@ -26,7 +35,7 @@ class Report extends Component {
 
     render() {
         const {selectedTab} = this.state;
-        const {isTasksFeatureEnable} = this.props;
+        const {isTasksFeatureEnable, classes, hasPendingShifts} = this.props;
 
         return (
             <Fragment>
@@ -36,7 +45,15 @@ class Report extends Component {
                     {isTasksFeatureEnable &&
                     <Tab value={EReportType.TASKS} label="משימות" />
                     }
-                    <Tab value={EReportType.PENDING} label="ממתינות לאישור" />
+                    <Tab
+                        disabled={!hasPendingShifts}
+                        value={EReportType.PENDING}
+                        label={
+                            <Badge className={classes.padding} color="secondary" variant="dot" invisible={!hasPendingShifts}>
+                                ממתינות לאישור
+                            </Badge>
+                        }
+                    />
                 </Tabs>
                 {selectedTab === EReportType.MONTHLY && <MonthlyReportContainer/>}
                 {selectedTab === EReportType.DAILY && <DailyReportContainer mode={ReportModes.Report} />}
@@ -53,7 +70,8 @@ Report.defaultProps = {};
 const mapStateToProps = (state) => {
     return {
         isTasksFeatureEnable: selectors.isTasksFeatureEnable(state),
+        hasPendingShifts: state.pendingShifts.length > 0
     };
 };
 
-export default connect(mapStateToProps)(Report);
+export default connect(mapStateToProps)(withStyles(styles)(Report));

@@ -116,6 +116,7 @@
     <file url="file://$PROJECT_DIR$/public/reducers/GeneralReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/LoaderReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/ModalReducer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/reducers/PendingShiftsReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/ReportsReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/ShiftsReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/TasksReducer.js" charset="UTF-8" />

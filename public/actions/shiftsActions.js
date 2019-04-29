@@ -22,6 +22,11 @@ export const fetchShiftsSuccess = (payload) => ({
     payload
 });
 
+export const fetchPendingShiftsSuccess = (payload) => ({
+    type: actions.FETCH_PENDING_SHIFTS_SUCCESS,
+    payload
+});
+
 export const createShiftsSuccess = (payload) => ({
     type: actions.CREATE_SHIFT_SUCCESS,
     payload
@@ -75,7 +80,7 @@ export const fetchPendingShifts = () => ({
     payload: {
         url: prepareFetchPendingShiftsUrl(),
         method: "get",
-        success: fetchShiftsSuccess,
+        success: fetchPendingShiftsSuccess,
     },
     meta: {
         shouldAuthenticate: true,

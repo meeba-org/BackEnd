@@ -46,16 +46,16 @@ PendingReportContainer.defaultProps = {};
 
 function mapStateToProps(state) {
     return {
-        shifts: state.shifts,
+        shifts: state.pendingShifts,
         initialValues: {
-            shifts: state.shifts
+            shifts: state.pendingShifts
         },
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchPendingShifts: (startDate) => {dispatch( fetchPendingShifts(startDate)); },
+        fetchPendingShifts: () => {dispatch( fetchPendingShifts()); },
         deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
         updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, false, month, year)),
         showShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
