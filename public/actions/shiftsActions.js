@@ -22,8 +22,8 @@ export const fetchShiftsSuccess = (payload) => ({
     payload
 });
 
-export const fetchPendingShiftsSuccess = (payload) => ({
-    type: actions.FETCH_PENDING_SHIFTS_SUCCESS,
+export const hasPendingShiftsSuccess = (payload) => ({
+    type: actions.HAS_PENDING_SHIFTS_SUCCESS,
     payload
 });
 
@@ -75,12 +75,24 @@ export const fetchShifts = (startDate, endDate) => ({
     }
 });
 
+export const hasPendingShifts = () => ({
+    type: actions.API,
+    payload: {
+        url: prepareFetchPendingShiftsUrl(),
+        method: "get",
+        success: hasPendingShiftsSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+    }
+});
+
 export const fetchPendingShifts = () => ({
     type: actions.API,
     payload: {
         url: prepareFetchPendingShiftsUrl(),
         method: "get",
-        success: fetchPendingShiftsSuccess,
+        success: fetchShiftsSuccess,
     },
     meta: {
         shouldAuthenticate: true,

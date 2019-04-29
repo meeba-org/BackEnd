@@ -2,12 +2,12 @@ import React, {PureComponent} from 'react';
 import {connect} from "react-redux";
 import reduxForm from "redux-form/es/reduxForm";
 import {
-    fetchPendingShifts,
+    hasPendingShifts,
     fetchUsers,
     showDeleteShiftModal,
     showEditShiftModal,
     showLocationModal,
-    updateShift
+    updateShift, fetchPendingShifts
 } from "../../actions";
 import {ReportModes} from "../../helpers/utils";
 import PendingReport from "./PendingReport";
@@ -21,6 +21,17 @@ class PendingReportContainer extends PureComponent {
         this.props.fetchPendingShifts();
     }
 
+    showShiftDialog = (shift, callBack) => {
+        let {showShiftDialog, hasPendingShifts} = this.props;
+
+        showShiftDialog(shift, () => {
+            hasPendingShifts();
+            if (callBack)
+                callBack()
+        })
+    };
+
+
     render() {
         const {handleSubmit, updateShift, deleteShift, showShiftDialog, showLocationModal, shifts, isLoading} = this.props;
 
@@ -31,7 +42,7 @@ class PendingReportContainer extends PureComponent {
                     mode={ReportModes.Report}
                     onDeleteShift={deleteShift}
                     onUpdateShift={updateShift}
-                    showShiftDialog={showShiftDialog}
+                    showShiftDialog={this.showShiftDialog}
                     showLocationModal={showLocationModal}
                     isLoading={isLoading}
                 />
@@ -46,15 +57,16 @@ PendingReportContainer.defaultProps = {};
 
 function mapStateToProps(state) {
     return {
-        shifts: state.pendingShifts,
+        shifts: state.shifts,
         initialValues: {
-            shifts: state.pendingShifts
+            shifts: state.shifts
         },
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
+        hasPendingShifts: () => dispatch( hasPendingShifts()) ,
         fetchPendingShifts: () => {dispatch( fetchPendingShifts()); },
         deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
         updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, false, month, year)),

@@ -21,7 +21,7 @@ class PendingReport extends Component {
     };
 
     render() {
-        const {showShiftDialog, onDeleteShift, showLocationModal, mode, classes} = this.props;
+        const {showShiftDialog, onDeleteShift, showLocationModal, mode} = this.props;
 
         return (
             <Card>

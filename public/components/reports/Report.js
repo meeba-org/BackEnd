@@ -70,7 +70,7 @@ Report.defaultProps = {};
 const mapStateToProps = (state) => {
     return {
         isTasksFeatureEnable: selectors.isTasksFeatureEnable(state),
-        hasPendingShifts: state.pendingShifts.length > 0
+        hasPendingShifts: state.user.hasPendingShifts
     };
 };
 
