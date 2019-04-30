@@ -11,7 +11,7 @@ export const createShift = (employee, momentStart, momentEnd) => {
     return {
         clockInTime: momentStart,
         clockOutTime: momentEnd,
-        user: employee._id,
+        user: employee,
     };
 };
 

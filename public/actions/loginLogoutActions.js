@@ -19,13 +19,12 @@ function handleLoginSuccess(response, router, isLoginMode) {
         throw new Error('אין הרשאות מתאימות');
 
     localStorage.setItem('jwtToken', response.data.token);
+    localStorage.setItem('activeUser', JSON.stringify(response.data.user));
 
     router.push('/dashboard');
     return {
         type: actionsTypes.HANDLE_LOGIN_SUCCESS,
         ga: {
-            category: extractCompany(user),
-            action: extractUser(user),
             actionType: isLoginMode ? GAAction.LOGIN : GAAction.REGISTER,
         }
     };
