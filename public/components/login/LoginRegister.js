@@ -65,6 +65,7 @@ class LoginRegister extends Component {
                                        name={isLoginMode ? "uid" : "username"}
                                        autoComplete="username"
                                        autoFocus
+                                       testId={"username"}
                                 />
                                 <Field component={renderTextField}
                                        fullWidth={true}
@@ -73,6 +74,7 @@ class LoginRegister extends Component {
                                        type="password"
                                        name="password"
                                        autoComplete="current-password"
+                                       testId={"password"}
                                 />
                             {!isLoginMode &&
                                 <Field component={renderTextField}
@@ -81,6 +83,7 @@ class LoginRegister extends Component {
                                        label="אימות סיסמא"
                                        type="password"
                                        name="retypePassword"
+                                       testId={"retypePassword"}
                                 />
                             }
                             {error && <div className={styles["error-msg"]}>{error}</div>}

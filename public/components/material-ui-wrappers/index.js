@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from "@material-ui/core/TextField";
 import PropTypes from 'prop-types';
 
-export const renderTextField = ({input, label, type, fullWidth, autoFocus, autoComplete}) => (
+export const renderTextField = ({input, label, type, fullWidth, autoFocus, autoComplete, testId}) => (
     <TextField
         placeholder={label}
         label={label}
@@ -10,6 +10,7 @@ export const renderTextField = ({input, label, type, fullWidth, autoFocus, autoC
         fullWidth={fullWidth}
         autoFocus={autoFocus}
         autoComplete={autoComplete}
+        data-testid={testId}
         {...input}
         />
 );

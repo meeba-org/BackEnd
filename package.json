@@ -111,6 +111,7 @@
         "webpack-chunk-hash": "^0.6.0"
     },
     "devDependencies": {
+        "cypress": "^3.2.0",
         "babel-cli": "^6.18.0",
         "babel-eslint": "^8.2.3",
         "babel-preset-env": "^1.7.0",

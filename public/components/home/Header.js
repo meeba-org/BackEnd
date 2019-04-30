@@ -29,7 +29,7 @@ class Header extends Component {
                             <div className={styles["sub-title"]}>
                                 שעון נוכחות חינמי
                             </div>
-                            <Button className={styles["login-button"]} variant="contained" color="primary" onClick={showLoginRegisterDialog}>
+                            <Button className={styles["login-button"]} variant="contained" color="primary" onClick={showLoginRegisterDialog} data-testid={"loginButton"}>
                                 <span>כניסה</span>
                                 <ArrowBack style={{"paddingTop": "5px"}}/>
                             </Button>
