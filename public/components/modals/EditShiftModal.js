@@ -148,6 +148,11 @@ class EditShiftModal extends Component {
                 delete draftShift[key];
         }
 
+        // Special treatment fro commuteCost - I need to flatten this object
+        if (draftShift.commuteCost.publicTransportation === 0)
+            delete draftShift.commuteCost;
+
+
         return draftShift;
     }
 
