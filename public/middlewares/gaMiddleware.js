@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const UNKNOWN_USER = "UNKNOWN_USER";
 
 const gaMiddleware = () => next => action => {
@@ -49,7 +51,8 @@ const extractUserFromJson = (activeUserStr) => {
 };
 
 const createExtraInfo = (ga, company, user) => {
-    return `companyId: ${company._id} | userId: ${user._id}`;
+    let time = moment().format("DD-MM-YYYY HH:mm");
+    return `${time} | companyId: ${company._id} | userId: ${user._id}`;
 };
 
 export const extractUser = (activeUser) => {
