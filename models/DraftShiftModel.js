@@ -6,7 +6,7 @@ const resolve = require("../controllers/apiManager").resolve;
 const DraftShiftSchema = mongoose.Schema({
     clockInTime: {
         type: Date,
-        default: Date.now
+        default: null
     },
     clockOutTime: {
         type: Date,

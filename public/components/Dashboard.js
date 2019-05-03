@@ -79,7 +79,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadUserFromToken: () => { dispatch(loadUserFromToken()) },
+        loadUserFromToken: () => { dispatch(loadUserFromToken()); },
         hasPendingShifts: () => {dispatch( hasPendingShifts()); },
     };
 };
