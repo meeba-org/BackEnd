@@ -328,7 +328,7 @@ class EditShiftModal extends Component {
         if (moment(shift.clockOutTime).format(TIME_FORMAT) === moment(shift.draftShift.clockOutTime).format(TIME_FORMAT)) // same time on draft
             return null;
 
-        let clockOutTime = moment(shift.clockOutTime).format(TIME_FORMAT);
+        let clockOutTime = shift.clockOutTime ? moment(shift.clockOutTime).format(TIME_FORMAT) : "--:--";
         return <label><span style={{ color: "lightgray"}}>היה: </span>{clockOutTime}</label>;
     };
 
