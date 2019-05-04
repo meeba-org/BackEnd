@@ -1,9 +1,8 @@
-import React, {Component, Fragment} from 'react';
-import {connect} from "react-redux";
 import {withStyles} from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
-import Badge from '@material-ui/core/Badge';
+import React, {Component, Fragment} from 'react';
+import {connect} from "react-redux";
 import {ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import DailyReportContainer from "./DailyReportContainer";
@@ -35,7 +34,7 @@ class Report extends Component {
 
     render() {
         const {selectedTab} = this.state;
-        const {isTasksFeatureEnable, classes, hasPendingShifts} = this.props;
+        const {isTasksFeatureEnable} = this.props;
 
         return (
             <Fragment>
@@ -45,15 +44,7 @@ class Report extends Component {
                     {isTasksFeatureEnable &&
                     <Tab value={EReportType.TASKS} label="משימות" />
                     }
-                    <Tab
-                        disabled={!hasPendingShifts}
-                        value={EReportType.PENDING}
-                        label={
-                            <Badge className={classes.padding} color="secondary" variant="dot" invisible={!hasPendingShifts}>
-                                ממתינות לאישור
-                            </Badge>
-                        }
-                    />
+                    <Tab value={EReportType.PENDING} label="ממתינות לאישור" />
                 </Tabs>
                 {selectedTab === EReportType.MONTHLY && <MonthlyReportContainer/>}
                 {selectedTab === EReportType.DAILY && <DailyReportContainer mode={ReportModes.Report} />}
@@ -70,7 +61,7 @@ Report.defaultProps = {};
 const mapStateToProps = (state) => {
     return {
         isTasksFeatureEnable: selectors.isTasksFeatureEnable(state),
-        hasPendingShifts: state.user.hasPendingShifts
+        // hasPendingShifts: state.user.hasPendingShifts
     };
 };
 

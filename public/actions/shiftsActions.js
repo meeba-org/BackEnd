@@ -1,6 +1,6 @@
+import moment from "moment";
 import * as actions from "./actionTypes";
 import {fetchMonthlyReport} from "./reportsActions";
-import moment from "moment";
 
 export const fetchShiftSuccess = (payload) => ({
     type: actions.FETCH_SHIFT_SUCCESS,
@@ -155,7 +155,6 @@ export const updateShift0 = (dispatch, shift, shouldFetchMonthlyReport, month, y
                 if (shouldFetchMonthlyReport && !!month && !!year) {
                     dispatch(fetchMonthlyReport(month, year));
                 }
-                dispatch(hasPendingShifts()); // Checking if we have pending shifts for every shift update ... not that efficient... maybe will change it later
                 return dispatch(updateShiftSuccess(data));
             },
         },

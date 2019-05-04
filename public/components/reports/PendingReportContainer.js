@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import reduxForm from "redux-form/es/reduxForm";
 import {
     fetchPendingShifts,
-    hasPendingShifts,
     showDeleteShiftModal,
     showEditShiftModal,
     showLocationModal,
@@ -55,7 +54,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        hasPendingShifts: () => dispatch( hasPendingShifts()) ,
+        // hasPendingShifts: () => dispatch( hasPendingShifts()) ,
         fetchPendingShifts: () => {dispatch( fetchPendingShifts()); },
         deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
         updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, false, month, year)),
