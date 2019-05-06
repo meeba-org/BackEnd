@@ -76,13 +76,6 @@ class MonthlyReport extends React.PureComponent {
         this.props.onCreateShift(shift, selectedMonth, selectedYear);
     };
 
-    onUpdateShift = (shift) => {
-        const {selectedYear, selectedMonth} = this.state;
-
-        let value = moment().year(selectedYear).month(selectedMonth - 1);
-        this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'));
-    };
-
     onDeleteShift = (shift) => {
         const {selectedYear, selectedMonth} = this.state;
 
@@ -139,8 +132,6 @@ class MonthlyReport extends React.PureComponent {
                                                onDeleteShift={this.onDeleteShift}
                                                showShiftDialog={showShiftDialog}
                                                showLocationModal={showLocationModal}
-                                               onUpdateShift={this.onUpdateShift}
-                                               onCreateShift={this.onCreateShift}
                                         />
                                     </Fade>)
                                 )}
@@ -159,7 +150,6 @@ MonthlyReport.propTypes = {
     fields: PropTypes.object,
     employees: PropTypes.array,
     onCreateShift: PropTypes.func.isRequired,
-    onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     showLocationModal: PropTypes.func.isRequired,

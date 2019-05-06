@@ -1,6 +1,6 @@
+import moment from "moment";
 import * as actions from "./actionTypes";
 import {fetchMonthlyReport} from "./reportsActions";
-import moment from "moment";
 
 export const fetchShiftSuccess = (payload) => ({
     type: actions.FETCH_SHIFT_SUCCESS,
@@ -19,6 +19,11 @@ export const deleteShiftSuccess = (id) => ({
 
 export const fetchShiftsSuccess = (payload) => ({
     type: actions.FETCH_SHIFTS_SUCCESS,
+    payload
+});
+
+export const hasPendingShiftsSuccess = (payload) => ({
+    type: actions.HAS_PENDING_SHIFTS_SUCCESS,
     payload
 });
 
@@ -53,10 +58,39 @@ function prepareFetchShiftsUrl(startDate, endDate) {
 
     return url;
 }
+
+function prepareFetchPendingShiftsUrl() {
+    return '/shifts?pending=true';
+}
+
 export const fetchShifts = (startDate, endDate) => ({
     type: actions.API,
     payload: {
         url: prepareFetchShiftsUrl(startDate, endDate),
+        method: "get",
+        success: fetchShiftsSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+    }
+});
+
+export const hasPendingShifts = () => ({
+    type: actions.API,
+    payload: {
+        url: prepareFetchPendingShiftsUrl(),
+        method: "get",
+        success: hasPendingShiftsSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+    }
+});
+
+export const fetchPendingShifts = () => ({
+    type: actions.API,
+    payload: {
+        url: prepareFetchPendingShiftsUrl(),
         method: "get",
         success: fetchShiftsSuccess,
     },
