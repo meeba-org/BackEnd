@@ -18,7 +18,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {hideEditShiftModal} from "../../actions/index";
 import {EShiftStatus} from "../../helpers/EShiftStatus";
-import {TIME_FORMAT} from "../../helpers/utils";
+import {isNumber, TIME_FORMAT} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import TasksSelectionContainer from "../tasks/TasksSelectionContainer";
 import withShiftLogic from "../withShiftLogic";
@@ -148,11 +148,6 @@ class EditShiftModal extends Component {
                 delete draftShift[key];
         }
 
-        // Special treatment fro commuteCost - I need to flatten this object
-        if (draftShift.commuteCost.publicTransportation === 0)
-            delete draftShift.commuteCost;
-
-
         return draftShift;
     }
 
@@ -275,7 +270,14 @@ class EditShiftModal extends Component {
     }
 
     isDraftPublicTransportationExist(shift) {
-        return shift.draftShift && shift.draftShift.commuteCost && shift.draftShift.commuteCost.publicTransportation;
+        if (!shift.draftShift || !shift.draftShift.commuteCost)
+            return false;
+
+        return isNumber(shift.draftShift.commuteCost.publicTransportation) || shift.draftShift.commuteCost.publicTransportation === "";
+    }
+
+    isPublicTransportationExist(shift) {
+        return shift && shift.commuteCost && shift.commuteCost.publicTransportation;
     }
 
     calcDate = (shift) => {
@@ -333,7 +335,7 @@ class EditShiftModal extends Component {
     };
 
     calcPublicTransportation = (shift) => {
-        if (this.isDraftPublicTransportationExist(shift))
+        if (this.isDraftPublicTransportationExist(shift) && shift.status === EShiftStatus.PENDING)
             return shift.draftShift.commuteCost.publicTransportation;
         else {
             if (!shift.commuteCost)
@@ -344,11 +346,21 @@ class EditShiftModal extends Component {
     };
 
     calcPublicTransportationHelperText = (shift) => {
-        if (!this.isDraftPublicTransportationExist(shift))
-            return null;
+        if (this.isPublicTransportationExist(shift)){
+            if (!this.isDraftPublicTransportationExist(shift) && shift.status !== EShiftStatus.PENDING)
+                return null;
 
-        let publicTransportation = shift.commuteCost.publicTransportation;
-        return <label>היה: {publicTransportation}</label>;
+            // Has also draft - helper text hold the original
+            let publicTransportation = shift.commuteCost.publicTransportation;
+            return <label>היה: {publicTransportation}</label>;
+        }
+
+        // No original pt
+        if (this.isDraftPublicTransportationExist(shift))
+            return <label>היה: -</label>;
+
+        // No original && no draft
+        return null;
     };
 
     render() {

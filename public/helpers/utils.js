@@ -127,3 +127,5 @@ export const isIsraeliIdValid = (id) => {
     }
     return (counter % 10 === 0);
 };
+
+export const isNumber = (n) => !isNaN(n);

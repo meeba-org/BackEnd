@@ -71,7 +71,7 @@ const updateShift = (shift) => {
             newShift._id = shift._id;
 
             newShift = newShift.toObject();
-            return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true}).populate('user task draftShift').exec();
+            return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true, setDefaultsOnInsert: true}).populate('user task draftShift').exec();
         })
 };
 

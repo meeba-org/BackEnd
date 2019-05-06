@@ -16,7 +16,7 @@ const DraftShiftSchema = mongoose.Schema({
         type: Number
     },
     commuteCost: {
-        publicTransportation: {type: Number, default: 0, required: true},
+        publicTransportation: {type: Number, default: 0},
     },
     extraPay: {type: Number, default: 0, required: true},
 });
