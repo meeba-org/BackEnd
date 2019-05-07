@@ -8,18 +8,17 @@ const gaMiddleware = () => next => action => {
     }
 
     // We want to track only production
-    // TODO Chen for debugging - uncomment this when done
-    // if (localStorage.getItem('isDevEnv') === "true")
-    //     return next(action);
+    if (localStorage.getItem('isDevEnv') === "true")
+        return next(action);
 
     let activeUser = localStorage.getItem('activeUser');
 
     let company = extractCompanyFromJson(activeUser);
     let user = action.ga.user || extractUserFromJson(activeUser);
 
-    let gaCategory = action.ga.actionType;
-    let gaAction = action.ga.actionInfo;
-    let gaLabel = createExtraInfo(action.ga, company, user);
+    let gaCategory = action.ga.category;
+    let gaAction = action.ga.action;
+    let gaLabel = createLabel(action.ga, company, user);
 
     // Call Google Analytics
     window.ga('send', 'event', gaCategory, gaAction, gaLabel, {
@@ -50,9 +49,13 @@ const extractUserFromJson = (activeUserStr) => {
     return extractUser(activeUser);
 };
 
-const createExtraInfo = (ga, company, user) => {
+const createLabel = (ga, company, user) => {
     let time = moment().format("DD-MM-YYYY HH:mm");
-    return `${time} | companyId: ${company._id} | userId: ${user._id}`;
+    let extraInfo = `${time} | companyId: ${company._id} | userId: ${user._id}`;
+
+    if (ga.label)
+        extraInfo += " | " + ga.label;
+    return extraInfo;
 };
 
 export const extractUser = (activeUser) => {
@@ -67,15 +70,6 @@ export const extractCompany = (activeUser) => {
         return UNKNOWN_USER;
 
     return activeUser.company;
-};
-
-const extractAction = (actionType, actionInfo) => {
-    let action = actionType;
-
-    if (actionInfo)
-        action += "_" + actionInfo;
-
-    return action;
 };
 
 export default gaMiddleware;

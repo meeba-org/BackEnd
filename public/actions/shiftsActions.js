@@ -1,7 +1,7 @@
-import {GAAction} from "../helpers/GATypes";
+import moment from "moment";
+import {GACategory} from "../helpers/GATypes";
 import * as actions from "./actionTypes";
 import {fetchMonthlyReport} from "./reportsActions";
-import moment from "moment";
 
 export const fetchShiftSuccess = (payload) => ({
     type: actions.FETCH_SHIFT_SUCCESS,
@@ -45,8 +45,8 @@ export const createShift = (shift, dispatch, month, year) => ({
         shouldAuthenticate: true,
     },
     ga: {
-        actionType: GAAction.CLOCK_IN,
-        actionInfo: "web",
+        category: GACategory.CLOCK_IN,
+        action: "web",
         user: shift.user
     }
 });
