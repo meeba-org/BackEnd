@@ -12,6 +12,7 @@ import BusCost from "./BusCost";
 import ExtraPay from "./ExtraPay";
 import Location from "./Location";
 import Note from "./Note";
+import PendingApprovalIndicator from "./PendingApprovalIndicator";
 import TaskIndicator from "./TaskIndicator";
 import Warning from "./Warning";
 
@@ -58,8 +59,8 @@ const ReportShift = (props) => {
             {isDesktop &&
                 <Fragment>
                     <Warning warning={errors}/>
+                    <PendingApprovalIndicator status={shift.status} onClick={showShiftDialog}/>
                     <Note text={shift.note} onClick={showShiftDialog}/>
-                    {/*<CarCost data={shift.commuteCost} onClick={showShiftDialog}/>*/}
                     <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
                     <Location location={shift.location} onClick={showLocationModal} />
                     <ExtraPay extraPay={shift.extraPay} onClick={showShiftDialog}/>

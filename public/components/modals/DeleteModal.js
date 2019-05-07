@@ -43,8 +43,8 @@ DeleteModal.propTypes = {
     deleteEntity: PropTypes.func,
     dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
-    month: PropTypes.string,
-    year: PropTypes.string,
+    month: PropTypes.number,
+    year: PropTypes.number,
 };
 
 export default connect()(DeleteModal);

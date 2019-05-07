@@ -1,6 +1,4 @@
-import MomentUtils from "@date-io/moment";
 import Paper from "@material-ui/core/Paper";
-import MuiPickersUtilsProvider from "material-ui-pickers/MuiPickersUtilsProvider";
 import PropTypes from 'prop-types';
 import React from 'react';
 import CSSModules from "react-css-modules";
@@ -19,6 +17,7 @@ class Dashboard extends React.PureComponent {
 
     componentWillMount() {
         this.props.loadUserFromToken();
+        // this.props.hasPendingShifts();
     }
 
     toggleDrawer = () => {
@@ -53,9 +52,7 @@ class Dashboard extends React.PureComponent {
                             />
                         </Paper>
                         <Paper styleName="main-container">
-                            <MuiPickersUtilsProvider utils={MomentUtils}>
                             {this.props.children}
-                            </MuiPickersUtilsProvider>
                         </Paper>
                     </div>
                 </div>
@@ -82,9 +79,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadUserFromToken: () => {
-            dispatch(loadUserFromToken());
-        },
+        loadUserFromToken: () => { dispatch(loadUserFromToken()); },
+        // hasPendingShifts: () => {dispatch( hasPendingShifts()); },
     };
 };
 

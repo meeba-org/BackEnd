@@ -1,24 +1,14 @@
-import React from "react";
-import Field from "redux-form/es/Field";
+import moment from "moment";
 import PropTypes from 'prop-types';
-import ShiftContainer from "./ShiftContainer";
+import React from "react";
 import CSSModules from "react-css-modules";
-import NoData from "../NoData";
+import Field from "redux-form/es/Field";
 import styles from "../../styles/ShiftsList.scss";
 import Fade from "../Fade";
-import moment from "moment";
+import NoData from "../NoData";
+import ShiftContainer from "./ShiftContainer";
 
 class ShiftsList extends React.PureComponent {
-    onCreate(fields) {
-        let newEntity = {};
-        fields.push(newEntity);
-        this.props.onCreate(newEntity);
-    }
-
-    onUpdate(entity) {
-        this.props.onUpdate(entity);
-    }
-
     onDelete(fields, index) {
         let entityToDelete = fields.get(index);
         this.props.onDelete(entityToDelete);
@@ -68,7 +58,6 @@ class ShiftsList extends React.PureComponent {
                                 onDelete={() => this.onDelete(fields, index)}
                                 showShiftDialog={showShiftDialog}
                                 showLocationModal={showLocationModal}
-                                onUpdate={(shift) => this.onUpdate(shift)}
                                 showNames={showNames}
                                 mode={mode}
                                 getIntersectShift={this.getIntersectShift}
@@ -85,8 +74,6 @@ class ShiftsList extends React.PureComponent {
 
 ShiftsList.propTypes = {
     fields: PropTypes.object.isRequired,
-    onCreate: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     showLocationModal: PropTypes.func.isRequired,

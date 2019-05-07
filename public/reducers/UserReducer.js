@@ -22,6 +22,12 @@ export function UserReducer(state = {}, action = null) {
                 ...action.payload,
             };
         }
+        case types.HAS_PENDING_SHIFTS_SUCCESS: {
+            return {
+                ...state,
+                hasPendingShifts: action.payload.length > 0
+            };
+        }
         default:
             return state;
     }

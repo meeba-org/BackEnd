@@ -27,11 +27,17 @@ const muiTheme = createMuiTheme({
         },
         MuiInputLabel: {
             root: {
-                transformOrigin: "top right"
+                transformOrigin: "top right",
+                right: 0
             },
             shrink: {
                 transformOrigin: "top right"
             },
+        },
+        MuiFormControl: {
+            root: {
+                alignItems: "flex-start"
+            }
         },
         MuiTooltip: {
             tooltip: {

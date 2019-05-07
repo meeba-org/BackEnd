@@ -3,6 +3,8 @@
 .stacked-bar-graph {
     flex: 1;
     height: 13px;
+    display: flex;
+    align-items: center;
 
     span {
         display: flex;
