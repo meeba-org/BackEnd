@@ -1,10 +1,12 @@
-import React, {Fragment} from 'react';
+import MomentUtils from "@date-io/moment";
+import MuiPickersUtilsProvider from "material-ui-pickers/MuiPickersUtilsProvider";
 import PropTypes from 'prop-types';
-import ModalRoot from "./modals/ModalRoot";
-import "../styles/App.scss";
-import {handleResize} from "../actions/index";
+import React from 'react';
 import connect from "react-redux/es/connect/connect";
 import {fetchMetaData} from "../actions/generalActions";
+import {handleResize} from "../actions/index";
+import "../styles/App.scss";
+import ModalRoot from "./modals/ModalRoot";
 
 class AppContainer extends React.Component {
     componentDidMount() {
@@ -24,10 +26,10 @@ class AppContainer extends React.Component {
 
     render() {
         return (
-            <Fragment>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
                 {this.props.children}
                 <ModalRoot />
-            </Fragment>
+            </MuiPickersUtilsProvider>
         );
     }
 }

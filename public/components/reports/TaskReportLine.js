@@ -2,7 +2,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import ArrowBack from '@material-ui/icons/KeyboardArrowLeft';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 import CSSModules from "react-css-modules";
@@ -23,7 +22,7 @@ const TaskBreadCrumb = CSSModules(({taskBreadCrumb}) => {
                 <Fragment>
                     {index === 0 ?
                         <div styleName="crumb">{t.title}</div> :
-                        <div styleName="crumb"><ArrowBack styleName="icon"/>{t.title}</div>
+                        <div styleName="crumb"><KeyboardArrowLeft styleName="icon"/>{t.title}</div>
                     }
                 </Fragment>
             ))
@@ -46,7 +45,7 @@ class TaskReportLine extends React.PureComponent {
     };
 
     render() {
-        let {input, isCollapsed, onToggle, onCreateShift, onUpdateShift, onDeleteShift, showShiftDialog, showLocationModal, index} = this.props;
+        let {input, isCollapsed, onToggle, onUpdateShift, onDeleteShift, showShiftDialog, showLocationModal, index} = this.props;
         let toggleButton = isCollapsed ?
             <Tooltip title="פרטי משמרות" placement="top"><KeyboardArrowLeft/></Tooltip> :
             <KeyboardArrowDown/>;
@@ -69,7 +68,6 @@ class TaskReportLine extends React.PureComponent {
                             showShiftDialog={showShiftDialog}
                             showLocationModal={showLocationModal}
                             onUpdate={onUpdateShift}
-                            onCreate={onCreateShift}
                             showNames={true}
                             mode={ReportModes.Report}
                             shouldDisplayNoData={true}
@@ -83,7 +81,6 @@ class TaskReportLine extends React.PureComponent {
 
 TaskReportLine.propTypes = {
     input: PropTypes.object.isRequired,
-    onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,

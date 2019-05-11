@@ -13,21 +13,10 @@ const { body, param } = require('express-validator/check');
 //GET /shifts shift
 router.get('/',
     (req, res) => routeWrapper(req, res, (req, res) => {
-        const startDate = req.query.startDate || moment().startOf('month');
-        const userId = req.query.userId;
+        if (req.query.pending)
+            return getPendingShifts(req, res);
 
-        if (userId && !jwtService.isUserIdValid(userId, req))
-            return reject("[ShiftsController.Get] userId is not valid - does not fit token", 400);
-
-        let endDate = req.query.endDate || moment(startDate).endOf('month');
-        endDate = moment(endDate).endOf('day');
-
-        if (!moment(startDate).isValid() || !moment(endDate).isValid())
-            return reject("[ShiftsController.Get] moment isValid() failed - startDate || endDate are not valid", 400);
-
-        const company = jwtService.getCompanyFromLocals(res);
-
-        return ShiftModel.getShiftsBetween(company, startDate, endDate, userId);
+        return getShiftsBetweenDates(req, res);
     })
 );
 
@@ -83,5 +72,29 @@ let fillMissingShiftData = function (res, newShift) {
 
     fillHolidayData(newShift);
 };
+
+function getPendingShifts(req, res) {
+    const company = jwtService.getCompanyFromLocals(res);
+
+    return ShiftModel.getPendingShifts(company);
+}
+
+function getShiftsBetweenDates(req, res) {
+    const startDate = req.query.startDate || moment().startOf('month');
+    const userId = req.query.userId;
+
+    if (userId && !jwtService.isUserIdValid(userId, req))
+        return reject("[ShiftsController.Get] userId is not valid - does not fit token", 400);
+
+    let endDate = req.query.endDate || moment(startDate).endOf('month');
+    endDate = moment(endDate).endOf('day');
+
+    if (!moment(startDate).isValid() || !moment(endDate).isValid())
+        return reject("[ShiftsController.Get] moment isValid() failed - startDate || endDate are not valid", 400);
+
+    const company = jwtService.getCompanyFromLocals(res);
+
+    return ShiftModel.getShiftsBetween(company, startDate, endDate, userId);
+}
 
 module.exports = router;

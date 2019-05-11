@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const UNKNOWN_USER = "UNKNOWN_USER";
 
 const gaMiddleware = () => next => action => {
@@ -11,12 +13,18 @@ const gaMiddleware = () => next => action => {
 
     let activeUser = localStorage.getItem('activeUser');
 
-    let gaCategory = action.ga.category || extractCompanyFromJson(activeUser);
-    let gaAction = action.ga.action || extractUserFromJson(activeUser);
-    let gaLabel = extractAction(action.ga.actionType, action.ga.actionInfo);
+    let company = extractCompanyFromJson(activeUser);
+    let user = action.ga.user || extractUserFromJson(activeUser);
+
+    let gaCategory = action.ga.category;
+    let gaAction = action.ga.action;
+    let gaLabel = createLabel(action.ga, company, user);
 
     // Call Google Analytics
-    window.ga('send', 'event', gaCategory, gaAction, gaLabel);
+    window.ga('send', 'event', gaCategory, gaAction, gaLabel, {
+        'dimension1': company.name,
+        'dimension2': user.fullName
+    });
 
     return next(action);
 };
@@ -41,37 +49,27 @@ const extractUserFromJson = (activeUserStr) => {
     return extractUser(activeUser);
 };
 
+const createLabel = (ga, company, user) => {
+    let time = moment().format("DD-MM-YYYY HH:mm");
+    let extraInfo = `${time} | companyId: ${company._id} | userId: ${user._id}`;
+
+    if (ga.label)
+        extraInfo += " | " + ga.label;
+    return extraInfo;
+};
+
 export const extractUser = (activeUser) => {
     if (!activeUser || !activeUser._id)
-        return UNKNOWN_USER;
+        return {fullName: UNKNOWN_USER};
 
-    let user = activeUser._id;
-
-    if (activeUser.fullName)
-        user += "_" + activeUser.fullName;
-
-    return user;
+    return activeUser;
 };
 
 export const extractCompany = (activeUser) => {
     if (!activeUser || !activeUser.company || !activeUser.company._id)
         return UNKNOWN_USER;
 
-    let company = activeUser.company._id;
-
-    if (activeUser.company.name)
-        company += "_" + activeUser.company.name;
-
-    return company;
-};
-
-const extractAction = (actionType, actionInfo) => {
-    let action = actionType;
-
-    if (actionInfo)
-        action += "_" + actionInfo;
-
-    return action;
+    return activeUser.company;
 };
 
 export default gaMiddleware;

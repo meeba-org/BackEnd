@@ -1,13 +1,14 @@
-import React from "react";
-import PropTypes from 'prop-types';
-import CSSModules from "react-css-modules";
-import {convertMomentToTimeStr, convertTimeStrToMoment, getCurrentTime, ReportModes} from "../../helpers/utils";
 import moment from "moment";
+import PropTypes from 'prop-types';
+import React from "react";
+import CSSModules from "react-css-modules";
+import connect from "react-redux/es/connect/connect";
+import {ReportModes} from "../../helpers/utils";
+import * as selectors from "../../selectors";
 import styles from "../../styles/Shift.scss";
+import withShiftLogic from "../withShiftLogic";
 import LiveShift from "./LiveShift";
 import ReportShift from "./ReportShift";
-import * as selectors from "../../selectors";
-import connect from "react-redux/es/connect/connect";
 
 class ShiftContainer extends React.PureComponent {
 
@@ -20,42 +21,6 @@ class ShiftContainer extends React.PureComponent {
         };
     }
 
-    onUpdateStartDate = (date, shift) => {
-        let {startTimeStr, endTimeStr} = convertMomentToTimeStr(shift);
-        let newStartDateStr = date.format("YYYY-MM-DD");
-
-        this.onUpdate(newStartDateStr, startTimeStr, endTimeStr);
-    }
-
-    onUpdateStartTime = (time, shift) => {
-        let {startDateStr, endTimeStr} = convertMomentToTimeStr(shift);
-        let newStartTimeStr = time.format("HH:mm");
-
-        this.onUpdate(startDateStr, newStartTimeStr, endTimeStr);
-    }
-
-    onUpdateEndTime = (time, shift) => {
-        let {startDateStr, startTimeStr} = convertMomentToTimeStr(shift);
-        let newEndTimeStr = time.format("HH:mm");
-
-        this.onUpdate(startDateStr, startTimeStr, newEndTimeStr);
-    }
-
-    onUpdate = (startDateStr, startTimeStr, endTimeStr) => {
-        let {input, onUpdate} = this.props;
-
-        let {momentStart, momentEnd} = convertTimeStrToMoment(startDateStr, startTimeStr, endTimeStr);
-
-        let shift = {
-            ...input.value,
-            clockInTime: momentStart,
-            clockOutTime: momentEnd,
-        };
-
-        input.onChange(shift);
-        onUpdate(shift);
-    }
-
     onDelete = () => {
         let {onDelete, input} = this.props;
 
@@ -65,7 +30,7 @@ class ShiftContainer extends React.PureComponent {
     showShiftDialog = () => {
         let {showShiftDialog, input} = this.props;
 
-        showShiftDialog(input.value, (editedShift) => input.onChange(editedShift));
+        showShiftDialog(input.value); //, (editedShift) => input.onChange(editedShift));
     };
 
     showLocationModal = () => {
@@ -90,13 +55,6 @@ class ShiftContainer extends React.PureComponent {
             window.open(`https://maps.google.com/maps?q=${location.latitude},${location.longitude}`);
     };
 
-    onShiftComplete = () => {
-        let {startDateStr, startTimeStr} = convertMomentToTimeStr(this.props.input.value);
-        let newEndTimeStr = getCurrentTime();
-
-        this.onUpdate(startDateStr, startTimeStr, newEndTimeStr);
-    };
-
     onMouseEnter = () => {
         this.setState({hover: true});
     };
@@ -111,6 +69,33 @@ class ShiftContainer extends React.PureComponent {
 
     onBlur = () => {
         this.setState({focus: false});
+    };
+
+    onUpdateStartDate = (date, shift) => {
+        const {onUpdateStartDate} = this.props;
+        let updatedShift = onUpdateStartDate(date, shift);
+
+        this.onUpdate(updatedShift);
+    };
+
+    onUpdateStartTime = (time, shift) => {
+        const {onUpdateStartTime} = this.props;
+        let updatedShift = onUpdateStartTime(time, shift);
+
+        this.onUpdate(updatedShift);
+    };
+
+    onUpdateEndTime = (time, shift) => {
+        const {onUpdateEndTime} = this.props;
+        let updatedShift = onUpdateEndTime(time, shift);
+
+        this.onUpdate(updatedShift);
+    };
+
+    onUpdate = (updatedShift) => {
+        let {input} = this.props;
+
+        input.onChange(updatedShift);
     };
 
     getErrors = () => {
@@ -134,9 +119,8 @@ class ShiftContainer extends React.PureComponent {
         return undefined;
     };
 
-
     render() {
-        let {showNames, input, mode, isDesktop} = this.props;
+        let {showNames, input, mode, isDesktop, onDelete} = this.props;
         const {focus, hover} = this.state;
         let errors = this.getErrors();
         let classes1 = "shift " + (focus ? "focus" : "");
@@ -150,13 +134,14 @@ class ShiftContainer extends React.PureComponent {
                         shift={input.value}
                         errors={errors}
                         hover={hover}
-                        onUpdateStartTime={this.onUpdateStartTime}
-                        onUpdateEndTime={this.onUpdateEndTime}
-                        onDelete={this.onDelete}
-                        onShiftComplete={this.onShiftComplete}
+                        onUpdate={this.onUpdate}
                         showShiftDialog={this.showShiftDialog}
                         showLocationModal={this.showLocationModal}
                         isDesktop={isDesktop}
+                        onDelete={onDelete}
+                        onUpdateStartTime={this.onUpdateStartTime}
+                        onUpdateEndTime={this.onUpdateEndTime}
+                        onShiftComplete={this.onShiftComplete}
                     />
                 }
                 {mode === ReportModes.Report &&
@@ -168,10 +153,10 @@ class ShiftContainer extends React.PureComponent {
                         onUpdateStartDate={this.onUpdateStartDate}
                         onUpdateStartTime={this.onUpdateStartTime}
                         onUpdateEndTime={this.onUpdateEndTime}
-                        onDelete={this.onDelete}
                         showShiftDialog={this.showShiftDialog}
                         showLocationModal={this.showLocationModal}
                         isDesktop={isDesktop}
+                        onDelete={onDelete}
                     />
                 }
             </div>
@@ -183,9 +168,11 @@ ShiftContainer.propTypes = {
     input: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
     mode: PropTypes.number.isRequired,
+    onUpdateStartDate: PropTypes.func.isRequired,
+    onUpdateStartTime: PropTypes.func.isRequired,
+    onUpdateEndTime: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -194,4 +181,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(CSSModules(ShiftContainer, styles, {allowMultiple: true}));
+export default connect(mapStateToProps)(withShiftLogic(CSSModules(ShiftContainer, styles, {allowMultiple: true})));

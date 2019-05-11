@@ -1,10 +1,9 @@
 import axios from 'axios';
-import * as actionsTypes from "./actionTypes";
-import config from "../config";
 import SubmissionError from "redux-form/es/SubmissionError";
+import config from "../config";
+import {GACategory} from "../helpers/GATypes";
 import {isUserAllowedLogin} from "../helpers/utils";
-import {GAAction} from "../helpers/GATypes";
-import {extractCompany, extractUser} from "../middlewares/gaMiddleware";
+import * as actionsTypes from "./actionTypes";
 import {hideLoginRegisterModal} from "./index";
 
 function handleLoginStart() {
@@ -19,14 +18,13 @@ function handleLoginSuccess(response, router, isLoginMode) {
         throw new Error('אין הרשאות מתאימות');
 
     localStorage.setItem('jwtToken', response.data.token);
+    localStorage.setItem('activeUser', JSON.stringify(response.data.user));
 
     router.push('/dashboard');
     return {
         type: actionsTypes.HANDLE_LOGIN_SUCCESS,
         ga: {
-            category: extractCompany(user),
-            action: extractUser(user),
-            actionType: isLoginMode ? GAAction.LOGIN : GAAction.REGISTER,
+            category: isLoginMode ? GACategory.LOGIN : GACategory.REGISTER,
         }
     };
 }

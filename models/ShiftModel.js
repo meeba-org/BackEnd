@@ -1,5 +1,6 @@
 const moment = require('moment');
 const mongoose = require('mongoose');
+const DraftShiftModel = require("./DraftShiftModel");
 const reject = require("../controllers/apiManager").reject;
 
 // Shift Schema
@@ -27,7 +28,9 @@ const ShiftSchema = mongoose.Schema({
         longitude: {type: Number}
     },
     task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
-    breakLength: {type: Number, default: 0}
+    breakLength: {type: Number, default: 0},
+    draftShift: { type: mongoose.Schema.Types.ObjectId, ref: 'DraftShift' },
+    status: {type: Number, default: 0},
 });
 
 const Shift = mongoose.model('Shift', ShiftSchema);
@@ -43,25 +46,47 @@ const getByShiftId = (id) => {
 };
 
 const createShift = (shift) => {
-    let newShift = createShiftInstance(shift);
+    return DraftShiftModel.createDraftShift(shift.draftShift)
+        .then(draftShift => {
+            if (draftShift)
+                shift.draftShift = draftShift;
 
-    return newShift.save()
-        .then(shift => Shift.populate(shift, {path: 'user'}));
+            let newShift = createShiftInstance(shift);
+
+            return newShift.save()
+                .then(shift => Shift.populate(shift, {path: 'user'}));
+        });
 };
 
 const updateShift = (shift) => {
     if (!shift._id)
         return reject("[ShiftModel.updateShift] - no valid id");
 
-    let newShift = createShiftInstance(shift);
-    newShift._id = shift._id;
+    return DraftShiftModel.createOrUpdateDraftShift(shift.draftShift)
+        .then(draftShift => {
+            if (draftShift)
+                shift.draftShift = draftShift;
 
-    newShift = newShift.toObject();
-    return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true}).populate('user task').exec();
+            let newShift = createShiftInstance(shift);
+            newShift._id = shift._id;
+
+            newShift = newShift.toObject();
+            return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true, setDefaultsOnInsert: true}).populate('user task draftShift').exec();
+        })
 };
 
 const deleteShift = (id) => {
     return Shift.remove({_id: id}).exec();
+};
+
+const getPendingShifts = (company) => {
+    let condition = {
+        $and: [{draftShift: {$exists : true}}, {draftShift: { $ne: null }}],
+        company: company._id
+    };
+
+    return Shift.find(condition).populate('user task draftShift').lean()
+        .then((shifts) => shifts.sort((s1, s2) => s1.clockInTime - s2.clockInTime));
 };
 
 const getShiftsBetween = (company, startDate, endDate, userId) => {
@@ -76,7 +101,7 @@ const getShiftsBetween = (company, startDate, endDate, userId) => {
     if (userId)
         condition.user = userId;
 
-    return Shift.find(condition).populate('user task').lean()
+    return Shift.find(condition).populate('user task draftShift').lean()
         .then((shifts) => shifts.sort((s1, s2) => s1.clockInTime - s2.clockInTime));
 };
 
@@ -116,6 +141,7 @@ module.exports = {
     createOrUpdateShift
     , deleteAllShifts
     , getShiftsBetween
+    , getPendingShifts
     , getByShiftId
     , createShift
     , updateShift
