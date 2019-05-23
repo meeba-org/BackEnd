@@ -19,13 +19,14 @@ import {isIsraeliIdValid} from "../../helpers/utils";
 import styles from "../../styles/EmployeesList.scss";
 import Fade from "../Fade";
 import NoData from "../NoData";
+import SearchBar from "../SearchBar";
 import EmployeeContainer from "./EmployeeContainer";
 
 class EmployeesList extends React.PureComponent {
 
-    constructor(props) {
-        super(props);
-    }
+    state = {
+        employeesFilter: ""
+    };
 
     onCreate = () => {
         this.props.onCreate({});
@@ -51,6 +52,15 @@ class EmployeesList extends React.PureComponent {
 
     render() {
         const {fields, showMobileAppModal, showEmployeeDialog, isDesktop} = this.props;
+
+        function filterEmployees(result, index, fields, employeesFilter) {
+            if (!employeesFilter)
+                return true;
+
+            let employee = fields.get(index);
+            return employee.fullName.includes(employeesFilter);
+        }
+
         return (
             <Card>
                 <CardHeader title="עובדים"/>
@@ -66,6 +76,9 @@ class EmployeesList extends React.PureComponent {
                             <Button className={styles["action-button"]} variant="contained" color="primary"
                                     onClick={() => showMobileAppModal()}><Icon>mobile_screen_share</Icon></Button>
                         </Tooltip>
+                        <SearchBar onChange={(filter) =>   {
+                            this.setState({employeesFilter: filter});
+                        }}/>
                     </div>
                     <Divider className={styles["divider"]}/>
                         {fields && fields.length > 0 && isDesktop &&
@@ -87,7 +100,7 @@ class EmployeesList extends React.PureComponent {
                                    showEmployeeDialog={showEmployeeDialog}
                             />
                         </Fade>)
-                    )}
+                    ).filter((obj, index) => filterEmployees(obj, index, fields, this.state.employeesFilter))}
                     {(!fields || (fields.length === 0)) &&
                     <NoData text="אין עובדים - בוא ננסה להוסיף!"/>
                     }
