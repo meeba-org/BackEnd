@@ -58,6 +58,10 @@ class EmployeesList extends React.PureComponent {
                 return true;
 
             let employee = fields.get(index);
+
+            if (!employee || !employee.fullName)
+                return false;
+
             return employee.fullName.includes(employeesFilter);
         }
 
