@@ -50,20 +50,21 @@ class EmployeesList extends React.PureComponent {
         return undefined;
     }
 
+    filterEmployees = (result, index, fields, employeesFilter) => {
+        if (!employeesFilter)
+            return true;
+
+        let employee = fields.get(index);
+
+        if (!employee || !employee.fullName)
+            return false;
+
+        return employee.fullName.includes(employeesFilter);
+    };
+
     render() {
         const {fields, showMobileAppModal, showEmployeeDialog, isDesktop} = this.props;
 
-        function filterEmployees(result, index, fields, employeesFilter) {
-            if (!employeesFilter)
-                return true;
-
-            let employee = fields.get(index);
-
-            if (!employee || !employee.fullName)
-                return false;
-
-            return employee.fullName.includes(employeesFilter);
-        }
 
         return (
             <Card>
@@ -104,7 +105,7 @@ class EmployeesList extends React.PureComponent {
                                    showEmployeeDialog={showEmployeeDialog}
                             />
                         </Fade>)
-                    ).filter((obj, index) => filterEmployees(obj, index, fields, this.state.employeesFilter))}
+                    ).filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))}
                     {(!fields || (fields.length === 0)) &&
                     <NoData text="אין עובדים - בוא ננסה להוסיף!"/>
                     }

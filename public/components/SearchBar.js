@@ -3,6 +3,7 @@ import {withStyles} from '@material-ui/core/styles';
 import {fade} from '@material-ui/core/styles/colorManipulator';
 import SearchIcon from '@material-ui/icons/Search';
 import React from 'react';
+import {debounce} from "../helpers/utils";
 
 const SearchBar = ({classes, onChange}) => (
     <div className={classes.search}>
@@ -10,7 +11,11 @@ const SearchBar = ({classes, onChange}) => (
             <SearchIcon/>
         </div>
         <InputBase
-            onChange={e => onChange(e.target.value)}
+            onChange={e => {
+                let value = e.target.value;
+
+                debounce(() => onChange(value), 250)();
+            }}
             placeholder="חיפוש…"
             classes={{
                 root: classes.inputRoot,
