@@ -22,7 +22,7 @@ const SearchBar = ({classes, onChange}) => (
 
 const styles = theme => ({
     search: {
-        borderRadius: 10,
+        borderRadius: 4,
         marginRight: "10px",
         display: "flex",
         backgroundColor: fade("#000000", 0.1),
