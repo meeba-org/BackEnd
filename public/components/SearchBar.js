@@ -33,7 +33,12 @@ const styles = theme => ({
         backgroundColor: fade("#000000", 0.1),
         '&:hover': {
             backgroundColor: fade("#000000", 0.25),
-            width: '300px'
+            [theme.breakpoints.up('xs')]: {
+                width: '100%'
+            },
+            [theme.breakpoints.between('sm', 'xl')]: {
+                width: '300px'
+            }
         },
         marginLeft: 0,
         width: '200px',

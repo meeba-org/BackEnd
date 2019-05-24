@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" addBOMForNewFiles="with NO BOM">
+  <component name="Encoding">
     <file url="file://$PROJECT_DIR$/.editorconfig" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/.env" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/.eslintrc" charset="UTF-8" />
@@ -116,7 +116,6 @@
     <file url="file://$PROJECT_DIR$/public/reducers/GeneralReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/LoaderReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/ModalReducer.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/reducers/PendingShiftsReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/ReportsReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/ShiftsReducer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/reducers/TasksReducer.js" charset="UTF-8" />
