@@ -84,10 +84,10 @@ const isUserWithSameUidAlreadyExist = (user) => {
         return UserModel.getAllByUid(user.uid)
             .then(users => {
                 let result = false;
-                if (users && user.length > 1)
+                if (users && user.length > 1) // If more than 1 user has the same uid --> return false
                     result = true;
                 if (users.length === 1) {
-                    if (users[0]._id !== user._id)
+                    if (!users[0]._id.equals(user._id)) // If only 1 user exist with the id but its not our user --> return false
                         result = true;
                 }
 
