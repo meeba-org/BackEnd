@@ -53,7 +53,13 @@ router.put('/',
         const companyFromToken = jwtService.getCompanyFromLocals(res);
         user.company = companyFromToken._id;
 
-        return UserModel.updateUser(user);
+        return AppManager.isUserWithSameUidAlreadyExist(user)
+            .then(isUserExist => {
+                if (isUserExist)
+                    throw new Error('משתמש עם תז זו כבר קיים');
+                else
+                    return UserModel.updateUser(user);
+            });
     })
 );
 

@@ -78,10 +78,29 @@ const registerCompanyManager = (username, password) => {
         });
 };
 
+const isUserWithSameUidAlreadyExist = (user) => {
+    return new Promise((resolve, reject) => {
+
+        return UserModel.getAllByUid(user.uid)
+            .then(users => {
+                let result = false;
+                if (users && user.length > 1)
+                    result = true;
+                if (users.length === 1) {
+                    if (users[0]._id !== user._id)
+                        result = true;
+                }
+
+                return resolve(result);
+            })
+    })
+}
+
 module.exports = {
     addUser
     , removeUser
     , addShift
     , removeShift
     , registerCompanyManager
+    , isUserWithSameUidAlreadyExist
 };

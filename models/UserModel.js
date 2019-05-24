@@ -36,6 +36,10 @@ const getByUserUid = (uid, shouldPopulateCompany) => {
     return query.exec();
 };
 
+const getAllByUid = (uid) => {
+    return User.find({uid}).exec();
+};
+
 const getByUserId = (id) => {
     return User.findById(id).populate('company shifts').exec();
 };
@@ -130,6 +134,7 @@ module.exports = {
     createUser
     , getByUserId
     , getByUserUid
+    , getAllByUid
     , getByUserName
     , getUsers
     , updateUser
