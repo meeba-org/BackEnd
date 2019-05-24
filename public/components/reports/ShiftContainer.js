@@ -120,7 +120,7 @@ class ShiftContainer extends React.PureComponent {
     };
 
     render() {
-        let {showNames, input, mode, isDesktop, onDelete} = this.props;
+        let {showNames, input, mode, isDesktop, onDelete, onShiftComplete} = this.props;
         const {focus, hover} = this.state;
         let errors = this.getErrors();
         let classes1 = "shift " + (focus ? "focus" : "");
@@ -141,7 +141,7 @@ class ShiftContainer extends React.PureComponent {
                         onDelete={onDelete}
                         onUpdateStartTime={this.onUpdateStartTime}
                         onUpdateEndTime={this.onUpdateEndTime}
-                        onShiftComplete={this.onShiftComplete}
+                        onShiftComplete={onShiftComplete}
                     />
                 }
                 {mode === ReportModes.Report &&

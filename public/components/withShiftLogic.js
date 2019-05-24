@@ -89,11 +89,11 @@ function withShiftLogic(WrappedComponent) {
             deleteShift(shift);
         };
 
-        onShiftComplete = () => {
-            let {startDateStr, startTimeStr} = convertMomentToTimeStr(this.props.shift);
+        onShiftComplete = (shift) => {
+            let {startDateStr, startTimeStr} = convertMomentToTimeStr(shift);
             let newEndTimeStr = getCurrentTime();
 
-            this.onUpdate(startDateStr, startTimeStr, newEndTimeStr);
+            this.onUpdate(shift, startDateStr, startTimeStr, newEndTimeStr);
         };
 
         render() {

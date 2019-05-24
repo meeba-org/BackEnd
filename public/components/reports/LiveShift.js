@@ -62,7 +62,7 @@ const LiveShift = (props) => {
             <div>
                 {isWorking(shift) &&
                 <Tooltip title="סיים משמרת" placement="left">
-                    <IconButton className={styles["elem"]} onClick={onShiftComplete}><Home/></IconButton>
+                    <IconButton className={styles["elem"]} onClick={() => onShiftComplete(shift)}><Home/></IconButton>
                 </Tooltip>
                 }
                 <Tooltip title="עריכה" placement="left">
