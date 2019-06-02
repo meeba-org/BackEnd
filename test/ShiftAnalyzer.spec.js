@@ -262,4 +262,34 @@ describe('ShiftAnalyzer', function () {
             expect(hours.extra150Hours).to.be.equal(2);
         });
     })
+
+    describe('Independence Day', () => {
+        it('Independence Day 1', function () {
+            const shift = {
+                clockInTime: moment('09/05/2019 10:30', 'DD/MM/YYYY HH:mm'),
+                clockOutTime: moment('09/05/2019 20:30', 'DD/MM/YYYY HH:mm'),
+            };
+
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(0);
+            expect(hours.extra125Hours).to.be.equal(0);
+            expect(hours.extra150Hours).to.be.equal(9);
+            expect(hours.extra175Hours).to.be.equal(1);
+        });
+
+        it('Independence Day 2', function () {
+            const shift = {
+                clockInTime: moment('09/05/2019 18:00', 'DD/MM/YYYY HH:mm'),
+                clockOutTime: moment('10/05/2019 04:00', 'DD/MM/YYYY HH:mm'),
+            };
+
+            const hours = analyzeHours(shift, settings);
+
+            expect(hours.regularHours).to.be.equal(0);
+            expect(hours.extra125Hours).to.be.equal(0);
+            expect(hours.extra150Hours).to.be.equal(9);
+            expect(hours.extra175Hours).to.be.equal(1);
+        });
+    })
 });

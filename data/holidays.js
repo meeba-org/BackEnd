@@ -66,7 +66,7 @@ module.exports = [
         "hebrew": "יום העצמאות",
         "subcat": "major",
         "category": "holiday",
-        DayType: EDataType.Holiday
+        DayType: EDataType.IndependenceDay
     },
     {
         "memo": "Festival of Weeks, commemorates the giving of the Torah at Mount Sinai",

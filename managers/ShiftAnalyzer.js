@@ -136,6 +136,9 @@ const analyzeShiftHours = (shift, settings) => {
         case EDayType.HolidayEvening:
             analyzedHours = analyzeHolidayEveningShiftHours(clockIn, clockOut, breakLength, settings);
             break;
+        case EDayType.IndependenceDay:
+            analyzedHours = analyzeWholeShiftInHolidayHours(clockIn, clockOut, breakLength, settings);
+            break;
         case EDayType.Regular:
         default:
             analyzedHours = analyzeRegularDayShiftHours(clockIn, clockOut, breakLength, settings, REGULAR_SHIFT_LENGTH);

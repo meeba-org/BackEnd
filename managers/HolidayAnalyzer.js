@@ -32,6 +32,11 @@ const initHolidays = () => {
     return holidays;
 };
 
+const isIndependenceDay = (day) => {
+    let momentDay = moment(day);
+    return isListedHoliday(momentDay, EDayType.IndependenceDay);
+};
+
 const isHoliday = (day) => {
     let momentDay = moment(day);
     return momentDay.day() === SATURDAY || isListedHoliday(momentDay, EDayType.Holiday);
@@ -56,6 +61,8 @@ const analyzeDayType = (momentDay) => {
         return EDayType.Holiday;
     else if (isHolidayEvening(momentDay))
         return EDayType.HolidayEvening;
+    else if (isIndependenceDay(momentDay))
+        return EDayType.IndependenceDay;
     else
         return EDayType.Regular;
 }
