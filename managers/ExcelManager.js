@@ -3,6 +3,7 @@ const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 const Excel = require('exceljs');
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
+const isIndependenceDay = require("./HolidayAnalyzer").isIndependenceDay;
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
 const isHoliday = require("./HolidayAnalyzer").isHoliday;
 const RowBorderStyle = {
@@ -339,7 +340,7 @@ let markWarnings = function (addedRow) {
 function addDayRow(sheet, row, day) {
     let addedRow = sheet.addRow(row);
 
-    if (isHoliday(day) || isHolidayEvening(day)) {
+    if (isHoliday(day) || isHolidayEvening(day) || isIndependenceDay(day)) {
         let holidayName = getHolidayName(day);
         setHolidayName(addedRow, holidayName);
         markRowAsHoliday(sheet, addedRow);

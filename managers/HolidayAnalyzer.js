@@ -74,5 +74,6 @@ module.exports = {
     isListedHoliday,
     isHoliday,
     isHolidayEvening,
+    isIndependenceDay,
     getHolidayName,
 };
