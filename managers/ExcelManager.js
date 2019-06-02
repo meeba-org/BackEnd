@@ -395,6 +395,7 @@ const calcClockOutTime = (shift) => {
 };
 
 let addWorksheet = function (workbook, title, color) {
+    title = title.replace(/'/g, ""); // Omit name wiht single quote "'"
     return workbook.addWorksheet(title, {
         properties: {
             tabColor:{argb: color}
