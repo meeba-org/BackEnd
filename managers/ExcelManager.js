@@ -395,7 +395,9 @@ const calcClockOutTime = (shift) => {
 };
 
 let addWorksheet = function (workbook, title, color) {
-    title = title.replace(/'/g, ""); // Omit name wiht single quote "'"
+    title = title.replace(/'/g, ""); // Omit name with single quote "'"
+    title = title.substring(0, EXCEL_SHEET_NAME_LIMIT);
+
     return workbook.addWorksheet(title, {
         properties: {
             tabColor:{argb: color}
@@ -433,7 +435,7 @@ function generateTaskName(task) {
         else
             name += "-->" + b.title;
     }
-    return name.substring(0, EXCEL_SHEET_NAME_LIMIT);
+    return name;
 }
 
 const addShiftsPerTaskSheets = (workbook, company, tasks, year, month) => {
