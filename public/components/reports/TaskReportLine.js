@@ -19,7 +19,7 @@ const TaskBreadCrumb = CSSModules(({taskBreadCrumb}) => {
     return (
         <div styleName="name">
             {taskBreadCrumb.map((t, index) => (
-                <Fragment>
+                <Fragment key={index}>
                     {index === 0 ?
                         <div styleName="crumb">{t.title}</div> :
                         <div styleName="crumb"><KeyboardArrowLeft styleName="icon"/>{t.title}</div>
