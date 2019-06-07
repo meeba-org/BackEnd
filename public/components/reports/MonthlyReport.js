@@ -19,6 +19,7 @@ import AddShiftsDialog from "../AddShiftsDialog";
 import Fade from "../Fade";
 import MonthPicker from "../MonthPicker";
 import NoData from "../NoData";
+import SearchBar from "../SearchBar";
 
 
 class MonthlyReport extends React.PureComponent {
@@ -31,6 +32,7 @@ class MonthlyReport extends React.PureComponent {
             selectedMonth: moment().month() + 1,
             selectedYear: moment().year(),
             open: false,
+            employeesFilter: ""
         };
     }
 
@@ -82,6 +84,18 @@ class MonthlyReport extends React.PureComponent {
         this.props.onDeleteShift(shift, selectedMonth, selectedYear);
     };
 
+    filterEmployees = (result, index, fields, employeesFilter) => {
+        if (!employeesFilter)
+            return true;
+
+        let employee = fields.get(index);
+
+        if (!employee || !employee.fullName)
+            return false;
+
+        return employee.fullName.includes(employeesFilter);
+    };
+
     render() {
         const {fields, employees, userRole, showShiftDialog, showLocationModal, reportLineComponent, title} = this.props;
         const {selectedYear, selectedMonth} = this.state;
@@ -119,6 +133,9 @@ class MonthlyReport extends React.PureComponent {
                                             onClick={() => this.handleGenerateExcelClick()}><AssignmentIcon/></Button>
                                 </Tooltip>
                             </IfGranted>
+                            <SearchBar onChange={(filter) =>   {
+                                this.setState({employeesFilter: filter});
+                            }}/>
                         </div>
                         <Divider className={styles["divider"]}/>
 
@@ -134,7 +151,7 @@ class MonthlyReport extends React.PureComponent {
                                                showLocationModal={showLocationModal}
                                         />
                                     </Fade>)
-                                )}
+                                ).filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))}
                                 {(!fields || (fields.length === 0)) &&
                                 <NoData text="לא נמצאו משמרות"/>
                                 }
