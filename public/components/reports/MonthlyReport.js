@@ -88,12 +88,20 @@ class MonthlyReport extends React.PureComponent {
         if (!employeesFilter)
             return true;
 
-        let employee = fields.get(index);
+        let entity = fields.get(index);
 
-        if (!employee || !employee.fullName)
+        if (!entity)
             return false;
 
-        return employee.fullName.includes(employeesFilter);
+        // In case its an entity entity...
+        if (entity.fullName)
+            return entity.fullName.includes(employeesFilter);
+
+        // In case its an task entity...
+        if (entity.title)
+            return entity.title.includes(employeesFilter);
+
+        return false;
     };
 
     render() {
