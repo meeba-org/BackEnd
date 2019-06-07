@@ -4,6 +4,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
+
+const styles = theme => ({
+    root: {
+        justifyContent: "flex-start",
+        display: "flex"
+    }
+});
 
 class CheckBoxList extends Component {
     constructor(props) {
@@ -34,7 +42,7 @@ class CheckBoxList extends Component {
     }
 
     render() {
-        const {items} = this.props;
+        const {items, classes} = this.props;
 
         return (
             <List>
@@ -50,7 +58,7 @@ class CheckBoxList extends Component {
                             tabIndex={-1}
                             disableRipple
                         />
-                        <ListItemText primary={item.fullName} />
+                        <ListItemText classes={{root: classes.root}} primary={item.fullName} />
                     </ListItem>
                 ))}
             </List>
@@ -64,5 +72,5 @@ CheckBoxList.propTypes = {
 };
 CheckBoxList.defaultProps = {};
 
-export default CheckBoxList;
+export default withStyles(styles)(CheckBoxList);
 
