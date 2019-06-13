@@ -32,6 +32,9 @@ const mapUsersToShifts = function (shifts) {
     shifts.forEach((shift) => {
         let clonedShift = Object.assign({}, shift);
 
+        if (!clonedShift.user) // Not suppose to happen but for protection
+            return;
+
         if (usersToShiftsMap[clonedShift.user.uid]) {
             const uid = clonedShift.user.uid;
             clonedShift.user = clonedShift.user._id;
