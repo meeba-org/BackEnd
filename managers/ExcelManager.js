@@ -118,6 +118,8 @@ function createShiftsPerTaskColumns(sheet, company) {
     sheet.columns = sheet.columns.concat([
         {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'שם עובד', key: 'userName', width: 20, style: {alignment: {horizontal: 'right'}}},
+        {header: 'ת.ז.', key: 'employeeUid', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שכ"ע לשעה', key: 'hourWage', width: 11, style: {alignment: {horizontal: 'center'}}},
         {header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}},
     ]);
 }
@@ -164,9 +166,13 @@ function addCommuteData(company, row, shift) {
 }
 
 function addTasksData(company, row, shift) {
+    let user = shift.user || {};
+
     row = {
         ...row,
         task: formatTask(shift.task),
+        employeeUid: user.uid,
+        hourWage: user.hourWage,
     };
 
     return row;
