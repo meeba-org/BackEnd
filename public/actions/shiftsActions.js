@@ -194,7 +194,6 @@ export const showEditShiftModal = (shift, callBack) => ({
         modalProps: {
             entity: shift,
             callBack,
-            updateShift,
             open: true,
             key: shift._id
         }

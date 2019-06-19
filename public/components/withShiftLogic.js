@@ -1,7 +1,4 @@
-import moment from "moment";
 import React, {Component} from 'react';
-import {connect} from "react-redux";
-import {createShift, showDeleteShiftModal, updateShift} from "../actions";
 import {convertMomentToTimeStr, convertTimeStrToMoment, getCurrentTime} from "../helpers/utils";
 
 function withShiftLogic(WrappedComponent) {
@@ -49,8 +46,6 @@ function withShiftLogic(WrappedComponent) {
         };
 
         onDraftUpdate = (orgShift, startDateStr, startTimeStr, endTimeStr) => {
-            let {updateShift} = this.props;
-
             let {momentStart, momentEnd} = convertTimeStrToMoment(startDateStr, startTimeStr, endTimeStr);
 
             let updatedShift = {
@@ -62,14 +57,10 @@ function withShiftLogic(WrappedComponent) {
                 }
             };
 
-            let mShift = moment(orgShift.clockInTime); // Passing the original month & year
-            updateShift(updatedShift, mShift.format('MM'), mShift.format('YYYY'));
             return updatedShift;
         };
 
         onUpdate = (orgShift, startDateStr, startTimeStr, endTimeStr) => {
-            let {updateShift} = this.props;
-
             let {momentStart, momentEnd} = convertTimeStrToMoment(startDateStr, startTimeStr, endTimeStr);
 
             let updatedShift = {
@@ -78,15 +69,7 @@ function withShiftLogic(WrappedComponent) {
                 clockOutTime: momentEnd,
             };
 
-            let mShift = moment(orgShift.clockInTime); // Passing the original month & year
-            updateShift(updatedShift, mShift.format('MM'), mShift.format('YYYY'));
             return updatedShift;
-        };
-
-        onDelete = () => {
-            let {deleteShift, shift} = this.props;
-
-            deleteShift(shift);
         };
 
         onShiftComplete = (shift) => {
@@ -103,7 +86,6 @@ function withShiftLogic(WrappedComponent) {
                 onUpdateStartDate={this.onUpdateStartDate}
                 onUpdateStartTime={this.onUpdateStartTime}
                 onUpdateEndTime={this.onUpdateEndTime}
-                onDelete={this.onDelete}
                 onShiftComplete={this.onShiftComplete}
                 onDraftUpdateStartDate={this.onDraftUpdateStartDate}
                 onDraftUpdateStartTime={this.onDraftUpdateStartTime}
@@ -117,15 +99,7 @@ function withShiftLogic(WrappedComponent) {
     WithShiftLogic.propTypes = {
     };
 
-    function mapDispatchToProps(dispatch) {
-        return {
-            createShift: (shift) => dispatch(createShift(shift, dispatch)),
-            updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, true, month, year)),
-            deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
-        };
-    }
-
-    return connect(null, mapDispatchToProps)(WithShiftLogic);
+    return WithShiftLogic;
 }
 
 export default withShiftLogic;

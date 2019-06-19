@@ -16,6 +16,7 @@ import TimePicker from "material-ui-pickers/TimePicker";
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {createShift, showDeleteShiftModal, updateShift} from "../../actions";
 import {hideEditShiftModal} from "../../actions/index";
 import {EShiftStatus} from "../../helpers/EShiftStatus";
 import {isNumber, TIME_FORMAT} from "../../helpers/utils";
@@ -112,12 +113,12 @@ class EditShiftModal extends Component {
     }
 
     handleClose = () => {
-        let {dispatch, callBack} = this.props;
+        let {hideEditShiftModal, callBack} = this.props;
 
         if (callBack)
             callBack(this.state.entity);
 
-        dispatch(hideEditShiftModal());
+        hideEditShiftModal();
     };
 
     onApproval = () => {
@@ -217,23 +218,24 @@ class EditShiftModal extends Component {
         this.updateShift(entity, updatedShift);
     };
 
-    updateShift = (entity, updatedShift) => {
-        let month = moment(entity.clockInTime).format('MM');
-        let year = moment(entity.clockInTime).format('YYYY');
+    updateShift = (orgShift, updatedShift) => {
+        let month = moment(orgShift.clockInTime).format('MM');
+        let year = moment(orgShift.clockInTime).format('YYYY');
         let {updateShift} = this.props;
 
         updateShift(updatedShift, month, year);
     };
 
-    onUpdateStartDate = (date, shift) => {
+    onUpdateStartDate = (date, orgShift) => {
         const {onUpdateStartDate, onDraftUpdateStartDate} = this.props;
+        let updatedShift;
 
-        if (this.isDraftClockInTimeExist(shift))
-            shift = onDraftUpdateStartDate(date, shift); // Updating the draft shift
+        if (this.isDraftClockInTimeExist(orgShift))
+            updatedShift = onDraftUpdateStartDate(date, orgShift); // Updating the draft orgShift
         else
-            shift = onUpdateStartDate(date, shift); // Updating the shift
+            updatedShift = onUpdateStartDate(date, orgShift); // Updating the orgShift
 
-        this.onUpdate(shift);
+        this.onUpdate(orgShift, updatedShift);
     };
 
     onUpdateStartTime = (date, shift) => {
@@ -258,9 +260,10 @@ class EditShiftModal extends Component {
         this.onUpdate(shift);
     };
 
-    onUpdate(shift) {
-        this.setState({entity: shift});
-    }
+    onUpdate = (orgShift, updatedShift) => {
+        this.updateShift(orgShift, updatedShift);
+        this.setState({entity: updatedShift});
+    };
 
     isDraftClockInTimeExist(shift) {
         return shift.draftShift && shift.draftShift.clockInTime;
@@ -483,7 +486,6 @@ EditShiftModal.propTypes = {
     editShift: PropTypes.func,
     updateShift: PropTypes.func,
     deleteShift: PropTypes.func,
-    dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
     isCommuteFeatureEnable: PropTypes.bool,
     month: PropTypes.string,
@@ -498,4 +500,14 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(withShiftLogic(EditShiftModal)));
+function mapDispatchToProps(dispatch) {
+    return {
+        createShift: (shift) => dispatch(createShift(shift, dispatch)),
+        updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, true, month, year)),
+        deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
+        hideEditShiftModal: () => dispatch(hideEditShiftModal())
+    };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(withShiftLogic(EditShiftModal)));

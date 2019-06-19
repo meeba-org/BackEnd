@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from "react";
 import CSSModules from "react-css-modules";
 import connect from "react-redux/es/connect/connect";
+import {createShift, showDeleteShiftModal, updateShift} from "../../actions";
 import {ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import styles from "../../styles/Shift.scss";
@@ -75,27 +76,38 @@ class ShiftContainer extends React.PureComponent {
         const {onUpdateStartDate} = this.props;
         let updatedShift = onUpdateStartDate(date, shift);
 
-        this.onUpdate(updatedShift);
+        this.onUpdate(shift, updatedShift);
     };
 
     onUpdateStartTime = (time, shift) => {
         const {onUpdateStartTime} = this.props;
         let updatedShift = onUpdateStartTime(time, shift);
 
-        this.onUpdate(updatedShift);
+        this.onUpdate(shift, updatedShift);
     };
 
     onUpdateEndTime = (time, shift) => {
         const {onUpdateEndTime} = this.props;
         let updatedShift = onUpdateEndTime(time, shift);
 
-        this.onUpdate(updatedShift);
+        this.onUpdate(shift, updatedShift);
     };
 
-    onUpdate = (updatedShift) => {
-        let {input} = this.props;
+    onUpdate = (orgShift, updatedShift) => {
+        let {input, updateShift} = this.props;
 
         input.onChange(updatedShift);
+
+        let month = moment(orgShift.clockInTime).format('MM');
+        let year = moment(orgShift.clockInTime).format('YYYY');
+
+        updateShift(updatedShift, month, year);
+    };
+
+    onDelete = () => {
+        let {deleteShift, input} = this.props;
+
+        deleteShift(input.value);
     };
 
     getErrors = () => {
@@ -134,11 +146,10 @@ class ShiftContainer extends React.PureComponent {
                         shift={input.value}
                         errors={errors}
                         hover={hover}
-                        onUpdate={this.onUpdate}
                         showShiftDialog={this.showShiftDialog}
                         showLocationModal={this.showLocationModal}
                         isDesktop={isDesktop}
-                        onDelete={onDelete}
+                        onDelete={this.onDelete}
                         onUpdateStartTime={this.onUpdateStartTime}
                         onUpdateEndTime={this.onUpdateEndTime}
                         onShiftComplete={onShiftComplete}
@@ -181,4 +192,12 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(withShiftLogic(CSSModules(ShiftContainer, styles, {allowMultiple: true})));
+function mapDispatchToProps(dispatch) {
+    return {
+        createShift: (shift) => dispatch(createShift(shift, dispatch)),
+        updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, true, month, year)),
+        deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withShiftLogic(CSSModules(ShiftContainer, styles, {allowMultiple: true})));
