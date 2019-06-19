@@ -76,7 +76,7 @@ function withShiftLogic(WrappedComponent) {
             let {startDateStr, startTimeStr} = convertMomentToTimeStr(shift);
             let newEndTimeStr = getCurrentTime();
 
-            this.onUpdate(shift, startDateStr, startTimeStr, newEndTimeStr);
+            return this.onUpdate(shift, startDateStr, startTimeStr, newEndTimeStr);
         };
 
         render() {
@@ -95,9 +95,6 @@ function withShiftLogic(WrappedComponent) {
             />);
         }
     }
-
-    WithShiftLogic.propTypes = {
-    };
 
     return WithShiftLogic;
 }

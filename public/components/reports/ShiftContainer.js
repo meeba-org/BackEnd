@@ -93,6 +93,13 @@ class ShiftContainer extends React.PureComponent {
         this.onUpdate(shift, updatedShift);
     };
 
+    onShiftComplete = (orgShift) => {
+        let {onShiftComplete} = this.props;
+        let updatedShift = onShiftComplete(orgShift);
+
+        this.onUpdate(orgShift, updatedShift);
+    };
+
     onUpdate = (orgShift, updatedShift) => {
         let {input, updateShift} = this.props;
 
@@ -152,7 +159,7 @@ class ShiftContainer extends React.PureComponent {
                         onDelete={this.onDelete}
                         onUpdateStartTime={this.onUpdateStartTime}
                         onUpdateEndTime={this.onUpdateEndTime}
-                        onShiftComplete={onShiftComplete}
+                        onShiftComplete={this.onShiftComplete}
                     />
                 }
                 {mode === ReportModes.Report &&

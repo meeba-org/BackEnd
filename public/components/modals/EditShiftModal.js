@@ -238,26 +238,28 @@ class EditShiftModal extends Component {
         this.onUpdate(orgShift, updatedShift);
     };
 
-    onUpdateStartTime = (date, shift) => {
+    onUpdateStartTime = (date, orgShift) => {
         const {onUpdateStartTime, onDraftUpdateStartTime} = this.props;
+        let updatedShift;
 
-        if (this.isDraftClockInTimeExist(shift))
-            shift = onDraftUpdateStartTime(date, shift); // Updating the draft shift
+        if (this.isDraftClockInTimeExist(orgShift))
+            updatedShift = onDraftUpdateStartTime(date, orgShift); // Updating the draft shift
         else
-            shift = onUpdateStartTime(date, shift); // Updating the shift
+            updatedShift = onUpdateStartTime(date, orgShift); // Updating the shift
 
-        this.onUpdate(shift);
+        this.onUpdate(orgShift, updatedShift);
     };
 
-    onUpdateEndTime = (date, shift) => {
+    onUpdateEndTime = (date, orgShift) => {
         const {onUpdateEndTime, onDraftUpdateEndTime} = this.props;
+        let updatedShift;
 
-        if (this.isDraftClockOutTimeExist(shift))
-            shift = onDraftUpdateEndTime(date, shift); // Updating the draft shift
+        if (this.isDraftClockOutTimeExist(orgShift))
+            updatedShift = onDraftUpdateEndTime(date, orgShift); // Updating the draft shift
         else
-            shift = onUpdateEndTime(date, shift); // Updating the shift
+            updatedShift = onUpdateEndTime(date, orgShift); // Updating the shift
 
-        this.onUpdate(shift);
+        this.onUpdate(orgShift, updatedShift);
     };
 
     onUpdate = (orgShift, updatedShift) => {
