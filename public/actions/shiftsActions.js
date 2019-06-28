@@ -128,7 +128,7 @@ const isMovingShiftOutOfMonth = (shift, orgMonth, orgYear) => {
     return (orgMonth !== newMonth || orgYear !== newYear);
 };
 
-export const updateShift = (shift, dispatch, shouldFetchMonthlyReport, month, year) => {
+export const updateShift = (shift, dispatch, postUpdate, month, year) => {
     if (isMovingShiftOutOfMonth(shift, month, year)) {
         return {
             type: 'SHOW_MODAL',
@@ -138,7 +138,7 @@ export const updateShift = (shift, dispatch, shouldFetchMonthlyReport, month, ye
                     entity: shift,
                     month,
                     year,
-                    shouldFetchMonthlyReport,
+                    postUpdate,
                     updateShift: updateShift0,
                     open: true
                 }
@@ -146,10 +146,10 @@ export const updateShift = (shift, dispatch, shouldFetchMonthlyReport, month, ye
         };
     }
 
-    return updateShift0(dispatch, shift, shouldFetchMonthlyReport, month, year);
+    return updateShift0(dispatch, shift, postUpdate, month, year);
 };
 
-export const updateShift0 = (dispatch, shift, shouldFetchMonthlyReport, month, year) => {
+export const updateShift0 = (dispatch, shift, postUpdate, month, year) => {
 
     return {
         type: actions.API,
@@ -158,8 +158,8 @@ export const updateShift0 = (dispatch, shift, shouldFetchMonthlyReport, month, y
             method: "put",
             data: shift,
             success: (data) => {
-                if (shouldFetchMonthlyReport && !!month && !!year) {
-                    dispatch(fetchMonthlyReport(month, year));
+                if (postUpdate && !!month && !!year) {
+                    dispatch(postUpdate(month, year));
                 }
                 return dispatch(updateShiftSuccess(data));
             },
@@ -187,13 +187,14 @@ export const showDeleteShiftModal = (shift, dispatch, month, year) => ({
     }
 });
 
-export const showEditShiftModal = (shift, callBack) => ({
+export const showEditShiftModal = (shift, callBack, postUpdate) => ({
     type: 'SHOW_MODAL',
     payload: {
         modalType: 'EDIT_SHIFT',
         modalProps: {
             entity: shift,
             callBack,
+            postUpdate,
             open: true,
             key: shift._id
         }

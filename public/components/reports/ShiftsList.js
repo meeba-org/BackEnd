@@ -47,7 +47,7 @@ class ShiftsList extends React.PureComponent {
 
     render() {
 
-        let {fields, showNames, mode, shouldDisplayNoData, showShiftDialog, showLocationModal} = this.props;
+        let {fields, showNames, mode, shouldDisplayNoData, showShiftDialog, showLocationModal, postUpdate} = this.props;
         return (
             <div styleName="shifts-list">
                 {fields && fields.map((shiftName, index) =>
@@ -61,6 +61,7 @@ class ShiftsList extends React.PureComponent {
                                 showNames={showNames}
                                 mode={mode}
                                 getIntersectShift={this.getIntersectShift}
+                                postUpdate={postUpdate}
                             />
                     </Fade>)
                 )}
@@ -80,6 +81,7 @@ ShiftsList.propTypes = {
     showNames: PropTypes.bool,
     shouldDisplayNoData: PropTypes.bool,
     mode: PropTypes.number.isRequired,
+    postUpdate: PropTypes.func.isRequired,
 };
 
 export default CSSModules(ShiftsList, styles);

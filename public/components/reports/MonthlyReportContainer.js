@@ -50,6 +50,7 @@ class MonthlyReportContainer extends React.PureComponent {
                             onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
                             onGenerateExcel={(month, year) => this.onGenerateExcel(month, year)}
                             userRole={userRole}
+                            postUpdate={this.onDataChange}
                             reportLineComponent={MonthlyReportLine}
                             title={'דו"ח חודשי'}
                 />
@@ -91,7 +92,7 @@ function mapDispatchToProps(dispatch) {
         generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
         createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
-        showShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
+        showShiftDialog: (shift, callBack, postUpdate) => dispatch(showEditShiftModal(shift, callBack, postUpdate)),
         showLocationModal: (shift, callBack) => dispatch(showLocationModal(shift, callBack)),
     };
 }

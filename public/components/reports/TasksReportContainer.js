@@ -52,6 +52,7 @@ class TasksReportContainer extends React.PureComponent {
                             userRole={userRole}
                             reportLineComponent={TaskReportLine}
                             title={'דו"ח משימות'}
+                            postUpdate={this.onDataChange}
                 />
             </form>
         );
@@ -91,7 +92,7 @@ function mapDispatchToProps(dispatch) {
         generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
         createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
-        showShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
+        showShiftDialog: (shift, callBack, postUpdate) => dispatch(showEditShiftModal(shift, callBack, postUpdate)),
         showLocationModal: (shift, callBack) => dispatch(showLocationModal(shift, callBack)),
     };
 }

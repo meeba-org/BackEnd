@@ -45,7 +45,7 @@ class TaskReportLine extends React.PureComponent {
     };
 
     render() {
-        let {input, isCollapsed, onToggle, onUpdateShift, onDeleteShift, showShiftDialog, showLocationModal, index} = this.props;
+        let {input, isCollapsed, onToggle, onUpdateShift, onDeleteShift, showShiftDialog, showLocationModal, index, postUpdate} = this.props;
         let toggleButton = isCollapsed ?
             <Tooltip title="פרטי משמרות" placement="top"><KeyboardArrowLeft/></Tooltip> :
             <KeyboardArrowDown/>;
@@ -71,6 +71,7 @@ class TaskReportLine extends React.PureComponent {
                             showNames={true}
                             mode={ReportModes.Report}
                             shouldDisplayNoData={true}
+                            postUpdate={postUpdate}
                         />
                 </div>
                 }
@@ -87,6 +88,7 @@ TaskReportLine.propTypes = {
     showLocationModal: PropTypes.func.isRequired,
     onToggle: PropTypes.func.isRequired,
     isCollapsed: PropTypes.bool.isRequired,
+    postUpdate: PropTypes.func.isRequired,
 };
 
 export default CSSModules(TaskReportLine, styles);

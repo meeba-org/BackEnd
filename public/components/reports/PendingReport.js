@@ -3,7 +3,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import React, {Component} from 'react';
 import FieldArray from "redux-form/es/FieldArray";
-import {DATE_FORMAT} from "../../helpers/utils";
+import {DATE_FORMAT, ReportModes} from "../../helpers/utils";
 import Divider from "@material-ui/core/Divider";
 import moment from "./DailyReport";
 import ShiftsList from "./ShiftsList";
@@ -21,7 +21,7 @@ class PendingReport extends Component {
     };
 
     render() {
-        const {showShiftDialog, onDeleteShift, showLocationModal, mode} = this.props;
+        const {showShiftDialog, onDeleteShift, showLocationModal, postUpdate} = this.props;
 
         return (
             <Card>
@@ -40,8 +40,9 @@ class PendingReport extends Component {
                             showShiftDialog={showShiftDialog}
                             showLocationModal={showLocationModal}
                             showNames={true}
-                            mode={mode}
+                            mode={ReportModes.Report}
                             shouldDisplayNoData={true}
+                            postUpdate={postUpdate}
                         />
                     </div>
 

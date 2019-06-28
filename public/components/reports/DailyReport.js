@@ -173,6 +173,7 @@ class DailyReport extends React.PureComponent {
                                 mode={mode}
                                 showLocationModal={showLocationModal}
                                 shouldDisplayNoData={false}
+                                postUpdate={() => this.props.onDayChange(this.state.currentDay)}
                             />
                         </div>
 

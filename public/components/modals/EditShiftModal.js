@@ -221,9 +221,9 @@ class EditShiftModal extends Component {
     updateShift = (orgShift, updatedShift) => {
         let month = moment(orgShift.clockInTime).format('MM');
         let year = moment(orgShift.clockInTime).format('YYYY');
-        let {updateShift} = this.props;
+        let {updateShift, postUpdate} = this.props;
 
-        updateShift(updatedShift, month, year);
+        updateShift(updatedShift, month, year, postUpdate);
     };
 
     onUpdateStartDate = (date, orgShift) => {
@@ -505,7 +505,7 @@ const mapStateToProps = (state) => {
 function mapDispatchToProps(dispatch) {
     return {
         createShift: (shift) => dispatch(createShift(shift, dispatch)),
-        updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, true, month, year)),
+        updateShift: (shift, month, year, postUpdate) => dispatch(updateShift(shift, dispatch, postUpdate, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
         hideEditShiftModal: () => dispatch(hideEditShiftModal())
     };

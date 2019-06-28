@@ -29,9 +29,10 @@ class ShiftContainer extends React.PureComponent {
     };
 
     showShiftDialog = () => {
-        let {showShiftDialog, input} = this.props;
+        let {showShiftDialog, input, postUpdate} = this.props;
 
-        showShiftDialog(input.value); //, (editedShift) => input.onChange(editedShift));
+        // TODO 2nd parameter callBack I think is not in used
+        showShiftDialog(input.value, null, postUpdate); //, (editedShift) => input.onChange(editedShift));
     };
 
     showLocationModal = () => {
@@ -101,14 +102,14 @@ class ShiftContainer extends React.PureComponent {
     };
 
     onUpdate = (orgShift, updatedShift) => {
-        let {input, updateShift} = this.props;
+        let {input, updateShift, postUpdate} = this.props;
 
         input.onChange(updatedShift);
 
         let month = moment(orgShift.clockInTime).format('MM');
         let year = moment(orgShift.clockInTime).format('YYYY');
 
-        updateShift(updatedShift, month, year);
+        updateShift(updatedShift, month, year, postUpdate);
     };
 
     onDelete = () => {
@@ -139,7 +140,7 @@ class ShiftContainer extends React.PureComponent {
     };
 
     render() {
-        let {showNames, input, mode, isDesktop, onDelete, onShiftComplete} = this.props;
+        let {showNames, input, mode, isDesktop, onDelete} = this.props;
         const {focus, hover} = this.state;
         let errors = this.getErrors();
         let classes1 = "shift " + (focus ? "focus" : "");
@@ -191,6 +192,7 @@ ShiftContainer.propTypes = {
     onUpdateStartDate: PropTypes.func.isRequired,
     onUpdateStartTime: PropTypes.func.isRequired,
     onUpdateEndTime: PropTypes.func.isRequired,
+    postUpdate: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -202,7 +204,7 @@ const mapStateToProps = (state) => {
 function mapDispatchToProps(dispatch) {
     return {
         createShift: (shift) => dispatch(createShift(shift, dispatch)),
-        updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, true, month, year)),
+        updateShift: (shift, month, year, postUpdate) => dispatch(updateShift(shift, dispatch, postUpdate, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
     };
 }

@@ -105,7 +105,7 @@ class MonthlyReport extends React.PureComponent {
     };
 
     render() {
-        const {fields, employees, userRole, showShiftDialog, showLocationModal, reportLineComponent, title} = this.props;
+        const {fields, employees, userRole, showShiftDialog, showLocationModal, reportLineComponent, title, postUpdate} = this.props;
         const {selectedYear, selectedMonth} = this.state;
 
         return (
@@ -157,6 +157,7 @@ class MonthlyReport extends React.PureComponent {
                                                onDeleteShift={this.onDeleteShift}
                                                showShiftDialog={showShiftDialog}
                                                showLocationModal={showLocationModal}
+                                               postUpdate={postUpdate}
                                         />
                                     </Fade>)
                                 ).filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))}
@@ -179,6 +180,7 @@ MonthlyReport.propTypes = {
     showShiftDialog: PropTypes.func.isRequired,
     showLocationModal: PropTypes.func.isRequired,
     onStartDayOfMonthChange: PropTypes.func.isRequired,
+    postUpdate: PropTypes.func.isRequired,
     onGenerateExcel: PropTypes.func.isRequired,
     userRole: PropTypes.string,
 };

@@ -17,8 +17,12 @@ class PendingReportContainer extends PureComponent {
     };
 
     componentDidMount() {
-        this.props.fetchPendingShifts();
+        this.fetchPendingShifts();
     }
+
+    fetchPendingShifts = () => {
+        this.props.fetchPendingShifts();
+    };
 
     render() {
         const {handleSubmit, updateShift, deleteShift, showShiftDialog, showLocationModal, shifts, isLoading} = this.props;
@@ -27,12 +31,12 @@ class PendingReportContainer extends PureComponent {
             <form onSubmit={handleSubmit(() => {})}>
                 <PendingReport
                     shifts={shifts}
-                    mode={ReportModes.Report}
                     onDeleteShift={deleteShift}
                     onUpdateShift={updateShift}
                     showShiftDialog={showShiftDialog}
                     showLocationModal={showLocationModal}
                     isLoading={isLoading}
+                    postUpdate={this.fetchPendingShifts}
                 />
             </form>
         );
@@ -58,7 +62,7 @@ function mapDispatchToProps(dispatch) {
         fetchPendingShifts: () => {dispatch( fetchPendingShifts()); },
         deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
         updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, false, month, year)),
-        showShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
+        showShiftDialog: (shift, callBack, postUpdate) => dispatch(showEditShiftModal(shift, callBack, postUpdate)),
         showLocationModal: (shift, callBack) => dispatch(showLocationModal(shift, callBack)),
     };
 }

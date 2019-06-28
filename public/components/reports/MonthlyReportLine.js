@@ -27,7 +27,7 @@ class MonthlyReportLine extends React.PureComponent {
     };
 
     render() {
-        let {input, isCollapsed, onToggle, onDeleteShift, showShiftDialog, showLocationModal, index} = this.props;
+        let {input, isCollapsed, onToggle, onDeleteShift, showShiftDialog, showLocationModal, index, postUpdate} = this.props;
         let toggleButton = isCollapsed ?
             <Tooltip title="פרטי משמרות" placement="top"><KeyboardArrowLeft/></Tooltip> :
             <KeyboardArrowDown/>;
@@ -52,6 +52,7 @@ class MonthlyReportLine extends React.PureComponent {
                             showNames={false}
                             mode={ReportModes.Report}
                             shouldDisplayNoData={true}
+                            postUpdate={postUpdate}
                         />
                 </div>
                 }
@@ -67,6 +68,7 @@ MonthlyReportLine.propTypes = {
     showLocationModal: PropTypes.func.isRequired,
     onToggle: PropTypes.func.isRequired,
     isCollapsed: PropTypes.bool.isRequired,
+    postUpdate: PropTypes.func.isRequired,
 };
 
 export default CSSModules(MonthlyReportLine, styles);

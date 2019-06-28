@@ -11,9 +11,9 @@ import {hideDeleteEntityModal} from "../../actions/index";
 class MovingShiftOutOfMonthModal extends Component {
 
     updateShift = () => {
-        let {dispatch, updateShift, entity, month, year, shouldFetchMonthlyReport} = this.props;
+        let {dispatch, updateShift, entity, month, year, postUpdate} = this.props;
 
-        dispatch(updateShift(entity, dispatch, shouldFetchMonthlyReport, month, year));
+        dispatch(updateShift(entity, dispatch, postUpdate, month, year));
         dispatch(hideDeleteEntityModal());
     };
 
@@ -50,7 +50,7 @@ MovingShiftOutOfMonthModal.propTypes = {
     month: PropTypes.string,
     year: PropTypes.string,
     input: PropTypes.object,
-    shouldFetchMonthlyReport: PropTypes.bool,
+    postUpdate: PropTypes.func,
 };
 
 export default connect()(MovingShiftOutOfMonthModal);

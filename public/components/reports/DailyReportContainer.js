@@ -72,7 +72,7 @@ function mapDispatchToProps(dispatch) {
         updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, false, month, year)),
         createShift: (shift) => dispatch(createShift(shift, dispatch)),
         deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
-        showShiftDialog: (shift, callBack) => dispatch(showEditShiftModal(shift, callBack)),
+        showShiftDialog: (shift, callBack, postUpdate) => dispatch(showEditShiftModal(shift, callBack, postUpdate)),
         showLocationModal: (shift, callBack) => dispatch(showLocationModal(shift, callBack)),
     };
 }
