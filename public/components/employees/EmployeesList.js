@@ -105,7 +105,10 @@ class EmployeesList extends React.PureComponent {
                                    showEmployeeDialog={showEmployeeDialog}
                             />
                         </Fade>)
-                    ).filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))}
+                    )
+                        .filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))
+                        .sort(((e1, e2) => !e1.fullName ? -1 : !e2.fullName ? 1 : e1.fullName.localeCompare(e2.fullName)))
+                    }
                     {(!fields || (fields.length === 0)) &&
                     <NoData text="אין עובדים - בוא ננסה להוסיף!"/>
                     }

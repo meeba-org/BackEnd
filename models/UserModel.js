@@ -64,7 +64,7 @@ const getUsers = (company, hideDeleted) => {
     if (!!hideDeleted)
         conditions.deleted = false; // get users that are not deleted
 
-    return User.find(conditions).sort({fullName:1}).exec();
+    return User.find(conditions).exec();
 };
 
 // Return a promise
