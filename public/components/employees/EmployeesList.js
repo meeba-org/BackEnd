@@ -62,6 +62,13 @@ class EmployeesList extends React.PureComponent {
         return employee.fullName.includes(employeesFilter);
     };
 
+    sortByName(fields, obj1, obj2) {
+        let emp1 = fields.get(obj1.key);
+        let emp2 = fields.get(obj2.key);
+        return !emp1.fullName ? -1 : !emp2.fullName ? 1 :
+            emp1.fullName.localeCompare(emp2.fullName);
+    }
+
     render() {
         const {fields, showMobileAppModal, showEmployeeDialog, isDesktop} = this.props;
 
@@ -107,7 +114,7 @@ class EmployeesList extends React.PureComponent {
                         </Fade>)
                     )
                         .filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))
-                        .sort(((e1, e2) => !e1.fullName ? -1 : !e2.fullName ? 1 : e1.fullName.localeCompare(e2.fullName)))
+                        .sort((obj1, obj2) => this.sortByName(fields, obj1, obj2))
                     }
                     {(!fields || (fields.length === 0)) &&
                     <NoData text="אין עובדים - בוא ננסה להוסיף!"/>
