@@ -42,9 +42,9 @@ function init() {
     switch (process.env.NODE_ENV) {
         case "production" :
         {
-            console.log("Production Mode!")
+            console.log("Production Mode!");
 
-            module.exports.dbUrl = process.env.MONGOLAB_ORANGE_URI;
+            module.exports.dbUrl = process.env.MONGOLAB_COPPER_URI;
             break;
         }
         case "development" :
@@ -56,7 +56,7 @@ function init() {
         }
         case "test" :
         {
-            console.log("Testing Mode!")
+            console.log("Testing Mode!");
 
             /**
              * Ugly hack - cant extract the process.env.TEST_DB in test phase in heroku
