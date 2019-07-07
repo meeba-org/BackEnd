@@ -29,7 +29,7 @@ class MeebaAppBar extends Component {
     };
 
     render() {
-        let {companyName, isDesktop} = this.props;
+        let {companyName, isDesktop, hasPremium} = this.props;
         return (
             <div styleName="app-bar">
                 <AppBar position="static">
@@ -42,6 +42,9 @@ class MeebaAppBar extends Component {
                         </div>
                         <div styleName="logout">
                             <Button color="inherit"><Link style={{color: "inherit", textDecoration: 'none'}} to="/faq">שאלות ותשובות</Link></Button>
+                            {!hasPremium &&
+                            <Button variant="contained" color="secondary" >רוצה להיות בוס!</Button>
+                            }
                             <Button onClick={this.onLogout} color="inherit">יציאה</Button>
                         </div>
                     </Toolbar>
@@ -58,12 +61,14 @@ MeebaAppBar.propTypes = {
     router: PropTypes.object.isRequired,
     companyName: PropTypes.string.isRequired,
     isDesktop: PropTypes.bool,
+    hasPremium: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
     return {
         companyName: selectors.getCompanyName(state) || "מיבא",
-        isDesktop: selectors.isDesktop(state)
+        isDesktop: selectors.isDesktop(state),
+        hasPremium: selectors.hasPremium(state)
     };
 }
 

@@ -1,7 +1,12 @@
 import FeaturesManager, {Feature} from "../managers/FeaturesManager";
 
+export const getUser = (state) => {
+    return (!state.user) ? null : state.user;
+};
+
 export const getCompany = (state) => {
-    return (!state.user) ? null : state.user.company;
+    let user = getUser(state);
+    return (!user) ? null : user.company;
 };
 
 export const getCompanyName = (state) => {
@@ -19,6 +24,10 @@ export const getMeta = (state) => {
 
 export const isDesktop = (state) => {
     return state.general.isDesktop;
+};
+
+export const hasPremium = (state) => {
+    return isFeatureEnable(state, Feature.Premium);
 };
 
 export const isDevEnv = (state) => {
