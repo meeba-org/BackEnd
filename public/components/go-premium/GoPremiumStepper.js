@@ -1,11 +1,40 @@
-import React, {Fragment} from 'react';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Stepper from '@material-ui/core/Stepper';
+import {withStyles} from '@material-ui/core/styles';
+import React from 'react';
 
-const GoPremiumStepper = ({activeStep, onStepSelect}) => {
+const styles = theme => ({
+    root: {
+        width: '90%',
+    },
+    backButton: {
+        marginRight: 4,
+    },
+    instructions: {
+        marginTop: 4,
+        marginBottom: 4,
+    }
+});
+
+function getSteps() {
+    return ['למה זה טוב?', 'קח תכסף', 'סיימת!'];
+}
+
+const GoPremiumStepper = ({classes, activeStep}) => {
+    const steps = getSteps();
+
     return (
-        <Fragment>
-            Stepper
-        </Fragment>
+        <div className={classes.root}>
+            <Stepper activeStep={activeStep} alternativeLabel>
+                {steps.map(label => (
+                    <Step key={label}>
+                        <StepLabel>{label}</StepLabel>
+                    </Step>
+                ))}
+            </Stepper>
+        </div>
     );
-};
+}
 
-export default GoPremiumStepper;
+export default withStyles(styles)(GoPremiumStepper);

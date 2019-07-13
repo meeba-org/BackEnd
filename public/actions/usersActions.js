@@ -1,3 +1,4 @@
+import {EModalType} from "../components/modals/EModalType";
 import * as actions from "./actionTypes";
 
 export const fetchUserSuccess = (payload) => ({
@@ -84,7 +85,7 @@ export const showEditEmployeeModal = (employee, callBack) => ({
 export const showLoginRegisterDialog = () => ({
     type: 'SHOW_MODAL',
     payload: {
-        modalType: 'LOGIN_REGISTER',
+        modalType: EModalType.LOGIN_REGISTER,
         modalProps: {
             open: true,
         }
