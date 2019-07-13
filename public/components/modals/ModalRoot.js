@@ -1,24 +1,28 @@
-import React from "react";
-import DeleteModal from './DeleteModal';
-import EditShiftModal from './EditShiftModal';
-import {connect} from "react-redux";
 import PropTypes from 'prop-types';
-import MovingShiftOutOfMonthModal from "./MovingShiftOutOfMonthModal";
-import MobileAppLinksModal from "./MobileAppLinksModal";
-import EditEmployeeModal from "./EditEmployeeModal";
-import LocationModal from "./LocationModal";
+import React from "react";
+import {connect} from "react-redux";
 import LoginRegister from "../login/LoginRegister";
+import DeleteModal from "./DeleteModal";
+import EditEmployeeModal from "./EditEmployeeModal";
+import EditShiftModal from "./EditShiftModal";
+import {EModalType} from "./EModalType";
+import GoPremiumModal from "./GoPremiumModal";
+import LocationModal from "./LocationModal";
+import MobileAppLinksModal from "./MobileAppLinksModal";
+import MovingShiftOutOfMonthModal from "./MovingShiftOutOfMonthModal";
 import TaskModal from "./TaskModal";
 
-const MODAL_COMPONENTS = {
-    "DELETE_ENTITY": DeleteModal,
-    "EDIT_SHIFT": EditShiftModal,
-    "EDIT_EMPLOYEE": EditEmployeeModal,
-    "MOVING_SHIFT_OUT_OF_MONTH": MovingShiftOutOfMonthModal,
-    "MOBILE_APP_LINKS": MobileAppLinksModal,
-    "LOCATION_MODAL": LocationModal,
-    "LOGIN_REGISTER": LoginRegister,
-    "TASK_MODAL": TaskModal,
+
+export const MODAL_COMPONENTS = {
+    [EModalType.DELETE_ENTITY]: DeleteModal,
+    [EModalType.EDIT_SHIFT]: EditShiftModal,
+    [EModalType.EDIT_EMPLOYEE]: EditEmployeeModal,
+    [EModalType.MOVING_SHIFT_OUT_OF_MONTH]: MovingShiftOutOfMonthModal,
+    [EModalType.MOBILE_APP_LINKS]: MobileAppLinksModal,
+    [EModalType.LOCATION_MODAL]: LocationModal,
+    [EModalType.LOGIN_REGISTER]: LoginRegister,
+    [EModalType.TASK_MODAL]: TaskModal,
+    [EModalType.GO_PREMIUM_MODAL]: GoPremiumModal,
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {

@@ -1,4 +1,5 @@
 import moment from "moment";
+import {EModalType} from "../components/modals/EModalType";
 import {GACategory} from "../helpers/GATypes";
 import * as actions from "./actionTypes";
 import {fetchMonthlyReport} from "./reportsActions";
@@ -183,6 +184,16 @@ export const showDeleteShiftModal = (shift, dispatch, month, year) => ({
             year,
             deleteEntity: deleteShift,
             open: true
+        }
+    }
+});
+
+export const showGoPremiumModal = () => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: EModalType.GO_PREMIUM_MODAL,
+        modalProps: {
+            open: true,
         }
     }
 });

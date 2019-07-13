@@ -10,7 +10,7 @@ import CSSModules from "react-css-modules";
 import styles from '../styles/AppBar.scss';
 import {connect} from "react-redux";
 import * as selectors from "../selectors";
-import {handleLogout, navigateHome} from "../actions/index";
+import {handleLogout, navigateHome, showGoPremiumModal} from "../actions/index";
 import PropTypes from 'prop-types';
 import {Link} from "react-router";
 
@@ -29,7 +29,7 @@ class MeebaAppBar extends Component {
     };
 
     render() {
-        let {companyName, isDesktop, hasPremium} = this.props;
+        let {companyName, isDesktop, hasPremium, showGoPremiumModal} = this.props;
         return (
             <div styleName="app-bar">
                 <AppBar position="static">
@@ -43,7 +43,7 @@ class MeebaAppBar extends Component {
                         <div styleName="logout">
                             <Button color="inherit"><Link style={{color: "inherit", textDecoration: 'none'}} to="/faq">שאלות ותשובות</Link></Button>
                             {!hasPremium &&
-                            <Button variant="contained" color="secondary" >רוצה להיות בוס!</Button>
+                            <Button variant="contained" color="secondary" onClick={showGoPremiumModal}>רוצה להיות בוס!</Button>
                             }
                             <Button onClick={this.onLogout} color="inherit">יציאה</Button>
                         </div>
@@ -76,6 +76,7 @@ function mapDispatchToProps(dispatch) {
     return {
         logout: (router) => dispatch(handleLogout(router)),
         navigateHome: (router) => dispatch(navigateHome(router)),
+        showGoPremiumModal: () => dispatch(showGoPremiumModal())
     };
 }
 

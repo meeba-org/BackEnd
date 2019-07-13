@@ -1,3 +1,4 @@
+import {EModalType} from "../components/modals/EModalType";
 import {DESKTOP, Error, HIDE_LOADING, MOBILE, SHOW_LOADING} from "./actionTypes";
 
 export * from "./companyActions";
@@ -6,75 +7,29 @@ export * from "./usersActions";
 export * from "./loginLogoutActions";
 export * from "./tasksActions";
 
-export const hideDeleteEntityModal = () => ({
+export const hideModal = (modalType) => ({
     type: 'HIDE_MODAL',
     payload : {
-        modalType: 'DELETE_ENTITY',
+        modalType,
         modalProps: {
             open: false
         }
     }
 });
 
-export const hideTaskModal = () => ({
-    type: 'HIDE_MODAL',
-    payload : {
-        modalType: 'TASK_MODAL',
-        modalProps: {
-            open: false
-        }
-    }
-});
+export const hideDeleteEntityModal = () => hideModal(EModalType.DELETE_ENTITY);
 
-export const hideLocationModal = () => ({
-    type: 'HIDE_MODAL',
-    payload : {
-        modalType: 'LOCATION_MODAL',
-        modalProps: {
-            open: false
-        }
-    }
-});
+export const hideTaskModal = () => hideModal(EModalType.TASK_MODAL);
 
-export const hideEditShiftModal = () => ({
-    type: 'HIDE_MODAL',
-    payload : {
-        modalType: 'EDIT_SHIFT',
-        modalProps: {
-            open: false
-        }
-    }
-});
+export const hideLocationModal = () => hideModal(EModalType.LOCATION_MODAL);
 
-export const hideEditEmployeeModal = () => ({
-    type: 'HIDE_MODAL',
-    payload : {
-        modalType: 'EDIT_EMPLOYEE',
-        modalProps: {
-            open: false
-        }
-    }
-});
+export const hideEditShiftModal = () => hideModal(EModalType.EDIT_SHIFT);
 
-export const hideLoginRegisterModal = () => ({
-    type: 'HIDE_MODAL',
-    payload : {
-        modalType: 'LOGIN_REGISTER',
-        modalProps: {
-            open: false
-        }
-    }
-});
+export const hideEditEmployeeModal = () => hideModal(EModalType.EDIT_EMPLOYEE);
 
-export const hideMobileAppModal = () => ({
-    type: 'HIDE_MODAL',
-    payload : {
-        modalType: 'MOBILE_APP_LINKS',
-        modalProps: {
-            open: false
-        }
-    }
-});
+export const hideLoginRegisterModal = () => hideModal(EModalType.LOGIN_REGISTER);
+
+export const hideMobileAppModal = () => hideModal(EModalType.MOBILE_APP_LINKS);
 
 export const ErrorAction = (err) => ({
     type: Error,
