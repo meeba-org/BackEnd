@@ -1,13 +1,13 @@
-import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import {hideModal} from "../../actions";
+import React, {Component, Fragment} from 'react';
+import CSSModules from "react-css-modules";
+import {connect} from "react-redux";
 import {getUser} from "../../selectors";
-import {EModalType} from "../modals/EModalType";
 import GoPremiumConfirm from "./GoPremiumConfirm";
 import GoPremiumIntro from "./GoPremiumIntro";
 import GoPremiumPay from "./GoPremiumPay";
 import GoPremiumStepper from "./GoPremiumStepper";
-import {connect} from "react-redux";
+import styles from '../../styles/GoPremiumContainer.scss';
 
 const EGoPremiumStep = {
     INTRO: 0,
@@ -30,12 +30,14 @@ class GoPremiumContainer extends Component {
         const {activeStep} = this.state;
 
         return (
-            <Fragment>
-                <GoPremiumStepper activeStep={activeStep} onStepSelect={this.onStepSelect} />
+            <div styleName='go-premium-container'>
+                <div styleName='go-premium-stepper-container'>
+                    <GoPremiumStepper activeStep={activeStep} onStepSelect={this.onStepSelect} />
+                </div>
                 {activeStep === EGoPremiumStep.INTRO && <GoPremiumIntro onNext={() => this.onStepSelect(EGoPremiumStep.PAY)} />}
                 {activeStep === EGoPremiumStep.PAY && <GoPremiumPay onNext={() => this.onStepSelect(EGoPremiumStep.CONFIRM)}/>}
                 {activeStep === EGoPremiumStep.CONFIRM && <GoPremiumConfirm onNext={() => onClose()}/>}
-            </Fragment>
+            </div>
         );
     }
 }
@@ -48,4 +50,4 @@ const mapStateToProps = (state) => ({
     user: getUser(state)
 });
 
-export default connect(mapStateToProps)(GoPremiumContainer);
+export default connect(mapStateToProps)(CSSModules(GoPremiumContainer, styles));

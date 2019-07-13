@@ -1,0 +1,10 @@
+.go-premium-container {
+    display: flex;
+    flex-direction: column;
+    
+    .go-premium-stepper-container {
+        display: flex;
+
+        justify-content: center;
+    }
+}
