@@ -35,7 +35,7 @@ const ModalRoot = ({ modalType, modalProps }) => {
 };
 
 ModalRoot.propTypes = {
-    modalType: PropTypes.string,
+    modalType: PropTypes.number,
     modalProps: PropTypes.object.isRequired,
 };
 

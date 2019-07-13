@@ -34,6 +34,10 @@ export const isDevEnv = (state) => {
     return state.general.isDevEnv;
 };
 
+export const getBlueSnapBaseUrl = state => {
+    return isDevEnv(state) ? "https://sandbox.bluesnap.com" : "https://ws.bluesnap.com";
+};
+
 export const isFeatureEnable = (state, feature) => {
     let company = getCompany(state);
     return (!company) ? false : FeaturesManager.isFeatureEnable(company, feature);

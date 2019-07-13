@@ -18,5 +18,6 @@
     <orderEntry type="library" name="analytics" level="application" />
     <orderEntry type="library" name="@types/material-ui" level="application" />
     <orderEntry type="library" name="@types/prop-types" level="application" />
+    <orderEntry type="library" name="bluesnap" level="application" />
   </component>
 </module>
