@@ -70,9 +70,6 @@ class SideBar extends Component {
                         (<IfAnyGranted key={index} expected={item.allowedRoles} actual={[userRole]}>
                             <ListItem button onClick={() => updateRoute(item, index)}
                                       disabled={item.disabled}
-                                      classes={{
-                                          root: classes.root
-                                      }}
                                       style={{
                                           backgroundColor: item.selected ? "rgba(0, 0, 0, 0.10)" : 'transparent',
                                       }}
@@ -80,7 +77,7 @@ class SideBar extends Component {
                                 <ListItemIcon>
                                     {item.icon}
                                 </ListItemIcon>
-                                <ListItemText primary={item.text} style={{paddingRight: "24px"}}/>
+                                <ListItemText primary={item.text} />
                             </ListItem>
                         </IfAnyGranted>)
                     )}

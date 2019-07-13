@@ -134,7 +134,7 @@ export const updateShift = (shift, dispatch, postUpdate, month, year) => {
         return {
             type: 'SHOW_MODAL',
             payload: {
-                modalType: 'MOVING_SHIFT_OUT_OF_MONTH',
+                modalType: EModalType.MOVING_SHIFT_OUT_OF_MONTH,
                 modalProps: {
                     entity: shift,
                     month,
@@ -177,7 +177,7 @@ export const updateShift0 = (dispatch, shift, postUpdate, month, year) => {
 export const showDeleteShiftModal = (shift, dispatch, month, year) => ({
     type: 'SHOW_MODAL',
     payload: {
-        modalType: 'DELETE_ENTITY',
+        modalType: EModalType.DELETE_ENTITY,
         modalProps: {
             entity: shift,
             month,
@@ -201,7 +201,7 @@ export const showGoPremiumModal = () => ({
 export const showEditShiftModal = (shift, callBack, postUpdate) => ({
     type: 'SHOW_MODAL',
     payload: {
-        modalType: 'EDIT_SHIFT',
+        modalType: EModalType.EDIT_SHIFT,
         modalProps: {
             entity: shift,
             callBack,
@@ -215,7 +215,7 @@ export const showEditShiftModal = (shift, callBack, postUpdate) => ({
 export const showLocationModal = (shift, callBack) => ({
     type: 'SHOW_MODAL',
     payload: {
-        modalType: 'LOCATION_MODAL',
+        modalType: EModalType.LOCATION_MODAL,
         modalProps: {
             entity: shift,
             callBack,

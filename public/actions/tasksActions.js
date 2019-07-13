@@ -1,3 +1,4 @@
+import {EModalType} from "../components/modals/EModalType";
 import * as actions from "./actionTypes";
 
 export const fetchTasksSuccess = (payload) => {
@@ -74,7 +75,7 @@ export const updateTask = (task) => ({
 export const showDeleteTaskModal = (entity) => ({
     type: 'SHOW_MODAL',
     payload: {
-        modalType: 'DELETE_ENTITY',
+        modalType: EModalType.DELETE_ENTITY,
         modalProps: {
             entity: entity,
             deleteEntity: deleteTask,
@@ -98,7 +99,7 @@ export const deleteTask = (task) => ({
 export const openTaskModal = (entity) => ({
     type: 'SHOW_MODAL',
     payload: {
-        modalType: 'TASK_MODAL',
+        modalType: EModalType.TASK_MODAL,
         modalProps: {
             createTask,
             updateTask,

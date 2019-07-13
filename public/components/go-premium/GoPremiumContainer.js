@@ -30,8 +30,8 @@ class GoPremiumContainer extends Component {
         const {activeStep} = this.state;
 
         return (
-            <div styleName='go-premium-container'>
-                <div styleName='go-premium-stepper-container'>
+            <div styleName="go-premium-container">
+                <div styleName="go-premium-stepper-container">
                     <GoPremiumStepper activeStep={activeStep} onStepSelect={this.onStepSelect} />
                 </div>
                 {activeStep === EGoPremiumStep.INTRO && <GoPremiumIntro onNext={() => this.onStepSelect(EGoPremiumStep.PAY)} />}

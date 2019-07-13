@@ -1,6 +1,7 @@
 import brown from '@material-ui/core/colors/brown';
 import orange from '@material-ui/core/colors/orange';
-import {createGenerateClassName, jssPreset} from '@material-ui/core/styles';
+import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
+import rtl from 'jss-rtl';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import {create} from 'jss';
@@ -13,6 +14,7 @@ import routes from "./routes";
 import createStore from "./store/configureStore";
 
 const muiTheme = createMuiTheme({
+    direction: 'rtl',
     typography: {
         useNextVariants: true,
         fontFamily: '"Assistant", sans-serif'
@@ -23,20 +25,6 @@ const muiTheme = createMuiTheme({
                 height: "100%",
                 width: "initial",
                 padding: "3px",
-            }
-        },
-        MuiInputLabel: {
-            root: {
-                transformOrigin: "top right",
-                right: 0
-            },
-            shrink: {
-                transformOrigin: "top right"
-            },
-        },
-        MuiFormControl: {
-            root: {
-                alignItems: "flex-start"
             }
         },
         MuiTooltip: {
@@ -63,8 +51,12 @@ const muiTheme = createMuiTheme({
 
 const store = createStore();
 const history = syncHistoryWithStore(browserHistory, store);
+
+// Configure JSS
+const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+
+// Custom Material-UI class name generator.
 const generateClassName = createGenerateClassName();
-const jss = create(jssPreset());
 
 const Root = () =>
     (<MuiThemeProvider theme={muiTheme}>

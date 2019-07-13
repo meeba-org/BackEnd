@@ -35,6 +35,6 @@ const GoPremiumStepper = ({classes, activeStep}) => {
             </Stepper>
         </div>
     );
-}
+};
 
 export default withStyles(styles)(GoPremiumStepper);

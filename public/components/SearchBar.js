@@ -28,7 +28,7 @@ const SearchBar = ({classes, onChange}) => (
 const styles = theme => ({
     search: {
         borderRadius: 4,
-        marginRight: "10px",
+        marginLeft: "10px",
         display: "flex",
         backgroundColor: fade("#000000", 0.1),
         '&:hover': {
@@ -40,7 +40,6 @@ const styles = theme => ({
                 width: '300px'
             }
         },
-        marginLeft: 0,
         width: '200px',
         transition: "width 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
     },
