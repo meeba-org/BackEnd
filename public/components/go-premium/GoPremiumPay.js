@@ -32,7 +32,9 @@ class GoPremiumPay extends Component {
                     <Input />
                 </FormControl>
                 {error && <div styleName="error-msg">{error}</div>}
-                <Button onClick={onNext}>שלם</Button>
+                <Button onClick={() => onNext({
+                    cc: 1
+                })}>שלם</Button>
             </Fragment>
         );
     }

@@ -153,8 +153,12 @@ router.get('/api/paymentToken',
 
 router.post('/api/payment',
     (req, res) => routeWrapper(req, res, (req, res) => {
+        let {token, cc} = req.body;
 
-        return reject("כרטיס אשראי חסום");
+        if (!cc)
+            return reject("כרטיס אשראי חסום");
+
+        return resolve("הכל טוב");
     })
 );
 module.exports = router;

@@ -23,7 +23,11 @@ class GoPremiumContainer extends Component {
     };
 
     onPayment = (paymentData) => {
-        this.props.handlePayment();
+        const {handlePayment, paymentToken} = this.props;
+        handlePayment({
+            ...paymentData,
+            token: paymentToken
+        });
     };
 
     render() {
