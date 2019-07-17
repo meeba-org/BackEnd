@@ -1,9 +1,9 @@
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
 import React, {Component, Fragment} from 'react';
 import * as BlueSnapHelper from '../../helpers/blueSnapHelper';
-import axios from "axios";
 
 class GoPremiumPay extends Component {
 
@@ -11,19 +11,7 @@ class GoPremiumPay extends Component {
     };
 
     componentDidMount () {
-        const {blueSnapBaseUrl} = this.props;
-
-        // TODO this needs to be BE to BE, not cors
-        axios.get(blueSnapBaseUrl + '/services/2/payment-fields-tokens')
-            .then(token => {
-                BlueSnapHelper.run(token);
-            });
-        // const script = document.createElement("script");
-        //
-        // script.src = blueSnapBaseUrl + "/source/web-sdk/bluesnap.js";
-        // script.async = true;
-        //
-        // document.body.appendChild(script);
+        // BlueSnapHelper.run(this.props.paymentToken);
     }
 
     render() {
@@ -33,15 +21,15 @@ class GoPremiumPay extends Component {
             <Fragment>
                 <FormControl>
                     <InputLabel>כרטיס אשראי</InputLabel>
-                    <div data-bluesnap="ccn"></div>
+                    <Input />
                 </FormControl>
                 <FormControl>
                     <InputLabel>תוקף</InputLabel>
-                    <div data-bluesnap="exp"></div>
+                    <Input />
                 </FormControl>
                 <FormControl>
                     <InputLabel>3 ספרות</InputLabel>
-                    <div data-bluesnap="cvv"></div>
+                    <Input />
                 </FormControl>
                 <Button onClick={onNext}>שלם</Button>
             </Fragment>

@@ -1,5 +1,5 @@
 export const run = (token) => {
-    var bsObj = {
+    let bsObj = {
         onFieldEventHandler: {
             // tagId returns: "ccn", "cvv", "exp"
             onFocus: function (tagId) {
@@ -42,6 +42,9 @@ export const run = (token) => {
             }
         }, */
         style: {
+            "#ccn": {
+                height: "20px"
+            },
             ":focus": {
                 //style for all input elements on focus event
                 "color": "orange"

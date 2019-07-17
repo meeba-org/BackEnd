@@ -130,4 +130,24 @@ router.get('/api/general/meta',
     })
 );
 
+router.get('/api/paymentToken',
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        // let blueSnapBaseUrl = process.env.NODE_ENV === 'development' ? "https://sandbox.bluesnap.com" : "https://ws.bluesnap.com"
+
+        return resolve("713fa52b02f4056a6128f34cfd2f543c26b33ac2210f207e91e6789561960f04_");
+
+        // return axios.get(blueSnapBaseUrl + '/services/2/payment-fields-tokens',
+        //     {
+        //         auth: {
+        //             username: process.env.BLUESNAP_USERNAME,
+        //             password: process.env.BLUESNAP_PASSWORD
+        //         }
+        //     })
+        //     .then(token =>
+        //     {
+        //         return token;
+        //     })
+        //     .catch(err => console.error(err));
+    })
+);
 module.exports = router;

@@ -2,12 +2,13 @@ import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
 import CSSModules from "react-css-modules";
 import {connect} from "react-redux";
-import {getBlueSnapBaseUrl, getUser} from "../../selectors";
+import {getPaymentToken, getUser} from "../../selectors";
 import GoPremiumConfirm from "./GoPremiumConfirm";
 import GoPremiumIntro from "./GoPremiumIntro";
 import GoPremiumPay from "./GoPremiumPay";
 import GoPremiumStepper from "./GoPremiumStepper";
 import styles from '../../styles/GoPremiumContainer.scss';
+import { fetchPaymentToken } from '../../actions/generalActions';
 
 const EGoPremiumStep = {
     INTRO: 0,
@@ -16,6 +17,10 @@ const EGoPremiumStep = {
 };
 
 class GoPremiumContainer extends Component {
+
+    componentDidMount() {
+        this.props.fetchPaymentToken();
+    }
 
     state = {
         activeStep: EGoPremiumStep.INTRO
@@ -26,7 +31,7 @@ class GoPremiumContainer extends Component {
     };
 
     render() {
-        const {onClose, blueSnapBaseUrl} = this.props;
+        const {onClose, paymentToken} = this.props;
         const {activeStep} = this.state;
 
         return (
@@ -35,7 +40,7 @@ class GoPremiumContainer extends Component {
                     <GoPremiumStepper activeStep={activeStep} onStepSelect={this.onStepSelect} />
                 </div>
                 {activeStep === EGoPremiumStep.INTRO && <GoPremiumIntro onNext={() => this.onStepSelect(EGoPremiumStep.PAY)} />}
-                {activeStep === EGoPremiumStep.PAY && <GoPremiumPay blueSnapBaseUrl={blueSnapBaseUrl} onNext={() => this.onStepSelect(EGoPremiumStep.CONFIRM)}/>}
+                {activeStep === EGoPremiumStep.PAY && <GoPremiumPay paymentToken={paymentToken} onNext={() => this.onStepSelect(EGoPremiumStep.CONFIRM)}/>}
                 {activeStep === EGoPremiumStep.CONFIRM && <GoPremiumConfirm onNext={() => onClose()}/>}
             </div>
         );
@@ -48,7 +53,11 @@ GoPremiumContainer.propTypes = {
 
 const mapStateToProps = (state) => ({
     user: getUser(state),
-    blueSnapBaseUrl: getBlueSnapBaseUrl(state)
+    paymentToken: getPaymentToken (state)
 });
 
-export default connect(mapStateToProps)(CSSModules(GoPremiumContainer, styles));
+const mapDispatchToProps = dispatch => ({
+    fetchPaymentToken: () => dispatch(fetchPaymentToken())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(GoPremiumContainer, styles));

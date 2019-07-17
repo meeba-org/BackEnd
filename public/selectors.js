@@ -18,6 +18,8 @@ export const getUserRole = (state) => {
     return (!state.user) ? null : state.user.role;
 };
 
+const getGeneral = state => state.general;
+
 export const getMeta = (state) => {
     return (!state.general.meta) ? null : state.general.meta;
 };
@@ -31,12 +33,14 @@ export const hasPremium = (state) => {
 };
 
 export const isDevEnv = (state) => {
-    return state.general.isDevEnv;
+    return getGeneral(state).isDevEnv;
 };
 
 export const getBlueSnapBaseUrl = state => {
     return isDevEnv(state) ? "https://sandbox.bluesnap.com" : "https://ws.bluesnap.com";
 };
+
+export const getPaymentToken = state => getGeneral(state).paymentToken;
 
 export const isFeatureEnable = (state, feature) => {
     let company = getCompany(state);

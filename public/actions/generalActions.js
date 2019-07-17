@@ -17,3 +17,20 @@ export const fetchMetaData = () => ({
         success: fetchMetaDataSuccess,
     },
 });
+
+export const fetchPaymentTokenSuccess = payload => ({
+    type: actions.FETCH_PAYMENT_TOKEN_SUCCESS,
+    payload
+});
+
+export const fetchPaymentToken = () => ({
+    type: actions.API,
+    payload: {
+        url: "/paymentToken",
+        method: "get",
+        success: fetchPaymentTokenSuccess
+    },
+    meta: {
+        shouldAuthenticate: true
+    }
+});

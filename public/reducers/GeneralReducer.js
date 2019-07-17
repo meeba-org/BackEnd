@@ -9,6 +9,11 @@ export function GeneralReducer(state = initialState, action) {
                 ...state,
                 meta: action.payload
             };
+        case types.FETCH_PAYMENT_TOKEN_SUCCESS:
+            return {
+                ...state,
+                paymentToken: action.payload
+            };
         case types.DESKTOP:
             return {
                 ...state,
