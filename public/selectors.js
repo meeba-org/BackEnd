@@ -40,7 +40,13 @@ export const getBlueSnapBaseUrl = state => {
     return isDevEnv(state) ? "https://sandbox.bluesnap.com" : "https://ws.bluesnap.com";
 };
 
-export const getPaymentToken = state => getGeneral(state).paymentToken;
+const getPayment = state => state.payment;
+
+export const getPaymentToken = state => getPayment(state).token;
+
+export const getPaymentError = state => getPayment(state).error;
+
+export const getPaymentActiveStep = state => getPayment(state).activeStep;
 
 export const isFeatureEnable = (state, feature) => {
     let company = getCompany(state);

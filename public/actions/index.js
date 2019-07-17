@@ -6,6 +6,7 @@ export * from "./shiftsActions";
 export * from "./usersActions";
 export * from "./loginLogoutActions";
 export * from "./tasksActions";
+export * from "./paymentActions";
 
 export const hideModal = (modalType) => ({
     type: 'HIDE_MODAL',

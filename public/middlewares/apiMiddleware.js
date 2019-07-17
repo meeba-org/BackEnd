@@ -16,7 +16,7 @@ const apiMiddleware = ({dispatch}) => next => action => {
         }
     }
 
-    let {url, success, method, data, responseType} = action.payload;
+    let {url, success, onError, method, data, responseType} = action.payload;
 
     url = `${config.API_URL}${url}`;
 
@@ -34,7 +34,10 @@ const apiMiddleware = ({dispatch}) => next => action => {
     })
     .catch((err) => {
         dispatch(HideLoading());
-        return dispatch(ErrorAction(err));
+        if (onError)
+            return dispatch(onError(err.response.data));
+        else
+            return dispatch(ErrorAction(err));
     });
 
     return next(action);

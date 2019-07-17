@@ -1,23 +1,21 @@
 import * as types from "../actions/actionTypes";
 
-const initialState = {};
-
-export function GeneralReducer(state = initialState, action) {
+export function PaymentReducer(state = {}, action = null) {
     switch (action.type) {
-        case types.FETCH_META_DATA_SUCCESS:
+        case types.FETCH_PAYMENT_TOKEN_SUCCESS:
             return {
                 ...state,
-                meta: action.payload
+                token: action.payload
             };
-        case types.DESKTOP:
+        case types.PAYMENT_ERROR:
             return {
                 ...state,
-                isDesktop: true
+                error: action.error
             };
-        case types.MOBILE:
+        case types.UPDATE_PAYMENT_STEP:
             return {
                 ...state,
-                isDesktop: false
+                activeStep: action.activeStep
             };
         default:
             return state;

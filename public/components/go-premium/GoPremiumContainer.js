@@ -1,38 +1,33 @@
 import PropTypes from 'prop-types';
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import CSSModules from "react-css-modules";
 import {connect} from "react-redux";
-import {getPaymentToken, getUser} from "../../selectors";
+import {getPaymentActiveStep, getPaymentError, getPaymentToken, getUser} from "../../selectors";
+import {EGoPremiumStep} from "./EPremiumStep";
 import GoPremiumConfirm from "./GoPremiumConfirm";
 import GoPremiumIntro from "./GoPremiumIntro";
 import GoPremiumPay from "./GoPremiumPay";
 import GoPremiumStepper from "./GoPremiumStepper";
 import styles from '../../styles/GoPremiumContainer.scss';
-import { fetchPaymentToken } from '../../actions/generalActions';
-
-const EGoPremiumStep = {
-    INTRO: 0,
-    PAY: 1,
-    CONFIRM: 2
-};
+import {handlePayment, fetchPaymentToken, setActiveStep} from "../../actions";
 
 class GoPremiumContainer extends Component {
 
     componentDidMount() {
         this.props.fetchPaymentToken();
+        this.props.setActiveStep(EGoPremiumStep.INTRO);
     }
 
-    state = {
-        activeStep: EGoPremiumStep.INTRO
+    onStepSelect = (activeStep) => {
+        this.props.setActiveStep(activeStep);
     };
 
-    onStepSelect = (activeStep) => {
-        this.setState({activeStep});
+    onPayment = (paymentData) => {
+        this.props.handlePayment();
     };
 
     render() {
-        const {onClose, paymentToken} = this.props;
-        const {activeStep} = this.state;
+        const {onClose, paymentToken, paymentError, activeStep} = this.props;
 
         return (
             <div styleName="go-premium-container">
@@ -40,7 +35,7 @@ class GoPremiumContainer extends Component {
                     <GoPremiumStepper activeStep={activeStep} onStepSelect={this.onStepSelect} />
                 </div>
                 {activeStep === EGoPremiumStep.INTRO && <GoPremiumIntro onNext={() => this.onStepSelect(EGoPremiumStep.PAY)} />}
-                {activeStep === EGoPremiumStep.PAY && <GoPremiumPay paymentToken={paymentToken} onNext={() => this.onStepSelect(EGoPremiumStep.CONFIRM)}/>}
+                {activeStep === EGoPremiumStep.PAY && <GoPremiumPay paymentToken={paymentToken}  error={paymentError} onNext={this.onPayment}/>}
                 {activeStep === EGoPremiumStep.CONFIRM && <GoPremiumConfirm onNext={() => onClose()}/>}
             </div>
         );
@@ -53,11 +48,15 @@ GoPremiumContainer.propTypes = {
 
 const mapStateToProps = (state) => ({
     user: getUser(state),
-    paymentToken: getPaymentToken (state)
+    paymentToken: getPaymentToken(state),
+    paymentError: getPaymentError(state),
+    activeStep: getPaymentActiveStep(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchPaymentToken: () => dispatch(fetchPaymentToken())
+    fetchPaymentToken: () => dispatch(fetchPaymentToken()),
+    handlePayment: paymentData => dispatch(handlePayment(paymentData)),
+    setActiveStep: (activeStep => dispatch(setActiveStep(activeStep)))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(GoPremiumContainer, styles));

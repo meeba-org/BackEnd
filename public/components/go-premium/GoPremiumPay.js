@@ -15,7 +15,7 @@ class GoPremiumPay extends Component {
     }
 
     render() {
-        const {onNext} = this.props;
+        const {onNext, error} = this.props;
 
         return (
             <Fragment>
@@ -31,6 +31,7 @@ class GoPremiumPay extends Component {
                     <InputLabel>3 ספרות</InputLabel>
                     <Input />
                 </FormControl>
+                {error && <div styleName="error-msg">{error}</div>}
                 <Button onClick={onNext}>שלם</Button>
             </Fragment>
         );

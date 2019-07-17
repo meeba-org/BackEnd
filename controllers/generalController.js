@@ -150,4 +150,11 @@ router.get('/api/paymentToken',
         //     .catch(err => console.error(err));
     })
 );
+
+router.post('/api/payment',
+    (req, res) => routeWrapper(req, res, (req, res) => {
+
+        return reject("כרטיס אשראי חסום");
+    })
+);
 module.exports = router;
