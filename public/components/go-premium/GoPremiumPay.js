@@ -14,26 +14,34 @@ class GoPremiumPay extends Component {
         // BlueSnapHelper.run(this.props.paymentToken);
     }
 
+    updatePaymentData = (key, value) => {
+        this.setState({
+            [key]: value
+        });
+    }
     render() {
         const {onNext, error} = this.props;
+        const {cc, expire, cvv} = this.state;
 
         return (
             <Fragment>
                 <FormControl>
                     <InputLabel>כרטיס אשראי</InputLabel>
-                    <Input />
+                    <Input onChange={event => this.updatePaymentData("cc", event.target.value)}/>
                 </FormControl>
                 <FormControl>
                     <InputLabel>תוקף</InputLabel>
-                    <Input />
+                    <Input onChange={event => this.updatePaymentData("expire", event.target.value)}/>
                 </FormControl>
                 <FormControl>
                     <InputLabel>3 ספרות</InputLabel>
-                    <Input />
+                    <Input onChange={event => this.updatePaymentData("cvv", event.target.value)}/>
                 </FormControl>
                 {error && <div styleName="error-msg">{error}</div>}
                 <Button onClick={() => onNext({
-                    cc: 1
+                    cc,
+                    expire,
+                    cvv
                 })}>שלם</Button>
             </Fragment>
         );
