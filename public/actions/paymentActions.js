@@ -19,7 +19,10 @@ export const fetchPaymentToken = () => ({
     }
 });
 
-const paymentSuccess = () => {
+const paymentSuccess = (response) => {
+    localStorage.setItem('jwtToken', response.data.token);
+    localStorage.setItem('activeUser', JSON.stringify(response.data.user));
+
     return setActiveStep(EGoPremiumStep.CONFIRM);
 };
 

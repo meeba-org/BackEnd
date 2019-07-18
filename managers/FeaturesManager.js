@@ -18,6 +18,14 @@ function isFeatureGloballyEnable(feature) {
     return GlobalFeatures.includes(feature);
 }
 
+function addFeature(company, feature) {
+    if (!company.features)
+        company.features = [];
+
+    if (!company.features.includes(feature))
+        company.features.push(feature);
+}
+
 const isFeatureEnable = (company, feature) => {
     if (isFeatureGloballyEnable(feature))
         return true;
@@ -30,5 +38,6 @@ const isFeatureEnable = (company, feature) => {
 
 module.exports = {
     Feature,
-    isFeatureEnable
+    isFeatureEnable,
+    addFeature
 };

@@ -9,6 +9,7 @@ const AppManager = require('../managers/AppManager');
 const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
+const {Feature, addFeature} = require("./FeaturesManager");
 
 //POST /register user
 router.post('/register',
@@ -158,7 +159,23 @@ router.post('/api/payment',
         if (!cc)
             return reject("כרטיס אשראי חסום");
 
-        return resolve("הכל טוב");
+        let company = jwtService.getCompanyFromLocals(res);
+        let user = jwtService.getUserFromLocals(res);
+        if (!company)
+            return reject('משתמש לא ידוע - נסה להיכנס מחדש לחשבון');
+
+        addFeature(company, Feature.Premium);
+        return CompanyModel.updateCompany(company)
+            .then(() => UserModel.getByUserId(user.id))
+            .then((user) => {
+
+                // use the jsonwebtoken package to create the token and respond with it
+                let token = jwt.sign(user.toObject(), config.secret);
+                return resolve({
+                    user,
+                    token
+                });
+            });
     })
 );
 module.exports = router;
