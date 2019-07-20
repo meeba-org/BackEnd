@@ -4,6 +4,7 @@ import AppContainer from "./components/AppContainer";
 import Dashboard from "./components/Dashboard";
 import EmployeesContainer from "./components/employees/EmployeesContainer";
 import FAQContainer from "./components/faq/FAQContainer";
+import PaymentSuccessRedirectContainer from "./components/go-premium/PaymentSuccessRedirectContainer";
 import Home from "./components/home/Home";
 import DailyReportContainer from "./components/reports/DailyReportContainer";
 import Report from "./components/reports/Report";
@@ -23,6 +24,7 @@ export default (
             <Redirect from="*" to="/dashboard/live" />
         </Route>
         <Route path="faq(/:name)" component={FAQContainer} />
+        <Route path="paymentSuccess" component={PaymentSuccessRedirectContainer} />
     </Route>
 );
 

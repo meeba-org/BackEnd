@@ -9,7 +9,6 @@ const AppManager = require('../managers/AppManager');
 const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
-const {Feature, addFeature} = require("./FeaturesManager");
 
 //POST /register user
 router.post('/register',
@@ -131,51 +130,4 @@ router.get('/api/general/meta',
     })
 );
 
-router.get('/api/paymentToken',
-    (req, res) => routeWrapper(req, res, (req, res) => {
-        // let blueSnapBaseUrl = process.env.NODE_ENV === 'development' ? "https://sandbox.bluesnap.com" : "https://ws.bluesnap.com"
-
-        return resolve("713fa52b02f4056a6128f34cfd2f543c26b33ac2210f207e91e6789561960f04_");
-
-        // return axios.get(blueSnapBaseUrl + '/services/2/payment-fields-tokens',
-        //     {
-        //         auth: {
-        //             username: process.env.BLUESNAP_USERNAME,
-        //             password: process.env.BLUESNAP_PASSWORD
-        //         }
-        //     })
-        //     .then(token =>
-        //     {
-        //         return token;
-        //     })
-        //     .catch(err => console.error(err));
-    })
-);
-
-router.post('/api/payment',
-    (req, res) => routeWrapper(req, res, (req, res) => {
-        let {token, cc} = req.body;
-
-        if (!cc)
-            return reject("כרטיס אשראי חסום");
-
-        let company = jwtService.getCompanyFromLocals(res);
-        let user = jwtService.getUserFromLocals(res);
-        if (!company)
-            return reject('משתמש לא ידוע - נסה להיכנס מחדש לחשבון');
-
-        addFeature(company, Feature.Premium);
-        return CompanyModel.updateCompany(company)
-            .then(() => UserModel.getByUserId(user.id))
-            .then((user) => {
-
-                // use the jsonwebtoken package to create the token and respond with it
-                let token = jwt.sign(user.toObject(), config.secret);
-                return resolve({
-                    user,
-                    token
-                });
-            });
-    })
-);
 module.exports = router;

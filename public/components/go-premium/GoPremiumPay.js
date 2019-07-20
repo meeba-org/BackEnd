@@ -1,9 +1,6 @@
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
 import React, {Component, Fragment} from 'react';
-import * as BlueSnapHelper from '../../helpers/blueSnapHelper';
+import CSSModules from "react-css-modules";
+import styles from "../../styles/GoPremiumPay.scss";
 
 class GoPremiumPay extends Component {
 
@@ -25,24 +22,7 @@ class GoPremiumPay extends Component {
 
         return (
             <Fragment>
-                <FormControl>
-                    <InputLabel>כרטיס אשראי</InputLabel>
-                    <Input onChange={event => this.updatePaymentData("cc", event.target.value)}/>
-                </FormControl>
-                <FormControl>
-                    <InputLabel>תוקף</InputLabel>
-                    <Input onChange={event => this.updatePaymentData("expire", event.target.value)}/>
-                </FormControl>
-                <FormControl>
-                    <InputLabel>3 ספרות</InputLabel>
-                    <Input onChange={event => this.updatePaymentData("cvv", event.target.value)}/>
-                </FormControl>
-                {error && <div styleName="error-msg">{error}</div>}
-                <Button onClick={() => onNext({
-                    cc,
-                    expire,
-                    cvv
-                })}>שלם</Button>
+                <iframe src={"https://testicredit.rivhit.co.il/payment/PaymentFullPage.aspx?GroupId=1f904a93-332c-4d32-aa54-e9b71298b2bb"} />
             </Fragment>
         );
     }
@@ -51,4 +31,4 @@ class GoPremiumPay extends Component {
 GoPremiumPay.propTypes = {
 };
 
-export default GoPremiumPay;
+export default CSSModules(GoPremiumPay, styles);

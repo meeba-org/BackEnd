@@ -9,25 +9,27 @@ import GoPremiumIntro from "./GoPremiumIntro";
 import GoPremiumPay from "./GoPremiumPay";
 import GoPremiumStepper from "./GoPremiumStepper";
 import styles from '../../styles/GoPremiumContainer.scss';
-import {handlePayment, fetchPaymentToken, setActiveStep} from "../../actions";
+import {handlePaymentSuccess, setActiveStep} from "../../actions";
 
 class GoPremiumContainer extends Component {
 
     componentDidMount() {
-        this.props.fetchPaymentToken();
         this.props.setActiveStep(EGoPremiumStep.INTRO);
+
+        window.addEventListener('message', this.onPaymentSuccess);
+
     }
+
+    onPaymentSuccess = (e) => {
+        console.log('GoPremiumContainer: ' + e.data);
+        if (e.data !== 'user_payed')
+            return;
+
+        this.props.handlePaymentSuccess();
+    };
 
     onStepSelect = (activeStep) => {
         this.props.setActiveStep(activeStep);
-    };
-
-    onPayment = (paymentData) => {
-        const {handlePayment, paymentToken} = this.props;
-        handlePayment({
-            ...paymentData,
-            token: paymentToken
-        });
     };
 
     render() {
@@ -58,8 +60,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchPaymentToken: () => dispatch(fetchPaymentToken()),
-    handlePayment: paymentData => dispatch(handlePayment(paymentData)),
+    handlePaymentSuccess: () => dispatch(handlePaymentSuccess()),
     setActiveStep: (activeStep => dispatch(setActiveStep(activeStep)))
 });
 

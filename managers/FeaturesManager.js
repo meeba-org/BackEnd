@@ -5,7 +5,7 @@ const Feature = {
 };
 
 const GlobalFeatures = [Feature.CommuteModule, Feature.Tasks];
-const PremiumFeatures = [Feature.CommuteModule];
+const PremiumFeatures = [Feature.Premium, Feature.CommuteModule];
 
 const hasFeature = (company, feature) => {
     return company.features.includes(feature);
@@ -31,7 +31,7 @@ const isFeatureEnable = (company, feature) => {
         return true;
 
     if (isCompanyHasPremium(company))
-        return PremiumFeatures.contains(feature);
+        return PremiumFeatures.includes(feature);
 
     return hasFeature(company, feature);
 };

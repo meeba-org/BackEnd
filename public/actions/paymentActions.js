@@ -20,9 +20,10 @@ export const fetchPaymentToken = () => ({
 });
 
 const paymentSuccess = (response) => {
-    localStorage.setItem('jwtToken', response.data.token);
-    localStorage.setItem('activeUser', JSON.stringify(response.data.user));
+    localStorage.setItem('jwtToken', response.token);
+    localStorage.setItem('activeUser', JSON.stringify(response.user));
 
+    // TODO Need to update store with user - DAH??!!??
     return setActiveStep(EGoPremiumStep.CONFIRM);
 };
 
@@ -31,14 +32,13 @@ const handlePaymentError = err => ({
     error: err.message
 });
 
-export const handlePayment = (data) => ({
+export const handlePaymentSuccess = (data = {}) => ({
     type: actions.API,
     payload: {
         url: "/payment",
         method: "post",
         data,
         success: paymentSuccess,
-        onError: handlePaymentError
     },
     meta: {
         shouldAuthenticate: true
