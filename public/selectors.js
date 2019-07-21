@@ -42,7 +42,7 @@ export const getBlueSnapBaseUrl = state => {
 
 const getPayment = state => state.payment;
 
-export const getPaymentToken = state => getPayment(state).token;
+export const getPaymentUrl = state => getPayment(state).url;
 
 export const getPaymentError = state => getPayment(state).error;
 

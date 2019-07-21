@@ -19,11 +19,11 @@ export const fetchPaymentToken = () => ({
     }
 });
 
-const paymentSuccess = (response) => {
+const paymentSuccess = (response) => dispatch => {
     localStorage.setItem('jwtToken', response.token);
     localStorage.setItem('activeUser', JSON.stringify(response.user));
 
-    // TODO Need to update store with user - DAH??!!??
+    dispatch(updateActiveUserSuccess(response.user));
     return setActiveStep(EGoPremiumStep.CONFIRM);
 };
 
@@ -49,3 +49,18 @@ export const setActiveStep = activeStep => ({
     type: actions.UPDATE_PAYMENT_STEP,
     activeStep
 });
+
+export const fetchPaymentUrl = (data = {}) => {
+    return {
+        type: actions.API,
+        payload: {
+            url: "/payment",
+            method: "post",
+            data,
+            success: paymentSuccess,
+        },
+        meta: {
+            shouldAuthenticate: true
+        }
+    };
+};

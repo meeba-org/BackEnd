@@ -2,18 +2,19 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import CSSModules from "react-css-modules";
 import {connect} from "react-redux";
-import {getPaymentActiveStep, getPaymentError, getPaymentToken, getUser} from "../../selectors";
+import {getPaymentActiveStep, getPaymentUrl, getUser} from "../../selectors";
 import {EGoPremiumStep} from "./EPremiumStep";
 import GoPremiumConfirm from "./GoPremiumConfirm";
 import GoPremiumIntro from "./GoPremiumIntro";
 import GoPremiumPay from "./GoPremiumPay";
 import GoPremiumStepper from "./GoPremiumStepper";
 import styles from '../../styles/GoPremiumContainer.scss';
-import {handlePaymentSuccess, setActiveStep} from "../../actions";
+import {handlePaymentSuccess, setActiveStep, fetchPaymentUrl} from "../../actions";
 
 class GoPremiumContainer extends Component {
 
     componentDidMount() {
+        this.props.fetchPaymentUrl();
         this.props.setActiveStep(EGoPremiumStep.INTRO);
 
         window.addEventListener('message', this.onPaymentSuccess);
@@ -54,13 +55,14 @@ GoPremiumContainer.propTypes = {
 
 const mapStateToProps = (state) => ({
     user: getUser(state),
-    paymentToken: getPaymentToken(state),
-    paymentError: getPaymentError(state),
+    paymentUrl: getPaymentUrl(state),
+    // paymentError: getPaymentError(state),
     activeStep: getPaymentActiveStep(state)
 });
 
 const mapDispatchToProps = dispatch => ({
     handlePaymentSuccess: () => dispatch(handlePaymentSuccess()),
+    fetchPaymentUrl: () => dispatch(fetchPaymentUrl()),
     setActiveStep: (activeStep => dispatch(setActiveStep(activeStep)))
 });
 

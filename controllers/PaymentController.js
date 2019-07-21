@@ -8,6 +8,34 @@ const jwtService = require("./jwtService");
 const {Feature, addFeature} = require("./../managers/FeaturesManager");
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+const axios = require('axios');
+
+router.get('/',
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        let company = jwtService.getCompanyFromLocals(res);
+        let user = jwtService.getUserFromLocals(res);
+        if (!company || !user)
+            return reject('משתמש לא ידוע - נסה להיכנס מחדש לחשבון');
+
+        let data = {
+            "GroupPrivateToken":"f930c192-ea2b-4e53-8de8-27d3a74fab66",
+            "Items":[{
+                "Quantity":1,
+                "UnitPrice":100,
+                "Description": "מנוי חודשי לאתר מיבא"
+            }],
+            "RedirectURL":"http://www.ynet.co.il",
+            "ExemptVAT":true,
+            "MaxPayments":1,
+        };
+
+        return axios.post('https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/GetUrl',data)
+            .then(response => {
+                console.log(response);
+                return response.data.URL;
+            });
+    })
+);
 
 router.post('/',
     (req, res) => routeWrapper(req, res, (req, res) => {
