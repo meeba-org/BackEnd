@@ -34,16 +34,16 @@ class GoPremiumContainer extends Component {
     };
 
     render() {
-        const {onClose, paymentToken, paymentError, activeStep} = this.props;
+        const {onClose, paymentUrl, paymentError, activeStep} = this.props;
 
         return (
             <div styleName="go-premium-container">
                 <div styleName="go-premium-stepper-container">
                     <GoPremiumStepper activeStep={activeStep} onStepSelect={this.onStepSelect} />
                 </div>
-                {activeStep === EGoPremiumStep.INTRO && <GoPremiumIntro onNext={() => this.onStepSelect(EGoPremiumStep.PAY)} />}
-                {activeStep === EGoPremiumStep.PAY && <GoPremiumPay paymentToken={paymentToken}  error={paymentError} onNext={this.onPayment}/>}
-                {activeStep === EGoPremiumStep.CONFIRM && <GoPremiumConfirm onNext={() => onClose()}/>}
+                {activeStep === EGoPremiumStep.INTRO && <GoPremiumIntro onNext={() => this.onStepSelect(EGoPremiumStep.PAY)} onClose={onClose}/>}
+                {activeStep === EGoPremiumStep.PAY && <GoPremiumPay paymentUrl={paymentUrl}  onNext={this.onPayment}/>}
+                {/*{activeStep === EGoPremiumStep.CONFIRM && <GoPremiumConfirm onNext={() => onClose()}/>}*/}
             </div>
         );
     }

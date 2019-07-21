@@ -7,6 +7,11 @@ export function PaymentReducer(state = {}, action = null) {
                 ...state,
                 token: action.payload
             };
+        case types.FETCH_PAYMENT_URL_SUCCESS:
+            return {
+                ...state,
+                paymentUrl: action.payload
+            };
         case types.PAYMENT_ERROR:
             return {
                 ...state,

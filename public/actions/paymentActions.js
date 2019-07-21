@@ -7,6 +7,11 @@ export const fetchPaymentTokenSuccess = payload => ({
     payload
 });
 
+export const fetchPaymentUrlSuccess = payload => ({
+    type: actions.FETCH_PAYMENT_URL_SUCCESS,
+    payload
+});
+
 export const fetchPaymentToken = () => ({
     type: actions.API,
     payload: {
@@ -55,9 +60,9 @@ export const fetchPaymentUrl = (data = {}) => {
         type: actions.API,
         payload: {
             url: "/payment",
-            method: "post",
+            method: "get",
             data,
-            success: paymentSuccess,
+            success: fetchPaymentUrlSuccess,
         },
         meta: {
             shouldAuthenticate: true

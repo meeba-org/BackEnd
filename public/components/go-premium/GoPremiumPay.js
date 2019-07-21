@@ -5,9 +5,10 @@ import styles from "../../styles/GoPremiumPay.scss";
 class GoPremiumPay extends Component {
 
     render() {
+        const {paymentUrl} = this.props;
         return (
             <div styleName="pay-container">
-                <iframe src={"https://testicredit.rivhit.co.il/payment/PaymentFullPage.aspx?GroupId=1f904a93-332c-4d32-aa54-e9b71298b2bb"} />
+                <iframe src={paymentUrl} />
             </div>
         );
     }
