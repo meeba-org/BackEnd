@@ -24,7 +24,7 @@ export const fetchPaymentToken = () => ({
     }
 });
 
-const paymentSuccess = (response) => dispatch => {
+const paymentFinished = (response) => dispatch => {
     localStorage.setItem('jwtToken', response.token);
     localStorage.setItem('activeUser', JSON.stringify(response.user));
 
@@ -37,13 +37,13 @@ const handlePaymentError = err => ({
     error: err.message
 });
 
-export const handlePaymentSuccess = (data = {}) => ({
+export const handlePaymentFinished = (data = {}) => ({
     type: actions.API,
     payload: {
         url: "/payment",
         method: "post",
         data,
-        success: paymentSuccess,
+        success: paymentFinished,
     },
     meta: {
         shouldAuthenticate: true

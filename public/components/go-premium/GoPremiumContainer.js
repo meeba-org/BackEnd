@@ -4,12 +4,12 @@ import CSSModules from "react-css-modules";
 import {connect} from "react-redux";
 import {getPaymentActiveStep, getPaymentUrl, getUser} from "../../selectors";
 import {EGoPremiumStep} from "./EPremiumStep";
-import GoPremiumConfirm from "./GoPremiumConfirm";
+import GoPremiumFinish from "./GoPremiumFinish";
 import GoPremiumIntro from "./GoPremiumIntro";
 import GoPremiumPay from "./GoPremiumPay";
 import GoPremiumStepper from "./GoPremiumStepper";
 import styles from '../../styles/GoPremiumContainer.scss';
-import {handlePaymentSuccess, setActiveStep, fetchPaymentUrl} from "../../actions";
+import {handlePaymentFinished, setActiveStep, fetchPaymentUrl} from "../../actions";
 
 class GoPremiumContainer extends Component {
 
@@ -26,7 +26,7 @@ class GoPremiumContainer extends Component {
         if (e.data !== 'user_payed')
             return;
 
-        this.props.handlePaymentSuccess();
+        this.props.handlePaymentFinished();
     };
 
     onStepSelect = (activeStep) => {
@@ -42,8 +42,8 @@ class GoPremiumContainer extends Component {
                     <GoPremiumStepper activeStep={activeStep} onStepSelect={this.onStepSelect} />
                 </div>
                 {activeStep === EGoPremiumStep.INTRO && <GoPremiumIntro onNext={() => this.onStepSelect(EGoPremiumStep.PAY)} onClose={onClose}/>}
-                {activeStep === EGoPremiumStep.PAY && <GoPremiumPay paymentUrl={paymentUrl}  onNext={this.onPayment}/>}
-                {/*{activeStep === EGoPremiumStep.CONFIRM && <GoPremiumConfirm onNext={() => onClose()}/>}*/}
+                {activeStep === EGoPremiumStep.PAY && <GoPremiumPay paymentUrl={paymentUrl} />}
+                {activeStep === EGoPremiumStep.CONFIRM && <GoPremiumFinish onClose={onClose}/>}
             </div>
         );
     }
@@ -61,7 +61,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    handlePaymentSuccess: () => dispatch(handlePaymentSuccess()),
+    handlePaymentFinished: () => dispatch(handlePaymentFinished()),
     fetchPaymentUrl: () => dispatch(fetchPaymentUrl()),
     setActiveStep: (activeStep => dispatch(setActiveStep(activeStep)))
 });

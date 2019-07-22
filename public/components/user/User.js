@@ -129,7 +129,7 @@ class User extends Component {
 
                 </CardContent>
 
-                <CardHeader title="הגדרות"/>
+                <CardHeader title="מתקדם"/>
 
                 <CardContent>
                     <div className={styles["settings"]}>

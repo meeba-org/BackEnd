@@ -18,7 +18,7 @@ const styles = theme => ({
 });
 
 function getSteps() {
-    return ['למה להיות מנוי?', 'תשלום'];
+    return ['למה להיות מנוי?', 'תשלום', 'סיום'];
 }
 
 const GoPremiumStepper = ({classes, activeStep}) => {

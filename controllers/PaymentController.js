@@ -32,6 +32,8 @@ router.get('/',
         return axios.post('https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/GetUrl',data)
             .then(response => {
                 console.log(response);
+                // TODO Save private & public token
+
                 return response.data.URL;
             });
     })

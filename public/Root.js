@@ -17,7 +17,10 @@ const muiTheme = createMuiTheme({
     direction: 'rtl',
     typography: {
         useNextVariants: true,
-        fontFamily: '"Assistant", sans-serif'
+        fontFamily: [
+            'Assistant',
+            'sans-serif',
+        ].join(','),
     },
     overrides: {
         MuiIconButton: {

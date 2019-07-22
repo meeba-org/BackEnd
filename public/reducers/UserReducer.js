@@ -2,6 +2,7 @@ import * as types from "../actions/actionTypes";
 
 export function UserReducer(state = {}, action = null) {
     switch (action.type) {
+        case types.UPDATE_ACTIVE_USER_SUCCESS:
         case types.ME_FROM_TOKEN_SUCCESS: {
             return {
                 ...action.payload
@@ -15,11 +16,6 @@ export function UserReducer(state = {}, action = null) {
             return {
                 ...state,
                 company: action.payload,
-            };
-        }
-        case types.UPDATE_ACTIVE_USER_SUCCESS: {
-            return {
-                ...action.payload,
             };
         }
         case types.HAS_PENDING_SHIFTS_SUCCESS: {
