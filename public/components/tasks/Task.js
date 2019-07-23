@@ -12,9 +12,10 @@ import React, {Component} from 'react';
 const styles = {
     listItem: {
         textAlign: "right",
+        paddingTop: "7px",
+        paddingBottom: "7px",
     },
     listItemText: {
-        height: "30px"
     },
     listItemSelectionMode: {
         textAlign: "right",
@@ -47,33 +48,39 @@ class Task extends Component {
     };
 
     render() {
-        const {data, onDoubleClick, onClick, classes, selectMode} = this.props;
+        const {data, onDoubleClick, onClick, classes, selectMode, isLimited} = this.props;
 
         return (
-            <ListItem classes={{root: selectMode ? classes.listItemSelectionMode : classes.listItem}} button onMouseEnter={this.onMouseEnter}
-                      onMouseLeave={this.onMouseLeave}
-                      onDoubleClick={() => onDoubleClick(data)}
-                      onClick={() => onClick(data)}
-            >
-                <ListItemText classes={{root: classes.listItemText}} primary={
-                    <Grid container>
-                        <Grid item xs={selectMode ? 12 : 9}>
-                            {data.title}
+            <Grid container onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <Grid item xs={9}>
+                <ListItem classes={{root: selectMode ? classes.listItemSelectionMode : classes.listItem}} button
+                          onDoubleClick={() => onDoubleClick(data)}
+                          onClick={() => onClick(data)}
+                          disabled={isLimited}
+                >
+                    <ListItemText classes={{root: classes.listItemText}} primary={
+                        <Grid container>
+                            <Grid item>
+                                {data.title}
+                            </Grid>
                         </Grid>
-                        {this.state.hover && !selectMode &&
-                        <Grid item xs={3}>
-                            <Tooltip title="הגדרות נוספות" placement="top">
-                                <IconButton className={styles["elem"]}
-                                            onClick={(e) => this.onEdit(e, data)}><SettingsIcon/></IconButton>
-                            </Tooltip>
-                            <Tooltip title="מחיקה" placement="top">
-                                <IconButton onClick={(e) => this.onDelete(e, data)}><DeleteIcon/></IconButton>
-                            </Tooltip>
-                        </Grid>
-                        }
-                    </Grid>
-                }/>
-            </ListItem>
+                    }/>
+                </ListItem>
+                </Grid>
+                {this.state.hover && !selectMode &&
+                <Grid item xs={3}>
+                    <Tooltip title="הגדרות נוספות" placement="top">
+                        <IconButton className={styles["elem"]}
+                                    disabled={isLimited}
+                                    onClick={(e) => this.onEdit(e, data)}><SettingsIcon/></IconButton>
+                    </Tooltip>
+                    <Tooltip title="מחיקה" placement="top">
+                        <IconButton onClick={(e) => this.onDelete(e, data)}><DeleteIcon/></IconButton>
+                    </Tooltip>
+                </Grid>
+                }
+
+            </Grid>
         );
     }
 }
@@ -84,6 +91,7 @@ Task.propTypes = {
     onDelete: PropTypes.func,
     onClick: PropTypes.func,
     onDoubleClick: PropTypes.func,
+    isLimited: PropTypes.bool
 };
 
 export default withStyles(styles)(Task);

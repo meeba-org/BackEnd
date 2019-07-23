@@ -5,7 +5,7 @@ import Task from "./Task";
 class TasksList extends Component {
 
     render() {
-        const {tasks, onClick, onDoubleClick, onEdit, onDelete, selectMode} = this.props;
+        const {tasks, onClick, onDoubleClick, onEdit, onDelete, selectMode, isLimited} = this.props;
 
         return (
             <List>
@@ -18,6 +18,7 @@ class TasksList extends Component {
                         onClick={(task) => onClick(task)}
                         onDoubleClick={(task) => onDoubleClick(task)}
                         selectMode={selectMode}
+                        isLimited={isLimited}
                     />)
                 )}
             </List>

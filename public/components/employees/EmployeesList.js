@@ -18,6 +18,7 @@ import Field from "redux-form/es/Field";
 import {isIsraeliIdValid} from "../../helpers/utils";
 import styles from "../../styles/EmployeesList.scss";
 import Fade from "../Fade";
+import GoPremiumNotification from "../go-premium/GoPremiumNotification";
 import NoData from "../NoData";
 import SearchBar from "../SearchBar";
 import EmployeeContainer from "./EmployeeContainer";
@@ -82,6 +83,7 @@ class EmployeesList extends React.PureComponent {
                     <div className={styles["controls-line"]}>
                         <Tooltip title="הוספת עובד" placement="top">
                             <Button className={styles["action-button"]} variant="contained" color="primary"
+                                    disabled={isLimited}
                                     onClick={this.onCreate}><AddIcon/></Button>
                         </Tooltip>
                         <Tooltip title="לינק לאפליקציית העובד" placement="top">
@@ -93,12 +95,9 @@ class EmployeesList extends React.PureComponent {
                         }}/>
                     </div>
                     <Divider className={styles["divider"]}/>
-                    {isLimited &&
-                        <div className={styles["limit-container"]}>
-                            <div className={styles["text"]}>במסלול החינמי מותר עד 5 עובדים -</div>
-                            <Button className={styles["button"]} color="primary" onClick={showGoPremiumModal}>שדרג אותי למנוי</Button>
-                        </div>
-                    }
+
+                    <GoPremiumNotification isVisible={isLimited} text="במסלול החינמי מותר עד 5 עובדים -" />
+
                     {fields && fields.length > 0 && isDesktop &&
                     <Grid className={styles["header"]} container spacing={24}>
                         <Grid item sm={3}>שם</Grid>

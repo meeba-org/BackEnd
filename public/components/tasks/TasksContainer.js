@@ -8,6 +8,7 @@ import reduxForm from "redux-form/es/reduxForm";
 import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
 import * as selectors from "../../selectors";
 import styles from "../../styles/EmployeesList.scss";
+import GoPremiumNotification from "../go-premium/GoPremiumNotification";
 import MbCard from "../MbCard";
 import BreadCrumb from "./BreadCrumb";
 import {filterTasks} from "./TaskService";
@@ -48,7 +49,7 @@ class TasksContainer extends React.Component {
     };
 
     render() {
-        const {openTaskModal, showDeleteTaskModal} = this.props;
+        const {openTaskModal, showDeleteTaskModal, isLimited} = this.props;
         let {breadcrumbTasks, selectedParent} = this.state;
         let tasks = filterTasks(this.props.tasks, selectedParent);
 
@@ -58,6 +59,7 @@ class TasksContainer extends React.Component {
                     <Tooltip title="הוספת משימה" placement="top">
                         <Button className={styles["action-button"]}
                                 variant="contained" color="primary"
+                                disabled={isLimited}
                                 onClick={this.onCreate}><AddIcon/>
                         </Button>
                     </Tooltip>
@@ -65,17 +67,19 @@ class TasksContainer extends React.Component {
 
                 <Divider className={styles["divider"]}/>
 
+                <GoPremiumNotification isVisible={isLimited} text="במסלול החינמי מותר עד 2 משימות -" />
 
                 <BreadCrumb
                     data={breadcrumbTasks}
                     onSelectTask={this.onSelectTask}
                 />
-                {tasks && tasks.length > 0 && 
+                {tasks && tasks.length > 0 &&
                 <TasksList
                     tasks={tasks}
                     onEdit={openTaskModal}
                     onDelete={showDeleteTaskModal}
                     onClick={this.onSelectTask}
+                    isLimited={isLimited}
                 />
                 }
             </MbCard>
@@ -90,6 +94,7 @@ function mapStateToProps(state) {
     return {
         tasks: state.tasks,
         company: selectors.getCompany(state),
+        isLimited: !selectors.hasPremium(state) && (state.tasks && state.tasks.filter(t => !t.parent).length >= 2)
     };
 }
 
@@ -98,7 +103,6 @@ function mapDispatchToProps(dispatch) {
         fetchTasks: () => dispatch(fetchTasks()),
         openTaskModal: (task) => dispatch(openTaskModal(task)),
         showDeleteTaskModal: (task) => dispatch(showDeleteTaskModal(task)),
-
     };
 }
 
