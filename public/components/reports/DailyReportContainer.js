@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {createShift, showLocationModal, updateShift} from "../../actions";
+import {createShift, updateShift} from "../../actions";
 import reduxForm from "redux-form/es/reduxForm";
 import PropTypes from 'prop-types';
 import {fetchDailyReport, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
@@ -18,7 +18,7 @@ class DailyReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, updateShift, createShift, deleteShift, showShiftDialog, showLocationModal, shifts, employees, isLoading, mode} = this.props;
+        const {handleSubmit, updateShift, createShift, deleteShift, showShiftDialog, shifts, employees, isLoading, mode} = this.props;
 
         return (
             <form onSubmit={handleSubmit(() => {})}>
@@ -30,7 +30,6 @@ class DailyReportContainer extends React.PureComponent {
                     onUpdateShift={updateShift}
                     onCreateShift={createShift}
                     showShiftDialog={showShiftDialog}
-                    showLocationModal={showLocationModal}
                     onDayChange={(startDayOfMonth) => this.onDayChange(startDayOfMonth)}
                     isLoading={isLoading}
                 />
@@ -50,7 +49,6 @@ DailyReportContainer.propTypes = {
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
-    showLocationModal: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
 };
 
@@ -73,7 +71,6 @@ function mapDispatchToProps(dispatch) {
         createShift: (shift) => dispatch(createShift(shift, dispatch)),
         deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
         showShiftDialog: (shift, callBack, postUpdate) => dispatch(showEditShiftModal(shift, callBack, postUpdate)),
-        showLocationModal: (shift, callBack) => dispatch(showLocationModal(shift, callBack)),
     };
 }
 

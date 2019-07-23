@@ -3,7 +3,7 @@ import React from "react";
 import {connect} from "react-redux";
 import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
-import {createShift, showLocationModal} from "../../actions";
+import {createShift} from "../../actions";
 import {fetchTasksReport, generateExcelReport} from "../../actions/reportsActions";
 import {showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
@@ -36,7 +36,7 @@ class TasksReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, showShiftDialog, showLocationModal, createShift, deleteShift, employees, userRole} = this.props;
+        const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="tasksReports"
@@ -44,7 +44,6 @@ class TasksReportContainer extends React.PureComponent {
                             employees={employees}
                             onDeleteShift={deleteShift}
                             showShiftDialog={showShiftDialog}
-                            showLocationModal={showLocationModal}
                             onCreateShift={createShift}
                             onMonthChange={this.onDataChange}
                             onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
@@ -70,7 +69,6 @@ TasksReportContainer.propTypes = {
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
-    showLocationModal: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
 };
 
@@ -93,7 +91,6 @@ function mapDispatchToProps(dispatch) {
         createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
         showShiftDialog: (shift, callBack, postUpdate) => dispatch(showEditShiftModal(shift, callBack, postUpdate)),
-        showLocationModal: (shift, callBack) => dispatch(showLocationModal(shift, callBack)),
     };
 }
 

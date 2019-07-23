@@ -212,13 +212,12 @@ export const showEditShiftModal = (shift, callBack, postUpdate) => ({
     }
 });
 
-export const showLocationModal = (shift, callBack) => ({
+export const showLocationModal = (shift) => ({
     type: 'SHOW_MODAL',
     payload: {
         modalType: EModalType.LOCATION_MODAL,
         modalProps: {
             entity: shift,
-            callBack,
             open: true,
             key: shift._id
         }

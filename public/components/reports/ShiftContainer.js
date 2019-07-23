@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from "react";
 import CSSModules from "react-css-modules";
 import connect from "react-redux/es/connect/connect";
-import {createShift, showDeleteShiftModal, updateShift, showGoPremiumModal} from "../../actions";
+import {createShift, showDeleteShiftModal, updateShift, showGoPremiumModal, showLocationModal} from "../../actions";
 import {ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import styles from "../../styles/Shift.scss";
@@ -214,7 +214,8 @@ function mapDispatchToProps(dispatch) {
         createShift: (shift) => dispatch(createShift(shift, dispatch)),
         updateShift: (shift, month, year, postUpdate) => dispatch(updateShift(shift, dispatch, postUpdate, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
-        showGoPremiumModal: () => dispatch(showGoPremiumModal())
+        showGoPremiumModal: () => dispatch(showGoPremiumModal()),
+        showLocationModal: (shift) => dispatch(showLocationModal(shift)),
     };
 }
 
