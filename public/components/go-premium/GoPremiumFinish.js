@@ -12,7 +12,7 @@ const GoPremiumFinish = ({onClose}) => {
                     check
                 </Icon>
 
-                <div styleName="text">תודה רבה!</div>
+                <div styleName="text">תודה - מקווים להצדיק את האמון</div>
             </div>
 
             <div styleName="buttons-container">
