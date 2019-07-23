@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import React from "react";
 import CSSModules from "react-css-modules";
 import connect from "react-redux/es/connect/connect";
-import {createShift, showDeleteShiftModal, updateShift} from "../../actions";
+import {createShift, showDeleteShiftModal, updateShift, showGoPremiumModal} from "../../actions";
 import {ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import styles from "../../styles/Shift.scss";
 import withShiftLogic from "../withShiftLogic";
 import LiveShift from "./LiveShift";
 import ReportShift from "./ReportShift";
+import {isCompanyHasPremium} from '../../../managers/FeaturesManager';
 
 class ShiftContainer extends React.PureComponent {
 
@@ -36,7 +37,12 @@ class ShiftContainer extends React.PureComponent {
     };
 
     showLocationModal = () => {
-        let {showLocationModal, input, isDesktop} = this.props;
+        let {showLocationModal, input, isDesktop, company,showGoPremiumModal} = this.props;
+
+        if (!isCompanyHasPremium(company)) {
+            showGoPremiumModal();
+            return;
+        }
 
         if (!input.value.location)
             return;
@@ -185,6 +191,7 @@ class ShiftContainer extends React.PureComponent {
 
 ShiftContainer.propTypes = {
     input: PropTypes.object.isRequired,
+    company: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
@@ -197,7 +204,8 @@ ShiftContainer.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        isDesktop: selectors.isDesktop(state)
+        isDesktop: selectors.isDesktop(state),
+        company: selectors.getCompany(state)
     };
 };
 
@@ -206,6 +214,7 @@ function mapDispatchToProps(dispatch) {
         createShift: (shift) => dispatch(createShift(shift, dispatch)),
         updateShift: (shift, month, year, postUpdate) => dispatch(updateShift(shift, dispatch, postUpdate, month, year)),
         deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
+        showGoPremiumModal: () => dispatch(showGoPremiumModal())
     };
 }
 

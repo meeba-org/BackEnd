@@ -39,5 +39,6 @@ const isFeatureEnable = (company, feature) => {
 module.exports = {
     Feature,
     isFeatureEnable,
-    addFeature
+    addFeature,
+    isCompanyHasPremium
 };
