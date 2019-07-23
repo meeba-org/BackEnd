@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import EmployeesList from "./EmployeesList";
-import {createUser, fetchUsers, showEditEmployeeModal, updateUser} from "../../actions";
+import {createUser, fetchUsers, showEditEmployeeModal, showGoPremiumModal, updateUser} from "../../actions";
 import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
 import {showDeleteUserModal, showMobileAppModal} from "../../actions/usersActions";
@@ -14,7 +14,7 @@ class EmployeesContainer extends React.Component {
     }
 
     render() {
-        const {handleSubmit, deleteUser, updateUser, createUser, showMobileAppModal, showEmployeeDialog, isDesktop} = this.props;
+        const {handleSubmit, deleteUser, updateUser, createUser, showMobileAppModal, showEmployeeDialog, isDesktop, isLimited, showGoPremiumModal} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray
@@ -25,7 +25,9 @@ class EmployeesContainer extends React.Component {
                     onCreate={createUser}
                     showMobileAppModal={showMobileAppModal}
                     showEmployeeDialog={showEmployeeDialog}
+                    showGoPremiumModal={showGoPremiumModal}
                     isDesktop={isDesktop}
+                    isLimited={isLimited}
                 />
             </form>
         );
@@ -41,6 +43,7 @@ EmployeesContainer.propTypes = {
     deleteUser: PropTypes.func.isRequired,
     showMobileAppModal: PropTypes.func.isRequired,
     showEmployeeDialog: PropTypes.func.isRequired,
+    showGoPremiumModal: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -48,7 +51,8 @@ function mapStateToProps(state) {
         initialValues: {
             employees: state.users
         },
-        isDesktop: selectors.isDesktop(state)
+        isDesktop: selectors.isDesktop(state),
+        isLimited: !selectors.hasPremium(state) && (state.users && state.users.length > 5)
     };
 }
 
@@ -70,6 +74,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(showMobileAppModal());
         },
         showEmployeeDialog: (employee, callBack) => dispatch(showEditEmployeeModal(employee, callBack)),
+        showGoPremiumModal: () => dispatch(showGoPremiumModal())
     };
 }
 

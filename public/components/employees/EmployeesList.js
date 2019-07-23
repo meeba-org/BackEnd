@@ -70,7 +70,7 @@ class EmployeesList extends React.PureComponent {
     }
 
     render() {
-        const {fields, showMobileAppModal, showEmployeeDialog, isDesktop} = this.props;
+        const {fields, showMobileAppModal, showEmployeeDialog, isDesktop, isLimited, showGoPremiumModal} = this.props;
 
 
         return (
@@ -93,7 +93,13 @@ class EmployeesList extends React.PureComponent {
                         }}/>
                     </div>
                     <Divider className={styles["divider"]}/>
-                        {fields && fields.length > 0 && isDesktop &&
+                    {isLimited &&
+                        <div className={styles["limit-container"]}>
+                            <div className={styles["text"]}>במסלול החינמי מותר עד 5 עובדים -</div>
+                            <Button className={styles["button"]} color="primary" onClick={showGoPremiumModal}>שדרג אותי למנוי</Button>
+                        </div>
+                    }
+                    {fields && fields.length > 0 && isDesktop &&
                     <Grid className={styles["header"]} container spacing={24}>
                         <Grid item sm={3}>שם</Grid>
                         <Grid item sm={2} className={styles["header-item"]}>ת.ז.</Grid>
@@ -110,6 +116,7 @@ class EmployeesList extends React.PureComponent {
                                    onUpdate={(employee) => this.onUpdate(employee)}
                                    validate={this.validateEmployee}
                                    showEmployeeDialog={showEmployeeDialog}
+                                   isLimited={isLimited}
                             />
                         </Fade>)
                     )
@@ -134,7 +141,9 @@ EmployeesList.propTypes = {
     onDelete: PropTypes.func.isRequired,
     showMobileAppModal: PropTypes.func.isRequired,
     showEmployeeDialog: PropTypes.func.isRequired,
+    showGoPremiumModal: PropTypes.func.isRequired,
     isDesktop: PropTypes.bool,
+    isLimited: PropTypes.bool,
 };
 
 export default CSSModules(EmployeesList, styles);
