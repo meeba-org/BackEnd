@@ -6,6 +6,7 @@
 const CompanyModel = require('../models/CompanyModel');
 const UserModel = require('../models/UserModel');
 const ShiftModel = require('../models/ShiftModel');
+const PaymentModel = require('../models/PaymentModel');
 const moment = require('moment');
 const mongoose = require("mongoose");
 
@@ -39,19 +40,21 @@ function clearDB() {
         CompanyModel.companiesCount(),
         UserModel.usersCount(),
         ShiftModel.shiftsCount(),
-        TaskModel.tasksCount()
+        TaskModel.tasksCount(),
+        PaymentModel.paymentsCount()
     ])
     .then((responses) => {
         responses.forEach(response => {
             if (response > 4)
-                throw new Error("[testUtils.clearDB] - Error! - clearing db with too much documents");
+                throw new Error("[testUtils.clearDB] - Error! - something suspicious --> clearing db with too much documents (verify you are not on production)");
         });
     }).then(() => {
         return Promise.all([
             CompanyModel.deleteAllCompanies(),
             UserModel.deleteAllUsers(),
             ShiftModel.deleteAllShifts(),
-            TaskModel.deleteAllTasks()
+            TaskModel.deleteAllTasks(),
+            PaymentModel.deleteAllPayments()
         ]);
     });
 }

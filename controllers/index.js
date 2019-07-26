@@ -5,7 +5,7 @@ const general = require('./generalController');
 const users = require('./UsersController');
 const shifts = require('./ShiftsController');
 const companies = require('./CompaniesController');
-const payment = require('./PaymentController');
+const goPremium = require('./GoPremiumController');
 const tasks = require('./TasksController');
 const reports = require('./ReportsController');
 const config = require('../config');
@@ -22,7 +22,7 @@ router.use('/api/tasks', tasks);
 router.use('/api', restrictEmployee); // Beyond here api is not allowed for employees
 router.use('/api/users', users);
 router.use('/api/companies', companies);
-router.use('/api/payment', payment);
+router.use('/api/goPremium', goPremium);
 
 router.use(function (err, req, res, next) {
      if (err.name === 'UnauthorizedError') {

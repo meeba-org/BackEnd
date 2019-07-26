@@ -40,7 +40,7 @@ const handlePaymentError = err => ({
 export const handlePaymentFinished = (data = {}) => ({
     type: actions.API,
     payload: {
-        url: "/payment",
+        url: "/goPremium",
         method: "post",
         data,
         success: paymentFinished,
@@ -59,7 +59,7 @@ export const fetchPaymentUrl = (data = {}) => {
     return {
         type: actions.API,
         payload: {
-            url: "/payment",
+            url: "/goPremium",
             method: "get",
             data,
             success: fetchPaymentUrlSuccess,

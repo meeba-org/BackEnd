@@ -2,6 +2,7 @@ const express = require('express');
 const CompanyModel = require("../models/CompanyModel");
 const {reject, resolve} = require("./apiManager");
 const UserModel = require("../models/UserModel");
+const PaymentModel = require("../models/PaymentModel");
 const router = express.Router();
 const routeWrapper = require("./apiManager").routeWrapper;
 const jwtService = require("./jwtService");
@@ -32,8 +33,7 @@ router.get('/',
         return axios.post('https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/GetUrl',data)
             .then(response => {
                 console.log(response);
-                // TODO Save private & public token
-
+                PaymentModel.createPayment(response.data); // No need to wait for it
                 return response.data.URL;
             });
     })
