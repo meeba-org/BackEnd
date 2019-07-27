@@ -16,9 +16,13 @@ const GoPremiumNotification = ({isVisible, text}) => {
     );
 };
 
-const mapDispatchToProps = {
-    showGoPremiumModal
-};
+// const mapDispatchToProps = {
+//     showGoPremiumModal
+// };
+
+const mapDispatchToProps = dispatch => ({
+    showGoPremiumModal: () => dispatch(showGoPremiumModal())
+});
 
 export default connect(null, mapDispatchToProps)(GoPremiumNotification);
 

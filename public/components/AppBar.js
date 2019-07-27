@@ -42,9 +42,7 @@ class MeebaAppBar extends Component {
                         </div>
                         <div styleName="logout">
                             <Button color="inherit"><Link style={{color: "inherit", textDecoration: 'none'}} to="/faq">שאלות ותשובות</Link></Button>
-                            {!hasPremium &&
                             <Button variant="contained" color="secondary" onClick={showGoPremiumModal}>הירשם כמנוי</Button>
-                            }
                             <Button onClick={this.onLogout} color="inherit">יציאה</Button>
                         </div>
                     </Toolbar>
@@ -61,14 +59,14 @@ MeebaAppBar.propTypes = {
     router: PropTypes.object.isRequired,
     companyName: PropTypes.string.isRequired,
     isDesktop: PropTypes.bool,
-    hasPremium: PropTypes.bool,
+    // hasPremium: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
     return {
         companyName: selectors.getCompanyName(state) || "מיבא",
         isDesktop: selectors.isDesktop(state),
-        hasPremium: selectors.hasPremium(state)
+        // hasPremium: selectors.hasPremium(state)
     };
 }
 

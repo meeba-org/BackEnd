@@ -67,7 +67,7 @@ class TasksContainer extends React.Component {
 
                 <Divider className={styles["divider"]}/>
 
-                <GoPremiumNotification isVisible={isLimited} text="במסלול החינמי מותר עד 2 משימות -" />
+                <GoPremiumNotification isVisible={isLimited} text="במסלול החינמי יאופשרו עד 2 משימות -" />
 
                 <BreadCrumb
                     data={breadcrumbTasks}
@@ -79,7 +79,7 @@ class TasksContainer extends React.Component {
                     onEdit={openTaskModal}
                     onDelete={showDeleteTaskModal}
                     onClick={this.onSelectTask}
-                    isLimited={isLimited}
+                    isLimited={false}
                 />
                 }
             </MbCard>
