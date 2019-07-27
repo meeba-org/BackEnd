@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import CSSModules from "react-css-modules";
 import {connect} from "react-redux";
-import {getPaymentActiveStep, getPaymentUrl, getUser} from "../../selectors";
+import {getPaymentActiveStep, getPaymentError, getPaymentUrl, getUser} from "../../selectors";
 import {EGoPremiumStep} from "./EPremiumStep";
 import GoPremiumFinish from "./GoPremiumFinish";
 import GoPremiumIntro from "./GoPremiumIntro";
@@ -17,16 +17,21 @@ class GoPremiumContainer extends Component {
         this.props.fetchPaymentUrl();
         this.props.setActiveStep(EGoPremiumStep.INTRO);
 
-        window.addEventListener('message', this.onPaymentSuccess);
+        window.addEventListener('message', this.onPaymentFinish);
 
     }
 
-    onPaymentSuccess = (e) => {
+    onPaymentFinish = (e) => {
         console.log('GoPremiumContainer: ' + e.data);
-        if (e.data !== 'user_payed')
+        if (!e || !e.data)
             return;
 
-        this.props.handlePaymentFinished();
+        if (e.data && e.data.msg !== 'user_payed')
+            return;
+
+        this.props.handlePaymentFinished({
+            token: e.data.token
+        });
     };
 
     onStepSelect = (activeStep) => {
@@ -34,7 +39,7 @@ class GoPremiumContainer extends Component {
     };
 
     render() {
-        const {onClose, paymentUrl, paymentError, activeStep} = this.props;
+        const {onClose, paymentUrl, paymentError, activeStep, error} = this.props;
 
         return (
             <div styleName="go-premium-container">
@@ -43,7 +48,7 @@ class GoPremiumContainer extends Component {
                 </div>
                 {activeStep === EGoPremiumStep.INTRO && <GoPremiumIntro onNext={() => this.onStepSelect(EGoPremiumStep.PAY)} onClose={onClose}/>}
                 {activeStep === EGoPremiumStep.PAY && <GoPremiumPay paymentUrl={paymentUrl} />}
-                {activeStep === EGoPremiumStep.CONFIRM && <GoPremiumFinish onClose={onClose}/>}
+                {activeStep === EGoPremiumStep.CONFIRM && <GoPremiumFinish onClose={onClose} hasError={!!error}/>}
             </div>
         );
     }
@@ -56,12 +61,12 @@ GoPremiumContainer.propTypes = {
 const mapStateToProps = (state) => ({
     user: getUser(state),
     paymentUrl: getPaymentUrl(state),
-    // paymentError: getPaymentError(state),
-    activeStep: getPaymentActiveStep(state)
+    activeStep: getPaymentActiveStep(state),
+    error: getPaymentError(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-    handlePaymentFinished: () => dispatch(handlePaymentFinished()),
+    handlePaymentFinished: (data) => dispatch(handlePaymentFinished(data)),
     fetchPaymentUrl: () => dispatch(fetchPaymentUrl()),
     setActiveStep: (activeStep => dispatch(setActiveStep(activeStep)))
 });

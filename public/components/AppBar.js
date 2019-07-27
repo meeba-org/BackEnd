@@ -29,7 +29,7 @@ class MeebaAppBar extends Component {
     };
 
     render() {
-        let {companyName, isDesktop, hasPremium, showGoPremiumModal} = this.props;
+        let {companyName, isDesktop, hasPremium, showGoPremiumModal, isLoading} = this.props;
         return (
             <div styleName="app-bar">
                 <AppBar position="static">
@@ -42,7 +42,7 @@ class MeebaAppBar extends Component {
                         </div>
                         <div styleName="logout">
                             <Button color="inherit"><Link style={{color: "inherit", textDecoration: 'none'}} to="/faq">שאלות ותשובות</Link></Button>
-                            {!hasPremium &&
+                            {isLoading === false && !hasPremium &&
                             <Button variant="contained" color="secondary" onClick={showGoPremiumModal}>הירשם כמנוי</Button>
                             }
                             <Button onClick={this.onLogout} color="inherit">יציאה</Button>
@@ -64,13 +64,12 @@ MeebaAppBar.propTypes = {
     hasPremium: PropTypes.bool,
 };
 
-function mapStateToProps(state) {
-    return {
-        companyName: selectors.getCompanyName(state) || "מיבא",
-        isDesktop: selectors.isDesktop(state),
-        hasPremium: selectors.hasPremium(state)
-    };
-}
+const mapStateToProps = state => ({
+    companyName: selectors.getCompanyName(state) || "מיבא",
+    isDesktop: selectors.isDesktop(state),
+    hasPremium: selectors.hasPremium(state),
+    isLoading: state.loader.isLoading
+});
 
 function mapDispatchToProps(dispatch) {
     return {

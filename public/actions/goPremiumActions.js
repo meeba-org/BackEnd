@@ -37,6 +37,11 @@ const handlePaymentError = err => ({
     error: err.message
 });
 
+const onPaymentError = err => dispatch => {
+    dispatch(handlePaymentError(err));
+    return dispatch(setActiveStep(EGoPremiumStep.CONFIRM));
+};
+
 export const handlePaymentFinished = (data = {}) => ({
     type: actions.API,
     payload: {
@@ -44,6 +49,7 @@ export const handlePaymentFinished = (data = {}) => ({
         method: "post",
         data,
         success: paymentFinished,
+        onError: onPaymentError
     },
     meta: {
         shouldAuthenticate: true

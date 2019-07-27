@@ -9,7 +9,13 @@ const jwtService = require("./jwtService");
 const {Feature, addFeature} = require("./../managers/FeaturesManager");
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+const { body } = require('express-validator/check');
 const axios = require('axios');
+
+const EPaymentStatus = {
+    START: 0,
+    PAYMENT_DONE: 1,
+};
 
 router.get('/',
     (req, res) => routeWrapper(req, res, (req, res) => {
@@ -34,9 +40,11 @@ router.get('/',
             .then(response => {
                 let {URL, PrivateSaleToken, PublicSaleToken} = response.data;
                 const payment = {
+                    user: user._id,
                     url: URL,
                     privateSaleToken: PrivateSaleToken,
-                    publicSaleToken: PublicSaleToken
+                    publicSaleToken: PublicSaleToken,
+                    status: EPaymentStatus.START
                 };
                 PaymentModel.createPayment(payment); // No need to wait for it
                 return response.data.URL;
@@ -44,24 +52,45 @@ router.get('/',
     })
 );
 
+const getPayment = (userId, publicSaleToken) => {
+    return PaymentModel.getByUserIdAndToken(userId, publicSaleToken);
+};
+
+const updatePaymentFinished = (payment) => {
+    payment.status = EPaymentStatus.PAYMENT_DONE;
+    return PaymentModel.updatePayment(payment);
+};
+
 router.post('/',
+    [
+        body('token').exists(),
+    ],
     (req, res) => routeWrapper(req, res, (req, res) => {
         let company = jwtService.getCompanyFromLocals(res);
         let user = jwtService.getUserFromLocals(res);
+        let {token} = req.body; // This is the payment 3rd party token
         if (!company || !user)
             return reject('משתמש לא ידוע - נסה להיכנס מחדש לחשבון');
 
-        addFeature(company, Feature.Premium);
-        return CompanyModel.updateCompany(company)
-            .then(() => UserModel.getByUserId(user._id))
-            .then((user) => {
+        return getPayment(user._id, token)
+            .then(payment => {
+                if (!payment)
+                    return reject("פרטי תשלום לא תקינים");
 
-                // use the jsonwebtoken package to create the token and respond with it
-                let token = jwt.sign(user.toObject(), config.secret);
-                return resolve({
-                    user,
-                    token
-                });
+                // Its valid!
+                addFeature(company, Feature.Premium);
+                return updatePaymentFinished(payment)
+                    .then(() => CompanyModel.updateCompany(company))
+                    .then(() => UserModel.getByUserId(user._id))
+                    .then((user) => {
+
+                        // use the jsonwebtoken package to create the token and respond with it
+                        let token = jwt.sign(user.toObject(), config.secret); // This is meeba token
+                        return resolve({
+                            user,
+                            token
+                        });
+                    });
             });
     })
 );

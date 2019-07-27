@@ -2,9 +2,11 @@ const mongoose = require('mongoose');
 
 // Group Schema
 const PaymentSchema = mongoose.Schema({
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     publicSaleToken: { type: String },
     privateSaleToken: { type: String },
     url: { type: String },
+    status: {type: Number}
 });
 
 const Payment = mongoose.model('Payment', PaymentSchema);
@@ -23,8 +25,8 @@ const getByPaymentId = (id) => {
     return Payment.findById(id).exec();
 };
 
-const getByCompanyId = (companyId) => {
-    return Payment.find({company: companyId}).exec();
+const getByUserIdAndToken = (userId, publicSaleToken) => {
+    return Payment.findOne({user: userId, publicSaleToken}).exec();
 };
 
 const createPayment = (payment) => {
@@ -56,7 +58,7 @@ const paymentsCount = () => Payment.countDocuments().exec();
 module.exports = {
     createPayment
     , getByPaymentId
-    , getByCompanyId
+    , getByUserIdAndToken
     , getAllPayments
     , updatePayment
     , deletePayment
