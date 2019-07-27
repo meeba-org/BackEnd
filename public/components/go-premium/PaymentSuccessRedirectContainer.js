@@ -7,10 +7,10 @@ class PaymentSuccessRedirectContainer extends Component {
         console.log(msg);
         top.postMessage(msg, "*");
     }
-    
+
     render() {
         return (
-            <h1>Payment Success!</h1>
+            <h1 />
         );
     }
 }

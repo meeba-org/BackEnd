@@ -29,7 +29,7 @@ const paymentFinished = (response) => dispatch => {
     localStorage.setItem('activeUser', JSON.stringify(response.user));
 
     dispatch(updateActiveUserSuccess(response.user));
-    return setActiveStep(EGoPremiumStep.CONFIRM);
+    return dispatch(setActiveStep(EGoPremiumStep.CONFIRM));
 };
 
 const handlePaymentError = err => ({

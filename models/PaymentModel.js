@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 // Group Schema
 const PaymentSchema = mongoose.Schema({
-    publicToken: { type: String },
-    privateToken: { type: String },
+    publicSaleToken: { type: String },
+    privateSaleToken: { type: String },
     url: { type: String },
 });
 

@@ -25,15 +25,20 @@ router.get('/',
                 "UnitPrice":100,
                 "Description": "מנוי חודשי לאתר מיבא"
             }],
-            "RedirectURL":"http://www.ynet.co.il",
+            "RedirectURL":"https://meeba.org.il/paymentSuccess",
             "ExemptVAT":true,
             "MaxPayments":1,
         };
 
         return axios.post('https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/GetUrl',data)
             .then(response => {
-                console.log(response);
-                PaymentModel.createPayment(response.data); // No need to wait for it
+                let {URL, PrivateSaleToken, PublicSaleToken} = response.data;
+                const payment = {
+                    url: URL,
+                    privateSaleToken: PrivateSaleToken,
+                    publicSaleToken: PublicSaleToken
+                };
+                PaymentModel.createPayment(payment); // No need to wait for it
                 return response.data.URL;
             });
     })
