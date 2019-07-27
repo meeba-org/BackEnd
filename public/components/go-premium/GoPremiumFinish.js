@@ -12,7 +12,7 @@ const GoPremiumFinish = ({onClose, hasError}) => {
                     {hasError ? 'error' : 'check'}
                 </Icon>
 
-                <div styleName="text">{hasError ? ' שגיאה! צור עימנו קשר בפייסבוק' :  'תודה - מקווים להצדיק את האמון'}</div>
+                <div styleName="text">{hasError ? ' שגיאה! צור עימנו קשר בפייסבוק' :  'הפרטים התקבלו בהצלחה - תודה!'}</div>
             </div>
 
             <div styleName="buttons-container">
