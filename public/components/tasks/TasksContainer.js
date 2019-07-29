@@ -79,7 +79,7 @@ class TasksContainer extends React.Component {
                     onEdit={openTaskModal}
                     onDelete={showDeleteTaskModal}
                     onClick={this.onSelectTask}
-                    isLimited={false}
+                    isLimited={isLimited}
                 />
                 }
             </MbCard>
@@ -94,7 +94,7 @@ function mapStateToProps(state) {
     return {
         tasks: state.tasks,
         company: selectors.getCompany(state),
-        isLimited: !selectors.hasPremium(state) && (state.tasks && state.tasks.filter(t => !t.parent).length >= 2)
+        isLimited: false //!selectors.hasPremium(state) && (state.tasks && state.tasks.filter(t => !t.parent).length >= 2)
     };
 }
 

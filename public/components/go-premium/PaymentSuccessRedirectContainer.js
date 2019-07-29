@@ -13,7 +13,7 @@ class PaymentSuccessRedirectContainer extends Component {
     }
 
     render() {
-        console.log(this.props)
+        console.log(this.props);
         return (
             <h1>Payment Success2!</h1>
         );
