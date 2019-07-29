@@ -67,7 +67,7 @@ class TasksContainer extends React.Component {
 
                 <Divider className={styles["divider"]}/>
 
-                <GoPremiumNotification isVisible={isLimited} text="במסלול החינמי מספר המשימות יוגבל -" />
+                <GoPremiumNotification isVisible={true} text="במסלול החינמי מספר המשימות יוגבל -" />
 
                 <BreadCrumb
                     data={breadcrumbTasks}
