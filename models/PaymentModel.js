@@ -25,8 +25,8 @@ const getByPaymentId = (id) => {
     return Payment.findById(id).exec();
 };
 
-const getByUserIdAndToken = (userId, publicSaleToken) => {
-    return Payment.findOne({user: userId, publicSaleToken}).exec();
+const getByCompanyIdAndToken = (companyId, publicSaleToken) => {
+    return Payment.findOne({company: companyId, publicSaleToken}).exec();
 };
 
 const createPayment = (payment) => {
@@ -58,7 +58,7 @@ const paymentsCount = () => Payment.countDocuments().exec();
 module.exports = {
     createPayment
     , getByPaymentId
-    , getByUserIdAndToken
+    , getByCompanyIdAndToken
     , getAllPayments
     , updatePayment
     , deletePayment

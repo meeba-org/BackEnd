@@ -1,5 +1,3 @@
-import {EPlanType} from "../models/CompanyModel";
-
 const express = require('express');
 const CompanyModel = require("../models/CompanyModel");
 const {reject, resolve} = require("./apiManager");
@@ -13,6 +11,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 const { body } = require('express-validator/check');
 const axios = require('axios');
+const EPlanType = require('../models/EPlanType');
 
 const EPaymentStatus = {
     START: 0,
@@ -55,8 +54,8 @@ router.get('/',
     })
 );
 
-const getPayment = (userId, publicSaleToken) => {
-    return PaymentModel.getByUserIdAndToken(userId, publicSaleToken);
+const getPayment = (companyId, publicSaleToken) => {
+    return PaymentModel.getByCompanyIdAndToken(companyId, publicSaleToken);
 };
 
 const updatePaymentFinished = (payment) => {
@@ -75,7 +74,7 @@ router.post('/',
         if (!company || !user)
             return reject('משתמש לא ידוע - נסה להיכנס מחדש לחשבון');
 
-        return getPayment(user._id, token)
+        return getPayment(company._id, token)
             .then(payment => {
                 if (!payment)
                     return reject("פרטי תשלום לא תקינים");

@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
-
-export const EPlanType = {
-    Free: 0,
-    Premium: 1
-};
+const EPlanType = require('./EPlanType');
 
 // Group Schema
 const CompanySchema = mongoose.Schema({
