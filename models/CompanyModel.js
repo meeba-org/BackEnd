@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+export const EPlanType = {
+    Free: 0,
+    Premium: 1
+};
+
 // Group Schema
 const CompanySchema = mongoose.Schema({
     name: {
@@ -17,7 +22,8 @@ const CompanySchema = mongoose.Schema({
         enableTasks: {type: Boolean, default: false},
         breakLength: {type: Number, default: 0},
     },
-    features: [String]
+    features: [String],
+    plan: {type: Number, default: EPlanType.Free}
 });
 
 const Company = mongoose.model('Company', CompanySchema);

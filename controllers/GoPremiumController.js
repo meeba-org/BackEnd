@@ -1,3 +1,5 @@
+import {EPlanType} from "../models/CompanyModel";
+
 const express = require('express');
 const CompanyModel = require("../models/CompanyModel");
 const {reject, resolve} = require("./apiManager");
@@ -34,13 +36,14 @@ router.get('/',
             "RedirectURL":"https://meeba.org.il/paymentSuccess",
             "ExemptVAT":true,
             "MaxPayments":1,
+            "SaleType": 3 // איסוף כרטיס בלבד - ללא גבייה
         };
 
         return axios.post('https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/GetUrl',data)
             .then(response => {
                 let {URL, PrivateSaleToken, PublicSaleToken} = response.data;
                 const payment = {
-                    user: user._id,
+                    company: company._id,
                     url: URL,
                     privateSaleToken: PrivateSaleToken,
                     publicSaleToken: PublicSaleToken,
@@ -79,6 +82,7 @@ router.post('/',
 
                 // Its valid!
                 addFeature(company, Feature.Premium);
+                company.plan = EPlanType.Premium;
                 return updatePaymentFinished(payment)
                     .then(() => CompanyModel.updateCompany(company))
                     .then(() => UserModel.getByUserId(user._id))

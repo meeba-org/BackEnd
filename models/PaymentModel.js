@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // Group Schema
 const PaymentSchema = mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
     publicSaleToken: { type: String },
     privateSaleToken: { type: String },
     url: { type: String },
