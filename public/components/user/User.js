@@ -226,7 +226,7 @@ class User extends Component {
                     <div className={styles["plan"]}>
                         {plan === EPlanType.Premium &&
                         <Fragment>
-                            <div className={styles["text"]}>אתה כרגע מנוי בתוכנית פרימיום</div>
+                            <div className={styles["text"]}>הינך כרגע מנוי בתוכנית פרימיום</div>
                             <Button onClick={() => onPremiumPlanClick(user.company)} variant="outlined" color="secondary">
                                 סיים מנוי
                             </Button>
