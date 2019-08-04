@@ -198,18 +198,6 @@ export const showGoPremiumModal = () => ({
     }
 });
 
-export const showCancelPremiumModal = (company) => ({
-    type: 'SHOW_MODAL',
-    payload: {
-        modalType: EModalType.YES_NO_MODAL,
-        modalProps: {
-            open: true,
-            onAction: () => handleCancelPremiumPlan(company), // TODO implement...
-            text: "האם אתה בטוח?"
-        }
-    }
-});
-
 export const showEditShiftModal = (shift, callBack, postUpdate) => ({
     type: 'SHOW_MODAL',
     payload: {

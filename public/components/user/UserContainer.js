@@ -13,7 +13,7 @@ import User from "./User";
 class UserContainer extends React.Component {
 
     render() {
-        const {handleSubmit, updateUser, updateCompany, isCommuteFeatureEnable, plan, showGoPremiumModal, showCancelPremiumModal} = this.props;
+        const {handleSubmit, updateUser, updateCompany, isCommuteFeatureEnable, plan, showGoPremiumModal, showCancelPremiumModal, user} = this.props;
 
         return (
             <form onSubmit={handleSubmit(() => {})}>
@@ -23,9 +23,9 @@ class UserContainer extends React.Component {
                     onUpdateUser={updateUser}
                     onUpdateCompany={updateCompany}
                     isCommuteFeatureEnable={isCommuteFeatureEnable}
-                    plan={1}
+                    plan={plan}
                     onFreePlanClick={showGoPremiumModal}
-                    onPremiumPlanClick={showCancelPremiumModal}
+                    onPremiumPlanClick={() => showCancelPremiumModal(user.company)}
                 />
             </form>
         );
@@ -41,7 +41,7 @@ UserContainer.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        // user: state.user,
+        user: state.user,
         initialValues: {
             user: state.user
         },
@@ -54,7 +54,7 @@ const mapDispatchToProps = {
     updateUser: (user) => updateActiveUser(user),
     updateCompany: (user) => updateCompany(user),
     showGoPremiumModal: () => showGoPremiumModal(),
-    showCancelPremiumModal: () => showCancelPremiumModal()
+    showCancelPremiumModal: (company) => showCancelPremiumModal(company)
 };
 
 export default connect(

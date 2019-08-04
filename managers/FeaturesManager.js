@@ -14,17 +14,25 @@ const isCompanyHasPremium = (company) => {
     return hasFeature(company, Feature.Premium);
 };
 
-function isFeatureGloballyEnable(feature) {
-    return GlobalFeatures.includes(feature);
-}
+const isFeatureGloballyEnable = feature => GlobalFeatures.includes(feature);
 
-function addFeature(company, feature) {
+const addFeature = (company, feature) => {
     if (!company.features)
         company.features = [];
 
     if (!company.features.includes(feature))
         company.features.push(feature);
-}
+};
+
+const removeFeature = (company, feature) => {
+    if (!company.features)
+        return;
+
+    if (company.features.includes(feature)) {
+        let updatedFeatures = company.features.filter(f => f !== feature);
+        company.features = updatedFeatures;
+    }
+};
 
 const isFeatureEnable = (company, feature) => {
     if (isFeatureGloballyEnable(feature))
@@ -40,5 +48,6 @@ module.exports = {
     Feature,
     isFeatureEnable,
     addFeature,
-    isCompanyHasPremium
+    isCompanyHasPremium,
+    removeFeature
 };

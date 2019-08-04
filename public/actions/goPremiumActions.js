@@ -1,5 +1,10 @@
+import * as FeaturesManager from "../../managers/FeaturesManager";
+import * as EPlanType from "../../models/EPlanType";
 import {EGoPremiumStep} from "../components/go-premium/EPremiumStep";
+import Feature from "../components/home/Feature";
+import {EModalType} from "../components/modals/EModalType";
 import * as actions from "./actionTypes";
+import {updateCompany} from "./companyActions";
 import {updateActiveUserSuccess} from "./usersActions";
 
 export const fetchPaymentTokenSuccess = payload => ({
@@ -75,3 +80,24 @@ export const fetchPaymentUrl = (data = {}) => {
         }
     };
 };
+
+const handleCancelPremiumPlan = company => dispatch => {
+    FeaturesManager.removeFeature(company, Feature.Premium);
+    company = {
+        ...company,
+        plan: EPlanType.Free,
+    };
+    return dispatch(updateCompany(company));
+};
+
+export const showCancelPremiumModal = (company) => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: EModalType.YES_NO_MODAL,
+        modalProps: {
+            open: true,
+            onAction: () => handleCancelPremiumPlan(company),
+            text: "האם אתה בטוח?"
+        }
+    }
+});

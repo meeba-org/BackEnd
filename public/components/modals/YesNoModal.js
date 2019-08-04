@@ -10,9 +10,9 @@ import {hideYesNoModal} from "../../actions/index";
 class YesNoModal extends Component {
 
     onAction = () => {
-        let {dispatch, handleAction} = this.props;
+        let {dispatch, onAction} = this.props;
 
-        dispatch(handleAction());
+        dispatch(onAction());
         dispatch(hideYesNoModal());
     };
 
@@ -37,6 +37,10 @@ class YesNoModal extends Component {
 YesNoModal.propTypes = {
     handleAction: PropTypes.func,
     open: PropTypes.bool.isRequired,
+};
+
+YesNoModal.defaultProps = {
+    text: ""
 };
 
 export default connect()(YesNoModal);
