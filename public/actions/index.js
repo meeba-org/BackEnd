@@ -20,6 +20,8 @@ export const hideModal = (modalType) => ({
 
 export const hideDeleteEntityModal = () => hideModal(EModalType.DELETE_ENTITY);
 
+export const hideYesNoModal = () => hideModal(EModalType.YES_NO_MODAL);
+
 export const hideTaskModal = () => hideModal(EModalType.TASK_MODAL);
 
 export const hideLocationModal = () => hideModal(EModalType.LOCATION_MODAL);

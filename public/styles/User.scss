@@ -34,5 +34,21 @@
             }
         }
     }
+
+    .plan {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .text {
+            display: flex;
+            align-items: center;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+        }
+    }
 }
 

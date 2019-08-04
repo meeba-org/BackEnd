@@ -7,5 +7,6 @@ export const EModalType = {
     LOGIN_REGISTER: 6,
     TASK_MODAL: 7,
     GO_PREMIUM_MODAL: 8,
-    DELETE_ENTITY: 9
+    DELETE_ENTITY: 9,
+    YES_NO_MODAL: 10,
 };

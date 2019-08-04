@@ -1,4 +1,5 @@
 import FeaturesManager, {Feature} from "../managers/FeaturesManager";
+import * as EPlanType from "../models/EPlanType";
 
 export const getUser = (state) => {
     return (!state.user) ? null : state.user;
@@ -63,4 +64,11 @@ export const isCommuteFeatureEnable = (state) => {
 
 export const isTasksFeatureEnable = (state) => {
     return isFeatureEnable(state, Feature.Tasks) && getCompanySettings(state).enableTasks;
+};
+
+export const getPlan = state => {
+    let company = getCompany(state);
+    if (!company)
+        return EPlanType.Free;
+    return company.plan || EPlanType.Free;
 };

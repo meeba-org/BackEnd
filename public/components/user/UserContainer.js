@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Field from "redux-form/es/Field";
 import reduxForm from "redux-form/es/reduxForm";
 import {Feature} from "../../../managers/FeaturesManager";
+import {showCancelPremiumModal, showGoPremiumModal} from "../../actions";
 import {updateCompany} from "../../actions/companyActions";
 import {updateActiveUser} from "../../actions/usersActions";
 import * as selectors from "../../selectors";
@@ -12,7 +13,7 @@ import User from "./User";
 class UserContainer extends React.Component {
 
     render() {
-        const {handleSubmit, updateUser, updateCompany, isCommuteFeatureEnable} = this.props;
+        const {handleSubmit, updateUser, updateCompany, isCommuteFeatureEnable, plan, showGoPremiumModal, showCancelPremiumModal} = this.props;
 
         return (
             <form onSubmit={handleSubmit(() => {})}>
@@ -22,6 +23,9 @@ class UserContainer extends React.Component {
                     onUpdateUser={updateUser}
                     onUpdateCompany={updateCompany}
                     isCommuteFeatureEnable={isCommuteFeatureEnable}
+                    plan={1}
+                    onFreePlanClick={showGoPremiumModal}
+                    onPremiumPlanClick={showCancelPremiumModal}
                 />
             </form>
         );
@@ -32,6 +36,7 @@ UserContainer.propTypes = {
     updateUser: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     updateCompany: PropTypes.func.isRequired,
+    plan: PropTypes.number,
 };
 
 function mapStateToProps(state) {
@@ -41,15 +46,16 @@ function mapStateToProps(state) {
             user: state.user
         },
         isCommuteFeatureEnable: selectors.isFeatureEnable(state, Feature.CommuteModule),
+        plan: selectors.getPlan(state)
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        updateUser: (user) => {dispatch(updateActiveUser(user));},
-        updateCompany: (user) => {dispatch(updateCompany(user));},
-    };
-}
+const mapDispatchToProps = {
+    updateUser: (user) => updateActiveUser(user),
+    updateCompany: (user) => updateCompany(user),
+    showGoPremiumModal: () => showGoPremiumModal(),
+    showCancelPremiumModal: () => showCancelPremiumModal()
+};
 
 export default connect(
     mapStateToProps,

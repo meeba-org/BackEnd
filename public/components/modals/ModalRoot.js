@@ -11,6 +11,7 @@ import LocationModal from "./LocationModal";
 import MobileAppLinksModal from "./MobileAppLinksModal";
 import MovingShiftOutOfMonthModal from "./MovingShiftOutOfMonthModal";
 import TaskModal from "./TaskModal";
+import YesNoModal from "./YesNoModal";
 
 
 export const MODAL_COMPONENTS = {
@@ -23,6 +24,7 @@ export const MODAL_COMPONENTS = {
     [EModalType.LOGIN_REGISTER]: LoginRegister,
     [EModalType.TASK_MODAL]: TaskModal,
     [EModalType.GO_PREMIUM_MODAL]: GoPremiumModal,
+    [EModalType.YES_NO_MODAL]: YesNoModal,
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {

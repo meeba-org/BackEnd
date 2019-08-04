@@ -11,11 +11,13 @@ import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import CSSModules from "react-css-modules";
 import {Link} from "react-router";
+import * as EPlanType from "../../../models/EPlanType";
 import styles from '../../styles/User.scss';
 import NoData from "../NoData";
+import Button from "@material-ui/core/Button";
 
 const styles1 = () => ({
     switch: {
@@ -80,7 +82,7 @@ class User extends Component {
     };
 
     render() {
-        const {input, classes, isCommuteFeatureEnable} = this.props;
+        const {input, classes, isCommuteFeatureEnable, plan, onFreePlanClick, onPremiumPlanClick} = this.props;
         const user = input.value;
 
         if (!user || !user.company)
@@ -167,9 +169,10 @@ class User extends Component {
                         </div>
 
                         <div className={styles["row"]}>
-                            <FormControl >
+                            <FormControl>
                                 <InputLabel htmlFor="name-disabled">אורך הפסקה (דק')</InputLabel>
-                                <Input id="break-length" value={user.company.settings.breakLength} onChange={(e) => this.handleCompanySettingsChange("breakLength", e.target.value)} />
+                                <Input id="break-length" value={user.company.settings.breakLength}
+                                       onChange={(e) => this.handleCompanySettingsChange("breakLength", e.target.value)}/>
                             </FormControl>
                             <div style={{alignSelf: "flex-end"}}>
                                 <Link to="/faq/break" className={classes.link} target="_blank">מה זה?</Link>
@@ -214,8 +217,27 @@ class User extends Component {
                                 <Link to="/faq/tasks" className={classes.link} target="_blank">מה זה?</Link>
                             </div>
                         </div>
+                    </div>
+                </CardContent>
 
+                <CardHeader title="תוכנית"/>
 
+                <CardContent>
+                    <div className={styles["plan"]}>
+                        {plan === EPlanType.Premium &&
+                        <Fragment>
+                            <div className={styles["text"]}>אתה כרגע מנוי בתוכנית פרימיום</div>
+                            <Button onClick={() => onPremiumPlanClick(user.company)} variant="outlined" color="secondary">
+                                סיים מנוי
+                            </Button>
+                        </Fragment>
+                        }
+                        {(!plan || plan === EPlanType.Free) &&
+                        <Fragment>
+                            <div className={styles["text"]}>אתה כרגע במסלול החינמי</div>
+                            <Button onClick={onFreePlanClick} variant="contained" color="secondary">הירשם כמנוי</Button>
+                        </Fragment>
+                        }
                     </div>
                 </CardContent>
 
@@ -229,6 +251,7 @@ User.propTypes = {
     onUpdateCompany: PropTypes.func.isRequired,
     input: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
+    plan: PropTypes.number
 };
 
 export default CSSModules(withStyles(styles1)(User), styles);
