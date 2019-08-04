@@ -1,7 +1,6 @@
-import * as FeaturesManager from "../../managers/FeaturesManager";
+import FeaturesManager, {Feature} from "../../managers/FeaturesManager";
 import * as EPlanType from "../../models/EPlanType";
 import {EGoPremiumStep} from "../components/go-premium/EPremiumStep";
-import Feature from "../components/home/Feature";
 import {EModalType} from "../components/modals/EModalType";
 import * as actions from "./actionTypes";
 import {updateCompany} from "./companyActions";
