@@ -18,6 +18,9 @@ const EPaymentStatus = {
     PAYMENT_DONE: 1,
 };
 
+const PAYMENT_BASE_URL = config.PAYMENT_BASE_URL;
+const GetUrl = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/GetUrl`;
+
 router.get('/',
     (req, res) => routeWrapper(req, res, (req, res) => {
         let company = jwtService.getCompanyFromLocals(res);
@@ -30,15 +33,16 @@ router.get('/',
             "Items":[{
                 "Quantity":1,
                 "UnitPrice":100,
-                "Description": "מנוי חודשי לאתר מיבא"
+                "Description": "מנוי חודשי לאתר מיבא",
             }],
             "RedirectURL":"https://meeba.org.il/paymentSuccess",
             "ExemptVAT":true,
             "MaxPayments":1,
-            "SaleType": 3 // איסוף כרטיס בלבד - ללא גבייה
+            "SaleType": 3, // איסוף כרטיס בלבד - ללא גבייה
+            "EmailAddress": user.email
         };
 
-        return axios.post('https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/GetUrl',data)
+        return axios.post(GetUrl,data)
             .then(response => {
                 let {URL, PrivateSaleToken, PublicSaleToken} = response.data;
                 const payment = {
@@ -46,7 +50,7 @@ router.get('/',
                     url: URL,
                     privateSaleToken: PrivateSaleToken,
                     publicSaleToken: PublicSaleToken,
-                    status: EPaymentStatus.START
+                    status: EPaymentStatus.START,
                 };
                 PaymentModel.createPayment(payment); // No need to wait for it
                 return response.data.URL;

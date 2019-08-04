@@ -3,7 +3,7 @@ const fs = require('fs');
 const dotEnvFile = '.env';
 
 if (!process.env.NODE_ENV)
-    process.env.NODE_ENV = 'development'
+    process.env.NODE_ENV = 'development';
 
 if (!module.exports.dbUrl)
     init();
@@ -38,6 +38,7 @@ function init() {
     module.exports.DB_USER = process.env.DB_USER;
     module.exports.DB_PASS= process.env.DB_PASS;
     mongoose.Promise = global.Promise;
+    module.exports.PAYMENT_BASE_URL = "testicredit.rivhit.co.il";
 
     switch (process.env.NODE_ENV) {
         case "production" :
@@ -45,6 +46,7 @@ function init() {
             console.log("Production Mode!");
 
             module.exports.dbUrl = process.env.MONGOLAB_COPPER_URI;
+            module.exports.PAYMENT_BASE_URL = "icredit.rivhit.co.il";
             break;
         }
         case "development" :
@@ -71,7 +73,7 @@ function init() {
         }
         default :
         {
-            throw new Error("Error! No dbUrl was set!")
+            throw new Error("Error! No dbUrl was set!");
         }
     }
 }
