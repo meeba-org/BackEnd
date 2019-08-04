@@ -234,7 +234,7 @@ class User extends Component {
                         }
                         {(!plan || plan === EPlanType.Free) &&
                         <Fragment>
-                            <div className={styles["text"]}>אתה כרגע במסלול החינמי</div>
+                            <div className={styles["text"]}>הינך כרגע במסלול החינמי</div>
                             <Button onClick={onFreePlanClick} variant="contained" color="secondary">הירשם כמנוי</Button>
                         </Fragment>
                         }
