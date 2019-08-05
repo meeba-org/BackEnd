@@ -67,6 +67,7 @@ router.post('/',
 router.post('/ipn',
     (req, res) => routeWrapper(req, res, (req, res) => {
         console.log(res);
+        console.log(req);
     })
 );
 
