@@ -133,10 +133,13 @@ router.get('/api/general/meta',
 
 router.post('/api/general/ipn',
     (req, res) => routeWrapper(req, res, (req, res) => {
+        console.log('testing ipn start');
         let preetifyRes = JSON.stringify(res, null, 4);
         console.log("testing ipn req: " + preetifyRes);
         let preetifyData = JSON.stringify(res.data, null, 4);
         console.log("testing ipn data: " + preetifyData);
+
+        return resolve();
     })
 );
 
