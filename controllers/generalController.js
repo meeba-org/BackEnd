@@ -137,8 +137,8 @@ router.post('/api/general/ipn',
             console.log('testing ipn start');
             let preetifyRes = JSON.stringify(req, null, 4);
             console.log("testing ipn req: " + preetifyRes);
-            // let preetifyData = JSON.stringify(req.data, null, 4);
-            // console.log("testing ipn data: " + preetifyData);
+            let preetifyBody = JSON.stringify(req.body, null, 4);
+            console.log("testing ipn data: " + preetifyBody);
 
             return resolve();
         }
