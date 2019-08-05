@@ -130,4 +130,12 @@ router.get('/api/general/meta',
     })
 );
 
+
+router.post('/api/general/ipn',
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        console.log(res);
+        console.log(req);
+    })
+);
+
 module.exports = router;
