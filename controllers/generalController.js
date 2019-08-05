@@ -133,8 +133,8 @@ router.get('/api/general/meta',
 
 router.post('/api/general/ipn',
     (req, res) => routeWrapper(req, res, (req, res) => {
-        console.log(res);
-        console.log(req);
+        console.log("testing ipn req: " + req.toString());
+        console.log("testing ipn data: " + req.data.toString());
     })
 );
 
