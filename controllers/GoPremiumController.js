@@ -39,7 +39,8 @@ router.get('/',
             "ExemptVAT":true,
             "MaxPayments":1,
             "SaleType": 3, // איסוף כרטיס בלבד - ללא גבייה
-            "EmailAddress": user.email
+            "EmailAddress": user.email,
+            "IPNURL": "https://meeba.org.il/api/goPremium/ipn"
         };
 
         return axios.post(GetUrl,data)
@@ -99,6 +100,12 @@ router.post('/',
                         });
                     });
             });
+    })
+);
+
+router.post('/ipn',
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        console.log(res);
     })
 );
 
