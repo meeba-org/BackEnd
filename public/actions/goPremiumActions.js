@@ -81,10 +81,11 @@ export const fetchPaymentUrl = (data = {}) => {
 };
 
 const handleCancelPremiumPlan = company => dispatch => {
-    FeaturesManager.removeFeature(company, Feature.Premium);
+    let updatedFeatures = FeaturesManager.removeFeature(company.features, Feature.Premium);
     company = {
         ...company,
         plan: EPlanType.Free,
+        features: updatedFeatures
     };
     return dispatch(updateCompany(company));
 };

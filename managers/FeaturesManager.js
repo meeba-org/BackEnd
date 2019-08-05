@@ -24,14 +24,15 @@ const addFeature = (company, feature) => {
         company.features.push(feature);
 };
 
-const removeFeature = (company, feature) => {
-    if (!company.features)
-        return;
+const removeFeature = (features, feature) => {
+    if (!features)
+        return features;
 
-    if (company.features.includes(feature)) {
-        let updatedFeatures = company.features.filter(f => f !== feature);
-        company.features = updatedFeatures;
+    if (features.includes(feature)) {
+        return features.filter(f => f !== feature);
     }
+
+    return features;
 };
 
 const isFeatureEnable = (company, feature) => {

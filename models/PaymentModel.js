@@ -2,12 +2,16 @@ const mongoose = require('mongoose');
 
 // Group Schema
 const PaymentSchema = mongoose.Schema({
-    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
-    publicSaleToken: { type: String },
-    privateSaleToken: { type: String },
-    url: { type: String },
-    status: {type: Number}
-});
+        company: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
+        publicSaleToken: {type: String},
+        privateSaleToken: {type: String},
+        url: {type: String},
+        status: {type: Number}
+    },
+    {
+        timestamps: true // for adding createdAt & updatedAt fields
+    }
+);
 
 const Payment = mongoose.model('Payment', PaymentSchema);
 
@@ -40,6 +44,7 @@ const updatePayment = (payment) => {
     newPayment._id = payment._id;
 
     newPayment = newPayment.toObject();
+    delete newPayment.updatedAt; // if it exist it wont get updated in db
     return Payment.findOneAndUpdate({'_id': newPayment._id}, newPayment, {upsert: true, new: true}).exec();
 };
 
