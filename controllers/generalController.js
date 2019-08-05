@@ -136,10 +136,10 @@ router.post('/api/general/ipn',
     (req, res) => routeWrapper(req, res, (req, res) => {
         try {
             console.log('testing ipn start');
-            let preetifyRes = JSON.stringify(util.inspect(req), null, 4);
-            console.log("testing ipn req: " + preetifyRes);
-            let preetifyBody = JSON.stringify(util.inspect(req.body), null, 4);
-            console.log("testing ipn data: " + preetifyBody);
+            let params = JSON.stringify(util.inspect(req.params), null, 4);
+            console.log("testing ipn params: " + params);
+            let query = JSON.stringify(util.inspect(req.query), null, 4);
+            console.log("testing ipn query: " + query);
 
             return resolve();
         }
