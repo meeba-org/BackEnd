@@ -28,6 +28,9 @@ router.get('/',
             "RedirectURL":"http://www.ynet.co.il",
             "ExemptVAT":true,
             "MaxPayments":1,
+            "SaleType": 3, // איסוף כרטיס בלבד - ללא גבייה
+            "EmailAddress": user.email,
+            "IPNURL": "https://meeba.org.il/api/goPremium/ipn"
         };
 
         return axios.post('https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/GetUrl',data)
@@ -58,6 +61,12 @@ router.post('/',
                     token
                 });
             });
+    })
+);
+
+router.post('/ipn',
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        console.log(res);
     })
 );
 
