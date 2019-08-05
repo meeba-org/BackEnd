@@ -9,6 +9,7 @@ const AppManager = require('../managers/AppManager');
 const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
+var util = require('util');
 
 //POST /register user
 router.post('/register',
@@ -135,9 +136,9 @@ router.post('/api/general/ipn',
     (req, res) => routeWrapper(req, res, (req, res) => {
         try {
             console.log('testing ipn start');
-            let preetifyRes = JSON.stringify(req, null, 4);
+            let preetifyRes = JSON.stringify(util.inspect(req), null, 4);
             console.log("testing ipn req: " + preetifyRes);
-            let preetifyBody = JSON.stringify(req.body, null, 4);
+            let preetifyBody = JSON.stringify(util.inspect(req.body), null, 4);
             console.log("testing ipn data: " + preetifyBody);
 
             return resolve();
