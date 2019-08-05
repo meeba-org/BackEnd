@@ -40,7 +40,7 @@ router.get('/',
             "MaxPayments":1,
             "SaleType": 3, // איסוף כרטיס בלבד - ללא גבייה
             "EmailAddress": user.email,
-            "IPNURL": "https://meeba.org.il/api/goPremium/ipn"
+            "IPNURL": "https://meeba.org.il/api/general/ipn"
         };
 
         return axios.post(GetUrl,data)
