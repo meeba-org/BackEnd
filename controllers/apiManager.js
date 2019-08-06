@@ -24,14 +24,18 @@ function routeWrapper(req, res, body) {
     try {
         return body(req, res)
             .then((data) => {
-                return res.status(200).send(data)
+                return res.status(200).send(data);
             })
             .catch((err) =>{
-                return res.status(err.status || 500).send({message: err.message || "Error has occurred in async operation!"});
+                let message = err.message || "Error has occurred in async operation!";
+                console.error(message);
+                return res.status(err.status || 500).send({message});
             });
     }
     catch (err) {
-        return res.status(err.status || 500).send({message: err.message || "Error has been thrown!"});
+        let message = err.message || "Error has been thrown!";
+        console.error(message);
+        return res.status(err.status || 500).send({message});
     }
 }
 
