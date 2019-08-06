@@ -136,8 +136,8 @@ router.post('/api/general/ipn',
     (req, res) => routeWrapper(req, res, (req, res) => {
         try {
             console.log('testing ipn start');
-            let query = JSON.stringify(req.query);
-            console.log("testing ipn query: " + query);
+            let body = JSON.stringify(req.body);
+            console.log("testing ipn body: " + body);
 
             console.log("testing ipn SaleId: " + req.param('SaleId'));
             console.log("testing ipn GroupPrivateToken: " + req.param('GroupPrivateToken'));
