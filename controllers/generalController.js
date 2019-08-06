@@ -132,7 +132,7 @@ router.get('/api/general/meta',
 );
 
 
-router.post('/api/general/ipn', bodyParser.raw(),
+router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
     (req, res) => routeWrapper(req, res, (req, res) => {
         try {
             console.log('testing ipn start');
