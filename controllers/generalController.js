@@ -9,6 +9,7 @@ const AppManager = require('../managers/AppManager');
 const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
+const bodyParser = require('body-parser');
 
 //POST /register user
 router.post('/register',
@@ -127,6 +128,22 @@ router.get('/api/general/meta',
                 isDevEnv: process.env.NODE_ENV === 'development'
             });
         });
+    })
+);
+
+
+router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        try {
+            let body = JSON.stringify(req.body);
+            console.log("ipn body: " + body);
+
+            return resolve();
+        }
+        catch (e) {
+            console.log(e);
+            return reject(e);
+        }
     })
 );
 
