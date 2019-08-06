@@ -9,7 +9,7 @@ const AppManager = require('../managers/AppManager');
 const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
-var util = require('util');
+const bodyParser = require('body-parser');
 
 //POST /register user
 router.post('/register',
@@ -132,7 +132,7 @@ router.get('/api/general/meta',
 );
 
 
-router.post('/api/general/ipn',
+router.post('/api/general/ipn', bodyParser.raw(),
     (req, res) => routeWrapper(req, res, (req, res) => {
         try {
             console.log('testing ipn start');
