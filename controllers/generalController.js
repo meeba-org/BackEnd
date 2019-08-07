@@ -135,14 +135,16 @@ router.get('/api/general/meta',
 router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
     (req, res) => routeWrapper(req, res, (req, res) => {
         try {
-            console.log('testing ipn start');
             let body = JSON.stringify(req.body);
-            console.log("testing ipn body: " + body);
+            console.log("ipn response: " + body);
 
-            console.log("testing ipn SaleId: " + req.param('SaleId'));
-            console.log("testing ipn GroupPrivateToken: " + req.param('GroupPrivateToken'));
-            console.log("testing ipn TransactionAmount: " + req.param('TransactionAmount'));
-            return resolve();
+            let companyId = body.Custom1;
+
+            return CompanyModel.getByCompanyId(companyId)
+                .then(company => {
+                    company.creditCardToken = body.Token;
+                    return CompanyModel.updateCompany(company);
+                });
         }
         catch (e) {
             console.log(e);

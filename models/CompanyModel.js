@@ -17,7 +17,9 @@ const CompanySchema = mongoose.Schema({
         enableTasks: {type: Boolean, default: false},
         breakLength: {type: Number, default: 0},
     },
-    features: [String]
+    features: [String],
+    plan: {type: Number, default: EPlanType.Free},
+    creditCardToken: {type: String}
 });
 
 const Company = mongoose.model('Company', CompanySchema);

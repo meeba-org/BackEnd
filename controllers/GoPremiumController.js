@@ -19,7 +19,7 @@ router.get('/',
             return reject('משתמש לא ידוע - נסה להיכנס מחדש לחשבון');
 
         let data = {
-            "GroupPrivateToken":"f930c192-ea2b-4e53-8de8-27d3a74fab66",
+            "GroupPrivateToken":"a1408bfc-18da-49dc-aa77-d65870f7943e",
             "Items":[{
                 "Quantity":1,
                 "UnitPrice":100,
@@ -30,7 +30,8 @@ router.get('/',
             "MaxPayments":1,
             "SaleType": 3, // איסוף כרטיס בלבד - ללא גבייה
             "EmailAddress": user.email,
-            "IPNURL": "https://meeba.org.il/api/general/ipn"
+            "IPNURL": "https://meeba.org.il/api/general/ipn",
+            "Custom1": company._id // Storing this in order to link the return transaction token to the company
         };
 
         return axios.post('https://testicredit.rivhit.co.il/API/PaymentPageRequest.svc/GetUrl',data)
