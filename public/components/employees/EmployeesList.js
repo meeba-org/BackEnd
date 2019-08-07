@@ -96,7 +96,7 @@ class EmployeesList extends React.PureComponent {
                     </div>
                     <Divider className={styles["divider"]}/>
 
-                    <GoPremiumNotification isVisible={isLimited} text="במסלול החינמי מותר עד 5 עובדים -" />
+                    <GoPremiumNotification isVisible={true} text="במסלול החינמי מספר העובדים יוגבל -" />
 
                     {fields && fields.length > 0 && isDesktop &&
                     <Grid className={styles["header"]} container spacing={24}>
@@ -115,7 +115,7 @@ class EmployeesList extends React.PureComponent {
                                    onUpdate={(employee) => this.onUpdate(employee)}
                                    validate={this.validateEmployee}
                                    showEmployeeDialog={showEmployeeDialog}
-                                   isLimited={isLimited}
+                                   isLimited={false}
                             />
                         </Fade>)
                     )

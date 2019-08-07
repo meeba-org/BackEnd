@@ -33,7 +33,7 @@ class EmployeeContainer extends Component {
                 input={input}
                 error={error}
                 showEmployeeDialog={showEmployeeDialog}
-                isLimited={isLimited}
+                isLimited={false}
             /> :
             <EmployeeMobile
                 onUpdate={this.onUpdate}
@@ -43,7 +43,7 @@ class EmployeeContainer extends Component {
                 error={error}
                 showEmployeeDialog={showEmployeeDialog}
                 index={index}
-                isLimited={isLimited}
+                isLimited={false}
             />;
     }
 }

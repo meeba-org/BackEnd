@@ -67,7 +67,7 @@ class TasksContainer extends React.Component {
 
                 <Divider className={styles["divider"]}/>
 
-                <GoPremiumNotification isVisible={isLimited} text="במסלול החינמי מותר עד 2 משימות -" />
+                <GoPremiumNotification isVisible={true} text="במסלול החינמי מספר המשימות יוגבל -" />
 
                 <BreadCrumb
                     data={breadcrumbTasks}
@@ -94,7 +94,7 @@ function mapStateToProps(state) {
     return {
         tasks: state.tasks,
         company: selectors.getCompany(state),
-        isLimited: !selectors.hasPremium(state) && (state.tasks && state.tasks.filter(t => !t.parent).length >= 2)
+        isLimited: false //!selectors.hasPremium(state) && (state.tasks && state.tasks.filter(t => !t.parent).length >= 2)
     };
 }
 

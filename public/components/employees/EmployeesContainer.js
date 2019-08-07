@@ -27,7 +27,7 @@ class EmployeesContainer extends React.Component {
                     showEmployeeDialog={showEmployeeDialog}
                     showGoPremiumModal={showGoPremiumModal}
                     isDesktop={isDesktop}
-                    isLimited={isLimited}
+                    isLimited={false}
                 />
             </form>
         );

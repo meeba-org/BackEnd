@@ -1,3 +1,4 @@
+const EPlanType = require("./EPlanType");
 const mongoose = require('mongoose');
 const EPlanType = require('./EPlanType');
 

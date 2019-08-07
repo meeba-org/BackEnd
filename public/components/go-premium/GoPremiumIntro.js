@@ -17,8 +17,7 @@ const GoPremiumIntro = ({onNext, onClose}) => {
             </div>
 
             <div styleName="buttons-container">
-                <Button styleName="interested" variant="contained" color="primary" onClick={onNext}>אני מעוניין!</Button>
-                <Button onClick={onClose}>אני אחשוב על זה...</Button>
+                <Button styleName="interested" variant="contained" color="primary" onClick={onClose}>בקרוב...</Button>
             </div>
         </div>
     );
