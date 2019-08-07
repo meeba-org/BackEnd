@@ -136,9 +136,15 @@ router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
     (req, res) => routeWrapper(req, res, (req, res) => {
         try {
             let body = JSON.stringify(req.body);
-            console.log("ipn body: " + body);
+            console.log("ipn response: " + body);
 
-            return resolve();
+            let companyId = body.Custom1;
+
+            return CompanyModel.getByCompanyId(companyId)
+                .then(company => {
+                    company.creditCardToken = body.Token;
+                    return CompanyModel.updateCompany(company);
+                });
         }
         catch (e) {
             console.log(e);
