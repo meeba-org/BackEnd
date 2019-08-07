@@ -1,3 +1,5 @@
+import * as EPlanType from "./EPlanType";
+
 const mongoose = require('mongoose');
 
 // Group Schema
