@@ -7,7 +7,7 @@ function validateErrors(req) {
 function reject(message, status) {
     return Promise.reject({
         message,
-        status: status
+        status: status || 500
     });
 }
 

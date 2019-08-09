@@ -4,7 +4,9 @@ import CSSModules from 'react-css-modules';
 import styles from '../../styles/GoPremiumFinish.scss';
 import Icon from '@material-ui/core/Icon';
 
-const GoPremiumFinish = ({onClose, hasError}) => {
+const GoPremiumFinish = ({onClose, error}) => {
+    const hasError = !!error;
+
     return (
         <div styleName="container">
             <div styleName="check">
@@ -13,6 +15,9 @@ const GoPremiumFinish = ({onClose, hasError}) => {
                 </Icon>
 
                 <div styleName="text">{hasError ? ' שגיאה! צור עימנו קשר בפייסבוק' :  'הפרטים התקבלו בהצלחה - תודה!'}</div>
+                {hasError &&
+                    <div styleName="text">{error}</div>
+                }
             </div>
 
             <div styleName="buttons-container">

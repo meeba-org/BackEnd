@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import CSSModules from "react-css-modules";
 import {connect} from "react-redux";
 import {getPaymentActiveStep, getPaymentError, getPaymentUrl, getUser} from "../../selectors";
@@ -40,15 +40,20 @@ class GoPremiumContainer extends Component {
 
     render() {
         const {onClose, paymentUrl, paymentError, activeStep, error} = this.props;
+        const hasError = !!error;
 
         return (
             <div styleName="go-premium-container">
                 <div styleName="go-premium-stepper-container">
                     <GoPremiumStepper activeStep={activeStep} onStepSelect={this.onStepSelect} />
                 </div>
-                {activeStep === EGoPremiumStep.INTRO && <GoPremiumIntro onNext={() => this.onStepSelect(EGoPremiumStep.PAY)} onClose={onClose}/>}
-                {activeStep === EGoPremiumStep.PAY && <GoPremiumPay paymentUrl={paymentUrl} />}
-                {activeStep === EGoPremiumStep.CONFIRM && <GoPremiumFinish onClose={onClose} hasError={!!error}/>}
+                {!hasError &&
+                <Fragment>
+                    {activeStep === EGoPremiumStep.INTRO && <GoPremiumIntro onNext={() => this.onStepSelect(EGoPremiumStep.PAY)} onClose={onClose}/>}
+                    {activeStep === EGoPremiumStep.PAY && <GoPremiumPay paymentUrl={paymentUrl}/>}
+                </Fragment>
+                }
+                {(activeStep === EGoPremiumStep.CONFIRM || hasError) && <GoPremiumFinish onClose={onClose} error={error}/>}
             </div>
         );
     }

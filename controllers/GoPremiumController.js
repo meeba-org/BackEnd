@@ -29,34 +29,41 @@ router.get('/',
             return reject('משתמש לא ידוע - נסה להיכנס מחדש לחשבון');
 
         let data = {
-            "GroupPrivateToken":"a1408bfc-18da-49dc-aa77-d65870f7943e",
-            "Items":[{
-                "Quantity":1,
-                "UnitPrice":100,
+            "GroupPrivateToken": "f930c192-ea2b-4e53-8de8-27d3a74fab66",
+            "Items": [{
+                "Quantity": 1,
+                "UnitPrice": 100,
                 "Description": "מנוי חודשי לאתר מיבא",
             }],
-            "RedirectURL":"https://meeba.org.il/paymentSuccess",
-            "ExemptVAT":true,
-            "MaxPayments":1,
+            "RedirectURL": "https://meeba.org.il/paymentSuccess",
+            "ExemptVAT": true,
+            "MaxPayments": 1,
             "SaleType": 3, // איסוף כרטיס בלבד - ללא גבייה
             "EmailAddress": user.email,
             "IPNURL": "https://meeba.org.il/api/general/ipn",
             "Custom1": company._id // Storing this in order to link the return transaction token to the company
         };
 
-        return axios.post(GetUrl,data)
+        return axios.post(GetUrl, data)
             .then(response => {
-                let {URL, PrivateSaleToken, PublicSaleToken} = response.data;
-                const payment = {
-                    company: company._id,
-                    url: URL,
-                    privateSaleToken: PrivateSaleToken,
-                    publicSaleToken: PublicSaleToken,
-                    status: EPaymentStatus.START,
-                };
-                PaymentModel.createPayment(payment); // No need to wait for it
-                return response.data.URL;
-            });
+                    let {URL, PrivateSaleToken, PublicSaleToken} = response.data;
+                    if (!URL)
+                        return reject("iCredit החזיר שגיאה");
+
+                    const payment = {
+                        company: company._id,
+                        url: URL,
+                        privateSaleToken: PrivateSaleToken,
+                        publicSaleToken: PublicSaleToken,
+                        status: EPaymentStatus.START,
+                    };
+                    PaymentModel.createPayment(payment); // No need to wait for it
+                    return response.data.URL;
+                },
+                err => {
+                    console.error(err.toString());
+                    return reject("iCredit החזיר שגיאה");
+                });
     })
 );
 

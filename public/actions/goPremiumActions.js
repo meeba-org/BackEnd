@@ -16,18 +16,6 @@ export const fetchPaymentUrlSuccess = payload => ({
     payload
 });
 
-export const fetchPaymentToken = () => ({
-    type: actions.API,
-    payload: {
-        url: "/paymentToken",
-        method: "get",
-        success: fetchPaymentTokenSuccess
-    },
-    meta: {
-        shouldAuthenticate: true
-    }
-});
-
 const paymentFinished = (response) => dispatch => {
     localStorage.setItem('jwtToken', response.token);
     localStorage.setItem('activeUser', JSON.stringify(response.user));
@@ -42,8 +30,7 @@ const handlePaymentError = err => ({
 });
 
 const onPaymentError = err => dispatch => {
-    dispatch(handlePaymentError(err));
-    return dispatch(setActiveStep(EGoPremiumStep.CONFIRM));
+    return dispatch(handlePaymentError(err));
 };
 
 export const handlePaymentFinished = (data = {}) => ({
@@ -73,6 +60,7 @@ export const fetchPaymentUrl = (data = {}) => {
             method: "get",
             data,
             success: fetchPaymentUrlSuccess,
+            onError: onPaymentError
         },
         meta: {
             shouldAuthenticate: true
