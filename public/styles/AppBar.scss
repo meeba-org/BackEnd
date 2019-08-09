@@ -1,3 +1,5 @@
+@import "variables";
+
 .app-bar {
     .toolbar {
         display: flex;
@@ -15,6 +17,12 @@
 
             button {
                 padding: 8px 16px;
+            }
+
+            .goPremiumButton {
+                @media (max-width: $mobileWidth) {
+                    display: none;
+                }
             }
 
             @media (max-width: 576px) {

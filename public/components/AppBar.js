@@ -43,7 +43,7 @@ class MeebaAppBar extends Component {
                         <div styleName="logout">
                             <Button color="inherit"><Link style={{color: "inherit", textDecoration: 'none'}} to="/faq">שאלות ותשובות</Link></Button>
                             {isLoading === false && !hasPremium &&
-                            <Button variant="contained" color="secondary" onClick={showGoPremiumModal}>הירשם כמנוי</Button>
+                            <Button styleName="goPremiumButton" variant="contained" color="secondary" onClick={showGoPremiumModal}>הירשם כמנוי</Button>
                             }
                             <Button onClick={this.onLogout} color="inherit">יציאה</Button>
                         </div>
