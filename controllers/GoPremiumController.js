@@ -30,7 +30,7 @@ router.get('/',
             return reject('משתמש לא ידוע - נסה להיכנס מחדש לחשבון');
 
         let data = {
-            "GroupPrivateToken": "f930c192-ea2b-4e53-8de8-27d3a74fab66",
+            "GroupPrivateToken": "a1408bfc-18da-49dc-aa77-d65870f7943e",
             "Items": [{
                 "Quantity": 1,
                 "UnitPrice": 100,

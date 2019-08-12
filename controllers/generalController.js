@@ -151,6 +151,7 @@ router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
             CompanyModel.updateCompany(company);
 
             // Update Payment with SaleId
+            // TODO Chen this is not good - company will have many payments - maybe latest payment? maybe another way to pass the specific publicSaleToken?
             let payment = await PaymentModel.getByCompanyId(company);
             if (!payment)
                 return await reject("[generalController] - IPN, Could not find payment, companyId: " + companyId);
