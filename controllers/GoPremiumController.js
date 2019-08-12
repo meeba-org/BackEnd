@@ -22,7 +22,7 @@ const PAYMENT_BASE_URL = config.PAYMENT_BASE_URL;
 const GetUrl = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/GetUrl`;
 
 router.get('/',
-    (req, res) => routeWrapper(req, res, (req, res) => {
+    (req, res) => routeWrapper(req, res, async (req, res) => {
         let company = jwtService.getCompanyFromLocals(res);
         let user = jwtService.getUserFromLocals(res);
         if (!company || !user)
@@ -44,26 +44,25 @@ router.get('/',
             "Custom1": company._id // Storing this in order to link the return transaction token to the company
         };
 
-        return axios.post(GetUrl, data)
-            .then(response => {
-                    let {URL, PrivateSaleToken, PublicSaleToken} = response.data;
-                    if (!URL)
-                        return reject("iCredit החזיר שגיאה");
+        try {
+            const response = await axios.post(GetUrl, data);
+            let {URL, PrivateSaleToken, PublicSaleToken} = response.data;
+            if (!URL)
+                return reject("iCredit החזיר שגיאה");
 
-                    const payment = {
-                        company: company._id,
-                        url: URL,
-                        privateSaleToken: PrivateSaleToken,
-                        publicSaleToken: PublicSaleToken,
-                        status: EPaymentStatus.START,
-                    };
-                    PaymentModel.createPayment(payment); // No need to wait for it
-                    return response.data.URL;
-                },
-                err => {
-                    console.error(err.toString());
-                    return reject("iCredit החזיר שגיאה");
-                });
+            const payment = {
+                company: company._id,
+                url: URL,
+                privateSaleToken: PrivateSaleToken,
+                publicSaleToken: PublicSaleToken,
+                status: EPaymentStatus.START,
+            };
+            PaymentModel.createPayment(payment); // No need to wait for it
+            return response.data.URL;
+        } catch (err) {
+            console.error(err.toString());
+            return reject("iCredit החזיר שגיאה");
+        }
     })
 );
 
