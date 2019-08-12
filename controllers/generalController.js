@@ -139,7 +139,7 @@ router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
             let body = JSON.stringify(req.body);
             console.log("ipn response: " + body);
 
-            const companyId = body.Custom1;
+            const companyId = body["Custom1"];
             const saleId = body.SaleId;
 
             const company = await CompanyModel.getByCompanyId(companyId);
