@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 const UserModel = require("../models/UserModel");
 const CompanyModel = require("../models/CompanyModel");
+const PaymentModel = require("../models/PaymentModel");
 const jwtService = require("./jwtService");
 const AppManager = require('../managers/AppManager');
 const {reject, resolve} = require("./apiManager");
@@ -133,22 +134,26 @@ router.get('/api/general/meta',
 
 
 router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
-    (req, res) => routeWrapper(req, res, (req, res) => {
+    (req, res) => routeWrapper(req, res, async (req, res) => {
         try {
             let body = JSON.stringify(req.body);
             console.log("ipn response: " + body);
 
-            let companyId = body.Custom1;
+            const companyId = body.Custom1;
+            const saleId = body.SaleId;
 
-            return CompanyModel.getByCompanyId(companyId)
-                .then(company => {
-                    company.creditCardToken = body.Token;
-                    return CompanyModel.updateCompany(company);
-                });
+            const company = await CompanyModel.getByCompanyId(companyId);
+            company.creditCardToken = body.Token;
+            CompanyModel.updateCompany(company);
+
+            let payment = await PaymentModel.getByCompanyId(company);
+            payment.saleId = saleId;
+            PaymentModel.updatePayment(payment);
+            return await resolve();
         }
         catch (e) {
             console.log(e);
-            return reject(e);
+            return await reject(e);
         }
     })
 );

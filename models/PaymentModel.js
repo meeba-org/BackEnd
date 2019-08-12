@@ -5,6 +5,7 @@ const PaymentSchema = mongoose.Schema({
         company: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
         publicSaleToken: {type: String},
         privateSaleToken: {type: String},
+        saleId: {type: String},
         url: {type: String},
         status: {type: Number}
     },
@@ -29,8 +30,25 @@ const getByPaymentId = (id) => {
     return Payment.findById(id).exec();
 };
 
+/**
+ * Get payment by companyId and publicSaleToken
+ * Note this is more strict then getByCompnayId - used externally in API
+ * @param companyId
+ * @param publicSaleToken
+ * @return {RegExpExecArray}
+ */
 const getByCompanyIdAndToken = (companyId, publicSaleToken) => {
     return Payment.findOne({company: companyId, publicSaleToken}).exec();
+};
+
+/**
+ * Get payment by companyId
+ *
+ * @param companyId
+ * @return {RegExpExecArray}
+ */
+const getByCompanyId = (companyId) => {
+    return Payment.findOne({company: companyId}).exec();
 };
 
 const createPayment = (payment) => {
@@ -64,6 +82,7 @@ module.exports = {
     createPayment
     , getByPaymentId
     , getByCompanyIdAndToken
+    ,getByCompanyId
     , getAllPayments
     , updatePayment
     , deletePayment
