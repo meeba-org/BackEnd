@@ -144,7 +144,7 @@ router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
 
             const company = await CompanyModel.getByCompanyId(companyId);
             if (!company)
-                return await reject("[generalController] - IPN, Could not find company");
+                return await reject("[generalController] - IPN, Could not find company, companyId: " + companyId);
 
             company.creditCardToken = body.Token;
             CompanyModel.updateCompany(company);
