@@ -142,19 +142,22 @@ router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
             const companyId = body.Custom1;
             const saleId = body.SaleId;
 
+            // Update Company with creditCardToken
             const company = await CompanyModel.getByCompanyId(companyId);
             if (!company)
                 return await reject("[generalController] - IPN, Could not find company, companyId: " + companyId);
 
-            company.creditCardToken = body.Token;
+            company.creditCardToken = body.TransactionToken;
             CompanyModel.updateCompany(company);
 
+            // Update Payment with SaleId
             let payment = await PaymentModel.getByCompanyId(company);
             if (!payment)
                 return await reject("[generalController] - IPN, Could not find payment, companyId: " + companyId);
 
             payment.saleId = saleId;
             PaymentModel.updatePayment(payment);
+
             return await resolve();
         }
         catch (e) {
