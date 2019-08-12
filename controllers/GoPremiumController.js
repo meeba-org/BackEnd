@@ -103,7 +103,7 @@ router.post('/',
 
         await updatePaymentFinished(payment);
         await CompanyModel.updateCompany(company);
-        const updatedUser = UserModel.getByUserId(user._id);
+        const updatedUser = await UserModel.getByUserId(user._id);
 
         // use the jsonwebtoken package to create the token and respond with it
         let meebaToken = jwt.sign(updatedUser.toObject(), config.secret); // This is meeba token
