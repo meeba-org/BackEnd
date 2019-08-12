@@ -137,7 +137,7 @@ router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
     (req, res) => routeWrapper(req, res, async (req, res) => {
         try {
             let body = req.body;
-            console.log("ipn response: " + body);
+            console.log("ipn response: " + JSON.stringify(body));
 
             const companyId = body.Custom1;
             const saleId = body.SaleId;
