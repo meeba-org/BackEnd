@@ -136,10 +136,10 @@ router.get('/api/general/meta',
 router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
     (req, res) => routeWrapper(req, res, async (req, res) => {
         try {
-            let body = JSON.stringify(req.body);
+            let body = req.body;
             console.log("ipn response: " + body);
 
-            const companyId = body["Custom1"];
+            const companyId = body.Custom1;
             const saleId = body.SaleId;
 
             const company = await CompanyModel.getByCompanyId(companyId);
