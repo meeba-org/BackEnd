@@ -51,6 +51,15 @@ const getByCompanyId = (companyId) => {
     return Payment.findOne({company: companyId}).exec();
 };
 
+/**
+ * Get latest payment by companyId
+ * @param companyId
+ * @return {RegExpExecArray}
+ */
+const getLatestByCompanyId = (companyId) => {
+    return Payment.findOne({company: companyId}).sort({createdAt: -1}).limit(1).exec();
+};
+
 const createPayment = (payment) => {
     let newPayment = createPaymentInstance(payment);
 
@@ -82,7 +91,8 @@ module.exports = {
     createPayment
     , getByPaymentId
     , getByCompanyIdAndToken
-    ,getByCompanyId
+    , getLatestByCompanyId
+    , getByCompanyId
     , getAllPayments
     , updatePayment
     , deletePayment
