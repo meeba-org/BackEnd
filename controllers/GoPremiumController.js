@@ -12,13 +12,13 @@ const config = require('../config');
 const { body } = require('express-validator/check');
 const axios = require('axios');
 const EPlanType = require('../models/EPlanType');
+const {PAYMENT_BASE_URL} = require("../config");
 
 const EPaymentStatus = {
     START: 0,
     PAYMENT_DONE: 1,
 };
 
-const PAYMENT_BASE_URL = config.PAYMENT_BASE_URL;
 const GetUrl = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/GetUrl`;
 
 // Getting iCredit payment url

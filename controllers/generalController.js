@@ -7,6 +7,7 @@ const CompanyModel = require("../models/CompanyModel");
 const PaymentModel = require("../models/PaymentModel");
 const jwtService = require("./jwtService");
 const AppManager = require('../managers/AppManager');
+const iCreditManager = require('../managers/iCreditManager');
 const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
@@ -132,36 +133,45 @@ router.get('/api/general/meta',
     })
 );
 
+const updateCompanyWithCreditCardToken = async (companyId, creditCardToken) => {
+    // Update Company with creditCardToken
+    const company = await CompanyModel.getByCompanyId(companyId);
+    if (!company)
+        throw new Error("[generalController] - IPN, Could not find company, companyId: " + companyId);
+
+    company.creditCardToken = creditCardToken;
+    CompanyModel.updateCompany(company);
+};
+
+const updatePaymentWithSaleId = async (companyId, saleId) => {
+    // Update Payment with SaleId
+    let payment = await PaymentModel.getLatestByCompanyId(companyId);
+    if (!payment)
+        return await reject("[generalController] - IPN, Could not find payment, companyId: " + companyId);
+
+    payment.saleId = saleId;
+    PaymentModel.updatePayment(payment);
+};
+
+const handleIPNCall = async data => {
+    const {Custom1: companyId, SaleId: saleId, TransactionToken: creditCardToken} = data;
+
+    await updateCompanyWithCreditCardToken(companyId, creditCardToken);
+    await updatePaymentWithSaleId(companyId, saleId);
+
+    return await iCreditManager.generateWaitingPayment(creditCardToken);
+};
 
 router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
     (req, res) => routeWrapper(req, res, async (req, res) => {
         try {
-            let body = req.body;
-            console.log("ipn response: " + JSON.stringify(body));
+            let data = req.body;
+            console.log("ipn response: " + JSON.stringify(data));
 
-            const companyId = body.Custom1;
-            const saleId = body.SaleId;
-
-            // Update Company with creditCardToken
-            const company = await CompanyModel.getByCompanyId(companyId);
-            if (!company)
-                return await reject("[generalController] - IPN, Could not find company, companyId: " + companyId);
-
-            company.creditCardToken = body.TransactionToken;
-            CompanyModel.updateCompany(company);
-
-            // Update Payment with SaleId
-            let payment = await PaymentModel.getLatestByCompanyId(company);
-            if (!payment)
-                return await reject("[generalController] - IPN, Could not find payment, companyId: " + companyId);
-
-            payment.saleId = saleId;
-            PaymentModel.updatePayment(payment);
-
-            return await resolve();
+            return await handleIPNCall(data);
         }
         catch (e) {
-            console.log(e);
+            console.error(e);
             return await reject(e);
         }
     })
