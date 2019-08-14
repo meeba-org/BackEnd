@@ -99,9 +99,12 @@ const generateWaitingPayment = async (creditCardToken) => {
  * @param creditCardToken
  * @param authNum
  * @param customerTransactionId
+ * @param email
+ * @param firstName
+ * @param lastName
  * @return {Promise<boolean>}
  */
-const generateImmediatePayment = async (creditCardToken, authNum, customerTransactionId, email, firstName, lastName) => {
+const generateImmediatePayment = async (creditCardToken, authNum, customerTransactionId, email, firstName = "", lastName = "") => {
     let data = {
         "GroupPrivateToken": GROUP_PRIVATE_TOKEN,
         "CreditcardToken": creditCardToken,
@@ -170,6 +173,18 @@ const updateCompanyWithPaymentData = async (companyId, paymentData) => {
     };
 
     await CompanyModel.updateCompany(company);
+};
+
+const chargePremiumPlanCompanies = async () => {
+    let premiumPlanCompanies = await CompanyModel.getPremiumPlanCompanies();
+
+    if (!premiumPlanCompanies)
+        return;
+
+    for (const company of premiumPlanCompanies) {
+        let {creditCardToken, authNum, customerTransactionId} = company.paymentData;
+        await generateImmediatePayment(creditCardToken, authNum, customerTransactionId, company.email);
+    }
 };
 
 module.exports = {

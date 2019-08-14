@@ -24,7 +24,8 @@ const CompanySchema = mongoose.Schema({
         creditCardToken: {type: String},
         customerTransactionId: {type: String},
         authNum: {type: String},
-    }
+    },
+    email: { type: String },
 });
 
 const Company = mongoose.model('Company', CompanySchema);
@@ -37,6 +38,10 @@ function createCompanyInstance(company) {
 
 const getAllCompanies = () => {
     return Company.find().exec();
+};
+
+const getPremiumPlanCompanies = () => {
+    return Company.find({plan: EPlanType.Premium}).exec();
 };
 
 const getByCompanyId = (id) => {
@@ -81,6 +86,7 @@ module.exports = {
     createCompany
     , getByCompanyId
     , getAllCompanies
+    , getPremiumPlanCompanies
     , updateCompany
     , deleteCompany
     , deleteAllCompanies

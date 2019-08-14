@@ -3,6 +3,7 @@ const expect = require('chai').expect;
 const iCreditManager = require('../managers/iCreditManager');
 const CompanyModel = require("../models/CompanyModel");
 const PaymentModel = require("../models/PaymentModel");
+const EPlanType = require("../models/EPlanType");
 const TEST_CREDIT_CARD_TOKEN = "0a1b8304-36e6-4a11-bdc7-b43c92fc2a25";
 
 describe('iCreditManager', function () {
@@ -71,5 +72,57 @@ describe('iCreditManager', function () {
         expect(updateCompany.paymentData.creditCardToken).to.not.be.null;
         expect(updateCompany.paymentData.customerTransactionId).to.not.be.null;
         expect(updateCompany.paymentData.authNum).to.not.be.null;
+    });
+
+    it ('chargePremiumPlanCompanies', async () => {
+        // Arrange
+        let c1 = utils.createMockedCompanyPlainObject("c1-premium");
+        let c2 = utils.createMockedCompanyPlainObject("c2-nonPremium");
+        let c3 = utils.createMockedCompanyPlainObject("c3-premium");
+
+        c1.email = c1.name + "@gmail.com";
+        c2.email = c1.name + "@gmail.com";
+        c3.email = c1.name + "@gmail.com";
+
+        c1.plan = EPlanType.Premium;
+        c2.plan = EPlanType.Free;
+        c3.plan = EPlanType.Premium;
+
+        c1 = await CompanyModel.createCompany(c1);
+        c2 = await CompanyModel.createCompany(c2);
+        c3 = await CompanyModel.createCompany(c3);
+
+        // Creating payments
+        for (let company of [c1, c2, c3]) {
+            let paymentObject = utils.createMockedPaymentPlainObject(company._id);
+            await PaymentModel.createPayment(paymentObject);
+        }
+
+
+        let data = {
+            // Custom1: company._id,
+            TransactionToken: TEST_CREDIT_CARD_TOKEN,
+            // SaleId: "333-444-555"
+        };
+
+        // Act 1 - IPN call from iCredit (including generating waiting payment)
+        for (let company of [c1, c3]) {
+            data.Custom1 = company._id;
+            data.SaleId = company.name + "-007";
+            await iCreditManager.handleIPNCall(data);
+        }
+
+        // Act 2 - Generate immediate payment
+        let premiumPlanCompanies = await CompanyModel.getPremiumPlanCompanies();
+        expect(premiumPlanCompanies.length == 2).to.be.true; // only c1 && c2
+
+        for (let company of premiumPlanCompanies) {
+            let fetchCompany = await CompanyModel.getByCompanyId(company._id);
+
+            let {creditCardToken, authNum, customerTransactionId} = fetchCompany.paymentData;
+            let {email, name} = fetchCompany;
+
+            await iCreditManager.generateImmediatePayment(creditCardToken, authNum, customerTransactionId, email, name);
+        }
     });
 });
