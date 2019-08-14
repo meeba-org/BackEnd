@@ -102,25 +102,29 @@ function createMockedShiftPlainObject(clockInTime1, company, user) {
 }
 
 
-function createMockedCompanyPlainObject(name) {
-    return {
-        name: name,
-    };
-}
+const createMockedCompanyPlainObject = name => ({
+    name,
+});
 
-function createMockedTaskPlainObject(title, parent) {
-    return {
-        title,
-        company: require('mongoose').Types.ObjectId(),
-        parent,
-    };
-}
+const createMockedPaymentPlainObject = company => ({
+    company,
+    publicSaleToken: "111-222-333",
+    privateSaleToken: "444-555-666",
+    status: 0
+});
+
+const createMockedTaskPlainObject = (title, parent) => ({
+    title,
+    company: require('mongoose').Types.ObjectId(),
+    parent,
+});
 
 module.exports = {
     createMockedUserPlainObject
     , createMockedCompanyPlainObject
     , createMockedTaskPlainObject
     , createMockedShiftPlainObject
+    , createMockedPaymentPlainObject
     , TIMEOUT
     , getAdminUser
     , clearDB

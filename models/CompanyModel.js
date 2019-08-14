@@ -20,7 +20,11 @@ const CompanySchema = mongoose.Schema({
     },
     features: [String],
     plan: {type: Number, default: EPlanType.Free},
-    creditCardToken: {type: String}
+    paymentData: {
+        creditCardToken: {type: String},
+        customerTransactionId: {type: String},
+        authNum: {type: String},
+    }
 });
 
 const Company = mongoose.model('Company', CompanySchema);

@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 const UserModel = require("../models/UserModel");
 const CompanyModel = require("../models/CompanyModel");
-const PaymentModel = require("../models/PaymentModel");
 const jwtService = require("./jwtService");
 const AppManager = require('../managers/AppManager');
 const iCreditManager = require('../managers/iCreditManager');
@@ -133,42 +132,13 @@ router.get('/api/general/meta',
     })
 );
 
-const updateCompanyWithCreditCardToken = async (companyId, creditCardToken) => {
-    // Update Company with creditCardToken
-    const company = await CompanyModel.getByCompanyId(companyId);
-    if (!company)
-        throw new Error("[generalController] - IPN, Could not find company, companyId: " + companyId);
-
-    company.creditCardToken = creditCardToken;
-    CompanyModel.updateCompany(company);
-};
-
-const updatePaymentWithSaleId = async (companyId, saleId) => {
-    // Update Payment with SaleId
-    let payment = await PaymentModel.getLatestByCompanyId(companyId);
-    if (!payment)
-        return await reject("[generalController] - IPN, Could not find payment, companyId: " + companyId);
-
-    payment.saleId = saleId;
-    PaymentModel.updatePayment(payment);
-};
-
-const handleIPNCall = async data => {
-    const {Custom1: companyId, SaleId: saleId, TransactionToken: creditCardToken} = data;
-
-    await updateCompanyWithCreditCardToken(companyId, creditCardToken);
-    await updatePaymentWithSaleId(companyId, saleId);
-
-    return await iCreditManager.generateWaitingPayment(creditCardToken);
-};
-
 router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
     (req, res) => routeWrapper(req, res, async (req, res) => {
         try {
             let data = req.body;
             console.log("ipn response: " + JSON.stringify(data));
 
-            return await handleIPNCall(data);
+            return await iCreditManager.handleIPNCall(data);
         }
         catch (e) {
             console.error(e);

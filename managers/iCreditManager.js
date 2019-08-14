@@ -1,13 +1,16 @@
 const {PAYMENT_BASE_URL} = require("../config");
 const axios = require('axios');
+const PaymentModel = require("../models/PaymentModel");
+const CompanyModel = require("../models/CompanyModel");
 
 const CREATE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/CreateSale`;
 const CHARGE_SIMPLE = `https://testpci.rivhit.co.il/api/iCreditRestApiService.svc/ChargeSimple/Full`;
 const COMPLETE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/CompleteSale`;
+const SALE_CHARGE_TOKEN = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/SaleChargeToken`;
 const GROUP_PRIVATE_TOKEN = "a1408bfc-18da-49dc-aa77-d65870f7943e";
 const CREDIT_BOX_TOKEN = "7cd7ca78-e67c-4909-94b7-22fd19e42ad4";
 
-const createSaleToken = async () => {
+const createSale = async () => {
     let data = {
         "GroupPrivateToken": GROUP_PRIVATE_TOKEN,
         "Items": [
@@ -26,13 +29,16 @@ const createSaleToken = async () => {
 
     try {
         const response = await axios.post(CREATE_SALE, data);
-        return response.data.SaleToken;
+        let {SaleToken} = response.data;
+        return {
+            saleToken: SaleToken
+        };
     } catch (err) {
         console.error("[CreateSale] has failed");
     }
 };
 
-const generateCustomerTransactionId = async creditCardToken => {
+const chargeSimple = async creditCardToken => {
     let data = {
         "Token": creditCardToken,
         "CreateToken": true,
@@ -45,7 +51,11 @@ const generateCustomerTransactionId = async creditCardToken => {
 
     try {
         const response = await axios.post(CHARGE_SIMPLE, data);
-        return response.data.CustomerTransactionId;
+        let {CustomerTransactionId, AuthNum} = response.data;
+        return {
+            customerTransactionId: CustomerTransactionId,
+            authNum: AuthNum
+        };
     } catch (err) {
         console.error("[ChargeSimple] has failed");
     }
@@ -71,17 +81,95 @@ const completeSale = async (saleToken, customerTransactionId) => {
 };
 
 const generateWaitingPayment = async (creditCardToken) => {
-    const saleToken = await createSaleToken();
-    const customerTransactionId = await generateCustomerTransactionId(creditCardToken);
+    const createSaleResult = await createSale();
+    let {saleToken} = createSaleResult;
+    const chargeSimpleResult = await chargeSimple(creditCardToken);
+    let {customerTransactionId, authNum} = chargeSimpleResult;
 
-    return await completeSale(saleToken, customerTransactionId);
+    let result = await completeSale(saleToken, customerTransactionId);
+    return {
+        saleToken,
+        customerTransactionId,
+        authNum
+    };
+};
+
+const generateImmediatePayment = async (creditCardToken, authNum, customerTransactionId) => {
+    let data = {
+        "GroupPrivateToken": GROUP_PRIVATE_TOKEN,
+        "CreditcardToken": creditCardToken,
+        "CustomerLastName": "ddd-charge-test",
+        "EmailAddress": "m@gmail.co.il",
+        "Currency": 1,
+        "SaleType": 1,
+        "AuthNum": authNum, //"2332108",
+        "J5CustomerTransactionId": customerTransactionId, //"5b643290-7bfc-4303-bf6d-efcc9dcb95f5",
+        "Items": [
+            {
+                "UnitPrice": 20,
+                "Quantity": 1,
+                "Description": "מנוי חודשי לאתר מיבא"
+            }
+        ]
+    };
+
+    try {
+        const response = await axios.post(SALE_CHARGE_TOKEN, data);
+        let status = response.data.Status;
+
+        if (status !== 0)
+            throw new Error(`status: ${status}`);
+
+        return true;
+    } catch (err) {
+        console.error(`[generateImmediatePayment] has failed - ${err.message}`);
+    }
+};
+
+const handleIPNCall = async data => {
+    const {Custom1: companyId, SaleId: saleId, TransactionToken: creditCardToken} = data;
+
+    await updateCompanyWithPaymentData(companyId, {
+        creditCardToken
+    });
+    await updatePaymentWithSaleId(companyId, saleId);
+
+    let waitingPayment = await generateWaitingPayment(creditCardToken);
+    await updateCompanyWithPaymentData(companyId, {
+        customerTransactionId: waitingPayment.customerTransactionId,
+        authNum: waitingPayment.authNum
+    });
+};
+
+const updatePaymentWithSaleId = async (companyId, saleId) => {
+    // Update Payment with SaleId
+    let payment = await PaymentModel.getLatestByCompanyId(companyId);
+    if (!payment)
+        throw new Error("[generalController] - IPN, Could not find payment, companyId: " + companyId);
+
+    payment.saleId = saleId;
+    PaymentModel.updatePayment(payment);
+};
+
+const updateCompanyWithPaymentData = async (companyId, paymentData) => {
+    let company = await CompanyModel.getByCompanyId(companyId);
+    let orgPaymentData = company.paymentData || {};
+
+    company.paymentData = {
+        ...orgPaymentData,
+        ...paymentData
+    };
+
+    await CompanyModel.updateCompany(company);
 };
 
 module.exports = {
-    createSaleToken,
+    createSale,
     generateWaitingPayment,
-    generateCustomerTransactionId,
-    completeSale
+    chargeSimple,
+    completeSale,
+    generateImmediatePayment,
+    handleIPNCall
 };
 
 
