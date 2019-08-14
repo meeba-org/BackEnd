@@ -43,8 +43,11 @@ describe('iCreditManager', function () {
     it('generateImmediatePayment', async () => {
         let authNum = "2332108";
         let customerTransactionId = "5b643290-7bfc-4303-bf6d-efcc9dcb95f5";
+        const email = "chenop@gmail.com";
+        let first = "Chen";
+        let last = "Oppenhaim";
 
-        let result = await iCreditManager.generateImmediatePayment(TEST_CREDIT_CARD_TOKEN, authNum, customerTransactionId);
+        let result = await iCreditManager.generateImmediatePayment(TEST_CREDIT_CARD_TOKEN, authNum, customerTransactionId, email, first, last);
 
         expect(result).to.be.true;
     });
@@ -62,7 +65,6 @@ describe('iCreditManager', function () {
         };
 
         await iCreditManager.handleIPNCall(data);
-        // await expect(iCreditManager.handleIPNCall(data)).to.be.rejectedWith(Error);
 
         let updateCompany = await CompanyModel.getByCompanyId(company);
         expect(updateCompany.paymentData).to.not.be.null;

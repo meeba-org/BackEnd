@@ -94,12 +94,20 @@ const generateWaitingPayment = async (creditCardToken) => {
     };
 };
 
-const generateImmediatePayment = async (creditCardToken, authNum, customerTransactionId) => {
+/**
+ * https://icredit.rivhit.co.il/API/PaymentPageRequest.svc/help/operations/ExecuteSale
+ * @param creditCardToken
+ * @param authNum
+ * @param customerTransactionId
+ * @return {Promise<boolean>}
+ */
+const generateImmediatePayment = async (creditCardToken, authNum, customerTransactionId, email, firstName, lastName) => {
     let data = {
         "GroupPrivateToken": GROUP_PRIVATE_TOKEN,
         "CreditcardToken": creditCardToken,
-        "CustomerLastName": "ddd-charge-test",
-        "EmailAddress": "m@gmail.co.il",
+        "CustomerLastName": firstName,
+        "CustomerFirstName": lastName,
+        "EmailAddress": email,
         "Currency": 1,
         "SaleType": 1,
         "AuthNum": authNum, //"2332108",
@@ -115,6 +123,7 @@ const generateImmediatePayment = async (creditCardToken, authNum, customerTransa
 
     try {
         const response = await axios.post(SALE_CHARGE_TOKEN, data);
+        console.log(response.data);
         let status = response.data.Status;
 
         if (status !== 0)
