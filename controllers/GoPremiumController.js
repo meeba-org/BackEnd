@@ -25,12 +25,14 @@ const GetUrl = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/GetUrl`;
 router.get('/',
     (req, res) => routeWrapper(req, res, async (req, res) => {
         let company = jwtService.getCompanyFromLocals(res);
-        let user = jwtService.getUserFromLocals(res);
+        let userFromToken = jwtService.getUserFromLocals(res);
+        let user = await UserModel.getByUserId(userFromToken._id);
+
         if (!company || !user)
             return reject('משתמש לא ידוע - נסה להיכנס מחדש לחשבון');
 
         let data = {
-            "GroupPrivateToken": "a1408bfc-18da-49dc-aa77-d65870f7943e",
+            "GroupPrivateToken": "f930c192-ea2b-4e53-8de8-27d3a74fab66",
             "Items": [{
                 "Quantity": 1,
                 "UnitPrice": 100,
@@ -40,7 +42,9 @@ router.get('/',
             "ExemptVAT": true,
             "MaxPayments": 1,
             "SaleType": 3, // איסוף כרטיס בלבד - ללא גבייה
-            "EmailAddress": user.email,
+            "EmailAddress": user.email || null,
+            "CustomerFirstName": company.name || null,
+            "HideItemList": true,
             "IPNURL": "https://meeba.org.il/api/general/ipn",
             "Custom1": company._id // Storing this in order to link the return transaction token to the company
         };

@@ -114,7 +114,7 @@ describe('iCreditManager', function () {
 
         // Act 2 - Generate immediate payment
         let premiumPlanCompanies = await CompanyModel.getPremiumPlanCompanies();
-        expect(premiumPlanCompanies.length == 2).to.be.true; // only c1 && c2
+        expect(premiumPlanCompanies.length === 2).to.be.true; // only c1 && c2
 
         for (let company of premiumPlanCompanies) {
             let fetchCompany = await CompanyModel.getByCompanyId(company._id);

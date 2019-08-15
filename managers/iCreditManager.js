@@ -139,10 +139,11 @@ const generateImmediatePayment = async (creditCardToken, authNum, customerTransa
 };
 
 const handleIPNCall = async data => {
-    const {Custom1: companyId, SaleId: saleId, TransactionToken: creditCardToken} = data;
+    const {Custom1: companyId, SaleId: saleId, TransactionToken: creditCardToken, EmailAddress: email} = data;
 
     await updateCompanyWithPaymentData(companyId, {
-        creditCardToken
+        creditCardToken,
+        email
     });
     await updatePaymentWithSaleId(companyId, saleId);
 
