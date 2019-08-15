@@ -37,7 +37,7 @@ router.get('/',
             "GroupPrivateToken": "f930c192-ea2b-4e53-8de8-27d3a74fab66",
             "Items": [{
                 "Quantity": 1,
-                "UnitPrice": 100,
+                "UnitPrice": MONTHLY_SUBSCRIPTION_PRICE,
                 "Description": "מנוי חודשי לאתר מיבא",
             }],
             "RedirectURL": "https://meeba.org.il/paymentSuccess",

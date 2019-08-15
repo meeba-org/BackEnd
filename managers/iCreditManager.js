@@ -11,20 +11,20 @@ const SALE_CHARGE_TOKEN = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.sv
 const GROUP_PRIVATE_TOKEN = "a1408bfc-18da-49dc-aa77-d65870f7943e";
 const CREDIT_BOX_TOKEN = "7cd7ca78-e67c-4909-94b7-22fd19e42ad4";
 
-const createSale = async () => {
+const createSale = async (email) => {
     let data = {
         "GroupPrivateToken": GROUP_PRIVATE_TOKEN,
         "Items": [
             {
                 "Quantity": 1,
-                "UnitPrice": 20,
+                "UnitPrice": MONTHLY_SUBSCRIPTION_PRICE,
                 "Description": "מנוי חודשי לאתר מיבא"
             }
         ],
         "ExemptVAT": true,
         "MaxPayments": 1,
         "SaleType": 2,
-        // TODO add the email here
+        "EmailAddress": email,
         "CustomerLastName":"ddd"
     };
 
@@ -81,8 +81,8 @@ const completeSale = async (saleToken, customerTransactionId) => {
     }
 };
 
-const generateWaitingPayment = async (creditCardToken) => {
-    const createSaleResult = await createSale();
+const generateWaitingPayment = async (creditCardToken, email) => {
+    const createSaleResult = await createSale(email);
     let {saleToken} = createSaleResult;
     const chargeSimpleResult = await chargeSimple(creditCardToken);
     let {customerTransactionId, authNum} = chargeSimpleResult;
@@ -148,7 +148,7 @@ const handleIPNCall = async data => {
     });
     await updatePaymentWithSaleId(companyId, saleId);
 
-    let waitingPayment = await generateWaitingPayment(creditCardToken);
+    let waitingPayment = await generateWaitingPayment(creditCardToken, email);
     await updateCompanyWithPaymentData(companyId, {
         customerTransactionId: waitingPayment.customerTransactionId,
         authNum: waitingPayment.authNum
