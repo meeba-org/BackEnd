@@ -8,6 +8,7 @@
     <file url="file://$PROJECT_DIR$/.npmrc" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/circle.yml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/config.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/constants.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/CompaniesController.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/ReportsController.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/ShiftsController.js" charset="UTF-8" />
@@ -148,6 +149,7 @@
     <file url="file://$PROJECT_DIR$/public/styles/Features.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Footer.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/GoPremiumContainer.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/styles/GoPremiumIntro.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Header.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Home.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/HomeAppBar.scss" charset="UTF-8" />

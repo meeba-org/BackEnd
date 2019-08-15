@@ -12,7 +12,9 @@ const config = require('../config');
 const { body } = require('express-validator/check');
 const axios = require('axios');
 const EPlanType = require('../models/EPlanType');
+const {MONTHLY_SUBSCRIPTION_PRICE} = require("../constants");
 const {PAYMENT_BASE_URL} = require("../config");
+
 
 const EPaymentStatus = {
     START: 0,

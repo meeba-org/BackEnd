@@ -2,6 +2,7 @@ const {PAYMENT_BASE_URL} = require("../config");
 const axios = require('axios');
 const PaymentModel = require("../models/PaymentModel");
 const CompanyModel = require("../models/CompanyModel");
+const {MONTHLY_SUBSCRIPTION_PRICE} = require("../constants");
 
 const CREATE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/CreateSale`;
 const CHARGE_SIMPLE = `https://testpci.rivhit.co.il/api/iCreditRestApiService.svc/ChargeSimple/Full`;

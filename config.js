@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const fs = require('fs');
 const dotEnvFile = '.env';
 
@@ -33,12 +32,13 @@ function init() {
     if (process.env.NODE_ENV !== 'test')
         checkEnvInfoExists();
 
-    module.exports.secret = process.env.SECRET;
-    module.exports.TEST_DB = process.env.TEST_DB;
-    module.exports.DB_USER = process.env.DB_USER;
-    module.exports.DB_PASS= process.env.DB_PASS;
-    mongoose.Promise = global.Promise;
-    module.exports.PAYMENT_BASE_URL = "testicredit.rivhit.co.il";
+    module.exports = {
+        secret: process.env.SECRET,
+        TEST_DB: process.env.TEST_DB,
+        DB_USER: process.env.DB_USER,
+        DB_PASS: process.env.DB_PASS,
+        PAYMENT_BASE_URL: "testicredit.rivhit.co.il",
+    };
 
     switch (process.env.NODE_ENV) {
         case "production" :

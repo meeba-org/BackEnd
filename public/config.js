@@ -1,4 +1,3 @@
-
 const port = process.env.PORT || 4000;
 const ROOT_URL = location.href.indexOf('localhost') > 0 ? 'http://localhost:' + port : '';
 const API_URL = `${ROOT_URL}/api`;

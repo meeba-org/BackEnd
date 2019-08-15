@@ -2,6 +2,7 @@ import Button from '@material-ui/core/Button';
 import CheckIcon from "@material-ui/icons/Check";
 import React from 'react';
 import CSSModules from "react-css-modules";
+import {MONTHLY_SUBSCRIPTION_PRICE} from "../../../constants";
 import styles from '../../styles/GoPremiumIntro.scss';
 
 const IntroLine = CSSModules(({text}) => <div styleName="text"><CheckIcon styleName="check"/>{text}</div>, styles);
@@ -9,6 +10,12 @@ const IntroLine = CSSModules(({text}) => <div styleName="text"><CheckIcon styleN
 const GoPremiumIntro = ({onNext, onClose}) => {
     return (
         <div styleName="container">
+            <div styleName="price">
+                <div styleName="label">עלות חודשית:</div>
+                <div styleName="number">{MONTHLY_SUBSCRIPTION_PRICE}</div>
+                <div styleName="symbol">ש"ח</div>
+            </div>
+
             <div styleName="intro-info">
                 <IntroLine text={"מספר עובדים ללא הגבלה"}/>
                 <IntroLine text={"הצגת מיקום בכניסה למשמרת"}/>
