@@ -140,9 +140,9 @@ router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
 
             return await iCreditManager.handleIPNCall(data);
         }
-        catch (e) {
-            console.error(e);
-            return await reject(e);
+        catch (err) {
+            console.error(err.message);
+            return await reject(err);
         }
     })
 );

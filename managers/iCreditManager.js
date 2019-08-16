@@ -28,15 +28,15 @@ const createSale = async (email) => {
         "CustomerLastName":"ddd"
     };
 
-    try {
-        const response = await axios.post(CREATE_SALE, data);
-        let {SaleToken} = response.data;
-        return {
-            saleToken: SaleToken
-        };
-    } catch (err) {
-        console.error("[CreateSale] has failed");
-    }
+    const response = await axios.post(CREATE_SALE, data);
+    if (hasICreditError(response))
+        throw new Error(`[CreateSale] - Error response${JSON.stringify(response.data)}`);
+
+    let {SaleToken} = response.data;
+
+    return {
+        saleToken: SaleToken
+    };
 };
 
 const chargeSimple = async creditCardToken => {
@@ -50,16 +50,16 @@ const chargeSimple = async creditCardToken => {
         "ParamJ": 5
     };
 
-    try {
-        const response = await axios.post(CHARGE_SIMPLE, data);
-        let {CustomerTransactionId, AuthNum} = response.data;
-        return {
-            customerTransactionId: CustomerTransactionId,
-            authNum: AuthNum
-        };
-    } catch (err) {
-        console.error("[ChargeSimple] has failed");
-    }
+    const response = await axios.post(CHARGE_SIMPLE, data);
+    if (hasICreditError(response))
+        throw new Error(`[ChargeSimple] - Error response${JSON.stringify(response.data)}`);
+
+    let {CustomerTransactionId, AuthNum} = response.data;
+
+    return {
+        customerTransactionId: CustomerTransactionId,
+        authNum: AuthNum
+    };
 };
 
 const completeSale = async (saleToken, customerTransactionId) => {
@@ -68,17 +68,11 @@ const completeSale = async (saleToken, customerTransactionId) => {
         "SaleToken": saleToken
     };
 
-    try {
-        const response = await axios.post(COMPLETE_SALE, data);
-        let status = response.data.Status;
+    const response = await axios.post(COMPLETE_SALE, data);
+    if (hasICreditError(response))
+        throw new Error(`[CompleteSale] - Error response${JSON.stringify(response.data)}`);
 
-        if (status !== 0)
-            throw new Error(`status: ${status}`);
-
-        return true;
-    } catch (err) {
-        console.error(`[CompleteSale] has failed - ${err.message}`);
-    }
+    return true;
 };
 
 const generateWaitingPayment = async (creditCardToken, email) => {
@@ -132,10 +126,9 @@ const generateImmediatePayment = async (creditCardToken, authNum, customerTransa
     try {
         const response = await axios.post(SALE_CHARGE_TOKEN, data);
         console.log(response.data);
-        let status = response.data.Status;
 
-        if (status !== 0)
-            throw new Error(`status: ${status}`);
+        if (hasICreditError(response))
+            throw new Error(`[generateImmediatePayment] - Error response${JSON.stringify(response.data)}`);
 
         return true;
     } catch (err) {
@@ -194,6 +187,8 @@ const chargePremiumPlanCompanies = async () => {
         await generateImmediatePayment(creditCardToken, authNum, customerTransactionId, company.email);
     }
 };
+
+const hasICreditError = response => response.data.Status !== 0;
 
 module.exports = {
     createSale,
