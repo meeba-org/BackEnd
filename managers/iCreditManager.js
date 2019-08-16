@@ -82,9 +82,13 @@ const completeSale = async (saleToken, customerTransactionId) => {
 };
 
 const generateWaitingPayment = async (creditCardToken, email) => {
+    console.log(`Create Sale email: ${email}, ccToken: ${creditCardToken}`);
     const createSaleResult = await createSale(email);
+    console.log(`Create Sale Result ${JSON.stringify(createSaleResult)}`);
     let {saleToken} = createSaleResult;
+
     const chargeSimpleResult = await chargeSimple(creditCardToken);
+    console.log(`Charge Simple Result: ${JSON.stringify(chargeSimpleResult)}`);
     let {customerTransactionId, authNum} = chargeSimpleResult;
 
     let result = await completeSale(saleToken, customerTransactionId);
@@ -162,18 +166,20 @@ const updatePaymentWithSaleId = async (companyId, saleId) => {
         throw new Error("[generalController] - IPN, Could not find payment, companyId: " + companyId);
 
     payment.saleId = saleId;
+    console.log(`Update Payment ${payment._id} with SaleId: ${saleId}`);
     PaymentModel.updatePayment(payment);
 };
 
-const updateCompanyWithPaymentData = async (companyId, paymentData) => {
+const updateCompanyWithPaymentData = async (companyId, newPaymentData) => {
     let company = await CompanyModel.getByCompanyId(companyId);
     let orgPaymentData = company.paymentData || {};
 
     company.paymentData = {
         ...orgPaymentData,
-        ...paymentData
+        ...newPaymentData
     };
 
+    console.log(`Updating Company ${company.name} with ${JSON.stringify(newPaymentData)}`);
     await CompanyModel.updateCompany(company);
 };
 
