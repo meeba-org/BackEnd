@@ -44,8 +44,8 @@ router.get('/',
             "ExemptVAT": true,
             "MaxPayments": 1,
             "SaleType": 3, // איסוף כרטיס בלבד - ללא גבייה
-            "EmailAddress": user.email || null,
-            "CustomerFirstName": company.name || null,
+            "EmailAddress": user.company.email || null,
+            "CustomerFirstName": user.company.name || null,
             "HideItemList": true,
             "IPNURL": "https://meeba.org.il/api/general/ipn",
             "Custom1": company._id // Storing this in order to link the return transaction token to the company

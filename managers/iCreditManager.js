@@ -159,12 +159,14 @@ const updatePaymentWithSaleId = async (companyId, saleId) => {
         throw new Error("[generalController] - IPN, Could not find payment, companyId: " + companyId);
 
     payment.saleId = saleId;
-    console.log(`Update Payment ${payment._id} with SaleId: ${saleId}`);
+    console.log(`[iCreditManager] - Update Payment ${payment._id} with SaleId: ${saleId}`);
     PaymentModel.updatePayment(payment);
 };
 
 const updateCompanyWithPaymentData = async (companyId, newPaymentData) => {
     let company = await CompanyModel.getByCompanyId(companyId);
+    if (!company)
+        throw new Error(`[iCreditManager] - No such Company id: ${companyId}`);
     let orgPaymentData = company.paymentData || {};
 
     company.paymentData = {
@@ -172,7 +174,7 @@ const updateCompanyWithPaymentData = async (companyId, newPaymentData) => {
         ...newPaymentData
     };
 
-    console.log(`Updating Company ${company.name} with ${JSON.stringify(newPaymentData)}`);
+    console.log(`[iCreditManager] - Updating Company ${company.name} with ${JSON.stringify(newPaymentData)}`);
     await CompanyModel.updateCompany(company);
 };
 

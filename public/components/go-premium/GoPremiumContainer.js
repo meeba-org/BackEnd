@@ -22,7 +22,6 @@ class GoPremiumContainer extends Component {
     }
 
     onPaymentFinish = (e) => {
-        console.log('GoPremiumContainer: ' + e.data);
         if (!e || !e.data)
             return;
 

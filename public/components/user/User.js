@@ -103,6 +103,22 @@ class User extends Component {
                                 onChange={(e) => this.handleUserChange("fullName", e)}
                             />
                         </Grid>
+                    </Grid>
+                </CardContent>
+
+                <CardHeader title="חברה"/>
+
+                <CardContent>
+                    <Grid container>
+                        <Grid item sm={12}>
+                            <TextField
+                                id="company-name"
+                                label="שם"
+                                value={user.company.name}
+                                onChange={(e) => this.handleCompanyChange("name", e)}
+                                className={styles["long-field"]}
+                            />
+                        </Grid>
                         <Grid item sm={12}>
                             <Tooltip
                                 title="אנחנו מכבדים את הפרטיות שלך - ובאופן כללי לא מאמינים במיילים! - תכלס זה פה כי אולי נעשה עם זה משהו בעתיד.">
@@ -110,25 +126,12 @@ class User extends Component {
                                     className={styles["long-field"]}
                                     label="דואר אלקטרוני"
                                     type="email"
-                                    value={user.email}
-                                    onChange={(e) => this.handleUserChange("email", e)}
+                                    value={user.company.email}
+                                    onChange={(e) => this.handleCompanyChange("email", e)}
                                 />
                             </Tooltip>
                         </Grid>
                     </Grid>
-                </CardContent>
-
-                <CardHeader title="חברה"/>
-
-                <CardContent>
-                    <TextField
-                        id="company-name"
-                        label="שם"
-                        value={user.company.name}
-                        onChange={(e) => this.handleCompanyChange("name", e)}
-                        className={styles["long-field"]}
-                    />
-
                 </CardContent>
 
                 <CardHeader title="מתקדם"/>
