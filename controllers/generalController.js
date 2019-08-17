@@ -96,7 +96,7 @@ router.get('/authenticate',
         // Use process.env.JWT_SECRET instead of config.secret
         return jwt.verify(token, config.secret, function (err, user) {
             if (err)
-                return reject('[authenticate] - Token is not valid', 401);
+                return reject(`[authenticate] - Token is not valid, Error: ${err.message}`, 401);
 
             //return user using the id from w/in JWTToken
             return UserModel.getByUserId(user._id)

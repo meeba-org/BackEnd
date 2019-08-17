@@ -30,7 +30,7 @@ const createSale = async (email) => {
 
     const response = await axios.post(CREATE_SALE, data);
     if (hasICreditError(response))
-        throw new Error(`[CreateSale] - Error response${JSON.stringify(response.data)}`);
+        throw new Error(`[CreateSale] - Error! response: ${JSON.stringify(response.data)}`);
 
     let {SaleToken} = response.data;
 
@@ -52,7 +52,7 @@ const chargeSimple = async creditCardToken => {
 
     const response = await axios.post(CHARGE_SIMPLE, data);
     if (hasICreditError(response))
-        throw new Error(`[ChargeSimple] - Error response${JSON.stringify(response.data)}`);
+        throw new Error(`[ChargeSimple] - Error! response: ${JSON.stringify(response.data)}`);
 
     let {CustomerTransactionId, AuthNum} = response.data;
 
@@ -70,7 +70,7 @@ const completeSale = async (saleToken, customerTransactionId) => {
 
     const response = await axios.post(COMPLETE_SALE, data);
     if (hasICreditError(response))
-        throw new Error(`[CompleteSale] - Error response${JSON.stringify(response.data)}`);
+        throw new Error(`[CompleteSale] - Error! response: ${JSON.stringify(response.data)}`);
 
     return true;
 };
@@ -128,7 +128,7 @@ const generateImmediatePayment = async (creditCardToken, authNum, customerTransa
         console.log(response.data);
 
         if (hasICreditError(response))
-            throw new Error(`[generateImmediatePayment] - Error response${JSON.stringify(response.data)}`);
+            throw new Error(`[generateImmediatePayment] - Error! response: ${JSON.stringify(response.data)}`);
 
         return true;
     } catch (err) {
