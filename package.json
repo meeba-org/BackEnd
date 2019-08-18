@@ -32,7 +32,8 @@
         "analyze-bundle": "babel-node ./tools/analyzeBundle.js",
         "test": "mocha ./test/**/*.spec.js",
         "generateWaitingPayment" : "node tools/generateWaitingPayment.js",
-        "generateImmediatePayment" : "node tools/generateImmediatePayment.js"
+        "generateImmediatePayment" : "node tools/generateImmediatePayment.js",
+        "chargePremiumCompanies" : "node tools/chargePremiumCompanies.js"
     },
     "repository": {
         "type": "git",

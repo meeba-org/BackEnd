@@ -11,11 +11,26 @@ mongoose.connect(config.dbUrl, {useNewUrlParser: true }, () => {
     console.log("Connected to DB successfully");
 });
 
-let companyId = "5a1a9d1e9723c88e24ef4907";
+const chargePremiumCompanies = async () => {
+    let companies = await CompanyModel.getPremiumPlanCompanies();
+    if (!companies) {
+        console.log('No Premium companies found :-(');
+        return;
+    }
+
+    for (let company of companies) {
+        try{
+            await iCreditManager.generateImmediatePayment(company._id);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+};
 
 const run = async () => {
     try {
-        await iCreditManager.generateImmediatePayment(companyId);
+        await chargePremiumCompanies();
         console.log("Success!");
     } catch (e) {
         console.error(e);

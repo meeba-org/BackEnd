@@ -75,7 +75,7 @@ const completeSale = async (saleToken, customerTransactionId) => {
     return true;
 };
 
-const generateWaitingPayment = async (creditCardToken, email) => {
+const generateWaitingPayment = async (creditCardToken, email = "") => {
     console.log(`Create Sale email: ${email}, ccToken: ${creditCardToken}`);
     const createSaleResult = await createSale(email);
     console.log(`Create Sale Result ${JSON.stringify(createSaleResult)}`);
@@ -85,12 +85,30 @@ const generateWaitingPayment = async (creditCardToken, email) => {
     console.log(`Charge Simple Result: ${JSON.stringify(chargeSimpleResult)}`);
     let {customerTransactionId, authNum} = chargeSimpleResult;
 
-    let result = await completeSale(saleToken, customerTransactionId);
+    await completeSale(saleToken, customerTransactionId);
     return {
         saleToken,
         customerTransactionId,
         authNum
     };
+};
+
+const generateImmediatePayment = async (companyId) => {
+    let company = await CompanyModel.getByCompanyId(companyId);
+    if (!company)
+        throw new Error(`Company id ${companyId} was not found`);
+
+    if (!company.paymentData) {
+        throw new Error(`No Payment daya for company id ${companyId}`);
+    }
+
+    let {email} = company;
+    let {creditCardToken, customerTransactionId, authNum} = company.paymentData;
+    creditCardToken = "0a1b8304-36e6-4a11-bdc7-b43c92fc2a25"; // TODO  Test CCToken!!! - debug only - remove it in production
+
+    if (!customerTransactionId || !creditCardToken || !authNum)
+        throw new Error(`customerTransactionId or creditCardToken or authNum is missing for company id ${companyId}`);
+    await generateImmediatePayment0(creditCardToken, authNum, customerTransactionId, email);
 };
 
 /**
@@ -103,7 +121,7 @@ const generateWaitingPayment = async (creditCardToken, email) => {
  * @param lastName
  * @return {Promise<boolean>}
  */
-const generateImmediatePayment = async (creditCardToken, authNum, customerTransactionId, email, firstName = "", lastName = "") => {
+const generateImmediatePayment0 = async (creditCardToken, authNum, customerTransactionId, email, firstName = "", lastName = "") => {
     let data = {
         "GroupPrivateToken": GROUP_PRIVATE_TOKEN,
         "CreditcardToken": creditCardToken,
@@ -204,6 +222,7 @@ module.exports = {
     chargeSimple,
     completeSale,
     generateImmediatePayment,
+    generateImmediatePayment0,
     handleIPNCall
 };
 
