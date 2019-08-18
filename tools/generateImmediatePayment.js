@@ -13,7 +13,7 @@ mongoose.connect(config.dbUrl, {useNewUrlParser: true }, () => {
 
 let companyId = "5a1a9d1e9723c88e24ef4907";
 
-const generateWaitingPayment = async (companyId) => {
+const generateImmediatePayment = async (companyId) => {
     let company = await CompanyModel.getByCompanyId(companyId);
     if (!company)
         throw new Error(`Company id ${companyId} was not found`);
@@ -23,21 +23,21 @@ const generateWaitingPayment = async (companyId) => {
     }
 
     let {email} = company;
-    let {creditCardToken} = company.paymentData;
+    let {creditCardToken, customerTransactionId, authNum} = company.paymentData;
     creditCardToken = "0a1b8304-36e6-4a11-bdc7-b43c92fc2a25"; // TODO  Test CCToken!!! - debug only - remove it in production
 
-    if (!email || !creditCardToken)
-        throw new Error(`email or creditCardToken is missing for company id ${companyId}`);
-    await iCreditManager.generateWaitingPaymentAndSave(creditCardToken, email, companyId);
+    if (!customerTransactionId || !creditCardToken || !authNum)
+        throw new Error(`customerTransactionId or creditCardToken or authNum is missing for company id ${companyId}`);
+
+    const result = await iCreditManager.generateImmediatePayment(creditCardToken, authNum, customerTransactionId, email);
+    console.log(JSON.stringify(result));
 };
 
 const run = async () => {
     try {
-        await generateWaitingPayment(companyId);
-        console.log("Success!");
+        await generateImmediatePayment(companyId);
     } catch (e) {
         console.error(e);
-        console.log("Failed...");
     } finally {
         process.exit();
     }

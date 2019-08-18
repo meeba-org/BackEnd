@@ -136,6 +136,15 @@ const generateImmediatePayment = async (creditCardToken, authNum, customerTransa
     }
 };
 
+async function generateWaitingPaymentAndSave(creditCardToken, email, companyId) {
+    let waitingPayment = await generateWaitingPayment(creditCardToken, email);
+    console.log(JSON.stringify(waitingPayment));
+    await updateCompanyWithPaymentData(companyId, {
+        customerTransactionId: waitingPayment.customerTransactionId,
+        authNum: waitingPayment.authNum
+    });
+}
+
 const handleIPNCall = async data => {
     const {Custom1: companyId, SaleId: saleId, TransactionToken: creditCardToken, EmailAddress: email} = data;
 
@@ -145,11 +154,7 @@ const handleIPNCall = async data => {
     });
     await updatePaymentWithSaleId(companyId, saleId);
 
-    let waitingPayment = await generateWaitingPayment(creditCardToken, email);
-    await updateCompanyWithPaymentData(companyId, {
-        customerTransactionId: waitingPayment.customerTransactionId,
-        authNum: waitingPayment.authNum
-    });
+    await generateWaitingPaymentAndSave(creditCardToken, email, companyId);
 };
 
 const updatePaymentWithSaleId = async (companyId, saleId) => {
@@ -195,6 +200,7 @@ const hasICreditError = response => response.data.Status !== 0;
 module.exports = {
     createSale,
     generateWaitingPayment,
+    generateWaitingPaymentAndSave,
     chargeSimple,
     completeSale,
     generateImmediatePayment,

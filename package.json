@@ -31,7 +31,8 @@
         "open:cover": "npm run test:cover && opn ./coverage/lcov-report/index.html",
         "analyze-bundle": "babel-node ./tools/analyzeBundle.js",
         "test": "mocha ./test/**/*.spec.js",
-        "generateWaitingPayment" : "node tools/generateWaitingPayment.js"
+        "generateWaitingPayment" : "node tools/generateWaitingPayment.js",
+        "generateImmediatePayment" : "node tools/generateImmediatePayment.js"
     },
     "repository": {
         "type": "git",
