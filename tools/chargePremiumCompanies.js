@@ -13,7 +13,7 @@ mongoose.connect(config.dbUrl, {useNewUrlParser: true }, () => {
 
 const chargePremiumCompanies = async () => {
     let companies = await CompanyModel.getPremiumPlanCompanies();
-    if (!companies) {
+    if (!companies || companies.length === 0) {
         console.log('No Premium companies found :-(');
         return;
     }
