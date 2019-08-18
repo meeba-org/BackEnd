@@ -30,7 +30,8 @@
         "test:watch": "npm run test-fe -- --watch",
         "open:cover": "npm run test:cover && opn ./coverage/lcov-report/index.html",
         "analyze-bundle": "babel-node ./tools/analyzeBundle.js",
-        "test": "mocha ./test/**/*.spec.js"
+        "test": "mocha ./test/**/*.spec.js",
+        "generateWaitingPayment" : "node tools/generateWaitingPayment.js"
     },
     "repository": {
         "type": "git",
