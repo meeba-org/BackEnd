@@ -26,7 +26,7 @@ describe('iCreditManager', function () {
     });
 
     // TODO need to think how to test completeSale - dependes on CreateSale & ChargeSimple
-    it('completeSale', async () => {
+    xit('completeSale', async () => {
         const saleToken = "e7827d4f-a09a-4960-907e-ae24c4a2fff7";
         const customerTransactionId = "c9efcb89-2af4-433b-8eb7-b22573746585";
 
@@ -35,13 +35,13 @@ describe('iCreditManager', function () {
         expect(result).to.be.true;
     });
 
-    it('generateWaitingPayment', async () => {
+    xit('generateWaitingPayment', async () => {
         let result = await iCreditManager.generateWaitingPayment(TEST_CREDIT_CARD_TOKEN);
 
         expect(result).to.be.true;
     });
 
-    it('generateImmediatePayment', async () => {
+    xit('generateImmediatePayment', async () => {
         let authNum = "2332108";
         let customerTransactionId = "5b643290-7bfc-4303-bf6d-efcc9dcb95f5";
         const email = "chenop@gmail.com";
@@ -53,7 +53,7 @@ describe('iCreditManager', function () {
         expect(result).to.be.true;
     });
 
-    it('handleIPNCall', async () => {
+    xit('handleIPNCall', async () => {
         let companyObject = utils.createMockedCompanyPlainObject("Toluna");
         let company = await CompanyModel.createCompany(companyObject);
         let paymentObject = utils.createMockedPaymentPlainObject(company._id);
@@ -74,7 +74,7 @@ describe('iCreditManager', function () {
         expect(updateCompany.paymentData.authNum).to.not.be.null;
     });
 
-    it ('chargePremiumPlanCompanies', async () => {
+    xit ('chargePremiumPlanCompanies', async () => {
         // Arrange
         let c1 = utils.createMockedCompanyPlainObject("c1-premium");
         let c2 = utils.createMockedCompanyPlainObject("c2-nonPremium");
