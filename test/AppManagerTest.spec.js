@@ -31,21 +31,18 @@ describe('AppManager', function () {
     });
 
     describe('removeUser', function () {
-        it('should remove user from the company', function () {
+        it('should remove user from the company', async () => {
             let newCompany = utils.createMockedCompanyPlainObject("Toluna");
             let newUser = utils.createMockedUserPlainObject();
-            let createdCompany;
 
-            return CompanyModel.createCompany(newCompany)
-                .then((newCreatedCompany) => {
-                    newUser.company = createdCompany = newCreatedCompany;
-                    return AppManager.addUser(newUser);
-                })
-                .then((createdUser) => AppManager.removeUser(createdUser.id))
-                .then(() => UserModel.usersCount(true))
-                .then((result) => expect(result).to.be.equal(0))
-                .then(() => CompanyModel.getByCompanyId(createdCompany.id))
-                .then((company) => expect(company.users).to.have.length(0));
+            let newCreatedCompany = await CompanyModel.createCompany(newCompany);
+            newUser.company  = newCreatedCompany;
+            let createdUser = await AppManager.addUser(newUser);
+            await AppManager.removeUser(createdUser.id);
+            let result = await UserModel.usersCount(true);
+            expect(result).to.be.equal(0);
+            let company = await CompanyModel.getByCompanyId(newCreatedCompany.id);
+            expect(company.users).to.have.length(0);
         });
     });
 
