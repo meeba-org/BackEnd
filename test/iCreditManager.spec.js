@@ -26,7 +26,7 @@ describe('iCreditManager', function () {
     });
 
     // TODO need to think how to test completeSale - dependes on CreateSale & ChargeSimple
-    it('completeSale', async () => {
+    xit('completeSale', async () => {
         const saleToken = "e7827d4f-a09a-4960-907e-ae24c4a2fff7";
         const customerTransactionId = "c9efcb89-2af4-433b-8eb7-b22573746585";
 
