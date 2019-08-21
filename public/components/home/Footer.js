@@ -15,7 +15,7 @@ class Footer extends Component {
                             <span styleName="facebook-link">צור קשר איתנו ב-</span>
                             <img src={facebookImage}/>
                         </Button>
-                        <div styleName="phone">טלפון: 052-8421440</div>
+                        <div styleName="phone">טלפון: 052-8421440, הגליל 138, חיפה</div>
                     </div>
                     <div styleName="signature">
                         <div>©2017 - נוצר ע"י <a target="_blank" href="https://www.linkedin.com/in/chenop/">חן אופנהיים</a>
