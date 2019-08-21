@@ -1,6 +1,7 @@
 process.env.NODE_ENV = 'production';
 
 const CompanyModel = require("../models/CompanyModel");
+// eslint-disable-next-line no-unused-vars
 const UserModel = require("../models/UserModel");
 const mongoose = require('mongoose');
 const config = require('../config');

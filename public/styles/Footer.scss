@@ -8,12 +8,11 @@
     text-align: center;
     justify-content: center;
     align-items: center;
+    font-size: 14px;
+    padding-bottom: 20px;
+
 
     .footer-container {
-        //@media (min-width: $mobileWidth) {
-        //    width: 768px;
-        //}
-
         .weak {
             color: material-color('brown', '100')
         }
@@ -21,19 +20,34 @@
             .facebook-link {
                 margin-right: 6px;
             }
+
+            .phone {
+                padding-top: 5px;
+            }
         }
 
 
         .signature {
-            h5 {
-                flex-direction: row;
-                a {
-                    color: material-color('brown', '100')
-                }
+            padding-top: 10px;
+            padding-bottom: 10px;
+            flex-direction: row;
 
-                .like {
-                    padding-right: 10px;
-                }
+            a {
+                color: material-color('brown', '100')
+            }
+
+            .like {
+                padding-right: 10px;
+            }
+        }
+
+        .term-usage {
+            display: flex;
+            justify-content: center;
+
+
+            a {
+                color: material-color('brown', '100')
             }
         }
     }
