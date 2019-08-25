@@ -4,16 +4,58 @@ const PaymentModel = require("../models/PaymentModel");
 const CompanyModel = require("../models/CompanyModel");
 const {MONTHLY_SUBSCRIPTION_PRICE} = require("../constants");
 
+const GetUrl = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/GetUrl`;
 const CREATE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/CreateSale`;
 const CHARGE_SIMPLE = `https://testpci.rivhit.co.il/api/iCreditRestApiService.svc/ChargeSimple/Full`;
 const COMPLETE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/CompleteSale`;
 const SALE_CHARGE_TOKEN = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/SaleChargeToken`;
-const GROUP_PRIVATE_TOKEN = "a1408bfc-18da-49dc-aa77-d65870f7943e";
+const TEST_GROUP_PRIVATE_TOKEN = "f930c192-ea2b-4e53-8de8-27d3a74fab66";
+const PRODUCTION_GROUP_PRIVATE_TOKEN = "af4517a6-a5dc-4ef2-9f2d-d85193edc889";
 const CREDIT_BOX_TOKEN = "7cd7ca78-e67c-4909-94b7-22fd19e42ad4";
+
+const createIframeUrl = async (user, company) => {
+    let data = {
+        "GroupPrivateToken": PRODUCTION_GROUP_PRIVATE_TOKEN,
+        "Items": [{
+            "Quantity": 1,
+            "UnitPrice": MONTHLY_SUBSCRIPTION_PRICE,
+            "Description": "מנוי חודשי לאתר מיבא",
+        }],
+        "RedirectURL": "https://meeba.org.il/paymentSuccess",
+        "ExemptVAT": true,
+        "MaxPayments": 1,
+        "SaleType": 3, // איסוף כרטיס בלבד - ללא גבייה
+        "EmailAddress": user.company.email || null,
+        "CustomerLastName": user.company.name || null,
+        "HideItemList": true,
+        "IPNURL": "https://meeba.org.il/api/general/ipn",
+        "Custom1": company._id // Storing this in order to link the return transaction token to the company
+    };
+
+    try {
+        const response = await axios.post(GetUrl, data);
+        let {URL, PrivateSaleToken, PublicSaleToken} = response.data;
+        if (!URL)
+            throw new Error("iCredit החזיר שגיאה");
+
+        const payment = {
+            company: company._id,
+            url: URL,
+            privateSaleToken: PrivateSaleToken,
+            publicSaleToken: PublicSaleToken,
+            status: 0 // EPaymentStatus.START, // TODO fix this
+        };
+        PaymentModel.createPayment(payment); // No need to wait for it
+        return response.data.URL;
+    } catch (err) {
+        console.error(err.toString());
+        throw new Error("iCredit החזיר שגיאה");
+    }
+};
 
 const createSale = async (email) => {
     let data = {
-        "GroupPrivateToken": GROUP_PRIVATE_TOKEN,
+        "GroupPrivateToken": PRODUCTION_GROUP_PRIVATE_TOKEN,
         "Items": [
             {
                 "Quantity": 1,
@@ -123,7 +165,7 @@ const generateImmediatePayment = async (companyId) => {
  */
 const generateImmediatePayment0 = async (creditCardToken, authNum, customerTransactionId, email, firstName = "", lastName = "") => {
     let data = {
-        "GroupPrivateToken": GROUP_PRIVATE_TOKEN,
+        "GroupPrivateToken": PRODUCTION_GROUP_PRIVATE_TOKEN,
         "CreditcardToken": creditCardToken,
         "CustomerLastName": firstName,
         "CustomerFirstName": lastName,
@@ -223,7 +265,8 @@ module.exports = {
     completeSale,
     generateImmediatePayment,
     generateImmediatePayment0,
-    handleIPNCall
+    handleIPNCall,
+    createIframeUrl
 };
 
 

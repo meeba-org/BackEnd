@@ -54,6 +54,7 @@ function init() {
             console.log("Development Mode!");
 
             module.exports.dbUrl = process.env.MONGODB_URI;
+            module.exports.PAYMENT_BASE_URL = "icredit.rivhit.co.il"; // TODO should be testIcredit
             break;
         }
         case "test" :

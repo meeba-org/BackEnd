@@ -10,10 +10,8 @@ const {Feature, addFeature} = require("./../managers/FeaturesManager");
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const { body } = require('express-validator/check');
-const axios = require('axios');
 const EPlanType = require('../models/EPlanType');
-const {MONTHLY_SUBSCRIPTION_PRICE} = require("../constants");
-const {PAYMENT_BASE_URL} = require("../config");
+const {createIframeUrl} = require("../managers/iCreditManager");
 
 
 const EPaymentStatus = {
@@ -21,7 +19,6 @@ const EPaymentStatus = {
     PAYMENT_DONE: 1,
 };
 
-const GetUrl = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/GetUrl`;
 
 // Getting iCredit payment url
 router.get('/',
@@ -33,43 +30,7 @@ router.get('/',
         if (!company || !user)
             return reject('משתמש לא ידוע - נסה להיכנס מחדש לחשבון');
 
-        let data = {
-            "GroupPrivateToken": "f930c192-ea2b-4e53-8de8-27d3a74fab66",
-            "Items": [{
-                "Quantity": 1,
-                "UnitPrice": MONTHLY_SUBSCRIPTION_PRICE,
-                "Description": "מנוי חודשי לאתר מיבא",
-            }],
-            "RedirectURL": "https://meeba.org.il/paymentSuccess",
-            "ExemptVAT": true,
-            "MaxPayments": 1,
-            "SaleType": 3, // איסוף כרטיס בלבד - ללא גבייה
-            "EmailAddress": user.company.email || null,
-            "CustomerFirstName": user.company.name || null,
-            "HideItemList": true,
-            "IPNURL": "https://meeba.org.il/api/general/ipn",
-            "Custom1": company._id // Storing this in order to link the return transaction token to the company
-        };
-
-        try {
-            const response = await axios.post(GetUrl, data);
-            let {URL, PrivateSaleToken, PublicSaleToken} = response.data;
-            if (!URL)
-                return reject("iCredit החזיר שגיאה");
-
-            const payment = {
-                company: company._id,
-                url: URL,
-                privateSaleToken: PrivateSaleToken,
-                publicSaleToken: PublicSaleToken,
-                status: EPaymentStatus.START,
-            };
-            PaymentModel.createPayment(payment); // No need to wait for it
-            return response.data.URL;
-        } catch (err) {
-            console.error(err.toString());
-            return reject("iCredit החזיר שגיאה");
-        }
+        return await createIframeUrl(user, company);
     })
 );
 
