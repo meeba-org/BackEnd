@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {MAX_FREE_EMPLOYEES_ALLOWED} from "../../../constants";
 import EmployeesList from "./EmployeesList";
 import {createUser, fetchUsers, showEditEmployeeModal, showGoPremiumModal, updateUser} from "../../actions";
 import FieldArray from "redux-form/es/FieldArray";
@@ -14,7 +15,7 @@ class EmployeesContainer extends React.Component {
     }
 
     render() {
-        const {handleSubmit, deleteUser, updateUser, createUser, showMobileAppModal, showEmployeeDialog, isDesktop, isLimited, showGoPremiumModal} = this.props;
+        const {handleSubmit, deleteUser, updateUser, createUser, showMobileAppModal, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed, showGoPremiumModal} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray
@@ -27,7 +28,8 @@ class EmployeesContainer extends React.Component {
                     showEmployeeDialog={showEmployeeDialog}
                     showGoPremiumModal={showGoPremiumModal}
                     isDesktop={isDesktop}
-                    isLimited={false}
+                    isAddAllowed={isAddAllowed}
+                    isEditAllowed={isEditAllowed}
                 />
             </form>
         );
@@ -52,31 +54,20 @@ function mapStateToProps(state) {
             employees: state.users
         },
         isDesktop: selectors.isDesktop(state),
-        isLimited: !selectors.hasPremium(state) && (state.users && state.users.length > 5)
+        isAddAllowed: selectors.hasPremiumFeature(state) | (state.users && state.users.length < MAX_FREE_EMPLOYEES_ALLOWED),
+        isEditAllowed: selectors.hasPremiumFeature(state) || (state.users && state.users.length <= MAX_FREE_EMPLOYEES_ALLOWED),
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchEmployees: () => {
-            dispatch(fetchUsers(true));
-        },
-        createUser: (employee) => {
-            dispatch(createUser(employee));
-        },
-        updateUser: (employee) => {
-            dispatch(updateUser(employee));
-        },
-        deleteUser: (employee) => {
-            dispatch(showDeleteUserModal(employee));
-        },
-        showMobileAppModal: () => {
-            dispatch(showMobileAppModal());
-        },
-        showEmployeeDialog: (employee, callBack) => dispatch(showEditEmployeeModal(employee, callBack)),
-        showGoPremiumModal: () => dispatch(showGoPremiumModal())
-    };
-}
+const mapDispatchToProps = {
+        fetchEmployees: () => fetchUsers(true),
+        createUser: (employee) => createUser(employee),
+        updateUser: (employee) => updateUser(employee),
+        deleteUser: (employee) => showDeleteUserModal(employee),
+        showMobileAppModal: () => showMobileAppModal(),
+        showEmployeeDialog: (employee, callBack) => showEditEmployeeModal(employee, callBack),
+        showGoPremiumModal: () => showGoPremiumModal()
+};
 
 export default connect(
     mapStateToProps, mapDispatchToProps

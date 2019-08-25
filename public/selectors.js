@@ -29,7 +29,7 @@ export const isDesktop = (state) => {
     return state.general.isDesktop;
 };
 
-export const hasPremium = (state) => {
+export const hasPremiumFeature = (state) => {
     return isFeatureEnable(state, Feature.Premium);
 };
 
@@ -72,3 +72,5 @@ export const getPlan = state => {
         return EPlanType.Free;
     return company.plan || EPlanType.Free;
 };
+
+export const hasPremiumPlan = state => getPlan(state) === EPlanType.Premium;

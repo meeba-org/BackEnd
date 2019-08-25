@@ -71,7 +71,7 @@ class EmployeesList extends React.PureComponent {
     }
 
     render() {
-        const {fields, showMobileAppModal, showEmployeeDialog, isDesktop, isLimited, showGoPremiumModal} = this.props;
+        const {fields, showMobileAppModal, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed} = this.props;
 
 
         return (
@@ -83,7 +83,7 @@ class EmployeesList extends React.PureComponent {
                     <div className={styles["controls-line"]}>
                         <Tooltip title="הוספת עובד" placement="top">
                             <Button className={styles["action-button"]} variant="contained" color="primary"
-                                    disabled={isLimited}
+                                    disabled={!isAddAllowed}
                                     onClick={this.onCreate}><AddIcon/></Button>
                         </Tooltip>
                         <Tooltip title="לינק לאפליקציית העובד" placement="top">
@@ -96,7 +96,7 @@ class EmployeesList extends React.PureComponent {
                     </div>
                     <Divider className={styles["divider"]}/>
 
-                    <GoPremiumNotification isVisible={true} text="במסלול החינמי מספר העובדים יוגבל -" />
+                    <GoPremiumNotification isVisible={!isAddAllowed} text="במסלול החינמי מספר העובדים יוגבל -" />
 
                     {fields && fields.length > 0 && isDesktop &&
                     <Grid className={styles["header"]} container spacing={24}>
@@ -115,7 +115,7 @@ class EmployeesList extends React.PureComponent {
                                    onUpdate={(employee) => this.onUpdate(employee)}
                                    validate={this.validateEmployee}
                                    showEmployeeDialog={showEmployeeDialog}
-                                   isLimited={false}
+                                   isLimited={!isEditAllowed}
                             />
                         </Fade>)
                     )
@@ -140,9 +140,9 @@ EmployeesList.propTypes = {
     onDelete: PropTypes.func.isRequired,
     showMobileAppModal: PropTypes.func.isRequired,
     showEmployeeDialog: PropTypes.func.isRequired,
-    showGoPremiumModal: PropTypes.func.isRequired,
     isDesktop: PropTypes.bool,
-    isLimited: PropTypes.bool,
+    isEditAllowed: PropTypes.bool,
+    isAddAllowed: PropTypes.bool,
 };
 
 export default CSSModules(EmployeesList, styles);

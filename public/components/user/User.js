@@ -14,7 +14,6 @@ import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
 import CSSModules from "react-css-modules";
 import {Link} from "react-router";
-import * as EPlanType from "../../../models/EPlanType";
 import styles from '../../styles/User.scss';
 import NoData from "../NoData";
 import Button from "@material-ui/core/Button";
@@ -82,7 +81,7 @@ class User extends Component {
     };
 
     render() {
-        const {input, classes, isCommuteFeatureEnable, plan, onFreePlanClick, onPremiumPlanClick} = this.props;
+        const {input, classes, isCommuteFeatureEnable, hasPremiumFeature, onFreePlanClick, onPremiumPlanClick} = this.props;
         const user = input.value;
 
         if (!user || !user.company)
@@ -227,7 +226,7 @@ class User extends Component {
 
                 <CardContent>
                     <div className={styles["plan"]}>
-                        {plan === EPlanType.Premium &&
+                        {hasPremiumFeature &&
                         <Fragment>
                             <div className={styles["text"]}>הינך כרגע מנוי בתוכנית פרימיום</div>
                             <Button onClick={() => onPremiumPlanClick(user.company)} variant="outlined" color="secondary">
@@ -235,7 +234,7 @@ class User extends Component {
                             </Button>
                         </Fragment>
                         }
-                        {(!plan || plan === EPlanType.Free) &&
+                        {!hasPremiumFeature &&
                         <Fragment>
                             <div className={styles["text"]}>הינך כרגע במסלול החינמי</div>
                             <Button onClick={onFreePlanClick} variant="contained" color="secondary">הירשם כמנוי</Button>
@@ -254,7 +253,7 @@ User.propTypes = {
     onUpdateCompany: PropTypes.func.isRequired,
     input: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
-    plan: PropTypes.number
+    hasPremiumFeature: PropTypes.bool
 };
 
 export default CSSModules(withStyles(styles1)(User), styles);

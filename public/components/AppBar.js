@@ -67,7 +67,7 @@ MeebaAppBar.propTypes = {
 const mapStateToProps = state => ({
     companyName: selectors.getCompanyName(state) || "מיבא",
     isDesktop: selectors.isDesktop(state),
-    hasPremium: selectors.hasPremium(state),
+    hasPremium: selectors.hasPremiumFeature(state),
     isLoading: state.loader.isLoading
 });
 

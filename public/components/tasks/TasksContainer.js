@@ -5,6 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import React from 'react';
 import {connect} from 'react-redux';
 import reduxForm from "redux-form/es/reduxForm";
+import {MAX_FREE_TASKS_ALLOWED} from "../../../constants";
 import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
 import * as selectors from "../../selectors";
 import styles from "../../styles/EmployeesList.scss";
@@ -49,7 +50,7 @@ class TasksContainer extends React.Component {
     };
 
     render() {
-        const {openTaskModal, showDeleteTaskModal, isLimited} = this.props;
+        const {openTaskModal, showDeleteTaskModal, isEditAllowed, isAddAllowed} = this.props;
         let {breadcrumbTasks, selectedParent} = this.state;
         let tasks = filterTasks(this.props.tasks, selectedParent);
 
@@ -59,7 +60,7 @@ class TasksContainer extends React.Component {
                     <Tooltip title="הוספת משימה" placement="top">
                         <Button className={styles["action-button"]}
                                 variant="contained" color="primary"
-                                disabled={isLimited}
+                                disabled={!isAddAllowed}
                                 onClick={this.onCreate}><AddIcon/>
                         </Button>
                     </Tooltip>
@@ -67,7 +68,7 @@ class TasksContainer extends React.Component {
 
                 <Divider className={styles["divider"]}/>
 
-                <GoPremiumNotification isVisible={true} text="במסלול החינמי מספר המשימות יוגבל -" />
+                <GoPremiumNotification isVisible={!isAddAllowed} text="במסלול החינמי מספר המשימות יוגבל -" />
 
                 <BreadCrumb
                     data={breadcrumbTasks}
@@ -79,7 +80,7 @@ class TasksContainer extends React.Component {
                     onEdit={openTaskModal}
                     onDelete={showDeleteTaskModal}
                     onClick={this.onSelectTask}
-                    isLimited={isLimited}
+                    isLimited={!isEditAllowed}
                 />
                 }
             </MbCard>
@@ -94,7 +95,8 @@ function mapStateToProps(state) {
     return {
         tasks: state.tasks,
         company: selectors.getCompany(state),
-        isLimited: false //!selectors.hasPremium(state) && (state.tasks && state.tasks.filter(t => !t.parent).length >= 2)
+        isAddAllowed: selectors.hasPremiumFeature(state) || (state.tasks && state.tasks.filter(t => !t.parent).length < MAX_FREE_TASKS_ALLOWED),
+        isEditAllowed: selectors.hasPremiumFeature(state) || (state.tasks && state.tasks.filter(t => !t.parent).length <= MAX_FREE_TASKS_ALLOWED),
     };
 }
 
