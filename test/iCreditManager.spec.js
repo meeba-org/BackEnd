@@ -6,7 +6,7 @@ const PaymentModel = require("../models/PaymentModel");
 const EPlanType = require("../models/EPlanType");
 const TEST_CREDIT_CARD_TOKEN = "0a1b8304-36e6-4a11-bdc7-b43c92fc2a25";
 
-describe('iCreditManager', function () {
+describe.skip('iCreditManager', function () {
     this.timeout(utils.TIMEOUT);
 
     it('createSaleToken', async () => {
