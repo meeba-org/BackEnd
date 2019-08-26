@@ -46,7 +46,7 @@ function init() {
             console.log("Production Mode!");
 
             module.exports.dbUrl = process.env.MONGOLAB_COPPER_URI;
-            // module.exports.PAYMENT_BASE_URL = "icredit.rivhit.co.il";
+            module.exports.PAYMENT_BASE_URL = "icredit.rivhit.co.il";
             break;
         }
         case "development" :
