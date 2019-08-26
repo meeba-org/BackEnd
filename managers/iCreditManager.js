@@ -1,11 +1,11 @@
-const {PAYMENT_BASE_URL} = require("../config");
+const {PAYMENT_BASE_URL, PAYMENT_PCI_BASE_URL} = require("../config");
 const axios = require('axios');
 const PaymentModel = require("../models/PaymentModel");
 const CompanyModel = require("../models/CompanyModel");
 const {MONTHLY_SUBSCRIPTION_PRICE} = require("../constants");
 
 const CREATE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/CreateSale`;
-const CHARGE_SIMPLE = `https://pci.rivhit.co.il/api/iCreditRestApiService.svc/ChargeSimple/Full`;
+const CHARGE_SIMPLE = `https://${PAYMENT_PCI_BASE_URL}/api/iCreditRestApiService.svc/ChargeSimple/Full`;
 const COMPLETE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/CompleteSale`;
 const SALE_CHARGE_TOKEN = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/SaleChargeToken`;
 const GROUP_PRIVATE_TOKEN = "af4517a6-a5dc-4ef2-9f2d-d85193edc889";
