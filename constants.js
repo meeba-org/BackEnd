@@ -1,3 +1,3 @@
 module.exports = {
-    MONTHLY_SUBSCRIPTION_PRICE: 100 // TODO DEbug only! need to be 100!!!
+    MONTHLY_SUBSCRIPTION_PRICE: 1 // TODO DEbug only! need to be 100!!!
 };

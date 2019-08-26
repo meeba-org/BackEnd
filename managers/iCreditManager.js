@@ -8,8 +8,8 @@ const CREATE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/Crea
 const CHARGE_SIMPLE = `https://testpci.rivhit.co.il/api/iCreditRestApiService.svc/ChargeSimple/Full`;
 const COMPLETE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/CompleteSale`;
 const SALE_CHARGE_TOKEN = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/SaleChargeToken`;
-const GROUP_PRIVATE_TOKEN = "a1408bfc-18da-49dc-aa77-d65870f7943e";
-const CREDIT_BOX_TOKEN = "7cd7ca78-e67c-4909-94b7-22fd19e42ad4";
+const GROUP_PRIVATE_TOKEN = "af4517a6-a5dc-4ef2-9f2d-d85193edc889";
+const CREDIT_BOX_TOKEN = "1c176e94-5299-44ab-82ec-2ca33d7f54d6";
 
 const createSale = async (email) => {
     let data = {
