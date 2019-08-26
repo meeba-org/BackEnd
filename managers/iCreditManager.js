@@ -104,7 +104,6 @@ const generateImmediatePayment = async (companyId) => {
 
     let {email} = company;
     let {creditCardToken, customerTransactionId, authNum} = company.paymentData;
-    creditCardToken = "0a1b8304-36e6-4a11-bdc7-b43c92fc2a25"; // TODO  Test CCToken!!! - debug only - remove it in production
 
     if (!customerTransactionId || !creditCardToken || !authNum)
         throw new Error(`customerTransactionId or creditCardToken or authNum is missing for company id ${companyId}`);
