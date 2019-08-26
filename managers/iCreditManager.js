@@ -5,7 +5,7 @@ const CompanyModel = require("../models/CompanyModel");
 const {MONTHLY_SUBSCRIPTION_PRICE} = require("../constants");
 
 const CREATE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/CreateSale`;
-const CHARGE_SIMPLE = `https://testpci.rivhit.co.il/api/iCreditRestApiService.svc/ChargeSimple/Full`;
+const CHARGE_SIMPLE = `https://pci.rivhit.co.il/api/iCreditRestApiService.svc/ChargeSimple/Full`;
 const COMPLETE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/CompleteSale`;
 const SALE_CHARGE_TOKEN = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/SaleChargeToken`;
 const GROUP_PRIVATE_TOKEN = "af4517a6-a5dc-4ef2-9f2d-d85193edc889";
@@ -45,7 +45,7 @@ const chargeSimple = async creditCardToken => {
         "CreateToken": true,
         "Currency": 1,
         "CreditboxToken": CREDIT_BOX_TOKEN,
-        "Amount": 20,
+        "Amount": MONTHLY_SUBSCRIPTION_PRICE ,
         //"TransactionType": 11, // הוראת קבע
         "ParamJ": 5
     };
