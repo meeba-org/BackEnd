@@ -46,7 +46,7 @@ const chargeSimple = async creditCardToken => {
         "Currency": 1,
         "CreditboxToken": CREDIT_BOX_TOKEN,
         "Amount": 20,
-        "TransactionType": 11, // הוראת קבע
+        //"TransactionType": 11, // הוראת קבע
         "ParamJ": 5
     };
 
