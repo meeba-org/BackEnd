@@ -43,7 +43,7 @@ const createIframeUrl = async (user, company) => {
             url: URL,
             privateSaleToken: PrivateSaleToken,
             publicSaleToken: PublicSaleToken,
-            status: 0 // EPaymentStatus.START, // TODO fix this
+            status: 0 // EPaymentStatus.START, // TODO GoPremium fix this
         };
         PaymentModel.createPayment(payment); // No need to wait for it
         return response.data.URL;
