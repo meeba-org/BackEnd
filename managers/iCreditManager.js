@@ -54,7 +54,7 @@ const createIframeUrl = async (user, company) => {
     }
 };
 
-const createSale = async (email) => {
+const createSale = async (email, companyName) => {
     let data = {
         "GroupPrivateToken": PRODUCTION_GROUP_PRIVATE_TOKEN,
         "Items": [
@@ -68,7 +68,7 @@ const createSale = async (email) => {
         "MaxPayments": 1,
         "SaleType": 2,
         "EmailAddress": email,
-        "CustomerLastName":"ddd"
+        "CustomerLastName": companyName
     };
 
     const response = await axios.post(CREATE_SALE, data);
@@ -118,9 +118,9 @@ const completeSale = async (saleToken, customerTransactionId) => {
     return true;
 };
 
-const generateWaitingPayment = async (creditCardToken, email = "") => {
+const generateWaitingPayment = async (creditCardToken, email = "", companyName = "") => {
     console.log(`Create Sale email: ${email}, ccToken: ${creditCardToken}`);
-    const createSaleResult = await createSale(email);
+    const createSaleResult = await createSale(email, companyName);
     console.log(`Create Sale Result ${JSON.stringify(createSaleResult)}`);
     let {saleToken} = createSaleResult;
 
@@ -196,8 +196,8 @@ const generateImmediatePayment0 = async (creditCardToken, authNum, customerTrans
     }
 };
 
-async function generateWaitingPaymentAndSave(creditCardToken, email, companyId) {
-    let waitingPayment = await generateWaitingPayment(creditCardToken, email);
+async function generateWaitingPaymentAndSave(creditCardToken, email, companyId, companyName) {
+    let waitingPayment = await generateWaitingPayment(creditCardToken, email, companyName);
     console.log(JSON.stringify(waitingPayment));
     await updateCompanyWithPaymentData(companyId, {
         customerTransactionId: waitingPayment.customerTransactionId,
@@ -208,13 +208,13 @@ async function generateWaitingPaymentAndSave(creditCardToken, email, companyId) 
 const handleIPNCall = async data => {
     const {Custom1: companyId, SaleId: saleId, TransactionToken: creditCardToken, EmailAddress: email} = data;
 
-    await updateCompanyWithPaymentData(companyId, {
+    let updatedCompany = await updateCompanyWithPaymentData(companyId, {
         creditCardToken,
         email
     });
     await updatePaymentWithSaleId(companyId, saleId);
 
-    await generateWaitingPaymentAndSave(creditCardToken, email, companyId);
+    await generateWaitingPaymentAndSave(creditCardToken, email, companyId, updatedCompany.name);
 };
 
 const updatePaymentWithSaleId = async (companyId, saleId) => {
@@ -240,7 +240,7 @@ const updateCompanyWithPaymentData = async (companyId, newPaymentData) => {
     };
 
     console.log(`[iCreditManager] - Updating Company ${company.name} with ${JSON.stringify(newPaymentData)}`);
-    await CompanyModel.updateCompany(company);
+    return await CompanyModel.updateCompany(company);
 };
 
 const chargePremiumPlanCompanies = async () => {

@@ -23,12 +23,12 @@ const generateWaitingPayment = async (companyId) => {
         throw new Error(`No Payment daya for company id ${companyId}`);
     }
 
-    let {email} = company;
+    let {email, name} = company;
     let {creditCardToken} = company.paymentData;
 
     if (!email || !creditCardToken)
         throw new Error(`email or creditCardToken is missing for company id ${companyId}`);
-    await iCreditManager.generateWaitingPaymentAndSave(creditCardToken, email, companyId);
+    await iCreditManager.generateWaitingPaymentAndSave(creditCardToken, email, companyId, name);
 };
 
 const run = async () => {
