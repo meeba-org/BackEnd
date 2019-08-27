@@ -234,12 +234,15 @@ const updateCompanyWithPaymentData = async (companyId, newPaymentData) => {
         throw new Error(`[iCreditManager] - No such Company id: ${companyId}`);
     let orgPaymentData = company.paymentData || {};
 
+    console.log(`[debug] - org payment ${JSON.stringify(orgPaymentData)}`);
+
     company.paymentData = {
         ...orgPaymentData,
         ...newPaymentData
     };
 
     console.log(`[iCreditManager] - Updating Company ${company.name} with ${JSON.stringify(newPaymentData)}`);
+    console.log(`[debug] - Updating Company ${company.name} with ${JSON.stringify(company)}`);
     return await CompanyModel.updateCompany(company);
 };
 
