@@ -102,12 +102,12 @@ const generateImmediatePayment = async (companyId) => {
         throw new Error(`No Payment daya for company id ${companyId}`);
     }
 
-    let {email} = company;
+    let {email, name} = company;
     let {creditCardToken, customerTransactionId, authNum} = company.paymentData;
 
     if (!customerTransactionId || !creditCardToken || !authNum)
         throw new Error(`customerTransactionId or creditCardToken or authNum is missing for company id ${companyId}`);
-    await generateImmediatePayment0(creditCardToken, authNum, customerTransactionId, email);
+    await generateImmediatePayment0(creditCardToken, authNum, customerTransactionId, email, "", name);
 };
 
 /**
@@ -124,8 +124,8 @@ const generateImmediatePayment0 = async (creditCardToken, authNum, customerTrans
     let data = {
         "GroupPrivateToken": GROUP_PRIVATE_TOKEN,
         "CreditcardToken": creditCardToken,
-        "CustomerLastName": firstName,
-        "CustomerFirstName": lastName,
+        "CustomerLastName": lastName,
+        "CustomerFirstName": firstName,
         "EmailAddress": email,
         "Currency": 1,
         "SaleType": 1,
@@ -133,7 +133,7 @@ const generateImmediatePayment0 = async (creditCardToken, authNum, customerTrans
         "J5CustomerTransactionId": customerTransactionId, //"5b643290-7bfc-4303-bf6d-efcc9dcb95f5",
         "Items": [
             {
-                "UnitPrice": 20,
+                "UnitPrice": MONTHLY_SUBSCRIPTION_PRICE,
                 "Quantity": 1,
                 "Description": "מנוי חודשי לאתר מיבא"
             }
