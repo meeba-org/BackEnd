@@ -73,6 +73,7 @@ class EmployeesList extends React.PureComponent {
     render() {
         const {fields, showMobileAppModal, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed} = this.props;
 
+        let NOT_ALLOW_TO_ADD_MESSAGE = "במסלול החינמי מספר העובדים יוגבל";
 
         return (
             <Card>
@@ -81,10 +82,12 @@ class EmployeesList extends React.PureComponent {
                 <CardContent className={styles["card-content"]}>
 
                     <div className={styles["controls-line"]}>
-                        <Tooltip title="הוספת עובד" placement="top">
+                        <Tooltip title={isAddAllowed ? "הוספת עובד" : NOT_ALLOW_TO_ADD_MESSAGE} placement="top">
+                            <span>
                             <Button className={styles["action-button"]} variant="contained" color="primary"
                                     disabled={!isAddAllowed}
                                     onClick={this.onCreate}><AddIcon/></Button>
+                            </span>
                         </Tooltip>
                         <Tooltip title="לינק לאפליקציית העובד" placement="top">
                             <Button className={styles["action-button"]} variant="contained" color="primary"
@@ -96,7 +99,7 @@ class EmployeesList extends React.PureComponent {
                     </div>
                     <Divider className={styles["divider"]}/>
 
-                    <GoPremiumNotification isVisible={!isAddAllowed} text="במסלול החינמי מספר העובדים יוגבל -" />
+                    <GoPremiumNotification isVisible={!isAddAllowed} text={NOT_ALLOW_TO_ADD_MESSAGE + " -"} />
 
                     {fields && fields.length > 0 && isDesktop &&
                     <Grid className={styles["header"]} container spacing={24}>
