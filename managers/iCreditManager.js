@@ -11,7 +11,8 @@ const COMPLETE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/Co
 const SALE_CHARGE_TOKEN = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/SaleChargeToken`;
 const TEST_GROUP_PRIVATE_TOKEN = "f930c192-ea2b-4e53-8de8-27d3a74fab66";
 const PRODUCTION_GROUP_PRIVATE_TOKEN = "af4517a6-a5dc-4ef2-9f2d-d85193edc889";
-const CREDIT_BOX_TOKEN = "7cd7ca78-e67c-4909-94b7-22fd19e42ad4";
+const TEST_CREDIT_BOX_TOKEN = "7cd7ca78-e67c-4909-94b7-22fd19e42ad4";
+const PRODUCTION_CREDIT_BOX_TOKEN = "1c176e94-5299-44ab-82ec-2ca33d7f54d6";
 
 const createIframeUrl = async (user, company) => {
     let data = {
@@ -86,7 +87,7 @@ const chargeSimple = async creditCardToken => {
         "Token": creditCardToken,
         "CreateToken": true,
         "Currency": 1,
-        "CreditboxToken": CREDIT_BOX_TOKEN,
+        "CreditboxToken": PRODUCTION_CREDIT_BOX_TOKEN,
         "Amount": MONTHLY_SUBSCRIPTION_PRICE ,
         // "TransactionType": 11, // הוראת קבע במסוף EMV
         "ParamJ": 5

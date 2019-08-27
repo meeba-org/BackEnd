@@ -20,6 +20,7 @@ const chargePremiumCompanies = async () => {
 
     for (let company of companies) {
         try{
+            console.log(`Charging company - name: ${company.name}, id: ${company._id}`);
             await iCreditManager.generateImmediatePayment(company._id);
         }
         catch (e) {
