@@ -18,7 +18,6 @@ class GoPremiumContainer extends Component {
         this.props.setActiveStep(EGoPremiumStep.INTRO);
 
         window.addEventListener('message', this.onPaymentFinish);
-
     }
 
     onPaymentFinish = (e) => {
@@ -38,7 +37,7 @@ class GoPremiumContainer extends Component {
     };
 
     render() {
-        const {onClose, paymentUrl, paymentError, activeStep, error} = this.props;
+        const {onClose, paymentUrl, activeStep, error} = this.props;
         const hasError = !!error;
 
         return (
