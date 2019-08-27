@@ -138,7 +138,8 @@ router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
             let data = req.body;
             console.log("ipn response: " + JSON.stringify(data));
 
-            return await iCreditManager.handleIPNCall(data);
+            await iCreditManager.handleIPNCall(data);
+            return await resolve();
         }
         catch (err) {
             console.error(err.message);

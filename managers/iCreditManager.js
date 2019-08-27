@@ -243,7 +243,9 @@ const updateCompanyWithPaymentData = async (companyId, newPaymentData) => {
 
     console.log(`[iCreditManager] - Updating Company ${company.name} with ${JSON.stringify(newPaymentData)}`);
     console.log(`[debug] - Updating Company ${company.name} with ${JSON.stringify(company)}`);
-    return await CompanyModel.updateCompany(company);
+    let updatedCompany = await CompanyModel.updateCompany(company);
+    console.log(`[debug] - updatedCompany ${company.name} with ${JSON.stringify(updatedCompany)}`);
+    return updatedCompany;
 };
 
 const chargePremiumPlanCompanies = async () => {
