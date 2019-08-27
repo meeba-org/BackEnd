@@ -75,7 +75,7 @@ router.post('/',
         // use the jsonwebtoken package to create the token and respond with it
         let meebaToken = jwt.sign(updatedUser.toObject(), config.secret); // This is meeba token
         return resolve({
-            user,
+            user: updatedUser,
             token: meebaToken
         });
     })
