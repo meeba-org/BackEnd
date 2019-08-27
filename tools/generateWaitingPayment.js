@@ -25,7 +25,6 @@ const generateWaitingPayment = async (companyId) => {
 
     let {email} = company;
     let {creditCardToken} = company.paymentData;
-    creditCardToken = "0a1b8304-36e6-4a11-bdc7-b43c92fc2a25"; // TODO  Test CCToken!!! - debug only - remove it in production
 
     if (!email || !creditCardToken)
         throw new Error(`email or creditCardToken is missing for company id ${companyId}`);

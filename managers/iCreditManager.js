@@ -1,4 +1,4 @@
-const {PAYMENT_BASE_URL} = require("../config");
+const {PAYMENT_BASE_URL, PAYMENT_PCI_BASE_URL} = require("../config");
 const axios = require('axios');
 const PaymentModel = require("../models/PaymentModel");
 const CompanyModel = require("../models/CompanyModel");
@@ -6,7 +6,7 @@ const {MONTHLY_SUBSCRIPTION_PRICE} = require("../constants");
 
 const GetUrl = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/GetUrl`;
 const CREATE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/CreateSale`;
-const CHARGE_SIMPLE = `https://testpci.rivhit.co.il/api/iCreditRestApiService.svc/ChargeSimple/Full`;
+const CHARGE_SIMPLE = `https://${PAYMENT_PCI_BASE_URL}/api/iCreditRestApiService.svc/ChargeSimple/Full`;
 const COMPLETE_SALE = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/CompleteSale`;
 const SALE_CHARGE_TOKEN = `https://${PAYMENT_BASE_URL}/API/PaymentPageRequest.svc/SaleChargeToken`;
 const TEST_GROUP_PRIVATE_TOKEN = "f930c192-ea2b-4e53-8de8-27d3a74fab66";
@@ -87,7 +87,7 @@ const chargeSimple = async creditCardToken => {
         "CreateToken": true,
         "Currency": 1,
         "CreditboxToken": CREDIT_BOX_TOKEN,
-        "Amount": 20,
+        "Amount": MONTHLY_SUBSCRIPTION_PRICE ,
         // "TransactionType": 11, // הוראת קבע במסוף EMV
         "ParamJ": 5
     };
@@ -144,13 +144,12 @@ const generateImmediatePayment = async (companyId) => {
         throw new Error(`No Payment daya for company id ${companyId}`);
     }
 
-    let {email} = company;
+    let {email, name} = company;
     let {creditCardToken, customerTransactionId, authNum} = company.paymentData;
-    creditCardToken = "0a1b8304-36e6-4a11-bdc7-b43c92fc2a25"; // TODO  Test CCToken!!! - debug only - remove it in production
 
     if (!customerTransactionId || !creditCardToken || !authNum)
         throw new Error(`customerTransactionId or creditCardToken or authNum is missing for company id ${companyId}`);
-    await generateImmediatePayment0(creditCardToken, authNum, customerTransactionId, email);
+    await generateImmediatePayment0(creditCardToken, authNum, customerTransactionId, email, "", name);
 };
 
 /**
@@ -167,8 +166,8 @@ const generateImmediatePayment0 = async (creditCardToken, authNum, customerTrans
     let data = {
         "GroupPrivateToken": PRODUCTION_GROUP_PRIVATE_TOKEN,
         "CreditcardToken": creditCardToken,
-        "CustomerLastName": firstName,
-        "CustomerFirstName": lastName,
+        "CustomerLastName": lastName,
+        "CustomerFirstName": firstName,
         "EmailAddress": email,
         "Currency": 1,
         "SaleType": 1,
@@ -176,7 +175,7 @@ const generateImmediatePayment0 = async (creditCardToken, authNum, customerTrans
         "J5CustomerTransactionId": customerTransactionId, //"5b643290-7bfc-4303-bf6d-efcc9dcb95f5",
         "Items": [
             {
-                "UnitPrice": 20,
+                "UnitPrice": MONTHLY_SUBSCRIPTION_PRICE,
                 "Quantity": 1,
                 "Description": "מנוי חודשי לאתר מיבא"
             }

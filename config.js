@@ -38,6 +38,7 @@ function init() {
         DB_USER: process.env.DB_USER,
         DB_PASS: process.env.DB_PASS,
         PAYMENT_BASE_URL: "testicredit.rivhit.co.il",
+        PAYMENT_PCI_BASE_URL: "testpci.rivhit.co.il",
     };
 
     switch (process.env.NODE_ENV) {
@@ -46,7 +47,8 @@ function init() {
             console.log("Production Mode!");
 
             module.exports.dbUrl = process.env.MONGOLAB_COPPER_URI;
-            // module.exports.PAYMENT_BASE_URL = "icredit.rivhit.co.il";
+            module.exports.PAYMENT_BASE_URL = "icredit.rivhit.co.il";
+            module.exports.PAYMENT_PCI_BASE_URL = "pci.rivhit.co.il";
             break;
         }
         case "development" :
