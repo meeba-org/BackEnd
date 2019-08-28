@@ -208,6 +208,9 @@ async function generateWaitingPaymentAndSave(creditCardToken, email, companyId, 
 const handleIPNCall = async data => {
     const {Custom1: companyId, SaleId: saleId, TransactionToken: creditCardToken, EmailAddress: email} = data;
 
+    if (!creditCardToken)
+        throw new Error (`[handleIPNCall] - no TransactionToken found in data for companyId ${companyId}`);
+
     let updatedCompany = await updateCompanyWithPaymentData(companyId, {
         creditCardToken,
         email
