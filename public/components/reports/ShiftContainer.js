@@ -39,10 +39,10 @@ class ShiftContainer extends React.PureComponent {
     showLocationModal = () => {
         let {showLocationModal, input, isDesktop, company,showGoPremiumModal} = this.props;
 
-        // if (!isCompanyHasPremium(company)) {
-        //     showGoPremiumModal();
-        //     return;
-        // }
+        if (!isCompanyHasPremium(company)) {
+            showGoPremiumModal();
+            return;
+        }
 
         if (!input.value.location)
             return;
