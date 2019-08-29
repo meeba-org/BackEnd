@@ -33,7 +33,8 @@
         "test": "mocha ./test/**/*.spec.js",
         "generateWaitingPayment" : "node tools/generateWaitingPayment.js",
         "generateImmediatePayment" : "node tools/generateImmediatePayment.js",
-        "chargePremiumCompanies" : "node tools/chargePremiumCompanies.js"
+        "chargePremiumCompanies" : "node tools/chargePremiumCompanies.js",
+        "logs": "heroku logs -t -a meeba"
     },
     "repository": {
         "type": "git",

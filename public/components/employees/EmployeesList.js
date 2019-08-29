@@ -15,6 +15,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CSSModules from "react-css-modules";
 import Field from "redux-form/es/Field";
+import {MAX_FREE_EMPLOYEES_ALLOWED} from "../../../constants";
 import {isIsraeliIdValid} from "../../helpers/utils";
 import styles from "../../styles/EmployeesList.scss";
 import Fade from "../Fade";
@@ -73,7 +74,7 @@ class EmployeesList extends React.PureComponent {
     render() {
         const {fields, showMobileAppModal, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed} = this.props;
 
-        let NOT_ALLOW_TO_ADD_MESSAGE = "במסלול החינמי מספר העובדים יוגבל";
+        let NOT_ALLOW_TO_ADD_MESSAGE = `במסלול החינמי מספר העובדים המקסימלי הוא ${MAX_FREE_EMPLOYEES_ALLOWED}`
 
         return (
             <Card>

@@ -5,7 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import React from 'react';
 import {connect} from 'react-redux';
 import reduxForm from "redux-form/es/reduxForm";
-import {MAX_FREE_TASKS_ALLOWED} from "../../../constants";
+import {MAX_FREE_EMPLOYEES_ALLOWED, MAX_FREE_TASKS_ALLOWED} from "../../../constants";
 import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
 import * as selectors from "../../selectors";
 import styles from "../../styles/EmployeesList.scss";
@@ -53,22 +53,25 @@ class TasksContainer extends React.Component {
         const {openTaskModal, showDeleteTaskModal, isEditAllowed, isAddAllowed} = this.props;
         let {breadcrumbTasks, selectedParent} = this.state;
         let tasks = filterTasks(this.props.tasks, selectedParent);
+        let NOT_ALLOW_TO_ADD_MESSAGE = `במסלול החינמי מספר העובדים המקסימלי הוא ${MAX_FREE_EMPLOYEES_ALLOWED}`;
 
         return (
             <MbCard title="משימות / אירועים">
                 <div className={styles["controls-line"]}>
-                    <Tooltip title="הוספת משימה" placement="top">
+                    <Tooltip title={isAddAllowed ? "הוספת משימה" : NOT_ALLOW_TO_ADD_MESSAGE} placement="top">
+                        <span>
                         <Button className={styles["action-button"]}
                                 variant="contained" color="primary"
                                 disabled={!isAddAllowed}
                                 onClick={this.onCreate}><AddIcon/>
                         </Button>
+                        </span>
                     </Tooltip>
                 </div>
 
                 <Divider className={styles["divider"]}/>
 
-                <GoPremiumNotification isVisible={!isAddAllowed} text="במסלול החינמי מספר המשימות יוגבל -" />
+                <GoPremiumNotification isVisible={!isAddAllowed} text={NOT_ALLOW_TO_ADD_MESSAGE} />
 
                 <BreadCrumb
                     data={breadcrumbTasks}
