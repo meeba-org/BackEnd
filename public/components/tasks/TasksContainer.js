@@ -53,7 +53,7 @@ class TasksContainer extends React.Component {
         const {openTaskModal, showDeleteTaskModal, isEditAllowed, isAddAllowed} = this.props;
         let {breadcrumbTasks, selectedParent} = this.state;
         let tasks = filterTasks(this.props.tasks, selectedParent);
-        let NOT_ALLOW_TO_ADD_MESSAGE = `במסלול החינמי מספר העובדים המקסימלי הוא ${MAX_FREE_EMPLOYEES_ALLOWED}`;
+        let NOT_ALLOW_TO_ADD_MESSAGE = `במסלול החינמי מספר המשימות המקסימלי הוא ${MAX_FREE_TASKS_ALLOWED}`;
 
         return (
             <MbCard title="משימות / אירועים">

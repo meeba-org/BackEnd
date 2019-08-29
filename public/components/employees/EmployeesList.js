@@ -100,7 +100,7 @@ class EmployeesList extends React.PureComponent {
                     </div>
                     <Divider className={styles["divider"]}/>
 
-                    <GoPremiumNotification isVisible={!isAddAllowed} text={NOT_ALLOW_TO_ADD_MESSAGE + " -"} />
+                    <GoPremiumNotification isVisible={!isAddAllowed} text={NOT_ALLOW_TO_ADD_MESSAGE} />
 
                     {fields && fields.length > 0 && isDesktop &&
                     <Grid className={styles["header"]} container spacing={24}>

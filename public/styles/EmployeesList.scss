@@ -6,15 +6,22 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    font-size: 20px;
+    font-size: 16px;
     padding: 20px 0 20px;
+    color: material-color('grey', '600');
+
+    .icon {
+        padding-left: 10px;
+        font-size: 16px;
+    }
 
     .text {
-        color: material-color('red', '400');
+        font-size: 16px;
     }
 
     .button {
-        font-size: 20px;
+        font-size: 16px;
+        color: material-color('orange', '700');
     }
 }
 
