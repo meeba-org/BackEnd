@@ -37,7 +37,7 @@ class EmployeeMobile extends React.Component {
     };
 
     render() {
-        let {input, onDelete, classes, onBlur, onUpdate, index, error} = this.props;
+        let {input, onDelete, classes, onBlur, onUpdate, index, error, isLimited} = this.props;
         return (
                 <Grid container className={scssStyles[index % 2 === 0 ? "odd" : "even" ]}>
                     <Grid item xs={12}>
@@ -45,6 +45,7 @@ class EmployeeMobile extends React.Component {
                                onChange={(e) => onUpdate(e, "fullName")}
                                onBlur={onBlur}
                                classes={{root: classes.root}}
+                               disabled={isLimited}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -52,6 +53,7 @@ class EmployeeMobile extends React.Component {
                                onChange={(e) => onUpdate(e, "uid")}
                                onBlur={onBlur}
                                classes={{root: classes.root}}
+                               disabled={isLimited}
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -60,6 +62,7 @@ class EmployeeMobile extends React.Component {
                                onBlur={onBlur}
                                classes={{root: classes.root}}
                                endAdornment={<InputAdornment position="end">לשעה</InputAdornment>}
+                               disabled={isLimited}
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -68,6 +71,7 @@ class EmployeeMobile extends React.Component {
                                onBlur={onBlur}
                                classes={{root: classes.root}}
                                endAdornment={<InputAdornment position="end">{input.value.transportPaymentPer === 0 ? "למשמרת" : "חודשי"}</InputAdornment>}
+                               disabled={isLimited}
                         />
                     </Grid>
                     {error &&
@@ -76,7 +80,7 @@ class EmployeeMobile extends React.Component {
                     </Grid>
                     }
                     <Grid item xs={12} className={scssStyles["buttons-container"]} >
-                            <Button color="primary" onClick={this.showEmployeeDialog}>
+                            <Button color="primary" onClick={this.showEmployeeDialog} disabled={isLimited}>
                                 <SettingsIcon />
                             </Button>
                             <Button color="primary" onClick={onDelete}>

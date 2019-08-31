@@ -74,7 +74,7 @@ class EmployeesList extends React.PureComponent {
     render() {
         const {fields, showMobileAppModal, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed} = this.props;
 
-        let NOT_ALLOW_TO_ADD_MESSAGE = `במסלול החינמי מספר העובדים המקסימלי הוא ${MAX_FREE_EMPLOYEES_ALLOWED}`
+        let NOT_ALLOW_TO_ADD_MESSAGE = `במסלול החינמי מספר העובדים המקסימלי הוא ${MAX_FREE_EMPLOYEES_ALLOWED}`;
 
         return (
             <Card>
