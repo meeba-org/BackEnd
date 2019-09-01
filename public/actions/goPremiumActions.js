@@ -2,6 +2,7 @@ import FeaturesManager, {Feature} from "../../managers/FeaturesManager";
 import * as EPlanType from "../../models/EPlanType";
 import {EGoPremiumStep} from "../components/go-premium/EPremiumStep";
 import {EModalType} from "../components/modals/EModalType";
+import {GACategory} from "../helpers/GATypes";
 import * as actions from "./actionTypes";
 import {updateCompany} from "./companyActions";
 import {updateActiveUserSuccess} from "./usersActions";
@@ -44,6 +45,9 @@ export const handlePaymentFinished = (data = {}) => ({
     },
     meta: {
         shouldAuthenticate: true
+    },
+    ga: {
+        category: GACategory.USER_WENT_PREMIUM
     }
 });
 
