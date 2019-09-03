@@ -27,7 +27,7 @@ class Header extends Component {
                         <hr/>
                         <div styleName="lower-middle-content">
                             <div className={styles["sub-title"]}>
-                                שעון נוכחות חינמי
+                                שעון נוכחות ומחשבון שכר
                             </div>
                             <Button className={styles["login-button"]} variant="contained" color="primary" onClick={showLoginRegisterDialog}>
                                 <span>כניסה</span>
