@@ -35,17 +35,17 @@ const mapUsersToShifts = function (shifts) {
         if (!clonedShift.user) // Not suppose to happen but for protection
             return;
 
-        if (usersToShiftsMap[clonedShift.user.uid]) {
-            const uid = clonedShift.user.uid;
+        if (usersToShiftsMap[clonedShift.user._id]) {
+            const id = clonedShift.user._id;
             clonedShift.user = clonedShift.user._id;
-            usersToShiftsMap[uid].shifts.push(clonedShift);
+            usersToShiftsMap[id].shifts.push(clonedShift);
         }
         else {
             let clonedUser = Object.assign({}, shift.user);
 
             clonedShift.user = clonedShift.user._id;
             clonedUser.shifts = [clonedShift];
-            usersToShiftsMap[clonedUser.uid] = clonedUser;
+            usersToShiftsMap[clonedUser._id] = clonedUser;
         }
     });
     const keys = Object.keys(usersToShiftsMap);

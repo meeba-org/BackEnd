@@ -1,7 +1,8 @@
-const {Feature, isFeatureEnable} = require("./FeaturesManager");
+const {Feature, isFeatureEnable, isCompanyHasPremium} = require("./FeaturesManager");
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 const Excel = require('exceljs');
+const {MAX_FREE_EMPLOYEES_ALLOWED} = require("../constants");
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isIndependenceDay = require("./HolidayAnalyzer").isIndependenceDay;
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
@@ -21,15 +22,13 @@ const HeaderBorderStyle = {
 const EXCEL_SHEET_NAME_LIMIT = 31;
 moment.locale('he');
 
-const createTitleDate = function (year, month) {
-    return moment().year(year).month(month-1).format('MM-YYYY');
-};
+const createTitleDate = (year, month) => moment().year(year).month(month - 1).format('MM-YYYY');
 
-setSummaryHeaderColor = function(sheet) {
+const setSummaryHeaderColor = sheet => {
     setHeaderColor(sheet);
 };
 
-setEmployeeHeaderColor = function(sheet) {
+const setEmployeeHeaderColor = sheet => {
     setHeaderColor(sheet);
 };
 
@@ -65,12 +64,50 @@ function createSummaryColumns(sheet, company) {
     setSummaryHeaderColor(sheet, company);
 }
 
-const addSummarySheet = (workbook, company, employees) => {
+const createWhyDoILimitContent = sheet => {
+    sheet.addRow();
+    const title = sheet.addRow({
+        employeeName: `איפה כל העובדים?`,
+    });
+    const sentence1 = sheet.addRow({
+        employeeName: `הינך במסלול החינמי המוגבל ל-${MAX_FREE_EMPLOYEES_ALLOWED} עובדים`,
+    });
+
+    const chat = sheet.addRow();
+    chat.getCell('employeeName').value = {
+        text: 'לשאלות נשמח לדבר איתך בצ\'אט',
+        hyperlink: 'https://m.me/meebaOnFace'
+    };
+
+    let limitContentStyle = {
+        type: 'pattern',
+        pattern: 'solid',
+        size: 20,
+        color: {argb: 'FF9800'}
+    };
+
+    let chatStyle = {
+        type: 'pattern',
+        pattern: 'solid',
+        size: 14,
+        underline: true,
+        color: {argb: '2196F3'}
+    };
+
+    title.getCell('employeeName').font = limitContentStyle;
+    sentence1.getCell('employeeName').font = limitContentStyle;
+    chat.getCell('employeeName').font = chatStyle;
+};
+
+const addSummarySheet = (workbook, company, employees, limitedReport) => {
     // create a sheet with the first row and column frozen
     let sheet = addWorksheet(workbook, "סיכום");
 
     createSummaryColumns(sheet, company);
     createSummaryContent(sheet, employees);
+
+    if (limitedReport)
+        createWhyDoILimitContent(sheet);
 };
 
 let createSummaryContent = function (sheet, employees) {
@@ -98,7 +135,7 @@ let createSummaryContent = function (sheet, employees) {
 };
 
 function createShiftsPerEmployeeColumns(sheet, company) {
-    createBasicShiftsColumns(sheet, company)
+    createBasicShiftsColumns(sheet, company);
 
     if (isFeatureEnable(company, Feature.Tasks)) {
         sheet.columns = sheet.columns.concat([
@@ -113,7 +150,7 @@ function createShiftsPerEmployeeColumns(sheet, company) {
 }
 
 function createShiftsPerTaskColumns(sheet, company) {
-    createBasicShiftsColumns(sheet, company)
+    createBasicShiftsColumns(sheet, company);
 
     sheet.columns = sheet.columns.concat([
         {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
@@ -276,11 +313,11 @@ function addTotalSalary(entity, sheet) {
 }
 
 const createTasksTotalSection = (sheet, employee) => {
-    createBasicTotalSection(sheet, employee, false, false, false)
+    createBasicTotalSection(sheet, employee, false, false, false);
 };
 
 const createEmployeesTotalSection = (sheet, employee) => {
-    createBasicTotalSection(sheet, employee, true, true, true)
+    createBasicTotalSection(sheet, employee, true, true, true);
 };
 
 const createBasicTotalSection = (sheet, employee, shouldAddTransportation, shouldAddExtraPay, shouldAddOverallSalary) => {
@@ -360,7 +397,7 @@ const markBorders = (sheet, row, borderStyle) => {
     sheet.columns.map(column => {
         row.getCell(column.key).border = borderStyle;
     });
-}
+};
 
 function getShifts(shifts, m) {
     let relevantShifts = [];
@@ -371,13 +408,6 @@ function getShifts(shifts, m) {
 
     return relevantShifts;
 }
-
-const calcClockInDate = (shift) => {
-    if (!shift || !shift.clockInTime)
-        return "-";
-
-    return moment(shift.clockInTime).format("DD/MM/YYYY");
-};
 
 const calcDayInWeek = (m) => {
     if (!m)
@@ -427,7 +457,7 @@ const addShiftsPerEmployeeSheets = (workbook, company, employees, year, month) =
         createEmployeesTotalSection(sheet, employee);
     });
 
-}
+};
 
 function generateTaskName(task) {
     if (!task.taskBreadCrumb || task.taskBreadCrumb.length === 0)
@@ -454,7 +484,7 @@ const addShiftsPerTaskSheets = (workbook, company, tasks, year, month) => {
         createTasksTotalSection(sheet, task);
     });
 
-}
+};
 
 let createWorkbook = function () {
     const workbook = new Excel.Workbook();
@@ -463,9 +493,14 @@ let createWorkbook = function () {
     return workbook;
 };
 
+function isLimitedReport(company, employees) {
+    return !isCompanyHasPremium(company) && employees.length > MAX_FREE_EMPLOYEES_ALLOWED;
+}
+
 const processShiftsForEmployees = function (shifts, company) {
     if (!shifts || shifts.length === 0)
         return [];
+
     return ShiftAnalyzer.createEmployeeReports(shifts, company.settings);
 };
 
@@ -478,9 +513,15 @@ const processShiftsForTasks = function (shifts, company, tasks) {
 const createExcel = (shifts, year, month, company, rawTasks) => {
     const workbook = createWorkbook();
     let employees = processShiftsForEmployees(shifts, company);
+
+    // If company is not premium take the MAX_FREE_EMPLOYEES_ALLOWED
+    let limitedReport = isLimitedReport(company, employees);
+    if (limitedReport)
+        employees = employees.slice(0, MAX_FREE_EMPLOYEES_ALLOWED);
+
     let tasks = processShiftsForTasks(shifts, company, rawTasks);
 
-    addSummarySheet(workbook, company, employees);
+    addSummarySheet(workbook, company, employees, limitedReport);
     addShiftsPerEmployeeSheets(workbook, company, employees, year, month);
     addShiftsPerTaskSheets(workbook, company, tasks, year, month);
 
