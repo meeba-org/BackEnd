@@ -64,7 +64,7 @@ function createSummaryColumns(sheet, company) {
     setSummaryHeaderColor(sheet, company);
 }
 
-const createWhyDoILimitContent = sheet => {
+const createLimitedContentWarning = sheet => {
     sheet.addRow();
     const title = sheet.addRow({
         employeeName: `איפה כל העובדים?`,
@@ -107,7 +107,7 @@ const addSummarySheet = (workbook, company, employees, limitedReport) => {
     createSummaryContent(sheet, employees);
 
     if (limitedReport)
-        createWhyDoILimitContent(sheet);
+        createLimitedContentWarning(sheet);
 };
 
 let createSummaryContent = function (sheet, employees) {
