@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import CSSModules from "react-css-modules";
+import {MONTHLY_SUBSCRIPTION_PRICE} from "../../../constants";
 import styles from "../../styles/FAQContainer.scss";
 import FAQContent from "./FAQContent";
 import FAQHeader from "./FAQHeader";
@@ -32,6 +33,8 @@ class FAQContainer extends Component {
 - הגדרת 4 עובדים ומעלה
 - הגדרת 3 משימות ומעלה
 - הצגת מיקום העובד בכניסה
+
+מחיר: ${MONTHLY_SUBSCRIPTION_PRICE} ש"ח חודשי
 `
                 },
                 {
@@ -63,7 +66,7 @@ class FAQContainer extends Component {
                 },
                 {
                     q: "גיבויים",
-                    a: `גיבוי אוטומאטי מתבצע בכל יום שישי בשעה 16:00`
+                    a: `גיבוי אוטומאטי מתבצע בכל יום - עם זאת תקלות יכולות לקרות, מומלץ בכל סוף חודש להוריד ולשמור את דוח השעות החודשי`
                 },
                 {
                     name: "break",

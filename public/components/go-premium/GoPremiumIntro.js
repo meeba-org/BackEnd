@@ -20,7 +20,6 @@ const GoPremiumIntro = ({onNext, onClose}) => {
                 <IntroLine text={"מספר עובדים ללא הגבלה"}/>
                 <IntroLine text={"הצגת מיקום בכניסה למשמרת"}/>
                 <IntroLine text={"משימות"}/>
-                <IntroLine text={"גיבוי יומי"}/>
             </div>
 
             <div styleName="buttons-container">
