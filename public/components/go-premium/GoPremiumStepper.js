@@ -4,7 +4,7 @@ import Stepper from '@material-ui/core/Stepper';
 import {withStyles} from '@material-ui/core/styles';
 import React from 'react';
 
-const styles = theme => ({
+const styles = () => ({
     root: {
         width: '90%',
     },

@@ -1,13 +1,7 @@
 import React, {PureComponent} from 'react';
 import {connect} from "react-redux";
 import reduxForm from "redux-form/es/reduxForm";
-import {
-    fetchPendingShifts,
-    showDeleteShiftModal,
-    showEditShiftModal,
-    updateShift
-} from "../../actions";
-import {ReportModes} from "../../helpers/utils";
+import {fetchPendingShifts, showDeleteShiftModal, showEditShiftModal, updateShift} from "../../actions";
 import PendingReport from "./PendingReport";
 
 class PendingReportContainer extends PureComponent {

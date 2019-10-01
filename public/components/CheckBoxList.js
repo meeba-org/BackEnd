@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const styles = theme => ({
+const styles = () => ({
     root: {
         justifyContent: "flex-start",
         display: "flex"

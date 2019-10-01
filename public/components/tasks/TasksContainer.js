@@ -5,7 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import React from 'react';
 import {connect} from 'react-redux';
 import reduxForm from "redux-form/es/reduxForm";
-import {MAX_FREE_EMPLOYEES_ALLOWED, MAX_FREE_TASKS_ALLOWED} from "../../../constants";
+import {MAX_FREE_TASKS_ALLOWED} from "../../../constants";
 import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
 import * as selectors from "../../selectors";
 import styles from "../../styles/EmployeesList.scss";

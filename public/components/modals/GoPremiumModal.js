@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {hideModal} from "../../actions";
-import {getUser} from "../../selectors";
 import GoPremiumContainer from "../go-premium/GoPremiumContainer";
 import {EModalType} from "./EModalType";
 
