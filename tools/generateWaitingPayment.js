@@ -1,3 +1,4 @@
+/* eslint no-console: 0 */
 process.env.NODE_ENV = 'production';
 
 const CompanyModel = require("../models/CompanyModel");
