@@ -84,6 +84,6 @@
         "react/sort-comp": 1
     },
     "globals": {
-        "bluesnap": true
+        "db": true
     }
 }

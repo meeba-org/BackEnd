@@ -47,8 +47,8 @@ const muiTheme = createMuiTheme({
         }
     },
     palette: {
-        primary: brown,
-        secondary: orange,
+        primary: { main: '#94585C' }, //brown,
+        secondary: { main: '#F3CBA5' }, //orange,
     },
 });
 

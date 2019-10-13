@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import MenuIcon from '@material-ui/icons/Menu';
 import CSSModules from "react-css-modules";
 import styles from '../styles/AppBar.scss';
@@ -13,6 +12,7 @@ import * as selectors from "../selectors";
 import {handleLogout, navigateHome, showGoPremiumModal} from "../actions/index";
 import PropTypes from 'prop-types';
 import {Link} from "react-router";
+import {Logo} from "../styles/Logo";
 
 class MeebaAppBar extends Component {
     onLogout = () => {
@@ -32,20 +32,20 @@ class MeebaAppBar extends Component {
         let {companyName, isDesktop, hasPremium, showGoPremiumModal, isLoading} = this.props;
         return (
             <div styleName="app-bar">
-                <AppBar position="static">
-                    <Toolbar styleName="toolbar">
+                <AppBar position="static" >
+                    <Toolbar styleName="toolbar" color="secondary">
                         <div styleName="logo" onClick={this.onLogoClick}>
-                            <IconButton color="inherit" aria-label="Menu">
-                                {isDesktop ? <AccessTimeIcon/> : <MenuIcon/>}
+                            <IconButton color="secondary" aria-label="Menu">
+                                {isDesktop ? <Logo /> : <MenuIcon/>}
                             </IconButton>
-                            <Typography type="title" color="inherit">{companyName}</Typography>
+                            <Typography type="title" color="secondary">{companyName}</Typography>
                         </div>
                         <div styleName="logout">
-                            <Button color="inherit"><Link style={{color: "inherit", textDecoration: 'none'}} to="/faq">שאלות ותשובות</Link></Button>
+                            <Button color="secondary"><Link style={{color: "secondary", textDecoration: 'none'}} to="/faq">שאלות ותשובות</Link></Button>
                             {isLoading === false && !hasPremium &&
                             <Button styleName="goPremiumButton" variant="contained" color="secondary" onClick={showGoPremiumModal}>הירשם כמנוי</Button>
                             }
-                            <Button onClick={this.onLogout} color="inherit">יציאה</Button>
+                            <Button onClick={this.onLogout} color="secondary">יציאה</Button>
                         </div>
                     </Toolbar>
                 </AppBar>
