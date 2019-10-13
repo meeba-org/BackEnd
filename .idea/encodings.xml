@@ -178,6 +178,8 @@
     <file url="file://$PROJECT_DIR$/public/styles/StatisticsCell.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/User.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Warning.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/styles/palette-primary.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/styles/palette-secondary.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/variables.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/server.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test/AppManagerTest.spec.js" charset="UTF-8" />

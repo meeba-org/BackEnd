@@ -1,8 +1,10 @@
 @import "~sass-material-colors/sass/sass-material-colors";
+@import "palette-primary";
+@import "palette-secondary";
 
-$primary: material-color('brown', '500');
-$secondary: material-color('orange', '500');
-$lightPrimary: material-color('brown', '100');
+$primary: $palette-primary-500; //material-color('brown', '500');
+$secondary: $palette-secondary-500; //material-color('orange', '500');
+$lightPrimary: $palette-primary-100; //material-color('brown', '100');
 
 $hourRate100: material-color('green', '400');
 $hourRate125: material-color('green', '100');

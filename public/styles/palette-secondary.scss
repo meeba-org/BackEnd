@@ -1,0 +1,35 @@
+// Generated with http://mcg.mbitson.com
+
+$palette-secondary:
+    rgb(254, 249, 243)
+    rgb(254, 239, 226)
+    rgb(253, 229, 207)
+    rgb(252, 218, 188)
+    rgb(251, 210, 173)
+    rgb(250, 202, 159)
+    rgb(249, 197, 151)
+    rgb(249, 189, 141)
+    rgb(248, 183, 131)
+    rgb(246, 171, 114)
+    rgb(255, 255, 255)
+    rgb(255, 255, 255)
+    rgb(255, 255, 255)
+    rgb(255, 247, 241)
+;
+
+$palette-secondary-50: nth($palette-secondary, 1);
+$palette-secondary-100: nth($palette-secondary, 2);
+$palette-secondary-200: nth($palette-secondary, 3);
+$palette-secondary-300: nth($palette-secondary, 4);
+$palette-secondary-400: nth($palette-secondary, 5);
+$palette-secondary-500: nth($palette-secondary, 6);
+$palette-secondary-600: nth($palette-secondary, 7);
+$palette-secondary-700: nth($palette-secondary, 8);
+$palette-secondary-800: nth($palette-secondary, 9);
+$palette-secondary-900: nth($palette-secondary, 10);
+$palette-secondary-A100: nth($palette-secondary, 11);
+$palette-secondary-A200: nth($palette-secondary, 12);
+$palette-secondary-A400: nth($palette-secondary, 13);
+$palette-secondary-A700: nth($palette-secondary, 14);
+
+

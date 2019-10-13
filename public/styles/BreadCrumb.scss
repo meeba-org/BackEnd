@@ -1,4 +1,4 @@
-@import "variables";
+@import "palette-secondary";
 
 .breadcrumb {
     display: flex;
@@ -35,7 +35,7 @@
         cursor: pointer;
 
         &:hover {
-            background-color: material-color('orange', '100');
+            background-color: $palette-secondary-100;
         }
     }
 

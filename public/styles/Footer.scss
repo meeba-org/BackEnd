@@ -1,8 +1,9 @@
 @import "variables";
+@import "palette-primary";
 
 .footer {
-    background-color: material-color('brown', '900');
-    color: material-color('brown', '200');
+    background-color: $palette-primary-900;
+    color: $palette-primary-200;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -14,7 +15,7 @@
 
     .footer-container {
         .weak {
-            color: material-color('brown', '100')
+            color: $palette-primary-100
         }
         .social {
             .facebook-link {
@@ -33,7 +34,7 @@
             flex-direction: row;
 
             a {
-                color: material-color('brown', '100')
+                color: $palette-primary-100
             }
 
             .like {
@@ -47,7 +48,7 @@
 
 
             a {
-                color: material-color('brown', '100')
+                color: $palette-primary-100
             }
         }
     }

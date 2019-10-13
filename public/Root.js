@@ -1,5 +1,3 @@
-import brown from '@material-ui/core/colors/brown';
-import orange from '@material-ui/core/colors/orange';
 import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
 import rtl from 'jss-rtl';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';

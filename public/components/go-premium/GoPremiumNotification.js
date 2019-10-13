@@ -13,7 +13,7 @@ const GoPremiumNotification = ({isVisible, text, showGoPremiumModal}) => {
         <div className={styles["limit-container"]}>
             <ArrowIcon className={styles["icon"]}/>
             <div className={styles["text"]}>{text}</div>
-            <Button className={styles["button"]} color="secondary"  onClick={showGoPremiumModal}>הירשם כמנוי</Button>
+            <Button className={styles["button"]} color="primary"  onClick={showGoPremiumModal}>הירשם כמנוי</Button>
         </div>
     );
 };

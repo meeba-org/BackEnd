@@ -1,11 +1,12 @@
 @import "variables";
+@import "palette-primary";
 
 .switch-label {
     color:  material-color('grey', '500');
 }
 
 .odd {
-    background: material-color('brown', '50');
+    background: $palette-primary-50;
 }
 
 .buttons-container {

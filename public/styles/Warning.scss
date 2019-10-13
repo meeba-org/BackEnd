@@ -1,9 +1,9 @@
-@import "variables";
+@import "palette-secondary";
 
 .warning {
     margin-top: 5px;
     margin-left: 5px;
     text-align: center;
     width: 32px;
-    color: material-color('orange', '600');
+    color: $palette-secondary-600;
 }
