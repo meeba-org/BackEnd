@@ -41,7 +41,7 @@ class MeebaAppBar extends Component {
                             <Typography type="title" color="secondary">{companyName}</Typography>
                         </div>
                         <div styleName="logout">
-                            <Button color="secondary"><Link style={{color: "secondary", textDecoration: 'none'}} to="/faq">שאלות ותשובות</Link></Button>
+                            <Button color="secondary"><Link style={{color: "inherit", textDecoration: 'none'}} to="/faq">שאלות ותשובות</Link></Button>
                             {isLoading === false && !hasPremium &&
                             <Button styleName="goPremiumButton" variant="contained" color="secondary" onClick={showGoPremiumModal}>הירשם כמנוי</Button>
                             }
