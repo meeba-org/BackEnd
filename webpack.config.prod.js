@@ -51,7 +51,7 @@ module.exports = {
         // Generate HTML file that contains references to generated bundles. See here for how this works: https://github.com/ampedandwired/html-webpack-plugin#basic-usage
         new HtmlWebpackPlugin({
             template: 'public/index.ejs',
-            favicon: 'public/styles/images/icon.png',
+            favicon: 'public/styles/images/favicon.png',
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
