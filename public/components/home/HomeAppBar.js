@@ -4,13 +4,13 @@ import IconButton from "@material-ui/core/IconButton";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import React, {Component} from "react";
 import {connect} from 'react-redux';
 import {Link, withRouter} from "react-router";
 import {showLoginRegisterDialog} from "../../actions";
 import * as selectors from "../../selectors";
 import facebookImage from "../../styles/images/facebook.png";
+import {Logo} from "../../styles/Logo";
 
 const styles = {
     colorPrimary: {
@@ -51,8 +51,8 @@ class HomeAppBar extends Component {
                 <Toolbar>
                     <Link to="/home" className={classes.link}>
                         <IconButton aria-label="Menu" color="inherit">
-                            <AccessTimeIcon/>
-                            <Typography type="title" color="inherit" style={{paddingRight: "5px"}}>
+                            <Logo />
+                            <Typography type="title" color="inherit" style={{paddingRight: "10px"}}>
                                 מיבא
                             </Typography>
                         </IconButton>
