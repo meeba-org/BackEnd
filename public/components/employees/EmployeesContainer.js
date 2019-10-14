@@ -54,7 +54,7 @@ function mapStateToProps(state) {
             employees: state.users
         },
         isDesktop: selectors.isDesktop(state),
-        isAddAllowed: selectors.hasPremiumFeature(state) | (state.users && state.users.length < MAX_FREE_EMPLOYEES_ALLOWED),
+        isAddAllowed: selectors.hasPremiumFeature(state) || (state.users && state.users.length < MAX_FREE_EMPLOYEES_ALLOWED),
         isEditAllowed: selectors.hasPremiumFeature(state) || (state.users && state.users.length <= MAX_FREE_EMPLOYEES_ALLOWED),
     };
 }
