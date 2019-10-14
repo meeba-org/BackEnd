@@ -5,7 +5,7 @@
     background-color: $palette-primary-900;
     color: $palette-primary-200;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     text-align: center;
     justify-content: center;
     align-items: center;
@@ -17,20 +17,10 @@
         .weak {
             color: $palette-primary-100
         }
-        .social {
-            .facebook-link {
-                margin-right: 6px;
-            }
-
-            .phone {
-                padding-top: 5px;
-            }
-        }
-
 
         .signature {
-            padding-top: 10px;
-            padding-bottom: 10px;
+            padding-top: 5px;
+            padding-bottom: 12px;
             flex-direction: row;
 
             a {

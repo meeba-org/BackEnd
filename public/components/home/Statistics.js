@@ -18,7 +18,7 @@ class Statistics extends Component {
                         <h1>מי כבר עובד עם מיבא?</h1>
                         <div styleName="cells">
                             <StatisticsCell title="מנהלים" num={meta.companiesCount}/>
-                            <StatisticsCell title="עובדים" num={1234}/>
+                            <StatisticsCell title="עובדים" num={meta.usersCount}/>
                         </div>
                     </div>
                 </div>
