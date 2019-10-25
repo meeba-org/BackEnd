@@ -78,12 +78,12 @@ class EmployeesList extends React.PureComponent {
             navigator.share({
                 title: 'התקנת שעון נוכחות',
                 text: `
-                עובד יקר,
-                התחלנו להשתמש בשעון הנוכחות "מיבא".
-                אנא הורד את האפליקציה:
-                אנדרואיד - https://goo.gl/iGzWxX
-                או 
-                אייפון - https://goo.gl/L6WKJc
+עובד יקר,
+התחלנו להשתמש בשעון הנוכחות "מיבא".
+אנא הורד את האפליקציה:
+אנדרואיד - https://goo.gl/iGzWxX
+או 
+אייפון - https://goo.gl/L6WKJc
                 `
             });
         } else
