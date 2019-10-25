@@ -71,8 +71,27 @@ class EmployeesList extends React.PureComponent {
             emp1.fullName.localeCompare(emp2.fullName);
     }
 
+    showMobileAppModal = () => {
+        const {showMobileAppModal} = this.props;
+
+        if (navigator.share) {
+            navigator.share({
+                title: 'התקנת שעון נוכחות',
+                text: `
+                עובד יקר,
+                התחלנו להשתמש בשעון הנוכחות "מיבא".
+                אנא הורד את האפליקציה:
+                אנדרואיד - https://goo.gl/iGzWxX
+                או 
+                אייפון - https://goo.gl/L6WKJc
+                `
+            });
+        } else
+            showMobileAppModal();
+    }
+
     render() {
-        const {fields, showMobileAppModal, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed} = this.props;
+        const {fields, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed} = this.props;
 
         let NOT_ALLOW_TO_ADD_MESSAGE = `במסלול החינמי מספר העובדים המקסימלי הוא ${MAX_FREE_EMPLOYEES_ALLOWED}`;
 
@@ -92,7 +111,7 @@ class EmployeesList extends React.PureComponent {
                         </Tooltip>
                         <Tooltip title="לינק לאפליקציית העובד" placement="top">
                             <Button className={styles["action-button"]} variant="contained" color="primary"
-                                    onClick={() => showMobileAppModal()}><Icon>mobile_screen_share</Icon></Button>
+                                    onClick={this.showMobileAppModal}><Icon>mobile_screen_share</Icon></Button>
                         </Tooltip>
                         <SearchBar onChange={(filter) =>   {
                             this.setState({employeesFilter: filter});
