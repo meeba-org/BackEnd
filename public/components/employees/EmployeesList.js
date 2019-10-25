@@ -8,8 +8,8 @@ import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
-import Icon from "@material-ui/core/Icon";
 import Tooltip from "@material-ui/core/Tooltip";
+import ShareIcon from '@material-ui/icons/Share';
 import AddIcon from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -111,7 +111,7 @@ class EmployeesList extends React.PureComponent {
                         </Tooltip>
                         <Tooltip title="לינק לאפליקציית העובד" placement="top">
                             <Button className={styles["action-button"]} variant="contained" color="primary"
-                                    onClick={this.showMobileAppModal}><Icon>mobile_screen_share</Icon></Button>
+                                    onClick={this.showMobileAppModal}><ShareIcon/></Button>
                         </Tooltip>
                         <SearchBar onChange={(filter) =>   {
                             this.setState({employeesFilter: filter});
