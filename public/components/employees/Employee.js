@@ -46,17 +46,17 @@ class Employee extends React.Component {
     };
 
     showEmployeeDialog = () => {
-        let {showEmployeeDialog, input} = this.props;
+        let {showEmployeeDialog, employee} = this.props;
 
-        showEmployeeDialog(input.value, (editedEmployee) => input.onChange(editedEmployee));
+        showEmployeeDialog(employee);
     };
 
     render() {
-        let {input, onDelete, classes, onBlur, onUpdate, error, isLimited} = this.props;
+        let {employee, onDelete, classes, onBlur, onUpdate, error, isLimited} = this.props;
         return (
                 <Grid container spacing={24} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Grid item sm={3}>
-                        <Input value={input.value.fullName} placeholder="שם"
+                        <Input value={employee.fullName} placeholder="שם"
                                onChange={(e) => onUpdate(e, "fullName")}
                                onBlur={onBlur}
                                classes={{root: classes.root}}
@@ -64,7 +64,7 @@ class Employee extends React.Component {
                         />
                     </Grid>
                     <Grid item sm={2}>
-                        <Input value={input.value.uid} placeholder="ת.ז."
+                        <Input value={employee.uid} placeholder="ת.ז."
                                onChange={(e) => onUpdate(e, "uid")}
                                onBlur={onBlur}
                                classes={{root: classes.root}}
@@ -72,7 +72,7 @@ class Employee extends React.Component {
                         />
                     </Grid>
                     <Grid item sm={1}>
-                        <Input value={input.value.hourWage} placeholder="שכר שעתי"
+                        <Input value={employee.hourWage} placeholder="שכר שעתי"
                                onChange={(e) => onUpdate(e, "hourWage")}
                                onBlur={onBlur}
                                classes={{root: classes.root}}
@@ -80,11 +80,11 @@ class Employee extends React.Component {
                         />
                     </Grid>
                     <Grid item sm={2}>
-                        <Input value={input.value.transportation} placeholder="נסיעות"
+                        <Input value={employee.transportation} placeholder="נסיעות"
                                onChange={(e) => onUpdate(e, "transportation")}
                                onBlur={onBlur}
                                classes={{root: classes.root}}
-                               endAdornment={<InputAdornment position="end">{input.value.transportPaymentPer === 0 ? "למשמרת" : "חודשי"}</InputAdornment>}
+                               endAdornment={<InputAdornment position="end">{employee.transportPaymentPer === 0 ? "למשמרת" : "חודשי"}</InputAdornment>}
                                disabled={isLimited}
                         />
                     </Grid>
@@ -113,7 +113,7 @@ class Employee extends React.Component {
 }
 
 Employee.propTypes = {
-    input: PropTypes.object.isRequired,
+    employee: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,

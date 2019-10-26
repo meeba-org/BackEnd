@@ -68,14 +68,13 @@ export const fetchUser = (userId) => ({
     }
 });
 
-export const showEditEmployeeModal = (employee, callBack) => ({
+export const showEditEmployeeModal = (employee, onUpdate) => ({
     type: 'SHOW_MODAL',
     payload: {
         modalType: EModalType.EDIT_EMPLOYEE,
         modalProps: {
             entity: employee,
-            callBack,
-            updateUser,
+            updateUser: onUpdate,
             open: true,
             key: employee._id
         }
@@ -102,6 +101,9 @@ export const updateUser = (user) => ({
     },
     meta: {
         shouldAuthenticate: true,
+        debounce: {
+            time: 700
+        }
     }
 });
 

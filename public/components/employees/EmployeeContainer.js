@@ -6,50 +6,66 @@ import Employee from "./Employee";
 import EmployeeMobile from "./EmployeeMobile";
 
 class EmployeeContainer extends Component {
-    onUpdate = (e, name) => {
-        let {input} = this.props;
 
-        let employee = {
-            ...input.value,
+    constructor(props) {
+        super(props);
+        let employee = props.employee || {};
+        this.state = {
+            employee: {...employee }
+        };
+    }
+
+    onUpdate = (e, name) => {
+        let {employee} = this.props;
+
+        let newEmployee = {
+            ...employee,
             [name]: e.target.value,
         };
 
-        input.onChange(employee);
+        this.updateUser(newEmployee);
+    };
+
+    updateUser = (employee) => {
+        this.setState({employee});
+        this.props.onUpdate(employee);
     };
 
     onBlur = () => {
-        let {input, onUpdate} = this.props;
+        let {onUpdate} = this.props;
+        const {employee} = this.state;
 
-        onUpdate(input.value);
+        onUpdate(employee);
     };
 
+    showEmployeeDialog = employee => this.props.showEmployeeDialog(employee, this.updateUser);
+
     render() {
-        const {isDesktop, onDelete, input, showEmployeeDialog, index, meta: {error}, isLimited} = this.props;
+        const {isDesktop, onDelete, order, isLimited} = this.props;
+        const {employee} = this.state;
+        // TODO error?
         return isDesktop ?
             <Employee
                 onUpdate={this.onUpdate}
                 onDelete={onDelete}
                 onBlur={this.onBlur}
-                input={input}
-                error={error}
-                showEmployeeDialog={showEmployeeDialog}
+                employee={employee}
+                showEmployeeDialog={this.showEmployeeDialog}
                 isLimited={isLimited}
             /> :
             <EmployeeMobile
                 onUpdate={this.onUpdate}
                 onDelete={onDelete}
                 onBlur={this.onBlur}
-                input={input}
-                error={error}
-                showEmployeeDialog={showEmployeeDialog}
-                index={index}
+                employee={employee}
+                showEmployeeDialog={this.showEmployeeDialog}
+                order={order}
                 isLimited={isLimited}
             />;
     }
 }
 
 EmployeeContainer.propTypes = {
-    input: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     showEmployeeDialog: PropTypes.func.isRequired,

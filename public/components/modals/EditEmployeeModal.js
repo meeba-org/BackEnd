@@ -34,9 +34,7 @@ class EditEmployeeModal extends Component {
     }
 
     handleClose = () => {
-        let {dispatch, callBack} = this.props;
-        if (callBack)
-            callBack(this.state.entity);
+        let {dispatch} = this.props;
 
         dispatch(hideEditEmployeeModal());
     };
@@ -58,7 +56,7 @@ class EditEmployeeModal extends Component {
 
         let updatedEmployee = {
             ...entity,
-            transportPaymentPer: event.target.checked ? 1 : 0,
+            transportPaymentPer: event.target.checked ? 0 : 1,
         };
 
         this.updateUser(updatedEmployee);
@@ -69,9 +67,9 @@ class EditEmployeeModal extends Component {
             entity: updatedEmployee
         });
 
-        let {updateUser, dispatch} = this.props;
+        let {updateUser} = this.props;
 
-        dispatch(updateUser(updatedEmployee));
+        updateUser(updatedEmployee);
     }
 
     render() {
@@ -96,7 +94,7 @@ class EditEmployeeModal extends Component {
                             <MbSwitch
                                 firstLabel="חודשי" secondLabel="למשמרת"
                                 onChange={(e) => this.updateTransportPaymentPer(e)}
-                                checked={entity && entity.transportPaymentPer === 1}
+                                checked={entity && entity.transportPaymentPer === 0}
                             />
                         </Grid>
                     </Grid>
@@ -122,7 +120,6 @@ EditEmployeeModal.propTypes = {
     isCommuteFeatureEnable: PropTypes.bool,
     month: PropTypes.string,
     year: PropTypes.string,
-    callBack: PropTypes.func,
 };
 
 export default connect()(withStyles(styles)(EditEmployeeModal));

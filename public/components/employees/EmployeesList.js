@@ -30,6 +30,8 @@ class EmployeesList extends React.PureComponent {
         employeesFilter: ""
     };
 
+    NOT_ALLOW_TO_ADD_MESSAGE = `במסלול החינמי מספר העובדים המקסימלי הוא ${MAX_FREE_EMPLOYEES_ALLOWED}`;
+
     onCreate = () => {
         this.props.onCreate({});
     };
@@ -38,8 +40,7 @@ class EmployeesList extends React.PureComponent {
         this.props.onUpdate(employee);
     }
 
-    onDelete(fields, index) {
-        let employeeToDelete = fields.get(index);
+    onDelete(employeeToDelete) {
         this.props.onDelete(employeeToDelete);
     }
 
@@ -52,11 +53,9 @@ class EmployeesList extends React.PureComponent {
         return undefined;
     }
 
-    filterEmployees = (result, index, fields, employeesFilter) => {
+    filterEmployees = (employee, employeesFilter) => {
         if (!employeesFilter)
             return true;
-
-        let employee = fields.get(index);
 
         if (!employee || !employee.fullName)
             return false;
@@ -64,9 +63,7 @@ class EmployeesList extends React.PureComponent {
         return employee.fullName.includes(employeesFilter);
     };
 
-    sortByName(fields, obj1, obj2) {
-        let emp1 = fields.get(obj1.key);
-        let emp2 = fields.get(obj2.key);
+    sortByName(emp1, emp2) {
         return !emp1.fullName ? -1 : !emp2.fullName ? 1 :
             emp1.fullName.localeCompare(emp2.fullName);
     }
@@ -88,12 +85,11 @@ class EmployeesList extends React.PureComponent {
             });
         } else
             showMobileAppModal();
-    }
+    };
 
     render() {
-        const {fields, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed} = this.props;
-
-        let NOT_ALLOW_TO_ADD_MESSAGE = `במסלול החינמי מספר העובדים המקסימלי הוא ${MAX_FREE_EMPLOYEES_ALLOWED}`;
+        const {employees, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed} = this.props;
+        let processEmployees = this.processEmployees(employees);
 
         return (
             <Card>
@@ -102,7 +98,7 @@ class EmployeesList extends React.PureComponent {
                 <CardContent className={styles["card-content"]}>
 
                     <div className={styles["controls-line"]}>
-                        <Tooltip title={isAddAllowed ? "הוספת עובד" : NOT_ALLOW_TO_ADD_MESSAGE} placement="top">
+                        <Tooltip title={isAddAllowed ? "הוספת עובד" : this.NOT_ALLOW_TO_ADD_MESSAGE} placement="top">
                             <span>
                             <Button className={styles["action-button"]} variant="contained" color="primary"
                                     disabled={!isAddAllowed}
@@ -119,9 +115,9 @@ class EmployeesList extends React.PureComponent {
                     </div>
                     <Divider className={styles["divider"]}/>
 
-                    <GoPremiumNotification isVisible={!isAddAllowed} text={NOT_ALLOW_TO_ADD_MESSAGE} />
+                    <GoPremiumNotification isVisible={!isAddAllowed} text={this.NOT_ALLOW_TO_ADD_MESSAGE} />
 
-                    {fields && fields.length > 0 && isDesktop &&
+                    {this.hasEmployees(processEmployees) && isDesktop &&
                     <Grid className={styles["header"]} container spacing={24}>
                         <Grid item sm={3}>שם</Grid>
                         <Grid item sm={2} className={styles["header-item"]}>ת.ז.</Grid>
@@ -129,23 +125,21 @@ class EmployeesList extends React.PureComponent {
                         <Grid item sm={2} className={styles["header-item"]}>נסיעות</Grid>
                     </Grid>
                     }
-                    {fields && fields.map((employeeIndex, index) =>
-                        (<Fade key={index} isVisible>
-                            <Field component={EmployeeContainer}
-                                   name={employeeIndex}
-                                   index={index}
-                                   onDelete={() => this.onDelete(fields, index)}
-                                   onUpdate={(employee) => this.onUpdate(employee)}
-                                   validate={this.validateEmployee}
-                                   showEmployeeDialog={showEmployeeDialog}
-                                   isLimited={!isEditAllowed}
+                    {this.hasEmployees(processEmployees) && processEmployees.map((employee, index) =>
+                        (<Fade key={employee._id} isVisible>
+                            <EmployeeContainer
+                                employee={employee}
+                                order={index}
+                                onDelete={() => this.onDelete(employee)}
+                                onUpdate={(employee) => this.onUpdate(employee)}
+                                validate={this.validateEmployee}
+                                showEmployeeDialog={showEmployeeDialog}
+                                isLimited={!isEditAllowed}
                             />
                         </Fade>)
                     )
-                        .filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))
-                        .sort((obj1, obj2) => this.sortByName(fields, obj1, obj2))
                     }
-                    {(!fields || (fields.length === 0)) &&
+                    {!this.hasEmployees(processEmployees) &&
                     <NoData text="אין עובדים - בוא ננסה להוסיף!"/>
                     }
 
@@ -154,10 +148,21 @@ class EmployeesList extends React.PureComponent {
             </Card>
         );
     }
+
+    hasEmployees(employees) {
+        return employees && employees.length > 0;
+    }
+
+    processEmployees(employees) {
+        let sort = employees
+            .filter((employee) => this.filterEmployees(employee, this.state.employeesFilter))
+            .sort((emp1, emp2) => this.sortByName(emp1, emp2));
+        return sort;
+    }
 }
 
 EmployeesList.propTypes = {
-    fields: PropTypes.object.isRequired,
+    employees: PropTypes.array,
     onCreate: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
