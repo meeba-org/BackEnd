@@ -41,9 +41,10 @@ class EmployeeContainer extends Component {
     showEmployeeDialog = employee => this.props.showEmployeeDialog(employee, this.updateUser);
 
     render() {
-        const {isDesktop, onDelete, order, isLimited} = this.props;
+        const {isDesktop, onDelete, order, isLimited, validate} = this.props;
         const {employee} = this.state;
-        // TODO error?
+        let error = validate(employee);
+
         return isDesktop ?
             <Employee
                 onUpdate={this.onUpdate}
@@ -52,6 +53,7 @@ class EmployeeContainer extends Component {
                 employee={employee}
                 showEmployeeDialog={this.showEmployeeDialog}
                 isLimited={isLimited}
+                error={error}
             /> :
             <EmployeeMobile
                 onUpdate={this.onUpdate}
@@ -61,6 +63,7 @@ class EmployeeContainer extends Component {
                 showEmployeeDialog={this.showEmployeeDialog}
                 order={order}
                 isLimited={isLimited}
+                error={error}
             />;
     }
 }
@@ -69,6 +72,7 @@ EmployeeContainer.propTypes = {
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
     showEmployeeDialog: PropTypes.func.isRequired,
+    validate: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
