@@ -22,7 +22,7 @@ class FAQContainer extends Component {
                 },
                 {
                     q: "איך זה עובד?",
-                    a: `**המנהל** עובד מול [האתר](https://www.meeba.org.il), מזין עובדים, מעדכן שעות ועוד.
+                    a: `**המנהל** עובד מול [האתר](https://www.meeba.co.il), מזין עובדים, מעדכן שעות ועוד.
 
 **העובד** מוריד את האפליקציה ([אנדרואיד](https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) / [אייפון](https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8)) לסלולרי ומדווח כניסה ויציאה.`
                 },
@@ -45,9 +45,9 @@ class FAQContainer extends Component {
 4. לראות מיקום העובד בכניסה
 5. לנהל פרטי עובדים
 
-איפה הוא עושה את כל זה? ב[אתר](https://www.meeba.org.il)!
+איפה הוא עושה את כל זה? ב[אתר](https://www.meeba.co.il)!
 
-מה לגבי מובייל? ה[אתר](https://www.meeba.org.il) מותאם גם למובייל - כלומר, בסלולרי שלכם פתחו את הדפדפן וגילשו ל-https://meeba.org.il`
+מה לגבי מובייל? ה[אתר](https://www.meeba.co.il) מותאם גם למובייל - כלומר, בסלולרי שלכם פתחו את הדפדפן וגילשו ל-https://meeba.co.il`
                 },
                 {
                     q: "מה העובד יכול לעשות?",

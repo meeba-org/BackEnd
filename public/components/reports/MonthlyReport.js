@@ -109,7 +109,7 @@ class MonthlyReport extends React.PureComponent {
         const {selectedYear, selectedMonth} = this.state;
 
         return (
-            <Card>
+            <Card styleName="monthly-report">
                 <CardHeader title={title}/>
 
                 <CardContent className={styles["card-content"]}>

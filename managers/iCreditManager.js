@@ -22,14 +22,14 @@ const createIframeUrl = async (user, company) => {
             "UnitPrice": MONTHLY_SUBSCRIPTION_PRICE,
             "Description": "מנוי חודשי לאתר מיבא",
         }],
-        "RedirectURL": "https://meeba.org.il/paymentSuccess",
+        "RedirectURL": "https://meeba.co.il/paymentSuccess",
         "ExemptVAT": true,
         "MaxPayments": 1,
         "SaleType": 3, // איסוף כרטיס בלבד - ללא גבייה
         "EmailAddress": user.company.email || null,
         "CustomerLastName": user.company.name || null,
         "HideItemList": true,
-        "IPNURL": "https://meeba.org.il/api/general/ipn",
+        "IPNURL": "https://meeba.co.il/api/general/ipn",
         "Custom1": company._id // Storing this in order to link the return transaction token to the company
     };
 

@@ -14,7 +14,6 @@ import AddIcon from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
 import React from 'react';
 import CSSModules from "react-css-modules";
-import Field from "redux-form/es/Field";
 import {MAX_FREE_EMPLOYEES_ALLOWED} from "../../../constants";
 import {isIsraeliIdValid} from "../../helpers/utils";
 import styles from "../../styles/EmployeesList.scss";
@@ -92,7 +91,7 @@ class EmployeesList extends React.PureComponent {
         let processEmployees = this.processEmployees(employees);
 
         return (
-            <Card>
+            <Card styleName="employees-list">
                 <CardHeader title="עובדים"/>
 
                 <CardContent className={styles["card-content"]}>
