@@ -41,7 +41,6 @@ const styles = theme => ({
             }
         },
         width: '150px',
-        margin: '10px',
         transition: "width 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
     },
     searchIcon: {
@@ -54,6 +53,7 @@ const styles = theme => ({
     inputRoot: {
         color: 'inherit',
         width: '100%',
+        height: '40px'
     },
     inputInput: {
         padding: "8px 20px 8px 8px",
