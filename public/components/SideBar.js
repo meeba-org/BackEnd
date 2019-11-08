@@ -56,7 +56,7 @@ class SideBar extends Component {
                 open={open}
                 onClose={toggleSideBar}
                 onOpen={toggleSideBar}
-                anchor="right"
+                anchor="left"
             >
                 <div className={CSSModulesStyles["drawer-header"]}
                      onClick={toggleSideBar}>
