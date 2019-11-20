@@ -1,6 +1,24 @@
+import {combineReducers} from "redux";
 import * as types from "../actions/actionTypes";
 
-export function ShiftsReducer(state = [], action = null) {
+export const ShiftsReducer = combineReducers({
+    daily: dailyShiftsReducer,
+    pending: pendingShiftsReducer
+});
+
+function pendingShiftsReducer (state = [], action = null) {
+    switch (action.type) {
+        case types.FETCH_PENDING_SHIFTS_SUCCESS: {
+            return [
+                ...action.payload
+            ];
+        }
+        default:
+            return state;
+    }
+}
+
+function dailyShiftsReducer (state = [], action = null) {
     switch (action.type) {
         case types.CREATE_SHIFT_SUCCESS: {
             return [
@@ -8,7 +26,7 @@ export function ShiftsReducer(state = [], action = null) {
                 action.payload
             ];
         }
-        case types.FETCH_SHIFTS_SUCCESS: {
+        case types.FETCH_DAILY_SHIFTS_SUCCESS: {
             return [
                 ...action.payload
             ];

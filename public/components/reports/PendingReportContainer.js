@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {connect} from "react-redux";
 import reduxForm from "redux-form/es/reduxForm";
 import {fetchPendingShifts, showDeleteShiftModal, showEditShiftModal, updateShift} from "../../actions";
+import {getPendingShifts} from "../../selectors";
 import PendingReport from "./PendingReport";
 
 class PendingReportContainer extends PureComponent {
@@ -41,9 +42,9 @@ PendingReportContainer.defaultProps = {};
 
 function mapStateToProps(state) {
     return {
-        shifts: state.shifts,
+        shifts: getPendingShifts(state),
         initialValues: {
-            shifts: state.shifts
+            shifts: getPendingShifts(state)
         },
     };
 }

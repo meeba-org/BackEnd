@@ -4,6 +4,7 @@ import {createShift, updateShift} from "../../actions";
 import reduxForm from "redux-form/es/reduxForm";
 import PropTypes from 'prop-types';
 import {fetchDailyReport, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
+import {getDailyShifts} from "../../selectors";
 import DailyReport from "./DailyReport";
 import {fetchUsers} from "../../actions/usersActions";
 
@@ -54,10 +55,10 @@ DailyReportContainer.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        shifts: state.shifts,
+        shifts: getDailyShifts(state),
         employees: state.users,
         initialValues: {
-            shifts: state.shifts
+            shifts: getDailyShifts(state)
         },
         isLoading: state.loader.isLoading
     };

@@ -74,3 +74,7 @@ export const getPlan = state => {
 };
 
 export const hasPremiumPlan = state => getPlan(state) === EPlanType.Premium;
+
+export const getDailyShifts = state => state.shifts.daily;
+
+export const getPendingShifts = state => state.shifts.pending;

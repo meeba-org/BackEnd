@@ -19,8 +19,13 @@ export const deleteShiftSuccess = (id) => ({
     id
 });
 
-export const fetchShiftsSuccess = (payload) => ({
-    type: actions.FETCH_SHIFTS_SUCCESS,
+export const fetchDailyShiftsSuccess = (payload) => ({
+    type: actions.FETCH_DAILY_SHIFTS_SUCCESS,
+    payload
+});
+
+export const fetchPendingShiftsSuccess = (payload) => ({
+    type: actions.FETCH_PENDING_SHIFTS_SUCCESS,
     payload
 });
 
@@ -70,12 +75,12 @@ function prepareFetchPendingShiftsUrl() {
     return '/shifts?pending=true';
 }
 
-export const fetchShifts = (startDate, endDate) => ({
+export const fetchDailyReport = (startDate) => ({
     type: actions.API,
     payload: {
-        url: prepareFetchShiftsUrl(startDate, endDate),
+        url: prepareFetchShiftsUrl(startDate, startDate),
         method: "get",
-        success: fetchShiftsSuccess,
+        success: fetchDailyShiftsSuccess,
     },
     meta: {
         shouldAuthenticate: true,
@@ -99,7 +104,7 @@ export const fetchPendingShifts = () => ({
     payload: {
         url: prepareFetchPendingShiftsUrl(),
         method: "get",
-        success: fetchShiftsSuccess,
+        success: fetchPendingShiftsSuccess,
     },
     meta: {
         shouldAuthenticate: true,
@@ -241,6 +246,3 @@ export const deleteShift = (shift, dispatch, month, year) => ({
     }
 });
 
-export function fetchDailyReport(startDate) {
-    return fetchShifts(startDate, startDate);
-}
