@@ -3,9 +3,8 @@ import MuiPickersUtilsProvider from "material-ui-pickers/MuiPickersUtilsProvider
 import PropTypes from 'prop-types';
 import React from 'react';
 import connect from "react-redux/es/connect/connect";
-import {fetchPendingShifts} from "../actions";
+import {fetchPendingShifts, handleResize} from "../actions";
 import {fetchMetaData} from "../actions/generalActions";
-import {handleResize} from "../actions/index";
 import "../styles/App.scss";
 import ModalRoot from "./modals/ModalRoot";
 

@@ -1,46 +1,52 @@
 import moment from "moment";
 import {EModalType} from "../components/modals/EModalType";
 import {GACategory} from "../helpers/GATypes";
-import * as actions from "./actionTypes";
+import {
+    API,
+    CREATE_SHIFT_SUCCESS, DELETE_SHIFT_SUCCESS,
+    FETCH_DAILY_SHIFTS_SUCCESS,
+    FETCH_PENDING_SHIFTS_SUCCESS, FETCH_SHIFT_SUCCESS,
+    HAS_PENDING_SHIFTS_SUCCESS, UPDATE_SHIFT_SUCCESS
+} from "./actionTypes";
 import {fetchMonthlyReport} from "./reportsActions";
 
 export const fetchShiftSuccess = (payload) => ({
-    type: actions.FETCH_SHIFT_SUCCESS,
+    type: FETCH_SHIFT_SUCCESS,
     payload
 });
 
 export const updateShiftSuccess = (payload) => ({
-    type: actions.UPDATE_SHIFT_SUCCESS,
+    type: UPDATE_SHIFT_SUCCESS,
     payload
 });
 
 export const deleteShiftSuccess = (id) => ({
-    type: actions.DELETE_SHIFT_SUCCESS,
+    type: DELETE_SHIFT_SUCCESS,
     id
 });
 
 export const fetchDailyShiftsSuccess = (payload) => ({
-    type: actions.FETCH_DAILY_SHIFTS_SUCCESS,
+    type: FETCH_DAILY_SHIFTS_SUCCESS,
     payload
 });
 
 export const fetchPendingShiftsSuccess = (payload) => ({
-    type: actions.FETCH_PENDING_SHIFTS_SUCCESS,
+    type: FETCH_PENDING_SHIFTS_SUCCESS,
     payload
 });
 
 export const hasPendingShiftsSuccess = (payload) => ({
-    type: actions.HAS_PENDING_SHIFTS_SUCCESS,
+    type: HAS_PENDING_SHIFTS_SUCCESS,
     payload
 });
 
 export const createShiftsSuccess = (payload) => ({
-    type: actions.CREATE_SHIFT_SUCCESS,
+    type: CREATE_SHIFT_SUCCESS,
     payload
 });
 
 export const createShift = (shift, dispatch, month, year) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/shifts",
         method: "post",
@@ -76,7 +82,7 @@ function prepareFetchPendingShiftsUrl() {
 }
 
 export const fetchDailyReport = (startDate) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: prepareFetchShiftsUrl(startDate, startDate),
         method: "get",
@@ -88,7 +94,7 @@ export const fetchDailyReport = (startDate) => ({
 });
 
 export const hasPendingShifts = () => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: prepareFetchPendingShiftsUrl(),
         method: "get",
@@ -100,7 +106,7 @@ export const hasPendingShifts = () => ({
 });
 
 export const fetchPendingShifts = () => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: prepareFetchPendingShiftsUrl(),
         method: "get",
@@ -112,7 +118,7 @@ export const fetchPendingShifts = () => ({
 });
 
 export const fetchShift = (shiftId) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/shifts/" + shiftId,
         method: "get",
@@ -158,7 +164,7 @@ export const updateShift = (shift, dispatch, postUpdate, month, year) => {
 export const updateShift0 = (dispatch, shift, postUpdate, month, year) => {
 
     return {
-        type: actions.API,
+        type: API,
         payload: {
             url: "/shifts",
             method: "put",
@@ -230,7 +236,7 @@ export const showLocationModal = (shift) => ({
 });
 
 export const deleteShift = (shift, dispatch, month, year) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/shifts/" + shift._id,
         method: "delete",

@@ -1,41 +1,48 @@
 import {EModalType} from "../components/modals/EModalType";
-import * as actions from "./actionTypes";
+import {
+    API,
+    CREATE_TASK_SUCCESS,
+    DELETE_TASK_SUCCESS,
+    FETCH_TASKS_SUCCESS,
+    FILTER_TASKS,
+    UPDATE_TASK_SUCCESS
+} from "./actionTypes";
 
 export const fetchTasksSuccess = (payload) => {
     return {
-        type: actions.FETCH_TASKS_SUCCESS,
+        type: FETCH_TASKS_SUCCESS,
         payload
     };
 };
 
 export const filterTasks = (parent) => ({
-    type: actions.FILTER_TASKS,
+    type: FILTER_TASKS,
     parent
 });
 
 export const createTasksSuccess = (payload) => {
     return {
-        type: actions.CREATE_TASK_SUCCESS,
+        type: CREATE_TASK_SUCCESS,
         payload
     };
 };
 
 export const updateTaskSuccess = (payload) => {
     return {
-        type: actions.UPDATE_TASK_SUCCESS,
+        type: UPDATE_TASK_SUCCESS,
         payload
     };
 };
 
 export const deleteTaskSuccess = (id) => {
     return {
-        type: actions.DELETE_TASK_SUCCESS,
+        type: DELETE_TASK_SUCCESS,
         id
     };
 };
 
 export const fetchTasks = () => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/tasks",
         method: "get",
@@ -47,7 +54,7 @@ export const fetchTasks = () => ({
 });
 
 export const createTask = (task) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/tasks",
         method: "post",
@@ -60,7 +67,7 @@ export const createTask = (task) => ({
 });
 
 export const updateTask = (task) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/tasks",
         method: "put",
@@ -85,7 +92,7 @@ export const showDeleteTaskModal = (entity) => ({
 });
 
 export const deleteTask = (task) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/tasks/" + task._id,
         method: "delete",

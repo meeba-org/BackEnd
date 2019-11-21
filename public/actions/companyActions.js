@@ -1,12 +1,12 @@
-import * as actions from "./actionTypes";
+import {API, UPDATE_COMPANY_SUCCESS} from "./actionTypes";
 
 export const updateCompanySuccess = (payload) => ({
-    type: actions.UPDATE_COMPANY_SUCCESS,
+    type: UPDATE_COMPANY_SUCCESS,
     payload
 });
 
 export const updateCompany = (company) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/companies",
         method: "put",

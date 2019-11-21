@@ -1,38 +1,45 @@
 import {EModalType} from "../components/modals/EModalType";
-import * as actions from "./actionTypes";
+import {
+    API,
+    CREATE_USER_SUCCESS,
+    DELETE_USER_SUCCESS,
+    FETCH_USER_SUCCESS,
+    FETCH_USERS_SUCCESS, UPDATE_ACTIVE_USER_SUCCESS,
+    UPDATE_USER_SUCCESS
+} from "./actionTypes";
 
 export const fetchUserSuccess = (payload) => ({
-    type: actions.FETCH_USER_SUCCESS,
+    type: FETCH_USER_SUCCESS,
     payload
 });
 
 export const updateUserSuccess = (payload) => ({
-    type: actions.UPDATE_USER_SUCCESS,
+    type: UPDATE_USER_SUCCESS,
     payload
 });
 
 export const updateActiveUserSuccess = (payload) => ({
-    type: actions.UPDATE_ACTIVE_USER_SUCCESS,
+    type: UPDATE_ACTIVE_USER_SUCCESS,
     payload
 });
 
 export const deleteUserSuccess = (id) => ({
-    type: actions.DELETE_USER_SUCCESS,
+    type: DELETE_USER_SUCCESS,
     id
 });
 
 export const fetchUsersSuccess = (payload) => ({
-    type: actions.FETCH_USERS_SUCCESS,
+    type: FETCH_USERS_SUCCESS,
     payload
 });
 
 export const createUserSuccess = (payload) => ({
-    type: actions.CREATE_USER_SUCCESS,
+    type: CREATE_USER_SUCCESS,
     payload
 });
 
 export const createUser = (user) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/users",
         method: "post",
@@ -45,7 +52,7 @@ export const createUser = (user) => ({
 });
 
 export const fetchUsers = (hideDeleted) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/users" + (hideDeleted ? "?hideDeleted=true" : ""),
         method: "get",
@@ -57,7 +64,7 @@ export const fetchUsers = (hideDeleted) => ({
 });
 
 export const fetchUser = (userId) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/users/" + userId,
         method: "get",
@@ -92,7 +99,7 @@ export const showLoginRegisterDialog = () => ({
 });
 
 export const updateUser = (user) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/users",
         method: "put",
@@ -108,7 +115,7 @@ export const updateUser = (user) => ({
 });
 
 export const updateActiveUser = (user) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/users",
         method: "put",
@@ -147,7 +154,7 @@ export const showMobileAppModal = () => ({
 });
 
 export const deleteUser = (user) => ({
-    type: actions.API,
+    type: API,
     payload: {
         url: "/users/" + user._id,
         method: "delete",
