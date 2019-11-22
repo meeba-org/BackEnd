@@ -47,7 +47,6 @@ class Report extends Component {
                     <Tab value={EReportType.TASKS} label="משימות" />
                     }
                     <Tab
-                        disabled={!hasPendingShifts}
                         value={EReportType.PENDING}
                         label={
                             <Badge className={classes.padding} color="secondary" variant="dot" invisible={!hasPendingShifts}>ממתינות לאישור</Badge>

@@ -29,6 +29,7 @@ class PendingReportContainer extends PureComponent {
                     onUpdateShift={updateShift}
                     showShiftDialog={showShiftDialog}
                     isLoading={isLoading}
+                    onRefresh={this.fetchPendingShifts}
                     postUpdate={this.fetchPendingShifts}
                 />
             </form>
