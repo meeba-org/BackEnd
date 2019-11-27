@@ -30,7 +30,7 @@ export const displaySplashScreen = () => dispatch => {
         return false;
 
     dispatch(show2019SurveyModal());
-    // setSeenSplashScreen(splashScreenType); // TODO DEVELOPING change - do not commit!!!!!!!!
+    setSeenSplashScreen(splashScreenType);
 };
 
 export const show2019SurveyModal = () => ({
