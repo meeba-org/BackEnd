@@ -22,18 +22,21 @@ class YesNoModal extends Component {
 
         return (
             <Dialog onClose={this.handleCancel} open={open}>
-                <DialogTitle>מיבא - סקר 2019</DialogTitle>
-                <DialogContent>
+                <DialogContent >
                     <Typography variant="h4" gutterBottom>
                         היי!
                     </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        אנחנו מתחילים לסכם שנה ולנסות לעבד וללמוד מכל מה שקרה 🕵️‍♀️ ואנחנו מבקשים את עזרתכם!
-                        אנא מלאו את סקר 2019 שלנו - לכל מסיים יינתן *חודש חינם* ✨✨✨ במסלול פרמיום (מיקומי עובד, עובדים ללא הגבלה ועוד).
+                    <Typography variant="h6" gutterBottom align="center">
+                        אתה משתמש במיבא כבר זמן מה - מה דעתך? 👨🏻‍💻
+                    </Typography>
+                    <div style={{flexDirection: "row", textAlign: "center", marginBottom: "10px"}}>
+                        <Button style={{fontSize: "24px"}} target="_blank" href="https://www.quicksurveys.com/s/Gb5n4" variant="contained" color="primary" >סקר 2019</Button>
+                    </div>
+                    <Typography variant="h6" gutterBottom align="center">
+                        ⭐ חודש חינם במסלול פרמיום לעונים! ⭐
                     </Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button target="_blank" href="https://www.quicksurveys.com/s/Gb5n4" variant="contained" color="primary" >קח אותי לסקר!</Button>
                     <Button onClick={this.onAction} color="primary">סגור</Button>
                 </DialogActions>
             </Dialog>
