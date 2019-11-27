@@ -151,3 +151,11 @@ export const debounce = (func, wait, immediate) => {
         if (callNow) func.apply(context, args);
     };
 };
+
+export const parseJson = (json) => {
+    if (!json)
+        return null;
+
+    return JSON.parse(json);
+
+};

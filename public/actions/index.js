@@ -34,6 +34,8 @@ export const hideLoginRegisterModal = () => hideModal(EModalType.LOGIN_REGISTER)
 
 export const hideMobileAppModal = () => hideModal(EModalType.MOBILE_APP_LINKS);
 
+export const hide2019Survey = () => hideModal(EModalType.SURVEY_2019);
+
 export const ErrorAction = (err) => ({
     type: Error,
     err

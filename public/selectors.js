@@ -37,10 +37,6 @@ export const isDevEnv = (state) => {
     return getGeneral(state).isDevEnv;
 };
 
-export const getBlueSnapBaseUrl = state => {
-    return isDevEnv(state) ? "https://sandbox.bluesnap.com" : "https://ws.bluesnap.com";
-};
-
 const getPayment = state => state.payment;
 
 export const getPaymentUrl = state => getPayment(state).paymentUrl;

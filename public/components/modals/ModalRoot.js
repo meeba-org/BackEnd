@@ -10,6 +10,7 @@ import GoPremiumModal from "./GoPremiumModal";
 import LocationModal from "./LocationModal";
 import MobileAppLinksModal from "./MobileAppLinksModal";
 import MovingShiftOutOfMonthModal from "./MovingShiftOutOfMonthModal";
+import Survey2019Modal from "./Survey2019Modal";
 import TaskModal from "./TaskModal";
 import YesNoModal from "./YesNoModal";
 
@@ -25,6 +26,7 @@ export const MODAL_COMPONENTS = {
     [EModalType.TASK_MODAL]: TaskModal,
     [EModalType.GO_PREMIUM_MODAL]: GoPremiumModal,
     [EModalType.YES_NO_MODAL]: YesNoModal,
+    [EModalType.SURVEY_2019]: Survey2019Modal,
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {

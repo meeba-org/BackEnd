@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import connect from "react-redux/es/connect/connect";
 import {fetchPendingShifts, handleResize} from "../actions";
-import {fetchMetaData} from "../actions/generalActions";
+import {displaySplashScreen, fetchMetaData} from "../actions/generalActions";
 import "../styles/App.scss";
 import ModalRoot from "./modals/ModalRoot";
 
@@ -15,6 +15,7 @@ class AppContainer extends React.Component {
 
         this.props.fetchMetaData();
         this.props.fetchPendingShifts();
+        this.props.displaySplashScreen();
     }
 
     componentWillUnmount() {
@@ -43,7 +44,8 @@ AppContainer.propTypes = {
 const mapDispatchToProps = {
     handleResize,
     fetchMetaData,
-    fetchPendingShifts
+    fetchPendingShifts,
+    displaySplashScreen
 };
 
 export default connect(

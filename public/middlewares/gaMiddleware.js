@@ -1,4 +1,5 @@
 import moment from "moment";
+import {parseJson} from "../helpers/utils";
 
 const UNKNOWN_USER = "UNKNOWN_USER";
 
@@ -27,14 +28,6 @@ const gaMiddleware = () => next => action => {
     });
 
     return next(action);
-};
-
-const parseJson = (json) => {
-    if (!json)
-        return null;
-
-    return JSON.parse(json);
-
 };
 
 const extractCompanyFromJson = (activeUserStr) => {

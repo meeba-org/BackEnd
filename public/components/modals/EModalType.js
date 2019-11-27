@@ -9,4 +9,5 @@ export const EModalType = {
     GO_PREMIUM_MODAL: 8,
     DELETE_ENTITY: 9,
     YES_NO_MODAL: 10,
+    SURVEY_2019: 11,
 };
