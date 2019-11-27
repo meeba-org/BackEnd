@@ -1,6 +1,8 @@
 import {EModalType} from "../components/modals/EModalType";
 import {ESplashScreenType, hasSeenSplashScreen, setSeenSplashScreen} from "../helpers/SplashScreenHelper";
 import * as actions from "./actionTypes";
+import {loadUserFromToken} from "./loginLogoutActions";
+import {fetchPendingShifts} from "./shiftsActions";
 
 export const fetchMetaDataSuccess = (payload) => {
     localStorage.setItem('isDevEnv', payload.isDevEnv);
@@ -40,4 +42,10 @@ export const show2019SurveyModal = () => ({
         }
     }
 });
+
+export const loadDashboardData = () =>  dispatch => {
+    dispatch(loadUserFromToken());
+    dispatch(fetchPendingShifts());
+    dispatch(displaySplashScreen());
+};
 

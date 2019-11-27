@@ -4,7 +4,9 @@ import config from "../config";
 import {GACategory} from "../helpers/GATypes";
 import {isUserAllowedLogin} from "../helpers/utils";
 import * as actionsTypes from "./actionTypes";
+import {displaySplashScreen} from "./generalActions";
 import {hideLoginRegisterModal} from "./index";
+import {fetchPendingShifts} from "./shiftsActions";
 
 function handleLoginStart() {
     return {

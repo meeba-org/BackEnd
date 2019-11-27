@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CSSModules from "react-css-modules";
 import {connect} from "react-redux";
-import {loadUserFromToken} from "../actions/index";
+import {loadDashboardData} from "../actions/generalActions";
 import * as selectors from "../selectors";
 import styles from "../styles/Dashboard.scss";
 import AppBar from "./AppBar";
@@ -16,8 +16,7 @@ class Dashboard extends React.PureComponent {
     };
 
     componentWillMount() {
-        this.props.loadUserFromToken();
-        // this.props.hasPendingShifts();
+        this.props.loadDashboardData();
     }
 
     toggleDrawer = () => {
@@ -62,7 +61,7 @@ class Dashboard extends React.PureComponent {
 }
 
 Dashboard.propTypes = {
-    loadUserFromToken: PropTypes.func.isRequired,
+    loadDashboardData: PropTypes.func.isRequired,
     children: PropTypes.object,
     router: PropTypes.object.isRequired,
     userRole: PropTypes.string,
@@ -77,11 +76,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        loadUserFromToken: () => { dispatch(loadUserFromToken()); },
-        // hasPendingShifts: () => {dispatch( hasPendingShifts()); },
-    };
+const mapDispatchToProps = {
+    loadDashboardData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(Dashboard, styles, {allowMultiple: true}));

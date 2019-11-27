@@ -3,8 +3,8 @@ import MuiPickersUtilsProvider from "material-ui-pickers/MuiPickersUtilsProvider
 import PropTypes from 'prop-types';
 import React from 'react';
 import connect from "react-redux/es/connect/connect";
-import {fetchPendingShifts, handleResize} from "../actions";
-import {displaySplashScreen, fetchMetaData} from "../actions/generalActions";
+import {handleResize} from "../actions";
+import {fetchMetaData} from "../actions/generalActions";
 import "../styles/App.scss";
 import ModalRoot from "./modals/ModalRoot";
 
@@ -14,8 +14,6 @@ class AppContainer extends React.Component {
         window.addEventListener("resize", () => this.updatePredicate());
 
         this.props.fetchMetaData();
-        this.props.fetchPendingShifts();
-        this.props.displaySplashScreen();
     }
 
     componentWillUnmount() {
@@ -44,8 +42,6 @@ AppContainer.propTypes = {
 const mapDispatchToProps = {
     handleResize,
     fetchMetaData,
-    fetchPendingShifts,
-    displaySplashScreen
 };
 
 export default connect(
