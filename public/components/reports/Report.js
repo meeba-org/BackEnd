@@ -5,8 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 import {ReportModes} from "../../helpers/utils";
-import {getPendingShifts} from "../../selectors";
-import * as selectors from "../../selectors";
+import {getPendingShifts, isTasksFeatureEnable} from "../../selectors";
 import DailyReportContainer from "./DailyReportContainer";
 import MonthlyReportContainer from "./MonthlyReportContainer";
 import PendingReportContainer from "./PendingReportContainer";
@@ -67,7 +66,7 @@ Report.defaultProps = {};
 
 const mapStateToProps = (state) => {
     return {
-        isTasksFeatureEnable: selectors.isTasksFeatureEnable(state),
+        isTasksFeatureEnable: isTasksFeatureEnable(state),
         hasPendingShifts: getPendingShifts(state).length > 0
     };
 };

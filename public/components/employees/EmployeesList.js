@@ -86,6 +86,18 @@ class EmployeesList extends React.PureComponent {
             showMobileAppModal();
     };
 
+
+    hasEmployees(employees) {
+        return employees && employees.length > 0;
+    }
+
+    processEmployees(employees) {
+        let sort = employees
+            .filter((employee) => this.filterEmployees(employee, this.state.employeesFilter))
+            .sort((emp1, emp2) => this.sortByName(emp1, emp2));
+        return sort;
+    }
+
     render() {
         const {employees, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed} = this.props;
         let processEmployees = this.processEmployees(employees);
@@ -146,17 +158,6 @@ class EmployeesList extends React.PureComponent {
                 </CardContent>
             </Card>
         );
-    }
-
-    hasEmployees(employees) {
-        return employees && employees.length > 0;
-    }
-
-    processEmployees(employees) {
-        let sort = employees
-            .filter((employee) => this.filterEmployees(employee, this.state.employeesFilter))
-            .sort((emp1, emp2) => this.sortByName(emp1, emp2));
-        return sort;
     }
 }
 
