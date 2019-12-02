@@ -1,6 +1,7 @@
 import List from "@material-ui/core/List/List";
 import React, {Component} from 'react';
 import Task from "./Task";
+import ETaskType from "../../../models/ETaskType";
 
 class TasksList extends Component {
 
@@ -18,7 +19,7 @@ class TasksList extends Component {
                         onClick={(task) => onClick(task)}
                         onDoubleClick={(task) => onDoubleClick(task)}
                         selectMode={selectMode}
-                        isLimited={isLimited}
+                        isLimited={isLimited || task.type === ETaskType.GLOBAL}
                     />)
                 )}
             </List>

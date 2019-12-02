@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const ETaskType = require("./ETaskType");
 // Group Schema
 const TaskSchema = mongoose.Schema({
     title: {
@@ -57,6 +57,8 @@ const deleteAllTasks = (conditions) => {
 
 const tasksCount = () => Task.countDocuments().exec();
 
+const getGlobalTasks = () => Task.find({type: ETaskType.GLOBAL}).exec();
+
 module.exports = {
     createTask
     , getByTaskId
@@ -66,4 +68,5 @@ module.exports = {
     , deleteTask
     , deleteAllTasks
     , tasksCount
+    , getGlobalTasks
 };

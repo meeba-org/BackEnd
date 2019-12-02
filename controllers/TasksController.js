@@ -26,14 +26,15 @@ router.get('/:id',
 
 //GET /company/:companyId tasks
 router.get('/',
-    (req, res) => routeWrapper(req, res, (req, res) => {
+    (req, res) => routeWrapper(req, res, async (req, res) => {
         let company = jwtService.getCompanyFromLocals(res);
-        return TaskModel.getByCompanyId(company._id);
+        let tasks = await TaskModel.getByCompanyId(company._id);
+        let predefinedTasks = await TaskModel.getGlobalTasks();
+        return [...predefinedTasks, ...tasks];
     })
 );
 
 //POST /tasks task
-/* Not in used */
 router.post('/',
     (req, res) => routeWrapper(req, res, (req, res) => {
         return TaskModel.createTask(req.body);

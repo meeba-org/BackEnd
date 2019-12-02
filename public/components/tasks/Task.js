@@ -8,6 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import ETaskType from "../../../models/ETaskType";
 
 const styles = {
     listItem: {
@@ -47,8 +48,11 @@ class Task extends Component {
         this.props.onEdit(data);
     };
 
+    isGlobal = data => data.type === ETaskType.GLOBAL;
+
     render() {
         const {data, onDoubleClick, onClick, classes, selectMode, isLimited} = this.props;
+        const enableOptions = !selectMode && !this.isGlobal(data);
 
         return (
             <Grid container onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
@@ -58,7 +62,7 @@ class Task extends Component {
                           onClick={() => onClick(data)}
                           disabled={isLimited}
                 >
-                    <ListItemText classes={{root: classes.listItemText}} primary={
+                    <ListItemText primaryTypographyProps={{color: this.isGlobal(data) ? "primary" : "inherit"}} primary={
                         <Grid container>
                             <Grid item>
                                 {data.title}
@@ -67,7 +71,7 @@ class Task extends Component {
                     }/>
                 </ListItem>
                 </Grid>
-                {this.state.hover && !selectMode &&
+                {this.state.hover && enableOptions &&
                 <Grid item xs={3}>
                     <Tooltip title="הגדרות נוספות" placement="top">
                         <IconButton className={styles["elem"]}
