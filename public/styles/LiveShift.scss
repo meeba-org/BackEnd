@@ -1,53 +1,74 @@
 @import "variables";
 
-.elem {
-    margin: 0 10px;
-}
-
-.shift-members {
+.line {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
     width: 100%;
-    max-width: 140px;
-    flex-direction: row;
-
-    .date {
-        .hebrew-day {
-            display: flex;
-            align-items: center;
-            min-width: 13px;
-        }
-        display: flex;
-        width: 130px;
-    }
-
-    .time {
-        width: 50px;
-        direction: ltr;
+    margin-bottom: 10px;
+    .elem {
         margin: 0 10px;
+    }
 
-        input {
-            text-align: center
+    .controls {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+
+        .mobile-button {
+            height: 40px;
+            width: 50px;
+            min-width: 40px;
+            margin-right: 10px;
+            padding: 0px;
         }
     }
-}
 
-.name-container {
-    display: flex;
-    flex-direction: row;
+    .shift-members {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 140px;
+        flex-direction: row;
 
-    .icon {
-        padding-top: 5px;
-    }
-    .name {
+        .date {
+            .hebrew-day {
+                display: flex;
+                align-items: center;
+                min-width: 13px;
+            }
+
             display: flex;
-        @media (max-width: 576px) {
-            align-items: center;
+            width: 130px;
         }
-        @media (min-width: 577px) {
-            min-width: 100px;
+
+        .time {
+            width: 50px;
+            direction: ltr;
+            margin: 0 10px;
+
+            input {
+                text-align: center
+            }
+        }
+    }
+
+    .name-container {
+        display: flex;
+        flex-direction: row;
+
+        .icon {
             padding-top: 5px;
         }
+
+        .name {
+            display: flex;
+            @media (max-width: 576px) {
+                align-items: center;
+            }
+            @media (min-width: 577px) {
+                min-width: 100px;
+                padding-top: 5px;
+            }
+        }
     }
 }
-

@@ -1,3 +1,4 @@
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import Delete from '@material-ui/icons/Delete';
@@ -23,7 +24,7 @@ const LiveShift = (props) => {
         <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
 
     return (
-        <Fragment>
+        <div className={styles["line"]}>
             <div className={styles["name-container"]}>
                 <IconButton className={styles["icon"]}>{icon}</IconButton>
                 {showNames &&
@@ -73,7 +74,12 @@ const LiveShift = (props) => {
                 </Tooltip>
             </div>
             }
-        </Fragment>
+            {!isDesktop && isWorking(shift) &&
+                <div className={styles["controls"]}>
+                    <Button variant={"raised"} className={styles["mobile-button"]} onClick={() => onShiftComplete(shift)}><Home/></Button>
+                </div>
+            }
+        </div>
     );
 };
 
