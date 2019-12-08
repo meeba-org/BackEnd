@@ -3,32 +3,41 @@
 .line {
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
     width: 100%;
     margin-bottom: 10px;
     .elem {
         margin: 0 10px;
     }
 
-    .controls {
+    .name-container {
         display: flex;
-        width: 100%;
-        justify-content: flex-end;
+        flex-direction: row;
+        width: 80px;
 
-        .mobile-button {
-            height: 40px;
-            width: 50px;
-            min-width: 40px;
-            margin-right: 10px;
-            padding: 0px;
+        .icon {
+            padding-top: 5px;
+        }
+
+        .name {
+            display: flex;
+            @media (max-width: 576px) {
+                align-items: center;
+            }
+            @media (min-width: 577px) {
+                min-width: 100px;
+                padding-top: 5px;
+            }
         }
     }
 
     .shift-members {
+
         display: flex;
-        justify-content: space-between;
-        width: 100%;
-        max-width: 140px;
+        justify-content: flex-start;
         flex-direction: row;
+        flex: 1;
+        max-width: 140px;
 
         .date {
             .hebrew-day {
@@ -52,23 +61,21 @@
         }
     }
 
-    .name-container {
+    .desktop-controls {
+        justify-content: flex-start;
+    }
+
+    .mobile-controls {
         display: flex;
-        flex-direction: row;
+        justify-content: flex-end;
+        flex: 1;
 
-        .icon {
-            padding-top: 5px;
-        }
-
-        .name {
-            display: flex;
-            @media (max-width: 576px) {
-                align-items: center;
-            }
-            @media (min-width: 577px) {
-                min-width: 100px;
-                padding-top: 5px;
-            }
+        .mobile-button {
+            height: 40px;
+            width: 50px;
+            min-width: 40px;
+            margin-right: 10px;
+            padding: 0px;
         }
     }
 }

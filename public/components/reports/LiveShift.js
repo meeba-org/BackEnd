@@ -75,8 +75,8 @@ const LiveShift = (props) => {
             </div>
             }
             {!isDesktop && isWorking(shift) &&
-                <div className={styles["controls"]}>
-                    <Button variant={"raised"} className={styles["mobile-button"]} onClick={() => onShiftComplete(shift)}><Home/></Button>
+                <div className={styles["mobile-controls"]}>
+                    <Button variant={"contained"} className={styles["mobile-button"]} onClick={() => onShiftComplete(shift)}><Home/></Button>
                 </div>
             }
         </div>
