@@ -149,7 +149,7 @@ class ShiftContainer extends React.PureComponent {
         let {showNames, input, mode, isDesktop, onDelete} = this.props;
         const {focus, hover} = this.state;
         let errors = this.getErrors();
-        let classes1 = "shift " + (focus ? "focus" : "");
+        let classes1 = "shift " + (focus && isDesktop ? "focus" : "");
 
         return (
             <div styleName={classes1} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}
