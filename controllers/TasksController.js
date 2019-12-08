@@ -29,7 +29,7 @@ router.get('/',
     (req, res) => routeWrapper(req, res, async (req, res) => {
         let company = jwtService.getCompanyFromLocals(res);
         let tasks = await TaskModel.getByCompanyId(company._id);
-        let predefinedTasks = await TaskModel.getGlobalTasks();
+        let predefinedTasks = await TaskModel.getPredefinedTasks();
         return [...predefinedTasks, ...tasks];
     })
 );

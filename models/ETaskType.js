@@ -1,4 +1,6 @@
 module.exports = {
     REGULAR: 'REGULAR',
-    GLOBAL: 'GLOBAL',
+    VACATION: 'VACATION',
+    SICK: 'SICK',
+    RESERVE: 'RESERVE'
 };

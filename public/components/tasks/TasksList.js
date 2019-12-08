@@ -19,7 +19,7 @@ class TasksList extends Component {
                         onClick={(task) => onClick(task)}
                         onDoubleClick={(task) => onDoubleClick(task)}
                         selectMode={selectMode}
-                        isLimited={isLimited || task.type === ETaskType.GLOBAL}
+                        isLimited={isLimited || task.type !== ETaskType.REGULAR}
                     />)
                 )}
             </List>

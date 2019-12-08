@@ -48,11 +48,11 @@ class Task extends Component {
         this.props.onEdit(data);
     };
 
-    isGlobal = data => data.type === ETaskType.GLOBAL;
+    isPredefined = data => data.type !== ETaskType.REGULAR;
 
     render() {
         const {data, onDoubleClick, onClick, classes, selectMode, isLimited} = this.props;
-        const enableOptions = !selectMode && !this.isGlobal(data);
+        const enableOptions = !selectMode && !this.isPredefined(data);
 
         return (
             <Grid container onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
@@ -62,7 +62,7 @@ class Task extends Component {
                           onClick={() => onClick(data)}
                           disabled={isLimited}
                 >
-                    <ListItemText primaryTypographyProps={{color: this.isGlobal(data) ? "primary" : "inherit"}} primary={
+                    <ListItemText primaryTypographyProps={{color: this.isPredefined(data) ? "primary" : "inherit"}} primary={
                         <Grid container>
                             <Grid item>
                                 {data.title}

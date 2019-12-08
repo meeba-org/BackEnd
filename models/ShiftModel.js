@@ -81,7 +81,8 @@ const deleteShift = (id) => {
 
 const getPendingShifts = (company) => {
     let condition = {
-        $and: [{draftShift: {$exists : true}}, {draftShift: { $ne: null }}],
+        // $and: [{draftShift: {$exists : true}}, {draftShift: { $ne: null }}],
+        status: 1, //EShiftStatus.PENDING
         company: company._id
     };
 

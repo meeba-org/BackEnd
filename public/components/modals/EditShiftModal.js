@@ -141,7 +141,7 @@ class EditShiftModal extends Component {
 
     extractDraftShift(entity) {
         // eslint-disable-next-line no-unused-vars
-        let {_id, ...draftShift} = entity.draftShift; // Excluding the id
+        let {_id, ...draftShift} = entity.draftShift || {}; // Excluding the id
 
         // Deleting null / undefined values
         for (let key in draftShift) {

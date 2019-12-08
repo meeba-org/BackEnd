@@ -57,7 +57,7 @@ const deleteAllTasks = (conditions) => {
 
 const tasksCount = () => Task.countDocuments().exec();
 
-const getGlobalTasks = () => Task.find({type: ETaskType.GLOBAL}).exec();
+const getPredefinedTasks = () => Task.find({type: {$ne: ETaskType.REGULAR}}).exec();
 
 module.exports = {
     createTask
@@ -68,5 +68,5 @@ module.exports = {
     , deleteTask
     , deleteAllTasks
     , tasksCount
-    , getGlobalTasks
+    , getPredefinedTasks
 };
