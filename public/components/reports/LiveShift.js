@@ -7,7 +7,7 @@ import Home from '@material-ui/icons/Home';
 import Work from '@material-ui/icons/Work';
 import TimePicker from "material-ui-pickers/TimePicker";
 import PropTypes from 'prop-types';
-import React, {Fragment} from 'react';
+import React from 'react';
 import {isWorking} from "../../helpers/utils";
 import styles from "../../styles/LiveShift.scss";
 import BusCost from "./BusCost";
