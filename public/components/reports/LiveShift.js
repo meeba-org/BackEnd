@@ -28,7 +28,9 @@ const LiveShift = (props) => {
             <div className={styles["name-container"]}>
                 <IconButton className={styles["icon"]}>{icon}</IconButton>
                 {showNames &&
-                <div className={styles["name"]}>{shift.user && shift.user.fullName}</div>
+                <Tooltip title={shift?.user?.fullName} placement="top">
+                    <div className={styles["name"]}>{shift?.user?.fullName}</div>
+                </Tooltip>
                 }
             </div>
 

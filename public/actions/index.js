@@ -50,6 +50,6 @@ export const HideLoading = () => ({
 });
 
 export const handleResize = () => ({
-    type: window.innerWidth > 600 ? DESKTOP : MOBILE
+    type: window.innerWidth > 850 ? DESKTOP : MOBILE
 });
 
