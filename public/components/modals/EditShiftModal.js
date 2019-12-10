@@ -218,8 +218,13 @@ class EditShiftModal extends Component {
     };
 
     updateShift = (orgShift, updatedShift) => {
-        let month = moment(orgShift.clockInTime).format('MM');
-        let year = moment(orgShift.clockInTime).format('YYYY');
+        let month = null;
+        let year = null;
+
+        if (orgShift.clockInTime) {
+            month = moment(orgShift.clockInTime).format('MM');
+            year = moment(orgShift.clockInTime).format('YYYY');
+        }
         let {updateShift, postUpdate} = this.props;
 
         updateShift(updatedShift, month, year, postUpdate);
