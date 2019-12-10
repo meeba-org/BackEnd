@@ -4,48 +4,68 @@
     margin: 0 10px;
 }
 
-.shift-members {
+.wrapper {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 270px;
-    flex-direction: row;
+    flex-direction: column;
+    flex: 1;
 
-    .date {
-        .hebrew-day {
-            display: flex;
-            align-items: center;
-            min-width: 13px;
-        }
+    .line1 {
         display: flex;
-        max-width: 110px;
-    }
+        flex-direction: row;
+        width: 100%;
+        justify-content: flex-start;
+        margin-bottom: 10px;
 
-    .time {
-        width: 50px;
-        direction: ltr;
-
-        input {
-            text-align: center
-        }
-    }
-}
-
-.name-container {
-    display: flex;
-    padding-left: 5px;
-
-    .icon {
-        padding-top: 5px;
-    }
-    .name {
-        @media (max-width: 576px) {
+        .shift-members {
             display: flex;
-            align-items: center;
+            flex-direction: row;
+
+            .date {
+                flex-direction: row;
+                display: flex;
+                align-items: center;
+                max-width: 110px;
+
+                .hebrew-day {
+                    display: flex;
+                }
+            }
+
+            .time {
+                width: 50px;
+                direction: ltr;
+                margin-right: 10px;
+
+                input {
+                    text-align: center
+                }
+            }
         }
-        @media (min-width: 577px) {
-            min-width: 100px;
-            padding-top: 5px;
+
+        .name-container {
+            display: flex;
+            padding-left: 5px;
+
+            .icon {
+                padding-top: 5px;
+            }
+
+            .name {
+                @media (max-width: 576px) {
+                    display: flex;
+                    align-items: center;
+                }
+                @media (min-width: 577px) {
+                    min-width: 100px;
+                    padding-top: 5px;
+                }
+            }
         }
+    }
+
+    .line2 {
+        display: flex;
+        flex: 1;
+        justify-content: space-around;
     }
 }

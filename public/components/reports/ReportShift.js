@@ -1,3 +1,4 @@
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import Delete from '@material-ui/icons/Delete';
@@ -21,64 +22,75 @@ const ReportShift = (props) => {
     let hebrewDay = momentToDay(shift.clockInTime);
 
     return (
-        <Fragment>
-            {showNames &&
-            <div className={styles["name-container"]}>
-                <div className={styles["name"]}>{shift.user && shift.user.fullName}</div>
-            </div>
-            }
+        <div className={styles["wrapper"]}>
+            <div className={styles["line1"]}>
+                {showNames &&
+                <div className={styles["name-container"]}>
+                    <div className={styles["name"]}>{shift.user && shift.user.fullName}</div>
+                </div>
+                }
 
-            <div className={styles["shift-members"]}>
-                <div className={styles["date"]}>
-                    <div className={styles["hebrew-day"]}>{hebrewDay}'</div>
+                <div className={styles["shift-members"]}>
+                    <div className={styles["date"]}>
+                        <div className={styles["hebrew-day"]}>{hebrewDay}'</div>
 
-                    <DatePicker autoOk onChange={(date) => onUpdateStartDate(date, shift)}
-                                value={shift.clockInTime}
-                                format="DD/MM/YYYY"
-                                style={{margin: "0 10px 0 0"}}
-                                disableFuture
+                        <DatePicker autoOk onChange={(date) => onUpdateStartDate(date, shift)}
+                                    value={shift.clockInTime}
+                                    format="DD/MM/YYYY"
+                                    style={{margin: "0 10px 0 0"}}
+                                    disableFuture
+                        />
+                    </div>
+
+                    <TimePicker
+                        className={styles["time"]}
+                        ampm={false}
+                        autoOk
+                        value={shift.clockInTime}
+                        onChange={(time) => onUpdateStartTime(time, shift)}
+                    />
+
+                    <TimePicker
+                        className={styles["time"]}
+                        ampm={false}
+                        autoOk
+                        value={shift.clockOutTime}
+                        onChange={(time) => onUpdateEndTime(time, shift)}
                     />
                 </div>
-
-                <TimePicker
-                    className={styles["time"]}
-                    ampm={false}
-                    autoOk
-                    value={shift.clockInTime}
-                    onChange={(time) => onUpdateStartTime(time, shift)}
-                />
-
-                <TimePicker
-                    className={styles["time"]}
-                    ampm={false}
-                    autoOk
-                    value={shift.clockOutTime}
-                    onChange={(time) => onUpdateEndTime(time, shift)}
-                />
-            </div>
-            {isDesktop &&
+                {isDesktop &&
                 <Fragment>
                     <Warning warning={errors}/>
                     <PendingApprovalIndicator status={shift.status} onClick={showShiftDialog}/>
                     <Note text={shift.note} onClick={showShiftDialog}/>
                     <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
-                    <Location location={shift.location} onClick={showLocationModal} />
+                    <Location location={shift.location} onClick={showLocationModal}/>
                     <ExtraPay extraPay={shift.extraPay} onClick={showShiftDialog}/>
                     <TaskIndicator task={shift.task} onClick={showShiftDialog}/>
-                 </Fragment>
-            }
-            {hover && isDesktop &&
-            <div>
-                <Tooltip title="עריכה" placement="top">
-                    <IconButton className={styles["elem"]} onClick={showShiftDialog}><Edit/></IconButton>
-                </Tooltip>
-                <Tooltip title="מחיקה" placement="top">
-                    <IconButton className={styles["elem"]} onClick={onDelete}><Delete/></IconButton>
-                </Tooltip>
+                </Fragment>
+                }
+                {hover && isDesktop &&
+                <div>
+                    <Tooltip title="עריכה" placement="top">
+                        <IconButton className={styles["elem"]} onClick={showShiftDialog}><Edit/></IconButton>
+                    </Tooltip>
+                    <Tooltip title="מחיקה" placement="top">
+                        <IconButton className={styles["elem"]} onClick={onDelete}><Delete/></IconButton>
+                    </Tooltip>
+                </div>
+                }
+            </div>
+            {!isDesktop &&
+            <div className={styles["line2"]}>
+                <Button variant={"contained"} className={styles["mobile-button"]}
+                        onClick={showShiftDialog}><Edit/></Button>
+                <Button variant={"contained"} className={styles["mobile-button"]} onClick={onDelete}><Delete/></Button>
             </div>
             }
-        </Fragment>
-    );
+        </div>
+
+
+);
 };
 
 ReportShift.propTypes = {
