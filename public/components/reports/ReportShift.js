@@ -6,6 +6,7 @@ import DatePicker from "material-ui-pickers/DatePicker";
 import TimePicker from "material-ui-pickers/TimePicker";
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
+import {EShiftStatus} from "../../helpers/EShiftStatus";
 import {momentToDay} from "../../helpers/utils";
 import styles from "../../styles/ReportShift.scss";
 import BusCost from "./BusCost";
@@ -18,7 +19,24 @@ import Warning from "./Warning";
 
 const ReportShift = (props) => {
     let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog, showLocationModal, isDesktop} = props;
-    let hebrewDay = momentToDay(shift.clockInTime);
+
+    const calcClockInTime = () => {
+        if (shift.status === EShiftStatus.PENDING && shift.draftShift)
+            return shift.draftShift.clockInTime;
+
+        return shift.clockInTime;
+    };
+
+    const calcClockOutTime = () => {
+        if (shift.status === EShiftStatus.PENDING && shift.draftShift)
+            return shift.draftShift.clockOutTime;
+
+        return shift.clockOutTime;
+    };
+
+    let clockInTime = calcClockInTime();
+    let clockOutTime = calcClockOutTime();
+    let hebrewDay = momentToDay(clockInTime);
 
     return (
         <Fragment>
@@ -33,7 +51,7 @@ const ReportShift = (props) => {
                     <div className={styles["hebrew-day"]}>{hebrewDay}'</div>
 
                     <DatePicker autoOk onChange={(date) => onUpdateStartDate(date, shift)}
-                                value={shift.clockInTime}
+                                value={clockInTime}
                                 format="DD/MM/YYYY"
                                 style={{margin: "0 10px 0 0"}}
                                 disableFuture
@@ -44,7 +62,7 @@ const ReportShift = (props) => {
                     className={styles["time"]}
                     ampm={false}
                     autoOk
-                    value={shift.clockInTime}
+                    value={clockInTime}
                     onChange={(time) => onUpdateStartTime(time, shift)}
                 />
 
@@ -52,7 +70,7 @@ const ReportShift = (props) => {
                     className={styles["time"]}
                     ampm={false}
                     autoOk
-                    value={shift.clockOutTime}
+                    value={clockOutTime}
                     onChange={(time) => onUpdateEndTime(time, shift)}
                 />
             </div>

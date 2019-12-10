@@ -293,7 +293,7 @@ class EditShiftModal extends Component {
     };
 
     calcDateHelperText = (shift) => {
-        if (!this.isDraftClockInTimeExist(shift))
+        if (!this.isDraftClockInTimeExist(shift) || !shift.clockInTime)
             return null;
 
         if (moment(shift.clockInTime).isSame(moment(shift.draftShift.clockInTime), 'day')) // same date on draft
@@ -311,7 +311,7 @@ class EditShiftModal extends Component {
     };
 
     calcClockInTimeHelperTet = (shift) => {
-        if (!this.isDraftClockInTimeExist(shift))
+        if (!this.isDraftClockInTimeExist(shift) || !shift.clockInTime)
             return null;
 
         if (moment(shift.clockInTime).format(TIME_FORMAT) === moment(shift.draftShift.clockInTime).format(TIME_FORMAT)) // same time on draft
@@ -329,14 +329,17 @@ class EditShiftModal extends Component {
     };
 
     calcClockOutTimeHelperText = (shift) => {
-        if (!this.isDraftClockOutTimeExist(shift))
+        const clockOutTime = shift.clockOutTime;
+        const draftClockOutTime = shift.draftShift.clockOutTime;
+
+        if (!this.isDraftClockOutTimeExist(shift) || !clockOutTime)
             return null;
 
-        if (moment(shift.clockOutTime).format(TIME_FORMAT) === moment(shift.draftShift.clockOutTime).format(TIME_FORMAT)) // same time on draft
+        if (moment(clockOutTime).format(TIME_FORMAT) === moment(draftClockOutTime).format(TIME_FORMAT)) // same time on draft
             return null;
 
-        let clockOutTime = shift.clockOutTime ? moment(shift.clockOutTime).format(TIME_FORMAT) : "--:--";
-        return <label><span style={{ color: "lightgray"}}>היה: </span>{clockOutTime}</label>;
+        let clockOutTimeStr = clockOutTime ? moment(clockOutTime).format(TIME_FORMAT) : "--:--";
+        return <label><span style={{ color: "lightgray"}}>היה: </span>{clockOutTimeStr}</label>;
     };
 
     calcPublicTransportation = (shift) => {
