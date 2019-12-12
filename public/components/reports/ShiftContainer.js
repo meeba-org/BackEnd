@@ -118,6 +118,7 @@ class ShiftContainer extends React.PureComponent {
         updateShift(updatedShift, month, year, postUpdate);
     };
 
+    // TODO What the heck is this - duplicated onDelete
     onDelete = () => {
         let {deleteShift, input} = this.props;
 

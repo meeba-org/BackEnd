@@ -235,6 +235,7 @@ export const showLocationModal = (shift) => ({
     }
 });
 
+// TODO use thunk! => dispatch =>
 export const deleteShift = (shift, dispatch, month, year) => ({
     type: API,
     payload: {

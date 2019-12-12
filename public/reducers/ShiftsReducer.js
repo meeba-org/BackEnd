@@ -13,6 +13,12 @@ function pendingShiftsReducer (state = [], action = null) {
                 ...action.payload
             ];
         }
+        case types.UPDATE_SHIFT_SUCCESS: {
+                return state.map(shift => shift._id === action.payload._id ? action.payload : shift);
+            }
+        case types.DELETE_SHIFT_SUCCESS: {
+                return state.filter(shift => shift._id !== action.id);
+            }
         default:
             return state;
     }

@@ -16,7 +16,7 @@ import TimePicker from "material-ui-pickers/TimePicker";
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {createShift, showDeleteShiftModal, updateShift, hideEditShiftModal} from "../../actions";
+import {createShift, deleteShift, updateShift, hideEditShiftModal} from "../../actions";
 import {EShiftStatus} from "../../helpers/EShiftStatus";
 import {isNumber, TIME_FORMAT} from "../../helpers/utils";
 import * as selectors from "../../selectors";
@@ -154,20 +154,31 @@ class EditShiftModal extends Component {
 
     onDecline = () => {
         const {entity} = this.state;
+        const {deleteShift} = this.props;
 
-        let updatedShift = {
-            ...entity,
-            status: EShiftStatus.DECLINED,
-            draftShift: null
-        };
+        if (this.isPendingCreatedShift(entity)) {
+            deleteShift(entity);
+        }
+        else {
 
-        this.setState({
-            entity: updatedShift
-        });
+            let updatedShift = {
+                ...entity,
+                status: EShiftStatus.DECLINED,
+                draftShift: null
+            };
 
-        this.updateShift(entity, updatedShift);
+            this.setState({
+                entity: updatedShift
+            });
+
+            this.updateShift(entity, updatedShift);
+        }
         this.handleClose();
     };
+
+    isPendingCreatedShift(shift) {
+        return !shift.draftShift;
+    }
 
     handleShiftChange = (field, value) => {
         const {entity} = this.state;
@@ -276,7 +287,7 @@ class EditShiftModal extends Component {
     }
 
     isDraftClockOutTimeExist(shift) {
-        return shift.draftShift && shift.draftShift.clockOutTime;
+        return shift.draftShift?.clockOutTime;
     }
 
     isDraftPublicTransportationExist(shift) {
@@ -335,10 +346,11 @@ class EditShiftModal extends Component {
 
     calcClockOutTimeHelperText = (shift) => {
         const clockOutTime = shift.clockOutTime;
-        const draftClockOutTime = shift.draftShift.clockOutTime;
 
         if (!this.isDraftClockOutTimeExist(shift) || !clockOutTime)
             return null;
+
+        const draftClockOutTime = shift.draftShift.clockOutTime;
 
         if (moment(clockOutTime).format(TIME_FORMAT) === moment(draftClockOutTime).format(TIME_FORMAT)) // same time on draft
             return null;
@@ -513,7 +525,7 @@ function mapDispatchToProps(dispatch) {
     return {
         createShift: (shift) => dispatch(createShift(shift, dispatch)),
         updateShift: (shift, month, year, postUpdate) => dispatch(updateShift(shift, dispatch, postUpdate, month, year)),
-        deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
+        deleteShift: (shift) => dispatch(deleteShift(shift, dispatch)),
         hideEditShiftModal: () => dispatch(hideEditShiftModal())
     };
 }
