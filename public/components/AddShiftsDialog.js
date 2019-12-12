@@ -94,7 +94,6 @@ class AddShiftsDialog extends PureComponent {
                                 value={startDate || defaultStartDateMoment}
                                 format="DD/MM/YYYY"
                                 style={{margin: "0 10px"}}
-                                disableFuture
                     />
 
                     <TimePicker

@@ -36,7 +36,6 @@ const ReportShift = (props) => {
                                 value={shift.clockInTime}
                                 format="DD/MM/YYYY"
                                 style={{margin: "0 10px 0 0"}}
-                                disableFuture
                     />
                 </div>
 

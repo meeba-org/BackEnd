@@ -98,7 +98,6 @@ class DailyReport extends React.PureComponent {
                                 <DatePicker autoOk onChange={(date) => this.handleChange(date)} value={currentDay}
                                             format="DD/MM/YYYY"
                                             style={{margin: "0 10px"}}
-                                            disableFuture
                                 />
 
                                 <Tooltip title="הוספת משמרת" placement="top">
