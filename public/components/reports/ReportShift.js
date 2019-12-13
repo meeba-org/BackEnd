@@ -1,3 +1,4 @@
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import Delete from '@material-ui/icons/Delete';
@@ -21,7 +22,7 @@ const ReportShift = (props) => {
     let hebrewDay = momentToDay(shift.clockInTime);
 
     return (
-        <Fragment>
+        <div className={styles["line"]}>
             {showNames &&
             <div className={styles["name-container"]}>
                 <div className={styles["name"]}>{shift.user && shift.user.fullName}</div>
@@ -76,7 +77,12 @@ const ReportShift = (props) => {
                 </Tooltip>
             </div>
             }
-        </Fragment>
+            {!isDesktop &&
+                <div className={styles["mobile-controls"]}>
+                    <Button variant={"contained"} className={styles["mobile-button"]} onClick={onDelete}><Delete/></Button>
+                </div>
+            }
+        </div>
     );
 };
 
