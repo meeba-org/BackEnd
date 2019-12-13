@@ -79,7 +79,7 @@ const ReportShift = (props) => {
             }
             {!isDesktop &&
                 <div className={styles["mobile-controls"]}>
-                    <Button variant={"contained"} className={styles["mobile-button"]} onClick={onDelete}><Delete/></Button>
+                    <Button variant={"contained"} className={`${styles["mobile-button"]} ${styles.delete}`} onClick={onDelete}><Delete/></Button>
                 </div>
             }
         </div>

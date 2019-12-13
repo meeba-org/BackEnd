@@ -72,6 +72,10 @@
             min-width: 40px;
             margin-right: 10px;
             padding: 0px;
+
+            &.delete {
+                color: $darkGrey;
+            }
         }
     }
 }

@@ -81,7 +81,7 @@ const LiveShift = (props) => {
                     {isWorking(shift) &&
                     <Button variant={"contained"} color="primary" className={styles["mobile-button"]} onClick={() => onShiftComplete(shift)}><Home/></Button>
                     }
-                    <Button variant={"contained"} className={styles["mobile-button"]} onClick={onDelete}><Delete/></Button>
+                    <Button variant={"contained"} className={`${styles["mobile-button"]} ${styles.delete}`} onClick={onDelete}><Delete/></Button>
                 </div>
             }
         </div>
