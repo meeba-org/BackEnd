@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createShift, deleteShift, updateShift, hideEditShiftModal} from "../../actions";
-import {EShiftStatus} from "../../helpers/EShiftStatus";
+import EShiftStatus from "../../helpers/EShiftStatus";
 import {isNumber, isShiftPending, TIME_FORMAT} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import TasksSelectionContainer from "../tasks/TasksSelectionContainer";
@@ -291,7 +291,7 @@ class EditShiftModal extends Component {
     }
 
     isDraftPublicTransportationExist(shift) {
-        if (!shift.draftShift || !shift.draftShift.commuteCost)
+        if (!shift.draftShift || !shift.draftShift.commuteCost || shift.status === EShiftStatus.PENDING_CREATE)
             return false;
 
         return isNumber(shift.draftShift.commuteCost.publicTransportation) || shift.draftShift.commuteCost.publicTransportation === "";
@@ -309,7 +309,7 @@ class EditShiftModal extends Component {
     };
 
     calcDateHelperText = (shift) => {
-        if (!this.isDraftClockInTimeExist(shift) || !shift.clockInTime)
+        if (!this.isDraftClockInTimeExist(shift) || !shift.clockInTime || shift.status === EShiftStatus.PENDING_CREATE)
             return null;
 
         if (moment(shift.clockInTime).isSame(moment(shift.draftShift.clockInTime), 'day')) // same date on draft
@@ -327,7 +327,7 @@ class EditShiftModal extends Component {
     };
 
     calcClockInTimeHelperTet = (shift) => {
-        if (!this.isDraftClockInTimeExist(shift) || !shift.clockInTime)
+        if (!this.isDraftClockInTimeExist(shift) || !shift.clockInTime || shift.status === EShiftStatus.PENDING_CREATE)
             return null;
 
         if (moment(shift.clockInTime).format(TIME_FORMAT) === moment(shift.draftShift.clockInTime).format(TIME_FORMAT)) // same time on draft
@@ -347,7 +347,7 @@ class EditShiftModal extends Component {
     calcClockOutTimeHelperText = (shift) => {
         const clockOutTime = shift.clockOutTime;
 
-        if (!this.isDraftClockOutTimeExist(shift) || !clockOutTime)
+        if (!this.isDraftClockOutTimeExist(shift) || !clockOutTime || shift.status === EShiftStatus.PENDING_CREATE)
             return null;
 
         const draftClockOutTime = shift.draftShift.clockOutTime;
@@ -388,6 +388,17 @@ class EditShiftModal extends Component {
         return null;
     };
 
+    getTitle(shift) {
+        switch (shift.status) {
+            case EShiftStatus.PENDING_CREATE:
+                return "אישור יצירת משמרת";
+            case EShiftStatus.PENDING_UPDATE:
+                return "אישור שינוי משמרת";
+            default:
+                return "עריכת משמרת";
+        }
+    }
+
     render() {
         let {open, classes, isCommuteFeatureEnable, isTasksFeatureEnable} = this.props;
         let shift = this.state.entity;
@@ -405,10 +416,11 @@ class EditShiftModal extends Component {
         let publicTransportation = this.calcPublicTransportation(shift);
         let publicTransportationHelperText = this.calcPublicTransportationHelperText(shift);
         let isStatusPending = isShiftPending(shift);
+        let title = this.getTitle(shift);
 
         return (
             <Dialog onClose={this.handleClose} open={open} >
-                <DialogTitle>{isStatusPending ? "אישור שינוי משמרת": "עריכת משמרת"}</DialogTitle>
+                <DialogTitle>{title}</DialogTitle>
                 <DialogContent classes={{root: classes.dialogContentRoot}}>
                     <ESMDatePicker
                         autoOk
