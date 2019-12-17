@@ -1,5 +1,6 @@
 import moment from "moment";
 import * as ERoles from "./ERoles";
+import EShiftStatus from "./EShiftStatus";
 
 export const DATE_FORMAT = "YYYY-MM-DD";
 export const TIME_FORMAT = "HH:mm";
@@ -157,5 +158,6 @@ export const parseJson = (json) => {
         return null;
 
     return JSON.parse(json);
-
 };
+
+export const isShiftPending = shift => shift.status === EShiftStatus.PENDING_CREATE || shift.status === EShiftStatus.PENDING_UPDATE

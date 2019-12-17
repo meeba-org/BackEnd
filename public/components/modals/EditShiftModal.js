@@ -18,7 +18,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createShift, deleteShift, updateShift, hideEditShiftModal} from "../../actions";
 import {EShiftStatus} from "../../helpers/EShiftStatus";
-import {isNumber, TIME_FORMAT} from "../../helpers/utils";
+import {isNumber, isShiftPending, TIME_FORMAT} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import TasksSelectionContainer from "../tasks/TasksSelectionContainer";
 import withShiftLogic from "../withShiftLogic";
@@ -360,7 +360,7 @@ class EditShiftModal extends Component {
     };
 
     calcPublicTransportation = (shift) => {
-        if (this.isDraftPublicTransportationExist(shift) && shift.status === EShiftStatus.PENDING)
+        if (this.isDraftPublicTransportationExist(shift) && isShiftPending(shift))
             return shift.draftShift.commuteCost.publicTransportation;
         else {
             if (!shift.commuteCost)
@@ -372,7 +372,7 @@ class EditShiftModal extends Component {
 
     calcPublicTransportationHelperText = (shift) => {
         if (this.isPublicTransportationExist(shift)){
-            if (!this.isDraftPublicTransportationExist(shift) && shift.status !== EShiftStatus.PENDING)
+            if (!this.isDraftPublicTransportationExist(shift) && isShiftPending(shift))
                 return null;
 
             // Has also draft - helper text hold the original
@@ -404,7 +404,7 @@ class EditShiftModal extends Component {
         let clockOutTimeHelperText = this.calcClockOutTimeHelperText(shift);
         let publicTransportation = this.calcPublicTransportation(shift);
         let publicTransportationHelperText = this.calcPublicTransportationHelperText(shift);
-        let isStatusPending = status === EShiftStatus.PENDING;
+        let isStatusPending = isShiftPending(shift);
 
         return (
             <Dialog onClose={this.handleClose} open={open} >

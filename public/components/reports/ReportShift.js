@@ -6,8 +6,7 @@ import DatePicker from "material-ui-pickers/DatePicker";
 import TimePicker from "material-ui-pickers/TimePicker";
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import {EShiftStatus} from "../../helpers/EShiftStatus";
-import {momentToDay} from "../../helpers/utils";
+import {isShiftPending, momentToDay} from "../../helpers/utils";
 import styles from "../../styles/ReportShift.scss";
 import BusCost from "./BusCost";
 import ExtraPay from "./ExtraPay";
@@ -21,14 +20,14 @@ const ReportShift = (props) => {
     let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog, showLocationModal, isDesktop} = props;
 
     const calcClockInTime = () => {
-        if (shift.status === EShiftStatus.PENDING && shift.draftShift)
+        if (isShiftPending(shift) && shift.draftShift)
             return shift.draftShift.clockInTime;
 
         return shift.clockInTime;
     };
 
     const calcClockOutTime = () => {
-        if (shift.status === EShiftStatus.PENDING && shift.draftShift)
+        if (isShiftPending(shift) && shift.draftShift)
             return shift.draftShift.clockOutTime;
 
         return shift.clockOutTime;

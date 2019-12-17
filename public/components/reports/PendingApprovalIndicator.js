@@ -3,11 +3,11 @@ import EyeIcon from "@material-ui/icons/RemoveRedEye";
 import PropTypes from "prop-types";
 import React from "react";
 import CSSModules from "react-css-modules";
-import {EShiftStatus} from "../../helpers/EShiftStatus";
+import EShiftStatus from "../../helpers/EShiftStatus";
 import styles from "../../styles/PendingApprovalInicator.scss";
 
 const PendingApprovalIndicator = ({status, onClick}) => {
-    if (status !== EShiftStatus.PENDING)
+    if (status !== EShiftStatus.PENDING_UPDATE && status !== EShiftStatus.PENDING_CREATE)
         return null;
 
     return (

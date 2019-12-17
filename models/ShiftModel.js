@@ -2,6 +2,7 @@ const moment = require('moment');
 const mongoose = require('mongoose');
 const DraftShiftModel = require("./DraftShiftModel");
 const reject = require("../controllers/apiManager").reject;
+const EShiftStatus = require('../public/helpers/EShiftStatus');
 
 // Shift Schema
 const ShiftSchema = mongoose.Schema({
@@ -81,8 +82,7 @@ const deleteShift = (id) => {
 
 const getPendingShifts = (company) => {
     let condition = {
-        // $and: [{draftShift: {$exists : true}}, {draftShift: { $ne: null }}],
-        status: 1, //EShiftStatus.PENDING
+        $or: [{status: EShiftStatus.PENDING_UPDATE}, {status: EShiftStatus.PENDING_CREATE}],
         company: company._id
     };
 
