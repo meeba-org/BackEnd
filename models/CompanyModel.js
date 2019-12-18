@@ -16,6 +16,7 @@ const CompanySchema = mongoose.Schema({
         holidayShiftLength: {type: Number, default: 9},
         enableCommute: {type: Boolean, default: false},
         enableTasks: {type: Boolean, default: false},
+        enableAbsenceDays: {type: Boolean, default: false},
         breakLength: {type: Number, default: 0},
     },
     features: [String],

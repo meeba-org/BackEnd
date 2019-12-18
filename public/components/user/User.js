@@ -31,6 +31,7 @@ const styles1 = () => ({
     },
 });
 
+
 class User extends Component {
     handleUserChange = (field, e) => {
         const {onUpdateUser, input} = this.props;
@@ -181,44 +182,15 @@ class User extends Component {
                             </div>
                         </div>
 
-                        <div className={styles["row"]}>
-                            <FormControlLabel
-                                classes={{root: classes.switch}}
-                                control={
-                                    <Switch
-                                        checked={user.company.settings.enableCommute}
-                                        onChange={(e) => this.handleCompanySettingsChange("enableCommute", e.target.checked)}
-                                        value={user.company.settings.enableCommute}
-                                        color="primary"
-                                    />
-                                }
-                                label={<div>הזנת החזר נסיעות ע"י העובד</div>}
-                                disabled={!isCommuteFeatureEnable}
-                            />
-                            <div className={styles["whatisit"]}>
-                                <Link to="/faq/commute" className={classes.link} target="_blank">מה זה?</Link>
-                            </div>
+                        <this.SettingSwitch classes={classes} text={"הזנת החזר נסיעות ע\"י העובד"} value={user.company.settings.enableCommute}
+                                       fieldValue={"enableCommute"} link={"/faq/commute"} />
 
+                        <this.SettingSwitch classes={classes} text={"ימי העדרות (חופש, מחלה, מילואים)"} value={user.company.settings.enableAbsenceDays}
+                                       fieldValue={"enableAbsenceDays"} link={"/faq/commute"} />
 
-                        </div>
+                        <this.SettingSwitch classes={classes} text={"משימות"} value={user.company.settings.enableTasks}
+                                       fieldValue={"enableTasks"} link={"/faq/tasks"} />
 
-                        <div className={styles["row"]}>
-                            <FormControlLabel
-                                classes={{root: classes.switch}}
-                                control={
-                                    <Switch
-                                        checked={user.company.settings.enableTasks}
-                                        onChange={(e) => this.handleCompanySettingsChange("enableTasks", e.target.checked)}
-                                        value={user.company.settings.enableTasks}
-                                        color="primary"
-                                    />
-                                }
-                                label={<div>משימות</div>}
-                            />
-                            <div className={styles["whatisit"]}>
-                                <Link to="/faq/tasks" className={classes.link} target="_blank">מה זה?</Link>
-                            </div>
-                        </div>
                     </div>
                 </CardContent>
 
@@ -246,6 +218,31 @@ class User extends Component {
             </div>
         );
     }
+
+    SettingSwitch = ({classes, value, fieldValue, text, link}) => {
+        return (
+            <div className={styles["row"]}>
+                <FormControlLabel
+                    classes={{root: classes.switch}}
+                    control={
+                        <Switch
+                            checked={value}
+                            onChange={(e) => {
+                                this.handleCompanySettingsChange(fieldValue, e.target.checked)
+                            }}
+                            value={value}
+                            color="primary"
+                        />
+                    }
+                    label={<div>{text}</div>}
+                />
+                <div className={styles["whatisit"]}>
+                    <Link to={link} className={classes.link} target="_blank">מה זה?</Link>
+                </div>
+            </div>
+        );
+    };
+
 }
 
 User.propTypes = {

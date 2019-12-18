@@ -160,4 +160,4 @@ export const parseJson = (json) => {
     return JSON.parse(json);
 };
 
-export const isShiftPending = shift => shift.status === EShiftStatus.PENDING_CREATE || shift.status === EShiftStatus.PENDING_UPDATE
+export const isShiftPending = shift => shift.status === EShiftStatus.PENDING_CREATE || shift.status === EShiftStatus.PENDING_UPDATE;
