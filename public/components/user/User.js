@@ -228,7 +228,7 @@ class User extends Component {
                         <Switch
                             checked={value}
                             onChange={(e) => {
-                                this.handleCompanySettingsChange(fieldValue, e.target.checked)
+                                this.handleCompanySettingsChange(fieldValue, e.target.checked);
                             }}
                             value={value}
                             color="primary"

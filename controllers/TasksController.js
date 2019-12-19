@@ -1,11 +1,14 @@
 'use strict';
+
 const TaskModel = require('../models/TaskModel');
+const CompanyModel = require('../models/CompanyModel');
 const express = require('express');
 const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const router = express.Router();
 const { body, param } = require('express-validator/check');
 const jwtService = require("./jwtService");
+const {isAbsenceDaysEnable} = require("../managers/CompnayHelper");
 
 //GET /tasks/{id} task
 router.get('/:id',
@@ -27,9 +30,10 @@ router.get('/:id',
 //GET /company/:companyId tasks
 router.get('/',
     (req, res) => routeWrapper(req, res, async (req, res) => {
-        let company = jwtService.getCompanyFromLocals(res);
+        let companyFromLocals = jwtService.getCompanyFromLocals(res);
+        const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
         let tasks = await TaskModel.getByCompanyId(company._id);
-        let predefinedTasks = await TaskModel.getPredefinedTasks();
+        let predefinedTasks = isAbsenceDaysEnable(company) ? await TaskModel.getPredefinedTasks() : [];
         return [...predefinedTasks, ...tasks];
     })
 );
