@@ -86,32 +86,33 @@ router.post('/login',
 router.get('/authenticate',
     (req, res) => routeWrapper(req, res, (req, res) => {
 
-        // check header or url parameters or post parameters for token
+        // Check header or url parameters or post parameters for token
         var token = jwtService.extractTokenFromRequest(req);
         if (!token) {
             return reject("[authenticate] - Must pass token", 401);
         }
 
-        // decode token
-        // Use process.env.JWT_SECRET instead of config.secret
-        return jwt.verify(token, config.secret, function (err, user) {
+        // Decode token
+        return jwt.verify(token, config.secret, async (err, user) => {
             if (err)
                 return reject(`[authenticate] - Token is not valid, Error: ${err.message}`, 401);
 
             //return user using the id from w/in JWTToken
-            return UserModel.getByUserId(user._id)
-                .then((user) => {
-                    user = UserModel.getCleanUser(user.toObject()); //don't pass password and stuff
+            try {
+                user = await UserModel.getByUserId(user._id);
+                user = UserModel.getCleanUser(user.toObject()); // Don't pass password and stuff
 
-                    //note: you can renew token by creating new token(i.e. refresh it) w/ new expiration time at this point, but I'm passing the old token back.
-                    // var token = utils.generateToken(user);
+                //note: you can renew token by creating new token(i.e. refresh it) w/ new expiration time at this point, but I'm passing the old token back.
+                // var token = utils.generateToken(user);
 
-                    return resolve({
-                        user,
-                        token
-                    });
-                })
-                .catch(() => reject('[authenticate] - User was not found', 401));
+                return await resolve({
+                    user,
+                    token
+                });
+            }
+            catch (err) {
+                return await reject('[authenticate] - User was not found', 401);
+            }
         });
     })
 );
