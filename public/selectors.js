@@ -51,7 +51,7 @@ export const isFeatureEnable = (state, feature) => {
 };
 
 export const getCompanySettings = (state) => {
-    return getCompany(state).settings;
+    return getCompany(state)?.settings;
 };
 
 export const isCommuteFeatureEnable = (state) => {
@@ -59,7 +59,11 @@ export const isCommuteFeatureEnable = (state) => {
 };
 
 export const isTasksFeatureEnable = (state) => {
-    return isFeatureEnable(state, Feature.Tasks) && getCompanySettings(state).enableTasks;
+    const companySettings = getCompanySettings(state);
+    if (!companySettings)
+        return false;
+
+    return companySettings.enableTasks || companySettings.enableAbsenceDays;
 };
 
 export const getPlan = state => {

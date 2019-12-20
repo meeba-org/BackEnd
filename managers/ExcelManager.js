@@ -2,6 +2,7 @@ const {Feature, isFeatureEnable, isCompanyHasPremium} = require("./FeaturesManag
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 const Excel = require('exceljs');
+const {isTasksEnable} = require("./FeaturesManager");
 const {MAX_FREE_EMPLOYEES_ALLOWED} = require("../constants");
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isIndependenceDay = require("./HolidayAnalyzer").isIndependenceDay;
@@ -137,7 +138,7 @@ let createSummaryContent = function (sheet, employees) {
 function createShiftsPerEmployeeColumns(sheet, company) {
     createBasicShiftsColumns(sheet, company);
 
-    if (isFeatureEnable(company, Feature.Tasks)) {
+    if (isTasksEnable(company)) {
         sheet.columns = sheet.columns.concat([
             {header: 'משימה', key: 'task', width: 10, style: {alignment: {horizontal: 'center'}}},
         ]);
@@ -190,7 +191,7 @@ function shouldAddCommuteData(company, shift) {
 }
 
 function shouldAddTasksData(company, shift) {
-    return isFeatureEnable(company, Feature.Tasks) && !!shift.task;
+    return isTasksEnable(company) && !!shift.task;
 }
 
 function addCommuteData(company, row, shift) {

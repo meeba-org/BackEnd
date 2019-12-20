@@ -4,7 +4,7 @@ const Feature = {
     Tasks: "Tasks",
 };
 
-const GlobalFeatures = [Feature.CommuteModule, Feature.Tasks];
+const GlobalFeatures = [Feature.CommuteModule];
 const PremiumFeatures = [Feature.Premium, Feature.CommuteModule];
 
 const hasFeature = (company, feature) => {
@@ -45,10 +45,18 @@ const isFeatureEnable = (company, feature) => {
     return hasFeature(company, feature);
 };
 
+const getCompanySettings = company => company.settings;
+
+const isAbsenceDaysEnable = company => getCompanySettings(company).enableAbsenceDays;
+
+const isTasksEnable = company =>  getCompanySettings(company).enableTasks;
+
 module.exports = {
     Feature,
     isFeatureEnable,
     addFeature,
     isCompanyHasPremium,
-    removeFeature
+    removeFeature,
+    isAbsenceDaysEnable,
+    isTasksEnable,
 };
