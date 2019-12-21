@@ -1,7 +1,6 @@
 const Feature = {
     CommuteModule : "CommuteModule",
     Premium: "Premium",
-    Tasks: "Tasks",
 };
 
 const GlobalFeatures = [Feature.CommuteModule];
