@@ -20,14 +20,14 @@ const ReportShift = (props) => {
     let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog, showLocationModal, isDesktop} = props;
 
     const calcClockInTime = () => {
-        if (isShiftPending(shift) && shift.draftShift)
+        if (isShiftPending(shift) && shift.draftShift?.clockInTime)
             return shift.draftShift.clockInTime;
 
         return shift.clockInTime;
     };
 
     const calcClockOutTime = () => {
-        if (isShiftPending(shift) && shift.draftShift)
+        if (isShiftPending(shift) && shift.draftShift?.clockOutTime)
             return shift.draftShift.clockOutTime;
 
         return shift.clockOutTime;
