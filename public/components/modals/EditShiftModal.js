@@ -492,7 +492,7 @@ class EditShiftModal extends Component {
 
                     <DialogActions classes={{root: isStatusPending ? classes.dialogActionsWhilePending :  classes.dialogActions}} >
                             <div style={{flex: isStatusPending ? 0.45 : 1, justifyContent: isStatusPending ? "flex-start" : "center", display: "flex"}}>
-                                <Button onClick={this.handleClose} autoFocus color="primary">
+                                <Button onClick={this.handleClose} autoFocus  variant="raised" color="primary">
                                     סגור
                                 </Button>
                             </div>
