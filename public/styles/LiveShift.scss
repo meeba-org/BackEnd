@@ -1,53 +1,81 @@
 @import "variables";
 
-.elem {
-    margin: 0 10px;
-}
-
-.shift-members {
+.line {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: flex-start;
     width: 100%;
-    max-width: 140px;
-    flex-direction: row;
-
-    .date {
-        .hebrew-day {
-            display: flex;
-            align-items: center;
-            min-width: 13px;
-        }
-        display: flex;
-        width: 130px;
-    }
-
-    .time {
-        width: 50px;
-        direction: ltr;
+    margin-bottom: 10px;
+    align-items: center;
+    .elem {
         margin: 0 10px;
-
-        input {
-            text-align: center
-        }
     }
-}
 
-.name-container {
-    display: flex;
-    flex-direction: row;
+    .name-container {
+        display: flex;
+        flex-direction: row;
+        min-width: 120px;
+        max-width: 120px;
+        align-items: center;
 
-    .icon {
-        padding-top: 5px;
-    }
-    .name {
-            display: flex;
-        @media (max-width: 576px) {
-            align-items: center;
-        }
-        @media (min-width: 577px) {
-            min-width: 100px;
+        .icon {
             padding-top: 5px;
         }
+
+        .name {
+            display: flex;
+        }
+    }
+
+    .shift-members {
+
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: row;
+        flex: 1;
+        max-width: 140px;
+
+        .date {
+            .hebrew-day {
+                display: flex;
+                align-items: center;
+                min-width: 13px;
+            }
+
+            display: flex;
+            width: 130px;
+        }
+
+        .time {
+            width: 50px;
+            direction: ltr;
+            margin: 0 10px;
+
+            input {
+                text-align: center
+            }
+        }
+    }
+
+    .desktop-controls {
+        justify-content: flex-start;
+    }
+
+    .mobile-controls {
+        display: flex;
+        justify-content: flex-end;
+        flex: 1;
+
+        .mobile-button {
+            height: 40px;
+            width: 50px;
+            min-width: 40px;
+            margin-right: 10px;
+            padding: 0px;
+
+            &.delete {
+                color: $darkGrey;
+            }
+        }
     }
 }
-

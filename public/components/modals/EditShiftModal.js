@@ -428,7 +428,6 @@ class EditShiftModal extends Component {
                         value={date}
                         format="DD/MM/YYYY"
                         style={{margin: "0 10px 0 0"}}
-                        disableFuture
                         helperText={dateHelperText}
                         label={"תאריך"}
                     />

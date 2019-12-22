@@ -1,3 +1,4 @@
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import Delete from '@material-ui/icons/Delete';
@@ -6,7 +7,7 @@ import Home from '@material-ui/icons/Home';
 import Work from '@material-ui/icons/Work';
 import TimePicker from "material-ui-pickers/TimePicker";
 import PropTypes from 'prop-types';
-import React, {Fragment} from 'react';
+import React from 'react';
 import {isWorking} from "../../helpers/utils";
 import styles from "../../styles/LiveShift.scss";
 import BusCost from "./BusCost";
@@ -23,11 +24,13 @@ const LiveShift = (props) => {
         <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
 
     return (
-        <Fragment>
+        <div className={styles["line"]}>
             <div className={styles["name-container"]}>
                 <IconButton className={styles["icon"]}>{icon}</IconButton>
                 {showNames &&
-                <div className={styles["name"]}>{shift.user && shift.user.fullName}</div>
+                <Tooltip title={shift?.user?.fullName} placement="top">
+                    <div className={styles["name"]}>{shift?.user?.fullName}</div>
+                </Tooltip>
                 }
             </div>
 
@@ -73,7 +76,15 @@ const LiveShift = (props) => {
                 </Tooltip>
             </div>
             }
-        </Fragment>
+            {!isDesktop &&
+                <div className={styles["mobile-controls"]}>
+                    {isWorking(shift) &&
+                    <Button variant={"contained"} color="primary" className={styles["mobile-button"]} onClick={() => onShiftComplete(shift)}><Home/></Button>
+                    }
+                    <Button variant={"contained"} className={`${styles["mobile-button"]} ${styles.delete}`} onClick={onDelete}><Delete/></Button>
+                </div>
+            }
+        </div>
     );
 };
 

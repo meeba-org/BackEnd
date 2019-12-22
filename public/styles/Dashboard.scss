@@ -66,6 +66,7 @@ $margin: 12px;
             .main-container {
                 flex: 1;
                 height: 100%;
+                overflow-x: scroll;
 
                 .card-content {
                     max-height: $containerHeight;
