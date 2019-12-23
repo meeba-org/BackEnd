@@ -148,6 +148,8 @@ function createShiftsPerEmployeeColumns(sheet, company) {
         {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}},
     ]);
+
+    setEmployeeHeaderColor(sheet);
 }
 
 function createShiftsPerTaskColumns(sheet, company) {
@@ -160,6 +162,8 @@ function createShiftsPerTaskColumns(sheet, company) {
         {header: 'שכ"ע לשעה', key: 'hourWage', width: 11, style: {alignment: {horizontal: 'center'}}},
         {header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}},
     ]);
+
+    setHeaderColor(sheet);
 }
 
 function createBasicShiftsColumns(sheet, company) {
@@ -182,8 +186,6 @@ function createBasicShiftsColumns(sheet, company) {
             {header: 'החזר נסיעות', key: 'publicTransportation', width: 10, style: {alignment: {horizontal: 'center'}}},
         ]);
     }
-
-    setEmployeeHeaderColor(sheet);
 }
 
 function shouldAddCommuteData(company, shift) {
