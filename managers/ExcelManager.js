@@ -2,7 +2,7 @@ const {Feature, isFeatureEnable, isCompanyHasPremium} = require("./FeaturesManag
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 const Excel = require('exceljs');
-const {isTasksEnable} = require("./FeaturesManager");
+const {isTasksEnable, isAbsenceDaysEnable} = require("./FeaturesManager");
 const {MAX_FREE_EMPLOYEES_ALLOWED} = require("../constants");
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isIndependenceDay = require("./HolidayAnalyzer").isIndependenceDay;
@@ -138,7 +138,7 @@ let createSummaryContent = function (sheet, employees) {
 function createShiftsPerEmployeeColumns(sheet, company) {
     createBasicShiftsColumns(sheet, company);
 
-    if (isTasksEnable(company)) {
+    if (isTasksEnable(company) || isAbsenceDaysEnable(company)) {
         sheet.columns = sheet.columns.concat([
             {header: 'משימה', key: 'task', width: 10, style: {alignment: {horizontal: 'center'}}},
         ]);
