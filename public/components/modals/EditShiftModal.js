@@ -81,7 +81,7 @@ const ESMDatePicker = withStyles(pickerStyle)(({helperText, classes, ...other}) 
     );
 });
 
-const ESMTextInput = withStyles(pickerStyle)(({classes, TIIcon, value, onChange, type, label, helperText}) => {
+const ESMTextInput = withStyles(pickerStyle)(({classes, TIIcon, value, onChange, type, label, helperText,selectTextOnFocus,  ...props}) => {
     return (
         <Grid container spacing={8} alignItems={helperText ? "center" : "flex-end"}>
             <Grid item>
@@ -95,6 +95,8 @@ const ESMTextInput = withStyles(pickerStyle)(({classes, TIIcon, value, onChange,
                     value={value}
                     type={type}
                     helperText={helperText && <label className={classes.helperText}>{helperText}</label>}
+                    onFocus={selectTextOnFocus && (e => e.target.select())}
+                    {...props}
                 />
             </Grid>
         </Grid>
@@ -464,6 +466,7 @@ class EditShiftModal extends Component {
                         type={"number"}
                         TIIcon={ExtraFeeIcon}
                         label={"תוספת תשלום"}
+                        selectTextOnFocus
                         />
 
                     {isCommuteFeatureEnable &&
@@ -474,6 +477,7 @@ class EditShiftModal extends Component {
                             TIIcon={BusIcon}
                             label={"נסיעות"}
                             helperText={publicTransportationHelperText}
+                            selectTextOnFocus
                         />
                     }
 
