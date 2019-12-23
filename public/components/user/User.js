@@ -186,7 +186,7 @@ class User extends Component {
                                        fieldValue={"enableCommute"} link={"/faq/commute"} />
 
                         <this.SettingSwitch classes={classes} text={"ימי העדרות (חופש, מחלה, מילואים)"} value={user.company.settings.enableAbsenceDays}
-                                       fieldValue={"enableAbsenceDays"} link={"/faq/tasks"} />
+                                       fieldValue={"enableAbsenceDays"} />
 
                         <this.SettingSwitch classes={classes} text={"משימות"} value={user.company.settings.enableTasks}
                                        fieldValue={"enableTasks"} link={"/faq/tasks"} />
@@ -236,9 +236,11 @@ class User extends Component {
                     }
                     label={<div>{text}</div>}
                 />
+                {link &&
                 <div className={styles["whatisit"]}>
                     <Link to={link} className={classes.link} target="_blank">מה זה?</Link>
                 </div>
+                }
             </div>
         );
     };
