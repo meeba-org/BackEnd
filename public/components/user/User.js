@@ -185,8 +185,8 @@ class User extends Component {
                         <this.SettingSwitch classes={classes} text={"הזנת החזר נסיעות ע\"י העובד"} value={user.company.settings.enableCommute}
                                        fieldValue={"enableCommute"} link={"/faq/commute"} />
 
-                        <this.SettingSwitch classes={classes} text={"ימי העדרות (חופש, מחלה, מילואים)"} value={user.company.settings.enableAbsenceDays}
-                                       fieldValue={"enableAbsenceDays"} />
+                        <this.SettingSwitch classes={classes} text={"ימי היעדרות (חופש, מחלה, מילואים)"} value={user.company.settings.enableAbsenceDays}
+                                       fieldValue={"enableAbsenceDays"} link={"/faq/absenceDays"} />
 
                         <this.SettingSwitch classes={classes} text={"משימות"} value={user.company.settings.enableTasks}
                                        fieldValue={"enableTasks"} link={"/faq/tasks"} />
