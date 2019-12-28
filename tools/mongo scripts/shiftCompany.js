@@ -8,7 +8,14 @@ db.shifts.aggregate([
                 as: "shiftsCompany"
             }
     },
-    {$match: {"clockInTime": {$gte: new Date(new Date() - 10 * 60 * 60 * 24 * 1000)}}}, // last week
+    {
+        $match: {
+            $and: [
+                {"clockInTime": {$gte: new Date(new Date() - 30 * 60 * 60 * 24 * 1000)}}, // from
+                {"clockInTime": {$lte: new Date(new Date() - 0 * 60 * 60 * 24 * 1000)}} // to
+            ] 
+        }    
+    },
     {$sort: {clockInTime: -1}},
     {
         "$unwind": "$shiftsCompany" //Unwind that array

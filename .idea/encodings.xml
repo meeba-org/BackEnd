@@ -80,6 +80,7 @@
     <file url="file://$PROJECT_DIR$/public/components/login/LoginRegister.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/login/LoginRegisterContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/material-ui-wrappers/index.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/modals/AbsenceDaysModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/DeleteModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/EModalType.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/GoPremiumModal.js" charset="UTF-8" />

@@ -10,4 +10,5 @@ export const EModalType = {
     DELETE_ENTITY: 9,
     YES_NO_MODAL: 10,
     SURVEY_2019: 11,
+    NEW_FEATURE_ABSENCE_DAYS: 12,
 };

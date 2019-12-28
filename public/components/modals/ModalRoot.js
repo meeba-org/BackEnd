@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from "react";
 import {connect} from "react-redux";
 import LoginRegister from "../login/LoginRegister";
+import AbsenceDaysModal from "./AbsenceDaysModal";
 import DeleteModal from "./DeleteModal";
 import EditEmployeeModal from "./EditEmployeeModal";
 import EditShiftModal from "./EditShiftModal";
@@ -27,6 +28,7 @@ export const MODAL_COMPONENTS = {
     [EModalType.GO_PREMIUM_MODAL]: GoPremiumModal,
     [EModalType.YES_NO_MODAL]: YesNoModal,
     [EModalType.SURVEY_2019]: Survey2019Modal,
+    [EModalType.NEW_FEATURE_ABSENCE_DAYS]: AbsenceDaysModal,
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {

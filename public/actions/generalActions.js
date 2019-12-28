@@ -1,6 +1,7 @@
 import {EModalType} from "../components/modals/EModalType";
 import {ESplashScreenType, hasSeenSplashScreen, setSeenSplashScreen} from "../helpers/SplashScreenHelper";
 import * as actions from "./actionTypes";
+import {showModal} from "./index";
 import {loadUserFromToken} from "./loginLogoutActions";
 import {fetchPendingShifts} from "./shiftsActions";
 
@@ -23,25 +24,16 @@ export const fetchMetaData = () => ({
 });
 
 export const displaySplashScreen = () => dispatch => {
-    let splashScreenType = ESplashScreenType.SURVEY_2019;
+    let splashScreenType = ESplashScreenType.NEW_FEATURE_ABSENCE_DAYS;
     let hasSeen = hasSeenSplashScreen(splashScreenType);
 
     if (hasSeen)
         return false;
 
-    dispatch(show2019SurveyModal());
-    setSeenSplashScreen(splashScreenType);
+    dispatch(showModal(EModalType.NEW_FEATURE_ABSENCE_DAYS));
+    // TODO DEBUG PUROPOSE - UNCOMMENT BEFORE PRODUCTION
+    //setSeenSplashScreen(splashScreenType);
 };
-
-export const show2019SurveyModal = () => ({
-    type: 'SHOW_MODAL',
-    payload: {
-        modalType: EModalType.SURVEY_2019,
-        modalProps: {
-            open: true,
-        }
-    }
-});
 
 export const loadDashboardData = () =>  dispatch => {
     dispatch(loadUserFromToken());
