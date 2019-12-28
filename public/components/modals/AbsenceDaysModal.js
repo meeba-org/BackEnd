@@ -8,8 +8,9 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {hideModal} from "../../actions";
-import {ESplashScreenType} from "../../helpers/SplashScreenHelper";
+import {EModalType} from "./EModalType";
 
+const PADDING_RIGHT = 20;
 class YesNoModal extends Component {
 
     render() {
@@ -17,20 +18,13 @@ class YesNoModal extends Component {
 
         return (
             <Dialog onClose={this.handleCancel} open={open}>
-                <DialogTitle>{"ימי היעדרות"}</DialogTitle>
-                <DialogContent >
-                    <Typography variant="h4" gutterBottom>
-                        היי!
-                    </Typography>
-                    <Typography variant="h6" gutterBottom align="center">
-                        אתה משתמש במיבא כבר זמן מה - מה דעתך? 👨🏻‍💻
-                    </Typography>
-                    <div style={{flexDirection: "row", textAlign: "center", marginBottom: "10px"}}>
-                        <Button style={{fontSize: "24px"}} target="_blank" href="https://www.quicksurveys.com/s/Gb5n4" variant="contained" color="primary" >סקר 2019</Button>
-                    </div>
-                    <Typography variant="h6" gutterBottom align="center">
-                        ⭐ חודש חינם במסלול פרמיום לעונים! ⭐
-                    </Typography>
+                <DialogTitle>{"עכשיו עובד יכול לדווח על ימי חופש / מחלה / מילואים"}</DialogTitle>
+                <DialogContent>
+                    <Typography variant={"subtitle1"}>{"🙄 איך?"}</Typography>
+                    <Typography style={{paddingRight: PADDING_RIGHT}} variant={"body1"}>{`💁🏻‍♂️ הגדרות  ☚ סמן "ימי היעדרות"`}</Typography>
+                    <Typography variant={"subtitle1"}>{"🙄 ואז מה?"}</Typography>
+                    <Typography style={{paddingRight: PADDING_RIGHT}} variant={"body1"}>{"💁🏻‍♂️ כעת לעובד תהיה את האפשרות בסלולרי להוסיף יום היעדרות"}</Typography>
+                    <Typography style={{paddingRight: PADDING_RIGHT}} variant={"body1"}>{`💁🏻‍♂️ אתה כמנהל תוכל לראות את כל ימי החופש / מחלה / מילואים תחת "משימות"`}</Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={hideModal} color="primary">סגור</Button>
@@ -50,7 +44,7 @@ YesNoModal.defaultProps = {
 };
 
 const mapDispatchToProps = {
-    hideModal: () => hideModal(ESplashScreenType.NEW_FEATURE_ABSENCE_DAYS),
+    hideModal: () => hideModal(EModalType.NEW_FEATURE_ABSENCE_DAYS)
 };
 
 export default connect(null, mapDispatchToProps)(YesNoModal);
