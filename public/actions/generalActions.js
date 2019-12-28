@@ -31,8 +31,7 @@ export const displaySplashScreen = () => dispatch => {
         return false;
 
     dispatch(showModal(EModalType.NEW_FEATURE_ABSENCE_DAYS));
-    // TODO DEBUG PUROPOSE - UNCOMMENT BEFORE PRODUCTION
-    //setSeenSplashScreen(splashScreenType);
+    setSeenSplashScreen(splashScreenType);
 };
 
 export const loadDashboardData = () =>  dispatch => {
