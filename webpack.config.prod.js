@@ -8,6 +8,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 process.env.NODE_ENV = 'production';
 
 const GLOBALS = {
@@ -79,6 +80,20 @@ module.exports = {
         }),
         new BundleAnalyzerPlugin({
             analyzerMode: 'static'
+        }),
+        new WebpackPwaManifest({
+            name: "מיבא - שעון נוכחות ומחשבון שכר",
+            short_name: "מיבא",
+            display: "minimal-ui",
+            theme_color: "#AF6F74",
+            background_color: "#AF6F74",
+            description: 'My awesome Progressive Web App!',
+            icons: [
+                {
+                    src: 'public/styles/images/meeba-512.png',
+                    sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
+                },
+            ]
         }),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // we dont need all the locale in moment
     ],
