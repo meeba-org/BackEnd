@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 let HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+let WebpackPwaManifest = require('webpack-pwa-manifest');
 
 module.exports = {
     resolve: {
@@ -34,6 +35,20 @@ module.exports = {
             },
             inject: true
         }),
+        new WebpackPwaManifest({
+            name: "מיבא - שעון נוכחות ומחשבון שכר",
+            short_name: "מיבא",
+            display: "minimal-ui",
+            theme_color: "#AF6F74",
+            background_color: "#AF6F74",
+            description: 'My awesome Progressive Web App!',
+            icons: [
+                {
+                    src: 'public/styles/images/meeba-512.png',
+                    sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
+                },
+            ]
+        })
     ],
     module: {
         rules: [
