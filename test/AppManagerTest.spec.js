@@ -84,7 +84,7 @@ describe('AppManager', function () {
                 .then(() => UserModel.getByUserId(createdUser.id))
                 .then((user) => expect(user.shifts).to.have.length(0));
         });
-        it('fail test', () => {
+        it('fail test2', () => {
             expect(1).to.equal(2);
         });
     });
