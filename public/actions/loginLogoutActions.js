@@ -36,8 +36,8 @@ export function handleLogin(values, router) {
         dispatch(handleLoginStart());
         return axios.post(`${config.ROOT_URL}/${route}`, values)
             .then((response) => {
-                dispatch(handleLoginSuccess(response, router, values.isLoginMode));
                 dispatch(hideLoginRegisterModal());
+                dispatch(handleLoginSuccess(response, router, values.isLoginMode));
             })
             .catch((err) => {
                 let message = 'Unknown Error';
