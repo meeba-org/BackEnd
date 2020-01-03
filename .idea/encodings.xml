@@ -138,7 +138,10 @@
     <file url="file://$PROJECT_DIR$/public/reducers/index.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/routes.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/selectors.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/site.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/serviceWorker/site.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/serviceWorker/site.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/serviceWorker/sw.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/serviceWorker/sw.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/store/configureStore.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Animation.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/App.scss" charset="UTF-8" />
@@ -187,7 +190,6 @@
     <file url="file://$PROJECT_DIR$/public/styles/palette-primary.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/palette-secondary.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/variables.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/sw.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/server.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test/AppManagerTest.spec.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test/HolidayAnalyzer.spec.js" charset="UTF-8" />
