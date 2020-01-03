@@ -83,7 +83,7 @@ module.exports = {
         }),
         new WebpackPwaManifest({
             name: "מיבא - שעון נוכחות ומחשבון שכר",
-            short_name: "מיבא",
+            short_name: "מיבא למנהל",
             display: "minimal-ui",
             theme_color: "#AF6F74",
             background_color: "#AF6F74",

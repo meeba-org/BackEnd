@@ -22,25 +22,19 @@ const chargePremiumCompanies = async () => {
 
     for (let company of companies) {
         try{
-            console.log(`Charging company - name: ${company.name}, id: ${company._id}`);
+            console.log(`${company.name} - Charging company - id: ${company._id}`);
             await iCreditManager.generateImmediatePayment(company._id);
+            console.log(`${company.name} - Success!`);
         }
         catch (e) {
-            console.log(e);
+            console.log(`${company.name} - Failed!`);
         }
     }
 };
 
 const run = async () => {
-    try {
-        await chargePremiumCompanies();
-        console.log("Success!");
-    } catch (e) {
-        console.error(e);
-        console.log("Failed...");
-    } finally {
-        process.exit();
-    }
+    await chargePremiumCompanies();
+    process.exit();
 };
 
 run();

@@ -193,6 +193,7 @@ const generateImmediatePayment0 = async (creditCardToken, authNum, customerTrans
         return true;
     } catch (err) {
         console.error(`[generateImmediatePayment] has failed - ${err.message}`);
+        throw err;
     }
 };
 
@@ -244,18 +245,6 @@ const updateCompanyWithPaymentData = async (companyId, newPaymentData) => {
 
     console.log(`[iCreditManager] - Updating Company ${company.name} with ${JSON.stringify(newPaymentData)}`);
     return await CompanyModel.updateCompany(company);
-};
-
-const chargePremiumPlanCompanies = async () => {
-    let premiumPlanCompanies = await CompanyModel.getPremiumPlanCompanies();
-
-    if (!premiumPlanCompanies)
-        return;
-
-    for (const company of premiumPlanCompanies) {
-        let {creditCardToken, authNum, customerTransactionId} = company.paymentData;
-        await generateImmediatePayment(creditCardToken, authNum, customerTransactionId, company.email);
-    }
 };
 
 const hasICreditError = response => response.data.Status !== 0;
