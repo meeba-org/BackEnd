@@ -41,6 +41,7 @@ module.exports = {
             display: "minimal-ui",
             theme_color: "#AF6F74",
             background_color: "#AF6F74",
+            start_url: ".",
             description: 'My awesome Progressive Web App!',
             icons: [
                 {

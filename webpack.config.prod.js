@@ -88,6 +88,7 @@ module.exports = {
             theme_color: "#AF6F74",
             background_color: "#AF6F74",
             description: 'My awesome Progressive Web App!',
+            start_url: ".",
             icons: [
                 {
                     src: 'public/styles/images/meeba-512.png',
