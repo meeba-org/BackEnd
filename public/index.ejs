@@ -36,6 +36,11 @@
     <meta property="og:url" content="https://www.meeba.co.il" />
     <meta property="og:image" content="https://www.meeba.co.il/bg.jpg" />
     <meta property="fb:app_id" content="976991712448032" />
+    <script type="text/javascript">
+        navigator.serviceWorker && navigator.serviceWorker.register('./sw.js').then(function (registration) {
+            console.log('Excellent, registered with scope: ', registration.scope);
+        });
+    </script>
     <!-- Schema.org -->
     <script type="application/ld+json">
     {

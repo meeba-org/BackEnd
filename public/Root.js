@@ -53,7 +53,7 @@ const muiTheme = createMuiTheme({
 
 const store = createStore();
 const history = syncHistoryWithStore(browserHistory, store);
-registerServiceWorker();
+//registerServiceWorker();
 
 // Configure JSS
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
