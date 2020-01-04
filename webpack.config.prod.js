@@ -8,6 +8,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CopyPlugin = require('copy-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 process.env.NODE_ENV = 'production';
 
@@ -81,6 +82,9 @@ module.exports = {
         new BundleAnalyzerPlugin({
             analyzerMode: 'static'
         }),
+        new CopyPlugin([
+            './serviceWorker/sw.js',
+        ]),
         new WebpackPwaManifest({
             name: "מיבא - שעון נוכחות ומחשבון שכר",
             short_name: "מיבא למנהל",
