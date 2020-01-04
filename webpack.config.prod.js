@@ -84,6 +84,7 @@ module.exports = {
         }),
         new CopyPlugin([
             './public/serviceWorker/sw.js',
+            './public/serviceWorker/site.js',
         ]),
         new WebpackPwaManifest({
             name: "מיבא - שעון נוכחות ומחשבון שכר",
