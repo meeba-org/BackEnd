@@ -83,7 +83,7 @@ module.exports = {
             analyzerMode: 'static'
         }),
         new CopyPlugin([
-            './serviceWorker/sw.js',
+            './public/serviceWorker/sw.js',
         ]),
         new WebpackPwaManifest({
             name: "מיבא - שעון נוכחות ומחשבון שכר",
