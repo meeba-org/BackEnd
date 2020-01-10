@@ -1,5 +1,4 @@
 import {combineReducers} from 'redux';
-import {routerReducer} from "react-router-redux";
 import {ShiftsReducer} from "./ShiftsReducer";
 import {UserReducer} from "./UserReducer";
 import {UsersReducer} from "./UsersReducer";
@@ -11,10 +10,8 @@ import reducer from "redux-form/es/reducer";
 import {TasksReducer} from "./TasksReducer";
 import { PaymentReducer } from './PaymentReducer';
 
-
 const rootReducer = combineReducers({
     loader: LoaderReducer,
-    routing: routerReducer,
     users: UsersReducer,
     shifts: ShiftsReducer,
     // pendingShifts: PendingShiftsReducer,

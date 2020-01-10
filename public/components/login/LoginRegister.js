@@ -10,7 +10,8 @@ import React, {Component} from 'react';
 import CSSModules from "react-css-modules";
 
 import {connect} from "react-redux";
-import {withRouter} from "react-router";
+import {withRouter} from "react-router-dom";
+import {Form} from "redux-form";
 import Field from "redux-form/es/Field";
 import reduxForm from "redux-form/es/reduxForm";
 import {handleLogin, hideLoginRegisterModal} from "../../actions";
@@ -29,15 +30,14 @@ class LoginRegister extends Component {
     };
 
     handleClose = () => {
-        let {dispatch} = this.props;
-
-        dispatch(hideLoginRegisterModal());
+        this.props.hideLoginRegisterModal();
     };
 
     handleSubmit = (values) => {
-        let {dispatch, router} = this.props;
+        let {history} = this.props;
 
-        return dispatch(handleLogin(values, router));
+        //handleLogin(values, history);
+        history.push('/dashboard/report');
     };
 
     render() {
@@ -56,7 +56,7 @@ class LoginRegister extends Component {
                             ברוך הבא!
                             </div>
                         </div>
-                        <form onSubmit={handleSubmit(this.handleSubmit)}>
+                        <Form onSubmit={handleSubmit(this.handleSubmit)}>
                                 <Field
                                        fullWidth={true}
                                        component={renderTextField}
@@ -94,7 +94,7 @@ class LoginRegister extends Component {
                                     <div className={styles["change-mode"]} onClick={this.toggleLoginMode}>{changeModeText}</div>
                                 </div>
                             </div>
-                        </form>
+                        </Form>
                 </div>
             </Dialog>
         );
@@ -108,12 +108,17 @@ LoginRegister.propTypes = {
     change: PropTypes.func,
 };
 
+const mapStateToProps = state => ({
+    initialValues: {isLoginMode: true} // pull initial values from account reducer
+});
+
+const mapDispatchToProps = {
+    hideLoginRegisterModal,
+    handleLogin
+};
+
 // You have to connect() to any reducers that you wish to connect to yourself
-export default connect(
-    () => ({
-        initialValues: {isLoginMode: true} // pull initial values from account reducer
-    })
-)(reduxForm({
+export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
     form: 'loginRegisterForm' // a unique identifier for this form
-})(withRouter(CSSModules(LoginRegister, styles))));
+})(CSSModules(withRouter(LoginRegister), styles)));
 

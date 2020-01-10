@@ -6,7 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import React, {Component} from "react";
 import {connect} from 'react-redux';
-import {Link, withRouter} from "react-router";
+import {Link, withRouter} from "react-router-dom";
 import {showLoginRegisterDialog} from "../../actions";
 import * as selectors from "../../selectors";
 import facebookImage from "../../styles/images/facebook.png";

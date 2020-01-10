@@ -13,7 +13,7 @@ import moment from "moment";
 import PropTypes from 'prop-types';
 import React, {Fragment} from "react";
 import CSSModules from "react-css-modules";
-import {withRouter} from "react-router";
+import {withRouter} from "react-router-dom";
 import FieldArray from "redux-form/es/FieldArray";
 import {
     calculateCurrentDay,
@@ -77,7 +77,7 @@ class DailyReport extends React.PureComponent {
     };
 
     navigateToEmployees = () => {
-        this.props.router.push('/dashboard/employees');
+        this.props.history.push('/dashboard/employees');
     };
 
     render() {
@@ -192,7 +192,7 @@ DailyReport.propTypes = {
     onDayChange: PropTypes.func.isRequired,
     mode: PropTypes.number.isRequired,
     theme: PropTypes.object,
-    router: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
 };

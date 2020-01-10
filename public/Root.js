@@ -1,16 +1,13 @@
-import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
-import rtl from 'jss-rtl';
+import {createGenerateClassName, jssPreset} from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import {create} from 'jss';
+import rtl from 'jss-rtl';
 import React from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
 import {Provider} from "react-redux";
-import {browserHistory, Router} from "react-router";
-import {syncHistoryWithStore} from "react-router-redux";
-import routes from "./routes";
-import {registerServiceWorker} from "./serviceWorker/site";
-import createStore from "./store/configureStore";
+import Routes from "./routes";
+import configureStore from "./store/configureStore";
 
 const muiTheme = createMuiTheme({
     direction: 'rtl',
@@ -51,9 +48,7 @@ const muiTheme = createMuiTheme({
     },
 });
 
-const store = createStore();
-const history = syncHistoryWithStore(browserHistory, store);
-//registerServiceWorker();
+const store = configureStore();
 
 // Configure JSS
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
@@ -64,9 +59,9 @@ const generateClassName = createGenerateClassName();
 const Root = () =>
     (<MuiThemeProvider theme={muiTheme}>
         <Provider store={store}>
-            <JssProvider jss={jss} generateClassName={generateClassName}>
-                <Router history={history} routes={routes}/>
-            </JssProvider>
+                <JssProvider jss={jss} generateClassName={generateClassName}>
+                    <Routes/>
+                </JssProvider>
         </Provider>
     </MuiThemeProvider>);
 

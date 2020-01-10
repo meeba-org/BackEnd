@@ -28,17 +28,15 @@ module.exports = {
     mode: "production",
     target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.join(__dirname, 'dist'),
+        filename: '[name].chunkhash.bundle.js',
+        chunkFilename: '[name].chunkhash.bundle.js',
         publicPath: '/',
-        filename: '[name].[chunkhash].js'
     },
     optimization: {
         splitChunks: {
-            chunks: "all"
+            chunks: 'all',
         },
-        minimizer: [
-            new UglifyJsPlugin()
-        ]
     },
     stats: {
         children: false,

@@ -13,7 +13,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
 import CSSModules from "react-css-modules";
-import {Link} from "react-router";
+import {Link} from "react-router-dom";
 import styles from '../../styles/User.scss';
 import NoData from "../NoData";
 import Button from "@material-ui/core/Button";

@@ -12,7 +12,7 @@ function handleLoginStart() {
     };
 }
 
-function handleLoginSuccess(response, router, isLoginMode) {
+function handleLoginSuccess(response, history, isLoginMode) {
     let user = response.data.user;
     if (!!user && !isUserAllowedLogin(user))
         throw new Error('אין הרשאות מתאימות');
@@ -20,7 +20,7 @@ function handleLoginSuccess(response, router, isLoginMode) {
     localStorage.setItem('jwtToken', response.data.token);
     localStorage.setItem('activeUser', JSON.stringify(response.data.user));
 
-    router.push('/dashboard');
+    history.push('/dashboard');
     return {
         type: actionsTypes.HANDLE_LOGIN_SUCCESS,
         ga: {
@@ -29,42 +29,40 @@ function handleLoginSuccess(response, router, isLoginMode) {
     };
 }
 
-export function handleLogin(values, router) {
-    return function (dispatch) {
-        let route = values.isLoginMode ? "login" : "register";
+export const handleLogin = (values, history) => dispatch => {
+    let route = values.isLoginMode ? "login" : "register";
 
-        dispatch(handleLoginStart());
-        return axios.post(`${config.ROOT_URL}/${route}`, values)
-            .then((response) => {
-                dispatch(hideLoginRegisterModal());
-                dispatch(handleLoginSuccess(response, router, values.isLoginMode));
-            })
-            .catch((err) => {
-                let message = 'Unknown Error';
-                if (err) {
-                    if (!!err.response && !! err.response && !!err.response.data && !!err.response.data.message)
-                        message = err.response.data.message;
-                    else if (err.message)
-                        message = err.message;
-                }
+    dispatch(handleLoginStart());
+    return axios.post(`${config.ROOT_URL}/${route}`, values)
+        .then((response) => {
+            dispatch(hideLoginRegisterModal());
+            dispatch(handleLoginSuccess(response, history, values.isLoginMode));
+        })
+        .catch((err) => {
+            let message = 'Unknown Error';
+            if (err) {
+                if (!!err.response && !!err.response && !!err.response.data && !!err.response.data.message)
+                    message = err.response.data.message;
+                else if (err.message)
+                    message = err.message;
+            }
 
-                throw new SubmissionError({
-                    _error: message
-                });
+            throw new SubmissionError({
+                _error: message
             });
-    };
-}
+        });
+};
 
-export function handleLogout(router) {
+export function handleLogout(history) {
     return function () {
         localStorage.removeItem('jwtToken');
-        router.push('/home');
+        history.push('/home');
     };
 }
 
-export function navigateHome(router) {
+export function navigateHome(history) {
     return function () {
-        router.push('/');
+        history.push('/');
     };
 }
 

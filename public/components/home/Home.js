@@ -1,36 +1,24 @@
-import React, {Component} from 'react';
-import styles from "../../styles/Home.scss";
+import React from 'react';
 import CSSModules from "react-css-modules";
-import PropTypes from 'prop-types';
-import Header from "./Header";
-import Footer from "./Footer";
+import styles from "../../styles/Home.scss";
 import Features from "./Features";
-import Statistics from "./Statistics";
+import Footer from "./Footer";
+import Header from "./Header";
 import Movie from "./Movie";
+import Statistics from "./Statistics";
 
-class Home extends Component {
-    state = {
-        visible: false
-    };
-
-    render() {
-        return (
-            <div styleName="home">
-                <div styleName="home-bg">
-                    <Header />
-                    <Movie />
-                    <Features />
-                    <Statistics />
-                    <Footer />
-                </div>
+const Home = () => {
+    return (
+        <div styleName="home">
+            <div styleName="home-bg">
+                <Header/>
+                <Movie/>
+                <Features/>
+                <Statistics/>
+                <Footer/>
             </div>
-        );
-    }
-}
-
-Home.propTypes = {
-    router: PropTypes.object,
+        </div>
+    );
 };
-Home.defaultProps = {};
 
 export default CSSModules(Home, styles);

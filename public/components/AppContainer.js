@@ -1,7 +1,7 @@
 import MomentUtils from "@date-io/moment";
 import MuiPickersUtilsProvider from "material-ui-pickers/MuiPickersUtilsProvider";
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {Fragment} from 'react';
 import connect from "react-redux/es/connect/connect";
 import {handleResize} from "../actions";
 import {fetchMetaData} from "../actions/generalActions";
@@ -27,7 +27,9 @@ class AppContainer extends React.Component {
     render() {
         return (
             <MuiPickersUtilsProvider utils={MomentUtils}>
+                <Fragment>
                 {this.props.children}
+                </Fragment>
                 <ModalRoot />
             </MuiPickersUtilsProvider>
         );
@@ -35,7 +37,7 @@ class AppContainer extends React.Component {
 }
 
 AppContainer.propTypes = {
-    children: PropTypes.object.isRequired,
+    children: PropTypes.array.isRequired,
     handleResize: PropTypes.func,
 };
 

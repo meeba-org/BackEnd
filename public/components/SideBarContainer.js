@@ -4,7 +4,7 @@ import PermContactCalendar from '@material-ui/icons/PermContactCalendar';
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import PropTypes from 'prop-types';
 import React, {Component} from "react";
-import {withRouter} from 'react-router';
+import {withRouter} from 'react-router-dom';
 import * as ERoles from "../helpers/ERoles";
 import SideBar from "./SideBar";
 
@@ -23,8 +23,8 @@ class SideBarContainer extends Component {
     }
 
     updateRoute = (item, index) => {
-        let {router, isDesktop, toggleSideBar} = this.props;
-        router.push(item.url);
+        let {history, isDesktop, toggleSideBar} = this.props;
+        history.push(item.url);
 
         if (!isDesktop)
             toggleSideBar();
@@ -33,7 +33,7 @@ class SideBarContainer extends Component {
     };
 
     generateItems() {
-        const {router} = this.props;
+        const {location} = this.props;
 
         let items = [
             {
@@ -64,8 +64,8 @@ class SideBarContainer extends Component {
 
         items.forEach(item => {
             // Setting the selected menu according the url
-            if (item.url === router.location.pathname)
-            item.selected = true;
+            if (item.url === location.pathname)
+                item.selected = true;
         });
 
         return items;
@@ -89,7 +89,7 @@ class SideBarContainer extends Component {
 }
 
 SideBarContainer.propTypes = {
-    router: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     userRole: PropTypes.string,
     classes: PropTypes.object,
     isDesktop: PropTypes.bool.isRequired,

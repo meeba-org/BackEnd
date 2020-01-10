@@ -66,10 +66,8 @@ class Header extends Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        showLoginRegisterDialog: () => {dispatch(showLoginRegisterDialog());},
-    };
+const mapDispatchToProps = {
+    showLoginRegisterDialog,
 };
 
 export default connect(null, mapDispatchToProps)(CSSModules(Header, styles));
