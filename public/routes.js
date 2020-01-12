@@ -18,14 +18,14 @@ const Routes = () => {
             <AppContainer>
                 {/*<Redirect exact from="/" to="/dashboard"/>*/}
                 <Route path="/home" component={Home}/>
+                <Redirect exact from="/dashboard" to="/dashboard/report"/>
                 <Suspense fallback={<div>Loading...</div>}>
                     <Dashboard>
                         <Suspense fallback={<div>Loading...</div>}>
-                            {/*<Redirect exact from="/dashboard" to="/dashboard/report"/>*/}
                             <PrivateRoute path="/dashboard/employees" component={EmployeesContainer}/>
                             <PrivateRoute path="/dashboard/settings" component={Settings}/>
                             <PrivateRoute path="/dashboard/report" component={Report}/>
-                            <PrivateRoute path="/dashboard/live" component={() => <DailyReportContainer mode={ReportModes.Live}/>}/>
+                            <PrivateRoute path="/dashboard/live" component={() => <DailyReportContainer mode={ReportModes.Live}/>} />
                         </Suspense>
                     </Dashboard>
                 </Suspense>

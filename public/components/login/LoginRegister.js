@@ -34,10 +34,9 @@ class LoginRegister extends Component {
     };
 
     handleSubmit = (values) => {
-        let {history} = this.props;
+        let {history, handleLogin} = this.props;
 
-        //handleLogin(values, history);
-        history.push('/dashboard/report');
+        handleLogin(values, history);
     };
 
     render() {
