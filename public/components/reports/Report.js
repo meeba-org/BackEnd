@@ -1,5 +1,5 @@
 import Badge from "@material-ui/core/es/Badge";
-import {withStyles} from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import React, {Component, Fragment} from 'react';

@@ -15,7 +15,7 @@ process.env.NODE_ENV = 'production';
 const GLOBALS = {
     'process.env.NODE_ENV': JSON.stringify('production'),
     'process.env.BABEL_ENV': JSON.stringify('production'),
-    'process.env.PORT': 3000,
+    'process.env.PORT': 4000,
     __DEV__: false
 };
 
@@ -33,6 +33,7 @@ module.exports = {
         filename: '[name].[chunkhash].js'
     },
     optimization: {
+        runtimeChunk: 'single',
         splitChunks: {
             chunks: "all"
         },
@@ -83,8 +84,8 @@ module.exports = {
             analyzerMode: 'static'
         }),
         new CopyPlugin([
-            './public/serviceWorker/sw.js',
-            './public/serviceWorker/site.js',
+            // './public/serviceWorker/sw.js',
+            // './public/serviceWorker/site.js',
         ]),
         new WebpackPwaManifest({
             name: "מיבא - שעון נוכחות ומחשבון שכר",

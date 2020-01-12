@@ -1,5 +1,5 @@
 import React from 'react';
-import {SvgIcon} from '@material-ui/core';
+import SvgIcon from '@material-ui/core/SvgIcon/index';
 
 export const FramedLogo = props => (
     <SvgIcon {...props}  viewBox="0 0 524 490">

@@ -1,6 +1,9 @@
 import React from "react";
 import { compose, withProps } from "recompose";
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import Marker from "react-google-maps/lib/components/Marker";
+import withScriptjs from "react-google-maps/lib/withScriptjs";
+import GoogleMap from "react-google-maps/lib/components/GoogleMap";
+import withGoogleMap from "react-google-maps/lib/withGoogleMap";
 
 const API_KEY = "AIzaSyAgOEl4xMnzBoHSR9CQndSMRafzL3_EeEE";
 
