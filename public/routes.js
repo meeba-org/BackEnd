@@ -1,34 +1,26 @@
 import React from "react";
-import Loadable from 'react-loadable';
 import {IndexRedirect, Redirect, Route} from "react-router";
 import AppContainer from "./components/AppContainer";
-import Dashboard from "./components/Dashboard";
-import EmployeesContainer from "./components/employees/EmployeesContainer";
-import FAQContainer from "./components/faq/FAQContainer";
-import PaymentSuccessRedirectContainer from "./components/go-premium/PaymentSuccessRedirectContainer";
+const  Dashboard = React.lazy(() => import("./components/Dashboard"));
+const  EmployeesContainer = React.lazy(() => import("./components/employees/EmployeesContainer"));
+const  FAQContainer = React.lazy(() => import("./components/faq/FAQContainer"));
+const  PaymentSuccessRedirectContainer = React.lazy(() => import("./components/go-premium/PaymentSuccessRedirectContainer"));
 import Home from "./components/home/Home";
-import DailyReportContainer from "./components/reports/DailyReportContainer";
-import Report from "./components/reports/Report";
-import Settings from "./components/Settings";
+const  DailyReportContainer = React.lazy(() => import("./components/reports/DailyReportContainer"));
+const  Report = React.lazy(() => import("./components/reports/Report"));
+const  Settings = React.lazy(() => import("./components/Settings"));
 import {ReportModes} from "./helpers/utils";
-
-const LoadableDashboard = Loadable({
-    loader: () => import('./components/Dashboard'),
-    loading() {
-        return <div>Loading...</div>;
-    }
-});
 
 export default (
     <Route path="/" component={AppContainer}>
         <IndexRedirect to="/dashboard" />
         <Route path="/home" component={Home}/>
-        <Route path="/dashboard" component={LoadableDashboard} onEnter={requireAuth}>
+        <Route path="/dashboard" render={(props) => <Dashboard {...props} />} onEnter={requireAuth}>
             <IndexRedirect to="/dashboard/report" />
-            <Route path="employees" component={EmployeesContainer} />
-            <Route path="settings" component={Settings} />
-            <Route path="report" component={Report} />
-            <Route path="live" component={() => <DailyReportContainer mode={ReportModes.Live} />} />
+            <Route path="employees" render={props => <EmployeesContainer {...props}/>} />
+            <Route path="settings" render={props => <Settings {...props} />} />
+            <Route path="report" render={props => <Report {...props} />} />
+            <Route path="live" render={(props) => <DailyReportContainer mode={ReportModes.Live} {...props} />} />
             <Redirect from="*" to="/dashboard/live" />
         </Route>
         <Route path="faq(/:name)" component={FAQContainer} />
