@@ -3,7 +3,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import NoSsr from '@material-ui/core/NoSsr';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
-import emphasize from '@material-ui/core/styles/colorManipulator';
+import {emphasize} from '@material-ui/core/styles/colorManipulator';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import CancelIcon from '@material-ui/icons/Cancel';

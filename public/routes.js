@@ -1,6 +1,6 @@
 import React from "react";
 import Loadable from 'react-loadable';
-import {IndexRedirect, Route} from "react-router";
+import {IndexRedirect, Redirect, Route} from "react-router";
 import AppContainer from "./components/AppContainer";
 import Dashboard from "./components/Dashboard";
 import EmployeesContainer from "./components/employees/EmployeesContainer";
@@ -10,11 +10,12 @@ import Home from "./components/home/Home";
 import DailyReportContainer from "./components/reports/DailyReportContainer";
 import Report from "./components/reports/Report";
 import Settings from "./components/Settings";
+import {ReportModes} from "./helpers/utils";
 
 const LoadableDashboard = Loadable({
     loader: () => import('./components/Dashboard'),
     loading() {
-        return <div>Loading...</div>
+        return <div>Loading...</div>;
     }
 });
 
