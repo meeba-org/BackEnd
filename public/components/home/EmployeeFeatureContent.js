@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import CSSModules from "react-css-modules";
 import styles from '../../styles/EmployeeFeatureContent.scss';
 import mobileImage from '../../styles/images/1.png';
 import appStoreImage from '../../styles/images/appStore.svg';
@@ -38,4 +37,4 @@ class EmployeeFeatureContent extends Component {
 EmployeeFeatureContent.propTypes = {};
 EmployeeFeatureContent.defaultProps = {};
 
-export default CSSModules(EmployeeFeatureContent, styles);
+export default EmployeeFeatureContent;

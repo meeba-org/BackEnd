@@ -1,4 +1,5 @@
 /** An empty service worker! */
+// eslint-disable-next-line no-unused-vars
 self.addEventListener('fetch', function(event) {
     /** An empty fetch handler! */
 });
@@ -6,6 +7,7 @@ self.addEventListener('fetch', function(event) {
 let deferredPrompt;
 
 self.addEventListener('beforeinstallprompt', (e) => {
+    // eslint-disable-next-line no-console
     console.log("beforeinstallprompt fired", e);
     // Stash the event so it can be triggered later.
     deferredPrompt = e;
@@ -13,5 +15,6 @@ self.addEventListener('beforeinstallprompt', (e) => {
 });
 
 self.addEventListener('appinstalled', (evt) => {
+    // eslint-disable-next-line no-console
     console.log("appinstalled fired", evt);
 });

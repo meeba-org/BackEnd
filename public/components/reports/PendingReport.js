@@ -6,7 +6,6 @@ import Divider from "@material-ui/core/Divider";
 import Tooltip from "@material-ui/core/Tooltip";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import React, {Component} from 'react';
-import CSSModules from "react-css-modules";
 import FieldArray from "redux-form/es/FieldArray";
 import {DATE_FORMAT, ReportModes} from "../../helpers/utils";
 import styles from '../../styles/DailyReport.scss';
@@ -64,4 +63,4 @@ class PendingReport extends Component {
 PendingReport.propTypes = {};
 PendingReport.defaultProps = {};
 
-export default CSSModules(PendingReport, styles);
+export default PendingReport;

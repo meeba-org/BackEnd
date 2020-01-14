@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styles from "../../styles/StatisticsCell.scss";
-import CSSModules from "react-css-modules/dist/index";
 
 class StatisticsCell extends Component {
     render() {
@@ -21,4 +20,4 @@ StatisticsCell.propTypes = {
     title: PropTypes.string.isRequired
 };
 
-export default CSSModules(StatisticsCell, styles);
+export default StatisticsCell;

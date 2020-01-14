@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import excelImage from '../../styles/images/excel.png';
-import CSSModules from "react-css-modules";
 import styles from '../../styles/ReportFeatureContent.scss';
 
 class ReportFeatureContent extends Component {
@@ -16,4 +15,4 @@ class ReportFeatureContent extends Component {
 ReportFeatureContent.propTypes = {};
 ReportFeatureContent.defaultProps = {};
 
-export default CSSModules(ReportFeatureContent, styles);
+export default ReportFeatureContent;

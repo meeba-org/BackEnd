@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import CSSModules from "react-css-modules";
 import styles from '../../styles/ManagerFeatureContent.scss';
 import browserImage from '../../styles/images/browser.png';
 
@@ -16,4 +15,4 @@ class ManagerFeatureContent extends Component {
 ManagerFeatureContent.propTypes = {};
 ManagerFeatureContent.defaultProps = {};
 
-export default CSSModules(ManagerFeatureContent, styles);
+export default ManagerFeatureContent;

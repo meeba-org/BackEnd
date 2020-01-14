@@ -1,7 +1,6 @@
 import moment from "moment";
 import PropTypes from 'prop-types';
 import React from "react";
-import CSSModules from "react-css-modules";
 import Field from "redux-form/es/Field";
 import styles from "../../styles/ShiftsList.scss";
 import Fade from "../Fade";
@@ -82,4 +81,4 @@ ShiftsList.propTypes = {
     postUpdate: PropTypes.func.isRequired,
 };
 
-export default CSSModules(ShiftsList, styles);
+export default ShiftsList;

@@ -7,8 +7,6 @@ import Dialog from "@material-ui/core/Dialog";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import CSSModules from "react-css-modules";
-
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import Field from "redux-form/es/Field";
@@ -115,5 +113,5 @@ export default connect(
     })
 )(reduxForm({
     form: 'loginRegisterForm' // a unique identifier for this form
-})(withRouter(CSSModules(LoginRegister, styles))));
+})(withRouter(LoginRegister)));
 

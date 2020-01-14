@@ -4,7 +4,6 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import CSSModules from "react-css-modules";
 import FieldArray from "redux-form/es/FieldArray";
 import {ReportModes} from "../../helpers/utils";
 import styles from "../../styles/MonthlyReportLine.scss";
@@ -12,7 +11,7 @@ import HoursBar from "../HoursBar";
 import HoursSummary from "./HoursSummary";
 import ShiftsList from "./ShiftsList";
 
-const TaskBreadCrumb = CSSModules(({taskBreadCrumb}) => {
+const TaskBreadCrumb = ({taskBreadCrumb}) => {
     if (!taskBreadCrumb)
         return null;
 
@@ -29,7 +28,7 @@ const TaskBreadCrumb = CSSModules(({taskBreadCrumb}) => {
             }
         </div>
     );
-}, styles);
+};
 
 class TaskReportLine extends React.PureComponent {
     state = {
@@ -89,5 +88,5 @@ TaskReportLine.propTypes = {
     postUpdate: PropTypes.func.isRequired,
 };
 
-export default CSSModules(TaskReportLine, styles);
+export default TaskReportLine;
 

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import CSSModules from "react-css-modules";
 import styles from "../../styles/FAQHeader.scss";
 import HomeAppBar from '../home/HomeAppBar';
 
@@ -19,4 +18,4 @@ class FAQHeader extends Component {
     }
 }
 
-export default CSSModules(FAQHeader, styles);
+export default FAQHeader;

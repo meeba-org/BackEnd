@@ -73,13 +73,16 @@
         "autosuggest-highlight": "^3.1.1",
         "axios": "^0.19.0",
         "babel-loader": "^8.0.0",
+        "babel-plugin-react-css-modules": "^5.2.6",
         "babel-plugin-transform-react-remove-prop-types": "0.2.11",
         "bcryptjs": "*",
         "body-parser": "*",
         "classnames": "^2.2.6",
         "compression": "^1.7.2",
         "cookie-parser": "^1.4.3",
-        "css-loader": "^0.28.11",
+        "copy-webpack-plugin": "latest",
+        "css-loader": "^3.4.2",
+        "cssnano": "^4.1.10",
         "dotenv": "^4.0.0",
         "exceljs": "^1.6.2",
         "express": "4.15.4",
@@ -97,12 +100,12 @@
         "moment-timezone": "^0.5.14",
         "mongoose": "^5.2.4",
         "natives": "^1.1.6",
-        "node-sass": "^4.7.2",
-        "react": "^16.3.1",
+        "node-sass": "^4.13.0",
+        "postcss-preset-env": "^6.7.0",
+        "react": "^16.12.0",
         "react-authorization": "0.0.2",
         "react-autosuggest": "^9.3.2",
-        "react-css-modules": "^4.7.3",
-        "react-dom": "^16.3.1",
+        "react-dom": "^16.12.0",
         "react-google-maps": "^9.4.5",
         "react-jss": "^8.6.1",
         "react-markdown": "^4.0.4",
@@ -127,8 +130,7 @@
         "supertest": "^3.0.0",
         "url-loader": "^1.0.1",
         "webpack": "^4.12.0",
-        "webpack-chunk-hash": "^0.6.0",
-        "copy-webpack-plugin": "latest"
+        "webpack-chunk-hash": "^0.6.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.0.0",
@@ -157,7 +159,9 @@
         "mocha": "^3",
         "npm-run-all": "3.1.2",
         "opn-cli": "3.1.0",
-        "postcss-loader": "^2.1.5",
+        "postcss-loader": "^3.0.0",
+        "postcss-nested": "^4.2.1",
+        "postcss-scss": "^2.0.0",
         "prop-types": "15.5.10",
         "react-hot-loader": "^4.6.5",
         "redux-devtools-extension": "^2.13.8",
@@ -174,112 +178,6 @@
         "moduleNameMapper": {
             "\\.(css|scss)$": "identity-obj-proxy",
             "^.+\\.(gif|ttf|eot|svg|woff|woff2|ico)$": "<rootDir>/tools/fileMock.js"
-        }
-    },
-    "babel": {
-        "env": {
-            "development": {
-                "presets": [
-                    "@babel/preset-env",
-                    "@babel/preset-react"
-                ],
-                "plugins": [
-                    "react-hot-loader/babel",
-                    "@babel/plugin-proposal-optional-chaining",
-                    "@babel/plugin-syntax-dynamic-import",
-                    "@babel/plugin-syntax-import-meta",
-                    "@babel/plugin-proposal-class-properties",
-                    "@babel/plugin-proposal-json-strings",
-                    [
-                        "@babel/plugin-proposal-decorators",
-                        {
-                            "legacy": true
-                        }
-                    ],
-                    "@babel/plugin-proposal-function-sent",
-                    "@babel/plugin-proposal-export-namespace-from",
-                    "@babel/plugin-proposal-numeric-separator",
-                    "@babel/plugin-proposal-throw-expressions",
-                    "@babel/plugin-proposal-export-default-from",
-                    "@babel/plugin-proposal-logical-assignment-operators",
-                    [
-                        "@babel/plugin-proposal-pipeline-operator",
-                        {
-                            "proposal": "minimal"
-                        }
-                    ],
-                    "@babel/plugin-proposal-nullish-coalescing-operator",
-                    "@babel/plugin-proposal-do-expressions"
-                ]
-            },
-            "production": {
-                "presets": [
-                    "@babel/preset-env",
-                    "@babel/preset-react"
-                ],
-                "plugins": [
-                    "@babel/plugin-transform-react-constant-elements",
-                    "transform-react-remove-prop-types",
-                    "@babel/plugin-syntax-dynamic-import",
-                    "@babel/plugin-syntax-import-meta",
-                    "@babel/plugin-proposal-class-properties",
-                    "@babel/plugin-proposal-json-strings",
-                    [
-                        "@babel/plugin-proposal-decorators",
-                        {
-                            "legacy": true
-                        }
-                    ],
-                    "@babel/plugin-proposal-function-sent",
-                    "@babel/plugin-proposal-export-namespace-from",
-                    "@babel/plugin-proposal-numeric-separator",
-                    "@babel/plugin-proposal-throw-expressions",
-                    "@babel/plugin-proposal-export-default-from",
-                    "@babel/plugin-proposal-logical-assignment-operators",
-                    "@babel/plugin-proposal-optional-chaining",
-                    [
-                        "@babel/plugin-proposal-pipeline-operator",
-                        {
-                            "proposal": "minimal"
-                        }
-                    ],
-                    "@babel/plugin-proposal-nullish-coalescing-operator",
-                    "@babel/plugin-proposal-do-expressions"
-                ]
-            },
-            "test": {
-                "presets": [
-                    "@babel/preset-env",
-                    "@babel/preset-react"
-                ],
-                "plugins": [
-                    "@babel/plugin-syntax-dynamic-import",
-                    "@babel/plugin-syntax-import-meta",
-                    "@babel/plugin-proposal-class-properties",
-                    "@babel/plugin-proposal-json-strings",
-                    [
-                        "@babel/plugin-proposal-decorators",
-                        {
-                            "legacy": true
-                        }
-                    ],
-                    "@babel/plugin-proposal-function-sent",
-                    "@babel/plugin-proposal-export-namespace-from",
-                    "@babel/plugin-proposal-numeric-separator",
-                    "@babel/plugin-proposal-throw-expressions",
-                    "@babel/plugin-proposal-export-default-from",
-                    "@babel/plugin-proposal-logical-assignment-operators",
-                    "@babel/plugin-proposal-optional-chaining",
-                    [
-                        "@babel/plugin-proposal-pipeline-operator",
-                        {
-                            "proposal": "minimal"
-                        }
-                    ],
-                    "@babel/plugin-proposal-nullish-coalescing-operator",
-                    "@babel/plugin-proposal-do-expressions"
-                ]
-            }
         }
     }
 }

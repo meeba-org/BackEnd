@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from "react";
-import CSSModules from "react-css-modules";
 import {prepareHourToDisplay} from "../helpers/utils";
 import styles from '../styles/HoursBar.scss';
 
@@ -30,5 +29,5 @@ TaskHoursBar.propTypes = {
     displayDetails: PropTypes.bool.isRequired,
 };
 
-export default CSSModules(TaskHoursBar, styles);
+export default TaskHoursBar;
 

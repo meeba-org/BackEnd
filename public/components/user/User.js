@@ -12,7 +12,6 @@ import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
 import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
-import CSSModules from "react-css-modules";
 import {Link} from "react-router";
 import styles from '../../styles/User.scss';
 import NoData from "../NoData";
@@ -255,5 +254,5 @@ User.propTypes = {
     hasPremiumFeature: PropTypes.bool
 };
 
-export default CSSModules(withStyles(styles1)(User), styles);
+export default withStyles(styles1)(User);
 

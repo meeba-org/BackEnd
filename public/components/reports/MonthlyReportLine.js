@@ -4,7 +4,6 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import PropTypes from 'prop-types';
 import React from 'react';
-import CSSModules from "react-css-modules";
 import FieldArray from "redux-form/es/FieldArray";
 import {ReportModes} from "../../helpers/utils";
 import styles from "../../styles/MonthlyReportLine.scss";
@@ -69,5 +68,5 @@ MonthlyReportLine.propTypes = {
     postUpdate: PropTypes.func.isRequired,
 };
 
-export default CSSModules(MonthlyReportLine, styles);
+export default MonthlyReportLine;
 

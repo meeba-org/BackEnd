@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import styles from "../../styles/Home.scss";
-import CSSModules from "react-css-modules";
+import  "../../styles/Home.scss";
 import PropTypes from 'prop-types';
 import Header from "./Header";
 import Footer from "./Footer";
@@ -28,9 +27,4 @@ class Home extends Component {
     }
 }
 
-Home.propTypes = {
-    router: PropTypes.object,
-};
-Home.defaultProps = {};
-
-export default CSSModules(Home, styles);
+export default Home;

@@ -2,35 +2,34 @@ import IconButton from "@material-ui/core/IconButton";
 import Add from '@material-ui/icons/Add';
 import Minus from '@material-ui/icons/Remove';
 import React, {Component} from 'react';
-import CSSModules from "react-css-modules";
 import ReactMarkdown from "react-markdown";
 import styles from "../../styles/FAQContent.scss";
 import Fade from "../Fade";
 
-const Question = CSSModules(({text, onClick, collapse}) => {
+const Question = ({text, onClick, collapse}) => {
     return (
         <div styleName="question" onClick={onClick}>
             <div styleName="text">{text}</div>
             <IconButton className={styles["icon"]}>{collapse ? <Add /> : <Minus />}</IconButton>
         </div>
     );
-}, styles);
+};
 
-const Answer = CSSModules(({text}) => {
+const Answer = ({text}) => {
     return (
         <div styleName="answer">
             <ReactMarkdown source={text} />
         </div>
     );
-}, styles);
+};
 
-const AnswerFooter = CSSModules(() => {
+const AnswerFooter = () => {
     return (
         <div styleName="answer-footer">
             לא מספיק ברור? מחכים לשאלות שלכם ב<a href={"https://m.me/meebaOnFace"}>צ'אט</a>
         </div>
     );
-}, styles);
+};
 
 class QuestionAndAnswer extends Component {
     render() {
@@ -84,4 +83,4 @@ FAQContent.propTypes = {
 };
 FAQContent.defaultProps = {};
 
-export default CSSModules(FAQContent, styles);
+export default FAQContent;

@@ -12,7 +12,6 @@ import DatePicker from "material-ui-pickers/DatePicker";
 import moment from "moment";
 import PropTypes from 'prop-types';
 import React, {Fragment} from "react";
-import CSSModules from "react-css-modules";
 import {withRouter} from "react-router";
 import FieldArray from "redux-form/es/FieldArray";
 import {
@@ -197,5 +196,5 @@ DailyReport.propTypes = {
     isLoading: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles1)(CSSModules(withTheme()(withRouter(DailyReport)), styles));
+export default withStyles(styles1)(withTheme()(withRouter(DailyReport)));
 

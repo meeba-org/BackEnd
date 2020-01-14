@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import mobileImage from '../../styles/images/1.png';
 import styles from '../../styles/MobileImageContent.scss';
-import CSSModules from "react-css-modules";
 
 class MobileImageContent extends Component {
     render() {
@@ -16,4 +15,4 @@ class MobileImageContent extends Component {
 MobileImageContent.propTypes = {};
 MobileImageContent.defaultProps = {};
 
-export default CSSModules(MobileImageContent, styles);
+export default MobileImageContent;

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import styles from "../../styles/Statistics.scss";
-import CSSModules from "react-css-modules/dist/index";
 import StatisticsCell from "./StatisticsCell";
 import {connect} from "react-redux";
 import PropTypes from 'prop-types';
@@ -40,4 +39,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps, null
-)(CSSModules(Statistics, styles));
+)(Statistics);

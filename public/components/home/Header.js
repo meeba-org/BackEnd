@@ -2,7 +2,6 @@ import Button from "@material-ui/core/Button";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import React, {Component} from 'react';
-import CSSModules from "react-css-modules/dist/index";
 import {connect} from 'react-redux';
 import {showLoginRegisterDialog} from "../../actions";
 import styles from "../../styles/Header.scss";
@@ -72,4 +71,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(CSSModules(Header, styles));
+export default connect(null, mapDispatchToProps)(Header);

@@ -1,7 +1,7 @@
 import HomeIcon from "@material-ui/icons/Home";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import React from "react";
-import CSSModules from "react-css-modules";
+
 import styles from "../../styles/BreadCrumb.scss";
 
 const BreadCrumb = ({data, onSelectTask}) => {
@@ -20,4 +20,4 @@ const BreadCrumb = ({data, onSelectTask}) => {
     );
 };
 
-export default CSSModules(BreadCrumb, styles);
+export default BreadCrumb;

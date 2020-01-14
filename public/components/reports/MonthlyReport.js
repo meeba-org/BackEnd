@@ -10,7 +10,6 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from "react";
 import {IfGranted} from "react-authorization";
-import CSSModules from "react-css-modules";
 import Field from "redux-form/es/Field";
 import * as ERoles from "../../helpers/ERoles";
 import {DATE_FORMAT} from "../../helpers/utils";
@@ -183,4 +182,4 @@ MonthlyReport.propTypes = {
     userRole: PropTypes.string,
 };
 
-export default CSSModules(MonthlyReport, styles);
+export default MonthlyReport;

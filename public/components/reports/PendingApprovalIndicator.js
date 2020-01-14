@@ -2,7 +2,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import EyeIcon from "@material-ui/icons/RemoveRedEye";
 import PropTypes from "prop-types";
 import React from "react";
-import CSSModules from "react-css-modules";
 import EShiftStatus from "../../helpers/EShiftStatus";
 import styles from "../../styles/PendingApprovalInicator.scss";
 
@@ -23,4 +22,4 @@ PendingApprovalIndicator.propTypes = {
     warning: PropTypes.string,
 };
 
-export default CSSModules(PendingApprovalIndicator, styles);
+export default PendingApprovalIndicator;

@@ -9,7 +9,6 @@ import Paper from "@material-ui/core/Paper";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import CSSModules from "react-css-modules";
 import {connect} from "react-redux";
 import Field from "redux-form/es/Field";
 import reduxForm from "redux-form/es/reduxForm";
@@ -64,6 +63,6 @@ export default connect(
     // mapStateToProps
 )(reduxForm({
     form: 'loginForm',
-})(CSSModules(Login, styles)));
+})(Login));
 
 

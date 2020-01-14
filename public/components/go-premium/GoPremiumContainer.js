@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
-import CSSModules from "react-css-modules";
 import {connect} from "react-redux";
 import {getPaymentActiveStep, getPaymentError, getPaymentUrl, getUser} from "../../selectors";
 import {EGoPremiumStep} from "./EPremiumStep";
@@ -74,4 +73,4 @@ const mapDispatchToProps = dispatch => ({
     setActiveStep: (activeStep => dispatch(setActiveStep(activeStep)))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(GoPremiumContainer, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(GoPremiumContainer);

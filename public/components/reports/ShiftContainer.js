@@ -1,7 +1,6 @@
 import moment from "moment";
 import PropTypes from 'prop-types';
 import React from "react";
-import CSSModules from "react-css-modules";
 import connect from "react-redux/es/connect/connect";
 import {createShift, showDeleteShiftModal, updateShift, showGoPremiumModal, showLocationModal} from "../../actions";
 import {ReportModes} from "../../helpers/utils";
@@ -220,4 +219,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withShiftLogic(CSSModules(ShiftContainer, styles, {allowMultiple: true})));
+export default connect(mapStateToProps, mapDispatchToProps)(withShiftLogic(ShiftContainer));

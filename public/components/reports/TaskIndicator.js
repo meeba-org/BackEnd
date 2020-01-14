@@ -3,7 +3,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import LabelIcon from "@material-ui/icons/Label";
 import PropTypes from "prop-types";
 import React from "react";
-import CSSModules from "react-css-modules";
 import styles from "../../styles/ShiftIndicator.scss";
 
 const TaskIndicator = ({task, onClick}) => {
@@ -24,5 +23,5 @@ TaskIndicator.propTypes = {
     onClick: PropTypes.func,
 };
 
-export default CSSModules(TaskIndicator, styles);
+export default TaskIndicator;
 

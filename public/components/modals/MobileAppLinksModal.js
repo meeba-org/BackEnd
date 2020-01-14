@@ -9,7 +9,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import {hideMobileAppModal} from "../../actions/index";
 import PropTypes from 'prop-types';
-import CSSModules from "react-css-modules";
 
 class MobileAppLinksModal extends Component {
 
@@ -51,4 +50,4 @@ MobileAppLinksModal.propTypes = {
     year: PropTypes.string,
 };
 
-export default connect()(CSSModules(MobileAppLinksModal, styles));
+export default connect()(MobileAppLinksModal);

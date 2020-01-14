@@ -106,24 +106,18 @@ module.exports = {
                 test: /(\.css|\.scss|\.sass)$/,
                 exclude: /node_modules/,
                 use: [
-                    'style-loader',
+                    'style-loader?sourceMap',
                     {
                         loader: 'css-loader',
                         options: {
-                            modules: true,
-                            importLoaders: 2,
-                            localIdentName: '[name]-[local]-[hash:base64:2]',
+                            modules: {
+                                localIdentName: "[path]___[name]__[local]___[hash:base64:5]",
+                            },
+                            importLoaders: 1,
                             sourceMap: true,
                         }
-                    }, {
-                        loader: 'sass-loader',
-                        options: {
-                            includePaths: [
-                                path.resolve(__dirname, 'public/styles'),
-                            ],
-                            sourceMap: true
-                        }
-                    }
+                    },
+                    'sass-loader'
                 ]
             }
         ]

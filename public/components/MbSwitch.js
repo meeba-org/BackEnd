@@ -1,6 +1,5 @@
 import React, {Fragment} from "react";
 import Switch from "@material-ui/core/Switch";
-import CSSModules from "react-css-modules";
 import styles from '../styles/MbSwitch.scss';
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -31,4 +30,4 @@ const MbSwitch = ({firstLabel, secondLabel, checked, onChange, classes}) => {
     );
 };
 
-export default CSSModules(withStyles(styles2)(MbSwitch), styles);
+export default withStyles(styles2)(MbSwitch);

@@ -5,7 +5,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
-import CSSModules from "react-css-modules";
 import styles from '../styles/AppBar.scss';
 import {connect} from "react-redux";
 import * as selectors from "../selectors";
@@ -81,5 +80,5 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
     mapStateToProps, mapDispatchToProps
-)(CSSModules(MeebaAppBar, styles));
+)(MeebaAppBar);
 

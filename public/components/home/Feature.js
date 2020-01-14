@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from "react-css-modules";
 import styles from "../../styles/Feature.scss";
 import Dialog from "@material-ui/core/Dialog";
 
@@ -50,4 +49,4 @@ Feature.propTypes = {
     dialogContent: PropTypes.object.isRequired,
 };
 
-export default CSSModules(Feature, styles);
+export default Feature;

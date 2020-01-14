@@ -11,7 +11,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import classNames from 'classnames';
 import React, {Component} from "react";
 import {IfAnyGranted} from "react-authorization";
-import CSSModules from "react-css-modules";
 import CSSModulesStyles from "../styles/SideBar.scss";
 
 const drawerWidth = 200;
@@ -89,4 +88,4 @@ class SideBar extends Component {
 SideBar.propTypes = {};
 SideBar.defaultProps = {};
 
-export default CSSModules(withStyles(styles, {withTheme: true})(SideBar), CSSModulesStyles);
+export default withStyles(styles, {withTheme: true})(SideBar);

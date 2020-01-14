@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import CSSModules from "react-css-modules";
 import styles from "../../styles/Movie.scss";
 import YouTube from "react-youtube";
 
@@ -21,4 +20,4 @@ class Movie extends Component {
 Movie.propTypes = {};
 Movie.defaultProps = {};
 
-export default CSSModules(Movie, styles);
+export default Movie;

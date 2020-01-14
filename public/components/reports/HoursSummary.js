@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styles from '../../styles/HoursSummary.scss';
-import CSSModules from "react-css-modules";
 import {prepareHourToDisplay} from "../../helpers/utils";
 
 class HoursSummary extends Component {
@@ -55,4 +54,4 @@ HoursSummary.propTypes = {
 
 HoursSummary.defaultProps = {};
 
-export default CSSModules(HoursSummary, styles);
+export default HoursSummary;

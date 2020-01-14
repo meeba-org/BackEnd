@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import CSSModules from "react-css-modules";
 import styles from "../../styles/GoPremiumPay.scss";
 
 class GoPremiumPay extends Component {
@@ -17,4 +16,4 @@ class GoPremiumPay extends Component {
 GoPremiumPay.propTypes = {
 };
 
-export default CSSModules(GoPremiumPay, styles);
+export default GoPremiumPay;

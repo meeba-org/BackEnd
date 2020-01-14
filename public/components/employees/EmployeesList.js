@@ -13,7 +13,6 @@ import ShareIcon from '@material-ui/icons/Share';
 import AddIcon from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
 import React from 'react';
-import CSSModules from "react-css-modules";
 import {MAX_FREE_EMPLOYEES_ALLOWED} from "../../../constants";
 import {isIsraeliIdValid} from "../../helpers/utils";
 import styles from "../../styles/EmployeesList.scss";
@@ -78,7 +77,7 @@ class EmployeesList extends React.PureComponent {
 התחלנו להשתמש בשעון הנוכחות "מיבא".
 אנא הורד את האפליקציה:
 אנדרואיד - https://goo.gl/iGzWxX
-או 
+או
 אייפון - https://goo.gl/L6WKJc
                 `
             });
@@ -173,5 +172,5 @@ EmployeesList.propTypes = {
     isAddAllowed: PropTypes.bool,
 };
 
-export default CSSModules(EmployeesList, styles);
+export default EmployeesList;
 

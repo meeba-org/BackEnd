@@ -1,7 +1,6 @@
 import Paper from "@material-ui/core/Paper";
 import PropTypes from 'prop-types';
 import React from 'react';
-import CSSModules from "react-css-modules";
 import {connect} from "react-redux";
 import {loadDashboardData} from "../actions/generalActions";
 import * as selectors from "../selectors";
@@ -31,7 +30,7 @@ class Dashboard extends React.PureComponent {
     };
 
     render() {
-        let {router, userRole, isDesktop, isTasksFeatureEnable} = this.props;
+        let {router, userRole, isDesktop, isTasksFeatureEnable, children} = this.props;
         let open = this.isOpen();
 
         return (
@@ -51,7 +50,7 @@ class Dashboard extends React.PureComponent {
                             />
                         </Paper>
                         <Paper styleName="main-container">
-                            {this.props.children}
+                            {children}
                         </Paper>
                     </div>
                 </div>
@@ -80,5 +79,5 @@ const mapDispatchToProps = {
     loadDashboardData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(Dashboard, styles, {allowMultiple: true}));
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard, styles, {allowMultiple: true});
 

@@ -9,7 +9,6 @@ import {Provider} from "react-redux";
 import {browserHistory, Router} from "react-router";
 import {syncHistoryWithStore} from "react-router-redux";
 import routes from "./routes";
-import {registerServiceWorker} from "./serviceWorker/site";
 import createStore from "./store/configureStore";
 
 const muiTheme = createMuiTheme({

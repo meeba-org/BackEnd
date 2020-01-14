@@ -8,7 +8,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Settings from '@material-ui/icons/Settings';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import CSSModules from "react-css-modules";
 import scssStyles from "../../styles/Employees.scss";
 
 const styles = {
@@ -122,5 +121,5 @@ Employee.propTypes = {
     isLimited: PropTypes.bool,
 };
 
-export default withStyles(styles)(CSSModules(Employee, scssStyles));
+export default withStyles(styles)(Employee);
 

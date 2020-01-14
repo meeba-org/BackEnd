@@ -3,7 +3,6 @@ import Computer from "@material-ui/icons/Computer";
 import Description from "@material-ui/icons/Description";
 import PhonelinkRing from "@material-ui/icons/PhonelinkRing";
 import styles from '../../styles/Features.scss';
-import CSSModules from "react-css-modules/dist/index";
 import Feature from "./Feature";
 import EmployeeFeatureContent from "./EmployeeFeatureContent";
 import ManagerFeatureContent from "./ManagerFeatureContent";
@@ -67,5 +66,5 @@ class Features extends Component {
     }
 }
 
-export default CSSModules(Features, styles);
+export default Features;
 

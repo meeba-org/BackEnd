@@ -6,7 +6,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import scssStyles from "../../styles/Employees.scss";
 import Button from "@material-ui/core/Button";
 import withStyles from '@material-ui/core/styles/withStyles';
-import CSSModules from "react-css-modules";
 import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
 
@@ -101,5 +100,5 @@ EmployeeMobile.propTypes = {
     error: PropTypes.string,
 };
 
-export default withStyles(styles)(CSSModules(EmployeeMobile, scssStyles));
+export default withStyles(styles)(EmployeeMobile);
 

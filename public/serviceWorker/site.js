@@ -1,3 +1,4 @@
 navigator.serviceWorker && navigator.serviceWorker.register('./sw.js').then(function (registration) {
+    // eslint-disable-next-line no-console
     console.log('Excellent, registered with scope: ', registration.scope);
 });
