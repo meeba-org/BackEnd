@@ -3,8 +3,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import DatePicker from "material-ui-pickers/DatePicker";
-import TimePicker from "material-ui-pickers/TimePicker";
+import DatePicker from "@material-ui/pickers/DatePicker";
+import TimePicker from "@material-ui/pickers/TimePicker";
 import moment from "moment";
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
@@ -24,10 +24,19 @@ class AddShiftsDialog extends PureComponent {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.open && !this.props.open) {
-            this.setState({employeesToAdd: []}); // resetting employeesToAdd
-        }
+    // TODO do I really need this?
+    // componentWillReceiveProps(nextProps) {
+    //     if (nextProps.open && !this.props.open) {
+    //         this.setState({employeesToAdd: []}); // resetting employeesToAdd
+    //     }
+    // }
+
+    componentDidMount() {
+        console.log("mounted");
+    }
+
+    componentDidUnMount() {
+        console.log("un-mounted");
     }
 
     toggleEmployee(employee, check) {

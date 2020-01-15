@@ -4,7 +4,7 @@ import withTheme from '@material-ui/core/styles/withTheme';
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from '@material-ui/icons/Add';
 import Warning from "@material-ui/icons/Warning";
-import DatePicker from "material-ui-pickers/DatePicker";
+import DatePicker from "@material-ui/pickers/DatePicker";
 import moment from "moment";
 import PropTypes from 'prop-types';
 import React, {Fragment} from "react";

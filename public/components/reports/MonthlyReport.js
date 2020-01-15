@@ -58,15 +58,15 @@ class MonthlyReport extends React.PureComponent {
         this.setState({selectedMonth, selectedYear});
 
         this.props.onMonthChange(selectedMonth, selectedYear);
-    }
+    };
 
-    handleOpenAddDialog() {
+    handleOpenAddDialog = () => {
         this.setState({open: true});
-    }
+    };
 
-    handleCloseAddDialog() {
+    handleCloseAddDialog = () => {
         this.setState({open: false});
-    }
+    };
 
     onCreateShift = (shift) => {
         const {selectedYear, selectedMonth} = this.state;

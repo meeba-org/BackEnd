@@ -1,5 +1,5 @@
 import MomentUtils from "@date-io/moment";
-import MuiPickersUtilsProvider from "material-ui-pickers/MuiPickersUtilsProvider";
+import MuiPickersUtilsProvider from "@material-ui/pickers/MuiPickersUtilsProvider";
 import PropTypes from 'prop-types';
 import React from 'react';
 import connect from "react-redux/es/connect/connect";

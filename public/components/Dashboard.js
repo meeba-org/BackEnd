@@ -14,7 +14,7 @@ class Dashboard extends React.PureComponent {
         open: null,
     };
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.loadDashboardData();
     }
 
