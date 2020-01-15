@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import FieldArray from "redux-form/es/FieldArray";
 import {DATE_FORMAT, ReportModes} from "../../helpers/utils";
 import '../../styles/DailyReport.scss';
-import ActionButton from "../ActionButton";
+import MbActionButton from "../MbActionButton";
 import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import moment from "./DailyReport";
@@ -28,7 +28,7 @@ class PendingReport extends Component {
                     <div styleName="daily-report">
                         <MbActionsControls>
                             <Tooltip title="רענן" placement="top">
-                                <ActionButton
+                                <MbActionButton
                                     onClick={onRefresh}
                                     iconComponent={RefreshIcon}
                                 />

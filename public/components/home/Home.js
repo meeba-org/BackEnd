@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import  "../../styles/Home.scss";
-import PropTypes from 'prop-types';
 import Header from "./Header";
 import Footer from "./Footer";
 import Features from "./Features";

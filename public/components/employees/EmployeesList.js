@@ -3,7 +3,6 @@
  */
 
 import Grid from "@material-ui/core/Grid";
-import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from '@material-ui/icons/Add';
 import ShareIcon from '@material-ui/icons/Share';
 import PropTypes from 'prop-types';
@@ -11,7 +10,7 @@ import React from 'react';
 import {MAX_FREE_EMPLOYEES_ALLOWED} from "../../../constants";
 import {isIsraeliIdValid} from "../../helpers/utils";
 import "../../styles/EmployeesList.scss";
-import ActionButton from "../ActionButton";
+import MbActionButton from "../MbActionButton";
 import Fade from "../Fade";
 import GoPremiumNotification from "../go-premium/GoPremiumNotification";
 import MbActionsControls from "../MbActionsControls";
@@ -102,26 +101,22 @@ class EmployeesList extends React.PureComponent {
         return (
             // <Card styleName="employees-list">
             <MbCard title="עובדים">
-                    <MbActionsControls>
-                        <Tooltip title={isAddAllowed ? "הוספת עובד" : this.NOT_ALLOW_TO_ADD_MESSAGE} placement="top">
-                            <span>
-                                <ActionButton
-                                    disabled={!isAddAllowed}
-                                    onClick={this.onCreate}
-                                    iconComponent={AddIcon}
-                                />
-                            </span>
-                        </Tooltip>
-                        <Tooltip title="לינק לאפליקציית העובד" placement="top">
-                            <ActionButton
-                                onClick={this.showMobileAppModal}
-                                iconComponent={ShareIcon}
-                            />
-                        </Tooltip>
-                        <SearchBar onChange={(filter) =>   {
-                            this.setState({employeesFilter: filter});
-                        }}/>
-                    </MbActionsControls>
+                <MbActionsControls>
+                    <MbActionButton
+                        disabled={!isAddAllowed}
+                        onClick={this.onCreate}
+                        iconComponent={AddIcon}
+                        tooltip={isAddAllowed ? "הוספת עובד" : this.NOT_ALLOW_TO_ADD_MESSAGE}
+                    />
+                    <MbActionButton
+                        onClick={this.showMobileAppModal}
+                        iconComponent={ShareIcon}
+                        tooltip={"לינק לאפליקציית העובד"}
+                    />
+                    <SearchBar onChange={(filter) => {
+                        this.setState({employeesFilter: filter});
+                    }}/>
+                </MbActionsControls>
 
                     <GoPremiumNotification isVisible={!isAddAllowed} text={this.NOT_ALLOW_TO_ADD_MESSAGE} />
 

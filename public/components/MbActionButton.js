@@ -1,4 +1,5 @@
 import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
 import React from 'react';
 import "../styles/ActionButton.scss";
 
@@ -8,10 +9,19 @@ const ActionButton = ({disabled, onClick, iconComponent: IconComponent, color = 
                 variant="contained"
                 color={color}
                 disabled={disabled}
-                onClick={onClick}>
+                onClick={onClick} >
             <IconComponent />
         </Button>
     );
 };
 
-export default ActionButton;
+const MbActionButton = ({tooltip, ...props}) => {
+    if (tooltip)
+        return (<Tooltip title={tooltip} placement="top"><span>
+            <ActionButton {...props} />
+        </span></Tooltip>);
+    else
+        return <ActionButton {...props} />;
+};
+
+export default MbActionButton;

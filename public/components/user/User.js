@@ -81,7 +81,7 @@ class User extends Component {
     };
 
     render() {
-        const {input, classes, isCommuteFeatureEnable, hasPremiumFeature, onFreePlanClick, onPremiumPlanClick} = this.props;
+        const {input, classes, hasPremiumFeature, onFreePlanClick, onPremiumPlanClick} = this.props;
         const user = input.value;
 
         if (!user || !user.company)

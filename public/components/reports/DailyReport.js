@@ -18,7 +18,7 @@ import {
     ReportModes
 } from "../../helpers/utils";
 import '../../styles/DailyReport.scss';
-import ActionButton from "../ActionButton";
+import MbActionButton from "../MbActionButton";
 import AddShiftsDialog from "../AddShiftsDialog";
 import AutoComplete from "../AutoComplete";
 import MbActionsControls from "../MbActionsControls";
@@ -97,7 +97,7 @@ class DailyReport extends React.PureComponent {
                                 />
 
                                 <Tooltip title="הוספת משמרת" placement="top">
-                                    <ActionButton
+                                    <MbActionButton
                                         onClick={this.handleClickOpen}
                                         iconComponent={AddIcon}
                                     />
@@ -191,5 +191,5 @@ DailyReport.propTypes = {
     isLoading: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles1)(withTheme()(withRouter(DailyReport)));
+export default withStyles(styles1)((withRouter(withTheme(DailyReport))));
 

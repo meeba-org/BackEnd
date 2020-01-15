@@ -4,7 +4,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
-import withStyles from '@material-ui/core/styles/withStyles';
+import {withStyles, createStyles}  from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -12,7 +12,7 @@ import {connect} from "react-redux";
 import {hideEditEmployeeModal} from "../../actions";
 import MbSwitch from "../MbSwitch";
 
-const styles = {
+const styles = createStyles({
     dialogActionsRoot: {
         justifyContent: "center",
         paddingTop: "20px"
@@ -21,7 +21,7 @@ const styles = {
         display: "flex",
         flexDirection: "column"
     }
-};
+});
 
 class EditEmployeeModal extends Component {
 
@@ -34,9 +34,9 @@ class EditEmployeeModal extends Component {
     }
 
     handleClose = () => {
-        let {dispatch} = this.props;
+        let {hideEditEmployeeModal} = this.props;
 
-        dispatch(hideEditEmployeeModal());
+        hideEditEmployeeModal();
     };
 
 
@@ -122,4 +122,8 @@ EditEmployeeModal.propTypes = {
     year: PropTypes.string,
 };
 
-export default connect()(withStyles(styles)(EditEmployeeModal));
+const mapDispatchToProps = {
+    hideEditEmployeeModal
+};
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(EditEmployeeModal));

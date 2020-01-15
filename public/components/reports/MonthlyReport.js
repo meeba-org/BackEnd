@@ -1,9 +1,3 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import Divider from "@material-ui/core/Divider";
-import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from '@material-ui/icons/Add';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import moment from 'moment';
@@ -14,9 +8,9 @@ import Field from "redux-form/es/Field";
 import * as ERoles from "../../helpers/ERoles";
 import {DATE_FORMAT} from "../../helpers/utils";
 import '../../styles/MonthlyReport.scss';
-import ActionButton from "../ActionButton";
 import AddShiftsDialog from "../AddShiftsDialog";
 import Fade from "../Fade";
+import MbActionButton from "../MbActionButton";
 import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import MonthPicker from "../MonthPicker";
@@ -127,20 +121,18 @@ class MonthlyReport extends React.PureComponent {
                         selectedYear={selectedYear}
                     />
 
-                    <Tooltip title="הוספת משמרת" placement="top">
-                        <ActionButton
-                            onClick={this.handleOpenAddDialog}
-                            iconComponent={AddIcon}
-                        />
-                    </Tooltip>
+                    <MbActionButton
+                        onClick={this.handleOpenAddDialog}
+                        iconComponent={AddIcon}
+                        tooltip={"הוספת משמרת"}
+                    />
 
                     <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
-                        <Tooltip title="ייצוא דוח חודשי לאקסל" placement="top">
-                            <ActionButton
+                            <MbActionButton
                                 onClick={this.handleGenerateExcelClick}
                                 iconComponent={AssignmentIcon}
+                                tooltip={"ייצוא דוח חודשי לאקסל"}
                             />
-                        </Tooltip>
                     </IfGranted>
                     <SearchBar onChange={(filter) => {
                         this.setState({employeesFilter: filter});

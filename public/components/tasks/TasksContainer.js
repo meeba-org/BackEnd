@@ -1,4 +1,3 @@
-import Divider from "@material-ui/core/Divider";
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
 import React from 'react';
@@ -8,7 +7,7 @@ import {MAX_FREE_TASKS_ALLOWED} from "../../../constants";
 import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
 import * as selectors from "../../selectors";
 import "../../styles/EmployeesList.scss";
-import ActionButton from "../ActionButton";
+import MbActionButton from "../MbActionButton";
 import GoPremiumNotification from "../go-premium/GoPremiumNotification";
 import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
@@ -61,7 +60,7 @@ class TasksContainer extends React.Component {
                 <MbActionsControls>
                     <Tooltip title={isAddAllowed ? "הוספת משימה" : NOT_ALLOW_TO_ADD_MESSAGE} placement="top">
                         <span>
-                            <ActionButton
+                            <MbActionButton
                                 disabled={!isAddAllowed}
                                 onClick={this.onCreate}
                                 iconComponent={AddIcon}

@@ -1,17 +1,15 @@
-import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
+import {createMuiTheme} from "@material-ui/core";
+import StylesProvider from "@material-ui/styles/StylesProvider";
+import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import rtl from 'jss-rtl';
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import {create} from 'jss';
 import React from 'react';
-import JssProvider from 'react-jss/lib/JssProvider';
 import {Provider} from "react-redux";
 import {browserHistory, Router} from "react-router";
 import {syncHistoryWithStore} from "react-router-redux";
 import routes from "./routes";
 import createStore from "./store/configureStore";
 
-const muiTheme = createMuiTheme({
+const theme = createMuiTheme({
     direction: 'rtl',
     typography: {
         useNextVariants: true,
@@ -55,18 +53,16 @@ const history = syncHistoryWithStore(browserHistory, store);
 //registerServiceWorker();
 
 // Configure JSS
-const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+// const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
-// Custom Material-UI class name generator.
-const generateClassName = createGenerateClassName();
-
-const Root = () =>
-    (<MuiThemeProvider theme={muiTheme}>
-        <Provider store={store}>
-            <JssProvider jss={jss} generateClassName={generateClassName}>
+const Root = () => (
+    <Provider store={store}>
+        <StylesProvider injectFirst={true}>
+            <ThemeProvider theme={theme}>
                 <Router history={history} routes={routes}/>
-            </JssProvider>
-        </Provider>
-    </MuiThemeProvider>);
+            </ThemeProvider>);
+        </StylesProvider>
+    </Provider>
+);
 
 export default Root;
