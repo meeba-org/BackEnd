@@ -13,9 +13,12 @@ import {IfGranted} from "react-authorization";
 import Field from "redux-form/es/Field";
 import * as ERoles from "../../helpers/ERoles";
 import {DATE_FORMAT} from "../../helpers/utils";
-import styles from '../../styles/MonthlyReport.scss';
+import '../../styles/MonthlyReport.scss';
+import ActionButton from "../ActionButton";
 import AddShiftsDialog from "../AddShiftsDialog";
 import Fade from "../Fade";
+import MbActionsControls from "../MbActionsControls";
+import MbCard from "../MbCard";
 import MonthPicker from "../MonthPicker";
 import NoData from "../NoData";
 import SearchBar from "../SearchBar";
@@ -108,64 +111,59 @@ class MonthlyReport extends React.PureComponent {
         const {selectedYear, selectedMonth} = this.state;
 
         return (
-            <Card styleName="monthly-report">
-                <CardHeader title={title}/>
+            <MbCard title={title} styleName="monthly-report">
+                <MbActionsControls>
+                    <AddShiftsDialog
+                        open={this.state.open}
+                        onCreate={this.onCreateShift}
+                        onCancel={() => this.handleCloseAddDialog()}
+                        employees={employees}
+                        defaultStartDate={moment().year(selectedYear).month(selectedMonth - 1).startOf('month').format(DATE_FORMAT)}
+                    />
 
-                <CardContent className={styles["card-content"]}>
+                    <MonthPicker
+                        onMonthChange={this.onMonthChange}
+                        selectedMonth={selectedMonth}
+                        selectedYear={selectedYear}
+                    />
 
-                    <div>
-                        <div className={styles["controls-line"]}>
-                            <AddShiftsDialog
-                                open={this.state.open}
-                                onCreate={this.onCreateShift}
-                                onCancel={() => this.handleCloseAddDialog()}
-                                employees={employees}
-                                defaultStartDate={moment().year(selectedYear).month(selectedMonth - 1).startOf('month').format(DATE_FORMAT)}
+                    <Tooltip title="הוספת משמרת" placement="top">
+                        <ActionButton
+                            onClick={this.handleOpenAddDialog}
+                            iconComponent={AddIcon}
+                        />
+                    </Tooltip>
+
+                    <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
+                        <Tooltip title="ייצוא דוח חודשי לאקסל" placement="top">
+                            <ActionButton
+                                onClick={this.handleGenerateExcelClick}
+                                iconComponent={AssignmentIcon}
                             />
+                        </Tooltip>
+                    </IfGranted>
+                    <SearchBar onChange={(filter) => {
+                        this.setState({employeesFilter: filter});
+                    }}/>
+                </MbActionsControls>
 
-                            <MonthPicker
-                                onMonthChange={this.onMonthChange}
-                                selectedMonth={selectedMonth}
-                                selectedYear={selectedYear}
-                            />
-
-                           <Tooltip title="הוספת משמרת" placement="top">
-                                <Button className={styles["action-button"]} variant="contained" color="primary"
-                                        onClick={() => this.handleOpenAddDialog()}><AddIcon/></Button>
-                            </Tooltip>
-
-                            <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
-                                <Tooltip title="ייצוא דוח חודשי לאקסל" placement="top">
-                                    <Button className={styles["action-button"]} variant="contained" color="primary"
-                                            onClick={() => this.handleGenerateExcelClick()}><AssignmentIcon/></Button>
-                                </Tooltip>
-                            </IfGranted>
-                            <SearchBar onChange={(filter) =>   {
-                                this.setState({employeesFilter: filter});
-                            }}/>
-                        </div>
-                        <Divider className={styles["divider"]}/>
-
-                                {fields && fields.map((employeeShiftsReport, index) =>
-                                    (<Fade key={index} isVisible>
-                                        <Field component={reportLineComponent}
-                                               name={employeeShiftsReport}
-                                               isCollapsed={this.isCollapsed(fields, index)}
-                                               index={index}
-                                               onToggle={(name) => this.onToggle(name)}
-                                               onDeleteShift={this.onDeleteShift}
-                                               showShiftDialog={showShiftDialog}
-                                               postUpdate={postUpdate}
-                                        />
-                                    </Fade>)
-                                ).filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))}
-                                {(!fields || (fields.length === 0)) &&
-                                <NoData text="לא נמצאו משמרות"/>
-                                }
-                    </div>
-
-                </CardContent>
-            </Card>
+                {fields && fields.map((employeeShiftsReport, index) =>
+                    (<Fade key={index} isVisible>
+                        <Field component={reportLineComponent}
+                               name={employeeShiftsReport}
+                               isCollapsed={this.isCollapsed(fields, index)}
+                               index={index}
+                               onToggle={(name) => this.onToggle(name)}
+                               onDeleteShift={this.onDeleteShift}
+                               showShiftDialog={showShiftDialog}
+                               postUpdate={postUpdate}
+                        />
+                    </Fade>)
+                ).filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))}
+                {(!fields || (fields.length === 0)) &&
+                <NoData text="לא נמצאו משמרות"/>
+                }
+            </MbCard>
         );
     }
 }

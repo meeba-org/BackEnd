@@ -2,7 +2,7 @@ import Button from '@material-ui/core/Button';
 import CheckIcon from "@material-ui/icons/Check";
 import React from 'react';
 import {MONTHLY_SUBSCRIPTION_PRICE} from "../../../constants";
-import styles from '../../styles/GoPremiumIntro.scss';
+import '../../styles/GoPremiumIntro.scss';
 
 const IntroLine = ({text}) => <div styleName="text"><CheckIcon styleName="check"/>{text}</div>;
 

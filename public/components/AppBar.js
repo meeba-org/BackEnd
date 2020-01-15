@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
-import styles from '../styles/AppBar.scss';
+import '../styles/AppBar.scss';
 import {connect} from "react-redux";
 import * as selectors from "../selectors";
 import {handleLogout, navigateHome, showGoPremiumModal} from "../actions/index";

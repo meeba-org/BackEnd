@@ -7,7 +7,7 @@ import GoPremiumFinish from "./GoPremiumFinish";
 import GoPremiumIntro from "./GoPremiumIntro";
 import GoPremiumPay from "./GoPremiumPay";
 import GoPremiumStepper from "./GoPremiumStepper";
-import styles from '../../styles/GoPremiumContainer.scss';
+import '../../styles/GoPremiumContainer.scss';
 import {handlePaymentFinished, setActiveStep, fetchPaymentUrl} from "../../actions";
 
 class GoPremiumContainer extends Component {

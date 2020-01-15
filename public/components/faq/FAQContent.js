@@ -3,14 +3,14 @@ import Add from '@material-ui/icons/Add';
 import Minus from '@material-ui/icons/Remove';
 import React, {Component} from 'react';
 import ReactMarkdown from "react-markdown";
-import styles from "../../styles/FAQContent.scss";
+import "../../styles/FAQContent.scss";
 import Fade from "../Fade";
 
 const Question = ({text, onClick, collapse}) => {
     return (
         <div styleName="question" onClick={onClick}>
             <div styleName="text">{text}</div>
-            <IconButton className={styles["icon"]}>{collapse ? <Add /> : <Minus />}</IconButton>
+            <IconButton styleName="icon">{collapse ? <Add /> : <Minus />}</IconButton>
         </div>
     );
 };

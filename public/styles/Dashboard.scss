@@ -1,28 +1,7 @@
-$containerHeight: 800px;
 $margin: 12px;
 
 .button {
     height: 100%;
-}
-
-.controls-line {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap ;
-    align-items: center;
-
-    .action-button {
-        height: 40px;
-        width: 40px;
-        min-width: 40px;
-        margin-right: 10px;
-        padding: 0px;
-    }
-}
-
-.divider {
-    margin-bottom: 30px;
 }
 
 .dashboard
@@ -67,10 +46,6 @@ $margin: 12px;
                 flex: 1;
                 height: 100%;
                 overflow-x: scroll;
-
-                .card-content {
-                    max-height: $containerHeight;
-                }
             }
         }
     }

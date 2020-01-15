@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import styles from "../../styles/MobileAppLinksModal.scss";
+import "../../styles/MobileAppLinksModal.scss";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -23,9 +23,9 @@ class MobileAppLinksModal extends Component {
                 <DialogTitle>{"העתק הודעה זו ושלח לעובדים:"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <div className={styles["header"]}>עובד יקר,</div>
+                        <div styleName="header">עובד יקר,</div>
                         <div>התחלנו להשתמש בשעון הנוכחות "מיבא".</div>
-                        <div className={styles["header"]}>אנא הורד את האפליקציה:</div>
+                        <div styleName="header">אנא הורד את האפליקציה:</div>
                         <div>אנדרואיד - https://goo.gl/iGzWxX</div>
                         <div>או ​</div>
                         <div>אייפון - https://goo.gl/L6WKJc</div>

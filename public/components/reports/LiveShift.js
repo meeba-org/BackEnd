@@ -9,7 +9,7 @@ import TimePicker from "material-ui-pickers/TimePicker";
 import PropTypes from 'prop-types';
 import React from 'react';
 import {isWorking} from "../../helpers/utils";
-import styles from "../../styles/LiveShift.scss";
+import "../../styles/LiveShift.scss";
 import BusCost from "./BusCost";
 import ExtraPay from "./ExtraPay";
 import Location from "./Location";
@@ -24,19 +24,19 @@ const LiveShift = (props) => {
         <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
 
     return (
-        <div className={styles["line"]}>
-            <div className={styles["name-container"]}>
-                <IconButton className={styles["icon"]}>{icon}</IconButton>
+        <div styleName="line">
+            <div styleName="name-container">
+                <IconButton styleName="icon">{icon}</IconButton>
                 {showNames &&
                 <Tooltip title={shift?.user?.fullName} placement="top">
-                    <div className={styles["name"]}>{shift?.user?.fullName}</div>
+                    <div styleName="name">{shift?.user?.fullName}</div>
                 </Tooltip>
                 }
             </div>
 
-            <div className={styles["shift-members"]}>
+            <div styleName="shift-members">
                 <TimePicker
-                    className={styles["time"]}
+                    styleName="time"
                     ampm={false}
                     autoOk
                     value={shift.clockInTime}
@@ -45,7 +45,7 @@ const LiveShift = (props) => {
 
                 {!!shift.clockOutTime &&
                 <TimePicker
-                    className={styles["time"]}
+                    styleName="time"
                     ampm={false}
                     autoOk
                     value={shift.clockOutTime}
@@ -65,23 +65,23 @@ const LiveShift = (props) => {
             <div>
                 {isWorking(shift) &&
                 <Tooltip title="סיים משמרת" placement="left">
-                    <IconButton className={styles["elem"]} onClick={() => onShiftComplete(shift)}><Home/></IconButton>
+                    <IconButton styleName="elem" onClick={() => onShiftComplete(shift)}><Home/></IconButton>
                 </Tooltip>
                 }
                 <Tooltip title="עריכה" placement="left">
-                    <IconButton className={styles["elem"]} onClick={showShiftDialog}><Edit/></IconButton>
+                    <IconButton styleName="elem" onClick={showShiftDialog}><Edit/></IconButton>
                 </Tooltip>
                 <Tooltip title="מחיקה" placement="left">
-                    <IconButton className={styles["elem"]} onClick={onDelete}><Delete/></IconButton>
+                    <IconButton styleName="elem" onClick={onDelete}><Delete/></IconButton>
                 </Tooltip>
             </div>
             }
             {!isDesktop &&
-                <div className={styles["mobile-controls"]}>
+                <div styleName="mobile-controls">
                     {isWorking(shift) &&
-                    <Button variant={"contained"} color="primary" className={styles["mobile-button"]} onClick={() => onShiftComplete(shift)}><Home/></Button>
+                    <Button variant={"contained"} color="primary" styleName="mobile-button" onClick={() => onShiftComplete(shift)}><Home/></Button>
                     }
-                    <Button variant={"contained"} className={`${styles["mobile-button"]} ${styles.delete}`} onClick={onDelete}><Delete/></Button>
+                    <Button variant={"contained"} styleName={"mobile-button delete"} onClick={onDelete}><Delete/></Button>
                 </div>
             }
         </div>

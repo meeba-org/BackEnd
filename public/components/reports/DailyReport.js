@@ -1,8 +1,4 @@
-import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import Divider from "@material-ui/core/Divider";
 import withStyles from '@material-ui/core/styles/withStyles';
 import withTheme from '@material-ui/core/styles/withTheme';
 import Tooltip from "@material-ui/core/Tooltip";
@@ -21,9 +17,12 @@ import {
     DATE_FORMAT,
     ReportModes
 } from "../../helpers/utils";
-import styles from '../../styles/DailyReport.scss';
+import '../../styles/DailyReport.scss';
+import ActionButton from "../ActionButton";
 import AddShiftsDialog from "../AddShiftsDialog";
 import AutoComplete from "../AutoComplete";
+import MbActionsControls from "../MbActionsControls";
+import MbCard from "../MbCard";
 import ShiftsList from "./ShiftsList";
 
 const styles1 = {
@@ -88,20 +87,20 @@ class DailyReport extends React.PureComponent {
             <Card classes={{root: classes.root}}>
                 {(mode === ReportModes.Report) &&
                 <Fragment>
-                    <CardHeader title="דוח יומי"/>
+                    <MbCard title="דוח יומי">
 
-                    <CardContent className={styles["card-content"]}>
-
-                        <div className={styles["daily-report"]}>
-                            <div className={styles["controls-line"]}>
+                        <div styleName="daily-report">
+                            <MbActionsControls>
                                 <DatePicker autoOk onChange={(date) => this.handleChange(date)} value={currentDay}
                                             format="DD/MM/YYYY"
                                             style={{margin: "0 10px"}}
                                 />
 
                                 <Tooltip title="הוספת משמרת" placement="top">
-                                    <Button className={styles["action-button"]} variant="contained" color="primary"
-                                        onClick={() => this.handleClickOpen()}><AddIcon/></Button>
+                                    <ActionButton
+                                        onClick={this.handleClickOpen}
+                                        iconComponent={AddIcon}
+                                    />
                                 </Tooltip>
                                 <AddShiftsDialog
                                     open={this.state.open}
@@ -110,9 +109,7 @@ class DailyReport extends React.PureComponent {
                                     employees={employees}
                                     defaultStartDate={currentDay}
                                 />
-                            </div>
-
-                            <Divider className={styles["divider"]}/>
+                            </MbActionsControls>
 
                             <FieldArray
                                 name="shifts"
@@ -125,20 +122,18 @@ class DailyReport extends React.PureComponent {
                                 shouldDisplayNoData={true}
                             />
                         </div>
-
-                    </CardContent>
+                    </MbCard>
                 </Fragment>
                 }
                 {(mode === ReportModes.Live) &&
                 <Fragment>
-                    <CardHeader title="מצב משמרת"/>
+                    <MbCard title="מצב משמרת">
 
-                    <CardContent className={styles["card-content"]}>
-                        <div className={styles["live-report"]}>
-                            <div className={styles["live-time"]} style={{color: primary}}>{calculateCurrentTime()}</div>
-                            <div className={styles["live-date"]} style={{color: secondary}}>{calculateCurrentDay("DD/MM/YYYY")}</div>
+                        <div styleName="live-report">
+                            <div styleName="live-time" style={{color: primary}}>{calculateCurrentTime()}</div>
+                            <div styleName="live-date" style={{color: secondary}}>{calculateCurrentDay("DD/MM/YYYY")}</div>
 
-                            <div className={styles["auto-complete"]}>
+                            <div styleName="auto-complete">
                                 <AutoComplete
                                     placeholder="הכנס עובד למשמרת"
                                     suggestions={employees && employees.map(employee => ({
@@ -151,8 +146,8 @@ class DailyReport extends React.PureComponent {
                                 />
 
                                 {!isLoading && !this.hasEmployees(employees) &&
-                                <div className={styles["warning"]}>
-                                    <Warning className={styles["icon"]}/>
+                                <div styleName="warning">
+                                    <Warning styleName="icon"/>
                                     <span>
                                     עדיין לא הזנו עובדים. <a href="#" onClick={this.navigateToEmployees}>בוא נעשה זאת עכשיו!</a>
                                     </span>
@@ -173,7 +168,7 @@ class DailyReport extends React.PureComponent {
                             />
                         </div>
 
-                    </CardContent>
+                    </MbCard>
                 </Fragment>
                 }
             </Card>

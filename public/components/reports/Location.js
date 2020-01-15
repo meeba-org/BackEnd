@@ -3,16 +3,16 @@ import Tooltip from "@material-ui/core/Tooltip";
 import PlaceIcon from "@material-ui/icons/Place";
 import PropTypes from "prop-types";
 import React from "react";
-import styles from "../../styles/ShiftIndicator.scss";
+import "../../styles/ShiftIndicator.scss";
 
 const Location = ({location, onClick}) => {
     if (!location)
         return null;
 
     return (
-        <div className={styles["shift-indicator"]}>
+        <div styleName="shift-indicator">
             <Tooltip title="מיקום בזמן כניסה למשמרת" placement="top">
-                <IconButton className={styles["icon"]} onClick={onClick}><PlaceIcon/></IconButton>
+                <IconButton styleName="icon" onClick={onClick}><PlaceIcon/></IconButton>
             </Tooltip>
         </div>
     );

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import styles from '../../styles/ManagerFeatureContent.scss';
+import '../../styles/ManagerFeatureContent.scss';
 import browserImage from '../../styles/images/browser.png';
 
 class ManagerFeatureContent extends Component {

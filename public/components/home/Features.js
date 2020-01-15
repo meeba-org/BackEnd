@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Computer from "@material-ui/icons/Computer";
 import Description from "@material-ui/icons/Description";
 import PhonelinkRing from "@material-ui/icons/PhonelinkRing";
-import styles from '../../styles/Features.scss';
+import '../../styles/Features.scss';
 import Feature from "./Feature";
 import EmployeeFeatureContent from "./EmployeeFeatureContent";
 import ManagerFeatureContent from "./ManagerFeatureContent";

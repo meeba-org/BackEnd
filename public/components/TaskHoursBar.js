@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from "react";
 import {prepareHourToDisplay} from "../helpers/utils";
-import styles from '../styles/HoursBar.scss';
+import '../styles/HoursBar.scss';
 
 class TaskHoursBar extends React.Component {
 

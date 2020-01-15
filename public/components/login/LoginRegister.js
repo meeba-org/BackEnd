@@ -12,7 +12,7 @@ import {withRouter} from "react-router";
 import Field from "redux-form/es/Field";
 import reduxForm from "redux-form/es/reduxForm";
 import {handleLogin, hideLoginRegisterModal} from "../../actions";
-import styles from "../../styles/LoginRegister.scss";
+import "../../styles/LoginRegister.scss";
 import {renderTextField} from '../material-ui-wrappers';
 
 class LoginRegister extends Component {
@@ -48,9 +48,9 @@ class LoginRegister extends Component {
 
         return (
             <Dialog open={open} onClose={this.handleClose}>
-                <div className={styles["login-register"]}>
-                        <div className={styles["title"]}>
-                            <div className={styles["title-text"]}>
+                <div styleName="login-register">
+                        <div styleName="title">
+                            <div styleName="title-text">
                             ברוך הבא!
                             </div>
                         </div>
@@ -81,15 +81,15 @@ class LoginRegister extends Component {
                                        name="retypePassword"
                                 />
                             }
-                            {error && <div className={styles["error-msg"]}>{error}</div>}
-                            <div className={styles["login-register-footer"]}>
-                                <Button variant="contained" color="primary" type="submit" className={styles["login-button"]}>
+                            {error && <div styleName="error-msg">{error}</div>}
+                            <div styleName="login-register-footer">
+                                <Button variant="contained" color="primary" type="submit" styleName="login-button">
                                     <span>{buttonText}</span>
                                     <ArrowBackIcon/>
                                 </Button>
-                                <div className={styles["footer-text"]}>
-                                    <div className={styles["question"]}>{footerTextQuestion}</div>
-                                    <div className={styles["change-mode"]} onClick={this.toggleLoginMode}>{changeModeText}</div>
+                                <div styleName="footer-text">
+                                    <div styleName="question">{footerTextQuestion}</div>
+                                    <div styleName="change-mode" onClick={this.toggleLoginMode}>{changeModeText}</div>
                                 </div>
                             </div>
                         </form>

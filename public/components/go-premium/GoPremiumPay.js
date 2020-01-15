@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import styles from "../../styles/GoPremiumPay.scss";
+import "../../styles/GoPremiumPay.scss";
 
 class GoPremiumPay extends Component {
 

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import FieldArray from "redux-form/es/FieldArray";
 import {ReportModes} from "../../helpers/utils";
-import styles from "../../styles/MonthlyReportLine.scss";
+import "../../styles/MonthlyReportLine.scss";
 import HoursBar from '../HoursBar';
 import HoursSummary from "./HoursSummary";
 import ShiftsList from "./ShiftsList";
@@ -34,7 +34,7 @@ class MonthlyReportLine extends React.PureComponent {
         return (
             <div styleName="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div styleName="monthly-report-header" onClick={() => onToggle(index)}>
-                    <IconButton className={styles["toggle-button"]} color="primary" >{toggleButton}</IconButton>
+                    <IconButton styleName="toggle-button" color="primary" >{toggleButton}</IconButton>
                     <div styleName="name">{input.value.fullName}</div>
                     <HoursBar {...input.value} displayDetails={this.state.hover}/>
                 </div>

@@ -9,6 +9,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ETaskType from "../../../models/ETaskType";
+import "../../styles/Task.scss";
 
 const styles = {
     listItem: {
@@ -74,7 +75,7 @@ class Task extends Component {
                 {this.state.hover && enableOptions &&
                 <Grid item xs={3}>
                     <Tooltip title="הגדרות נוספות" placement="top">
-                        <IconButton className={styles["elem"]}
+                        <IconButton styleName="elem"
                                     disabled={isLimited}
                                     onClick={(e) => this.onEdit(e, data)}><SettingsIcon/></IconButton>
                     </Tooltip>

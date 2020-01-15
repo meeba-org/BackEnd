@@ -12,7 +12,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import Field from "redux-form/es/Field";
 import reduxForm from "redux-form/es/reduxForm";
-import styles from "../../styles/Login.scss";
+import "../../styles/Login.scss";
 import {renderTextField} from '../material-ui-wrappers';
 
 class Login extends Component {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import mobileImage from '../../styles/images/1.png';
-import styles from '../../styles/MobileImageContent.scss';
+import '../../styles/MobileImageContent.scss';
 
 class MobileImageContent extends Component {
     render() {

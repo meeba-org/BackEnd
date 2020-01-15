@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import excelImage from '../../styles/images/excel.png';
-import styles from '../../styles/ReportFeatureContent.scss';
+import '../../styles/ReportFeatureContent.scss';
 
 class ReportFeatureContent extends Component {
     render() {

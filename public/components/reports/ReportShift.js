@@ -8,7 +8,7 @@ import TimePicker from "material-ui-pickers/TimePicker";
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 import {isShiftPending, momentToDay} from "../../helpers/utils";
-import styles from "../../styles/ReportShift.scss";
+import "../../styles/ReportShift.scss";
 import BusCost from "./BusCost";
 import ExtraPay from "./ExtraPay";
 import Location from "./Location";
@@ -39,16 +39,16 @@ const ReportShift = (props) => {
     let hebrewDay = momentToDay(clockInTime);
 
     return (
-        <div className={styles["line"]}>
+        <div styleName="line">
             {showNames &&
-            <div className={styles["name-container"]}>
-                <div className={styles["name"]}>{shift.user && shift.user.fullName}</div>
+            <div styleName="name-container">
+                <div styleName="name">{shift.user && shift.user.fullName}</div>
             </div>
             }
 
-            <div className={styles["shift-members"]}>
-                <div className={styles["date"]}>
-                    <div className={styles["hebrew-day"]}>{hebrewDay}'</div>
+            <div styleName="shift-members">
+                <div styleName="date">
+                    <div styleName="hebrew-day">{hebrewDay}'</div>
 
                     <DatePicker autoOk onChange={(date) => onUpdateStartDate(date, shift)}
                                 value={clockInTime}
@@ -58,7 +58,7 @@ const ReportShift = (props) => {
                 </div>
 
                 <TimePicker
-                    className={styles["time"]}
+                    styleName="time"
                     ampm={false}
                     autoOk
                     value={clockInTime}
@@ -66,7 +66,7 @@ const ReportShift = (props) => {
                 />
 
                 <TimePicker
-                    className={styles["time"]}
+                    styleName="time"
                     ampm={false}
                     autoOk
                     value={clockOutTime}
@@ -87,16 +87,16 @@ const ReportShift = (props) => {
             {hover && isDesktop &&
             <div>
                 <Tooltip title="עריכה" placement="top">
-                    <IconButton className={styles["elem"]} onClick={showShiftDialog}><Edit/></IconButton>
+                    <IconButton styleName="elem" onClick={showShiftDialog}><Edit/></IconButton>
                 </Tooltip>
                 <Tooltip title="מחיקה" placement="top">
-                    <IconButton className={styles["elem"]} onClick={onDelete}><Delete/></IconButton>
+                    <IconButton styleName="elem" onClick={onDelete}><Delete/></IconButton>
                 </Tooltip>
             </div>
             }
             {!isDesktop &&
-                <div className={styles["mobile-controls"]}>
-                    <Button variant={"contained"} className={`${styles["mobile-button"]} ${styles.delete}`} onClick={onDelete}><Delete/></Button>
+                <div styleName="mobile-controls">
+                    <Button variant={"contained"} styleName={"mobile-button delete"} onClick={onDelete}><Delete/></Button>
                 </div>
             }
         </div>

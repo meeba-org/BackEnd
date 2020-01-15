@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 import Switch from "@material-ui/core/Switch";
-import styles from '../styles/MbSwitch.scss';
+import '../styles/MbSwitch.scss';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles2 = theme => ({
@@ -16,7 +16,7 @@ const styles2 = theme => ({
 const MbSwitch = ({firstLabel, secondLabel, checked, onChange, classes}) => {
     return (
         <Fragment>
-            <span className={styles["switch-label"]}>{firstLabel}</span>
+            <span styleName="switch-label">{firstLabel}</span>
             <Switch
                 onChange={onChange}
                 checked={checked}
@@ -25,7 +25,7 @@ const MbSwitch = ({firstLabel, secondLabel, checked, onChange, classes}) => {
                     bar: classes.bar,
                 }}
             />
-            <span className={styles["switch-label"]}>{secondLabel}</span>
+            <span styleName="switch-label">{secondLabel}</span>
         </Fragment>
     );
 };

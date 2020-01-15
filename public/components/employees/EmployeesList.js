@@ -2,22 +2,20 @@
  * Created by Chen on 16/07/2017.
  */
 
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
 import Tooltip from "@material-ui/core/Tooltip";
-import ShareIcon from '@material-ui/icons/Share';
 import AddIcon from '@material-ui/icons/Add';
+import ShareIcon from '@material-ui/icons/Share';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {MAX_FREE_EMPLOYEES_ALLOWED} from "../../../constants";
 import {isIsraeliIdValid} from "../../helpers/utils";
-import styles from "../../styles/EmployeesList.scss";
+import "../../styles/EmployeesList.scss";
+import ActionButton from "../ActionButton";
 import Fade from "../Fade";
 import GoPremiumNotification from "../go-premium/GoPremiumNotification";
+import MbActionsControls from "../MbActionsControls";
+import MbCard from "../MbCard";
 import NoData from "../NoData";
 import SearchBar from "../SearchBar";
 import EmployeeContainer from "./EmployeeContainer";
@@ -102,37 +100,37 @@ class EmployeesList extends React.PureComponent {
         let processEmployees = this.processEmployees(employees);
 
         return (
-            <Card styleName="employees-list">
-                <CardHeader title="עובדים"/>
-
-                <CardContent className={styles["card-content"]}>
-
-                    <div className={styles["controls-line"]}>
+            // <Card styleName="employees-list">
+            <MbCard title="עובדים">
+                    <MbActionsControls>
                         <Tooltip title={isAddAllowed ? "הוספת עובד" : this.NOT_ALLOW_TO_ADD_MESSAGE} placement="top">
                             <span>
-                            <Button className={styles["action-button"]} variant="contained" color="primary"
+                                <ActionButton
                                     disabled={!isAddAllowed}
-                                    onClick={this.onCreate}><AddIcon/></Button>
+                                    onClick={this.onCreate}
+                                    iconComponent={AddIcon}
+                                />
                             </span>
                         </Tooltip>
                         <Tooltip title="לינק לאפליקציית העובד" placement="top">
-                            <Button className={styles["action-button"]} variant="contained" color="primary"
-                                    onClick={this.showMobileAppModal}><ShareIcon/></Button>
+                            <ActionButton
+                                onClick={this.showMobileAppModal}
+                                iconComponent={ShareIcon}
+                            />
                         </Tooltip>
                         <SearchBar onChange={(filter) =>   {
                             this.setState({employeesFilter: filter});
                         }}/>
-                    </div>
-                    <Divider className={styles["divider"]}/>
+                    </MbActionsControls>
 
                     <GoPremiumNotification isVisible={!isAddAllowed} text={this.NOT_ALLOW_TO_ADD_MESSAGE} />
 
                     {this.hasEmployees(processEmployees) && isDesktop &&
-                    <Grid className={styles["header"]} container spacing={24}>
+                    <Grid styleName="header" container spacing={24}>
                         <Grid item sm={3}>שם</Grid>
-                        <Grid item sm={2} className={styles["header-item"]}>ת.ז.</Grid>
-                        <Grid item sm={1} className={styles["header-item"]}>שכר לשעה</Grid>
-                        <Grid item sm={2} className={styles["header-item"]}>נסיעות</Grid>
+                        <Grid item sm={2} styleName="header-item">ת.ז.</Grid>
+                        <Grid item sm={1} styleName="header-item">שכר לשעה</Grid>
+                        <Grid item sm={2} styleName="header-item">נסיעות</Grid>
                     </Grid>
                     }
                     {this.hasEmployees(processEmployees) && processEmployees.map((employee, index) =>
@@ -152,10 +150,7 @@ class EmployeesList extends React.PureComponent {
                     {!this.hasEmployees(processEmployees) &&
                     <NoData text="אין עובדים - בוא ננסה להוסיף!"/>
                     }
-
-
-                </CardContent>
-            </Card>
+            </MbCard>
         );
     }
 }

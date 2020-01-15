@@ -1,4 +1,4 @@
-import styles from "../../styles/Warning.scss";
+import "../../styles/Warning.scss";
 import WarningIcon from "./WarningIcon";
 import React from "react";
 import PropTypes from "prop-types";
@@ -8,7 +8,7 @@ const Warning = ({warning}) => {
         return null;
 
     return (
-        <div className={styles["warning"]}>
+        <div styleName="warning">
             <WarningIcon text={warning}/>
         </div>
     );

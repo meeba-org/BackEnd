@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import styles from "../../styles/StatisticsCell.scss";
+import "../../styles/StatisticsCell.scss";
 
 class StatisticsCell extends Component {
     render() {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import styles from '../styles/NoData.scss';
+import '../styles/NoData.scss';
 import PropTypes from 'prop-types';
 
 class NoData extends Component {

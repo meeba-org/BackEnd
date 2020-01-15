@@ -2,7 +2,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import React from "react";
 
-import styles from "../../styles/BreadCrumb.scss";
+import "../../styles/BreadCrumb.scss";
 
 const BreadCrumb = ({data, onSelectTask}) => {
     return (

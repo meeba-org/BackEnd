@@ -1,14 +1,12 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import Divider from "@material-ui/core/Divider";
 import Tooltip from "@material-ui/core/Tooltip";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import React, {Component} from 'react';
 import FieldArray from "redux-form/es/FieldArray";
 import {DATE_FORMAT, ReportModes} from "../../helpers/utils";
-import styles from '../../styles/DailyReport.scss';
+import '../../styles/DailyReport.scss';
+import ActionButton from "../ActionButton";
+import MbActionsControls from "../MbActionsControls";
+import MbCard from "../MbCard";
 import moment from "./DailyReport";
 import ShiftsList from "./ShiftsList";
 
@@ -26,20 +24,16 @@ class PendingReport extends Component {
         const {showShiftDialog, onDeleteShift, postUpdate, onRefresh} = this.props;
 
         return (
-            <Card>
-                <CardHeader title="משמרות ממתינות לאישור"/>
-
-                <CardContent className={styles["card-content"]}>
-
-                    <div className={styles["daily-report"]}>
-                        <div className={styles["controls-line"]}>
+            <MbCard title={"משמרות ממתינות לאישור"}>
+                    <div styleName="daily-report">
+                        <MbActionsControls>
                             <Tooltip title="רענן" placement="top">
-                                <Button className={styles["action-button"]} variant="contained" color="primary"
-                                        onClick={onRefresh}><RefreshIcon/></Button>
+                                <ActionButton
+                                    onClick={onRefresh}
+                                    iconComponent={RefreshIcon}
+                                />
                             </Tooltip>
-                        </div>
-
-                        <Divider className={styles["divider"]}/>
+                        </MbActionsControls>
 
                         <FieldArray
                             name="shifts"
@@ -53,9 +47,7 @@ class PendingReport extends Component {
                             postUpdate={postUpdate}
                         />
                     </div>
-
-                </CardContent>
-            </Card>
+            </MbCard>
         );
     }
 }

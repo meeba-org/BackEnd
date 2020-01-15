@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import styles from "../../styles/FAQHeader.scss";
+import "../../styles/FAQHeader.scss";
 import HomeAppBar from '../home/HomeAppBar';
 
 class FAQHeader extends Component {

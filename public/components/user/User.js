@@ -13,7 +13,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
 import {Link} from "react-router";
-import styles from '../../styles/User.scss';
+import '../../styles/User.scss';
 import NoData from "../NoData";
 import Button from "@material-ui/core/Button";
 
@@ -88,14 +88,14 @@ class User extends Component {
             return <NoData/>;
 
         return (
-            <div className={styles["user-container"]}>
+            <div styleName="user-container">
                 <CardHeader title="פרטי מנהל"/>
 
                 <CardContent>
                     <Grid container>
                         <Grid item sm={12}>
                             <TextField
-                                className={styles["long-field"]}
+                                styleName="long-field"
                                 id="fullName"
                                 label="שם מלא"
                                 value={user.fullName}
@@ -115,14 +115,14 @@ class User extends Component {
                                 label="שם"
                                 value={user.company.name}
                                 onChange={(e) => this.handleCompanyChange("name", e)}
-                                className={styles["long-field"]}
+                                styleName="long-field"
                             />
                         </Grid>
                         <Grid item sm={12}>
                             <Tooltip
                                 title="אנחנו מכבדים את הפרטיות שלך - ובאופן כללי לא מאמינים במיילים! - תכלס זה פה כי אולי נעשה עם זה משהו בעתיד.">
                                 <TextField
-                                    className={styles["long-field"]}
+                                    styleName="long-field"
                                     label="דואר אלקטרוני"
                                     type="email"
                                     value={user.company.email}
@@ -136,14 +136,14 @@ class User extends Component {
                 <CardHeader title="מתקדם"/>
 
                 <CardContent>
-                    <div className={styles["settings"]}>
-                        <div className={styles["row"]}>
+                    <div styleName="settings">
+                        <div styleName="row">
                             <TextField
                                 id="holiday-start"
                                 label="כניסת שבת/חג"
                                 value={user.company.settings.eveningHolidayStartHour}
                                 onChange={(e) => this.handleCompanySettingsChange("eveningHolidayStartHour", e.target.value)}
-                                className={styles["short-field"]}
+                                styleName="short-field"
                                 InputProps={{
                                     startAdornment: <InputAdornment position="start">00:</InputAdornment>
                                 }}
@@ -154,7 +154,7 @@ class User extends Component {
                                 label="יציאת שבת/חג"
                                 value={user.company.settings.holidayEndHour}
                                 onChange={(e) => this.handleCompanySettingsChange("holidayEndHour", e.target.value)}
-                                className={styles["short-field"]}
+                                styleName="short-field"
                                 InputProps={{
                                     startAdornment: <InputAdornment position="start">00:</InputAdornment>
                                 }}
@@ -164,13 +164,13 @@ class User extends Component {
                                 label="אורך משמרת בשבת/חג"
                                 value={user.company.settings.holidayShiftLength}
                                 onChange={(e) => this.handleCompanySettingsChange("holidayShiftLength", e.target.value)}
-                                className={styles["short-field"]}
+                                styleName="short-field"
                                 inputProps={{"style": {textAlign: "center"}}}
                             />
 
                         </div>
 
-                        <div className={styles["row"]}>
+                        <div styleName="row">
                             <FormControl>
                                 <InputLabel htmlFor="name-disabled">אורך הפסקה (דק')</InputLabel>
                                 <Input id="break-length" value={user.company.settings.breakLength}
@@ -196,10 +196,10 @@ class User extends Component {
                 <CardHeader title="תוכנית"/>
 
                 <CardContent>
-                    <div className={styles["plan"]}>
+                    <div styleName="plan">
                         {hasPremiumFeature &&
                         <Fragment>
-                            <div className={styles["text"]}>הינך כרגע מנוי בתוכנית פרימיום</div>
+                            <div styleName="text">הינך כרגע מנוי בתוכנית פרימיום</div>
                             <Button onClick={() => onPremiumPlanClick(user.company)} variant="outlined" color="secondary">
                                 סיים מנוי
                             </Button>
@@ -207,7 +207,7 @@ class User extends Component {
                         }
                         {!hasPremiumFeature &&
                         <Fragment>
-                            <div className={styles["text"]}>הינך כרגע במסלול החינמי</div>
+                            <div styleName="text">הינך כרגע במסלול החינמי</div>
                             <Button onClick={onFreePlanClick} variant="contained" color="secondary">הירשם כמנוי</Button>
                         </Fragment>
                         }
@@ -220,7 +220,7 @@ class User extends Component {
 
     SettingSwitch = ({classes, value, fieldValue, text, link}) => {
         return (
-            <div className={styles["row"]}>
+            <div styleName="row">
                 <FormControlLabel
                     classes={{root: classes.switch}}
                     control={
@@ -236,7 +236,7 @@ class User extends Component {
                     label={<div>{text}</div>}
                 />
                 {link &&
-                <div className={styles["whatisit"]}>
+                <div styleName="whatisit">
                     <Link to={link} className={classes.link} target="_blank">מה זה?</Link>
                 </div>
                 }

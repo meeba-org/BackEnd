@@ -8,7 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Settings from '@material-ui/icons/Settings';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import scssStyles from "../../styles/Employees.scss";
+import "../../styles/Employees.scss";
 
 const styles = {
     root: {
@@ -97,7 +97,7 @@ class Employee extends React.Component {
                         <Fragment>
                             {!isLimited &&
                             <Tooltip title="הגדרות נוספות" placement="top">
-                                <IconButton className={styles["elem"]} onClick={this.showEmployeeDialog}><Settings/></IconButton>
+                                <IconButton styleName="elem" onClick={this.showEmployeeDialog}><Settings/></IconButton>
                             </Tooltip>
                             }
                             <Tooltip title="מחיקה" placement="top">

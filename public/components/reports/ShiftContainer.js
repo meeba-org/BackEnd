@@ -5,7 +5,7 @@ import connect from "react-redux/es/connect/connect";
 import {createShift, showDeleteShiftModal, updateShift, showGoPremiumModal, showLocationModal} from "../../actions";
 import {ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
-import styles from "../../styles/Shift.scss";
+import "../../styles/Shift.scss";
 import withShiftLogic from "../withShiftLogic";
 import LiveShift from "./LiveShift";
 import ReportShift from "./ReportShift";

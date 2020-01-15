@@ -4,7 +4,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {loadDashboardData} from "../actions/generalActions";
 import * as selectors from "../selectors";
-import styles from "../styles/Dashboard.scss";
+import "../styles/Dashboard.scss";
 import AppBar from "./AppBar";
 import SideBarContainer from "./SideBarContainer";
 
@@ -79,5 +79,5 @@ const mapDispatchToProps = {
     loadDashboardData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard, styles, {allowMultiple: true});
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 

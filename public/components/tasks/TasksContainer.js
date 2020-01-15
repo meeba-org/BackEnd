@@ -1,4 +1,3 @@
-import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
@@ -8,8 +7,10 @@ import reduxForm from "redux-form/es/reduxForm";
 import {MAX_FREE_TASKS_ALLOWED} from "../../../constants";
 import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
 import * as selectors from "../../selectors";
-import styles from "../../styles/EmployeesList.scss";
+import "../../styles/EmployeesList.scss";
+import ActionButton from "../ActionButton";
 import GoPremiumNotification from "../go-premium/GoPremiumNotification";
+import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import BreadCrumb from "./BreadCrumb";
 import {filterTasks} from "./TaskService";
@@ -57,19 +58,17 @@ class TasksContainer extends React.Component {
 
         return (
             <MbCard title="משימות / אירועים">
-                <div className={styles["controls-line"]}>
+                <MbActionsControls>
                     <Tooltip title={isAddAllowed ? "הוספת משימה" : NOT_ALLOW_TO_ADD_MESSAGE} placement="top">
                         <span>
-                        <Button className={styles["action-button"]}
-                                variant="contained" color="primary"
+                            <ActionButton
                                 disabled={!isAddAllowed}
-                                onClick={this.onCreate}><AddIcon/>
-                        </Button>
+                                onClick={this.onCreate}
+                                iconComponent={AddIcon}
+                            />
                         </span>
                     </Tooltip>
-                </div>
-
-                <Divider className={styles["divider"]}/>
+                </MbActionsControls>
 
                 <GoPremiumNotification isVisible={!isAddAllowed} text={NOT_ALLOW_TO_ADD_MESSAGE} />
 

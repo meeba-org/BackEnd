@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import Select from "@material-ui/core/Select";
-import styles from "../styles/MonthlyReport.scss";
+import "../styles/MonthlyReport.scss";
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from "@material-ui/core/Input";
 import moment from 'moment';
@@ -81,7 +81,7 @@ class MonthPicker extends Component {
         return (
             <Fragment>
                 <Select
-                    className={styles["select"]}
+                    styleName="select"
                     value={selectedMonth}
                     onChange={(event) => this.handleMonthChange(event)}
                     input={<Input />}
@@ -90,7 +90,7 @@ class MonthPicker extends Component {
                 </Select>
 
                 <Select
-                    className={styles["select"]}
+                    styleName="select"
                     value={selectedYear}
                     onChange={(event) => this.handleYearChange(event)}
                     input={<Input />}

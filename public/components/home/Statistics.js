@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import styles from "../../styles/Statistics.scss";
+import "../../styles/Statistics.scss";
 import StatisticsCell from "./StatisticsCell";
 import {connect} from "react-redux";
 import PropTypes from 'prop-types';
