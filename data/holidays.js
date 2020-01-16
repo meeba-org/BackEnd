@@ -73,7 +73,7 @@ module.exports = [
         "date": "2020-04-14",
         "memo": "Passover, the Feast of Unleavened Bread",
         "title_orig": "Pesach VI (CH''M)",
-        "hebrew": "פסח יום ו׳ (חול המועד)"ת
+        "hebrew": "פסח יום ו׳ (חול המועד)",
         DayType: EDataType.HolidayEvening
     },
     {
@@ -85,7 +85,7 @@ module.exports = [
         "subcat": "major",
         "title": "פסח יום ז׳",
         "category": "holiday",
-        "link": "https://www.hebcal.com/holidays/pesach"ת
+        "link": "https://www.hebcal.com/holidays/pesach",
         DayType: EDataType.Holiday
     },
     {
