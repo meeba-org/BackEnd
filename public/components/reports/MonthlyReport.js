@@ -110,7 +110,7 @@ class MonthlyReport extends React.PureComponent {
                     <AddShiftsDialog
                         open={this.state.open}
                         onCreate={this.onCreateShift}
-                        onCancel={() => this.handleCloseAddDialog()}
+                        onCancel={this.handleCloseAddDialog}
                         employees={employees}
                         defaultStartDate={moment().year(selectedYear).month(selectedMonth - 1).startOf('month').format(DATE_FORMAT)}
                     />

@@ -5,7 +5,7 @@ import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
 import Home from '@material-ui/icons/Home';
 import Work from '@material-ui/icons/Work';
-import TimePicker from "@material-ui/pickers/TimePicker";
+import {TimePicker} from "@material-ui/pickers";
 import PropTypes from 'prop-types';
 import React from 'react';
 import {isWorking} from "../../helpers/utils";
