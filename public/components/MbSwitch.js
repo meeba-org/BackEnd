@@ -1,33 +1,20 @@
 import React, {Fragment} from "react";
 import Switch from "@material-ui/core/Switch";
 import '../styles/MbSwitch.scss';
-import withStyles from '@material-ui/core/styles/withStyles';
+import {Typography} from '@material-ui/core';
 
-const styles2 = theme => ({
-    colorSwitchBase: {
-        color: theme.palette.secondary[400],
-    },
-    bar: {
-        backgroundColor: theme.palette.secondary[400],
-        opacity: 0.5
-    },
-});
-
-const MbSwitch = ({firstLabel, secondLabel, checked, onChange, classes}) => {
+const MbSwitch = ({firstLabel, secondLabel, checked, onChange}) => {
     return (
-        <Fragment>
-            <span styleName="switch-label">{firstLabel}</span>
+        <div styleName="container">
+            <Typography variant={"body2"} styleName="switch-label">{firstLabel}</Typography>
             <Switch
                 onChange={onChange}
                 checked={checked}
-                classes={{
-                    switchBase: classes.colorSwitchBase,
-                    bar: classes.bar,
-                }}
+                style={{height: "initial"}}
             />
-            <span styleName="switch-label">{secondLabel}</span>
-        </Fragment>
+            <Typography variant={"body2"} styleName="switch-label">{secondLabel}</Typography>
+        </div>
     );
 };
 
-export default withStyles(styles2)(MbSwitch);
+export default MbSwitch;
