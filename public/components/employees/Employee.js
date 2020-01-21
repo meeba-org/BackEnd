@@ -1,3 +1,4 @@
+import {Typography} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
@@ -53,7 +54,7 @@ class Employee extends React.Component {
     render() {
         let {employee, onDelete, classes, onBlur, onUpdate, error, isLimited} = this.props;
         return (
-                <Grid container spacing={24} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+                <Grid container spacing={2} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                     <Grid item sm={3}>
                         <Input value={employee.fullName} placeholder="שם"
                                onChange={(e) => onUpdate(e, "fullName")}
@@ -83,7 +84,13 @@ class Employee extends React.Component {
                                onChange={(e) => onUpdate(e, "transportation")}
                                onBlur={onBlur}
                                classes={{root: classes.root}}
-                               endAdornment={<InputAdornment position="end">{employee.transportPaymentPer === 0 ? "למשמרת" : "חודשי"}</InputAdornment>}
+                               endAdornment={
+                                   <InputAdornment position="end">
+                                       <Typography variant={"body2"}>
+                                           {employee.transportPaymentPer === 0 ? "למשמרת" : "חודשי"}
+                                       </Typography>
+                                   </InputAdornment>
+                                   }
                                disabled={isLimited}
                         />
                     </Grid>

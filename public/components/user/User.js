@@ -199,6 +199,7 @@ class User extends Component {
                 <FormControlLabel
                     control={
                         <Switch
+                            style={{height: "initial"}}
                             checked={value}
                             onChange={(e) => {
                                 this.handleCompanySettingsChange(fieldValue, e.target.checked);

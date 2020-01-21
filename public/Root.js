@@ -22,9 +22,9 @@ const theme = createMuiTheme({
     overrides: {
         MuiIconButton: {
             root: {
-                // height: "100%",
-                // width: "initial",
-                // padding: "3px",
+                height: "100%",
+                width: "initial",
+                padding: "3px",
             }
         },
         MuiTooltip: {
