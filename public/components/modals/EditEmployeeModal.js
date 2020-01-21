@@ -80,7 +80,7 @@ class EditEmployeeModal extends Component {
             <Dialog onClose={this.handleClose} open={open}>
                 <DialogTitle>{"עריכת עובד"}</DialogTitle>
                 <DialogContent classes={{root: classes.dialogContentRoot}}>
-                    <Grid container spacing={8} alignItems="flex-end">
+                    <Grid container spacing={2} alignItems="flex-end">
                         <Grid item>
                             <TextField
                                 id="transportation"
