@@ -54,11 +54,15 @@ const history = syncHistoryWithStore(browserHistory, store);
 //registerServiceWorker();
 
 // Configure JSS
-const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+let jss = create({
+    plugins: [...jssPreset().plugins, rtl()],
+    // Define a custom insertion point that JSS will look for when injecting the styles into the DOM.
+    insertionPoint: 'jss-insertion-point',
+});
 
 const Root = () => (
     <Provider store={store}>
-        <StylesProvider injectFirst>
+        <StylesProvider jss={jss}>
             <ThemeProvider theme={theme}>
                 <Router history={history} routes={routes}/>
             </ThemeProvider>);

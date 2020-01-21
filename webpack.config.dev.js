@@ -29,10 +29,6 @@ module.exports = {
         new HtmlWebpackPlugin({     // Create HTML file that includes references to bundled CSS and JS.
             template: 'public/index.ejs',
             favicon: 'public/styles/images/favicon.png',
-            minify: {
-                removeComments: true,
-                collapseWhitespace: true
-            },
             inject: true
         }),
         new WebpackPwaManifest({
