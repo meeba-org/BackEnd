@@ -6,7 +6,7 @@ import "../styles/MbCard.scss";
 
 const MbCard = ({children, title}) => {
     return (
-        <Card>
+        <Card elevation={0}>
             <CardHeader title={title}/>
 
             <CardContent styleName="card-content">

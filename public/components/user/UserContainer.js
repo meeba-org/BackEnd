@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
-import Field from "redux-form/es/Field";
+import {Field, Form} from "redux-form";
 import reduxForm from "redux-form/es/reduxForm";
 import {Feature} from "../../../managers/FeaturesManager";
 import {showCancelPremiumModal, showGoPremiumModal} from "../../actions";
@@ -16,7 +16,7 @@ class UserContainer extends React.Component {
         const {handleSubmit, updateUser, updateCompany, isCommuteFeatureEnable, hasPremiumFeature, showGoPremiumModal, showCancelPremiumModal, user} = this.props;
 
         return (
-            <form onSubmit={handleSubmit(() => {})}>
+            <Form onSubmit={handleSubmit(() => {})}>
                 <Field
                     component={User}
                     name="user"
@@ -27,7 +27,7 @@ class UserContainer extends React.Component {
                     onFreePlanClick={showGoPremiumModal}
                     onPremiumPlanClick={() => showCancelPremiumModal(user.company)}
                 />
-            </form>
+            </Form>
         );
     }
 }
@@ -39,16 +39,14 @@ UserContainer.propTypes = {
     hasPremiumFeature: PropTypes.bool,
 };
 
-function mapStateToProps(state) {
-    return {
-        user: state.user,
-        initialValues: {
-            user: state.user
-        },
-        isCommuteFeatureEnable: selectors.isFeatureEnable(state, Feature.CommuteModule),
-        hasPremiumFeature: selectors.hasPremiumFeature(state)
-    };
-}
+const mapStateToProps = state => ({
+    user: state.user,
+    initialValues: {
+        user: state.user
+    },
+    isCommuteFeatureEnable: selectors.isFeatureEnable(state, Feature.CommuteModule),
+    hasPremiumFeature: selectors.hasPremiumFeature(state)
+});
 
 const mapDispatchToProps = {
     updateUser: (user) => updateActiveUser(user),

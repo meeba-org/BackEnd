@@ -16,6 +16,8 @@
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 5px;
+            font-size: 10px;
 
             .short-field {
                 max-width: 88px;
@@ -30,6 +32,7 @@
 
             .whatisit {
                 a {
+                    font-size: 12px;
                 }
             }
         }

@@ -1,35 +1,17 @@
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import FormControl from "@material-ui/core/FormControl/FormControl";
+import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid";
-import Input from "@material-ui/core/Input/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import InputLabel from "@material-ui/core/InputLabel/InputLabel";
-import withStyles from "@material-ui/core/styles/withStyles";
 import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
 import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
 import {Link} from "react-router";
 import '../../styles/User.scss';
+import MbCard from "../MbCard";
 import NoData from "../NoData";
-import Button from "@material-ui/core/Button";
-
-const styles1 = () => ({
-    switch: {
-        marginRight: "0px"
-    },
-    formControl: {
-        width: "100%"
-    },
-    link: {
-        textDecoration: "underline",
-        fontSize: "0.7rem"
-    },
-});
-
 
 class User extends Component {
     handleUserChange = (field, e) => {
@@ -89,9 +71,7 @@ class User extends Component {
 
         return (
             <div styleName="user-container">
-                <CardHeader title="פרטי מנהל"/>
-
-                <CardContent>
+                <MbCard title={"פרטי מנהל"}>
                     <Grid container>
                         <Grid item sm={12}>
                             <TextField
@@ -103,11 +83,9 @@ class User extends Component {
                             />
                         </Grid>
                     </Grid>
-                </CardContent>
+                </MbCard>
 
-                <CardHeader title="חברה"/>
-
-                <CardContent>
+                <MbCard title={"חברה"}>
                     <Grid container>
                         <Grid item sm={12}>
                             <TextField
@@ -131,11 +109,9 @@ class User extends Component {
                             </Tooltip>
                         </Grid>
                     </Grid>
-                </CardContent>
+                </MbCard>
 
-                <CardHeader title="מתקדם"/>
-
-                <CardContent>
+                <MbCard title={"מתקדם"}>
                     <div styleName="settings">
                         <div styleName="row">
                             <TextField
@@ -171,31 +147,31 @@ class User extends Component {
                         </div>
 
                         <div styleName="row">
-                            <FormControl>
-                                <InputLabel htmlFor="name-disabled">אורך הפסקה (דק')</InputLabel>
-                                <Input id="break-length" value={user.company.settings.breakLength}
-                                       onChange={(e) => this.handleCompanySettingsChange("breakLength", e.target.value)}/>
-                            </FormControl>
-                            <div style={{alignSelf: "flex-end"}}>
-                                <Link to="/faq/break" className={classes.link} target="_blank">מה זה?</Link>
-                            </div>
+                            <TextField
+                                id="standard-required"
+                                label="אורך הפסקה (דק')"
+                                value={user.company.settings.breakLength}
+                                onChange={(e) => this.handleCompanySettingsChange("breakLength", e.target.value)}
+                            />
+
+                            <Typography variant={"caption"}>
+                                <Link to="/faq/break"  target="_blank">מה זה?</Link>
+                            </Typography>
                         </div>
 
-                        <this.SettingSwitch classes={classes} text={"הזנת החזר נסיעות ע\"י העובד"} value={user.company.settings.enableCommute}
+                        <this.SettingSwitch text={"הזנת החזר נסיעות ע\"י העובד"} value={user.company.settings.enableCommute}
                                        fieldValue={"enableCommute"} link={"/faq/commute"} />
 
-                        <this.SettingSwitch classes={classes} text={"ימי היעדרות (חופש, מחלה, מילואים)"} value={user.company.settings.enableAbsenceDays}
+                        <this.SettingSwitch text={"ימי היעדרות (חופש, מחלה, מילואים)"} value={user.company.settings.enableAbsenceDays}
                                        fieldValue={"enableAbsenceDays"} link={"/faq/absenceDays"} />
 
-                        <this.SettingSwitch classes={classes} text={"משימות"} value={user.company.settings.enableTasks}
+                        <this.SettingSwitch text={"משימות"} value={user.company.settings.enableTasks}
                                        fieldValue={"enableTasks"} link={"/faq/tasks"} />
 
                     </div>
-                </CardContent>
+                </MbCard>
 
-                <CardHeader title="תוכנית"/>
-
-                <CardContent>
+                <MbCard title={"תוכנית"}>
                     <div styleName="plan">
                         {hasPremiumFeature &&
                         <Fragment>
@@ -212,17 +188,15 @@ class User extends Component {
                         </Fragment>
                         }
                     </div>
-                </CardContent>
-
+                </MbCard>
             </div>
         );
     }
 
-    SettingSwitch = ({classes, value, fieldValue, text, link}) => {
+    SettingSwitch = ({value, fieldValue, text, link}) => {
         return (
             <div styleName="row">
                 <FormControlLabel
-                    classes={{root: classes.switch}}
                     control={
                         <Switch
                             checked={value}
@@ -233,12 +207,12 @@ class User extends Component {
                             color="primary"
                         />
                     }
-                    label={<div>{text}</div>}
+                    label={<Typography variant={"body2"}>{text}</Typography>}
                 />
                 {link &&
-                <div styleName="whatisit">
-                    <Link to={link} className={classes.link} target="_blank">מה זה?</Link>
-                </div>
+                <Typography variant={"caption"}>
+                    <Link to={link}  target="_blank">מה זה?</Link>
+                </Typography>
                 }
             </div>
         );
@@ -250,9 +224,8 @@ User.propTypes = {
     onUpdateUser: PropTypes.func.isRequired,
     onUpdateCompany: PropTypes.func.isRequired,
     input: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired,
     hasPremiumFeature: PropTypes.bool
 };
 
-export default withStyles(styles1)(User);
+export default User;
 
