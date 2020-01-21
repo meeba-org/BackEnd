@@ -115,7 +115,6 @@ EditEmployeeModal.propTypes = {
     classes: PropTypes.object,
     editShift: PropTypes.func,
     updateUser: PropTypes.func,
-    dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
     isCommuteFeatureEnable: PropTypes.bool,
     month: PropTypes.string,

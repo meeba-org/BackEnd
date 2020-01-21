@@ -134,9 +134,6 @@ class MonthlyReport extends React.PureComponent {
                                 tooltip={"ייצוא דוח חודשי לאקסל"}
                             />
                     </IfGranted>
-                    <SearchBar onChange={(filter) => {
-                        this.setState({employeesFilter: filter});
-                    }}/>
                 </MbActionsControls>
 
                 {fields && fields.map((employeeShiftsReport, index) =>

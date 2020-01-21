@@ -113,9 +113,6 @@ class EmployeesList extends React.PureComponent {
                         iconComponent={ShareIcon}
                         tooltip={"לינק לאפליקציית העובד"}
                     />
-                    <SearchBar onChange={(filter) => {
-                        this.setState({employeesFilter: filter});
-                    }}/>
                 </MbActionsControls>
 
                     <GoPremiumNotification isVisible={!isAddAllowed} text={this.NOT_ALLOW_TO_ADD_MESSAGE} />
