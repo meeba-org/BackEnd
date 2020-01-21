@@ -41,11 +41,11 @@ const styles = {
 };
 
 const pickerStyle = {
-    container: {
+    pickerContainer: {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        marginRight: "32px",
+        marginLeft: "32px",
         marginBottom: "12px"
     },
     datePicker: {
@@ -59,7 +59,7 @@ const pickerStyle = {
 const ESMTimePicker = withStyles(pickerStyle)(({helperText, classes, ...other}) => {
 
     return (
-        <div className={classes.container}>
+        <div className={classes.pickerContainer}>
             <TimePicker classes={{root: classes.datePicker}} {...other} />
             {helperText &&
                 <FormHelperText classes={{root: classes.helperText}}>{helperText}</FormHelperText>
@@ -71,7 +71,7 @@ const ESMTimePicker = withStyles(pickerStyle)(({helperText, classes, ...other}) 
 const ESMDatePicker = withStyles(pickerStyle)(({helperText, classes, ...other}) => {
 
     return (
-        <div className={classes.container}>
+        <div className={classes.pickerContainer}>
             <DatePicker classes={{root: classes.datePicker}} {...other} />
             {helperText &&
                 <FormHelperText classes={{root: classes.helperText}}>{helperText}</FormHelperText>
@@ -82,7 +82,7 @@ const ESMDatePicker = withStyles(pickerStyle)(({helperText, classes, ...other}) 
 
 const ESMTextInput = withStyles(pickerStyle)(({classes, TIIcon, value, onChange, type, label, helperText,selectTextOnFocus,  ...props}) => {
     return (
-        <Grid container spacing={8} alignItems={helperText ? "center" : "flex-end"}>
+        <Grid container spacing={1} alignItems={helperText ? "center" : "flex-end"}>
             <Grid item>
                 <TIIcon style={{color: "grey"}}/>
             </Grid>
