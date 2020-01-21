@@ -1,3 +1,4 @@
+import Typography from "@material-ui/core/Typography";
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import "../../styles/MobileAppLinksModal.scss";
@@ -22,13 +23,13 @@ class MobileAppLinksModal extends Component {
             <Dialog onClose={this.handleCancel} open={open}>
                 <DialogTitle>{"העתק הודעה זו ושלח לעובדים:"}</DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                        <div styleName="header">עובד יקר,</div>
-                        <div>התחלנו להשתמש בשעון הנוכחות "מיבא".</div>
-                        <div styleName="header">אנא הורד את האפליקציה:</div>
-                        <div>אנדרואיד - https://goo.gl/iGzWxX</div>
-                        <div>או ​</div>
-                        <div>אייפון - https://goo.gl/L6WKJc</div>
+                    <DialogContentText>
+                        <Typography styleName="header">עובד יקר,</Typography>
+                        <Typography>התחלנו להשתמש בשעון הנוכחות "מיבא".</Typography>
+                        <Typography styleName="header">אנא הורד את האפליקציה:</Typography>
+                        <Typography>אנדרואיד - https://goo.gl/iGzWxX</Typography>
+                        <Typography>או ​</Typography>
+                        <Typography>אייפון - https://goo.gl/L6WKJc</Typography>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
