@@ -23,21 +23,6 @@ class AddShiftsDialog extends PureComponent {
         };
     }
 
-    // TODO do I really need this?
-    // componentWillReceiveProps(nextProps) {
-    //     if (nextProps.open && !this.props.open) {
-    //         this.setState({employeesToAdd: []}); // resetting employeesToAdd
-    //     }
-    // }
-
-    componentDidMount() {
-        console.log("mounted");
-    }
-
-    componentDidUnMount() {
-        console.log("un-mounted");
-    }
-
     toggleEmployee(employee, check) {
         const { employeesToAdd } = this.state;
         const currentIndex = employeesToAdd.indexOf(employee);
