@@ -62,8 +62,34 @@ class User extends Component {
         onUpdateCompany(user.company);
     };
 
+    SettingSwitch = ({value, fieldValue, text, link}) => {
+        return (
+            <div styleName="row">
+                <FormControlLabel
+                    control={
+                        <Switch
+                            style={{height: "initial"}}
+                            checked={value}
+                            onChange={(e) => {
+                                this.handleCompanySettingsChange(fieldValue, e.target.checked);
+                            }}
+                            value={value}
+                            color="primary"
+                        />
+                    }
+                    label={<Typography variant={"body2"}>{text}</Typography>}
+                />
+                {link &&
+                <Typography variant={"caption"}>
+                    <Link to={link}  target="_blank">מה זה?</Link>
+                </Typography>
+                }
+            </div>
+        );
+    }
+
     render() {
-        const {input, classes, hasPremiumFeature, onFreePlanClick, onPremiumPlanClick} = this.props;
+        const {input, hasPremiumFeature, onFreePlanClick, onPremiumPlanClick} = this.props;
         const user = input.value;
 
         if (!user || !user.company)
@@ -192,33 +218,6 @@ class User extends Component {
             </div>
         );
     }
-
-    SettingSwitch = ({value, fieldValue, text, link}) => {
-        return (
-            <div styleName="row">
-                <FormControlLabel
-                    control={
-                        <Switch
-                            style={{height: "initial"}}
-                            checked={value}
-                            onChange={(e) => {
-                                this.handleCompanySettingsChange(fieldValue, e.target.checked);
-                            }}
-                            value={value}
-                            color="primary"
-                        />
-                    }
-                    label={<Typography variant={"body2"}>{text}</Typography>}
-                />
-                {link &&
-                <Typography variant={"caption"}>
-                    <Link to={link}  target="_blank">מה זה?</Link>
-                </Typography>
-                }
-            </div>
-        );
-    };
-
 }
 
 User.propTypes = {

@@ -407,7 +407,7 @@ class EditShiftModal extends Component {
         if (!shift)
             return null;
 
-        let {note, extraPay, breakLength, task, status} = shift || {};
+        let {note, extraPay, breakLength, task} = shift || {};
         let date = this.calcDate(shift);
         let dateHelperText = this.calcDateHelperText(shift);
         let clockInTime = this.calcClockInTime(shift);

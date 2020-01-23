@@ -1,7 +1,7 @@
-import React, {Fragment} from "react";
-import Switch from "@material-ui/core/Switch";
-import '../styles/MbSwitch.scss';
 import {Typography} from '@material-ui/core';
+import Switch from "@material-ui/core/Switch";
+import React from "react";
+import '../styles/MbSwitch.scss';
 
 const MbSwitch = ({firstLabel, secondLabel, checked, onChange}) => {
     return (

@@ -10,13 +10,12 @@ import React from 'react';
 import {MAX_FREE_EMPLOYEES_ALLOWED} from "../../../constants";
 import {isIsraeliIdValid} from "../../helpers/utils";
 import "../../styles/EmployeesList.scss";
-import MbActionButton from "../MbActionButton";
 import Fade from "../Fade";
 import GoPremiumNotification from "../go-premium/GoPremiumNotification";
+import MbActionButton from "../MbActionButton";
 import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import NoData from "../NoData";
-import SearchBar from "../SearchBar";
 import EmployeeContainer from "./EmployeeContainer";
 
 class EmployeesList extends React.PureComponent {

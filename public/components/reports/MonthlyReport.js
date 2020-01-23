@@ -15,8 +15,6 @@ import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import MonthPicker from "../MonthPicker";
 import NoData from "../NoData";
-import SearchBar from "../SearchBar";
-
 
 class MonthlyReport extends React.PureComponent {
     constructor(props) {
