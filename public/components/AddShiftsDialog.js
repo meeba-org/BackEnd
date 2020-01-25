@@ -39,8 +39,8 @@ class AddShiftsDialog extends PureComponent {
         });
     }
 
-    onCreate() {
-        let {onCreate, onCancel} = this.props;
+    onCreate = () => {
+        let {onCreate} = this.props;
         let {employeesToAdd} = this.state;
 
 
@@ -49,8 +49,15 @@ class AddShiftsDialog extends PureComponent {
             onCreate(shift);
         }
 
+        this.onCancel();
+    };
+
+    onCancel = () => {
+        const {onCancel} = this.props;
+
+        this.setState({employeesToAdd: []});
         onCancel();
-    }
+    };
 
     onUpdateStartTime(time) {
         this.setState({startTime: time});
@@ -75,12 +82,12 @@ class AddShiftsDialog extends PureComponent {
     }
 
     render() {
-        let {onCancel, open, employees, defaultStartDate} = this.props;
+        let {open, employees, defaultStartDate} = this.props;
         let {startDate, startTime, endTime, employeesToAdd} = this.state;
         let defaultStartDateMoment = moment(defaultStartDate, DATE_FORMAT);
 
         return (
-            <Dialog open={open} onClose={onCancel}>
+            <Dialog open={open} onClose={this.onCancel}>
                 <DialogTitle>הוספת משמרת</DialogTitle>
                 <DialogContent>
                     <DatePicker autoOk onChange={(date) => this.onUpdateDateChange(date)}
@@ -110,10 +117,10 @@ class AddShiftsDialog extends PureComponent {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => this.onCreate()} variant="contained" color="primary" disabled={employeesToAdd.length === 0}>
+                    <Button onClick={this.onCreate} variant="contained" color="primary" disabled={employeesToAdd.length === 0}>
                         {employeesToAdd.length > 0 ? `הוסף ל- ` + employeesToAdd.length + ` אנשים` : "הוסף"}
                     </Button>
-                    <Button onClick={onCancel} color="primary">
+                    <Button onClick={this.onCancel} color="primary">
                         ביטול
                     </Button>
                 </DialogActions>
