@@ -1,6 +1,388 @@
 let EDataType = require('../models/EDayType');
 
 module.exports = [
+    // 2020
+    {
+        "link": "https://www.hebcal.com/holidays/pesach",
+        "date": "2020-04-08",
+        "category": "holiday",
+        "memo": "Passover, the Feast of Unleavened Bread",
+        "hebrew": "ערב פסח",
+        "title": "ערב פסח",
+        "title_orig": "Erev Pesach",
+        DayType: EDataType.HolidayEvening
+    },
+    {
+        "memo": "Passover, the Feast of Unleavened Bread",
+        "date": "2020-04-09",
+        "title_orig": "Pesach I",
+        "hebrew": "פסח יום א׳",
+        "link": "https://www.hebcal.com/holidays/pesach",
+        "category": "holiday",
+        "yomtov": true,
+        "subcat": "major",
+        "title": "פסח יום א׳",
+        DayType: EDataType.Holiday
+    },
+    {
+        "memo": "Passover, the Feast of Unleavened Bread",
+        "date": "2020-04-10",
+        "hebrew": "פסח יום ב׳",
+        "title_orig": "Pesach II",
+        "link": "https://www.hebcal.com/holidays/pesach",
+        "category": "holiday",
+        "title": "פסח יום ב׳",
+        "subcat": "major",
+        "yomtov": true
+    },
+    {
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/pesach",
+        "subcat": "major",
+        "title": "פסח יום ג׳ (חול המועד)",
+        "memo": "Passover, the Feast of Unleavened Bread",
+        "date": "2020-04-11",
+        "hebrew": "פסח יום ג׳ (חול המועד)",
+        "title_orig": "Pesach III (CH''M)"
+    },
+    {
+        "title": "פסח יום ד׳ (חול המועד)",
+        "subcat": "major",
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/pesach",
+        "hebrew": "פסח יום ד׳ (חול המועד)",
+        "title_orig": "Pesach IV (CH''M)",
+        "memo": "Passover, the Feast of Unleavened Bread",
+        "date": "2020-04-12"
+    },
+    {
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/pesach",
+        "title": "פסח יום ה׳ (חול המועד)",
+        "subcat": "major",
+        "memo": "Passover, the Feast of Unleavened Bread",
+        "date": "2020-04-13",
+        "hebrew": "פסח יום ה׳ (חול המועד)",
+        "title_orig": "Pesach V (CH''M)"
+    },
+    {
+        "link": "https://www.hebcal.com/holidays/pesach",
+        "category": "holiday",
+        "title": "פסח יום ו׳ (חול המועד)",
+        "subcat": "major",
+        "date": "2020-04-14",
+        "memo": "Passover, the Feast of Unleavened Bread",
+        "title_orig": "Pesach VI (CH''M)",
+        "hebrew": "פסח יום ו׳ (חול המועד)",
+        DayType: EDataType.HolidayEvening
+    },
+    {
+        "title_orig": "Pesach VII",
+        "hebrew": "פסח יום ז׳",
+        "date": "2020-04-15",
+        "memo": "Passover, the Feast of Unleavened Bread",
+        "yomtov": true,
+        "subcat": "major",
+        "title": "פסח יום ז׳",
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/pesach",
+        DayType: EDataType.Holiday
+    },
+    {
+        "title_orig": "Pesach VIII",
+        "hebrew": "פסח יום ח׳",
+        "memo": "Passover, the Feast of Unleavened Bread",
+        "date": "2020-04-16",
+        "yomtov": true,
+        "subcat": "major",
+        "title": "פסח יום ח׳",
+        "link": "https://www.hebcal.com/holidays/pesach",
+        "category": "holiday"
+    },
+    {
+        "title": "Independence Day",
+        "date": "2020-04-29",
+        "hebrew": "יום העצמאות",
+        "subcat": "major",
+        "category": "holiday",
+        DayType: EDataType.IndependenceDay
+    },
+    {
+        "hebrew": "ערב שבועות",
+        "title": "ערב שבועות",
+        "title_orig": "Erev Shavuot",
+        "memo": "Festival of Weeks, commemorates the giving of the Torah at Mount Sinai",
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/shavuot",
+        "date": "2020-05-28",
+        DayType: EDataType.HolidayEvening
+    },
+    {
+        "hebrew": "שבועות יום א׳",
+        "title_orig": "Shavuot I",
+        "date": "2020-05-29",
+        "memo": "Festival of Weeks, commemorates the giving of the Torah at Mount Sinai",
+        "title": "שבועות יום א׳",
+        "subcat": "major",
+        "yomtov": true,
+        "link": "https://www.hebcal.com/holidays/shavuot",
+        "category": "holiday",
+        DayType: EDataType.Holiday
+    },
+    {
+        "hebrew": "שבועות יום ב׳",
+        "title_orig": "Shavuot II",
+        "memo": "Festival of Weeks, commemorates the giving of the Torah at Mount Sinai",
+        "date": "2020-05-30",
+        "title": "שבועות יום ב׳",
+        "subcat": "major",
+        "yomtov": true,
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/shavuot"
+    },
+    {
+        "memo": "The Jewish New Year",
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/rosh-hashana",
+        "date": "2020-09-18",
+        "title": "ערב ראש השנה",
+        "hebrew": "ערב ראש השנה",
+        "title_orig": "Erev Rosh Hashana",
+        DayType: EDataType.HolidayEvening
+    },
+    {
+        "yomtov": true,
+        "title": "ראש השנה 5781",
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/rosh-hashana",
+        "title_orig": "Rosh Hashana 5781",
+        "hebrew": "ראש השנה 5781",
+        "memo": "The Jewish New Year",
+        "date": "2020-09-19",
+        DayType: EDataType.Holiday
+    },
+    {
+        "memo": "The Jewish New Year",
+        "date": "2020-09-20",
+        "hebrew": "ראש השנה יום ב׳",
+        "title_orig": "Rosh Hashana II",
+        "link": "https://www.hebcal.com/holidays/rosh-hashana",
+        "category": "holiday",
+        "title": "ראש השנה יום ב׳",
+        "subcat": "major",
+        "yomtov": true,
+        DayType: EDataType.Holiday
+    },
+    {
+        "title": "ערב יום כפור",
+        "hebrew": "ערב יום כפור",
+        "title_orig": "Erev Yom Kippur",
+        "memo": "Day of Atonement",
+        "date": "2020-09-27",
+        "link": "https://www.hebcal.com/holidays/yom-kippur",
+        "category": "holiday",
+        DayType: EDataType.HolidayEvening
+    },
+    {
+        "title_orig": "Yom Kippur",
+        "hebrew": "יום כפור",
+        "date": "2020-09-28",
+        "memo": "Day of Atonement",
+        "yomtov": true,
+        "title": "יום כפור",
+        "subcat": "major",
+        "link": "https://www.hebcal.com/holidays/yom-kippur",
+        "category": "holiday",
+        DayType: EDataType.Holiday
+    },
+    {
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/sukkot",
+        "yomtov": true,
+        "subcat": "major",
+        "title": "סוכות יום א׳",
+        "date": "2020-10-03",
+        "memo": "Feast of Tabernacles",
+        "title_orig": "Sukkot I",
+        "hebrew": "סוכות יום א׳",
+        DayType: EDataType.Holiday
+    },
+    {
+        "date": "2020-10-04",
+        "memo": "Feast of Tabernacles",
+        "title_orig": "Sukkot II",
+        "hebrew": "סוכות יום ב׳",
+        "link": "https://www.hebcal.com/holidays/sukkot",
+        "category": "holiday",
+        "yomtov": true,
+        "subcat": "major",
+        "title": "סוכות יום ב׳"
+    },
+    {
+        "date": "2020-10-05",
+        "memo": "Feast of Tabernacles",
+        "hebrew": "סוכות יום ג׳ (חול המועד)",
+        "title_orig": "Sukkot III (CH''M)",
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/sukkot",
+        "title": "סוכות יום ג׳ (חול המועד)",
+        "subcat": "major"
+    },
+    {
+        "date": "2020-10-06",
+        "memo": "Feast of Tabernacles",
+        "title_orig": "Sukkot IV (CH''M)",
+        "hebrew": "סוכות יום ד׳ (חול המועד)",
+        "link": "https://www.hebcal.com/holidays/sukkot",
+        "category": "holiday",
+        "subcat": "major",
+        "title": "סוכות יום ד׳ (חול המועד)"
+    },
+    {
+        "subcat": "major",
+        "title": "סוכות יום ה׳ (חול המועד)",
+        "link": "https://www.hebcal.com/holidays/sukkot",
+        "category": "holiday",
+        "title_orig": "Sukkot V (CH''M)",
+        "hebrew": "סוכות יום ה׳ (חול המועד)",
+        "date": "2020-10-07",
+        "memo": "Feast of Tabernacles"
+    },
+    {
+        "link": "https://www.hebcal.com/holidays/sukkot",
+        "category": "holiday",
+        "subcat": "major",
+        "title": "סוכות יום ו׳ (חול המועד)",
+        "date": "2020-10-08",
+        "memo": "Feast of Tabernacles",
+        "title_orig": "Sukkot VI (CH''M)",
+        "hebrew": "סוכות יום ו׳ (חול המועד)"
+    },
+    {
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/sukkot",
+        "subcat": "major",
+        "title": "סוכות יום ז׳ (הושענא רבה)",
+        "date": "2020-10-09",
+        "memo": "Feast of Tabernacles",
+        "title_orig": "Sukkot VII (Hoshana Raba)",
+        "hebrew": "סוכות יום ז׳ (הושענא רבה)",
+        DayType: EDataType.HolidayEvening
+    },
+    {
+        "link": "https://www.hebcal.com/holidays/shmini-atzeret",
+        "category": "holiday",
+        "title": "שמיני עצרת",
+        "subcat": "major",
+        "yomtov": true,
+        "memo": "Eighth Day of Assembly",
+        "date": "2020-10-10",
+        "hebrew": "שמיני עצרת",
+        "title_orig": "Shmini Atzeret",
+        DayType: EDataType.Holiday
+    },
+    {
+        "yomtov": true,
+        "subcat": "major",
+        "title": "שמחת תורה",
+        "link": "https://www.hebcal.com/holidays/simchat-torah",
+        "category": "holiday",
+        "title_orig": "Simchat Torah",
+        "hebrew": "שמחת תורה",
+        "memo": "Day of Celebrating the Torah",
+        "date": "2020-10-11"
+    },
+    {
+        "title_orig": "Chanukah: 1 Candle",
+        "hebrew": "חנוכה: א׳ נר",
+        "date": "2020-12-10",
+        "memo": "The Jewish festival of rededication, also known as the Festival of Lights",
+        "title": "חנוכה: א׳ נר",
+        "subcat": "major",
+        "link": "https://www.hebcal.com/holidays/chanukah",
+        "category": "holiday",
+    },
+    {
+        "link": "https://www.hebcal.com/holidays/chanukah",
+        "category": "holiday",
+        "title": "חנוכה: ב׳ נרות",
+        "subcat": "major",
+        "date": "2020-12-11",
+        "memo": "The Jewish festival of rededication, also known as the Festival of Lights",
+        "title_orig": "Chanukah: 2 Candles",
+        "hebrew": "חנוכה: ב׳ נרות"
+    },
+    {
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/chanukah",
+        "subcat": "major",
+        "title": "חנוכה: ג׳ נרות",
+        "date": "2020-12-12",
+        "memo": "The Jewish festival of rededication, also known as the Festival of Lights",
+        "title_orig": "Chanukah: 3 Candles",
+        "hebrew": "חנוכה: ג׳ נרות"
+    },
+    {
+        "title": "חנוכה: ד׳ נרות",
+        "subcat": "major",
+        "link": "https://www.hebcal.com/holidays/chanukah",
+        "category": "holiday",
+        "title_orig": "Chanukah: 4 Candles",
+        "hebrew": "חנוכה: ד׳ נרות",
+        "memo": "The Jewish festival of rededication, also known as the Festival of Lights",
+        "date": "2020-12-13"
+    },
+    {
+        "subcat": "major",
+        "title": "חנוכה: ה׳ נרות",
+        "link": "https://www.hebcal.com/holidays/chanukah",
+        "category": "holiday",
+        "title_orig": "Chanukah: 5 Candles",
+        "hebrew": "חנוכה: ה׳ נרות",
+        "date": "2020-12-14",
+        "memo": "The Jewish festival of rededication, also known as the Festival of Lights"
+    },
+    {
+        "title": "חנוכה: ו׳ נרות",
+        "subcat": "major",
+        "link": "https://www.hebcal.com/holidays/chanukah",
+        "category": "holiday",
+        "title_orig": "Chanukah: 6 Candles",
+        "hebrew": "חנוכה: ו׳ נרות",
+        "memo": "The Jewish festival of rededication, also known as the Festival of Lights",
+        "date": "2020-12-15"
+    },
+    {
+        "date": "2020-12-16",
+        "memo": "The Jewish festival of rededication, also known as the Festival of Lights",
+        "hebrew": "חנוכה: ז׳ נרות",
+        "title_orig": "Chanukah: 7 Candles",
+        "category": "holiday",
+        "link": "https://www.hebcal.com/holidays/chanukah",
+        "subcat": "major",
+        "title": "חנוכה: ז׳ נרות"
+    },
+    {
+        "link": "https://www.hebcal.com/holidays/chanukah",
+        "category": "holiday",
+        "subcat": "major",
+        "title": "חנוכה: ח׳ נרות",
+        "memo": "The Jewish festival of rededication, also known as the Festival of Lights",
+        "date": "2020-12-17",
+        "title_orig": "Chanukah: 8 Candles",
+        "hebrew": "חנוכה: ח׳ נרות"
+    },
+    {
+        "title": "חנוכה: יום ח׳",
+        "subcat": "major",
+        "link": "https://www.hebcal.com/holidays/chanukah",
+        "category": "holiday",
+        "hebrew": "חנוכה: יום ח׳",
+        "title_orig": "Chanukah: 8th Day",
+        "memo": "The Jewish festival of rededication, also known as the Festival of Lights",
+        "date": "2020-12-18"
+    },
+
     // 2019
     {
         "link": "https://www.hebcal.com/holidays/purim",
