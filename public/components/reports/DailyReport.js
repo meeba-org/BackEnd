@@ -18,9 +18,9 @@ import {
     ReportModes
 } from "../../helpers/utils";
 import '../../styles/DailyReport.scss';
-import MbActionButton from "../MbActionButton";
 import AddShiftsDialog from "../AddShiftsDialog";
 import AutoComplete from "../AutoComplete";
+import MbActionButton from "../MbActionButton";
 import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import ShiftsList from "./ShiftsList";

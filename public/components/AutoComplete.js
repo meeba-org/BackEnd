@@ -2,7 +2,7 @@ import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import NoSsr from '@material-ui/core/NoSsr';
 import Paper from '@material-ui/core/Paper';
-import {withStyles} from '@material-ui/core/styles';
+import {withStyles, createStyles} from '@material-ui/core/styles';
 import {emphasize} from '@material-ui/core/styles/colorManipulator';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -11,13 +11,14 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'react-select';
+import withTheme from '@material-ui/core/styles/withTheme';
 
-const styles = theme => ({
+const styles = theme => createStyles({
     root: {
     },
     input: {
         display: 'flex',
-        padding: 0,
+        paddingTop: 0,
     },
     valueContainer: {
         display: 'flex',
@@ -27,7 +28,7 @@ const styles = theme => ({
         overflow: 'hidden',
     },
     chip: {
-        margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
+        margin: `${theme.spacing(0.5)}px ${theme.spacing(0.25)}px`,
     },
     chipFocused: {
         backgroundColor: emphasize(
@@ -36,7 +37,7 @@ const styles = theme => ({
         ),
     },
     noOptionsMessage: {
-        padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+        padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
     },
     singleValue: {
         fontSize: 16,
@@ -47,12 +48,12 @@ const styles = theme => ({
     paper: {
         position: 'absolute',
         zIndex: 1,
-        marginTop: theme.spacing.unit,
+        marginTop: theme.spacing(1),
         left: 0,
         right: 0,
     },
     divider: {
-        height: theme.spacing.unit * 2,
+        height: theme.spacing(2),
     },
 });
 
@@ -218,4 +219,4 @@ IntegrationReactSelect.propTypes = {
     theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(IntegrationReactSelect);
+export default withStyles(styles)(withTheme(IntegrationReactSelect));
