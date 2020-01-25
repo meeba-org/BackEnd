@@ -46,10 +46,6 @@ $margin: 12px;
                 flex: 1;
                 height: 100%;
                 overflow-x: visible;
-
-                .card-content {
-                    max-height: $containerHeight;
-                }
             }
         }
     }
