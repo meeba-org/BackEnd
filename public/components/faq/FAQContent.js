@@ -26,7 +26,7 @@ const Answer = ({text}) => {
 const AnswerFooter = () => {
     return (
         <div styleName="answer-footer">
-            לא מספיק ברור? מחכים לשאלות שלכם ב<a href={"https://m.me/meebaOnFace"}>צ'אט</a>
+            לא מספיק ברור? מחכים לשאלות שלכם ב<a target="_blank" href={"https://m.me/meebaOnFace"}>צ'אט</a>
         </div>
     );
 };
