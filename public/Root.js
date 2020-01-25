@@ -1,5 +1,5 @@
 import {createMuiTheme} from "@material-ui/core";
-import { ThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider, StylesProvider, jssPreset } from '@material-ui/core/styles';
 import React from 'react';
 import {Provider} from "react-redux";
 import {browserHistory, Router} from "react-router";
@@ -8,7 +8,6 @@ import routes from "./routes";
 import createStore from "./store/configureStore";
 import { create } from 'jss';
 import rtl from 'jss-rtl';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
     direction: 'rtl',
