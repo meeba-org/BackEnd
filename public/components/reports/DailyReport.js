@@ -25,12 +25,6 @@ import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import ShiftsList from "./ShiftsList";
 
-const styles1 = {
-    root: {
-        overflow: "visible"
-    }
-};
-
 class DailyReport extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -79,12 +73,12 @@ class DailyReport extends React.PureComponent {
     };
 
     render() {
-        const {onCreateShift, onDeleteShift, showShiftDialog, employees, mode, isLoading, classes} = this.props;
+        const {onCreateShift, onDeleteShift, showShiftDialog, employees, mode, isLoading} = this.props;
         let {currentDay} = this.state;
         let {primary, secondary} = this.props.theme.palette.text;
 
         return (
-            <Card classes={{root: classes.root}}>
+            <Fragment>
                 {(mode === ReportModes.Report) &&
                 <Fragment>
                     <MbCard title="דוח יומי">
@@ -171,7 +165,7 @@ class DailyReport extends React.PureComponent {
                     </MbCard>
                 </Fragment>
                 }
-            </Card>
+            </Fragment>
         );
     }
 }
@@ -191,5 +185,5 @@ DailyReport.propTypes = {
     isLoading: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles1)((withRouter(withTheme(DailyReport))));
+export default withRouter(withTheme(DailyReport));
 
