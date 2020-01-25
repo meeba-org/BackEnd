@@ -1,7 +1,7 @@
 // For info about this file refer to webpack and webpack-hot-middleware documentation
 // For info on how we're generating bundles with hashed filenames for cache busting: https://medium.com/@okonetchnikov/long-term-caching-of-static-assets-with-webpack-1ecb139adb95#.w99i89nsz
 const webpack = require('webpack');
-const ExtractTextPlugin  = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackChunkHash = require('webpack-chunk-hash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
@@ -15,7 +15,7 @@ process.env.NODE_ENV = 'production';
 const GLOBALS = {
     'process.env.NODE_ENV': JSON.stringify('production'),
     'process.env.BABEL_ENV': JSON.stringify('production'),
-    'process.env.PORT': 3000,
+    'process.env.PORT': 4000,
     __DEV__: false
 };
 
@@ -55,7 +55,6 @@ module.exports = {
             template: 'public/index.ejs',
             favicon: 'public/styles/images/favicon.png',
             minify: {
-                removeComments: true,
                 collapseWhitespace: true,
                 removeRedundantAttributes: true,
                 useShortDoctype: true,
@@ -73,8 +72,9 @@ module.exports = {
         }),
 
         // Generate an external css file with a hash in the filename
-        new ExtractTextPlugin('[name].[md5:contenthash:hex:20].css'),
-
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+        }),
         // https://github.com/numical/script-ext-html-webpack-plugin
         new ScriptExtHtmlWebpackPlugin({
             defaultAttribute: 'defer'
@@ -157,40 +157,21 @@ module.exports = {
             {
                 test: /(\.css|\.scss|\.sass)$/,
                 exclude: /node_modules/,
-                use: ExtractTextPlugin.extract({
-                    use: [
+                use: [
+                        MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
                             options: {
-                                minimize: true,
-                                modules: true,
+                                modules: {
+                                    localIdentName: "[path]___[name]__[local]___[hash:base64:5]",
+                                },
                                 importLoaders: 1,
-                                localIdentName: '[name]-[local]-[hash:base64:2]',
+                                sourceMap: true,
                             }
-                        }, {
-                            loader: 'postcss-loader',
-                            options: {
-                                plugins: () => [
-                                    require('autoprefixer')
-                                ],
-                            }
-                        }, {
-                            loader: 'sass-loader',
-                            options: {
-                                includePaths: [
-                                    path.resolve(__dirname, 'public/styles'),
-                                ],
-                            }
-                        }
+                        },
+                        'sass-loader'
                     ]
-                })
             },
         ]
     }
 };
-
-// function isVendor({resource}) {
-//     return (
-//         resource && resource.indexOf("node_modules") >= 0 && resource.match(/\.js$/)
-//     );
-// }
