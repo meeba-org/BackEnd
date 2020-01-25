@@ -117,7 +117,7 @@ class EmployeesList extends React.PureComponent {
                     <GoPremiumNotification isVisible={!isAddAllowed} text={this.NOT_ALLOW_TO_ADD_MESSAGE} />
 
                     {this.hasEmployees(processEmployees) && isDesktop &&
-                    <Grid styleName="header" container spacing={24}>
+                    <Grid styleName="header" container spacing={2}>
                         <Grid item sm={3}>שם</Grid>
                         <Grid item sm={2} styleName="header-item">ת.ז.</Grid>
                         <Grid item sm={1} styleName="header-item">שכר לשעה</Grid>
