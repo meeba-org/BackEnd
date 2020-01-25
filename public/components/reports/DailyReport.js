@@ -181,7 +181,6 @@ DailyReport.propTypes = {
     mode: PropTypes.number.isRequired,
     theme: PropTypes.object,
     router: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
 };
 

@@ -191,7 +191,6 @@ class ShiftContainer extends React.PureComponent {
 
 ShiftContainer.propTypes = {
     input: PropTypes.object.isRequired,
-    company: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
