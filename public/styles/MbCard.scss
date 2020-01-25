@@ -1,5 +1,9 @@
 $containerHeight: 800px;
 
-.card-content {
-    max-height: $containerHeight;
+.container {
+    overflow: visible;
+
+    .card-content {
+        max-height: $containerHeight;
+    }
 }
