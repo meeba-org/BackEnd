@@ -6,7 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import React, {Component} from "react";
 import {connect} from 'react-redux';
-import {Link, withRouter} from "react-router";
+import {Link} from "react-router-dom";
 import {showLoginRegisterDialog} from "../../actions";
 import * as selectors from "../../selectors";
 import facebookImage from "../../styles/images/facebook.png";
@@ -65,14 +65,14 @@ class HomeAppBar extends Component {
                             <img src={facebookImage}/>
                         </Button>
                     </div>
-                    <div>
-                        {location.pathname !== '/faq' &&
-                        <Button color="inherit"><Link to="/faq" className={classes.faq}>שאלות ותשובות</Link></Button>
-                        }
-                        {location.pathname === '/faq' &&
-                        <Button color="inherit" onClick={showLoginRegisterDialog}>כניסה</Button>
-                        }
-                    </div>
+                    {/*<div>*/}
+                    {/*    {location.pathname !== '/faq' &&*/}
+                    {/*    <Button color="inherit"><Link to="/faq" className={classes.faq}>שאלות ותשובות</Link></Button>*/}
+                    {/*    }*/}
+                    {/*    {location.pathname === '/faq' &&*/}
+                    {/*    <Button color="inherit" onClick={showLoginRegisterDialog}>כניסה</Button>*/}
+                    {/*    }*/}
+                    {/*</div>*/}
                 </Toolbar>
             </AppBar>
         );
@@ -91,4 +91,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(HomeAppBar)));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(HomeAppBar));

@@ -1,5 +1,5 @@
 import React from "react";
-import {IndexRedirect, Redirect, Route} from "react-router";
+import {IndexRedirect, Redirect, Route} from "react-router-dom";
 import AppContainer from "./components/AppContainer";
 import Dashboard from "./components/Dashboard";
 import EmployeesContainer from "./components/employees/EmployeesContainer";
@@ -11,12 +11,13 @@ import Report from "./components/reports/Report";
 import Settings from "./components/Settings";
 import {ReportModes} from "./helpers/utils";
 
+
 export default (
     <Route path="/" component={AppContainer}>
-        <IndexRedirect to="/dashboard" />
+        {/*<IndexRedirect to="/dashboard" />*/}
         <Route path="/home" component={Home}/>
         <Route path="/dashboard" component={Dashboard} onEnter={requireAuth}>
-            <IndexRedirect to="/dashboard/report" />
+            {/*<IndexRedirect to="/dashboard/report" />*/}
             <Route path="employees" component={EmployeesContainer} />
             <Route path="settings" component={Settings} />
             <Route path="report" component={Report} />

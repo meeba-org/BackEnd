@@ -6,24 +6,18 @@ import Features from "./Features";
 import Statistics from "./Statistics";
 import Movie from "./Movie";
 
-class Home extends Component {
-    state = {
-        visible: false
-    };
-
-    render() {
-        return (
-            <div styleName="home">
-                <div styleName="home-bg">
-                    <Header />
-                    <Movie />
-                    <Features />
-                    <Statistics />
-                    <Footer />
-                </div>
+const Home = () => {
+    return (
+        <div styleName="home">
+            <div styleName="home-bg">
+                <Header />
+                <Movie />
+                <Features />
+                <Statistics />
+                <Footer />
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 export default Home;

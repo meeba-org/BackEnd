@@ -6,7 +6,7 @@ import {DatePicker} from "@material-ui/pickers";
 import moment from "moment";
 import PropTypes from 'prop-types';
 import React, {Fragment} from "react";
-import {withRouter} from "react-router";
+import {withRouter} from "react-router-dom";
 import FieldArray from "redux-form/es/FieldArray";
 import {
     calculateCurrentDay,

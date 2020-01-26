@@ -8,7 +8,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {withRouter} from "react-router";
+import {withRouter} from "react-router-dom";
 import Field from "redux-form/es/Field";
 import reduxForm from "redux-form/es/reduxForm";
 import {handleLogin, hideLoginRegisterModal} from "../../actions";

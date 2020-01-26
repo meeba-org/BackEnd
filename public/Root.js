@@ -1,13 +1,11 @@
 import {createMuiTheme} from "@material-ui/core";
-import { ThemeProvider, StylesProvider, jssPreset } from '@material-ui/core/styles';
+import {jssPreset, StylesProvider, ThemeProvider} from '@material-ui/core/styles';
+import {create} from 'jss';
+import rtl from 'jss-rtl';
 import React from 'react';
 import {Provider} from "react-redux";
-import {browserHistory, Router} from "react-router";
-import {syncHistoryWithStore} from "react-router-redux";
-import routes from "./routes";
+import AppContainer from "./components/AppContainer";
 import createStore from "./store/configureStore";
-import { create } from 'jss';
-import rtl from 'jss-rtl';
 
 const theme = createMuiTheme({
     direction: 'rtl',
@@ -49,7 +47,7 @@ const theme = createMuiTheme({
 });
 
 const store = createStore();
-const history = syncHistoryWithStore(browserHistory, store);
+// const history = syncHistoryWithStore(browserHistory, store);
 //registerServiceWorker();
 
 // Configure JSS
@@ -63,7 +61,8 @@ const Root = () => (
     <Provider store={store}>
         <StylesProvider jss={jss}>
             <ThemeProvider theme={theme}>
-                <Router history={history} routes={routes}/>
+                <AppContainer />
+                {/*<Router history={history} routes={routes}/>*/}
             </ThemeProvider>
         </StylesProvider>
     </Provider>

@@ -8,7 +8,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
-import {Link} from "react-router";
+import {Link} from "react-router-dom";
 import '../../styles/User.scss';
 import MbCard from "../MbCard";
 import NoData from "../NoData";

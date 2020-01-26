@@ -10,7 +10,7 @@ import {connect} from "react-redux";
 import * as selectors from "../selectors";
 import {handleLogout, navigateHome, showGoPremiumModal} from "../actions/index";
 import PropTypes from 'prop-types';
-import {Link} from "react-router";
+import {Link} from "react-router-dom";
 import {Logo} from "../styles/Logo";
 
 class MeebaAppBar extends Component {
