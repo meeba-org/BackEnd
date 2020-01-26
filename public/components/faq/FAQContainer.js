@@ -141,7 +141,7 @@ class FAQContainer extends Component {
 
     expandQuestionIfNeeded = () => {
         const {data} = this.state;
-        const {params} = this.props;
+        const {params} = this.props.match;
         let name = params.name;
         if (!name)
             return;
@@ -173,7 +173,7 @@ class FAQContainer extends Component {
 
     render() {
         const {data} = this.state;
-        const {params} = this.props;
+        const {params} = this.props.match;
 
         return (
             <div styleName="faq">

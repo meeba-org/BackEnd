@@ -1,11 +1,9 @@
 import MomentUtils from "@date-io/moment";
-import {Switch} from "@material-ui/core";
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import PropTypes from 'prop-types';
 import React from 'react';
 import connect from "react-redux/es/connect/connect";
-import {Route} from "react-router-dom";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {handleResize} from "../actions";
 import {fetchMetaData} from "../actions/generalActions";
 import "../styles/App.scss";
@@ -36,9 +34,9 @@ class AppContainer extends React.Component {
 
                 <BrowserRouter>
                     <Switch>
-                        <Route path="/home" component={Home}/>
-                {/*        <Route path="/faq(/:name)" component={FAQContainer} />*/}
-                {/*        <Route path="/paymentSuccess" component={PaymentSuccessRedirectContainer} />*/}
+                        <Route path="/home" component={Home} />
+                        <Route path="/faq/:name?" component={FAQContainer} />
+                        <Route path="/paymentSuccess" component={PaymentSuccessRedirectContainer} />
                     </Switch>
                 </BrowserRouter>
                 <ModalRoot />
