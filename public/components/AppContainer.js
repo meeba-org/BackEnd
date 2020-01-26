@@ -3,7 +3,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import PropTypes from 'prop-types';
 import React from 'react';
 import connect from "react-redux/es/connect/connect";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {handleResize} from "../actions";
 import {fetchMetaData} from "../actions/generalActions";
 import "../styles/App.scss";
@@ -37,6 +37,7 @@ class AppContainer extends React.Component {
                         <Route path="/home" component={Home} />
                         <Route path="/faq/:name?" component={FAQContainer} />
                         <Route path="/paymentSuccess" component={PaymentSuccessRedirectContainer} />
+                        <Redirect from="/" to="/home" />
                     </Switch>
                 </BrowserRouter>
                 <ModalRoot />
