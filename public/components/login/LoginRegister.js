@@ -27,15 +27,13 @@ class LoginRegister extends Component {
     };
 
     handleClose = () => {
-        let {dispatch} = this.props;
-
-        dispatch(hideLoginRegisterModal());
+        this.props.hideLoginRegisterModal();
     };
 
     handleSubmit = (values) => {
-        let {dispatch, router} = this.props;
+        let {history, handleLogin} = this.props;
 
-        return dispatch(handleLogin(values, router));
+        handleLogin(values, history);
     };
 
     render() {
@@ -106,12 +104,17 @@ LoginRegister.propTypes = {
     change: PropTypes.func,
 };
 
+const mapStateToProps = state => ({
+    initialValues: {isLoginMode: true} // pull initial values from account reducer
+});
+
+const mapDispatchToProps = {
+    hideLoginRegisterModal,
+    handleLogin
+};
+
 // You have to connect() to any reducers that you wish to connect to yourself
-export default connect(
-    () => ({
-        initialValues: {isLoginMode: true} // pull initial values from account reducer
-    })
-)(reduxForm({
+export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
     form: 'loginRegisterForm' // a unique identifier for this form
 })(withRouter(LoginRegister)));
 

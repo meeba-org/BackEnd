@@ -42,8 +42,8 @@ class AppContainer extends React.Component {
                         <Route path="/paymentSuccess" component={PaymentSuccessRedirectContainer} />
                         <Redirect from="/" to="/home" />
                     </Switch>
+                    <ModalRoot />
                 </BrowserRouter>
-                <ModalRoot />
             </MuiPickersUtilsProvider>
         );
     }

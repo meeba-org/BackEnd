@@ -12,7 +12,7 @@ function handleLoginStart() {
     };
 }
 
-function handleLoginSuccess(response, router, isLoginMode) {
+function handleLoginSuccess(response, history, isLoginMode) {
     let user = response.data.user;
     if (!!user && !isUserAllowedLogin(user))
         throw new Error('אין הרשאות מתאימות');
@@ -20,7 +20,7 @@ function handleLoginSuccess(response, router, isLoginMode) {
     localStorage.setItem('jwtToken', response.data.token);
     localStorage.setItem('activeUser', JSON.stringify(response.data.user));
 
-    router.push('/dashboard');
+    history.push('/dashboard');
     return {
         type: actionsTypes.HANDLE_LOGIN_SUCCESS,
         ga: {
@@ -29,15 +29,14 @@ function handleLoginSuccess(response, router, isLoginMode) {
     };
 }
 
-export function handleLogin(values, router) {
-    return function (dispatch) {
+export const handleLogin = (values, history) => dispatch => {
         let route = values.isLoginMode ? "login" : "register";
 
         dispatch(handleLoginStart());
         return axios.post(`${config.ROOT_URL}/${route}`, values)
             .then((response) => {
                 dispatch(hideLoginRegisterModal());
-                dispatch(handleLoginSuccess(response, router, values.isLoginMode));
+            dispatch(handleLoginSuccess(response, history, values.isLoginMode));
             })
             .catch((err) => {
                 let message = 'Unknown Error';
@@ -53,26 +52,19 @@ export function handleLogin(values, router) {
                 });
             });
     };
-}
 
-export function handleLogout(router) {
-    return function () {
-        localStorage.removeItem('jwtToken');
-        router.push('/home');
-    };
-}
+export const handleLogout = history => () => {
+    localStorage.removeItem('jwtToken');
+    history.push('/home');
+};
 
-export function navigateHome(router) {
-    return function () {
-        router.push('/');
-    };
-}
+export const navigateHome = history => () => {
+    history.push('/');
+};
 
-export function meFromToken() {
-    return {
-        type: actionsTypes.ME_FROM_TOKEN,
-    };
-}
+export const meFromToken = () => ({
+    type: actionsTypes.ME_FROM_TOKEN,
+});
 
 export function meFromTokenSuccess(currentUser) {
     return {
