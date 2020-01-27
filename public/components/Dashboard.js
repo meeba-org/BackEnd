@@ -30,14 +30,14 @@ class Dashboard extends React.PureComponent {
     };
 
     render() {
-        let {router, userRole, isDesktop, isTasksFeatureEnable, children} = this.props;
+        let {userRole, isDesktop, isTasksFeatureEnable, children} = this.props;
         let open = this.isOpen();
 
         return (
             <div styleName="dashboard">
                 <div styleName="dashboard-container">
                     <div styleName="appBar-container">
-                        <AppBar router={router} onLogoClick={this.toggleDrawer} isDesktop={!!isDesktop}/>
+                        <AppBar onLogoClick={this.toggleDrawer} isDesktop={!!isDesktop}/>
                     </div>
                     <div styleName="grid-container">
                         <Paper styleName={"sideBar-container" + (isDesktop ? " isDesktop" : "")}>
@@ -50,7 +50,8 @@ class Dashboard extends React.PureComponent {
                             />
                         </Paper>
                         <Paper styleName="main-container">
-                            {children}
+                            {/*{children}*/}
+                            Content
                         </Paper>
                     </div>
                 </div>
@@ -62,7 +63,6 @@ class Dashboard extends React.PureComponent {
 Dashboard.propTypes = {
     loadDashboardData: PropTypes.func.isRequired,
     children: PropTypes.object,
-    router: PropTypes.object.isRequired,
     userRole: PropTypes.string,
     isDesktop: PropTypes.bool
 };

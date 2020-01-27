@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import '../styles/AppBar.scss';
 import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
 import * as selectors from "../selectors";
 import {handleLogout, navigateHome, showGoPremiumModal} from "../actions/index";
 import PropTypes from 'prop-types';
@@ -15,14 +16,14 @@ import {Logo} from "../styles/Logo";
 
 class MeebaAppBar extends Component {
     onLogout = () => {
-        let {logout, router} = this.props;
-        logout(router);
+        let {logout, history} = this.props;
+        logout(history);
     };
 
     onLogoClick = () => {
-        let {navigateHome, router, isDesktop, onLogoClick} = this.props;
+        let {navigateHome, history, isDesktop, onLogoClick} = this.props;
         if (isDesktop)
-            navigateHome(router);
+            navigateHome(history);
         else
             onLogoClick();
     };
@@ -57,7 +58,7 @@ MeebaAppBar.propTypes = {
     logout: PropTypes.func.isRequired,
     onLogoClick: PropTypes.func.isRequired,
     navigateHome: PropTypes.func.isRequired,
-    router: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     companyName: PropTypes.string.isRequired,
     isDesktop: PropTypes.bool,
     hasPremium: PropTypes.bool,
@@ -70,15 +71,13 @@ const mapStateToProps = state => ({
     isLoading: state.loader.isLoading
 });
 
-function mapDispatchToProps(dispatch) {
-    return {
-        logout: (router) => dispatch(handleLogout(router)),
-        navigateHome: (router) => dispatch(navigateHome(router)),
-        showGoPremiumModal: () => dispatch(showGoPremiumModal())
+const mapDispatchToProps = {
+    logout: handleLogout,
+    navigateHome,
+    showGoPremiumModal,
     };
-}
 
 export default connect(
     mapStateToProps, mapDispatchToProps
-)(MeebaAppBar);
+)(withRouter(MeebaAppBar));
 

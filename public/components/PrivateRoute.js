@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect, Route} from "react-router";
+import {Redirect, Route} from "react-router-dom";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (<Route {...rest} render={(props) => {
     const token = localStorage.getItem('jwtToken');
