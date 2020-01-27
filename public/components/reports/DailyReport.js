@@ -67,7 +67,7 @@ class DailyReport extends React.PureComponent {
     };
 
     navigateToEmployees = () => {
-        this.props.router.push('/dashboard/employees');
+        this.props.history.push('/dashboard/employees');
     };
 
     render() {
@@ -178,7 +178,7 @@ DailyReport.propTypes = {
     onDayChange: PropTypes.func.isRequired,
     mode: PropTypes.number.isRequired,
     theme: PropTypes.object,
-    router: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
 };
 

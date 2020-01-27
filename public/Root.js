@@ -62,7 +62,6 @@ const Root = () => (
         <StylesProvider jss={jss}>
             <ThemeProvider theme={theme}>
                 <AppContainer />
-                {/*<Router history={history} routes={routes}/>*/}
             </ThemeProvider>
         </StylesProvider>
     </Provider>
