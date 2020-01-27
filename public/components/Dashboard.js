@@ -2,10 +2,16 @@ import Paper from "@material-ui/core/Paper";
 import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from "react-redux";
+import {Redirect, Route, withRouter, Switch} from "react-router-dom";
 import {loadDashboardData} from "../actions/generalActions";
+import {ReportModes} from "../helpers/utils";
 import * as selectors from "../selectors";
 import "../styles/Dashboard.scss";
 import AppBar from "./AppBar";
+import EmployeesContainer from "./employees/EmployeesContainer";
+import DailyReportContainer from "./reports/DailyReportContainer";
+import Report from "./reports/Report";
+import Settings from "./Settings";
 import SideBarContainer from "./SideBarContainer";
 
 class Dashboard extends React.PureComponent {
@@ -30,7 +36,7 @@ class Dashboard extends React.PureComponent {
     };
 
     render() {
-        let {userRole, isDesktop, isTasksFeatureEnable, children} = this.props;
+        let {userRole, isDesktop, isTasksFeatureEnable, match: {path} } = this.props;
         let open = this.isOpen();
 
         return (
@@ -50,8 +56,13 @@ class Dashboard extends React.PureComponent {
                             />
                         </Paper>
                         <Paper styleName="main-container">
-                            {/*{children}*/}
-                            Content
+                            <Switch>
+                                <Route path={`${path}/employees`} component={EmployeesContainer}/>
+                                <Route path={`${path}/settings`} component={Settings}/>
+                                <Route path={`${path}/report`} component={Report}/>
+                                <Route path={`${path}/live`} component={() => <DailyReportContainer mode={ReportModes.Live}/>}/>
+                                <Redirect from="*" to="/dashboard/live"/>
+                            </Switch>
                         </Paper>
                     </div>
                 </div>
@@ -62,7 +73,6 @@ class Dashboard extends React.PureComponent {
 
 Dashboard.propTypes = {
     loadDashboardData: PropTypes.func.isRequired,
-    children: PropTypes.object,
     userRole: PropTypes.string,
     isDesktop: PropTypes.bool
 };
@@ -79,5 +89,5 @@ const mapDispatchToProps = {
     loadDashboardData,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Dashboard));
 
