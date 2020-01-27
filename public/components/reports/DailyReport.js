@@ -44,13 +44,13 @@ class DailyReport extends React.PureComponent {
         this.props.onDayChange(currentDay);
     }
 
-    handleClickOpen() {
+    handleClickOpen = () => {
         this.setState({open: true});
-    }
+    };
 
-    handleRequestClose() {
+    handleRequestClose = () => {
         this.setState({open: false});
-    }
+    };
 
     onClockIn = (employee) => {
         let shift = createShiftForClockIn(employee);
