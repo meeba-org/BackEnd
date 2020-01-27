@@ -7,7 +7,6 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import {hideMobileAppModal} from "../../actions/index";
 import PropTypes from 'prop-types';
 
@@ -22,15 +21,13 @@ class MobileAppLinksModal extends Component {
         return (
             <Dialog onClose={this.handleCancel} open={open}>
                 <DialogTitle>{"העתק הודעה זו ושלח לעובדים:"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        <Typography styleName="header">עובד יקר,</Typography>
-                        <Typography>התחלנו להשתמש בשעון הנוכחות "מיבא".</Typography>
-                        <Typography styleName="header">אנא הורד את האפליקציה:</Typography>
-                        <Typography>אנדרואיד - https://goo.gl/iGzWxX</Typography>
-                        <Typography>או ​</Typography>
-                        <Typography>אייפון - https://goo.gl/L6WKJc</Typography>
-                    </DialogContentText>
+                <DialogContent styleName="content">
+                    <Typography styleName="header">עובד יקר,</Typography>
+                    <Typography>התחלנו להשתמש בשעון הנוכחות "מיבא".</Typography>
+                    <Typography styleName="header">אנא הורד את האפליקציה:</Typography>
+                    <Typography>אנדרואיד - https://goo.gl/iGzWxX</Typography>
+                    <Typography>או ​</Typography>
+                    <Typography>אייפון - https://goo.gl/L6WKJc</Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.handleCancel} color="primary">
