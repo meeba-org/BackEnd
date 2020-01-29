@@ -91,13 +91,13 @@ class AddShiftsDialog extends PureComponent {
                 <DialogTitle>הוספת משמרת</DialogTitle>
                 <DialogContent>
                     <div styleName="pickers">
-                        <DatePicker autoOk onChange={(date) => this.onUpdateDateChange(date)}
+                        <DatePicker styleName="picker" autoOk onChange={(date) => this.onUpdateDateChange(date)}
                                     value={startDate || defaultStartDateMoment}
                                     format="DD/MM/YYYY"
-                                    style={{margin: "0 10px"}}
                         />
 
                         <TimePicker
+                            styleName="picker"
                             ampm={false}
                             autoOk
                             value={startTime}
