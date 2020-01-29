@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 import {convertTimeStrToMoment2, createShift, DATE_FORMAT} from "../helpers/utils";
 import CheckBoxList from "./CheckBoxList";
-
+import "../styles/AddShiftDialog.scss";
 
 class AddShiftsDialog extends PureComponent {
 
@@ -90,26 +90,27 @@ class AddShiftsDialog extends PureComponent {
             <Dialog open={open} onClose={this.onCancel}>
                 <DialogTitle>הוספת משמרת</DialogTitle>
                 <DialogContent>
-                    <DatePicker autoOk onChange={(date) => this.onUpdateDateChange(date)}
-                                value={startDate || defaultStartDateMoment}
-                                format="DD/MM/YYYY"
-                                style={{margin: "0 10px"}}
-                    />
+                    <div styleName="pickers">
+                        <DatePicker autoOk onChange={(date) => this.onUpdateDateChange(date)}
+                                    value={startDate || defaultStartDateMoment}
+                                    format="DD/MM/YYYY"
+                                    style={{margin: "0 10px"}}
+                        />
 
-                    <TimePicker
-                        ampm={false}
-                        autoOk
-                        value={startTime}
-                        onChange={(time) => this.onUpdateStartTime(time)}
-                    />
+                        <TimePicker
+                            ampm={false}
+                            autoOk
+                            value={startTime}
+                            onChange={(time) => this.onUpdateStartTime(time)}
+                        />
 
-                    <TimePicker
-                        ampm={false}
-                        autoOk
-                        value={moment(endTime)}
-                        onChange={(time) => this.onUpdateEndTime(time)}
-                    />
-
+                        <TimePicker
+                            ampm={false}
+                            autoOk
+                            value={moment(endTime)}
+                            onChange={(time) => this.onUpdateEndTime(time)}
+                        />
+                    </div>
                     <CheckBoxList
                         items={employees}
                         onCheck={(employee, check) => this.toggleEmployee(employee, check)}
