@@ -7,15 +7,15 @@
 <head>
     <!-- jss-insertion-point -->
 
-    <!-- Google Analytics -->
-    <script defer>
-        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-        ga('create', 'UA-113133547-1', 'auto');
-        ga('send', 'pageview');
-    </script>
+<!--    &lt;!&ndash; Google Analytics &ndash;&gt;-->
+<!--    <script defer>-->
+<!--        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;-->
+<!--        ga('create', 'UA-113133547-1', 'auto');-->
+<!--        ga('send', 'pageview');-->
+<!--    </script>-->
 
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <!-- End Google Analytics -->
+<!--    <script async src='https://www.google-analytics.com/analytics.js'></script>-->
+<!--    &lt;!&ndash; End Google Analytics &ndash;&gt;-->
 
     <!--
       The htmlWebpackPlugin will parse the logic below so that trackJS is only added to the production version of index.html (since only webpack.config.prod.js provides the trackJS token)
@@ -41,99 +41,99 @@
     <meta property="fb:app_id" content="976991712448032" />
     <script src="./site.js"></script>
     <!-- Schema.org -->
-    <script type="application/ld+json">
-    {
-      "@context" : "http://schema.org",
-      "@type" : "SoftwareApplication",
-      "name" : "מיבא",
-      "description": "שעון נוכחות",
-      "applicationCategory": "שעון נוכחות",
-      "operatingSystem": "Android, OSX, Windows 7, Windows 10",
-      "countriesSupported": "Israel",
-      "screenshot": "https://www.meeba.co.il/1.png",
+<!--    <script type="application/ld+json">-->
+<!--    {-->
+<!--      "@context" : "http://schema.org",-->
+<!--      "@type" : "SoftwareApplication",-->
+<!--      "name" : "מיבא",-->
+<!--      "description": "שעון נוכחות",-->
+<!--      "applicationCategory": "שעון נוכחות",-->
+<!--      "operatingSystem": "Android, OSX, Windows 7, Windows 10",-->
+<!--      "countriesSupported": "Israel",-->
+<!--      "screenshot": "https://www.meeba.co.il/1.png",-->
 
-      "offers" : {
-        "@type" : "Offer",
-        "price" : "0",
-        "priceCurrency": "ILS"
-      }
-    }
+<!--      "offers" : {-->
+<!--        "@type" : "Offer",-->
+<!--        "price" : "0",-->
+<!--        "priceCurrency": "ILS"-->
+<!--      }-->
+<!--    }-->
 
-    </script>
+<!--    </script>-->
     <!-- Schema.org - END -->
 
     <!-- WalkMe - START -->
-    <script type="text/javascript" defer>(function () {
-            var walkme = document.createElement('script');
-            walkme.type = 'text/javascript';
-            walkme.async = true;
-            walkme.src = 'https://cdn.walkme.com/users/4d8254542a094c44ae1d9553b3b2554a/walkme_4d8254542a094c44ae1d9553b3b2554a_https.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(walkme, s);
-            window._walkmeConfig = {smartLoad: true};
-        })();
-    </script>
+<!--    <script type="text/javascript" defer>(function () {-->
+<!--            var walkme = document.createElement('script');-->
+<!--            walkme.type = 'text/javascript';-->
+<!--            walkme.async = true;-->
+<!--            walkme.src = 'https://cdn.walkme.com/users/4d8254542a094c44ae1d9553b3b2554a/walkme_4d8254542a094c44ae1d9553b3b2554a_https.js';-->
+<!--            var s = document.getElementsByTagName('script')[0];-->
+<!--            s.parentNode.insertBefore(walkme, s);-->
+<!--            window._walkmeConfig = {smartLoad: true};-->
+<!--        })();-->
+<!--    </script>-->
     <!-- WalkMe - END -->
 </head>
 <body dir="rtl">
 
     <!-- Your customer chat code -->
-    <div class="fb-customerchat"
-         page_id="2039324052970425"
-         theme_color="#ff7e29"
-         greeting_dialog_display="fade"
-         greeting_dialog_delay=5
-         logged_in_greeting="הי, זהו מענה אנושי מאויש 24 שעות, נסה אותי!"
-         logged_out_greeting="הי, זהו מענה אנושי מאויש 24 שעות, נסה אותי!">
-    </div>
+<!--    <div class="fb-customerchat"-->
+<!--         page_id="2039324052970425"-->
+<!--         theme_color="#ff7e29"-->
+<!--         greeting_dialog_display="fade"-->
+<!--         greeting_dialog_delay=5-->
+<!--         logged_in_greeting="הי, זהו מענה אנושי מאויש 24 שעות, נסה אותי!"-->
+<!--         logged_out_greeting="הי, זהו מענה אנושי מאויש 24 שעות, נסה אותי!">-->
+<!--    </div>-->
 
 <div id="react-app"></div>
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<script>
-    WebFontConfig = {
-        google: { families: [ 'Assistant:hebrew' ] }
-    };
+<link rel="preconnect" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!--<script>-->
+<!--    WebFontConfig = {-->
+<!--        google: { families: [ 'Assistant:hebrew' ] }-->
+<!--    };-->
 
-    (function (d) {
-        var wf = d.createElement('script'), s = d.scripts[0];
-        wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
-        wf.async = true;
-        s.parentNode.insertBefore(wf, s);
-    })(document);
-</script>
+<!--    (function (d) {-->
+<!--        var wf = d.createElement('script'), s = d.scripts[0];-->
+<!--        wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';-->
+<!--        wf.async = true;-->
+<!--        s.parentNode.insertBefore(wf, s);-->
+<!--    })(document);-->
+<!--</script>-->
 </body>
 <!-- Facebook Customer Chat Plugin -->
 <!-- Load Facebook SDK for JavaScript -->
-<div id="fb-root"></div>
-<script defer>
-    window.fbAsyncInit = function() {
-        FB.init({
-            xfbml            : true,
-            version          : 'v3.3'
-        });
-    };
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/he_IL/sdk/xfbml.customerchat.js';
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-    <!-- Facebook Customer Chat Plugin - END -->
-</script>
+<!--<div id="fb-root"></div>-->
+<!--<script defer>-->
+<!--    window.fbAsyncInit = function() {-->
+<!--        FB.init({-->
+<!--            xfbml            : true,-->
+<!--            version          : 'v3.3'-->
+<!--        });-->
+<!--    };-->
+<!--    (function(d, s, id) {-->
+<!--        var js, fjs = d.getElementsByTagName(s)[0];-->
+<!--        if (d.getElementById(id)) return;-->
+<!--        js = d.createElement(s); js.id = id;-->
+<!--        js.src = 'https://connect.facebook.net/he_IL/sdk/xfbml.customerchat.js';-->
+<!--        fjs.parentNode.insertBefore(js, fjs);-->
+<!--    }(document, 'script', 'facebook-jssdk'));-->
+<!--    &lt;!&ndash; Facebook Customer Chat Plugin - END &ndash;&gt;-->
+<!--</script>-->
 
 <!-- loading defered images -->
-<script>
-    function init() {
-        var imgDefer = document.getElementsByTagName('img');
-        for (var i = 0; i < imgDefer.length; i++) {
-            if (imgDefer[i].getAttribute('data-src')) {
-                imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
-            }
-        }
-    }
+<!--<script>-->
+<!--    function init() {-->
+<!--        var imgDefer = document.getElementsByTagName('img');-->
+<!--        for (var i = 0; i < imgDefer.length; i++) {-->
+<!--            if (imgDefer[i].getAttribute('data-src')) {-->
+<!--                imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));-->
+<!--            }-->
+<!--        }-->
+<!--    }-->
 
-    window.onload = init;
-</script>
+<!--    window.onload = init;-->
+<!--</script>-->
 
 </html>

@@ -14,7 +14,7 @@ class Header extends Component {
         const {showLoginRegisterDialog} = this.props;
         return (
             <div id="header1" styleName="header">
-                <HomeAppBar/>
+                {/*<HomeAppBar/>*/}
                 <div styleName="content">
                     <div styleName="middle-content">
                         <div styleName="title">

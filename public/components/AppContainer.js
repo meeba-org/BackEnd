@@ -34,16 +34,17 @@ class AppContainer extends React.Component {
     render() {
         return (
             <MuiPickersUtilsProvider utils={MomentUtils}>
-                <BrowserRouter>
-                    <Switch>
-                        <Route path="/home" component={Home} />
-                        <LazyPrivateRoute path="/dashboard" component={Dashboard} />
-                        <Route path="/faq/:name?" component={FAQContainer} />
-                        <Route path="/paymentSuccess" component={PaymentSuccessRedirectContainer} />
-                        <Redirect from="/" to="/home" />
-                    </Switch>
+                <Home />
+                {/*<BrowserRouter>*/}
+                {/*    <Switch>*/}
+                {/*        <Route path="/home" component={Home} />*/}
+                {/*        <LazyPrivateRoute path="/dashboard" component={Dashboard} />*/}
+                {/*        <Route path="/faq/:name?" component={FAQContainer} />*/}
+                {/*        <Route path="/paymentSuccess" component={PaymentSuccessRedirectContainer} />*/}
+                {/*        <Redirect from="/" to="/home" />*/}
+                {/*    </Switch>*/}
                     <ModalRoot />
-                </BrowserRouter>
+                {/*</BrowserRouter>*/}
             </MuiPickersUtilsProvider>
         );
     }
