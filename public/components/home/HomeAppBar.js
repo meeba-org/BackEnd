@@ -24,7 +24,7 @@ class HomeAppBar extends Component {
     }
 
     topScrollListener = () => {
-        const isTop = window.scrollY < 100;
+        const isTop = window.scrollY < 60;
         if (isTop !== this.state.isTop) {
             this.setState({isTop});
         }
