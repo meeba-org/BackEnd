@@ -21,5 +21,6 @@
     <orderEntry type="library" name="bluesnap" level="application" />
     <orderEntry type="library" name="@types/react-dom" level="application" />
     <orderEntry type="library" name="node_modules" level="project" />
+    <orderEntry type="library" name="@types/css-modules" level="application" />
   </component>
 </module>
