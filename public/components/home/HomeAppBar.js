@@ -37,7 +37,7 @@ class HomeAppBar extends Component {
 
         return (
             <AppBar position="fixed" styleName={`home-app-bar ${isTopClass}`}>
-                <Toolbar styleName="toolbar">
+                <Toolbar styleName={`toolbar ${isTopClass}`}>
                     <div styleName="right-buttons-group">
                         <Link to="/home" styleName="link">
                             <IconButton aria-label="Menu" color="inherit">

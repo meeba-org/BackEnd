@@ -14,6 +14,12 @@
         display: flex;
         justify-content: space-between;
         color: white;
+        transition: min-height 300ms linear;
+        min-height: 40px;
+
+        &.isTop {
+            min-height: 65px;
+        }
 
         .link {
             color: inherit;
