@@ -49,7 +49,7 @@ router.post('/register',
 //POST /login user
 router.post('/login',
     [
-        body('uid', "אנא הכנס שם משתמש").exists(),
+        body('uid', "אנא הכנס שם משתמש").not().isEmpty(),
     ],
     (req, res) => routeWrapper(req, res, (req, res) => {
         let identifier = req.body.uid;

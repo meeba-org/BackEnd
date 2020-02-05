@@ -5,31 +5,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-height: 245px;
     max-width: 310px;
-    font-family: 'Assistant';
-
-    .title {
-        display: flex;
-        flex: 1 0 auto;
-        justify-content: flex-end;
-        flex-direction: column;
-        background-color: $primary;
-        color: white;
-        text-align: right;
-        font-size: 32px;
-        padding-bottom: 5px;
-        height: 70px;
-        width: 100%;
-
-        .title-text {
-            margin-right: 20px;
-        }
-    }
-
-    form {
-        width: 70%;
-    }
+    transition: max-height 300ms linear;
 
     .error-msg {
         margin-top: 10px;
@@ -42,16 +19,13 @@
         justify-content: center;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
 
         .login-button  {
-            margin: 20px 20px 10px 20px;
-            width: 120px;
-
-            span {
-                font-size: 16px;
-                margin-left: 5px;
-            }
+            margin-top: 20px;
+            margin-bottom: 10px;
+            padding-left: 25px;
+            padding-right: 20px;
         }
 
         .footer-text {
@@ -64,7 +38,6 @@
             }
 
             .change-mode {
-                //font-weight: bold;
                 cursor: pointer;
             }
 

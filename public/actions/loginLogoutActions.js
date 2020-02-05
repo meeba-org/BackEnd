@@ -1,5 +1,4 @@
 import axios from 'axios';
-import SubmissionError from "redux-form/es/SubmissionError";
 import config from "../config";
 import {GACategory} from "../helpers/GATypes";
 import {isUserAllowedLogin} from "../helpers/utils";
@@ -29,14 +28,14 @@ function handleLoginSuccess(response, history, isLoginMode) {
     };
 }
 
-export const handleLogin = (values, history) => dispatch => {
-        let route = values.isLoginMode ? "login" : "register";
+export const handleLogin = (values, isLoginMode, history, onError) => dispatch => {
+        let route = isLoginMode ? "login" : "register";
 
         dispatch(handleLoginStart());
         return axios.post(`${config.ROOT_URL}/${route}`, values)
             .then((response) => {
                 dispatch(hideLoginRegisterModal());
-            dispatch(handleLoginSuccess(response, history, values.isLoginMode));
+            dispatch(handleLoginSuccess(response, history, isLoginMode));
             })
             .catch((err) => {
                 let message = 'Unknown Error';
@@ -47,9 +46,7 @@ export const handleLogin = (values, history) => dispatch => {
                         message = err.message;
                 }
 
-                throw new SubmissionError({
-                    _error: message
-                });
+                onError(message);
             });
     };
 

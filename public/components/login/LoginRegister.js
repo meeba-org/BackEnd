@@ -2,42 +2,55 @@
  * Created by Chen on 16/07/2017.
  */
 
+import {DialogContent, DialogTitle, TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import Typography from "@material-ui/core/Typography";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import Field from "redux-form/es/Field";
-import reduxForm from "redux-form/es/reduxForm";
 import {handleLogin, hideLoginRegisterModal} from "../../actions";
 import "../../styles/LoginRegister.scss";
-import {renderTextField} from '../material-ui-wrappers';
 
 class LoginRegister extends Component {
 
     state = {
-        isLoginMode: true
+        isLoginMode: true,
+        error: ""
     };
 
     toggleLoginMode= () => {
         this.setState({isLoginMode: !this.state.isLoginMode});
-        this.props.change('isLoginMode', !this.state.isLoginMode);
     };
 
     handleClose = () => {
         this.props.hideLoginRegisterModal();
     };
 
-    handleSubmit = (values) => {
+    handleSubmit = () => {
         let {history, handleLogin} = this.props;
+        let {values, isLoginMode} = this.state;
 
-        handleLogin(values, history);
+        handleLogin(values, isLoginMode, history, (error) => this.setState({error}));
     };
 
+    handleChange = (event) => {
+        const {name, value} = event.target;
+        const {values} = this.state;
+        this.setState({
+            values: {
+                ...values,
+                [name]: value,
+            },
+            error: ""
+        });
+    };
+
+
     render() {
-        let {handleSubmit, handleChange, error, open} = this.props;
+        let {open} = this.props;
+        const {error} = this.state;
         let {isLoginMode} = this.state;
 
         let buttonText = isLoginMode ? "היכנס" : "הירשם";
@@ -47,50 +60,49 @@ class LoginRegister extends Component {
         return (
             <Dialog open={open} onClose={this.handleClose}>
                 <div styleName="login-register">
-                        <div styleName="title">
-                            <div styleName="title-text">
-                            ברוך הבא!
+                    <DialogTitle>ברוך הבא!</DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            label="שם משתמש"
+                            placeholder="שם משתמש"
+                            name={isLoginMode ? "uid" : "username"}
+                            autoComplete="username"
+                            onChange={this.handleChange}
+                            fullWidth
+                            autoFocus
+                        />
+                        <TextField
+                            label="סיסמא"
+                            placeholder="סיסמא"
+                            type="password"
+                            name="password"
+                            autoComplete="current-password"
+                            onChange={this.handleChange}
+                            fullWidth
+                        />
+                        {!isLoginMode &&
+                        <TextField
+                            label="אימות סיסמא"
+                            placeholder="אימות סיסמא"
+                            type="password"
+                            name="retypePassword"
+                            onChange={this.handleChange}
+                            autoComplete="current-password"
+                            fullWidth
+                        />
+                        }
+                        {error && <Typography styleName="error-msg">{error}</Typography>}
+                        <div styleName="login-register-footer">
+                            <Button variant="contained" color="primary" type="submit" styleName="login-button" onClick={this.handleSubmit}>
+                                <Typography>{buttonText}</Typography>
+                                <ArrowBackIcon/>
+                            </Button>
+                            <div styleName="footer-text">
+                                <Typography styleName="question">{footerTextQuestion}</Typography>
+                                <Typography styleName="change-mode" onClick={this.toggleLoginMode}>{changeModeText}</Typography>
                             </div>
                         </div>
-                        <form onSubmit={handleSubmit(this.handleSubmit)}>
-                                <Field
-                                       fullWidth={true}
-                                       component={renderTextField}
-                                       onChange={handleChange}
-                                       label="שם משתמש"
-                                       name={isLoginMode ? "uid" : "username"}
-                                       autoComplete="username"
-                                       autoFocus
-                                />
-                                <Field component={renderTextField}
-                                       fullWidth={true}
-                                       onChange={handleChange}
-                                       label="סיסמא"
-                                       type="password"
-                                       name="password"
-                                       autoComplete="current-password"
-                                />
-                            {!isLoginMode &&
-                                <Field component={renderTextField}
-                                       fullWidth={true}
-                                       onChange={handleChange}
-                                       label="אימות סיסמא"
-                                       type="password"
-                                       name="retypePassword"
-                                />
-                            }
-                            {error && <div styleName="error-msg">{error}</div>}
-                            <div styleName="login-register-footer">
-                                <Button variant="contained" color="primary" type="submit" styleName="login-button">
-                                    <span>{buttonText}</span>
-                                    <ArrowBackIcon/>
-                                </Button>
-                                <div styleName="footer-text">
-                                    <div styleName="question">{footerTextQuestion}</div>
-                                    <div styleName="change-mode" onClick={this.toggleLoginMode}>{changeModeText}</div>
-                                </div>
-                            </div>
-                        </form>
+                    </DialogContent>
                 </div>
             </Dialog>
         );
@@ -98,23 +110,12 @@ class LoginRegister extends Component {
 }
 
 LoginRegister.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    handleChange: PropTypes.func,
-    error: PropTypes.string,
-    change: PropTypes.func,
 };
-
-const mapStateToProps = state => ({
-    initialValues: {isLoginMode: true} // pull initial values from account reducer
-});
 
 const mapDispatchToProps = {
     hideLoginRegisterModal,
     handleLogin
 };
 
-// You have to connect() to any reducers that you wish to connect to yourself
-export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
-    form: 'loginRegisterForm' // a unique identifier for this form
-})(withRouter(LoginRegister)));
+export default connect(null, mapDispatchToProps)(withRouter(LoginRegister));
 
