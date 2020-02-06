@@ -100,7 +100,8 @@ class DailyReport extends React.PureComponent {
                             <MbActionsControls>
                                 <DatePicker autoOk onChange={(date) => this.handleChange(date)} value={currentDay}
                                             format="DD/MM/YYYY"
-                                            style={{margin: "0 10px"}}
+                                            styleName="date"
+                                            inputProps={{style: {textAlign: "center"}}}
                                 />
 
                                 <MbActionButton
@@ -108,13 +109,12 @@ class DailyReport extends React.PureComponent {
                                     iconComponent={NavigateNext}
                                     tooltip="יום אחורה"
                                 />
+
                                 <MbActionButton
                                     onClick={this.onNextDay}
                                     iconComponent={NavigateBefore}
                                     tooltip="יום קדימה"
-                                    disabled={
-                                        moment(currentDay).isSame(new Date(), "day")
-                                    }
+                                    disabled={moment(currentDay).isSame(new Date(), "day")}
                                 />
 
                                 <Tooltip title="הוספת משמרת" placement="top">

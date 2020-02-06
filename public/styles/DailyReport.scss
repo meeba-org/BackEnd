@@ -1,8 +1,9 @@
 @import "./Dashboard";
 
 .daily-report {
-    .daily-date {
-        margin-right: 10px;
+    .date {
+        margin-left: 10px;
+        max-width: 90px;
     }
 }
 
