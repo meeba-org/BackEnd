@@ -5,7 +5,10 @@
 import {DialogContent, DialogTitle, TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import Typography from "@material-ui/core/Typography";
+import {Visibility, VisibilityOff} from "@material-ui/icons";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import React, {Component} from 'react';
 import {connect} from "react-redux";
@@ -17,6 +20,7 @@ class LoginRegister extends Component {
 
     state = {
         isLoginMode: true,
+        showPassword: false,
         error: ""
     };
 
@@ -58,7 +62,7 @@ class LoginRegister extends Component {
     render() {
         let {open} = this.props;
         const {error} = this.state;
-        let {isLoginMode} = this.state;
+        let {isLoginMode, showPassword} = this.state;
 
         let buttonText = isLoginMode ? "היכנס" : "הירשם";
         let footerTextQuestion = isLoginMode ? "עדיין לא נרשמת?" : "נרשמת כבר?";
@@ -82,18 +86,30 @@ class LoginRegister extends Component {
                         <TextField
                             label="סיסמא"
                             placeholder="סיסמא"
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             autoComplete="current-password"
                             onChange={this.handleChange}
                             onKeyPress={this.handleKeyPress}
                             fullWidth
+                            InputProps={{
+                            endAdornment:
+                                <InputAdornment position="end" styleName="password-icon">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={() => this.setState({showPassword: !this.state.showPassword})}
+                                    >
+                                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+
+                            }}
                         />
                         {!isLoginMode &&
                         <TextField
                             label="אימות סיסמא"
                             placeholder="אימות סיסמא"
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="retypePassword"
                             onChange={this.handleChange}
                             onKeyPress={this.handleKeyPress}
