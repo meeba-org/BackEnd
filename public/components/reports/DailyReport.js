@@ -1,5 +1,6 @@
 import withTheme from '@material-ui/core/styles/withTheme';
 import Tooltip from "@material-ui/core/Tooltip";
+import {NavigateBefore, NavigateNext} from "@material-ui/icons";
 import AddIcon from '@material-ui/icons/Add';
 import Warning from "@material-ui/icons/Warning";
 import {DatePicker} from "@material-ui/pickers";
@@ -37,8 +38,22 @@ class DailyReport extends React.PureComponent {
         this.props.onDayChange(this.state.currentDay);
     }
 
+    onNextDay = () => {
+        const {currentDay} = this.state;
+
+        const nextDay = moment(currentDay).add(1, 'days');
+        this.handleChange(nextDay);
+    };
+
+    onPrevDay = () => {
+        const {currentDay} = this.state;
+
+        const prevDay = moment(currentDay).subtract(1, 'days');
+        this.handleChange(prevDay);
+    };
+
     handleChange(date) {
-        let currentDay = date.format("YYYY-MM-DD");
+        let currentDay = date.format(DATE_FORMAT);
 
         this.setState({currentDay});
         this.props.onDayChange(currentDay);
@@ -86,6 +101,20 @@ class DailyReport extends React.PureComponent {
                                 <DatePicker autoOk onChange={(date) => this.handleChange(date)} value={currentDay}
                                             format="DD/MM/YYYY"
                                             style={{margin: "0 10px"}}
+                                />
+
+                                <MbActionButton
+                                    onClick={this.onPrevDay}
+                                    iconComponent={NavigateNext}
+                                    tooltip="יום אחורה"
+                                />
+                                <MbActionButton
+                                    onClick={this.onNextDay}
+                                    iconComponent={NavigateBefore}
+                                    tooltip="יום קדימה"
+                                    disabled={
+                                        moment(currentDay).isSame(new Date(), "day")
+                                    }
                                 />
 
                                 <Tooltip title="הוספת משמרת" placement="top">
