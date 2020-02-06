@@ -12,7 +12,6 @@ import PaymentSuccessRedirectContainer from "./go-premium/PaymentSuccessRedirect
 import Home from "./home/Home";
 import LazyPrivateRoute from "./LazyPrivateRoute";
 import ModalRoot from "./modals/ModalRoot";
-import PrivateRoute from "./PrivateRoute";
 const Dashboard = React.lazy(() => import("../components/Dashboard"));
 
 class AppContainer extends React.Component {
@@ -40,7 +39,7 @@ class AppContainer extends React.Component {
                         <LazyPrivateRoute path="/dashboard" component={Dashboard} />
                         <Route path="/faq/:name?" component={FAQContainer} />
                         <Route path="/paymentSuccess" component={PaymentSuccessRedirectContainer} />
-                        <Redirect from="/" to="/home" />
+                        <Redirect from="/" to="/dashboard" />
                     </Switch>
                     <ModalRoot />
                 </BrowserRouter>

@@ -39,7 +39,7 @@ class HomeAppBar extends Component {
             <AppBar position="fixed" styleName={`home-app-bar ${isTopClass}`}>
                 <Toolbar styleName={`toolbar ${isTopClass}`}>
                     <div styleName="right-buttons-group">
-                        <Link to="/home" styleName="link">
+                        <Link to="/dashboard" styleName="link">
                             <IconButton aria-label="Menu" color="inherit">
                                 <Logo />
                                 <Typography type="title" color="inherit" style={{paddingRight: "10px"}}>
@@ -55,9 +55,6 @@ class HomeAppBar extends Component {
                     <div>
                         {location.pathname !== '/faq' &&
                         <Button color="inherit"><Link to="/faq" styleName="faq">שאלות ותשובות</Link></Button>
-                        }
-                        {location.pathname === '/faq' &&
-                        <Button color="inherit" onClick={showLoginRegisterDialog}>כניסה</Button>
                         }
                     </div>
                 </Toolbar>
