@@ -26,6 +26,9 @@ module.exports = {
     plugins: [
         new HardSourceWebpackPlugin(),
         new webpack.HotModuleReplacementPlugin(),
+        new webpack.EnvironmentPlugin([
+            "NODE_ENV"
+        ]),
         new HtmlWebpackPlugin({     // Create HTML file that includes references to bundled CSS and JS.
             template: 'public/index.ejs',
             favicon: 'public/styles/images/favicon.png',

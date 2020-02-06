@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, {Suspense} from "react";
 import {connect} from "react-redux";
+import LoginRegister from "../login/LoginRegister";
 
 import {EModalType} from "./EModalType";
-const LoginRegister = React.lazy(() => import("../login/LoginRegister"));
 const AbsenceDaysModal = React.lazy(() => import("./AbsenceDaysModal"));
 const DeleteModal = React.lazy(() => import("./DeleteModal"));
 const EditEmployeeModal = React.lazy(() => import("./EditEmployeeModal"));

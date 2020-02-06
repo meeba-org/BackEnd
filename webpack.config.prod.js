@@ -12,13 +12,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 process.env.NODE_ENV = 'production';
 
-const GLOBALS = {
-    'process.env.NODE_ENV': JSON.stringify('production'),
-    'process.env.BABEL_ENV': JSON.stringify('production'),
-    'process.env.PORT': 4000,
-    __DEV__: false
-};
-
 module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx', '.json']
@@ -48,7 +41,9 @@ module.exports = {
         new WebpackChunkHash({algorithm: 'md5'}), // 'md5' is default value
 
         // Tells React to build in prod mode. https://facebook.github.io/react/downloads.html
-        new webpack.DefinePlugin(GLOBALS),
+        new webpack.EnvironmentPlugin([
+            "NODE_ENV", "BABEL_ENV", "PORT"
+        ]),
 
         // Generate HTML file that contains references to generated bundles. See here for how this works: https://github.com/ampedandwired/html-webpack-plugin#basic-usage
         new HtmlWebpackPlugin({

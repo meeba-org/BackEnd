@@ -62,31 +62,21 @@
     </script>
     <!-- Schema.org - END -->
 
-    <!-- Hotjar Tracking Code for www.meeba.co.il - START -->
-    <script>
-        (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:1673864,hjsv:6};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-    </script>
-    <!-- Hotjar - END -->
+    <% if (process.env.NODE_ENV === 'production') { %>
+        <!-- Hotjar Tracking Code for www.meeba.co.il - START -->
+        <script>
+            (function(h,o,t,j,a,r){
+                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                h._hjSettings={hjid:1673864,hjsv:6};
+                a=o.getElementsByTagName('head')[0];
+                r=o.createElement('script');r.async=1;
+                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                a.appendChild(r);
+            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+        </script>
+        <!-- Hotjar - END -->
+    <% } %>
 
-    <!-- WalkMe - START -->
-    <script type="text/javascript" defer>(function () {
-            var walkme = document.createElement('script');
-            walkme.type = 'text/javascript';
-            walkme.async = true;
-            walkme.src = 'https://cdn.walkme.com/users/4d8254542a094c44ae1d9553b3b2554a/walkme_4d8254542a094c44ae1d9553b3b2554a_https.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(walkme, s);
-            window._walkmeConfig = {smartLoad: true};
-        })();
-    </script>
-    <!-- WalkMe - END -->
 </head>
 <body dir="rtl">
 
@@ -100,7 +90,7 @@
          logged_out_greeting="הי, זהו מענה אנושי מאויש 24 שעות, נסה אותי!">
     </div>
 
-<div id="react-app"></div>
+    <div id="react-app"></div>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script>
     WebFontConfig = {
