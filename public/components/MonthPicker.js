@@ -1,10 +1,12 @@
-import React, {Component, Fragment} from 'react';
-import PropTypes from 'prop-types';
-import Select from "@material-ui/core/Select";
-import "../styles/MonthlyReport.scss";
-import MenuItem from '@material-ui/core/MenuItem';
 import Input from "@material-ui/core/Input";
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from "@material-ui/core/Select";
+import {NavigateBefore, NavigateNext} from "@material-ui/icons";
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React, {Component, Fragment} from 'react';
+import "../styles/MonthlyReport.scss";
+import MbActionButton from "./MbActionButton";
 
 class MonthPicker extends Component {
     state = {
@@ -53,13 +55,42 @@ class MonthPicker extends Component {
         return res;
     };
 
+    prevMonth = () => {
+        const {selectedMonth, selectedYear, onMonthChange} = this.props;
+        let newSelectedMonth = selectedMonth - 1;
+        let newSelectedYear = selectedYear;
 
-    handleMonthChange(event)  {
+        if (newSelectedMonth < 1) {
+            newSelectedMonth = 12;
+            newSelectedYear = selectedYear - 1;
+        }
+
+        onMonthChange(newSelectedMonth, newSelectedYear);
+    };
+
+    nextMonth = () => {
+        const {selectedMonth, selectedYear, onMonthChange} = this.props;
+        let newSelectedMonth = selectedMonth + 1;
+        let newSelectedYear = selectedYear;
+
+        if (newSelectedMonth > 12) {
+            newSelectedMonth = 1;
+            newSelectedYear = selectedYear + 1;
+        }
+
+        onMonthChange(newSelectedMonth, newSelectedYear);
+    };
+
+    onMonthChange = event => {
         let newSelectedMonth = event.target.value;
+        this.handleMonthChange(newSelectedMonth);
+    };
+
+    handleMonthChange = (newSelectedMonth) => {
         const {onMonthChange, selectedYear} = this.props;
 
         onMonthChange(newSelectedMonth, selectedYear);
-    }
+    };
 
     handleYearChange(event)  {
         let newSelectedYear = event.target.value;
@@ -83,7 +114,7 @@ class MonthPicker extends Component {
                 <Select
                     styleName="select"
                     value={selectedMonth}
-                    onChange={(event) => this.handleMonthChange(event)}
+                    onChange={(event) => this.onMonthChange(event)}
                     input={<Input />}
                 >
                     {this.createMonthMenuItems()}
@@ -97,6 +128,19 @@ class MonthPicker extends Component {
                 >
                     {this.createYearMenuItems()}
                 </Select>
+
+                <MbActionButton
+                    onClick={this.prevMonth}
+                    iconComponent={NavigateNext}
+                    tooltip="חודש אחורה"
+                />
+                <MbActionButton
+                    onClick={this.nextMonth}
+                    iconComponent={NavigateBefore}
+                    tooltip="חודש קדימה"
+                    disabled={selectedMonth === this.state.currentMonth}
+                />
+
             </Fragment>
         );
     }
