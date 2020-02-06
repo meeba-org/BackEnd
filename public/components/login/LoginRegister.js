@@ -47,6 +47,13 @@ class LoginRegister extends Component {
         });
     };
 
+    handleKeyPress = event => {
+        if (event.key === 'Enter') {
+            this.handleSubmit();
+            event.preventDefault();
+        }
+    };
+
 
     render() {
         let {open} = this.props;
@@ -68,6 +75,7 @@ class LoginRegister extends Component {
                             name={isLoginMode ? "uid" : "username"}
                             autoComplete="username"
                             onChange={this.handleChange}
+                            onKeyPress={this.handleKeyPress}
                             fullWidth
                             autoFocus
                         />
@@ -78,6 +86,7 @@ class LoginRegister extends Component {
                             name="password"
                             autoComplete="current-password"
                             onChange={this.handleChange}
+                            onKeyPress={this.handleKeyPress}
                             fullWidth
                         />
                         {!isLoginMode &&
@@ -87,6 +96,7 @@ class LoginRegister extends Component {
                             type="password"
                             name="retypePassword"
                             onChange={this.handleChange}
+                            onKeyPress={this.handleKeyPress}
                             autoComplete="current-password"
                             fullWidth
                         />
