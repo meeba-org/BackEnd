@@ -1,3 +1,4 @@
+import { hot } from 'react-hot-loader/root';
 import {createMuiTheme} from "@material-ui/core";
 import {jssPreset, StylesProvider, ThemeProvider} from '@material-ui/core/styles';
 import {create} from 'jss';
@@ -67,4 +68,4 @@ const Root = () => (
     </Provider>
 );
 
-export default Root;
+export default hot(Root);

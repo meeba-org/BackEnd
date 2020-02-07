@@ -7,11 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import '../styles/AppBar.scss';
 import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
+import {withRouter, Link} from "react-router-dom";
 import * as selectors from "../selectors";
 import {handleLogout, navigateHome, showGoPremiumModal} from "../actions/index";
 import PropTypes from 'prop-types';
-import {Link} from "react-router-dom";
 import {Logo} from "../styles/Logo";
 
 class MeebaAppBar extends Component {

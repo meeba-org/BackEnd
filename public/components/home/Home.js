@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import  "../../styles/Home.scss";
-import Header from "./Header";
-import Footer from "./Footer";
+import React from 'react';
+import "../../styles/Home.scss";
 import Features from "./Features";
-import Statistics from "./Statistics";
+import Footer from "./Footer";
+import Header from "./Header";
 import Movie from "./Movie";
+import Statistics from "./Statistics";
 
 const Home = () => {
     return (

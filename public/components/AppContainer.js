@@ -1,7 +1,7 @@
 import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import {MuiPickersUtilsProvider} from '@material-ui/pickers';
 import PropTypes from 'prop-types';
-import React, {Suspense} from 'react';
+import React from 'react';
 import connect from "react-redux/es/connect/connect";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {handleResize} from "../actions";
@@ -12,6 +12,7 @@ import PaymentSuccessRedirectContainer from "./go-premium/PaymentSuccessRedirect
 import Home from "./home/Home";
 import LazyPrivateRoute from "./LazyPrivateRoute";
 import ModalRoot from "./modals/ModalRoot";
+
 const Dashboard = React.lazy(() => import("../components/Dashboard"));
 
 class AppContainer extends React.Component {

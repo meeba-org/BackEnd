@@ -1,5 +1,5 @@
 import FormLabel from '@material-ui/core/FormLabel';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { withStyles } from '@material-ui/core/styles';
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import reduxForm from "redux-form/es/reduxForm";

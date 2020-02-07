@@ -1,6 +1,7 @@
 import "@babel/polyfill";
-import {render} from "react-dom";
+import 'react-hot-loader'; // required by react-hot-loader to be imported before 'react' https://github.com/gaearon/react-hot-loader
 import React from "react";
+import {render} from "react-dom";
 import Root from "./Root";
 
 
@@ -8,14 +9,4 @@ render(
     <Root />,
     document.getElementById('react-app')
 );
-
-if (module.hot) {
-    module.hot.accept('./Root', () => {
-        const RootContainer = require('./Root').default;
-        render(
-            <RootContainer />,
-            document.getElementById('react-app')
-        );
-    });
-}
 

@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import withStyles from '@material-ui/core/styles/withStyles';
+import { withStyles } from '@material-ui/core/styles';
 import React, {Component} from "react";
 import {connect} from 'react-redux';
 import {Link, withRouter} from "react-router-dom";
@@ -31,7 +31,7 @@ class HomeAppBar extends Component {
     };
 
     render() {
-        let {showLoginRegisterDialog, location} = this.props;
+        let {location} = this.props;
         const {isTop} = this.state;
         const isTopClass = isTop ? 'isTop' : '';
 

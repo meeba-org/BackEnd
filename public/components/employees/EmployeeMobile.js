@@ -5,7 +5,7 @@ import Input from "@material-ui/core/Input";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import scssStyles from "../../styles/Employees.scss";
 import Button from "@material-ui/core/Button";
-import withStyles from '@material-ui/core/styles/withStyles';
+import { withStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
 

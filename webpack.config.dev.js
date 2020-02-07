@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-let HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 let WebpackPwaManifest = require('webpack-pwa-manifest');
 
 module.exports = {
@@ -24,11 +23,10 @@ module.exports = {
         filename: 'bundle.js'
     },
     plugins: [
-        new HardSourceWebpackPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.EnvironmentPlugin([
-            "NODE_ENV"
-        ]),
+        new webpack.EnvironmentPlugin({
+            "NODE_ENV": 'development'
+        }),
         new HtmlWebpackPlugin({     // Create HTML file that includes references to bundled CSS and JS.
             template: 'public/index.ejs',
             favicon: 'public/styles/images/favicon.png',

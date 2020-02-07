@@ -5,7 +5,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from "@material-ui/core/Grid";
-import withStyles from '@material-ui/core/styles/withStyles';
+import { withStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import ExtraFeeIcon from "@material-ui/icons/CardGiftcard";
 import CommentIcon from "@material-ui/icons/Comment";
