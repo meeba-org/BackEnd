@@ -7,7 +7,7 @@ import {hideLocationModal} from "../../actions/index";
 import PropTypes from 'prop-types';
 import DialogContent from '@material-ui/core/DialogContent';
 import MbGoogleMap from "../MbGoogleMap";
-import withStyles from "@material-ui/core/styles/withStyles";
+import {withStyles} from '@material-ui/core/styles';
 
 const styles = {
     dialogContentRoot: {

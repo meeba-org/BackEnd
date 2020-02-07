@@ -72,4 +72,4 @@ const mapDispatchToProps = {
 };
 
 // withStyles() is needed here for the component to not crash in production - not sure why... :(
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles()(withRouter(HomeAppBar)));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles({})(withRouter(HomeAppBar)));
