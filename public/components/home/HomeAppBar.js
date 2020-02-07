@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import React, {Component} from "react";
 import {connect} from 'react-redux';
 import {Link, withRouter} from "react-router-dom";
@@ -72,4 +72,4 @@ const mapDispatchToProps = {
 };
 
 // withStyles() is needed here for the component to not crash in production - not sure why... :(
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles({})(withRouter(HomeAppBar)));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles()(withRouter(HomeAppBar)));
