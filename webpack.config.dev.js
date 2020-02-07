@@ -6,7 +6,10 @@ let WebpackPwaManifest = require('webpack-pwa-manifest');
 module.exports = {
     resolve: {
         extensions: ['*', '.js', '.jsx', '.json'],
-        modules: ['node_modules', 'public']
+        modules: ['node_modules', 'public'],
+        alias: {
+            'react-dom': '@hot-loader/react-dom'
+        }
     },
     devtool: "cheap-module-eval-source-map", // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
     entry: [
