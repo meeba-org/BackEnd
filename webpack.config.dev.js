@@ -8,7 +8,7 @@ module.exports = {
         extensions: ['*', '.js', '.jsx', '.json'],
         modules: ['node_modules', 'public']
     },
-    devtool: "eval-source-map", // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
+    devtool: "cheap-module-eval-source-map", // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
     entry: [
         // must be first entry to properly set public path
         './public/webpack-public-path',
@@ -20,7 +20,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'), // Note: Physical files are only output by the production build task `npm run build`.
         publicPath: '/',
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        pathinfo: false
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
