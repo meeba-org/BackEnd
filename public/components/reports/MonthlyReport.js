@@ -99,7 +99,7 @@ class MonthlyReport extends React.PureComponent {
     };
 
     render() {
-        const {fields, employees, userRole, showShiftDialog, reportLineComponent, title, postUpdate} = this.props;
+        const {fields, employees, userRole, showShiftDialog, reportLineComponent, title, postUpdate, isDesktop} = this.props;
         const {selectedYear, selectedMonth} = this.state;
 
         return (
@@ -112,11 +112,11 @@ class MonthlyReport extends React.PureComponent {
                         employees={employees}
                         defaultStartDate={moment().year(selectedYear).month(selectedMonth - 1).startOf('month').format(DATE_FORMAT)}
                     />
-
                     <MonthPicker
                         onMonthChange={this.onMonthChange}
                         selectedMonth={selectedMonth}
                         selectedYear={selectedYear}
+                        isDesktop={isDesktop}
                     />
 
                     <MbActionButton

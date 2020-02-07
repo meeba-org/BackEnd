@@ -35,7 +35,7 @@ class MonthlyReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole} = this.props;
+        const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="employeeShiftsReports"
@@ -51,6 +51,7 @@ class MonthlyReportContainer extends React.PureComponent {
                             postUpdate={this.onDataChange}
                             reportLineComponent={MonthlyReportLine}
                             title={'דו"ח חודשי'}
+                            isDesktop={isDesktop}
                 />
             </form>
         );
@@ -68,6 +69,7 @@ MonthlyReportContainer.propTypes = {
     deleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     userRole: PropTypes.string,
+    isDesktop: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(state) {
@@ -78,7 +80,8 @@ function mapStateToProps(state) {
         userRole: selectors.getUserRole(state),
         initialValues: {
             employeeShiftsReports,
-        }
+        },
+        isDesktop: selectors.isDesktop(state),
     };
 }
 

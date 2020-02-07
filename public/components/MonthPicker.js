@@ -1,12 +1,20 @@
 import Input from "@material-ui/core/Input";
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from "@material-ui/core/Select";
+import Typography from "@material-ui/core/Typography";
 import {NavigateBefore, NavigateNext} from "@material-ui/icons";
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
 import "../styles/MonthlyReport.scss";
 import MbActionButton from "./MbActionButton";
+
+const MobileDateDisplay = ({month, year}) => {
+
+    return (
+        <Typography style={{color: "#525252"}} variant={"h5"}>{`${year % 1000} / ${month.toString().padStart(2, '0')}`}</Typography>
+    );
+};
 
 class MonthPicker extends Component {
     state = {
@@ -107,27 +115,34 @@ class MonthPicker extends Component {
     }
 
     render() {
-        const {selectedMonth, selectedYear} = this.props;
+        const {selectedMonth, selectedYear, isDesktop} = this.props;
 
         return (
             <Fragment>
-                <Select
-                    styleName="select"
-                    value={selectedMonth}
-                    onChange={(event) => this.onMonthChange(event)}
-                    input={<Input />}
-                >
-                    {this.createMonthMenuItems()}
-                </Select>
+                {isDesktop &&
+                <Fragment>
+                    <Select
+                        styleName="select"
+                        value={selectedMonth}
+                        onChange={(event) => this.onMonthChange(event)}
+                        input={<Input/>}
+                    >
+                        {this.createMonthMenuItems()}
+                    </Select>
 
-                <Select
-                    styleName="select"
-                    value={selectedYear}
-                    onChange={(event) => this.handleYearChange(event)}
-                    input={<Input />}
-                >
-                    {this.createYearMenuItems()}
-                </Select>
+                    <Select
+                        styleName="select"
+                        value={selectedYear}
+                        onChange={(event) => this.handleYearChange(event)}
+                        input={<Input/>}
+                    >
+                        {this.createYearMenuItems()}
+                    </Select>
+                </Fragment>
+                }
+                {!isDesktop &&
+                <MobileDateDisplay month={selectedMonth} year={selectedYear} />
+                }
 
                 <MbActionButton
                     onClick={this.prevMonth}
@@ -150,6 +165,7 @@ MonthPicker.propTypes = {
     onMonthChange: PropTypes.func.isRequired,
     selectedMonth: PropTypes.number.isRequired,
     selectedYear: PropTypes.number.isRequired,
+    isDesktop: PropTypes.bool.isRequired
 };
 MonthPicker.defaultProps = {};
 
