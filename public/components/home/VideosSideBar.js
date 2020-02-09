@@ -1,12 +1,16 @@
-import React, {Fragment} from 'react';
+import {Button, Typography} from "@material-ui/core";
+import React from 'react';
+import "../../styles/VideosSideBar.scss";
 
-const VideosSideBar = ({onSelect, videos}) => {
+const VideosSideBar = ({onSelect, videos, selectedVideo}) => {
     return (
-        <Fragment>
-            {videos.map(video => (
-                <div onClick={onSelect}>{video.title}</div>
+        <div styleName="videos-side-bar">
+            {videos.map((video, index) => (
+                <Button key={index} styleName="video-item" onClick={() => onSelect(video)}>
+                    <Typography variant={video === selectedVideo ? "h4" : "h5"}>{video.title}</Typography>
+                </Button>
             ))}
-        </Fragment>
+        </div>
     );
 };
 
