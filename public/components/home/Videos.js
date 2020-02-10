@@ -9,7 +9,7 @@ const videos = [
         title: "ניהול משמרת"
     },
     {
-        url: "../../styles/videos/ShiftStatus.mp4",
+        url: "../../styles/videos/Reports.mp4",
         title: "דוח חודשי"
     }
 ];
