@@ -1,25 +1,34 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {connect} from "react-redux";
+import * as selectors from "../../selectors";
 import "../../styles/Home.scss";
 import Features from "./Features";
 import Footer from "./Footer";
 import Header from "./Header";
-import Movie from "./Movie";
 import Statistics from "./Statistics";
 import Videos from "./Videos";
 
-const Home = () => {
-    return (
-        <div styleName="home">
-            <div styleName="home-bg">
-                <Header />
-                <Videos />
-                <Movie />
-                <Features />
-                <Statistics />
-                <Footer />
-            </div>
-        </div>
-    );
-};
+class Home extends Component {
 
-export default Home;
+    render() {
+        const {isDesktop} = this.props;
+
+        return (
+            <div styleName="home">
+                <div styleName="home-bg">
+                    <Header />
+                    {isDesktop && <Videos/>}
+                    <Features />
+                    <Statistics />
+                    <Footer />
+                </div>
+            </div>
+        );
+    }
+}
+
+const mapStateToProps = state => ({
+    isDesktop: selectors.isDesktop(state),
+});
+
+export default connect(mapStateToProps)(Home);
