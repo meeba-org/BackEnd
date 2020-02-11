@@ -11,7 +11,15 @@ const videos = [
     {
         url: "../../styles/videos/Reports.mp4",
         title: "דוח חודשי"
-    }
+    },
+    {
+        url: "../../styles/videos/Excel.mp4",
+        title: "דוח אקסל חודשי"
+    },
+    {
+        url: "../../styles/videos/Location.mp4",
+        title: "מיקום העובד"
+    },
 ];
 
 const Videos = () => {

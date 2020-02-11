@@ -80,6 +80,9 @@ module.exports = {
         new CopyPlugin([
             './public/serviceWorker/sw.js',
             './public/serviceWorker/site.js',
+            {
+                from: './public/styles/videos', to: 'styles/videos'
+            }
         ]),
         new WebpackPwaManifest({
             name: "מיבא - שעון נוכחות ומחשבון שכר",
@@ -146,7 +149,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(jpe?g|png|gif|ico)$/i,
+                test: /\.(jpe?g|png|gif|ico|mp4)$/i,
                 use: ['file-loader']
             },
             {

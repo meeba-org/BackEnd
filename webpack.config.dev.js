@@ -93,7 +93,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(jpe?g|png|gif|ico)$/i,
+                test: /\.(jpe?g|png|gif|ico|mp4)$/i,
                 use: [
                     {
                         loader: 'file-loader',
