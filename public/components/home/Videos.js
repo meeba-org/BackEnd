@@ -17,7 +17,7 @@ const videos = [
         title: "דוח אקסל חודשי"
     },
     {
-        url: "../../styles",
+        url: "../../styles/videos/Location.mp4",
         title: "מיקום העובד"
     },
 ];
