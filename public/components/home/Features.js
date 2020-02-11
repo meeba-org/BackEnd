@@ -46,8 +46,6 @@ class Features extends Component {
     render() {
         return (
             <div styleName="features" id="features1">
-                <div styleName="title">איך זה עובד?</div>
-                <div styleName="sub-title">תהליכי עבודה מתקדמים</div>
 
                 <div styleName="features-container">
                     {this.state.features.map((feature, index) =>

@@ -27,7 +27,7 @@ const Videos = () => {
 
     return (
         <div styleName="container">
-            <SectionTitle title="הנה זה בפעולה"/>
+            <SectionTitle title="איך זה עובד?"/>
             <div styleName="content">
                 <VideosSideBar onSelect={setVideo} videos={videos} selectedVideo={video}/>
                 <VideoContainer video={video}/>

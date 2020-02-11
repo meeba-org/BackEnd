@@ -4,9 +4,11 @@ import Fade from "../Fade";
 
 const VideoContainer = ({video}) => {
     return (
-        <Fade isVisible key={video.title}>
-            <video src={video.url} loop muted controls height={400} autoPlay />
-        </Fade>
+        <div styleName="video-container">
+            <Fade isVisible key={video.title}>
+                <video src={video.url} loop muted controls height={400} autoPlay />
+            </Fade>
+        </div>
     );
 };
 
