@@ -33,7 +33,7 @@ class Feature extends Component {
                         <div>{sideContent}</div>
                     </div>
                 </div>
-                <Dialog maxWidth={false} onClose={this.handleClose} open={this.state.open}>
+                <Dialog maxWidth={'md'} onClose={this.handleClose} open={this.state.open}>
                     {dialogContent}
                 </Dialog>
             </Fragment>
