@@ -6,11 +6,11 @@ import "../../styles/Videos.scss";
 const videos = [
     {
         url: "../../styles/videos/ShiftStatus.mp4",
-        title: "ניהול משמרת"
+        title: "מצב משמרת"
     },
     {
         url: "../../styles/videos/Reports.mp4",
-        title: "דוח חודשי"
+        title: "ניהול משמרות"
     },
     {
         url: "../../styles/videos/Excel.mp4",
