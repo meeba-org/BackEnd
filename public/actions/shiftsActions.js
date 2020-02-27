@@ -1,6 +1,6 @@
 import moment from "moment";
 import {EModalType} from "../components/modals/EModalType";
-import {GACategory} from "../helpers/GATypes";
+import {GACategory} from "../helpers/GAService";
 import {
     API,
     CREATE_SHIFT_SUCCESS, DELETE_SHIFT_SUCCESS,

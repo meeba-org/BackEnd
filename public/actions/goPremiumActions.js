@@ -2,7 +2,7 @@ import FeaturesManager, {Feature} from "../../managers/FeaturesManager";
 import * as EPlanType from "../../models/EPlanType";
 import {EGoPremiumStep} from "../components/go-premium/EPremiumStep";
 import {EModalType} from "../components/modals/EModalType";
-import {GACategory} from "../helpers/GATypes";
+import {GACategory} from "../helpers/GAService";
 import {
     API,
     FETCH_PAYMENT_TOKEN_SUCCESS,

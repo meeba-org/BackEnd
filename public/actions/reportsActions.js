@@ -1,5 +1,5 @@
 import * as FileSaver from "file-saver";
-import {GACategory} from "../helpers/GATypes";
+import {GACategory} from "../helpers/GAService";
 import * as actions from "./actionTypes";
 
 export const fetchMonthlyReportSuccess = (payload) => ({

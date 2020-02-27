@@ -25,6 +25,10 @@ const videos = [
 const Videos = () => {
     const [video, setVideo] = useState(videos[0]);
 
+    const onSelect = video => {
+          setVideo(video);
+    };
+
     return (
         <div styleName="container">
             <SectionTitle title="איך זה עובד?"/>

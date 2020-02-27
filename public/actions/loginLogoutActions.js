@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from "../config";
-import {GACategory} from "../helpers/GATypes";
+import {GACategory} from "../helpers/GAService";
 import {isUserAllowedLogin} from "../helpers/utils";
 import * as actionsTypes from "./actionTypes";
 import {hideLoginRegisterModal} from "./index";
