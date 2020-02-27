@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {GACategory, sendGaEvent} from "../../helpers/GAService";
 import SectionTitle from "./SectionTitle";
 import VideoContainer from "./VideoContainer";
 import VideosSideBar from "./VideosSideBar";
@@ -27,13 +28,17 @@ const Videos = () => {
 
     const onSelect = video => {
           setVideo(video);
+          sendGaEvent({
+              category: GACategory.PROMOTION_VIDEO_SELECTED,
+              action: video.title
+          });
     };
 
     return (
         <div styleName="container">
             <SectionTitle title="איך זה עובד?"/>
             <div styleName="content">
-                <VideosSideBar onSelect={setVideo} videos={videos} selectedVideo={video}/>
+                <VideosSideBar onSelect={onSelect} videos={videos} selectedVideo={video}/>
                 <VideoContainer video={video}/>
             </div>
         </div>

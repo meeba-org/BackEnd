@@ -8,10 +8,15 @@ export const GACategory = {
     DOWNLOAD_EXCEL: "download-excel",
     CLOCK_IN: "clock-in",
     CLOCK_OUT: "clock-out",
-    USER_WENT_PREMIUM: "user-went-premium"
+    USER_WENT_PREMIUM: "user-went-premium",
+    PROMOTION_VIDEO_SELECTED: "promotion-video-selected",
 };
 
-export const sendGaEvent = ({defaultUser = null, category, action, label}) => {
+export const sendGaEvent = ({category, action = null, label = null, defaultUser = null}) => {
+    // We want to track only production
+    if (localStorage.getItem('isDevEnv') === "true")
+        return;
+
     let activeUser = localStorage.getItem('activeUser');
 
     let company = extractCompanyFromJson(activeUser);

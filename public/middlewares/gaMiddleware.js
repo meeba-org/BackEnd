@@ -7,10 +7,6 @@ const gaMiddleware = () => next => action => {
         return next(action);
     }
 
-    // We want to track only production
-    if (localStorage.getItem('isDevEnv') === "true")
-        return next(action);
-
     sendGaEvent(action.ga);
 
     return next(action);
