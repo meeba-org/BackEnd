@@ -8,30 +8,23 @@
 
         .mobile-sc {
             display: flex;
-            align-items: center;
-            margin: 35px;
+            padding: 35px;
+            flex: 1;
 
             img {
-                flex-grow: 0;
                 width: 100%;
-                height: auto;
             }
         }
 
         .badges {
             display: flex;
-            flex: 1 0 auto;
+            flex: 1;
             flex-direction: column;
-            width: 50%;
-            margin: auto 0;
+            justify-content: center;
 
             .badge {
-                display: flex;
-                flex: 1 0 auto;
-                max-width: 80%;
-
                 a {
-                    flex: 1 0 auto;
+                    flex: 1;
                 }
             }
         }

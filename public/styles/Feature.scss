@@ -8,64 +8,54 @@
     border-radius: 6px;
     transition: background-color 0.3s;
     flex: 1 0 auto;
-    height: 200px;
-    cursor: pointer;
 
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.12);
-    }
+    .image {
+        display: flex;
+        flex: 1;
+        padding: 0px 50px;
+        @media (max-width: $mobileWidth) {
+            padding: 20px 15px;
+        }
 
-    @media (max-width: $mobileWidth) {
-        height: 80px;
-        padding: 50px 20px;
+        img {
+            height: 100px;
+        }
     }
 
     .side1 {
-        width: 50%;
+        flex: 3;
 
         @media (max-width: $mobileWidth) {
             width: 100%;
         }
 
-        .feature-title-container {
+        .title-container {
             display: flex;
             flex-direction: row;
 
-            @media (max-width: $mobileWidth) {
-                justify-content: center;
-            }
-
-            .feature-icon {
-                color: $primary;
-
-            }
-
-            .feature-title {
+            .title {
                 justify-content: center;
                 align-items: center;
-                margin-right: 15px;
                 font-size: 40px;
                 font-weight: bold;
                 opacity: 0.8;
+
+                @media (max-width: $mobileWidth) {
+                    font-size: 35px;
+                }
             }
 
         }
 
-        .feature-description {
-            text-align: start;
+        .description {
             font-size: 20px;
             opacity: 0.6;
-
-            @media (max-width: $mobileWidth) {
-                text-align: center;
-            }
-
         }
     }
 
     .side2 {
-        width: 50%;
-        cursor: pointer;
+        cursor: zoom-in;
+        flex: 3;
 
         @media (max-width: $mobileWidth) {
             display: none;

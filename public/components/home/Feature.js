@@ -21,15 +21,15 @@ class Feature extends Component {
 
         return (
             <Fragment>
-                <div styleName="feature" onClick={this.handleOpen}>
+                <div styleName="feature">
+                    <div styleName="image">{icon}</div>
                     <div styleName="side1">
-                        <div styleName="feature-title-container">
-                            <div styleName="feature-icon">{icon}</div>
-                            <div styleName="feature-title">{title}</div>
+                        <div styleName="title-container">
+                            <div styleName="title">{title}</div>
                         </div>
-                        <div styleName="feature-description">{description}</div>
+                        <div styleName="description">{description}</div>
                     </div>
-                    <div styleName="side2">
+                    <div styleName="side2" onClick={this.handleOpen}>
                         <div>{sideContent}</div>
                     </div>
                 </div>
