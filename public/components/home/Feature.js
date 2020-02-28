@@ -30,7 +30,7 @@ class Feature extends Component {
                         <div styleName="description">{description}</div>
                     </div>
                     <div styleName="side2" onClick={this.handleOpen}>
-                        <div>{sideContent}</div>
+                        {sideContent}
                     </div>
                 </div>
                 <Dialog maxWidth={'md'} onClose={this.handleClose} open={this.state.open}>
