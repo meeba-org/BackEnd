@@ -28,14 +28,17 @@ function handleLoginSuccess(response, history, isLoginMode) {
     };
 }
 
-export const handleLogin = (values, isLoginMode, history, onError) => dispatch => {
+export const handleLogin = (values, isLoginMode, history, onSuccess, onError) => dispatch => {
         let route = isLoginMode ? "login" : "register";
 
         dispatch(handleLoginStart());
         return axios.post(`${config.ROOT_URL}/${route}`, values)
             .then((response) => {
+                if (onSuccess)
+                    onSuccess();
+
                 dispatch(hideLoginRegisterModal());
-            dispatch(handleLoginSuccess(response, history, isLoginMode));
+                dispatch(handleLoginSuccess(response, history, isLoginMode));
             })
             .catch((err) => {
                 let message = 'Unknown Error';

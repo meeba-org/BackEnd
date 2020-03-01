@@ -2,7 +2,7 @@
  * Created by Chen on 16/07/2017.
  */
 
-import {DialogContent, DialogTitle, TextField} from "@material-ui/core";
+import {CircularProgress, DialogContent, DialogTitle, TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import IconButton from "@material-ui/core/IconButton";
@@ -21,7 +21,8 @@ class LoginRegister extends Component {
     state = {
         isLoginMode: true,
         showPassword: false,
-        error: ""
+        error: "",
+        isLoading: false
     };
 
     toggleLoginMode= () => {
@@ -36,7 +37,9 @@ class LoginRegister extends Component {
         let {history, handleLogin} = this.props;
         let {values, isLoginMode} = this.state;
 
-        handleLogin(values, isLoginMode, history, (error) => this.setState({error}));
+        this.setState({isLoading: true});
+
+        handleLogin(values, isLoginMode, history, () => this.setState({isLoading: false}), error => this.setState({error}));
     };
 
     handleChange = (event) => {
@@ -62,7 +65,7 @@ class LoginRegister extends Component {
     render() {
         let {open} = this.props;
         const {error} = this.state;
-        let {isLoginMode, showPassword} = this.state;
+        let {isLoginMode, showPassword, isLoading} = this.state;
 
         let buttonText = isLoginMode ? "היכנס" : "הירשם";
         let footerTextQuestion = isLoginMode ? "עדיין לא נרשמת?" : "נרשמת כבר?";
@@ -120,8 +123,8 @@ class LoginRegister extends Component {
                         {error && <Typography styleName="error-msg">{error}</Typography>}
                         <div styleName="login-register-footer">
                             <Button variant="contained" color="primary" type="submit" styleName="login-button" onClick={this.handleSubmit}>
-                                <Typography>{buttonText}</Typography>
-                                <ArrowBackIcon/>
+                                <Typography styleName="button-text">{buttonText}</Typography>
+                                {isLoading ? <CircularProgress size={15} color={"white"} /> : <ArrowBackIcon/>}
                             </Button>
                             <div styleName="footer-text">
                                 <Typography styleName="question">{footerTextQuestion}</Typography>
