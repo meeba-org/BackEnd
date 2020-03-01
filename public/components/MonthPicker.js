@@ -114,6 +114,10 @@ class MonthPicker extends Component {
         onMonthChange(selectedMonth, newSelectedYear);
     }
 
+    isNextMonthDisabled(selectedMonth, selectedYear) {
+        return selectedMonth === this.state.currentMonth && selectedYear === this.state.currentYear;
+    }
+
     render() {
         const {selectedMonth, selectedYear, isDesktop} = this.props;
 
@@ -153,7 +157,7 @@ class MonthPicker extends Component {
                     onClick={this.nextMonth}
                     iconComponent={NavigateBefore}
                     tooltip="חודש קדימה"
-                    disabled={selectedMonth === this.state.currentMonth}
+                    disabled={this.isNextMonthDisabled(selectedMonth, selectedYear)}
                 />
 
             </Fragment>
