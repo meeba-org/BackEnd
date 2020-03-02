@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from "react";
 import connect from "react-redux/es/connect/connect";
 import {createShift, showDeleteShiftModal, updateShift, showGoPremiumModal, showLocationModal} from "../../actions";
+import {GACategory, sendGaEvent} from "../../helpers/GAService";
 import {ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import "../../styles/Shift.scss";
@@ -102,6 +103,10 @@ class ShiftContainer extends React.PureComponent {
     onShiftComplete = (orgShift) => {
         let {onShiftComplete} = this.props;
         let updatedShift = onShiftComplete(orgShift);
+        sendGaEvent({
+            category: GACategory.CLOCK_OUT,
+            action: "web"
+        });
 
         this.onUpdate(orgShift, updatedShift);
     };
