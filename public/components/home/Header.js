@@ -17,13 +17,15 @@ class Header extends Component {
                 <HomeAppBar/>
                 <div styleName="content">
                     <div styleName="middle-content">
-                        <div styleName="title">
-                            <div styleName="title-text">
-מיבא
-                                {/*<img src={betaImage} />*/}
+                        <div styleName="title-hr">
+                            <div styleName="title">
+                                <div styleName="title-text">
+                                    מיבא
+                                    {/*<img src={betaImage} />*/}
+                                </div>
                             </div>
+                            <hr/>
                         </div>
-                        <hr/>
                         <div styleName="lower-middle-content">
                             <div styleName="sub-title">
                                 שעון נוכחות ומחשבון שכר
