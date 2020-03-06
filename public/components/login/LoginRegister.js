@@ -39,7 +39,7 @@ class LoginRegister extends Component {
 
         this.setState({isLoading: true});
 
-        handleLogin(values, isLoginMode, history, () => this.setState({isLoading: false}), error => this.setState({error}));
+        handleLogin(values, isLoginMode, history, () => this.setState({isLoading: false}), error => this.setState({error, isLoading: false}));
     };
 
     handleChange = (event) => {
