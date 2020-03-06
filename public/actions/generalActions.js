@@ -37,6 +37,6 @@ export const displaySplashScreen = () => dispatch => {
 export const loadDashboardData = () =>  dispatch => {
     dispatch(loadUserFromToken());
     dispatch(fetchPendingShifts());
-    dispatch(displaySplashScreen());
+    // dispatch(displaySplashScreen());
 };
 
