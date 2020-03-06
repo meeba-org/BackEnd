@@ -3,7 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
-import {DatePicker, TimePicker} from "@material-ui/pickers";
+import {DatePicker, KeyboardDatePicker, KeyboardTimePicker, TimePicker} from "@material-ui/pickers";
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 import {isShiftPending, momentToDay} from "../../helpers/utils";
@@ -49,27 +49,34 @@ const ReportShift = (props) => {
                 <div styleName="date">
                     <div styleName="hebrew-day">{hebrewDay}'</div>
 
-                    <DatePicker autoOk onChange={(date) => onUpdateStartDate(date, shift)}
-                                value={clockInTime}
-                                format="DD/MM/YYYY"
-                                style={{margin: "0 10px 0 0"}}
+                    <DatePicker
+                        autoOk onChange={(date) => onUpdateStartDate(date, shift)}
+                        value={clockInTime}
+                        format="DD/MM/YYYY"
+                        style={{margin: "0 10px 0 0"}}
                     />
                 </div>
 
-                <TimePicker
+                <KeyboardTimePicker
                     styleName="time"
                     ampm={false}
                     autoOk
                     value={clockInTime}
                     onChange={(time) => onUpdateStartTime(time, shift)}
+                    mask="__:__"
+                    KeyboardButtonProps={{ disabled: true, style: { display: 'none' }}}
+                    invalidDateMessage={"זמן לא תקין"}
                 />
 
-                <TimePicker
+                <KeyboardTimePicker
                     styleName="time"
                     ampm={false}
                     autoOk
                     value={clockOutTime}
                     onChange={(time) => onUpdateEndTime(time, shift)}
+                    mask="__:__"
+                    KeyboardButtonProps={{ disabled: true, style: { display: 'none' }}}
+                    invalidDateMessage={"זמן לא תקין"}
                 />
             </div>
             {isDesktop &&

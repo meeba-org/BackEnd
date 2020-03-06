@@ -14,8 +14,8 @@ export const GACategory = {
 
 export const sendGaEvent = ({category, action = null, label = null, defaultUser = null}) => {
     // We want to track only production
-    if (localStorage.getItem('isDevEnv') === "true")
-        return;
+    // if (localStorage.getItem('isDevEnv') === "true")
+    //     return;
 
     let activeUser = localStorage.getItem('activeUser');
 
