@@ -45,7 +45,7 @@
             align-items: center;
 
             .title-hr {
-                animation: slide-down 0.5s forwards 1s;
+                animation: slide-down 1s forwards 1s;
                 transform: translateY(-400%);
                 opacity: 0;
                 width: 100%;
@@ -117,7 +117,7 @@
                     font-size: 32px;
                     transform: translateX(-150%);
                     opacity: 0;
-                    animation: slide-in 0.5s forwards 1s;
+                    animation: slide-in 1s forwards 1s;
                 }
 
                 @keyframes slide-in {
