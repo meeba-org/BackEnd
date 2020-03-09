@@ -18,10 +18,11 @@ class Dashboard extends React.PureComponent {
 
     state = {
         open: null,
+        isLoading: true
     };
 
     componentDidMount() {
-        this.props.loadDashboardData();
+        this.props.loadDashboardData(() => this.setState({isLoading: false}));
     }
 
     toggleDrawer = () => {
@@ -37,13 +38,14 @@ class Dashboard extends React.PureComponent {
 
     render() {
         let {userRole, isDesktop, isTasksFeatureEnable, match: {path} } = this.props;
+        const {isLoading} = this.state;
         let open = this.isOpen();
 
         return (
             <div styleName="dashboard">
                 <div styleName="dashboard-container">
                     <div styleName="appBar-container">
-                        <AppBar onLogoClick={this.toggleDrawer} isDesktop={!!isDesktop}/>
+                        <AppBar onLogoClick={this.toggleDrawer} isDesktop={!!isDesktop} isLoading={isLoading}/>
                     </div>
                     <div styleName="grid-container">
                         <Paper styleName={"sideBar-container" + (isDesktop ? " isDesktop" : "")}>

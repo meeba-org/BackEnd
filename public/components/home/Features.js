@@ -9,11 +9,6 @@ import ManagerFeatureContent from "./ManagerFeatureContent";
 import MobileImageContent from "./MobileImageContent";
 import ReportFeatureContent from "./ReportFeatureContent";
 
-const iconStyle = {
-    height: "48px",
-    width: "48px",
-};
-
 class Features extends Component {
 
     state = {

@@ -80,7 +80,7 @@ export function meFromTokenFailure(error) {
     };
 }
 
-export function loadUserFromToken() {
+export function loadUserFromToken(onFinishLoading) {
     return function (dispatch) {
         let token = localStorage.getItem('jwtToken');
         if (!token || token === '') {//if there is no token, dont bother
@@ -106,6 +106,9 @@ export function loadUserFromToken() {
         }).catch(function () {
             localStorage.removeItem('jwtToken');//remove token from storage
             dispatch(meFromTokenFailure("Error loading user from token"));
+        }).finally( () => {
+            if (onFinishLoading)
+                onFinishLoading();
         });
     };
 }

@@ -41,7 +41,7 @@ class MeebaAppBar extends Component {
                         </div>
                         <div styleName="logout">
                             <Button color="secondary"><Link style={{color: "inherit", textDecoration: 'none'}} to="/faq">שאלות ותשובות</Link></Button>
-                            {isLoading === false && !hasPremium &&
+                            {!isLoading && !hasPremium &&
                             <Button styleName="goPremiumButton" variant="contained" color="secondary" onClick={showGoPremiumModal}>הירשם כמנוי</Button>
                             }
                             <Button onClick={this.onLogout} color="secondary">יציאה</Button>
@@ -60,6 +60,7 @@ MeebaAppBar.propTypes = {
     history: PropTypes.object.isRequired,
     companyName: PropTypes.string.isRequired,
     isDesktop: PropTypes.bool,
+    isLoading: PropTypes.bool,
     hasPremium: PropTypes.bool,
 };
 
@@ -67,7 +68,6 @@ const mapStateToProps = state => ({
     companyName: selectors.getCompanyName(state) || "מיבא",
     isDesktop: selectors.isDesktop(state),
     hasPremium: selectors.hasPremiumFeature(state),
-    isLoading: state.loader.isLoading
 });
 
 const mapDispatchToProps = {
