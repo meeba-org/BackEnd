@@ -124,7 +124,7 @@ class LoginRegister extends Component {
                         <div styleName="login-register-footer">
                             <Button variant="contained" color="primary" type="submit" styleName="login-button" onClick={this.handleSubmit}>
                                 <Typography styleName="button-text">{buttonText}</Typography>
-                                {isLoading ? <CircularProgress size={15} color={"white"} /> : <ArrowBackIcon/>}
+                                {isLoading ? <CircularProgress size={15} style={{color: "white"}} /> : <ArrowBackIcon/>}
                             </Button>
                             <div styleName="footer-text">
                                 <Typography styleName="question">{footerTextQuestion}</Typography>

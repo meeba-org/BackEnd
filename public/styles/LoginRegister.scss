@@ -6,7 +6,8 @@
     align-items: center;
     flex-direction: column;
     max-width: 310px;
-    transition: max-height 300ms linear;
+    height: auto;
+    transition: flex 300ms ease-in;
 
     .error-msg {
         margin-top: 10px;
