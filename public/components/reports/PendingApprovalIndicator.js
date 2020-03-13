@@ -6,13 +6,18 @@ import EShiftStatus from "../../helpers/EShiftStatus";
 import "../../styles/PendingApprovalInicator.scss";
 
 const PendingApprovalIndicator = ({status, onClick}) => {
-    if (status !== EShiftStatus.PENDING_UPDATE && status !== EShiftStatus.PENDING_CREATE)
+    const shouldIndicate = status =>
+        status === EShiftStatus.APPROVED ||
+        status === EShiftStatus.PENDING_UPDATE ||
+        status === EShiftStatus.PENDING_CREATE;
+
+    if (!shouldIndicate(status))
         return null;
 
     return (
-        <div styleName="pending" onClick={onClick}>
+        <div styleName="icon" onClick={onClick}>
             <Tooltip title={"משמרת ממתינה לאישור"} placement="top">
-                <EyeIcon/>
+                <EyeIcon styleName={status === EShiftStatus.APPROVED ? "approved" : "pending"} />
             </Tooltip>
         </div>
     );
