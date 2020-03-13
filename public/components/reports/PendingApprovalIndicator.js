@@ -16,7 +16,7 @@ const PendingApprovalIndicator = ({status, onClick}) => {
 
     return (
         <div styleName="icon" onClick={onClick}>
-            <Tooltip title={"משמרת ממתינה לאישור"} placement="top">
+            <Tooltip title={status === EShiftStatus.APPROVED ? "משמרת שאושרה" : "משמרת ממתינה לאישור"} placement="top">
                 <EyeIcon styleName={status === EShiftStatus.APPROVED ? "approved" : "pending"} />
             </Tooltip>
         </div>
