@@ -61,6 +61,7 @@ class Employee extends React.Component {
                                onBlur={onBlur}
                                classes={{root: classes.root}}
                                disabled={isLimited}
+                               inputProps={{"data-hj-whitelist": true}}
                         />
                     </Grid>
                     <Grid item sm={2}>
@@ -69,6 +70,7 @@ class Employee extends React.Component {
                                onBlur={onBlur}
                                classes={{root: classes.root}}
                                disabled={isLimited}
+                               inputProps={{"data-hj-whitelist": true}}
                         />
                     </Grid>
                     <Grid item sm={1}>
@@ -77,6 +79,7 @@ class Employee extends React.Component {
                                onBlur={onBlur}
                                classes={{root: classes.root}}
                                disabled={isLimited}
+                               inputProps={{"data-hj-whitelist": true}}
                         />
                     </Grid>
                     <Grid item sm={2}>
@@ -84,6 +87,7 @@ class Employee extends React.Component {
                                onChange={(e) => onUpdate(e, "transportation")}
                                onBlur={onBlur}
                                classes={{root: classes.root}}
+                               inputProps={{"data-hj-whitelist": true}}
                                endAdornment={
                                    <InputAdornment position="end">
                                        <Typography variant={"body2"}>

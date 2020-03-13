@@ -85,6 +85,7 @@ class LoginRegister extends Component {
                             onKeyPress={this.handleKeyPress}
                             fullWidth
                             autoFocus
+                            inputProps={{"data-hj-whitelist": true}}
                         />
                         <TextField
                             label="סיסמא"
