@@ -5,11 +5,12 @@
     margin-left: 5px;
     text-align: center;
     width: 32px;
-    cursor: pointer;
 
     .pending {
         color: $palette-secondary-600;
+        cursor: pointer;
     }
+
     .approved {
         color: material-color('green', '200');
     }
