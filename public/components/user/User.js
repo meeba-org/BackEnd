@@ -139,8 +139,8 @@ class User extends Component {
 
                 <MbCard title={"מתקדם"}>
                     <div styleName="settings">
-                        <div styleName="row">
-                            <TextField
+                        <div styleName="row hours">
+                            <TextField styleName="hour"
                                 id="holiday-start"
                                 label="כניסת שבת/חג"
                                 value={user.company.settings.eveningHolidayStartHour}
@@ -151,7 +151,7 @@ class User extends Component {
                                 }}
                             />
 
-                            <TextField
+                            <TextField styleName="hour"
                                 id="holiday-end"
                                 label="יציאת שבת/חג"
                                 value={user.company.settings.holidayEndHour}
@@ -161,11 +161,22 @@ class User extends Component {
                                     startAdornment: <InputAdornment position="start">00:</InputAdornment>
                                 }}
                             />
-                            <TextField
+                        </div>
+                        <div styleName="row hours">
+                            <TextField styleName="hour"
                                 id="holiday-shift-length"
                                 label="אורך משמרת בשבת/חג"
                                 value={user.company.settings.holidayShiftLength}
                                 onChange={(e) => this.handleCompanySettingsChange("holidayShiftLength", e.target.value)}
+                                styleName="short-field"
+                                inputProps={{"style": {textAlign: "center"}}}
+                            />
+
+                            <TextField styleName="hour"
+                                id="regular-shift-length"
+                                label="אורך משמרת רגילה"
+                                value={user.company.settings.regularShiftLength}
+                                onChange={(e) => this.handleCompanySettingsChange("regularShiftLength", e.target.value)}
                                 styleName="short-field"
                                 inputProps={{"style": {textAlign: "center"}}}
                             />

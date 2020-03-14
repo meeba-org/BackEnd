@@ -144,7 +144,7 @@ const analyzeShiftHours = (shift, settings) => {
             break;
         case EDayType.Regular:
         default:
-            analyzedHours = analyzeRegularDayShiftHours(clockIn, clockOut, breakLength, settings, REGULAR_SHIFT_LENGTH);
+            analyzedHours = analyzeRegularDayShiftHours(clockIn, clockOut, breakLength, settings, settings.regularShiftLength || REGULAR_SHIFT_LENGTH);
             break;
     }
 
@@ -339,9 +339,6 @@ const analyzeWholeShiftInHolidayHours = (clockIn, clockOut, breakLength, setting
 };
 
 function calcExtra25PercentHours(shiftLength, regularShiftLength) {
-    if (!regularShiftLength)
-        regularShiftLength = REGULAR_SHIFT_LENGTH
-
     if (shiftLength <= regularShiftLength)
         return 0;
 
@@ -353,9 +350,6 @@ function calcExtra25PercentHours(shiftLength, regularShiftLength) {
 }
 
 function calcExtra50PercentHours(shiftLength, regularHoursInShift) {
-    if (!regularHoursInShift)
-        regularHoursInShift = REGULAR_SHIFT_LENGTH
-
     if (shiftLength <= regularHoursInShift + SHIFT_125_OVERDUE_LENGTH) {
         return 0;
     }

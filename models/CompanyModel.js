@@ -13,6 +13,7 @@ const CompanySchema = mongoose.Schema({
     settings: {
         eveningHolidayStartHour: {type: Number, default: 18}, // start hour of evening holiday (i.e. Friday knisat shabat hour)
         holidayEndHour: {type: Number, default: 19}, // end hour of holiday (i.e. Saturday Yetziat shabat hour)
+        regularShiftLength: {type: Number, default: 9},
         holidayShiftLength: {type: Number, default: 9},
         enableCommute: {type: Boolean, default: false},
         enableTasks: {type: Boolean, default: false},
