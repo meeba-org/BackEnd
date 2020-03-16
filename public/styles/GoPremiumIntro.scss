@@ -40,6 +40,13 @@
         .number {
             font-size: 30px;
             color: $secondary;
+
+            &.erased {
+                text-decoration: line-through;
+                padding-left: 15px;
+                color: lightgray;
+                font-weight: normal;
+            }
         }
 
         .symbol {
