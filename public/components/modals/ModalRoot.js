@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import LoginRegister from "../login/LoginRegister";
 
 import {EModalType} from "./EModalType";
+const Covid19Discount = React.lazy(() => import("./Covid19DiscountModal"));
 const AbsenceDaysModal = React.lazy(() => import("./AbsenceDaysModal"));
 const DeleteModal = React.lazy(() => import("./DeleteModal"));
 const EditEmployeeModal = React.lazy(() => import("./EditEmployeeModal"));
@@ -29,6 +30,7 @@ export const MODAL_COMPONENTS = {
     [EModalType.YES_NO_MODAL]: YesNoModal,
     [EModalType.SURVEY_2019]: Survey2019Modal,
     [EModalType.NEW_FEATURE_ABSENCE_DAYS]: AbsenceDaysModal,
+    [EModalType.COVID19_DISCOUNT]: Covid19Discount,
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {

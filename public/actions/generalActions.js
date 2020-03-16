@@ -24,19 +24,19 @@ export const fetchMetaData = () => ({
 });
 
 export const displaySplashScreen = () => dispatch => {
-    let splashScreenType = ESplashScreenType.NEW_FEATURE_ABSENCE_DAYS;
+    let splashScreenType = ESplashScreenType.COVID19_DISCOUNT;
     let hasSeen = hasSeenSplashScreen(splashScreenType);
 
     if (hasSeen)
         return false;
 
-    dispatch(showModal(EModalType.NEW_FEATURE_ABSENCE_DAYS));
+    dispatch(showModal(EModalType.COVID19_DISCOUNT));
     setSeenSplashScreen(splashScreenType);
 };
 
 export const loadDashboardData = (onFinishLoading) =>  dispatch => {
     dispatch(loadUserFromToken(onFinishLoading));
     dispatch(fetchPendingShifts());
-    // dispatch(displaySplashScreen());
+    dispatch(displaySplashScreen());
 };
 

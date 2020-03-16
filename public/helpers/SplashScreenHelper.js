@@ -2,7 +2,8 @@ import {parseJson} from "./utils";
 
 export const ESplashScreenType = {
     SURVEY_2019: "SURVEY_2019",
-    NEW_FEATURE_ABSENCE_DAYS: "NEW_FEATURE_ABSENCE_DAYS"
+    NEW_FEATURE_ABSENCE_DAYS: "NEW_FEATURE_ABSENCE_DAYS",
+    COVID19_DISCOUNT: "COVID19_DISCOUNT",
 };
 
 export const hasSeenSplashScreen = (splashScreenType) => {
