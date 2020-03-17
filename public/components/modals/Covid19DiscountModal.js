@@ -35,7 +35,7 @@ const Covid19DiscountModal = ({open}) => {
 
     return (
         <Dialog onClose={() => dispatch(hideModal())} open={open} classes={{paper: classes.paperRoot}}>
-            <DialogTitle><Text variant={"h6"} text={"אנחנו רוצים לתמוך בך 🙏🏻"} /></DialogTitle>
+            <DialogTitle><Typography align="center" variant={"h6"}>{"אנחנו רוצים לתמוך בך 🙏🏻"}</Typography></DialogTitle>
             <DialogContent classes={{root: classes.contentRoot}}>
                 <Typography>
                     <Box display="flex" flexDirection="row" fontSize={"h5.fontSize"}>
