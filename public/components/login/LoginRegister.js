@@ -103,7 +103,7 @@ class LoginRegister extends Component {
                                         aria-label="toggle password visibility"
                                         onClick={() => this.setState({showPassword: !this.state.showPassword})}
                                     >
-                                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
                                     </IconButton>
                                 </InputAdornment>
 
