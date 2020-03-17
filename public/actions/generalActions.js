@@ -27,8 +27,8 @@ export const displaySplashScreen = () => dispatch => {
     let splashScreenType = ESplashScreenType.COVID19_DISCOUNT;
     let hasSeen = hasSeenSplashScreen(splashScreenType);
 
-    if (hasSeen)
-        return false;
+    // if (hasSeen)
+    //     return false;
 
     dispatch(showModal(EModalType.COVID19_DISCOUNT));
     setSeenSplashScreen(splashScreenType);

@@ -7,8 +7,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
 import React from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {hideModal, showGoPremiumModal} from "../../actions";
+import {isDesktop} from "../../selectors";
 
 const useStyles = makeStyles({
     paperRoot: {
@@ -18,8 +19,8 @@ const useStyles = makeStyles({
         marginLeft: "5px",
     },
     contentRoot: {
-        paddingLeft: "100px",
-        paddingRight: "100px",
+        paddingLeft: props => props.isDesktop ? "100px" : "10px",
+        paddingRight: props => props.isDesktop ? "100px" : "10px",
     },
     line: {
         flexDirection: "row"
@@ -30,17 +31,18 @@ const useStyles = makeStyles({
 });
 
 const Covid19DiscountModal = ({open}) => {
-    const classes = useStyles();
+    const isDesktop0 = useSelector(isDesktop);
+    const classes = useStyles({isDesktop: isDesktop0});
     const dispatch = useDispatch();
 
     return (
         <Dialog onClose={() => dispatch(hideModal())} open={open} classes={{paper: classes.paperRoot}}>
-            <DialogTitle><Typography align="center" variant={"h6"}>{"אנחנו רוצים לתמוך בך 🙏🏻"}</Typography></DialogTitle>
+            <Typography align="center" variant={"h6"}>{"אנחנו רוצים לתמוך בך 🙏🏻"}</Typography>
             <DialogContent classes={{root: classes.contentRoot}}>
-                <Typography>
-                    <Box display="flex" flexDirection="row" fontSize={"h5.fontSize"}>
+                <Typography component="div">
+                    <Box display="flex" flexDirection="row" fontSize={isDesktop0 ? "h5.fontSize" : "h6.fontSize"}>
                         הוזלנו את דמי המנוי
-                        <Box fontWeight="bold" color={"primary.main"} classes={{root: classes.price}}>ל-10 ש"ח לחודש</Box>
+                        <Box fontWeight="bold" color={"primary.main"} classes={{root: classes.price}} fontSize={isDesktop0 ? "h5.fontSize" : "h6.fontSize"}>ל-10 ש"ח לחודש</Box>
                     </Box>
                     <Box fontSize="h6.fontSize" textAlign="center">(במקום 100 ש"ח)</Box>
                     <Box fontSize="body1.fontSize" textAlign="center" classes={{root: classes.root}}>ההטבה היא עד הודעה חדשה.</Box>
