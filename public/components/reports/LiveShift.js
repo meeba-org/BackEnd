@@ -41,6 +41,7 @@ const LiveShift = (props) => {
                     autoOk
                     value={shift.clockInTime}
                     onChange={(time) => onUpdateStartTime(time, shift)}
+                    inputProps={{"data-hj-whitelist": true}}
                 />
 
                 {!!shift.clockOutTime &&
@@ -50,6 +51,7 @@ const LiveShift = (props) => {
                     autoOk
                     value={shift.clockOutTime}
                     onChange={(time) => onUpdateEndTime(time, shift)}
+                    inputProps={{"data-hj-whitelist": true}}
                 />
                 }
             </div>
