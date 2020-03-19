@@ -2,13 +2,14 @@ import Paper from "@material-ui/core/Paper";
 import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from "react-redux";
-import {Redirect, Route, withRouter, Switch} from "react-router-dom";
+import {Redirect, Route, Switch, withRouter} from "react-router-dom";
 import {loadDashboardData} from "../actions/generalActions";
 import {ReportModes} from "../helpers/utils";
 import * as selectors from "../selectors";
 import "../styles/Dashboard.scss";
 import AppBar from "./AppBar";
 import EmployeesContainer from "./employees/EmployeesContainer";
+import MbSnackbar from "./MbSnackbar";
 import DailyReportContainer from "./reports/DailyReportContainer";
 import Report from "./reports/Report";
 import Settings from "./Settings";
@@ -18,7 +19,7 @@ class Dashboard extends React.PureComponent {
 
     state = {
         open: null,
-        isLoading: true
+        isLoading: true,
     };
 
     componentDidMount() {
@@ -35,6 +36,7 @@ class Dashboard extends React.PureComponent {
 
         return this.state.open;
     };
+
 
     render() {
         let {userRole, isDesktop, isTasksFeatureEnable, match: {path} } = this.props;
@@ -67,6 +69,7 @@ class Dashboard extends React.PureComponent {
                             </Switch>
                         </Paper>
                     </div>
+                    <MbSnackbar />
                 </div>
             </div>
         );
