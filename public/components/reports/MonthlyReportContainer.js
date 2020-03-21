@@ -35,7 +35,7 @@ class MonthlyReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop} = this.props;
+            const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="employeeShiftsReports"
@@ -85,16 +85,14 @@ function mapStateToProps(state) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchMonthlyReport: (month, year) => dispatch(fetchMonthlyReport(month, year)),
-        fetchEmployees: () => dispatch(fetchUsers(true)),
-        generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
-        createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
-        deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
-        showShiftDialog: (shift, callBack, postUpdate) => dispatch(showEditShiftModal(shift, callBack, postUpdate)),
-    };
-}
+const mapDispatchToProps = {
+    fetchMonthlyReport,
+    fetchEmployees: fetchUsers,
+    generateExcelReport,
+    createShift,
+    deleteShift: showDeleteShiftModal,
+    showShiftDialog: showEditShiftModal,
+};
 
 export default connect(
     mapStateToProps, mapDispatchToProps

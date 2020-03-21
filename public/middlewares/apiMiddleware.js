@@ -4,6 +4,7 @@ import axios from "axios";
 import {ErrorAction, HideLoading, ShowLoading} from "../actions/index";
 
 const apiMiddleware = ({dispatch}) => next => action => {
+
     if (action.type !== actionTypes.API) {
         return next(action);
     }

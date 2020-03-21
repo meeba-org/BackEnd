@@ -29,7 +29,6 @@ const MbSnackbar = () => {
 
     return (
         <Snackbar
-            // onClick={onClick}
             ContentProps={{
                 classes: {
                     root: classes.root
@@ -37,7 +36,7 @@ const MbSnackbar = () => {
             }}
             open={open}
             onClose={handleClose}
-            message={<Typography><Box>{"אנחנו רוצים לתמוך בך 🙏🏻 - עכשיו מנוי חודשי ב-10 שח בלבד"}</Box></Typography>}
+            message={<Box fontSize={16}>{"אנחנו רוצים לתמוך בך 🙏🏻 - עכשיו מנוי חודשי ב-10 שח בלבד"}</Box>}
             action={
                 <>
                     <Button color="secondary" fontSize={16} onClick={onClick}>

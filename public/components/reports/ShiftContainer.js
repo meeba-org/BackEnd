@@ -119,7 +119,7 @@ class ShiftContainer extends React.PureComponent {
         let month = moment(orgShift.clockInTime).format('MM');
         let year = moment(orgShift.clockInTime).format('YYYY');
 
-        updateShift(updatedShift, month, year, postUpdate);
+        updateShift(updatedShift, postUpdate, month, year);
     };
 
     // TODO What the heck is this - duplicated onDelete
@@ -213,14 +213,12 @@ const mapStateToProps = (state) => {
     };
 };
 
-function mapDispatchToProps(dispatch) {
-    return {
-        createShift: (shift) => dispatch(createShift(shift, dispatch)),
-        updateShift: (shift, month, year, postUpdate) => dispatch(updateShift(shift, dispatch, postUpdate, month, year)),
-        deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
-        showGoPremiumModal: () => dispatch(showGoPremiumModal()),
-        showLocationModal: (shift) => dispatch(showLocationModal(shift)),
-    };
-}
+const mapDispatchToProps = {
+    createShift,
+    updateShift,
+    deleteShift: showDeleteShiftModal,
+    showGoPremiumModal,
+    showLocationModal,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withShiftLogic(ShiftContainer));

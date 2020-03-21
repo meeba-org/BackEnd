@@ -17,7 +17,6 @@ const rootReducer = combineReducers({
     routing: routerReducer,
     users: UsersReducer,
     shifts: ShiftsReducer,
-    // pendingShifts: PendingShiftsReducer,
     tasks: TasksReducer,
     user: UserReducer,
     modal: ModalReducer,

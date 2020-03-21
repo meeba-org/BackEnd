@@ -239,7 +239,7 @@ class EditShiftModal extends Component {
         }
         let {updateShift, postUpdate} = this.props;
 
-        updateShift(updatedShift, month, year, postUpdate);
+        updateShift(updatedShift, postUpdate, month, year);
     };
 
     onUpdateStartDate = (date, orgShift) => {
@@ -535,14 +535,12 @@ const mapStateToProps = (state) => {
     };
 };
 
-function mapDispatchToProps(dispatch) {
-    return {
-        createShift: (shift) => dispatch(createShift(shift, dispatch)),
-        updateShift: (shift, month, year, postUpdate) => dispatch(updateShift(shift, dispatch, postUpdate, month, year)),
-        deleteShift: (shift) => dispatch(deleteShift(shift, dispatch)),
-        hideEditShiftModal: () => dispatch(hideEditShiftModal())
-    };
-}
+const mapDispatchToProps = {
+    createShift,
+    updateShift,
+    deleteShift,
+    hideEditShiftModal
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(withShiftLogic(EditShiftModal)));

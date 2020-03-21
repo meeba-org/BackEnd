@@ -54,13 +54,13 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-        fetchEmployees: () => fetchUsers(true),
-        createUser: (employee) => createUser(employee),
-        updateUser: (employee) => updateUser(employee),
-        deleteUser: (employee) => showDeleteUserModal(employee),
-        showMobileAppModal: showMobileAppModal,
+        fetchEmployees: fetchUsers,
+        createUser,
+        updateUser,
+        deleteUser: showDeleteUserModal,
+        showMobileAppModal,
         showEmployeeDialog: showEditEmployeeModal,
-        showGoPremiumModal: () => showGoPremiumModal()
+        showGoPremiumModal
 };
 
 export default connect(

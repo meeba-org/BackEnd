@@ -64,16 +64,14 @@ function mapStateToProps(state) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchDailyReport: (startDate) => {dispatch( fetchDailyReport(startDate)); },
-        fetchEmployees: () => dispatch(fetchUsers(true)),
-        updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, false, month, year)),
-        createShift: (shift) => dispatch(createShift(shift, dispatch)),
-        deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
-        showShiftDialog: (shift, callBack, postUpdate) => dispatch(showEditShiftModal(shift, callBack, postUpdate)),
-    };
-}
+const mapDispatchToProps = {
+    fetchDailyReport,
+    fetchEmployees: fetchUsers,
+    updateShift: (shift, month, year) => updateShift(shift, false, month, year),
+    createShift,
+    deleteShift: showDeleteShiftModal,
+    showShiftDialog: showEditShiftModal,
+};
 
 export default connect(
     mapStateToProps, mapDispatchToProps

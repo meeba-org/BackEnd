@@ -55,7 +55,7 @@ function mapDispatchToProps(dispatch) {
         // hasPendingShifts: () => dispatch( hasPendingShifts()) ,
         fetchPendingShifts: () => {dispatch( fetchPendingShifts()); },
         deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
-        updateShift: (shift, month, year) => dispatch(updateShift(shift, dispatch, false, month, year)),
+        updateShift: (shift, month, year) => dispatch(updateShift(shift, false, month, year)),
         showShiftDialog: (shift, callBack, postUpdate) => dispatch(showEditShiftModal(shift, callBack, postUpdate)),
     };
 }

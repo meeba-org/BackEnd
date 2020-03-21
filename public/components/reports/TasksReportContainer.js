@@ -83,16 +83,14 @@ function mapStateToProps(state) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchTasksReport: (month, year) => dispatch(fetchTasksReport(month, year)),
-        fetchEmployees: () => dispatch(fetchUsers(true)),
-        generateExcelReport: (month, year) => dispatch(generateExcelReport(month, year)),
-        createShift: (shift, month, year) => dispatch(createShift(shift, dispatch, month, year)),
-        deleteShift: (shift, month, year) => dispatch(showDeleteShiftModal(shift, dispatch, month, year)),
-        showShiftDialog: (shift, callBack, postUpdate) => dispatch(showEditShiftModal(shift, callBack, postUpdate)),
-    };
-}
+const mapDispatchToProps = {
+    fetchTasksReport,
+    fetchEmployees: fetchUsers,
+    generateExcelReport,
+    createShift,
+    deleteShift: showDeleteShiftModal,
+    showShiftDialog: showEditShiftModal,
+};
 
 export default connect(
     mapStateToProps, mapDispatchToProps

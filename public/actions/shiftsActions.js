@@ -45,13 +45,13 @@ export const createShiftsSuccess = (payload) => ({
     payload
 });
 
-export const createShift = (shift, dispatch, month, year) => ({
+export const createShift = (shift, month, year) => ({
     type: API,
     payload: {
         url: "/shifts",
         method: "post",
         data: shift,
-        success: (data) => {
+        success: (data) => dispatch => {
             dispatch(createShiftsSuccess(data));
             if (!!month && !!year)
                 dispatch(fetchMonthlyReport(month, year));
@@ -140,7 +140,7 @@ const isMovingShiftOutOfMonth = (shift, orgMonth, orgYear) => {
     return (orgMonth !== newMonth || orgYear !== newYear);
 };
 
-export const updateShift = (shift, dispatch, postUpdate, month, year) => {
+export const updateShift = (shift, postUpdate, month, year) =>  {
     if (isMovingShiftOutOfMonth(shift, month, year)) {
         return {
             type: 'SHOW_MODAL',
@@ -158,10 +158,10 @@ export const updateShift = (shift, dispatch, postUpdate, month, year) => {
         };
     }
 
-    return updateShift0(dispatch, shift, postUpdate, month, year);
+    return updateShift0(shift, postUpdate, month, year);
 };
 
-export const updateShift0 = (dispatch, shift, postUpdate, month, year) => {
+export const updateShift0 = (shift, postUpdate, month, year) => {
 
     return {
         type: API,
@@ -169,7 +169,7 @@ export const updateShift0 = (dispatch, shift, postUpdate, month, year) => {
             url: "/shifts",
             method: "put",
             data: shift,
-            success: (data) => {
+            success: (data) => dispatch => {
                 if (postUpdate && !!month && !!year) {
                     dispatch(postUpdate(month, year));
                 }
@@ -185,7 +185,7 @@ export const updateShift0 = (dispatch, shift, postUpdate, month, year) => {
     };
 };
 
-export const showDeleteShiftModal = (shift, dispatch, month, year) => ({
+export const showDeleteShiftModal = (shift, month, year) => ({
     type: 'SHOW_MODAL',
     payload: {
         modalType: EModalType.DELETE_ENTITY,
@@ -235,14 +235,13 @@ export const showLocationModal = (shift) => ({
     }
 });
 
-// TODO use thunk! => dispatch =>
-export const deleteShift = (shift, dispatch, month, year) => ({
+export const deleteShift = (shift, month, year) => ({
     type: API,
     payload: {
         url: "/shifts/" + shift._id,
         method: "delete",
         data: shift,
-        success: (data) => {
+        success: (data) => dispatch => {
             dispatch(deleteShiftSuccess(data));
             if (!!month && !!year)
                 dispatch(fetchMonthlyReport(month, year));

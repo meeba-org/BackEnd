@@ -14,7 +14,7 @@ class DeleteModal extends Component {
     handleDelete = () => {
         let {dispatch, deleteEntity, entity, month, year} = this.props;
 
-        dispatch(deleteEntity(entity, dispatch, month, year));
+        dispatch(deleteEntity(entity, month, year));
         dispatch(hideDeleteEntityModal());
     };
 
