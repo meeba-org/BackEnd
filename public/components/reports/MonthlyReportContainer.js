@@ -6,6 +6,7 @@ import reduxForm from "redux-form/es/reduxForm";
 import {fetchMonthlyReport, generateExcelReport} from "../../actions/reportsActions";
 import {createShift, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
+import {getMonthlyReport} from "../../selectors";
 import * as selectors from "../../selectors";
 import MonthlyReport from "./MonthlyReport";
 import MonthlyReportLine from "./MonthlyReportLine";
@@ -73,7 +74,7 @@ MonthlyReportContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-    const employeeShiftsReports = state.reports.employeesMonthlyReports;
+    const employeeShiftsReports = getMonthlyReport(state);
     const employees = state.users;
     return {
         employees,

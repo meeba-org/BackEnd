@@ -34,7 +34,7 @@ export const generateExcelReport = (month, year) => ({
 export const fetchMonthlyReport = (month, year) => ({
     type: actions.API,
     payload: {
-        url: "/reports/monthly?year=" + year + "&month=" + month,
+        url: `/reports/monthly?year=${year}&month=${month}`,
         method: "get",
         success: fetchMonthlyReportSuccess,
     },
