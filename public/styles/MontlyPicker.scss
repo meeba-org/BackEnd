@@ -1,0 +1,23 @@
+@import "variables";
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .selects {
+        display: flex;
+        flex-direction: row;
+        height: 40px;
+
+        .select {
+            margin-right: 10px;
+        }
+    }
+
+    .picker-label {
+        margin-top: 5px;
+        margin-right: 10px;
+        color: $lightGrey ;
+        font-size: 16px;
+    }
+}

@@ -6,7 +6,7 @@ import {NavigateBefore, NavigateNext} from "@material-ui/icons";
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
-import "../styles/MonthlyReport.scss";
+import "../styles/MontlyPicker.scss";
 import MbActionButton from "./MbActionButton";
 
 const MobileDateDisplay = ({month, year}) => {
@@ -124,25 +124,28 @@ class MonthPicker extends Component {
         return (
             <Fragment>
                 {isDesktop &&
-                <Fragment>
-                    <Select
-                        styleName="select"
-                        value={selectedMonth}
-                        onChange={(event) => this.onMonthChange(event)}
-                        input={<Input/>}
-                    >
-                        {this.createMonthMenuItems()}
-                    </Select>
+                <div styleName="container">
+                    <div styleName="selects">
+                        <Select
+                            styleName="select"
+                            value={selectedMonth}
+                            onChange={(event) => this.onMonthChange(event)}
+                            input={<Input/>}
+                        >
+                            {this.createMonthMenuItems()}
+                        </Select>
 
-                    <Select
-                        styleName="select"
-                        value={selectedYear}
-                        onChange={(event) => this.handleYearChange(event)}
-                        input={<Input/>}
-                    >
-                        {this.createYearMenuItems()}
-                    </Select>
-                </Fragment>
+                        <Select
+                            styleName="select"
+                            value={selectedYear}
+                            onChange={(event) => this.handleYearChange(event)}
+                            input={<Input/>}
+                        >
+                            {this.createYearMenuItems()}
+                        </Select>
+                    </div>
+                    <div styleName="picker-label">מה-1 ל-1 לחודש</div>
+                </div>
                 }
                 {!isDesktop &&
                 <MobileDateDisplay month={selectedMonth} year={selectedYear} />
