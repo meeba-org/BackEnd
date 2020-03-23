@@ -40,13 +40,14 @@ class MonthPicker extends Component {
     createMonthMenuItems = () => {
         let res = [];
         const {currentYear, currentMonth} = this.state;
-        const {selectedYear} = this.props;
+        const {selectedYear, startOfMonth} = this.props;
 
         // If current year create only months that exist
         let maxMonth = currentYear === selectedYear ? currentMonth : 12;
 
         for (let i = 1; i <= maxMonth; i++) {
-            res.push(<MenuItem key={i} value={i}>{this.monthMap[i]}</MenuItem>);
+            const text = (!startOfMonth || startOfMonth === 1) ? this.monthMap[i] : `החל מ-${startOfMonth} ל${this.monthMap[i]}`;
+            res.push(<MenuItem key={i} value={i}>{text}</MenuItem>);
         }
 
         return res;
@@ -144,7 +145,6 @@ class MonthPicker extends Component {
                             {this.createYearMenuItems()}
                         </Select>
                     </div>
-                    <div styleName="picker-label">מה-1 ל-1 לחודש</div>
                 </div>
                 }
                 {!isDesktop &&

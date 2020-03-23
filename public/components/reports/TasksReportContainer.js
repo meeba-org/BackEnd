@@ -7,7 +7,7 @@ import {createShift} from "../../actions";
 import {fetchTasksReport, generateExcelReport} from "../../actions/reportsActions";
 import {showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
-import * as selectors from "../../selectors";
+import {getStartOfMonth, getUserRole} from "../../selectors";
 import MonthlyReport from "./MonthlyReport";
 import TaskReportLine from "./TaskReportLine";
 
@@ -36,7 +36,7 @@ class TasksReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole} = this.props;
+        const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole, startOfMonth} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="tasksReports"
@@ -52,6 +52,7 @@ class TasksReportContainer extends React.PureComponent {
                             reportLineComponent={TaskReportLine}
                             title={'דו"ח משימות'}
                             postUpdate={this.onDataChange}
+                            startOfMonth={startOfMonth}
                 />
             </form>
         );
@@ -78,8 +79,9 @@ function mapStateToProps(state) {
         initialValues: {
             tasksReports: state.reports.tasksReports
         },
-        userRole: selectors.getUserRole(state),
-        isLoading: state.loader.isLoading
+        userRole: getUserRole(state),
+        isLoading: state.loader.isLoading,
+        startOfMonth: getStartOfMonth(state)
     };
 }
 

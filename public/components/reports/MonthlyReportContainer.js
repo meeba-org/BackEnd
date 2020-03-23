@@ -6,8 +6,7 @@ import reduxForm from "redux-form/es/reduxForm";
 import {fetchMonthlyReport, generateExcelReport} from "../../actions/reportsActions";
 import {createShift, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
-import {getMonthlyReport} from "../../selectors";
-import * as selectors from "../../selectors";
+import {getMonthlyReport, getStartOfMonth, getUserRole, isDesktop} from "../../selectors";
 import MonthlyReport from "./MonthlyReport";
 import MonthlyReportLine from "./MonthlyReportLine";
 
@@ -36,7 +35,7 @@ class MonthlyReportContainer extends React.PureComponent {
     }
 
     render() {
-            const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop} = this.props;
+            const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop, startOfMonth} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="employeeShiftsReports"
@@ -53,6 +52,7 @@ class MonthlyReportContainer extends React.PureComponent {
                             reportLineComponent={MonthlyReportLine}
                             title={'דו"ח חודשי'}
                             isDesktop={isDesktop}
+                            startOfMonth={startOfMonth}
                 />
             </form>
         );
@@ -78,11 +78,12 @@ function mapStateToProps(state) {
     const employees = state.users;
     return {
         employees,
-        userRole: selectors.getUserRole(state),
+        userRole: getUserRole(state),
         initialValues: {
             employeeShiftsReports,
         },
-        isDesktop: selectors.isDesktop(state),
+        isDesktop: isDesktop(state),
+        startOfMonth: getStartOfMonth(state),
     };
 }
 

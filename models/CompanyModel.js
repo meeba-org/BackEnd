@@ -19,6 +19,7 @@ const CompanySchema = mongoose.Schema({
         enableTasks: {type: Boolean, default: false},
         enableAbsenceDays: {type: Boolean, default: false},
         breakLength: {type: Number, default: 0},
+        startOfMonth: {type: Number, default: 1},
     },
     features: [String],
     plan: {type: Number, default: EPlanType.Free},

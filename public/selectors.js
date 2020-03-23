@@ -55,7 +55,7 @@ export const getCompanySettings = (state) => {
 };
 
 export const isCommuteFeatureEnable = (state) => {
-    return isFeatureEnable(state, Feature.CommuteModule) && getCompanySettings(state).enableCommute;
+    return isFeatureEnable(state, Feature.CommuteModule) && getCompanySettings(state)?.enableCommute;
 };
 
 export const isTasksFeatureEnable = (state) => {
@@ -80,3 +80,5 @@ export const getDailyShifts = state => state.shifts.daily;
 export const getPendingShifts = state => state.shifts.pending;
 
 export const getMonthlyReport = state => state.reports.employeesMonthlyReports;
+
+export const getStartOfMonth = state => getCompanySettings(state)?.startOfMonth;

@@ -12,6 +12,7 @@ import {Link} from "react-router-dom";
 import '../../styles/User.scss';
 import MbCard from "../MbCard";
 import NoData from "../NoData";
+import StartOfMonthField from "./StartOfMonthField";
 
 class User extends Component {
     handleUserChange = (field, e) => {
@@ -194,6 +195,13 @@ class User extends Component {
                             <Typography variant={"caption"}>
                                 <Link to="/faq/break"  target="_blank">מה זה?</Link>
                             </Typography>
+                        </div>
+
+                        <div styleName="row">
+                            <StartOfMonthField
+                                value={user.company.settings.startOfMonth}
+                                onChange={value => this.handleCompanySettingsChange("startOfMonth", value)}
+                            />
                         </div>
 
                         <this.SettingSwitch text={"הזנת החזר נסיעות ע\"י העובד"} value={user.company.settings.enableCommute}
