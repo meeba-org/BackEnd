@@ -106,20 +106,6 @@ const getShiftsBetween = (company, startDate, endDate, userId) => {
         .then((shifts) => shifts.sort((s1, s2) => s1.clockInTime - s2.clockInTime));
 };
 
-const getShiftsInMonth = (year, month, company, userId) => {
-    if (!year)
-        throw new Error('[ShiftModel.getShiftsInMonth] - year is not valid');
-    if (!month)
-        throw new Error('[ShiftModel.getShiftsInMonth] - month is not valid');
-
-    // moment consider month in a zero based
-    month = month - 1;
-    let startDate = moment().year(year).month(month).startOf('month');
-    let endDate = moment().year(year).month(month).endOf('month');
-
-    return getShiftsBetween(company, startDate, endDate, userId);
-};
-
 const deleteAllShifts = (conditions) => {
     if (!conditions)
         conditions = {};
@@ -147,6 +133,5 @@ module.exports = {
     , createShift
     , updateShift
     , deleteShift
-    , getShiftsInMonth
     , shiftsCount
 };

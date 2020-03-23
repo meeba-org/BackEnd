@@ -17,33 +17,32 @@ router.get('/download',
         query('year').exists(),
         query('month').exists(),
     ],
-    (req, res) => routeWrapper(req, res, (req, res) => {
+    (req, res) => routeWrapper(req, res, async (req, res) => {
 
         const year = req.query.year || moment().format('YYYY');
         const month = req.query.month || moment().format('MM');
 
-        let user = jwtService.getUserFromLocals(res);
-        return CompanyModel.getByCompanyId(user.company._id)
-            .then(company => {
-                return Promise.all([
-                    ShiftModel.getShiftsInMonth(year, month, company),
-                    TaskModel.getByCompanyId(company._id)
-                ])
-                    .then((results) => {
-                        let shifts = results[0];
-                        let tasks = results[1];
+        const companyFromLocals = jwtService.getCompanyFromLocals(res);
+        const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
 
-                        let workbook = ExcelManager.createExcel(shifts, year, month, company, tasks);
+        return Promise.all([
+            getShiftsInMonth(year, month, company),
+            TaskModel.getByCompanyId(company._id)
+        ])
+            .then((results) => {
+                let shifts = results[0];
+                let tasks = results[1];
 
-                        let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
-                        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                        res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
-                        return workbook.xlsx.write(res)
-                            .then(function () {
-                                res.end();
-                            });
-                    })
-            })
+                let workbook = ExcelManager.createExcel(shifts, year, month, company, tasks);
+
+                let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
+                return workbook.xlsx.write(res)
+                    .then(function () {
+                        res.end();
+                    });
+            });
     })
 );
 
@@ -53,18 +52,17 @@ router.get('/monthly',
         query('year').exists(),
         query('month').exists(),
     ],
-    (req, res) => routeWrapper(req, res, (req, res) => {
+    (req, res) => routeWrapper(req, res, async (req, res) => {
         let userId = req.query.userId;
 
         const year = req.query.year || moment().format('YYYY');
         const month = req.query.month || moment().format('MM');
 
-        const company = jwtService.getCompanyFromLocals(res);
+        const companyFromLocals = jwtService.getCompanyFromLocals(res);
+        const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
 
-        return ShiftModel.getShiftsInMonth(year, month, company, userId)
-            .then((shifts) => {
-                return ShiftAnalyzer.createEmployeeReports(shifts, company.settings);
-            });
+        const shifts = await getShiftsInMonth(year, month, company, userId);
+        return ShiftAnalyzer.createEmployeeReports(shifts, company.settings);
     })
 );
 
@@ -74,16 +72,17 @@ router.get('/tasks',
         query('year').exists(),
         query('month').exists(),
     ],
-    (req, res) => routeWrapper(req, res, (req, res) => {
+    (req, res) => routeWrapper(req, res, async (req, res) => {
         let userId = req.query.userId;
 
         const year = req.query.year || moment().format('YYYY');
         const month = req.query.month || moment().format('MM');
 
-        const company = jwtService.getCompanyFromLocals(res);
+        const companyFromLocals = jwtService.getCompanyFromLocals(res);
+        const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
 
         return Promise.all([
-            ShiftModel.getShiftsInMonth(year, month, company, userId),
+            getShiftsInMonth(year, month, company, userId),
             TaskModel.getByCompanyId(company._id)
             ])
             .then((results) => {
@@ -94,5 +93,20 @@ router.get('/tasks',
             });
     })
 );
+
+const getShiftsInMonth = (year, month, company, userId) => {
+    if (!year)
+        throw new Error('[ShiftModel.getShiftsInMonth] - year is not valid');
+    if (!month)
+        throw new Error('[ShiftModel.getShiftsInMonth] - month is not valid');
+
+    // moment consider month in a zero based
+    month = month - 1;
+    const startOfMonth = company.settings.startOfMonth;
+    let startDate = moment().year(year).month(month).date(startOfMonth).startOf('day');
+    let endDate = moment().year(year).month(month + 1).date(startOfMonth).startOf('day');
+
+    return ShiftModel.getShiftsBetween(company, startDate, endDate, userId);
+};
 
 module.exports = router;
