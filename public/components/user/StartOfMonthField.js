@@ -1,5 +1,5 @@
 import TextField from "@material-ui/core/TextField";
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 const StartOfMonthField = ({value, onChange}) => {
     const [error, setError] = useState(false);
