@@ -39,7 +39,7 @@ describe('Shifts', function () {
                     return ShiftModel.createShift(shift3)
                 })
                 .then(() => {
-                    return ShiftModel.getShiftsInMonth(year, month + 1, createdCompany)
+                    return AppManager.getShiftsInMonth(year, month + 1, createdCompany)
                 })
                 .then((shifts) => {
                     expect(shifts).to.not.be.null;
@@ -82,7 +82,7 @@ describe('Shifts', function () {
                     return ShiftModel.createShift(shift3)
                 })
                 .then(() => {
-                    return ShiftModel.getShiftsInMonth(year, month + 1, createdUser.company, createdUser._id);
+                    return AppManager.getShiftsInMonth(year, month + 1, createdUser.company, createdUser._id);
                 })
                 .then((shifts) => {
                     expect(shifts).to.not.be.null;

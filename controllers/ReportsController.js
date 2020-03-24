@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
-const ShiftModel = require('../models/ShiftModel');
+const AppManager = require('../managers/AppManager');
 const CompanyModel = require('../models/CompanyModel');
 const ExcelManager = require('../managers/ExcelManager');
 const jwtService = require("./jwtService");
@@ -26,7 +26,7 @@ router.get('/download',
         const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
 
         return Promise.all([
-            getShiftsInMonth(year, month, company),
+            AppManager.getShiftsInMonth(year, month, company),
             TaskModel.getByCompanyId(company._id)
         ])
             .then((results) => {
@@ -61,7 +61,7 @@ router.get('/monthly',
         const companyFromLocals = jwtService.getCompanyFromLocals(res);
         const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
 
-        const shifts = await getShiftsInMonth(year, month, company, userId);
+        const shifts = await AppManager.getShiftsInMonth(year, month, company, userId);
         return ShiftAnalyzer.createEmployeeReports(shifts, company.settings);
     })
 );
@@ -82,7 +82,7 @@ router.get('/tasks',
         const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
 
         return Promise.all([
-            getShiftsInMonth(year, month, company, userId),
+            AppManager.getShiftsInMonth(year, month, company, userId),
             TaskModel.getByCompanyId(company._id)
             ])
             .then((results) => {
@@ -93,20 +93,5 @@ router.get('/tasks',
             });
     })
 );
-
-const getShiftsInMonth = (year, month, company, userId) => {
-    if (!year)
-        throw new Error('[ShiftModel.getShiftsInMonth] - year is not valid');
-    if (!month)
-        throw new Error('[ShiftModel.getShiftsInMonth] - month is not valid');
-
-    // moment consider month in a zero based
-    month = month - 1;
-    const startOfMonth = company.settings.startOfMonth;
-    let startDate = moment().year(year).month(month).date(startOfMonth).startOf('day');
-    let endDate = moment().year(year).month(month + 1).date(startOfMonth).startOf('day');
-
-    return ShiftModel.getShiftsBetween(company, startDate, endDate, userId);
-};
 
 module.exports = router;

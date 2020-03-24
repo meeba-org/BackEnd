@@ -2,6 +2,8 @@ const ShiftModel = require('../models/ShiftModel');
 const UserModel = require('../models/UserModel');
 const CompanyModel = require('../models/CompanyModel');
 const ERoles = require ('../models/ERoles');
+const moment = require('moment');
+
 const addShift = (shift) => {
     const user = shift.user;
 
@@ -78,10 +80,26 @@ const registerCompanyManager = (username, password) => {
         });
 };
 
+const getShiftsInMonth = (year, month, company, userId) => {
+    if (!year)
+        throw new Error('[ShiftModel.getShiftsInMonth] - year is not valid');
+    if (!month)
+        throw new Error('[ShiftModel.getShiftsInMonth] - month is not valid');
+
+    // moment consider month in a zero based
+    month = month - 1;
+    const startOfMonth = company.settings.startOfMonth;
+    let startDate = moment().year(year).month(month).date(startOfMonth).startOf('day');
+    let endDate = moment().year(year).month(month + 1).date(startOfMonth).startOf('day');
+
+    return ShiftModel.getShiftsBetween(company, startDate, endDate, userId);
+};
+
 module.exports = {
     addUser
     , removeUser
     , addShift
     , removeShift
     , registerCompanyManager
+    , getShiftsInMonth
 };
