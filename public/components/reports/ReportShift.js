@@ -53,7 +53,7 @@ const ReportShift = (props) => {
                                 value={clockInTime}
                                 format="DD/MM/YYYY"
                                 style={{margin: "0 10px 0 0"}}
-                                inputProps={{"data-hj-whitelist": true}}
+                                inputProps={{"data-hj-whitelist": ""}}
                     />
                 </div>
 
@@ -63,7 +63,7 @@ const ReportShift = (props) => {
                     autoOk
                     value={clockInTime}
                     onChange={(time) => onUpdateStartTime(time, shift)}
-                    inputProps={{"data-hj-whitelist": true}}
+                    inputProps={{"data-hj-whitelist": ""}}
                 />
 
                 <TimePicker
@@ -72,7 +72,7 @@ const ReportShift = (props) => {
                     autoOk
                     value={clockOutTime}
                     onChange={(time) => onUpdateEndTime(time, shift)}
-                    inputProps={{"data-hj-whitelist": true}}
+                    inputProps={{"data-hj-whitelist": ""}}
                 />
             </div>
             {isDesktop &&
