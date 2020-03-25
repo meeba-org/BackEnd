@@ -39,25 +39,25 @@ function createCompanyInstance(company) {
     return newCompany;
 }
 
-const getAllCompanies = () => {
+export const getAllCompanies = () => {
     return Company.find().exec();
 };
 
-const getPremiumPlanCompanies = () => {
+export const getPremiumPlanCompanies = () => {
     return Company.find({plan: EPlanType.Premium}).exec();
 };
 
-const getByCompanyId = (id) => {
+export const getByCompanyId = (id) => {
     return Company.findById(id).populate('users').exec();
 };
 
-const createCompany = (company) => {
+export const createCompany = (company) => {
     let newCompany = createCompanyInstance(company);
 
     return newCompany.save();
 };
 
-const updateCompany = (company) => {
+export const updateCompany = (company) => {
     let newCompany = createCompanyInstance(company);
     newCompany._id = company._id;
 
@@ -65,25 +65,25 @@ const updateCompany = (company) => {
     return Company.findOneAndUpdate({'_id': newCompany._id}, newCompany, {upsert: true, new: true}).exec();
 };
 
-const deleteCompany = (id) => {
+export const deleteCompany = (id) => {
     return Company.remove({_id: id}).exec();
  };
 
- const addUser = (companyId, user) => {
+export const addUser = (companyId, user) => {
      return Company.findByIdAndUpdate(companyId, {$push: {"users": user.toObject()}}, {new : true});
 };
 
-const removeUser = (companyId, user) => {
+export const removeUser = (companyId, user) => {
     return Company.findByIdAndUpdate(companyId, { $pull: { "users": user.id} }, {'new': true} );
 };
 
-const deleteAllCompanies = (conditions) => {
+export const deleteAllCompanies = (conditions) => {
     if (!conditions)
         conditions = {};
     return Company.remove(conditions).exec();
 };
 
-const companiesCount = () => Company.countDocuments().exec();
+export const companiesCount = () => Company.countDocuments().exec();
 
 module.exports = {
     createCompany

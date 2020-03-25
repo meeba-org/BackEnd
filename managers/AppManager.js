@@ -1,6 +1,6 @@
-const ShiftModel = require('../models/ShiftModel');
-const UserModel = require('../models/UserModel');
-const CompanyModel = require('../models/CompanyModel');
+import {createShift, deleteShift, getByShiftId, getShiftsBetween} from "../models/ShiftModel";
+import {addShift, createUser, deleteUser, getByUserId, removeShift} from "../models/UserModel";
+
 const ERoles = require ('../models/ERoles');
 const moment = require('moment');
 
@@ -8,11 +8,11 @@ const addShift = (shift) => {
     const user = shift.user;
 
     // Add the shift
-    return ShiftModel.createShift(shift)
+    return createShift(shift)
         .then((createShift) => {
             if (!!user && user.id) {
                 // Add shift to user
-                return UserModel.addShift(user.id, createShift)
+                return addShift(user.id, createShift)
                     .then(() => createShift);
             }
             return createShift;
@@ -20,16 +20,16 @@ const addShift = (shift) => {
 };
 
 const removeShift = (shiftId) => {
-    return ShiftModel.getByShiftId(shiftId)
+    return getByShiftId(shiftId)
         .then((shift) => {
             const user = shift.user;
 
             // Remove the shift itself
-            return ShiftModel.deleteShift(shift.id)
+            return deleteShift(shift.id)
                 .then(() => {
                     // Remove shift from user
                     if (!!user && user.id)
-                        UserModel.removeShift(user.id, shift);
+                        removeShift(user.id, shift);
                 });
         });
 };
@@ -38,7 +38,7 @@ const addUser = (user) => {
     const company = user.company;
 
     // Add the user
-    return UserModel.createUser(user)
+    return createUser(user)
         .then((createdUser) => {
             if (!!company && company.id) {
                 // Add user to company
@@ -50,12 +50,12 @@ const addUser = (user) => {
 };
 
 const removeUser = (userId) => {
-    return UserModel.getByUserId(userId)
+    return getByUserId(userId)
         .then((user) => {
             const company = user.company;
 
             // Remove user itself
-            return UserModel.deleteUser(user.id)
+            return deleteUser(user.id)
                 .then(() => {
                     // Remove user from company
                     if (!!company && company.id)
@@ -92,7 +92,7 @@ const getShiftsInMonth = (year, month, company, userId) => {
     let startDate = moment().year(year).month(month).date(startOfMonth).startOf('day');
     let endDate = moment().year(year).month(month + 1).date(startOfMonth).startOf('day');
 
-    return ShiftModel.getShiftsBetween(company, startDate, endDate, userId);
+    return getShiftsBetween(company, startDate, endDate, userId);
 };
 
 module.exports = {

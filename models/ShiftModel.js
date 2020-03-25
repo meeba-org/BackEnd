@@ -42,11 +42,11 @@ function createShiftInstance(shift) {
     return newShift;
 }
 
-const getByShiftId = (id) => {
+export const getByShiftId = (id) => {
     return Shift.findById(id);
 };
 
-const createShift = (shift) => {
+export const createShift = (shift) => {
     return DraftShiftModel.createDraftShift(shift.draftShift)
         .then(draftShift => {
             if (draftShift)
@@ -59,7 +59,7 @@ const createShift = (shift) => {
         });
 };
 
-const updateShift = (shift) => {
+export const updateShift = (shift) => {
     if (!shift._id)
         return reject("[ShiftModel.updateShift] - no valid id");
 
@@ -76,11 +76,11 @@ const updateShift = (shift) => {
         })
 };
 
-const deleteShift = (id) => {
+export const deleteShift = (id) => {
     return Shift.remove({_id: id}).exec();
 };
 
-const getPendingShifts = (company) => {
+export const getPendingShifts = (company) => {
     let condition = {
         $or: [{status: EShiftStatus.PENDING_UPDATE}, {status: EShiftStatus.PENDING_CREATE}],
         company: company._id
@@ -90,7 +90,7 @@ const getPendingShifts = (company) => {
         .then((shifts) => shifts.sort((s1, s2) => s1.clockInTime - s2.clockInTime));
 };
 
-const getShiftsBetween = (company, startDate, endDate, userId) => {
+export const getShiftsBetween = (company, startDate, endDate, userId) => {
     let condition = {
         clockInTime: {
             $gte: startDate,
@@ -106,13 +106,13 @@ const getShiftsBetween = (company, startDate, endDate, userId) => {
         .then((shifts) => shifts.sort((s1, s2) => s1.clockInTime - s2.clockInTime));
 };
 
-const deleteAllShifts = (conditions) => {
+export const deleteAllShifts = (conditions) => {
     if (!conditions)
         conditions = {};
     return Shift.remove(conditions).exec();
 };
 
-const createOrUpdateShift = (shift) => {
+export const createOrUpdateShift = (shift) => {
     if (!shift)
         throw new Error('Shift is not valid');
 
@@ -122,7 +122,7 @@ const createOrUpdateShift = (shift) => {
         return createShift(shift);
 };
 
-const shiftsCount = () => Shift.countDocuments().exec();
+export const shiftsCount = () => Shift.countDocuments().exec();
 
 module.exports = {
     createOrUpdateShift

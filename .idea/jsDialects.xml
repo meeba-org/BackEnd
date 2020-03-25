@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JSDialectsMappings">
+    <file url="file://$PROJECT_DIR$/controllers" dialect="ES6" />
+    <file url="file://$PROJECT_DIR$/managers" dialect="ES6" />
+    <file url="file://$PROJECT_DIR$/models" dialect="ES6" />
+    <file url="file://$PROJECT_DIR$/public" dialect="JSX" />
+  </component>
+</project>

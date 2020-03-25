@@ -1,15 +1,14 @@
 // server.js
 
 // set up ============================================
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const expressValidator = require('express-validator');
-const mongoose = require('mongoose');
-const config = require('./config');
-const enforce = require("express-sslify");
-const compression = require('compression');
+import cookieParser from "cookie-parser";
+import express from "express";
+import bodyParser from "body-parser";
+import expressValidator from "express-validator";
+import mongoose from "mongoose";
+import config from "./config";
+import enforce from "express-sslify";
+import compression from "compression";
 
 // Connect to mongoose
 mongoose.Promise = global.Promise;

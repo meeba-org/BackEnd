@@ -68,13 +68,13 @@ const getUsers = (company, hideDeleted) => {
 };
 
 // Return a promise
-const createUser = (user) => {
+export const createUser = (user) => {
     let newUser = createUserInstance(user);
 
     return newUser.save();
 };
 
-const updateUser = (user) => {
+export const updateUser = (user) => {
     let newUser = createUserInstance(user);
     newUser._id = user._id;
 
@@ -82,11 +82,11 @@ const updateUser = (user) => {
     return User.findOneAndUpdate({'_id': newUser._id}, newUser, {upsert: true, new: true}).populate('company').exec();
 };
 
-const deleteUser = (id) => {
+export const deleteUser = (id) => {
     return User.findOneAndUpdate({'_id': id}, {deleted: true}).exec();
 };
 
-const comparePassword = (candidatePassword, password, callback) => {
+export const comparePassword = (candidatePassword, password, callback) => {
     return candidatePassword === password;
     // bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
     //     if (err) throw err;
@@ -94,26 +94,26 @@ const comparePassword = (candidatePassword, password, callback) => {
     // });
 };
 
-const getCleanUser = (user) => {
+export const getCleanUser = (user) => {
     delete user.password;
     return user;
 };
 
-const deleteAllUsers = (conditions) => {
+export const deleteAllUsers = (conditions) => {
     if (!conditions)
         conditions = {};
     return User.remove(conditions).exec();
 };
 
-const addShift = (userId, shift) => {
+export const addShift = (userId, shift) => {
     return User.findByIdAndUpdate(userId, {$push: {"shifts": shift.toObject()}}, {new : true});
 };
 
-const removeShift = (userId, shift) => {
+export const removeShift = (userId, shift) => {
     return User.findByIdAndUpdate(userId, { $pull: { "shifts": shift.id} }, {'new': true} );
 };
 
-const usersCount = (ignoreDeleted) => {
+export const usersCount = (ignoreDeleted) => {
     let conditions = {};
 
     if (ignoreDeleted)
@@ -122,9 +122,9 @@ const usersCount = (ignoreDeleted) => {
     return User.countDocuments(conditions).exec();
 };
 
-const isEmployee = (user) => user.role === ERoles.EMPLOYEE;
+export const isEmployee = (user) => user.role === ERoles.EMPLOYEE;
 
-const isCompanyManager = (user) => user.role === ERoles.COMPANY_MANAGER;
+export const isCompanyManager = (user) => user.role === ERoles.COMPANY_MANAGER;
 
 module.exports = {
     createUser

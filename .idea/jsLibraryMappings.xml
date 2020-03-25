@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{@types/css-modules, @types/material-ui, @types/prop-types, @types/react, @types/react-dom, @types/react-redux, node_modules}" />
+    <file url="file://$PROJECT_DIR$/controllers" libraries="{@types/css-modules, @types/material-ui, @types/prop-types, @types/react, @types/react-dom, @types/react-redux, HTML, node_modules}" />
+    <file url="file://$PROJECT_DIR$/managers" libraries="{@types/css-modules, @types/material-ui, @types/prop-types, @types/react, @types/react-dom, @types/react-redux, HTML, node_modules}" />
+    <file url="file://$PROJECT_DIR$/models" libraries="{@types/css-modules, @types/material-ui, @types/prop-types, @types/react, @types/react-dom, @types/react-redux, HTML, node_modules}" />
+    <file url="file://$PROJECT_DIR$/server.mjs" libraries="{@types/css-modules, @types/material-ui, @types/prop-types, @types/react, @types/react-dom, @types/react-redux, HTML, node_modules}" />
+    <file url="PROJECT" libraries="{@types/css-modules, @types/material-ui, @types/prop-types, @types/react, @types/react-dom, @types/react-redux, HTML, node_modules}" />
     <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>
