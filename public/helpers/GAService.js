@@ -12,7 +12,7 @@ export const GACategory = {
     PROMOTION_VIDEO_SELECTED: "promotion-video-selected",
 };
 
-export const sendGaEvent = ({category, action = null, label = null, defaultUser = null}) => {
+export const sendGaEvent = ({category, action = "default", label = null, defaultUser = null}) => {
     // We want to track only production
     if (localStorage.getItem('isDevEnv') === "true")
         return;
