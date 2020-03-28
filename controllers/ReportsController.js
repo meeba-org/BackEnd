@@ -110,7 +110,12 @@ const handleMichpalFormat = async (shifts, year, month, company, tasks, res) => 
     res.setHeader('Content-disposition', 'attachment; filename=theDocument.txt');
     res.setHeader('Content-type', 'text/plain');
     res.charset = 'UTF-8';
-    res.write("Hello, world");
+
+    let data = "Corona Times by Chen Oppenhaim\n";
+    data += "\n";
+    data += "Hate it!!!";
+
+    res.write(data);
     res.end();
 };
 
