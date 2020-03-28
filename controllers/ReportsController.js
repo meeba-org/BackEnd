@@ -9,9 +9,8 @@ const jwtService = require("./jwtService");
 const ShiftAnalyzer = require("../managers/ShiftAnalyzer");
 const TaskModel = require("../models/TaskModel");
 const {param, query } = require('express-validator/check');
-const {EXCEL} = require('../models/EReportFormat');
+const {EXCEL, MICHPAL} = require('../models/EReportFormat');
 const {reject, routeWrapper} = require("./apiManager");
-
 
 //GET /reports/download report
 router.get('/download',
@@ -23,7 +22,7 @@ router.get('/download',
 
         const year = req.query.year || moment().format('YYYY');
         const month = req.query.month || moment().format('MM');
-        const format = req.query.format || EXCEL;
+        const format = req.query.format || MICHPAL;
 
         const companyFromLocals = jwtService.getCompanyFromLocals(res);
         const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
@@ -37,14 +36,10 @@ router.get('/download',
         let tasks = results[1];
 
         if (format === EXCEL) {
-            let workbook = ExcelManager.createExcel(shifts, year, month, company, tasks);
-
-            let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
-            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
-            const wb = await workbook.xlsx.write(res);
-            res.end();
-            return wb;
+            return handleExcelFormat(shifts, year, month, company, tasks, res);
+        }
+        else if (format === MICHPAL) {
+            return handleMichpalFormat(shifts, year, month, company, tasks, res);
         }
 
         return reject("פורמט לא נתמך", 401);
@@ -98,5 +93,25 @@ router.get('/tasks',
             });
     })
 );
+
+const handleExcelFormat = (shifts, year, month, company, tasks, res) => {
+    let workbook = ExcelManager.createExcel(shifts, year, month, company, tasks);
+
+    let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
+    return workbook.xlsx.write(res)
+        .then(function () {
+            res.end();
+        });
+};
+
+const handleMichpalFormat = async (shifts, year, month, company, tasks, res) => {
+    res.setHeader('Content-disposition', 'attachment; filename=theDocument.txt');
+    res.setHeader('Content-type', 'text/plain');
+    res.charset = 'UTF-8';
+    res.write("Hello, world");
+    res.end();
+};
 
 module.exports = router;

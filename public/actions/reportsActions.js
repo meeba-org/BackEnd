@@ -19,8 +19,11 @@ export const generateExcelReport = (month, year) => ({
         method: "get",
         responseType: 'blob',
         success: (data)  => {
-            let blob = new Blob([data], {type: 'vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'});
-            FileSaver.saveAs(blob, 'דוח ' + month + "-" + year + ".xlsx");
+            let blob = new Blob([data]);
+            FileSaver.saveAs(blob, 'דוח ' + month + "-" + year + ".txt");
+
+            // let blob = new Blob([data], {type: 'vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'});
+            // FileSaver.saveAs(blob, 'דוח ' + month + "-" + year + ".xlsx");
         },
     },
     meta: {
