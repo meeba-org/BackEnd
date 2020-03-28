@@ -25,24 +25,22 @@ router.get('/download',
         const companyFromLocals = jwtService.getCompanyFromLocals(res);
         const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
 
-        return Promise.all([
+        const results = await Promise.all([
             AppManager.getShiftsInMonth(year, month, company),
             TaskModel.getByCompanyId(company._id)
-        ])
-            .then((results) => {
-                let shifts = results[0];
-                let tasks = results[1];
+        ]);
 
-                let workbook = ExcelManager.createExcel(shifts, year, month, company, tasks);
+        let shifts = results[0];
+        let tasks = results[1];
 
-                let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
-                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
-                return workbook.xlsx.write(res)
-                    .then(function () {
-                        res.end();
-                    });
-            });
+        let workbook = ExcelManager.createExcel(shifts, year, month, company, tasks);
+
+        let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
+        const wb = await workbook.xlsx.write(res);
+        res.end();
+        return wb;
     })
 );
 
