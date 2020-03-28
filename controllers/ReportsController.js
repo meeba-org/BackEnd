@@ -8,8 +8,10 @@ const ExcelManager = require('../managers/ExcelManager');
 const jwtService = require("./jwtService");
 const ShiftAnalyzer = require("../managers/ShiftAnalyzer");
 const TaskModel = require("../models/TaskModel");
-const routeWrapper = require("./apiManager").routeWrapper;
 const {param, query } = require('express-validator/check');
+const {EXCEL} = require('../models/EReportFormat');
+const {reject, routeWrapper} = require("./apiManager");
+
 
 //GET /reports/download report
 router.get('/download',
@@ -21,6 +23,7 @@ router.get('/download',
 
         const year = req.query.year || moment().format('YYYY');
         const month = req.query.month || moment().format('MM');
+        const format = req.query.format || EXCEL;
 
         const companyFromLocals = jwtService.getCompanyFromLocals(res);
         const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
@@ -33,14 +36,18 @@ router.get('/download',
         let shifts = results[0];
         let tasks = results[1];
 
-        let workbook = ExcelManager.createExcel(shifts, year, month, company, tasks);
+        if (format === EXCEL) {
+            let workbook = ExcelManager.createExcel(shifts, year, month, company, tasks);
 
-        let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
-        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
-        const wb = await workbook.xlsx.write(res);
-        res.end();
-        return wb;
+            let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
+            const wb = await workbook.xlsx.write(res);
+            res.end();
+            return wb;
+        }
+
+        return reject("פורמט לא נתמך", 401);
     })
 );
 
