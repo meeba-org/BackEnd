@@ -1,5 +1,6 @@
 const EPlanType = require("./EPlanType");
 const mongoose = require('mongoose');
+const {EXCEL} = require('../models/EReportFormat');
 
 // Group Schema
 const CompanySchema = mongoose.Schema({
@@ -20,6 +21,14 @@ const CompanySchema = mongoose.Schema({
         enableAbsenceDays: {type: Boolean, default: false},
         breakLength: {type: Number, default: 0},
         startOfMonth: {type: Number, default: 1},
+        defaultReportFormat: {type: String, default: EXCEL},
+        michpalSettings: {
+            regularHoursCode: {type: Number},
+            extra125HoursCode: {type: Number},
+            extra150HoursCode: {type: Number},
+            extra175HoursCode: {type: Number},
+            extra200HoursCode: {type: Number},
+        }
     },
     features: [String],
     plan: {type: Number, default: EPlanType.Free},

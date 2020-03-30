@@ -15,20 +15,36 @@ const EReportSymbol = {
     WORK_DAYS: '124',
     WORK_HOURS: '125',
     WORK_DAYS_IN_OFFICE: '126',
-    WORK_HOURS_IN_OFFICE: '125'
+    WORK_HOURS_IN_OFFICE: '127'
 };
 
-const generateReportSymbolsMap = employeeReport => {
-    return {
+const generateReportSymbolsMap = (employeeReport, michpalSettings) => {
+    const map = {
         [EReportSymbol.WORK_DAYS]: employeeReport.shiftsCount,
         [EReportSymbol.WORK_HOURS]: employeeReport.overallHours,
-        [EReportSymbol.USED_VACATION_DAYS]: employeeReport.vacationDays || 3,
-        [EReportSymbol.USED_SICK_DAYS]: employeeReport.sickDays || 4,
-        [EReportSymbol.USED_RESERVE_DUTY_DAYS]: employeeReport.reserveDutiesDays || 5,
     };
+
+    if (employeeReport.vacationDays > 0)
+        map[EReportSymbol.USED_VACATION_DAYS] = employeeReport.vacationDays;
+    if (employeeReport.sickDays > 0)
+        map[EReportSymbol.USED_SICK_DAYS] = employeeReport.sickDays;
+    if (employeeReport.reserveDutiesDays > 0)
+        map[EReportSymbol.USED_RESERVE_DUTY_DAYS] = employeeReport.reserveDutiesDays;
+
+    if (michpalSettings.regularHoursCode)
+        map[michpalSettings.regularHoursCode] = employeeReport.regularHours;
+    if (michpalSettings.extra125HoursCode && employeeReport.extra125Hours > 0)
+        map[michpalSettings.extra125HoursCode] = employeeReport.extra125Hours;
+    if (michpalSettings.extra150HoursCode && employeeReport.extra150Hours > 0)
+        map[michpalSettings.extra150HoursCode] = employeeReport.extra150Hours;
+    if (michpalSettings.extra175HoursCode && employeeReport.extra175Hours > 0)
+        map[michpalSettings.extra175HoursCode] = employeeReport.extra175Hours;
+    if (michpalSettings.extra200HoursCode && employeeReport.extra200Hours > 0)
+        map[michpalSettings.extra200HoursCode] = employeeReport.extra200Hours;
+    return map;
 };
 
-const generateEmployeeData = (employeeReport, michpalId, yymm) => {
+const generateEmployeeData = (employeeReport, michpalId, yymm, michpalSettings) => {
     michpalId = padStart(michpalId, 3, '0');
     // Per Employee
     const employeeMichpalId = padStart(employeeReport.michpalId || '1', 9, ' '); // The michpal id of the employee
@@ -36,12 +52,13 @@ const generateEmployeeData = (employeeReport, michpalId, yymm) => {
     const sign = '+';
 
     // Calculate Per Employee
-    const reportSymbolsMap = generateReportSymbolsMap(employeeReport);
+    const reportSymbolsMap = generateReportSymbolsMap(employeeReport,  michpalSettings);
     let data = '';
 
     for (let [reportSymbol, value] of Object.entries(reportSymbolsMap)) {
-        const paddedValue = padStart(value, 10, '0');
-        data += `${michpalId}${yymm}${employeeMichpalId}${employeeUid}${BRUTO_NETO_CODE}${CLIENT_EXISTENCE}${reportSymbol}${paddedValue}${sign}${UNIT_PRICE}${UNIT_PRICE_SIGN}${CLIENT_CODE}${RESERVED}${RECORD_CODE}\n`;
+        const paddedValue = padStart(value * 100, 10, '0');
+        const paddedReportSymbol = padStart(reportSymbol, 3, '0');
+        data += `${michpalId}${yymm}${employeeMichpalId}${employeeUid}${BRUTO_NETO_CODE}${CLIENT_EXISTENCE}${paddedReportSymbol}${paddedValue}${sign}${UNIT_PRICE}${UNIT_PRICE_SIGN}${CLIENT_CODE}${RESERVED}${RECORD_CODE}\n`;
     }
 
     return data;
@@ -56,7 +73,7 @@ const createMonthlyReport = (shifts, year, month, company) => {
 
     let aggregateData = "";
     for (let employeeReport of employeeReports) {
-        const data = generateEmployeeData(employeeReport, michpalId, yymm);
+        const data = generateEmployeeData(employeeReport, michpalId, yymm, company.settings.michpalSettings);
         aggregateData += data;
     }
 
