@@ -11,18 +11,18 @@ import MbCard from "../MbCard";
 import MichpalSettings from "./MichpalSettings";
 
 const ExportContainer = () => {
-    const company = useSelector(getCompany);
+    const company = useSelector(getCompany) || {};
+    const dispatch = useDispatch();
+    const {settings: {michpalSettings = {}, defaultExportFormat = EXCEL} = {}} =  company;
+    const [selectedFormat, setSelectedFormat] = useState(defaultExportFormat);
 
     if (!company)
         return null;
 
-    const {settings: {michpalSettings, defaultExportFormat}} =  company;
-    const dispatch = useDispatch();
-    const [selectedFormat, setSelectedFormat] = useState(defaultExportFormat);
 
     const handleMichpalSettingsChange = (key, value) => {
 
-        const company = {
+        const updatedCompany = {
             ...company,
             settings: {
                 ...company.settings,
@@ -33,7 +33,7 @@ const ExportContainer = () => {
             }
         };
 
-        dispatch(updateCompany(company));
+        dispatch(updateCompany(updatedCompany));
     };
 
     const setDefaultExportFormat = () => {
