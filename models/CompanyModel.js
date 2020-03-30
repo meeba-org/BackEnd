@@ -23,6 +23,7 @@ const CompanySchema = mongoose.Schema({
         startOfMonth: {type: Number, default: 1},
         defaultReportFormat: {type: String, default: EXCEL},
         michpalSettings: {
+            michpalId: {type: Number},
             regularHoursCode: {type: Number},
             extra125HoursCode: {type: Number},
             extra150HoursCode: {type: Number},

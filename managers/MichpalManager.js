@@ -2,6 +2,7 @@ const {createEmployeeReports} = require ("./ShiftAnalyzer");
 
 const BRUTO_NETO_CODE = ' '; // Not relevant
 const CLIENT_EXISTENCE = '0'; // Not relevant -0 Meaning: report does not include client reporting
+const SIGN = '+';  // Not Relevant
 const UNIT_PRICE = '0000000000'; // Not relevant - price of each unit
 const UNIT_PRICE_SIGN = '+'; // Not relevant
 const CLIENT_CODE = '   '; // Not relevant
@@ -21,7 +22,7 @@ const EReportSymbol = {
 const generateReportSymbolsMap = (employeeReport, michpalSettings) => {
     const map = {
         [EReportSymbol.WORK_DAYS]: employeeReport.shiftsCount,
-        [EReportSymbol.WORK_HOURS]: employeeReport.overallHours,
+        [EReportSymbol.WORK_HOURS]: employeeReport.shiftLength,
     };
 
     if (employeeReport.vacationDays > 0)
@@ -49,7 +50,6 @@ const generateEmployeeData = (employeeReport, michpalId, yymm, michpalSettings) 
     // Per Employee
     const employeeMichpalId = padStart(employeeReport.michpalId || '1', 9, ' '); // The michpal id of the employee
     const employeeUid = padStart(employeeReport.uid, 9, ' ');
-    const sign = '+';
 
     // Calculate Per Employee
     const reportSymbolsMap = generateReportSymbolsMap(employeeReport,  michpalSettings);
@@ -58,7 +58,7 @@ const generateEmployeeData = (employeeReport, michpalId, yymm, michpalSettings) 
     for (let [reportSymbol, value] of Object.entries(reportSymbolsMap)) {
         const paddedValue = padStart(value * 100, 10, '0');
         const paddedReportSymbol = padStart(reportSymbol, 3, '0');
-        data += `${michpalId}${yymm}${employeeMichpalId}${employeeUid}${BRUTO_NETO_CODE}${CLIENT_EXISTENCE}${paddedReportSymbol}${paddedValue}${sign}${UNIT_PRICE}${UNIT_PRICE_SIGN}${CLIENT_CODE}${RESERVED}${RECORD_CODE}\n`;
+        data += `${michpalId}${yymm}${employeeMichpalId}${employeeUid}${BRUTO_NETO_CODE}${CLIENT_EXISTENCE}${paddedReportSymbol}${paddedValue}${SIGN}${UNIT_PRICE}${UNIT_PRICE_SIGN}${CLIENT_CODE}${RESERVED}${RECORD_CODE}\n`;
     }
 
     return data;
@@ -66,7 +66,7 @@ const generateEmployeeData = (employeeReport, michpalId, yymm, michpalSettings) 
 
 const createMonthlyReport = (shifts, year, month, company) => {
     // Consts
-    const michpalId = company.settings.michpalId || "442";
+    const michpalId = company.settings.michpalSettings.michpalId;
     const yymm = year + month;
 
     const employeeReports = createEmployeeReports(shifts, company.settings);

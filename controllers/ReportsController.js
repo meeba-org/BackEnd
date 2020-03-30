@@ -23,10 +23,10 @@ router.get('/download',
 
         const year = req.query.year || moment().format('YYYY');
         const month = req.query.month || moment().format('MM');
-        const format = req.query.format || MICHPAL;
 
         const companyFromLocals = jwtService.getCompanyFromLocals(res);
         const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
+        const format = req.query.format || company.settings.defaultReportFormat || MICHPAL;
 
         const results = await Promise.all([
             AppManager.getShiftsInMonth(year, month, company),
@@ -40,7 +40,7 @@ router.get('/download',
             return handleExcelFormat(shifts, year, month, company, tasks, res);
         }
         else if (format === MICHPAL) {
-            return handleMichpalFormat(shifts, year, month, company, tasks, res);
+            return handleMichpalFormat(shifts, year, month, company, res);
         }
 
         return reject("פורמט לא נתמך", 401);
@@ -107,7 +107,7 @@ const handleExcelFormat = (shifts, year, month, company, tasks, res) => {
         });
 };
 
-const handleMichpalFormat = async (shifts, year, month, company, tasks, res) => {
+const handleMichpalFormat = async (shifts, year, month, company, res) => {
     res.setHeader('Content-disposition', 'attachment; filename=theDocument.txt');
     res.setHeader('Content-type', 'text/plain');
     res.charset = 'UTF-8';
