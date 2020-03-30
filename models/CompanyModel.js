@@ -21,7 +21,7 @@ const CompanySchema = mongoose.Schema({
         enableAbsenceDays: {type: Boolean, default: false},
         breakLength: {type: Number, default: 0},
         startOfMonth: {type: Number, default: 1},
-        defaultReportFormat: {type: String, default: EXCEL},
+        defaultExportFormat: {type: String, default: EXCEL},
         michpalSettings: {
             michpalId: {type: Number},
             regularHoursCode: {type: Number},

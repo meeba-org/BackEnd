@@ -9,6 +9,7 @@ import * as selectors from "../selectors";
 import "../styles/Dashboard.scss";
 import AppBar from "./AppBar";
 import EmployeesContainer from "./employees/EmployeesContainer";
+import ExportContainer from "./export/ExportContainer";
 import MbSnackbar from "./MbSnackbar";
 import DailyReportContainer from "./reports/DailyReportContainer";
 import Report from "./reports/Report";
@@ -61,10 +62,11 @@ class Dashboard extends React.PureComponent {
                         </Paper>
                         <Paper styleName="main-container">
                             <Switch>
-                                <Route path={`${path}/employees`} component={EmployeesContainer}/>
-                                <Route path={`${path}/settings`} component={Settings}/>
-                                <Route path={`${path}/report`} component={Report}/>
                                 <Route path={`${path}/live`} component={() => <DailyReportContainer mode={ReportModes.Live}/>}/>
+                                <Route path={`${path}/report`} component={Report}/>
+                                <Route path={`${path}/employees`} component={EmployeesContainer}/>
+                                <Route path={`${path}/export`} component={ExportContainer}/>
+                                <Route path={`${path}/settings`} component={Settings}/>
                                 <Redirect from="*" to="/dashboard/live"/>
                             </Switch>
                         </Paper>

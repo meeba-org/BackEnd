@@ -71,6 +71,8 @@
     <file url="file://$PROJECT_DIR$/public/components/TaskHoursBar.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/employees/EmployeeContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/employees/EmployeesContainer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/export/ExportContainer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/export/MichpalSettings.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/faq/FAQContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/faq/FAQContent.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/faq/FAQHeader.js" charset="UTF-8" />
