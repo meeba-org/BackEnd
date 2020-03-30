@@ -1,7 +1,7 @@
-import Assessment from '@material-ui/icons/Assessment';
-import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn';
-import PermContactCalendar from '@material-ui/icons/PermContactCalendar';
-import SettingsApplications from '@material-ui/icons/SettingsApplications';
+import Assessment from '@material-ui/icons/Subject';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import PermContactCalendar from '@material-ui/icons/PermIdentity';
+import SettingsApplications from '@material-ui/icons/Settings';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import PropTypes from 'prop-types';
 import React, {Component} from "react";
@@ -41,7 +41,7 @@ class SideBarContainer extends Component {
                 text: "מצב משמרת",
                 url: "/dashboard/live",
                 allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
-                icon: <AssignmentTurnedIn/>
+                icon: <ScheduleIcon/>
             },
             {
                 text: "משמרות",
