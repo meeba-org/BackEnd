@@ -1,5 +1,5 @@
 import AddIcon from '@material-ui/icons/Add';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from "react";
@@ -129,7 +129,7 @@ class MonthlyReport extends React.PureComponent {
                     <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
                             <MbActionButton
                                 onClick={this.handleGenerateExcelClick}
-                                iconComponent={AssignmentIcon}
+                                iconComponent={SaveAltIcon}
                                 tooltip={"ייצוא דוח חודשי לאקסל"}
                             />
                     </IfGranted>
