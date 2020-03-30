@@ -5,6 +5,7 @@ const moment = require('moment');
 const AppManager = require('../managers/AppManager');
 const CompanyModel = require('../models/CompanyModel');
 const ExcelManager = require('../managers/ExcelManager');
+const MichpalManager = require('../managers/MichpalManager');
 const jwtService = require("./jwtService");
 const ShiftAnalyzer = require("../managers/ShiftAnalyzer");
 const TaskModel = require("../models/TaskModel");
@@ -111,9 +112,7 @@ const handleMichpalFormat = async (shifts, year, month, company, tasks, res) => 
     res.setHeader('Content-type', 'text/plain');
     res.charset = 'UTF-8';
 
-    let data = "Corona Times by Chen Oppenhaim\n";
-    data += "\n";
-    data += "Hate it!!!";
+    const data = MichpalManager.createMonthlyReport(shifts, year, month, company, tasks);
 
     res.write(data);
     res.end();
