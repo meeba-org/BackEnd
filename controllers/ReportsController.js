@@ -112,7 +112,7 @@ const handleMichpalFormat = async (shifts, year, month, company, tasks, res) => 
     res.setHeader('Content-type', 'text/plain');
     res.charset = 'UTF-8';
 
-    const data = MichpalManager.createMonthlyReport(shifts, year, month, company, tasks);
+    const data = MichpalManager.createMonthlyReport(shifts, year, month, company);
 
     res.write(data);
     res.end();
