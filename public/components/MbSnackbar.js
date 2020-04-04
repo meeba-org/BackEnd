@@ -19,7 +19,11 @@ const MbSnackbar = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const handleClose = () => setOpen(false);
+    const handleClose = (e, reason) => {
+        if (reason === 'clickaway')
+            return; // Ignore in this case
+        setOpen(false);
+    };
 
     const onClick = () => {
         handleClose();
