@@ -139,6 +139,8 @@ class User extends Component {
                     </Grid>
                 </MbCard>
 
+                <ExportContainer />
+
                 <MbCard title={"מתקדם"}>
                     <div styleName="settings">
                         <div styleName="row hours">
@@ -216,8 +218,6 @@ class User extends Component {
 
                     </div>
                 </MbCard>
-
-                <ExportContainer />
 
                 <MbCard title={"תוכנית"}>
                     <div styleName="plan">
