@@ -1,6 +1,6 @@
-import PermContactCalendar from '@material-ui/icons/PermIdentity';
+import PersonIcon from '@material-ui/icons/PersonOutlineOutlined';
 import ScheduleIcon from '@material-ui/icons/Schedule';
-import SettingsApplications from '@material-ui/icons/Settings';
+import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import Assessment from '@material-ui/icons/Subject';
 import PropTypes from 'prop-types';
 import React, {Component} from "react";
@@ -52,13 +52,13 @@ class SideBarContainer extends Component {
                 text: "עובדים",
                 url: "/dashboard/employees",
                 allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
-                icon: <PermContactCalendar/>
+                icon: <PersonIcon/>
             },
             {
                 text: "הגדרות",
                 url: "/dashboard/settings",
                 allowedRoles: [ERoles.COMPANY_MANAGER],
-                icon: <SettingsApplications/>
+                icon: <SettingsIcon/>
             },
         ];
 
