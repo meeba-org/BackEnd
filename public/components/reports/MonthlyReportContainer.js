@@ -71,7 +71,7 @@ MonthlyReportContainer.propTypes = {
     deleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     userRole: PropTypes.string,
-    isDesktop: PropTypes.bool.isRequired
+    isDesktop: PropTypes.bool
 };
 
 function mapStateToProps(state) {

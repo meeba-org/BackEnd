@@ -114,7 +114,7 @@ const handleMichpalFormat = async (shifts, year, month, company, res) => {
 
     const data = MichpalManager.createMonthlyReport(shifts, year, month, company);
 
-    res.send(data);
+    res.write(data);
 };
 
 module.exports = router;

@@ -172,7 +172,7 @@ MonthPicker.propTypes = {
     onMonthChange: PropTypes.func.isRequired,
     selectedMonth: PropTypes.number.isRequired,
     selectedYear: PropTypes.number.isRequired,
-    isDesktop: PropTypes.bool.isRequired
+    isDesktop: PropTypes.bool
 };
 MonthPicker.defaultProps = {};
 
