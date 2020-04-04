@@ -15,6 +15,7 @@ const ExportContainer = () => {
     const dispatch = useDispatch();
     const {settings: {michpalSettings = {}, defaultExportFormat = EXCEL} = {}} =  company;
     const [selectedFormat, setSelectedFormat] = useState(defaultExportFormat);
+    const [settings, setSettings] = useState(michpalSettings);
 
     if (!company)
         return null;
@@ -22,17 +23,20 @@ const ExportContainer = () => {
 
     const handleMichpalSettingsChange = (key, value) => {
 
+        const newMichpalSettings = {
+            ...company.settings.michpalSettings,
+            [key]: value
+        };
+
         const updatedCompany = {
             ...company,
             settings: {
                 ...company.settings,
-                michpalSettings: {
-                    ...company.settings.michpalSettings,
-                    [key]: value
-                }
+                michpalSettings: newMichpalSettings
             }
         };
 
+        setSettings(newMichpalSettings);
         dispatch(updateCompany(updatedCompany));
     };
 
@@ -48,6 +52,7 @@ const ExportContainer = () => {
         dispatch(updateCompany(updatedCompany));
     };
 
+
     return (
         <MbCard title="ייצוא">
             <Select styleName={"select"}
@@ -61,7 +66,7 @@ const ExportContainer = () => {
             <Button color="primary" onClick={setDefaultExportFormat} disabled={defaultExportFormat === selectedFormat}>קבע
                 כברירת מחדל</Button>
             {selectedFormat === MICHPAL &&
-            <MichpalSettings onChange={handleMichpalSettingsChange} michpalSettings={michpalSettings}/>}
+            <MichpalSettings onChange={handleMichpalSettingsChange} michpalSettings={settings}/>}
         </MbCard>
     );
 };

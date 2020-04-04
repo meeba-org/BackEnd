@@ -64,6 +64,12 @@ const generateEmployeeData = (employeeReport, michpalId, yymm, michpalSettings) 
     return data;
 };
 
+const isMichpalSettingsValid = companySettings => {
+    const {michpalId} = companySettings;
+
+    return !!michpalId;
+};
+
 /**
  * Experimenting with generating Michpal report
  * To be implemented (If somenoone will get interested):
@@ -76,6 +82,9 @@ const generateEmployeeData = (employeeReport, michpalId, yymm, michpalSettings) 
  * @return {string}
  */
 const createMonthlyReport = (shifts, year, month, company) => {
+    if (!isMichpalSettingsValid(company.settings.michpalSettings))
+        throw new Error("Michpal settings not valid");
+
     // Consts
     const michpalId = company.settings.michpalSettings.michpalId;
     const yymm = year + month;

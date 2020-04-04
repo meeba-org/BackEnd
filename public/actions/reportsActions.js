@@ -18,7 +18,7 @@ const generateFileName = (month, year, companySettings) => {
         case MICHPAL: {
             const monthStr = month.toString().padStart(2, '0');
             const yearStr = year.toString().substr(year.toString().length - 2);
-            const michpalId = companySettings.michpalSettings.michpalId.toString().padStart(3, '0');
+            const michpalId = companySettings.michpalSettings.michpalId?.toString().padStart(3, '0');
 
             return `QVID${monthStr}${yearStr}.${michpalId}`;
         }
