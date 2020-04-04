@@ -64,6 +64,17 @@ const generateEmployeeData = (employeeReport, michpalId, yymm, michpalSettings) 
     return data;
 };
 
+/**
+ * Experimenting with generating Michpal report
+ * To be implemented (If somenoone will get interested):
+ *   1. Support absence days data
+ *
+ * @param shifts
+ * @param year
+ * @param month
+ * @param company
+ * @return {string}
+ */
 const createMonthlyReport = (shifts, year, month, company) => {
     // Consts
     const michpalId = company.settings.michpalSettings.michpalId;
