@@ -1,5 +1,6 @@
 import FeaturesManager, {Feature} from "../managers/FeaturesManager";
 import * as EPlanType from "../models/EPlanType";
+import {COMPANY_MANAGER} from "../models/ERoles";
 
 export const getUser = (state) => {
     return (!state.user) ? null : state.user;
@@ -16,7 +17,7 @@ export const getCompanyName = (state) => {
 };
 
 export const getUserRole = (state) => {
-    return (!state.user) ? null : state.user.role;
+    return getUser(state).role ?? COMPANY_MANAGER;
 };
 
 const getGeneral = state => state.general;
@@ -26,7 +27,7 @@ export const getMeta = (state) => {
 };
 
 export const isDesktop = (state) => {
-    return state.general.isDesktop;
+    return state.general.isDesktop ?? true;
 };
 
 export const hasPremiumFeature = (state) => {
