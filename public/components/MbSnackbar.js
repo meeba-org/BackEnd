@@ -28,6 +28,7 @@ const MbSnackbar = () => {
 
     return (
         <Snackbar
+            autoHideDuration={2000}
             ContentProps={{
                 classes: {
                     root: classes.root

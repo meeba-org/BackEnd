@@ -54,6 +54,10 @@ export const getCompanySettings = (state) => {
     return getCompany(state)?.settings;
 };
 
+export const getCompanyDefaultExportFormat = (state) => {
+    return getCompanySettings(state)?.defaultExportFormat;
+};
+
 export const isCommuteFeatureEnable = (state) => {
     return isFeatureEnable(state, Feature.CommuteModule) && getCompanySettings(state)?.enableCommute;
 };

@@ -1,4 +1,5 @@
 import * as FileSaver from "file-saver";
+import {EXCEL, MICHPAL} from "../../models/EReportFormat";
 import {GACategory} from "../helpers/GAService";
 import * as actions from "./actionTypes";
 
@@ -12,25 +13,45 @@ export const fetchTasksReportSuccess = (payload) => ({
     payload
 });
 
-export const exportReport = (month, year) => ({
-    type: actions.API,
-    payload: {
-        url: "/reports/download?year=" + year + "&month=" + month,
-        method: "get",
-        responseType: 'blob',
+const generateFileName = (month, year, companySettings) => {
+    switch (companySettings.defaultExportFormat) {
+        case MICHPAL: {
+            const monthStr = month.toString().padStart(2, '0');
+            const yearStr = year.toString().substr(year.toString().length - 2);
+            const michpalId = companySettings.michpalSettings.michpalId.toString().padStart(3, '0');
 
-        success: (data)  => {
-            let blob = new Blob([data], {type: data.type});
-            FileSaver.saveAs(blob, 'דוח ' + month + "-" + year + ".xlsx");
-        },
-    },
-    meta: {
-        shouldAuthenticate: true,
-    },
-    ga: {
-        category: GACategory.DOWNLOAD_EXCEL,
+            return `QVID${monthStr}${yearStr}.${michpalId}`;
+        }
+        case EXCEL:
+            return `דוח ${month}-${year}.xlsx`;
     }
-});
+};
+
+export const exportReport = (month, year, companySettings) => {
+    const defaultExportFormat = companySettings.defaultExportFormat;
+    const fileName = generateFileName(month, year, companySettings);
+
+    return {
+        type: actions.API,
+        payload: {
+            url: `/reports/download?year=${year}&month=${month}&format=${defaultExportFormat}`,
+            method: "get",
+            responseType: 'blob',
+
+            success: (data)  => {
+                let blob = new Blob([data], {type: data.type});
+                FileSaver.saveAs(blob, fileName);
+            },
+        },
+        meta: {
+            shouldAuthenticate: true,
+        },
+        ga: {
+            category: GACategory.DOWNLOAD_EXCEL,
+            action: defaultExportFormat
+        }
+    };
+};
 
 export const fetchMonthlyReport = (month, year) => ({
     type: actions.API,

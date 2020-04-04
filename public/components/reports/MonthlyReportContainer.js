@@ -3,10 +3,10 @@ import React from "react";
 import {connect} from "react-redux";
 import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
-import {fetchMonthlyReport, exportReport} from "../../actions/reportsActions";
+import {exportReport, fetchMonthlyReport} from "../../actions/reportsActions";
 import {createShift, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
-import {getMonthlyReport, getStartOfMonth, getUserRole, isDesktop} from "../../selectors";
+import {getCompanySettings, getMonthlyReport, getStartOfMonth, getUserRole, isDesktop} from "../../selectors";
 import MonthlyReport from "./MonthlyReport";
 import MonthlyReportLine from "./MonthlyReportLine";
 
@@ -28,10 +28,11 @@ class MonthlyReportContainer extends React.PureComponent {
     };
 
     onExportReport(month, year) {
+        const {exportReport, companySettings} = this.props;
         if (!month || !year)
             return;
 
-        this.props.exportReport(month, year);
+        exportReport(month, year, companySettings);
     }
 
     render() {
@@ -84,6 +85,7 @@ function mapStateToProps(state) {
         },
         isDesktop: isDesktop(state),
         startOfMonth: getStartOfMonth(state),
+        companySettings: getCompanySettings(state)
     };
 }
 

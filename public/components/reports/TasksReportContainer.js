@@ -4,10 +4,10 @@ import {connect} from "react-redux";
 import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
 import {createShift} from "../../actions";
-import {fetchTasksReport, exportReport} from "../../actions/reportsActions";
+import {exportReport, fetchTasksReport} from "../../actions/reportsActions";
 import {showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
-import {getStartOfMonth, getUserRole} from "../../selectors";
+import {getCompanySettings, getStartOfMonth, getUserRole} from "../../selectors";
 import MonthlyReport from "./MonthlyReport";
 import TaskReportLine from "./TaskReportLine";
 
@@ -29,10 +29,11 @@ class TasksReportContainer extends React.PureComponent {
     };
 
     onExportReport(month, year) {
+        const {exportReport, companySettings} = this.props;
         if (!month || !year)
             return;
 
-        this.props.exportReport(month, year);
+        exportReport(month, year, companySettings);
     }
 
     render() {
@@ -73,17 +74,16 @@ TasksReportContainer.propTypes = {
     isLoading: PropTypes.bool.isRequired,
 };
 
-function mapStateToProps(state) {
-    return {
-        employees: state.users,
-        initialValues: {
-            tasksReports: state.reports.tasksReports
-        },
-        userRole: getUserRole(state),
-        isLoading: state.loader.isLoading,
-        startOfMonth: getStartOfMonth(state)
-    };
-}
+const mapStateToProps = state => ({
+    employees: state.users,
+    initialValues: {
+        tasksReports: state.reports.tasksReports
+    },
+    userRole: getUserRole(state),
+    isLoading: state.loader.isLoading,
+    startOfMonth: getStartOfMonth(state),
+    companySettings: getCompanySettings(state)
+});
 
 const mapDispatchToProps = {
     fetchTasksReport,
