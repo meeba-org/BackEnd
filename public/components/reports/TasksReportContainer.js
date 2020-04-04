@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
 import {createShift} from "../../actions";
-import {fetchTasksReport, generateExcelReport} from "../../actions/reportsActions";
+import {fetchTasksReport, exportReport} from "../../actions/reportsActions";
 import {showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
 import {getStartOfMonth, getUserRole} from "../../selectors";
@@ -28,11 +28,11 @@ class TasksReportContainer extends React.PureComponent {
         this.props.fetchTasksReport(month, year);
     };
 
-    onGenerateExcel(month, year) {
+    onExportReport(month, year) {
         if (!month || !year)
             return;
 
-        this.props.generateExcelReport(month, year);
+        this.props.exportReport(month, year);
     }
 
     render() {
@@ -47,7 +47,7 @@ class TasksReportContainer extends React.PureComponent {
                             onCreateShift={createShift}
                             onMonthChange={this.onDataChange}
                             onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
-                            onGenerateExcel={(month, year) => this.onGenerateExcel(month, year)}
+                            onExportReport={(month, year) => this.onExportReport(month, year)}
                             userRole={userRole}
                             reportLineComponent={TaskReportLine}
                             title={'דו"ח משימות'}
@@ -88,7 +88,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     fetchTasksReport,
     fetchEmployees: fetchUsers,
-    generateExcelReport,
+    exportReport,
     createShift,
     deleteShift: showDeleteShiftModal,
     showShiftDialog: showEditShiftModal,

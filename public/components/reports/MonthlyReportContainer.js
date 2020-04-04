@@ -3,7 +3,7 @@ import React from "react";
 import {connect} from "react-redux";
 import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
-import {fetchMonthlyReport, generateExcelReport} from "../../actions/reportsActions";
+import {fetchMonthlyReport, exportReport} from "../../actions/reportsActions";
 import {createShift, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
 import {getMonthlyReport, getStartOfMonth, getUserRole, isDesktop} from "../../selectors";
@@ -27,11 +27,11 @@ class MonthlyReportContainer extends React.PureComponent {
         this.props.fetchMonthlyReport(month, year);
     };
 
-    onGenerateExcel(month, year) {
+    onExportReport(month, year) {
         if (!month || !year)
             return;
 
-        this.props.generateExcelReport(month, year);
+        this.props.exportReport(month, year);
     }
 
     render() {
@@ -46,7 +46,7 @@ class MonthlyReportContainer extends React.PureComponent {
                             onCreateShift={createShift}
                             onMonthChange={this.onDataChange}
                             onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
-                            onGenerateExcel={(month, year) => this.onGenerateExcel(month, year)}
+                            onExportReport={(month, year) => this.onExportReport(month, year)}
                             userRole={userRole}
                             postUpdate={this.onDataChange}
                             reportLineComponent={MonthlyReportLine}
@@ -65,7 +65,7 @@ MonthlyReportContainer.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     fetchMonthlyReport: PropTypes.func.isRequired,
     fetchEmployees: PropTypes.func.isRequired,
-    generateExcelReport: PropTypes.func.isRequired,
+    exportReport: PropTypes.func.isRequired,
     createShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
@@ -90,7 +90,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     fetchMonthlyReport,
     fetchEmployees: fetchUsers,
-    generateExcelReport,
+    exportReport,
     createShift,
     deleteShift: showDeleteShiftModal,
     showShiftDialog: showEditShiftModal,

@@ -12,7 +12,7 @@ export const fetchTasksReportSuccess = (payload) => ({
     payload
 });
 
-export const generateExcelReport = (month, year) => ({
+export const exportReport = (month, year) => ({
     type: actions.API,
     payload: {
         url: "/reports/download?year=" + year + "&month=" + month,

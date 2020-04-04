@@ -46,10 +46,10 @@ class MonthlyReport extends React.PureComponent {
         this.setState({collapsed: newCollapsedIndex});
     }
 
-    handleGenerateExcelClick = () => {
+    handleExportReportClick = () => {
         const {selectedMonth, selectedYear} = this.state;
 
-        this.props.onGenerateExcel(selectedMonth, selectedYear);
+        this.props.onExportReport(selectedMonth, selectedYear);
     };
 
     onMonthChange = (selectedMonth, selectedYear) => {
@@ -128,7 +128,7 @@ class MonthlyReport extends React.PureComponent {
 
                     <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
                             <MbActionButton
-                                onClick={this.handleGenerateExcelClick}
+                                onClick={this.handleExportReportClick}
                                 iconComponent={SaveAltIcon}
                                 tooltip={"ייצוא דוח חודשי לאקסל"}
                             />
@@ -164,7 +164,7 @@ MonthlyReport.propTypes = {
     showShiftDialog: PropTypes.func.isRequired,
     onStartDayOfMonthChange: PropTypes.func.isRequired,
     postUpdate: PropTypes.func.isRequired,
-    onGenerateExcel: PropTypes.func.isRequired,
+    onExportReport: PropTypes.func.isRequired,
     userRole: PropTypes.string,
 };
 
