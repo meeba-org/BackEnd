@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {EXCEL, MICHPAL} from "../../../models/EReportFormat";
 import {updateCompany} from "../../actions";
 import {getCompany} from "../../selectors";
-import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import MichpalSettings from "./MichpalSettings";
 
@@ -37,23 +36,31 @@ const ExportContainer = () => {
     };
 
     const setDefaultExportFormat = () => {
+        const updatedCompany = {
+            ...company,
+            settings: {
+                ...company.settings,
+                defaultExportFormat: selectedFormat
+            }
+        };
 
+        dispatch(updateCompany(updatedCompany));
     };
 
     return (
         <MbCard title="ייצוא">
-            <MbActionsControls>
-                <Select
-                    value={selectedFormat}
-                    onChange={e => setSelectedFormat(e.target.value)}
-                >
-                    <MenuItem value={EXCEL}>אקסל</MenuItem>
-                    <MenuItem value={MICHPAL}>מיכפל</MenuItem>
-                </Select>
+            <Select
+                value={selectedFormat}
+                onChange={e => setSelectedFormat(e.target.value)}
+            >
+                <MenuItem value={EXCEL}>אקסל</MenuItem>
+                <MenuItem value={MICHPAL}>מיכפל</MenuItem>
+            </Select>
 
-                <Button color="primary" onClick={setDefaultExportFormat} disabled={defaultExportFormat === selectedFormat}>קבע כברירת מחדל</Button>
-            </MbActionsControls>
-            {selectedFormat === MICHPAL && <MichpalSettings onChange={handleMichpalSettingsChange} michpalSettings={michpalSettings}/>}
+            <Button color="primary" onClick={setDefaultExportFormat} disabled={defaultExportFormat === selectedFormat}>קבע
+                כברירת מחדל</Button>
+            {selectedFormat === MICHPAL &&
+            <MichpalSettings onChange={handleMichpalSettingsChange} michpalSettings={michpalSettings}/>}
         </MbCard>
     );
 };

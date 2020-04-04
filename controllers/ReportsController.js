@@ -26,7 +26,7 @@ router.get('/download',
 
         const companyFromLocals = jwtService.getCompanyFromLocals(res);
         const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
-        const format = req.query.format || company.settings.defaultReportFormat || MICHPAL;
+        const format = req.query.format || company.settings.defaultExportFormat || MICHPAL;
 
         const results = await Promise.all([
             AppManager.getShiftsInMonth(year, month, company),
@@ -114,8 +114,7 @@ const handleMichpalFormat = async (shifts, year, month, company, res) => {
 
     const data = MichpalManager.createMonthlyReport(shifts, year, month, company);
 
-    res.write(data);
-    res.end();
+    res.send(data);
 };
 
 module.exports = router;

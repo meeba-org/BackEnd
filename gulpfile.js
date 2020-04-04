@@ -6,8 +6,7 @@ const gulp = require('gulp')
     , jshint = require('gulp-jshint');
 
 gulp.task('lint', function () {
-    gulp.src('./**/*.js')
-        .pipe(jshint());
+    return gulp.src('./**/*.js').pipe(jshint());
 });
 
 gulp.task('develop', function () {

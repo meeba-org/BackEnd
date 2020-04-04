@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import React, {Component, Fragment} from 'react';
 import {Link} from "react-router-dom";
 import '../../styles/User.scss';
+import ExportContainer from "../export/ExportContainer";
 import MbCard from "../MbCard";
 import NoData from "../NoData";
 import StartOfMonthField from "./StartOfMonthField";
@@ -215,6 +216,8 @@ class User extends Component {
 
                     </div>
                 </MbCard>
+
+                <ExportContainer />
 
                 <MbCard title={"תוכנית"}>
                     <div styleName="plan">

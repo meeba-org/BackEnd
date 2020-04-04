@@ -18,12 +18,10 @@ export const generateExcelReport = (month, year) => ({
         url: "/reports/download?year=" + year + "&month=" + month,
         method: "get",
         responseType: 'blob',
-        success: (data)  => {
-            let blob = new Blob([data]);
-            FileSaver.saveAs(blob, 'דוח ' + month + "-" + year + ".txt");
 
-            // let blob = new Blob([data], {type: 'vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'});
-            // FileSaver.saveAs(blob, 'דוח ' + month + "-" + year + ".xlsx");
+        success: (data)  => {
+            let blob = new Blob([data], {type: data.type});
+            FileSaver.saveAs(blob, 'דוח ' + month + "-" + year + ".xlsx");
         },
     },
     meta: {
