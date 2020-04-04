@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from "react";
 import {IfGranted} from "react-authorization";
 import Field from "redux-form/es/Field";
+import {EXCEL} from "../../../models/EReportFormat";
 import * as ERoles from "../../helpers/ERoles";
 import {DATE_FORMAT} from "../../helpers/utils";
 import '../../styles/MonthlyReport.scss';
@@ -99,7 +100,7 @@ class MonthlyReport extends React.PureComponent {
     };
 
     render() {
-        const {fields, employees, userRole, showShiftDialog, reportLineComponent, title, postUpdate, isDesktop, startOfMonth} = this.props;
+        const {fields, employees, userRole, showShiftDialog, reportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat} = this.props;
         const {selectedYear, selectedMonth} = this.state;
 
         return (
@@ -130,7 +131,7 @@ class MonthlyReport extends React.PureComponent {
                             <MbActionButton
                                 onClick={this.handleExportReportClick}
                                 iconComponent={SaveAltIcon}
-                                tooltip={"ייצוא דוח חודשי לאקסל"}
+                                tooltip={`ייצוא דוח חודשי ל${defaultExportFormat === EXCEL ? "אקסל" : "מיכפל"}`}
                             />
                     </IfGranted>
                 </MbActionsControls>

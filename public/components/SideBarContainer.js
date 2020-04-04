@@ -1,8 +1,7 @@
-import Assessment from '@material-ui/icons/Subject';
-import ScheduleIcon from '@material-ui/icons/Schedule';
 import PermContactCalendar from '@material-ui/icons/PermIdentity';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import SettingsApplications from '@material-ui/icons/Settings';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import Assessment from '@material-ui/icons/Subject';
 import PropTypes from 'prop-types';
 import React, {Component} from "react";
 import {withRouter} from 'react-router-dom';
@@ -54,12 +53,6 @@ class SideBarContainer extends Component {
                 url: "/dashboard/employees",
                 allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
                 icon: <PermContactCalendar/>
-            },
-            {
-                text: "ייצוא",
-                url: "/dashboard/export",
-                allowedRoles: [ERoles.COMPANY_MANAGER, ERoles.SHIFT_MANAGER],
-                icon: <SaveAltIcon/>
             },
             {
                 text: "הגדרות",

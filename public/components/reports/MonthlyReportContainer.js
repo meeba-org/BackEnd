@@ -36,7 +36,7 @@ class MonthlyReportContainer extends React.PureComponent {
     }
 
     render() {
-            const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop, startOfMonth} = this.props;
+            const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop, startOfMonth, companySettings} = this.props;
         return (
             <form onSubmit={handleSubmit(() => {})}>
                 <FieldArray name="employeeShiftsReports"
@@ -54,6 +54,7 @@ class MonthlyReportContainer extends React.PureComponent {
                             title={'דו"ח חודשי'}
                             isDesktop={isDesktop}
                             startOfMonth={startOfMonth}
+                            defaultExportFormat={companySettings?.defaultExportFormat}
                 />
             </form>
         );
