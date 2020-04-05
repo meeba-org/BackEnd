@@ -10,6 +10,7 @@ import "../styles/Dashboard.scss";
 import AppBar from "./AppBar";
 import EmployeesContainer from "./employees/EmployeesContainer";
 import ExportContainer from "./export/ExportContainer";
+import Fade from "./Fade";
 import MbSnackbar from "./MbSnackbar";
 import DailyReportContainer from "./reports/DailyReportContainer";
 import Report from "./reports/Report";
@@ -45,7 +46,7 @@ class Dashboard extends React.PureComponent {
         let open = this.isOpen();
 
         return (
-            <div styleName="dashboard">
+            <Fade styleName="dashboard">
                 <div styleName="dashboard-container">
                     <div styleName="appBar-container">
                         <AppBar onLogoClick={this.toggleDrawer} isDesktop={!!isDesktop} isLoading={isLoading}/>
@@ -73,7 +74,7 @@ class Dashboard extends React.PureComponent {
                     </div>
                     <MbSnackbar />
                 </div>
-            </div>
+            </Fade>
         );
     }
 }
