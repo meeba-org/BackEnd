@@ -10,6 +10,7 @@ const Fade = (props) => {
         in={isVisible}
         appear
         unmountOnExit
+        timeout={400}
         classNames={{...animation}}
     >
         <Fragment>
@@ -19,8 +20,7 @@ const Fade = (props) => {
 };
 
 Fade.propTypes = {
-    // children: PropTypes.object.isRequired,
-    isVisible: PropTypes.bool.isRequired
+    isVisible: PropTypes.bool
 };
 
 export default Fade;

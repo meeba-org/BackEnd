@@ -10,16 +10,22 @@ import {fetchUsers} from "../../actions/usersActions";
 
 class DailyReportContainer extends React.PureComponent {
 
+    state = {
+        isLoading: true
+    };
+    
     onDayChange(startDateOfMonth) {
         if (!startDateOfMonth)
             return;
 
+        this.setState({isLoading: true});
         this.props.fetchDailyReport(startDateOfMonth);
-        this.props.fetchEmployees();
+        this.props.fetchEmployees(() => this.setState({isLoading: false}));
     }
 
     render() {
-        const {handleSubmit, updateShift, createShift, deleteShift, showShiftDialog, shifts, employees, isLoading, mode} = this.props;
+        const {handleSubmit, updateShift, createShift, deleteShift, showShiftDialog, shifts, employees, mode} = this.props;
+        const {isLoading} = this.state;
 
         return (
             <form onSubmit={handleSubmit(() => {})}>
@@ -50,7 +56,6 @@ DailyReportContainer.propTypes = {
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -60,7 +65,6 @@ function mapStateToProps(state) {
         initialValues: {
             shifts: getDailyShifts(state)
         },
-        isLoading: state.loader.isLoading
     };
 }
 

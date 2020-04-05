@@ -51,12 +51,16 @@ export const createUser = (user) => ({
     }
 });
 
-export const fetchUsers = (hideDeleted = true) => ({
+export const fetchUsers = (callback) => ({
     type: API,
     payload: {
-        url: `/users?hideDeleted=${hideDeleted ? "true" : "false"}`,
+        url: `/users?hideDeleted=true`,
         method: "get",
-        success: fetchUsersSuccess,
+        success: (payload) => {
+            if (callback)
+                callback();
+            return fetchUsersSuccess(payload);
+        },
     },
     meta: {
         shouldAuthenticate: true,
