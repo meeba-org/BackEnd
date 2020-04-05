@@ -41,7 +41,7 @@ class Dashboard extends React.PureComponent {
 
 
     render() {
-        let {userRole, isDesktop, isTasksFeatureEnable, match: {path} } = this.props;
+        let {userRole, isDesktop, isTasksFeatureEnable, match: {path}, hasPremium } = this.props;
         const {isLoading} = this.state;
         let open = this.isOpen();
 
@@ -72,7 +72,7 @@ class Dashboard extends React.PureComponent {
                             </Switch>
                         </Paper>
                     </div>
-                    <MbSnackbar />
+                    {!isLoading && !hasPremium && <MbSnackbar /> }
                 </div>
             </Fade>
         );
@@ -90,6 +90,7 @@ const mapStateToProps = (state) => {
         userRole: selectors.getUserRole(state),
         isDesktop: selectors.isDesktop(state),
         isTasksFeatureEnable: selectors.isTasksFeatureEnable(state),
+        hasPremium: selectors.hasPremiumFeature(state)
     };
 };
 
