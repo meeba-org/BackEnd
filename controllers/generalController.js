@@ -45,77 +45,108 @@ router.post('/register',
     })
 );
 
+const getUser = async (identifier, password) => {
+    const user = await UserModel.getByUserIdentifier(identifier, true)
+    if (!user) {
+        throw new Error("שם משתמש לא קיים");
+    }
+
+    if (UserModel.isCompanyManager(user)) {
+        if (!password)
+            throw new Error("אנא הכנס סיסמא");
+
+        let isMatch = UserModel.comparePassword(password, user.password);
+
+        if (!isMatch) {
+            throw new Error("סיסמא לא נכונה - נסה שנית");
+        }
+    } 
+    
+    return user;
+};
+
 // Creating a /login route to acquire a token
 //POST /login user
 router.post('/login',
     [
         body('uid', "אנא הכנס שם משתמש").not().isEmpty(),
     ],
-    (req, res) => routeWrapper(req, res, (req, res) => {
+    (req, res) => routeWrapper(req, res, async (req, res) => {
         let identifier = req.body.uid;
         let password = req.body.password;
+        let user;
 
-        return UserModel.getByUserIdentifier(identifier, true)
-            .then((user) => {
-                if (!user) {
-                    return reject("שם משתמש לא קיים", 401);
-                }
+        try {
+            user = getUser(identifier, password);
+        }
+        catch (err) {
+            return reject(err.message, 401);
+        }
 
-                if (UserModel.isCompanyManager(user)) {
-                    if (!password)
-                        return reject("אנא הכנס סיסמא", 401);
-
-                    let isMatch = UserModel.comparePassword(password, user.password);
-
-                    if (!isMatch) {
-                        return reject("סיסמא לא נכונה - נסה שנית", 401);
-                    }
-                }
-
-                // use the jsonwebtoken package to create the token and respond with it
-                let token = jwt.sign(user.toObject(), config.secret);
-                return resolve({
-                    user,
-                    token
-                });
-            });
+        // use the jsonwebtoken package to create the token and respond with it
+        let token = jwt.sign(user.toObject(), config.secret);
+        return resolve({
+            user,
+            token
+        });
     })
 );
 
 // Convert username to Firebase credentials
 //POST /convertor user
-router.post('/login',
+router.post('/checkUserForFbExport',
     [
         body('uid', "אנא הכנס שם משתמש").not().isEmpty(),
     ],
-    (req, res) => routeWrapper(req, res, (req, res) => {
+    (req, res) => routeWrapper(req, res, async (req, res) => {
         let identifier = req.body.uid;
         let password = req.body.password;
+        let user;
 
-        return UserModel.getByUserIdentifier(identifier, true)
-            .then((user) => {
-                if (!user) {
-                    return reject("שם משתמש לא קיים", 401);
-                }
+        try {
+            user = getUser(identifier, password);
+        }
+        catch (err) {
+            return reject(err.message, 401);
+        }
 
-                if (UserModel.isCompanyManager(user)) {
-                    if (!password)
-                        return reject("אנא הכנס סיסמא", 401);
+        if (isFbUidExist(user))
+            return reject("אנא היכנס עם המייל שלך", 401);
 
-                    let isMatch = UserModel.comparePassword(password, user.password);
+        // New user to Firebase
+        return resolve("GetEmail");
+    })
+);
 
-                    if (!isMatch) {
-                        return reject("סיסמא לא נכונה - נסה שנית", 401);
-                    }
-                }
+router.post('/exportUserToFb',
+    [
+        body('email', "אנא הכנס אימייל").not().isEmpty(),
+    ],
+    (req, res) => routeWrapper(req, res, async (req, res) => {
+        let identifier = req.body.uid;
+        let password = req.body.password;
+        let user;
 
-                // use the jsonwebtoken package to create the token and respond with it
-                let token = jwt.sign(user.toObject(), config.secret);
-                return resolve({
-                    user,
-                    token
-                });
-            })
+        try {
+            user = getUser(identifier, password);
+        }
+        catch (err) {
+            return reject(err.message, 401);
+        }
+
+        if (isFbUidExist(user))
+            return reject("אנא היכנס עם המייל שלך", 401);
+
+        // Create FbUser - Save token
+        // Save Enail
+        // Save fbUid
+        
+        // Return token
+        // use the jsonwebtoken package to create the token and respond with it
+        return resolve({
+            user,
+            token
+        });
     })
 );
 
