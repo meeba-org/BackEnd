@@ -78,6 +78,43 @@ router.post('/login',
                     user,
                     token
                 });
+            });
+    })
+);
+
+// Convert username to Firebase credentials
+//POST /convertor user
+router.post('/login',
+    [
+        body('uid', "אנא הכנס שם משתמש").not().isEmpty(),
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
+        let identifier = req.body.uid;
+        let password = req.body.password;
+
+        return UserModel.getByUserIdentifier(identifier, true)
+            .then((user) => {
+                if (!user) {
+                    return reject("שם משתמש לא קיים", 401);
+                }
+
+                if (UserModel.isCompanyManager(user)) {
+                    if (!password)
+                        return reject("אנא הכנס סיסמא", 401);
+
+                    let isMatch = UserModel.comparePassword(password, user.password);
+
+                    if (!isMatch) {
+                        return reject("סיסמא לא נכונה - נסה שנית", 401);
+                    }
+                }
+
+                // use the jsonwebtoken package to create the token and respond with it
+                let token = jwt.sign(user.toObject(), config.secret);
+                return resolve({
+                    user,
+                    token
+                });
             })
     })
 );

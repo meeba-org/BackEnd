@@ -44,14 +44,12 @@ const getByUserName = (username) => {
     return User.findOne({username}).populate('company').exec();
 };
 
-const getByUserIdentifier = (identifier) => {
-    return getByUserName(identifier)
-        .then(user => {
-            if (!!user)
-                return user;
+const getByUserIdentifier = async (identifier) => {
+    const user = await getByUserName(identifier);
+    if (user)
+        return user;
 
-            return getByUserUid(identifier, true);
-        });
+    return getByUserUid(identifier, true);
 };
 
 // Return a promise

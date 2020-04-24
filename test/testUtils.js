@@ -27,7 +27,7 @@ beforeEach(function () {
     return mongoose.connect(config.dbUrl, {useNewUrlParser: true })
         .then(function() {
             return clearDB();
-        })
+        });
 });
 
 function clearDB() {
