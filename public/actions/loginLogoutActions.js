@@ -29,29 +29,28 @@ function handleLoginSuccess(response, history, isLoginMode) {
 }
 
 export const handleLogin = (values, isLoginMode, history, onSuccess, onError) => dispatch => {
-        let route = isLoginMode ? "login" : "register";
+    let route = isLoginMode ? "login" : "register";
 
-        dispatch(handleLoginStart());
-        return axios.post(`${config.ROOT_URL}/${route}`, values)
-            .then((response) => {
-                if (onSuccess)
-                    onSuccess();
+    dispatch(handleLoginStart());
+    return axios.post(`${config.ROOT_URL}/${route}`, values)
+        .then((response) => {
+            if (onSuccess)
+                onSuccess();
 
-                dispatch(hideLoginRegisterModal());
-                dispatch(handleLoginSuccess(response, history, isLoginMode));
-            })
-            .catch((err) => {
-                let message = 'Unknown Error';
-                if (err) {
-                    if (!!err.response && !! err.response && !!err.response.data && !!err.response.data.message)
-                        message = err.response.data.message;
-                    else if (err.message)
-                        message = err.message;
-                }
+            dispatch(handleLoginSuccess(response, history, isLoginMode));
+        })
+        .catch((err) => {
+            let message = 'Unknown Error';
+            if (err) {
+                if (!!err.response && !!err.response && !!err.response.data && !!err.response.data.message)
+                    message = err.response.data.message;
+                else if (err.message)
+                    message = err.message;
+            }
 
-                onError(message);
-            });
-    };
+            onError(message);
+        });
+};
 
 export const handleLogout = history => () => {
     localStorage.removeItem('jwtToken');

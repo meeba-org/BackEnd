@@ -84,7 +84,7 @@ router.post('/login',
         let user;
 
         try {
-            user = getUser(identifier, password);
+            user = await getUser(identifier, password);
         }
         catch (err) {
             return reject(err.message, 401);
@@ -111,7 +111,7 @@ router.post('/checkUserForFbExport',
         let user;
 
         try {
-            user = getUser(identifier, password);
+            user = await getUser(identifier, password);
         }
         catch (err) {
             return reject(err.message, 401);
@@ -136,7 +136,7 @@ router.post('/exportUserToFb',
         let user;
 
         try {
-            user = getUser(identifier, password);
+            user = await getUser(identifier, password);
         }
         catch (err) {
             return reject(err.message, 401);

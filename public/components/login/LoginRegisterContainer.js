@@ -27,7 +27,10 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hist
         setIsLoading(true);
 
         handleLogin(values, isLoginMode, history,
-            () => setIsLoading(false),
+            () => {
+                setIsLoading(false);
+                handleClose();
+            },
             error => {
                 setIsLoading(false);
                 setError(error);
