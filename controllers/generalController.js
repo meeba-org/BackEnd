@@ -12,6 +12,13 @@ const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
 const bodyParser = require('body-parser');
 
+const fbAdmin = require("firebase-admin");
+
+fbAdmin.initializeApp({
+    credential: fbAdmin.credential.applicationDefault(),
+    databaseURL: "https://meeba-dev.firebaseio.com"
+});
+
 //POST /register user
 router.post('/register',
     [
@@ -93,7 +100,7 @@ router.post('/login',
 );
 
 // Convert username to Firebase credentials
-//POST /convertor user
+//POST /checkUserForFbExport user
 router.post('/checkUserForFbExport',
     [
         body('uid', "אנא הכנס שם משתמש").not().isEmpty(),
@@ -123,7 +130,8 @@ router.post('/exportUserToFb',
         body('email', "אנא הכנס אימייל").not().isEmpty(),
     ],
     (req, res) => routeWrapper(req, res, async (req, res) => {
-        let identifier = req.body.uid;
+        let identifier = req.body.identifier;
+        let email = req.body.email;
         let password = req.body.password;
         let user;
 
@@ -134,18 +142,25 @@ router.post('/exportUserToFb',
             return reject(err.message, 401);
         }
 
+        // TODO consider doing the login for credentials with username
         if (isFbUidExist(user))
-            return reject("אנא היכנס עם המייל שלך", 401);
+            return reject("כניסה עם שם המשתמש אינה מורשית יותר, אנא היכנס עם המייל שלך", 401);
 
-        // Create FbUser - Save token
-        // Save Enail
-        // Save fbUid
+        // Create user in Firebase - Save token
+        const fbUser = await fbAdmin.auth().createUser({
+            email,
+            password
+        });
+
+        // Save Email and fbUid
+        user.email = email;
+        user.fbUid = fbUser.uid;
+
+        UserModel.updateUser(user);
         
-        // Return token
-        // use the jsonwebtoken package to create the token and respond with it
+        // Return user
         return resolve({
-            user,
-            token
+            user
         });
     })
 );
@@ -216,5 +231,7 @@ router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
         }
     })
 );
+
+const isFbUidExist = (user) => !!user.fbUid;
 
 module.exports = router;
