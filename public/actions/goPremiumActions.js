@@ -24,7 +24,7 @@ export const fetchPaymentUrlSuccess = payload => ({
 });
 
 const paymentFinished = (response) => dispatch => {
-    localStorage.setItem('jwtToken', response.token);
+    localStorage.setItem('idToken', response.token);
     localStorage.setItem('activeUser', JSON.stringify(response.user));
 
     dispatch(updateActiveUserSuccess(response.user));

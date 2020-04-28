@@ -56,7 +56,6 @@ export const createShift = (shift, month, year) => ({
             if (!!month && !!year)
                 dispatch(fetchMonthlyReport(month, year));
         },
-
     },
     meta: {
         shouldAuthenticate: true,

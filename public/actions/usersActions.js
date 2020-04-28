@@ -38,13 +38,17 @@ export const createUserSuccess = (payload) => ({
     payload
 });
 
-export const createUser = (user) => ({
+export const createUser = (user, onSuccess) => ({
     type: API,
     payload: {
         url: "/users",
         method: "post",
         data: user,
-        success: createUserSuccess,
+        success: () => {
+            createUserSuccess();
+            if (onSuccess)
+                onSuccess();
+        },
     },
     meta: {
         shouldAuthenticate: true,

@@ -1,5 +1,7 @@
 const config = require("../config");
 const jwt = require("jsonwebtoken");
+const {fbAdmin} = require('../managers/FirebaseManager');
+const UserModel = require('../models/UserModel');
 
 function extractTokenFromRequest(req) {
     const authorization = req.headers['authorization'];
@@ -18,13 +20,23 @@ function extractTokenFromRequest(req) {
     return req.body.token || req.query.token || req.headers['x-access-token'] || null;
 }
 
-function getUserFromToken(req) {
-    const token = extractTokenFromRequest(req);
-    if (!token)
-        throw new Error("[jwtService.getUserFromToken] - token could not extracted from request")
+const getDecodedIdTokenFromReq = async req => {
+    const idToken = extractTokenFromRequest(req);
+    if (!idToken)
+        throw new Error("[jwtService.getUserFromToken] - idToken could not extracted from request");
 
-    return jwt.verify(token, config.secret);
-}
+    return await fbAdmin.auth().verifyIdToken(idToken);
+};
+
+const getFbUidFromToken = async req => {
+    const decodedIdToken = await getDecodedIdTokenFromReq(req);
+    return decodedIdToken.uid;
+};
+
+const getUserFromToken = async req => {
+    const fbUid = await getFbUidFromToken(req);
+    return UserModel.getUserByFbUid(fbUid);
+};
 
 function getUserFromLocals(res) {
     const user = res.locals.user;
@@ -48,5 +60,7 @@ module.exports = {
     getUserFromToken,
     getCompanyFromLocals,
     getUserFromLocals,
-    isUserIdValid
+    isUserIdValid,
+    getFbUidFromToken,
+    getDecodedIdTokenFromReq
 };

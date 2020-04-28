@@ -12,9 +12,10 @@ const config = require('../config');
 const jwtService = require("./jwtService");
 const UserModel = require('../models/UserModel');
 
-router.use('/', general);
 
-router.use('/api', ejwt({secret: config.secret}));
+router.use('/api', general);
+
+// router.use('/api', ejwt({secret: config.secret}));
 router.use('/api', extractUserMiddleware);
 router.use('/api/shifts', shifts);
 router.use('/api/reports', reports);
@@ -44,19 +45,18 @@ function restrictEmployee(req, res, next) {
     }
 
     return next();
-};
+}
 
-function extractUserMiddleware(req, res, next) {
+async function extractUserMiddleware(req, res, next) {
     if (req.method.toLowerCase() === 'options')
         return next();
 
     try {
-        res.locals.user = jwtService.getUserFromToken(req);
-    }
-    catch(err) {
+        res.locals.user = await jwtService.getUserFromToken(req);
+    } catch (err) {
         return res.status(500).send(err);
     }
     return next();
-};
+}
 
 module.exports = router;

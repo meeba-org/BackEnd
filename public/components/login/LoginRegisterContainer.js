@@ -5,12 +5,12 @@
 import React, {useState} from 'react';
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {handleLogin, hideLoginRegisterModal} from "../../actions";
+import {handleLogin, handleRegister, hideLoginRegisterModal} from "../../actions";
 import "../../styles/LoginRegister.scss";
 import LoginRegister from "./LoginRegister";
 
-const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, history}) => {
-    const [isLoginMode, setIsLoginMode] = useState(true);
+const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, handleRegister, history}) => {
+    const [isLoginMode, setIsLoginMode] = useState(false); // TODO should be true!
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [values, setValues] = useState({});
@@ -26,15 +26,21 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hist
     const handleSubmit = () => {
         setIsLoading(true);
 
-        handleLogin(values, isLoginMode, history,
+        handleRegister({
+                email: values.username,
+                password: "123456" // TODO remove passwd
+            },
             () => {
                 setIsLoading(false);
                 handleClose();
+                history.push("/dashboard");
             },
-            error => {
+            (err) => {
                 setIsLoading(false);
-                setError(error);
-            });
+                // TODO Error handling by err.code auth/email-already-in-use
+                setError(err.toString());
+            }
+        );
     };
 
     const handleChange = (event) => {
@@ -66,7 +72,8 @@ LoginRegisterContainer.propTypes = {
 
 const mapDispatchToProps = {
     hideLoginRegisterModal,
-    handleLogin
+    handleLogin,
+    handleRegister
 };
 
 export default connect(null, mapDispatchToProps)(withRouter(LoginRegisterContainer));

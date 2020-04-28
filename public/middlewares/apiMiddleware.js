@@ -11,7 +11,7 @@ const apiMiddleware = ({dispatch}) => next => action => {
 
     let headers = {};
     if (action.meta && action.meta.shouldAuthenticate) {
-        let token = localStorage.getItem('jwtToken');
+        let token = localStorage.getItem('idToken');
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
         }
@@ -33,13 +33,13 @@ const apiMiddleware = ({dispatch}) => next => action => {
         dispatch(HideLoading());
         return dispatch(success(response.data));
     })
-    .catch((err) => {
-        dispatch(HideLoading());
-        if (onError)
-            return dispatch(onError(err.response.data));
-        else
-            return dispatch(ErrorAction(err));
-    });
+        .catch((err) => {
+            dispatch(HideLoading());
+            if (onError)
+                return dispatch(onError(err.response.data));
+            else
+                return dispatch(ErrorAction(err));
+        });
 
     return next(action);
 };

@@ -9,7 +9,7 @@ require("firebase/auth");
 firebase.initializeApp(firebaseConfig);
 
 /* eslint no-console: 0 */
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'development';
 
 const CompanyModel = require("../../models/CompanyModel");
 // eslint-disable-next-line no-unused-vars
@@ -22,8 +22,8 @@ mongoose.connect(config.dbUrl, {useNewUrlParser: true }, () => {
     console.log("Connected to DB successfully");
 });
 
-let email = "1";
-const password = "1";
+let email = "cc1@cc.cc";
+const password = "123456";
 
 const isValidEmail = (email) => !!email.match('^\\S+@\\S+$');
 
@@ -43,11 +43,13 @@ const createUserWithEmailAndPassword  = async () => {
 const signInWithEmailAndPassword  = async () => {
     try {
         const result = await firebase.auth().signInWithEmailAndPassword(email, password);
-        console.log(result);
+        const idToken = await firebase.auth().currentUser.getIdToken();
+        
+        console.log(idToken);
     } catch (error) {
         // Handle Errors here.
         console.log(error);
     }
 };
 
-createUserWithEmailAndPassword();
+signInWithEmailAndPassword();

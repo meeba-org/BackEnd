@@ -137,6 +137,8 @@
     <file url="file://$PROJECT_DIR$/public/config.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/ERoles.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/EShiftStatus.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/helpers/FirebaseUi.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/helpers/FirebaseUi.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/GATypes.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/SplashScreenHelper.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/utils.js" charset="UTF-8" />

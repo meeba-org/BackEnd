@@ -1,22 +1,16 @@
 import axios from 'axios';
 import config from "../config";
+import firebase from "../helpers/FirebaseUiService";
 import {GACategory} from "../helpers/GAService";
 import {isUserAllowedLogin} from "../helpers/utils";
 import * as actionsTypes from "./actionTypes";
-import {hideLoginRegisterModal} from "./index";
 
-function handleLoginStart() {
-    return {
-        type: actionsTypes.HANDLE_LOGIN_START
-    };
-}
-
-function handleLoginSuccess(response, history, isLoginMode) {
+const handleLoginSuccess = (response, history, isLoginMode) => {
     let user = response.data.user;
     if (!!user && !isUserAllowedLogin(user))
         throw new Error('אין הרשאות מתאימות');
 
-    localStorage.setItem('jwtToken', response.data.token);
+    localStorage.setItem('idToken', response.data.token);
     localStorage.setItem('activeUser', JSON.stringify(response.data.user));
 
     history.push('/dashboard');
@@ -26,18 +20,57 @@ function handleLoginSuccess(response, history, isLoginMode) {
             category: isLoginMode ? GACategory.LOGIN : GACategory.REGISTER,
         }
     };
-}
+};
+
+const registerUser = (values, onSuccess, onError) => ({
+    type: actionsTypes.API,
+    payload: {
+        url: "/register",
+        method: "post",
+        data: values,
+        success: (result) => dispatch => {
+            localStorage.setItem('fbUser', result.user); // TODO Do I really need fbUser?
+            dispatch(actionsTypes.REGISTER_SUCCESS);
+            if (onSuccess)
+                onSuccess();
+        },
+        onError
+    },
+    meta: {
+        shouldAuthenticate: true
+    },
+    ga: {
+        category: GACategory.REGISTER,
+    }
+});
+
+export const handleRegister = (values, onSuccess, onError) => async dispatch =>  {
+    const {email, password} = values;
+    try {
+        await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const token = await firebase.auth().currentUser.getIdToken();
+        console.log("idToken: ", token);
+        
+        localStorage.setItem("idToken", token);
+        dispatch(registerUser(values, onSuccess, onError));
+        return token; // Returning the promise
+    } catch (err) {
+        console.error(err);
+        if (onError)
+            onError(err);
+        
+    }
+};
 
 export const handleLogin = (values, isLoginMode, history, onSuccess, onError) => dispatch => {
     let route = isLoginMode ? "login" : "register";
 
-    dispatch(handleLoginStart());
     return axios.post(`${config.ROOT_URL}/${route}`, values)
         .then((response) => {
             if (onSuccess)
                 onSuccess();
 
-            dispatch(handleLoginSuccess(response, history, isLoginMode));
+            dispatch(handleLoginSuccess(response, isLoginMode));
         })
         .catch((err) => {
             let message = 'Unknown Error';
@@ -53,7 +86,7 @@ export const handleLogin = (values, isLoginMode, history, onSuccess, onError) =>
 };
 
 export const handleLogout = history => () => {
-    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('idToken');
     history.push('/home');
 };
 
@@ -79,35 +112,31 @@ export function meFromTokenFailure(error) {
     };
 }
 
-export function loadUserFromToken(onFinishLoading) {
-    return function (dispatch) {
-        let token = localStorage.getItem('jwtToken');
-        if (!token || token === '') {//if there is no token, dont bother
-            return;
+// TODO should fetch token 
+export const loadUserFromToken = onFinishLoading => dispatch => {
+    let token = localStorage.getItem('idToken');
+    if (!token || token === '') {//if there is no token, dont bother
+        return;
+    }
+
+    //fetch user from token (if server deems it's valid token)
+    dispatch(meFromToken());
+    return axios({
+        method: 'get',
+        url: `${config.ROOT_URL}/api/authenticate`,
+        headers: {
+            'Authorization': `Bearer ${token}`
         }
+    }).then(function (response) {
+        let user = response.data.user;
+        if (!!user && !isUserAllowedLogin(user))
+            throw new Error('user is not allowed to login');
 
-        //fetch user from token (if server deems it's valid token)
-        dispatch(meFromToken());
-        return axios({
-            method: 'get',
-            url: `${config.ROOT_URL}/authenticate`,
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then(function (response) {
-            let user = response.data.user;
-            if (!!user && !isUserAllowedLogin(user))
-                throw new Error('user is not allowed to login');
-
-            localStorage.setItem('jwtToken', response.data.token);
-            localStorage.setItem('activeUser', JSON.stringify(user));
-            dispatch(meFromTokenSuccess(user));
-        }).catch(function () {
-            localStorage.removeItem('jwtToken');//remove token from storage
-            dispatch(meFromTokenFailure("Error loading user from token"));
-        }).finally( () => {
-            if (onFinishLoading)
-                onFinishLoading();
-        });
-    };
-}
+        dispatch(meFromTokenSuccess(user));
+    }).catch(function () {
+        dispatch(meFromTokenFailure("Error loading user from token"));
+    }).finally(() => {
+        if (onFinishLoading)
+            onFinishLoading();
+    });
+};

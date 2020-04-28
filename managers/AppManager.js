@@ -65,19 +65,18 @@ const removeUser = (userId) => {
         });
 };
 
-const registerCompanyManager = (username, password) => {
-    return CompanyModel.createCompany({})
-        .then(company => {
-            let user = {
-                username,
-                password,
-                role: ERoles.COMPANY_MANAGER,
-                shifts: [],
-                company,
-            };
+const registerCompanyManager = async (email, fbUid) => {
+    const company = await CompanyModel.createCompany({});
 
-            return addUser(user);
-        });
+    let user = {
+        email,
+        fbUid,
+        role: ERoles.COMPANY_MANAGER,
+        shifts: [],
+        company,
+    };
+
+    return addUser(user);
 };
 
 const getShiftsInMonth = (year, month, company, userId) => {

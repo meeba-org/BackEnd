@@ -12,6 +12,7 @@ import PaymentSuccessRedirectContainer from "./go-premium/PaymentSuccessRedirect
 import Home from "./home/Home";
 import LazyPrivateRoute from "./LazyPrivateRoute";
 import ModalRoot from "./modals/ModalRoot";
+import {initOnAuthStateChange} from "../helpers/FirebaseUiService";
 
 const Dashboard = React.lazy(() => import("../components/Dashboard"));
 
@@ -19,8 +20,9 @@ class AppContainer extends React.Component {
     componentDidMount() {
         this.updatePredicate();
         window.addEventListener("resize", () => this.updatePredicate());
-
+        
         this.props.fetchMetaData();
+        initOnAuthStateChange();
     }
 
     componentWillUnmount() {

@@ -11,46 +11,26 @@ const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
 const bodyParser = require('body-parser');
-
-const fbAdmin = require("firebase-admin");
-
-fbAdmin.initializeApp({
-    credential: fbAdmin.credential.applicationDefault(),
-    databaseURL: "https://meeba-dev.firebaseio.com"
-});
+const {fbAdmin} = require('../managers/FirebaseManager');
 
 //POST /register user
 router.post('/register',
     [
-        body('username', "שדות חסרים").exists(),
-        body('password', "שדות חסרים").exists(),
-        body('retypePassword', "שדות חסרים").exists(),
+        // body('username', "שדות חסרים").exists(),
+        // body('password', "שדות חסרים").exists(),
+        // body('retypePassword', "שדות חסרים").exists(),
     ],
-    (req, res) => routeWrapper(req, res, (req, res) => {
-        let username = req.body.username;
-        let password = req.body.password;
-        let retypePassword = req.body.retypePassword;
+    (req, res) => routeWrapper(req, res, async (req, res) => {
+        const decodedIdToken = await jwtService.getDecodedIdTokenFromReq(req);
+        const user = await AppManager.registerCompanyManager(decodedIdToken.email, decodedIdToken.uid);
 
-        if (password !== retypePassword)
-            return reject("סיסמאות אינן תואמות", 401);
-
-        return UserModel.getByUserName(username)
-            .then(user => {
-                if (user)
-                    return reject("שם משתמש קיים", 401);
-
-                return AppManager.registerCompanyManager(username, password);
-            })
-            .then((user) => {
-                // use the jsonwebtoken package to create the token and respond with it
-                let token = jwt.sign(user.toObject(), config.secret);
-                return resolve({
-                    user,
-                    token
-                });
-            })
+        console.log("[register] - user: ", user.toObject());
+        return resolve({user});
     })
 );
+
+// TODO - is register working??? not clear...
+// TODO - understand get users and get shifts
 
 const getUser = async (identifier, password) => {
     const user = await UserModel.getByUserIdentifier(identifier, true)
@@ -167,40 +147,21 @@ router.post('/exportUserToFb',
 
 //get current user from token
 router.get('/authenticate',
-    (req, res) => routeWrapper(req, res, (req, res) => {
+    (req, res) => routeWrapper(req, res, async (req, res) => {
 
-        // Check header or url parameters or post parameters for token
-        var token = jwtService.extractTokenFromRequest(req);
-        if (!token) {
-            return reject("[authenticate] - Must pass token", 401);
+        try {
+            let user = await jwtService.getUserFromToken(req);
+            user = UserModel.getCleanUser(user.toObject()); // Don't pass password and stuff
+    
+            return await resolve({user});
         }
-
-        // Decode token
-        return jwt.verify(token, config.secret, async (err, user) => {
-            if (err)
-                return reject(`[authenticate] - Token is not valid, Error: ${err.message}`, 401);
-
-            //return user using the id from w/in JWTToken
-            try {
-                user = await UserModel.getByUserId(user._id);
-                user = UserModel.getCleanUser(user.toObject()); // Don't pass password and stuff
-
-                //note: you can renew token by creating new token(i.e. refresh it) w/ new expiration time at this point, but I'm passing the old token back.
-                // var token = utils.generateToken(user);
-
-                return await resolve({
-                    user,
-                    token
-                });
-            }
-            catch (err) {
-                return await reject('[authenticate] - User was not found', 401);
-            }
-        });
+        catch (err) {
+            return await reject('[authenticate] - User was not found', 401);
+        }
     })
 );
 
-router.get('/api/general/meta',
+router.get('/general/meta',
     (req, res) => routeWrapper(req, res, (req, res) => {
         return Promise.all([
             CompanyModel.companiesCount(),
@@ -216,7 +177,7 @@ router.get('/api/general/meta',
     })
 );
 
-router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
+router.post('/general/ipn', bodyParser.urlencoded({ extended: true }),
     (req, res) => routeWrapper(req, res, async (req, res) => {
         try {
             let data = req.body;
