@@ -22,6 +22,12 @@ const handleLoginSuccess = (response, history, isLoginMode) => {
     };
 };
 
+const registerUserSuccess = (user) => ({
+    type: actionsTypes.REGISTER_SUCCESS,
+    payload: user
+    
+});
+
 const registerUser = (values, onSuccess, onError) => ({
     type: actionsTypes.API,
     payload: {
@@ -30,7 +36,7 @@ const registerUser = (values, onSuccess, onError) => ({
         data: values,
         success: (result) => dispatch => {
             localStorage.setItem('fbUser', result.user); // TODO Do I really need fbUser?
-            dispatch(actionsTypes.REGISTER_SUCCESS);
+            dispatch(registerUserSuccess(result.user));
             if (onSuccess)
                 onSuccess();
         },
