@@ -36,9 +36,9 @@ const LoginRegister = ({
                 <DialogTitle>ברוך הבא!</DialogTitle>
                 <DialogContent>
                     <TextField
-                        label="שם משתמש"
-                        placeholder="שם משתמש"
-                        name={isLoginMode ? "uid" : "username"}
+                        label={isLoginMode ? "שם משתמש / אימייל" : "אימייל"}
+                        placeholder={isLoginMode ? "שם משתמש / אימייל" : "אימייל"}
+                        name="email"
                         autoComplete="username"
                         onChange={handleChange}
                         onKeyPress={handleKeyPress}

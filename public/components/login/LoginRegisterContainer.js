@@ -5,12 +5,12 @@
 import React, {useState} from 'react';
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {handleLogin, handleRegister, hideLoginRegisterModal} from "../../actions";
+import { handleLoginRegister, hideLoginRegisterModal} from "../../actions";
 import "../../styles/LoginRegister.scss";
 import LoginRegister from "./LoginRegister";
 
-const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, handleRegister, history}) => {
-    const [isLoginMode, setIsLoginMode] = useState(false); // TODO should be true!
+const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLoginRegister, history}) => {
+    const [isLoginMode, setIsLoginMode] = useState(true); // TODO should be true!
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [values, setValues] = useState({});
@@ -26,10 +26,11 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
     const handleSubmit = () => {
         setIsLoading(true);
 
-        handleRegister({
-                email: values.username,
+        handleLoginRegister({
+                email: values.email,
                 password: "123456" // TODO remove passwd
             },
+            isLoginMode,
             () => {
                 setIsLoading(false);
                 handleClose();
@@ -72,8 +73,7 @@ LoginRegisterContainer.propTypes = {
 
 const mapDispatchToProps = {
     hideLoginRegisterModal,
-    handleLogin,
-    handleRegister
+    handleLoginRegister
 };
 
 export default connect(null, mapDispatchToProps)(withRouter(LoginRegisterContainer));

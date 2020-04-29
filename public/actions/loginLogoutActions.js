@@ -25,13 +25,12 @@ const handleLoginSuccess = (response, history, isLoginMode) => {
 const registerUserSuccess = (user) => ({
     type: actionsTypes.REGISTER_SUCCESS,
     payload: user
-    
 });
 
-const registerUser = (values, onSuccess, onError) => ({
+const registerLoginUser = (values, isLoginMode, onSuccess, onError) => ({
     type: actionsTypes.API,
     payload: {
-        url: "/register",
+        url: isLoginMode ? "/login" : "/register",
         method: "post",
         data: values,
         success: (result) => dispatch => {
@@ -50,15 +49,20 @@ const registerUser = (values, onSuccess, onError) => ({
     }
 });
 
-export const handleRegister = (values, onSuccess, onError) => async dispatch =>  {
+export const handleLoginRegister = (values, isLoginMode, onSuccess, onError) => async dispatch =>  {
     const {email, password} = values;
     try {
-        await firebase.auth().createUserWithEmailAndPassword(email, password);
-        const token = await firebase.auth().currentUser.getIdToken();
-        console.log("idToken: ", token);
-        
+        if (!isLoginMode) {
+            await firebase.auth().createUserWithEmailAndPassword(email, password);
+        }
+        else {
+            await firebase.auth().signInWithEmailAndPassword(email, password);
+        }
+        let token = await firebase.auth().currentUser.getIdToken();
+
         localStorage.setItem("idToken", token);
-        dispatch(registerUser(values, onSuccess, onError));
+        dispatch(registerLoginUser(values, isLoginMode, onSuccess, onError));
+
         return token; // Returning the promise
     } catch (err) {
         console.error(err);
@@ -118,7 +122,6 @@ export function meFromTokenFailure(error) {
     };
 }
 
-// TODO should fetch token 
 export const loadUserFromToken = onFinishLoading => dispatch => {
     let token = localStorage.getItem('idToken');
     if (!token || token === '') {//if there is no token, dont bother

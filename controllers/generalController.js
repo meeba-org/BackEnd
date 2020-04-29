@@ -56,26 +56,19 @@ const getUser = async (identifier, password) => {
 //POST /login user
 router.post('/login',
     [
-        body('uid', "אנא הכנס שם משתמש").not().isEmpty(),
+        // body('uid', "אנא הכנס שם משתמש").not().isEmpty(),
     ],
     (req, res) => routeWrapper(req, res, async (req, res) => {
-        let identifier = req.body.uid;
-        let password = req.body.password;
         let user;
-
         try {
-            user = await getUser(identifier, password);
+            const fbUid = await jwtService.getFbUidFromToken(req);
+            user = await UserModel.getUserByFbUid(fbUid);
         }
         catch (err) {
             return reject(err.message, 401);
         }
 
-        // use the jsonwebtoken package to create the token and respond with it
-        let token = jwt.sign(user.toObject(), config.secret);
-        return resolve({
-            user,
-            token
-        });
+        return resolve({ user });
     })
 );
 
