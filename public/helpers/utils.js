@@ -161,3 +161,8 @@ export const parseJson = (json) => {
 };
 
 export const isShiftPending = shift => shift.status === EShiftStatus.PENDING_CREATE || shift.status === EShiftStatus.PENDING_UPDATE;
+
+export const isValidEmail = email => {
+    let re = /\S+@\S+\.\S+/;
+    return re.test(email);
+};

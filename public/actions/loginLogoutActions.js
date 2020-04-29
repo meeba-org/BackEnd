@@ -5,36 +5,36 @@ import {GACategory} from "../helpers/GAService";
 import {isUserAllowedLogin} from "../helpers/utils";
 import * as actionsTypes from "./actionTypes";
 
-const handleLoginSuccess = (response, history, isLoginMode) => {
-    let user = response.data.user;
-    if (!!user && !isUserAllowedLogin(user))
-        throw new Error('אין הרשאות מתאימות');
-
-    localStorage.setItem('idToken', response.data.token);
-    localStorage.setItem('activeUser', JSON.stringify(response.data.user));
-
-    history.push('/dashboard');
-    return {
-        type: actionsTypes.HANDLE_LOGIN_SUCCESS,
-        ga: {
-            category: isLoginMode ? GACategory.LOGIN : GACategory.REGISTER,
-        }
-    };
-};
+// const handleLoginSuccess = (response, history, isLoginMode) => {
+//     let user = response.data.user;
+//     if (!!user && !isUserAllowedLogin(user))
+//         throw new Error('אין הרשאות מתאימות');
+//
+//     localStorage.setItem('idToken', response.data.token);
+//     localStorage.setItem('activeUser', JSON.stringify(response.data.user));
+//
+//     history.push('/dashboard');
+//     return {
+//         type: actionsTypes.HANDLE_LOGIN_SUCCESS,
+//         ga: {
+//             category: isLoginMode ? GACategory.LOGIN : GACategory.REGISTER,
+//         }
+//     };
+// };
 
 const registerUserSuccess = (user) => ({
     type: actionsTypes.REGISTER_SUCCESS,
     payload: user
 });
 
-const registerLoginUser = (values, isLoginMode, onSuccess, onError) => ({
+const registerUser = (onSuccess, onError) => ({
     type: actionsTypes.API,
     payload: {
-        url: isLoginMode ? "/login" : "/register",
+        url: "/register",
         method: "post",
-        data: values,
+        data: {},
         success: (result) => dispatch => {
-            localStorage.setItem('fbUser', result.user); // TODO Do I really need fbUser?
+            // localStorage.setItem('fbUser', result.user); // TODO Do I really need fbUser?
             dispatch(registerUserSuccess(result.user));
             if (onSuccess)
                 onSuccess();
@@ -49,19 +49,14 @@ const registerLoginUser = (values, isLoginMode, onSuccess, onError) => ({
     }
 });
 
-export const handleLoginRegister = (values, isLoginMode, onSuccess, onError) => async dispatch =>  {
+export const handleRegister = (values, onSuccess, onError) => async dispatch =>  {
     const {email, password} = values;
     try {
-        if (!isLoginMode) {
-            await firebase.auth().createUserWithEmailAndPassword(email, password);
-        }
-        else {
-            await firebase.auth().signInWithEmailAndPassword(email, password);
-        }
+        await firebase.auth().createUserWithEmailAndPassword(email, password);
         let token = await firebase.auth().currentUser.getIdToken();
 
         localStorage.setItem("idToken", token);
-        dispatch(registerLoginUser(values, isLoginMode, onSuccess, onError));
+        dispatch(registerUser(onSuccess, onError));
 
         return token; // Returning the promise
     } catch (err) {
@@ -72,28 +67,44 @@ export const handleLoginRegister = (values, isLoginMode, onSuccess, onError) => 
     }
 };
 
-export const handleLogin = (values, isLoginMode, history, onSuccess, onError) => dispatch => {
-    let route = isLoginMode ? "login" : "register";
+export const handleLogin = (values, onSuccess, onError) => async dispatch =>  {
+    const {email, password} = values;
+    try {
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+        let token = await firebase.auth().currentUser.getIdToken();
 
-    return axios.post(`${config.ROOT_URL}/${route}`, values)
-        .then((response) => {
-            if (onSuccess)
-                onSuccess();
+        localStorage.setItem("idToken", token);
+        dispatch(registerUser(onSuccess, onError));
 
-            dispatch(handleLoginSuccess(response, isLoginMode));
-        })
-        .catch((err) => {
-            let message = 'Unknown Error';
-            if (err) {
-                if (!!err.response && !!err.response && !!err.response.data && !!err.response.data.message)
-                    message = err.response.data.message;
-                else if (err.message)
-                    message = err.message;
-            }
-
-            onError(message);
-        });
+        return token; // Returning the promise
+    } catch (err) {
+        console.error(err);
+        if (onError)
+            onError(err);
+        
+    }
 };
+
+// export const handleLogin = (values, history, onSuccess, onError) => dispatch => {
+//     return axios.post(`${config.ROOT_URL}/login`, values)
+//         .then((response) => {
+//             if (onSuccess)
+//                 onSuccess();
+//
+//             dispatch(handleLoginSuccess(response, isLoginMode));
+//         })
+//         .catch((err) => {
+//             let message = 'Unknown Error';
+//             if (err) {
+//                 if (!!err.response && !!err.response && !!err.response.data && !!err.response.data.message)
+//                     message = err.response.data.message;
+//                 else if (err.message)
+//                     message = err.message;
+//             }
+//
+//             onError(message);
+//         });
+// };
 
 export const handleLogout = history => () => {
     localStorage.removeItem('idToken');

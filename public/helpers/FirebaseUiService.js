@@ -31,7 +31,7 @@ let uiConfig = {
 export const initOnAuthStateChange = () => {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
-            localStorage.setItem('fbUser', user);
+            // localStorage.setItem('fbUser', user);
 
             firebase.auth().currentUser.getIdToken()
                 .then(idToken => {
@@ -39,7 +39,7 @@ export const initOnAuthStateChange = () => {
                 });
         }
         else {
-            localStorage.removeItem('fbUser');
+            // localStorage.removeItem('fbUser');
             localStorage.removeItem('idToken');
         }
     });

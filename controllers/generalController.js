@@ -12,6 +12,7 @@ const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
 const bodyParser = require('body-parser');
 const {fbAdmin} = require('../managers/FirebaseManager');
+import {isValidEmail} from "../public/helpers/utils";
 
 //POST /register user
 router.post('/register',
@@ -59,8 +60,22 @@ router.post('/login',
         // body('uid', "אנא הכנס שם משתמש").not().isEmpty(),
     ],
     (req, res) => routeWrapper(req, res, async (req, res) => {
+        // In case its an old non-furebase user
+        let identifier = req.body.email;
+        let password = req.body.password;
+        
         let user;
         try {
+            if (!isValidEmail(identifier)) {
+                user = await getUser(identifier, password);
+                
+                if (user.fbUid)
+                    return reject("אנא היכנס באמעות אימייל", 401); // We can be nicer and login for him
+                
+                // No Email, no Firebase uid - request email
+                return resolve({code: "REQUEST_EMAIL"});
+            }
+            
             const fbUid = await jwtService.getFbUidFromToken(req);
             user = await UserModel.getUserByFbUid(fbUid);
         }
