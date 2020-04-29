@@ -74,7 +74,7 @@ export const handleLogin = (values, onSuccess, onError) => async dispatch =>  {
         let token = await firebase.auth().currentUser.getIdToken();
 
         localStorage.setItem("idToken", token);
-        dispatch(registerUser(onSuccess, onError));
+        dispatch(authenticate(onSuccess, onError));
 
         return token; // Returning the promise
     } catch (err) {
@@ -133,30 +133,19 @@ export function meFromTokenFailure(error) {
     };
 }
 
-export const loadUserFromToken = onFinishLoading => dispatch => {
-    let token = localStorage.getItem('idToken');
-    if (!token || token === '') {//if there is no token, dont bother
-        return;
+export const authenticate = (onSuccess, onError) => ({
+    type: actionsTypes.API,
+    payload: {
+        url: "/authenticate",
+        method: "get",
+        success: data => dispatch => {
+            dispatch(meFromTokenSuccess(data.user));
+            if (onSuccess)
+                onSuccess();
+        },
+        onError
+    },
+    meta: {
+        shouldAuthenticate: true
     }
-
-    //fetch user from token (if server deems it's valid token)
-    dispatch(meFromToken());
-    return axios({
-        method: 'get',
-        url: `${config.ROOT_URL}/api/authenticate`,
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    }).then(function (response) {
-        let user = response.data.user;
-        if (!!user && !isUserAllowedLogin(user))
-            throw new Error('user is not allowed to login');
-
-        dispatch(meFromTokenSuccess(user));
-    }).catch(function () {
-        dispatch(meFromTokenFailure("Error loading user from token"));
-    }).finally(() => {
-        if (onFinishLoading)
-            onFinishLoading();
-    });
-};
+});
