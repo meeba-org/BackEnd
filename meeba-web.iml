@@ -17,10 +17,11 @@
     <orderEntry type="library" name="@types/webpack" level="application" />
     <orderEntry type="library" name="analytics" level="application" />
     <orderEntry type="library" name="@types/material-ui" level="application" />
-    <orderEntry type="library" name="@types/prop-types" level="application" />
     <orderEntry type="library" name="@types/react" level="application" />
     <orderEntry type="library" name="@types/react-dom" level="application" />
+    <orderEntry type="library" name="@types/react-native" level="application" />
     <orderEntry type="library" name="@types/react-redux" level="application" />
+    <orderEntry type="library" name="@types/styled-components" level="application" />
     <orderEntry type="library" name="node_modules" level="project" />
   </component>
 </module>

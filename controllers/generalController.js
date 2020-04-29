@@ -12,7 +12,6 @@ const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
 const bodyParser = require('body-parser');
 const {fbAdmin} = require('../managers/FirebaseManager');
-import {isValidEmail} from "../public/helpers/utils";
 
 //POST /register user
 router.post('/register',
@@ -70,7 +69,7 @@ router.post('/login',
                 user = await getUser(identifier, password);
                 
                 if (user.fbUid)
-                    return reject("אנא היכנס באמעות אימייל", 401); // We can be nicer and login for him
+                    return reject("אנא היכנס באמצעות אימייל", 401); // We can be nicer and login for him
                 
                 // No Email, no Firebase uid - request email
                 return resolve({code: "REQUEST_EMAIL"});
@@ -86,6 +85,12 @@ router.post('/login',
         return resolve({ user });
     })
 );
+
+
+const isValidEmail = email => {
+    let re = /\S+@\S+\.\S+/;
+    return re.test(email);
+};
 
 // Convert username to Firebase credentials
 //POST /checkUserForFbExport user

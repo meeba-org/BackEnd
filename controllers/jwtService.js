@@ -62,5 +62,5 @@ module.exports = {
     getUserFromLocals,
     isUserIdValid,
     getFbUidFromToken,
-    getDecodedIdTokenFromReq
+    getDecodedIdTokenFromReq,
 };

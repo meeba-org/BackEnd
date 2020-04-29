@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{@types/material-ui, @types/prop-types, @types/react, @types/react-dom, @types/react-redux, node_modules}" />
+    <file url="PROJECT" libraries="{@types/material-ui, @types/react, @types/react-dom, @types/react-native, @types/react-redux, @types/styled-components, node_modules}" />
     <includedPredefinedLibrary name="Node.js Core" />
     <excludedPredefinedLibrary name="HTML" />
   </component>
