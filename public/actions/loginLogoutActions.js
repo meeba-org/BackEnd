@@ -1,8 +1,6 @@
-import axios from 'axios';
-import config from "../config";
+import {isValidEmail} from "../../managers/utils";
 import firebase from "../helpers/FirebaseUiService";
 import {GACategory} from "../helpers/GAService";
-import {isUserAllowedLogin} from "../helpers/utils";
 import * as actionsTypes from "./actionTypes";
 
 // const handleLoginSuccess = (response, history, isLoginMode) => {
@@ -71,8 +69,7 @@ export const handleRegister = (values, onSuccess, onError) => async dispatch => 
     }
 };
 
-export const handleLogin = (values, onSuccess, onError) => async dispatch =>  {
-    const {email, password} = values;
+const handleLoginViaFirebase = (email, password, onSuccess, onError) => async dispatch => {
     try {
         await firebase.auth().signInWithEmailAndPassword(email, password);
         let token = await firebase.auth().currentUser.getIdToken();
@@ -85,7 +82,49 @@ export const handleLogin = (values, onSuccess, onError) => async dispatch =>  {
         console.error(err);
         if (onError)
             onError(err);
-        
+    }
+};
+
+const handleLoginViaMeebaBE = (email, password, onSuccess, onError) => dispatch => {
+    dispatch({
+        type: actionsTypes.API,
+        payload: {
+            url: "/login",
+            method: "post",
+            data: {
+                identifier: email,
+                password
+            },
+            success: result => {
+                if (isLoginSucceeded(result)) {
+                    loginSuccess(result.user);
+                    localStorage.setItem("idToken", result.token);
+                    
+                    if (onSuccess)
+                        onSuccess();
+                }
+                else if (isEmailNeeded(result)) {
+                    dispatch(showRequestEmailAndLoginModal());
+                    // TODO Modal with only email? or login modal with email field?
+                }
+            },
+            onError
+        }
+    });
+    // dispatch(loginUser(email, password, onSuccess, onError));
+    // localStorage.setItem("idToken", token);
+    // dispatch(authenticate(onSuccess, onError));
+    //
+    // return token; // Returning the promise
+};
+
+export const handleLogin = (values, onSuccess, onError) => dispatch =>  {
+    const {email, password} = values;
+    if (isValidEmail(email)) {
+        dispatch(handleLoginViaFirebase(email, password, onSuccess, onError));
+    }
+    else {
+        dispatch(handleLoginViaMeebaBE(email, password, onSuccess, onError));
     }
 };
 
@@ -127,6 +166,13 @@ export function meFromTokenSuccess(currentUser) {
     return {
         type: actionsTypes.ME_FROM_TOKEN_SUCCESS,
         payload: currentUser
+    };
+}
+
+export function loginSuccess(user) {
+    return {
+        type: actionsTypes.LOGIN_SUCCESS,
+        payload: user
     };
 }
 

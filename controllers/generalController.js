@@ -11,6 +11,7 @@ const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
 const bodyParser = require('body-parser');
+const {isValidEmail} = require("../managers/utils");
 const {fbAdmin} = require('../managers/FirebaseManager');
 
 //POST /register user
@@ -52,7 +53,7 @@ const getUser = async (identifier, password) => {
     return user;
 };
 
-// Creating a /login route to acquire a token
+// Creating a /login route for old non-firebase users (note we expecting most of teh users to login via firebase)
 //POST /login user
 router.post('/login',
     [
@@ -85,12 +86,6 @@ router.post('/login',
         return resolve({ user });
     })
 );
-
-
-const isValidEmail = email => {
-    let re = /\S+@\S+\.\S+/;
-    return re.test(email);
-};
 
 // Convert username to Firebase credentials
 //POST /checkUserForFbExport user

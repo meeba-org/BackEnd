@@ -4,6 +4,7 @@ export function UserReducer(state = {}, action = null) {
     switch (action.type) {
         case types.UPDATE_ACTIVE_USER_SUCCESS:
         case types.REGISTER_SUCCESS:
+        case types.LOGIN_SUCCESS:
         case types.ME_FROM_TOKEN_SUCCESS: {
             return {
                 ...action.payload
