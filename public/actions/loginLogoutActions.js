@@ -39,7 +39,11 @@ const registerUser = (onSuccess, onError) => ({
             if (onSuccess)
                 onSuccess();
         },
-        onError
+        onError: err => dispatch => {
+            dispatch(meFromTokenFailure(err));
+            if (onError)
+                onError();
+        }
     },
     meta: {
         shouldAuthenticate: true
@@ -143,7 +147,11 @@ export const authenticate = (onSuccess, onError) => ({
             if (onSuccess)
                 onSuccess();
         },
-        onError
+        onError: err => dispatch => {
+            dispatch(meFromTokenFailure(err));
+            if (onError)
+                onError();
+        }
     },
     meta: {
         shouldAuthenticate: true
