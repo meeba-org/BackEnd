@@ -22,7 +22,7 @@ mongoose.connect(config.dbUrl, {useNewUrlParser: true }, () => {
     console.log("Connected to DB successfully");
 });
 
-let email = "cc1@cc.cc";
+let email = "chenop@gmail.com";
 const password = "123456";
 
 const isValidEmail = (email) => !!email.match('^\\S+@\\S+$');
@@ -33,7 +33,6 @@ const createUserWithEmailAndPassword  = async () => {
             email += '@meeba.co.il';
         
         const result = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        console.log(result);
     } catch (error) {
         // Handle Errors here.
         console.log(error);
@@ -52,4 +51,13 @@ const signInWithEmailAndPassword  = async () => {
     }
 };
 
-signInWithEmailAndPassword();
+const resetPassword  = async () => {
+    try {
+        await firebase.auth().sendPasswordResetEmail(email);
+    } catch (error) {
+        // Handle Errors here.
+        console.log(error);
+    }
+};
+
+resetPassword();
