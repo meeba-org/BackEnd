@@ -11,6 +11,37 @@ function handleLoginStart() {
     };
 }
 
+const registerUserSuccess = user => ({
+    type: actionsTypes.REGISTER_SUCCESS,
+    payload: user
+});
+    
+export const handleRegister = (data, onSuccess, onError) => ({
+    type: actionsTypes.API,
+    payload: {
+        url: "/register",
+        method: "post",
+        data,
+        success: (result) => dispatch => {
+            localStorage.setItem('jwtToken', result.token);
+            dispatch(registerUserSuccess(result.user));
+            if (onSuccess)
+                onSuccess();
+        },
+        onError: err => dispatch => {
+            dispatch(registerUserFailure(err));
+            if (onError)
+                onError();
+        }
+    },
+    meta: {
+        shouldAuthenticate: true
+    },
+    ga: {
+        category: GACategory.REGISTER,
+    }
+});
+
 function handleLoginSuccess(response, history, isLoginMode) {
     let user = response.data.user;
     if (!!user && !isUserAllowedLogin(user))
@@ -27,6 +58,7 @@ function handleLoginSuccess(response, history, isLoginMode) {
         }
     };
 }
+
 
 export const handleLogin = (values, isLoginMode, history, onSuccess, onError) => dispatch => {
         let route = isLoginMode ? "login" : "register";
@@ -76,6 +108,13 @@ export function meFromTokenSuccess(currentUser) {
 export function meFromTokenFailure(error) {
     return {
         type: actionsTypes.ME_FROM_TOKEN_FAILURE,
+        payload: error
+    };
+}
+
+export function registerUserFailure(error) {
+    return {
+        type: actionsTypes.REGISTER_FAILURE,
         payload: error
     };
 }

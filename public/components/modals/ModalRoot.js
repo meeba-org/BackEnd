@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {Suspense} from "react";
 import {connect} from "react-redux";
 import FullScreenLoading from "../FullScreenLoading";
-import LoginRegister from "../login/LoginRegister";
+import LoginRegisterContainer from "../login/LoginRegisterContainer";
 
 import {EModalType} from "./EModalType";
 const Covid19DiscountModal = React.lazy(() => import("./Covid19DiscountModal"));
@@ -25,7 +25,7 @@ export const MODAL_COMPONENTS = {
     [EModalType.MOVING_SHIFT_OUT_OF_MONTH]: MovingShiftOutOfMonthModal,
     [EModalType.MOBILE_APP_LINKS]: MobileAppLinksModal,
     [EModalType.LOCATION_MODAL]: LocationModal,
-    [EModalType.LOGIN_REGISTER]: LoginRegister,
+    [EModalType.LOGIN_REGISTER]: LoginRegisterContainer,
     [EModalType.TASK_MODAL]: TaskModal,
     [EModalType.GO_PREMIUM_MODAL]: GoPremiumModal,
     [EModalType.YES_NO_MODAL]: YesNoModal,
