@@ -43,10 +43,13 @@ function isUserIdValid(userId, req) {
     return user._id === userId;
 }
 
+const sign = (user) => jwt.sign(user.toObject(), config.secret);
+
 module.exports = {
     extractTokenFromRequest,
     getUserFromToken,
     getCompanyFromLocals,
     getUserFromLocals,
-    isUserIdValid
+    isUserIdValid,
+    sign
 };

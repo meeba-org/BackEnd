@@ -11,37 +11,47 @@ const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
 const bodyParser = require('body-parser');
+const {fbAdmin} = require('../managers/FirebaseManager');
+
+const registerToFirebase = async userData => {
+    const fbUser = await fbAdmin.createUser(userData);
+    userData.fbUid = fbUser.uid;
+};
 
 //POST /register user
 router.post('/register',
     [
         body('username', "שדות חסרים").exists(),
+        body('email', "שדות חסרים").exists(),
         body('password', "שדות חסרים").exists(),
         body('retypePassword', "שדות חסרים").exists(),
     ],
-    (req, res) => routeWrapper(req, res, (req, res) => {
-        let username = req.body.username;
-        let password = req.body.password;
-        let retypePassword = req.body.retypePassword;
+    (req, res) => routeWrapper(req, res, async (req, res) => {
+        let userData = {
+            username: req.body.username,
+            password: req.body.password,
+            email: req.body.email
+        };
+        const retypePassword = req.body.retypePassword;
 
-        if (password !== retypePassword)
+        if (userData.password !== retypePassword)
             return reject("סיסמאות אינן תואמות", 401);
 
-        return UserModel.getByUserName(username)
-            .then(user => {
-                if (user)
-                    return reject("שם משתמש קיים", 401);
-
-                return AppManager.registerCompanyManager(username, password);
-            })
-            .then((user) => {
-                // use the jsonwebtoken package to create the token and respond with it
-                let token = jwt.sign(user.toObject(), config.secret);
-                return resolve({
-                    user,
-                    token
-                });
-            })
+        let user = await UserModel.getByUserName(userData.username);
+        if (user)
+            return reject("שם משתמש קיים", 401);
+        
+        // TODO Check if user already exist in FB
+        await registerToFirebase(userData);
+        user = await AppManager.registerCompanyManager(userData);
+        
+        // use the jsonwebtoken package to create the token and respond with it
+        const token = jwtService.sign(user);
+        
+        return resolve({
+            user,
+            token
+        });
     })
 );
 
@@ -51,34 +61,32 @@ router.post('/login',
     [
         body('uid', "אנא הכנס שם משתמש").not().isEmpty(),
     ],
-    (req, res) => routeWrapper(req, res, (req, res) => {
+    (req, res) => routeWrapper(req, res, async (req, res) => {
         let identifier = req.body.uid;
         let password = req.body.password;
 
-        return UserModel.getByUserIdentifier(identifier, true)
-            .then((user) => {
-                if (!user) {
-                    return reject("שם משתמש לא קיים", 401);
-                }
+        const user = await UserModel.getByUserIdentifier(identifier, true)
+        if (!user) {
+            return reject("שם משתמש לא קיים", 401);
+        }
 
-                if (UserModel.isCompanyManager(user)) {
-                    if (!password)
-                        return reject("אנא הכנס סיסמא", 401);
+        if (UserModel.isCompanyManager(user)) {
+            if (!password)
+                return reject("אנא הכנס סיסמא", 401);
 
-                    let isMatch = UserModel.comparePassword(password, user.password);
+            let isMatch = UserModel.comparePassword(password, user.password);
 
-                    if (!isMatch) {
-                        return reject("סיסמא לא נכונה - נסה שנית", 401);
-                    }
-                }
+            if (!isMatch) {
+                return reject("סיסמא לא נכונה - נסה שנית", 401);
+            }
+        }
 
-                // use the jsonwebtoken package to create the token and respond with it
-                let token = jwt.sign(user.toObject(), config.secret);
-                return resolve({
-                    user,
-                    token
-                });
-            })
+        // use the jsonwebtoken package to create the token and respond with it
+        let token = jwtService.sign(user);
+        return resolve({
+            user,
+            token
+        });
     })
 );
 
@@ -93,6 +101,7 @@ router.get('/authenticate',
         }
 
         // Decode token
+        // TODO move into jwtService
         return jwt.verify(token, config.secret, async (err, user) => {
             if (err)
                 return reject(`[authenticate] - Token is not valid, Error: ${err.message}`, 401);

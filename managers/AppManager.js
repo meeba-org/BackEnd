@@ -34,19 +34,16 @@ const removeShift = (shiftId) => {
         });
 };
 
-const addUser = (user) => {
+const addUser = async (user) => {
     const company = user.company;
 
     // Add the user
-    return UserModel.createUser(user)
-        .then((createdUser) => {
-            if (!!company && company.id) {
-                // Add user to company
-                return CompanyModel.addUser(company.id, createdUser)
-                    .then(() => createdUser);
-            }
-            return createdUser;
-        });
+    let createdUser = await UserModel.createUser(user)
+    if (!!company && company.id) {
+        // Add user to company
+        await CompanyModel.addUser(company.id, createdUser)
+    }
+    return createdUser;
 };
 
 const removeUser = (userId) => {
@@ -65,19 +62,17 @@ const removeUser = (userId) => {
         });
 };
 
-const registerCompanyManager = (username, password) => {
-    return CompanyModel.createCompany({})
-        .then(company => {
-            let user = {
-                username,
-                password,
-                role: ERoles.COMPANY_MANAGER,
-                shifts: [],
-                company,
-            };
+const registerCompanyManager = async (userData) => {
+    let company = await CompanyModel.createCompany({});
+    
+    let user = {
+        ...userData,
+        role: ERoles.COMPANY_MANAGER,
+        shifts: [],
+        company,
+    };
 
-            return addUser(user);
-        });
+    return addUser(user);
 };
 
 const getShiftsInMonth = (year, month, company, userId) => {
