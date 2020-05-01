@@ -11,10 +11,10 @@ const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
 const bodyParser = require('body-parser');
-const {fbAdmin} = require('../managers/FirebaseManager');
+const {createUser} = require('../managers/FirebaseManager');
 
 const registerToFirebase = async userData => {
-    const fbUser = await fbAdmin.createUser(userData);
+    const fbUser = await createUser(userData);
     userData.fbUid = fbUser.uid;
 };
 
@@ -36,8 +36,7 @@ router.post('/register',
         if (user)
             return reject("שם משתמש קיים", 401);
         
-        // TODO Check if user already exist in FB
-        await registerToFirebase(userData);
+        // await registerToFirebase(userData);
         user = await AppManager.registerCompanyManager(userData);
         
         // use the jsonwebtoken package to create the token and respond with it

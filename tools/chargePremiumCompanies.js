@@ -1,4 +1,6 @@
 /* eslint no-console: 0 */
+const {MONTHLY_SUBSCRIPTION_PRICE} = require("../constants");
+
 process.env.NODE_ENV = 'production';
 
 const CompanyModel = require("../models/CompanyModel");
@@ -14,6 +16,7 @@ mongoose.connect(config.dbUrl, {useNewUrlParser: true }, () => {
 });
 
 const chargePremiumCompanies = async () => {
+    console.log("Subscription price is:", MONTHLY_SUBSCRIPTION_PRICE);
     let companies = await CompanyModel.getPremiumPlanCompanies();
     if (!companies || companies.length === 0) {
         console.log('No Premium companies found :-(');
@@ -23,6 +26,7 @@ const chargePremiumCompanies = async () => {
     for (let company of companies) {
         try{
             console.log(`${company.name} - Charging company - id: ${company._id}`);
+            // For testing comment the following line
             await iCreditManager.generateImmediatePayment(company._id);
             console.log(`${company.name} - Success!`);
         }

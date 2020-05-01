@@ -8,7 +8,8 @@ fbAdmin.initializeApp({
 const createUser = user =>
     fbAdmin.auth().createUser({
         uid: user._id,
-        email: user.email
+        email: user.email,
+        password: user.password
     });
 
 module.exports = {

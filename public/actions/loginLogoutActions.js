@@ -130,7 +130,7 @@ export function loadUserFromToken(onFinishLoading) {
         dispatch(meFromToken());
         return axios({
             method: 'get',
-            url: `${config.ROOT_URL}/authenticate`,
+            url: `${config.ROOT_URL}/api/authenticate`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }

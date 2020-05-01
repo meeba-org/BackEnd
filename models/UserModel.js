@@ -6,6 +6,7 @@ const ETransportPaymentPer = require("./ETransportPaymentPer");
 // User Schema
 const UserSchema = mongoose.Schema({
     uid: { type: String, index: true },
+    // fbUid: { type: String },
     fullName: { type: String },
     username: { type: String },
     email: { type: String },
@@ -44,14 +45,16 @@ const getByUserName = (username) => {
     return User.findOne({username}).populate('company').exec();
 };
 
-const getByUserIdentifier = (identifier) => {
-    return getByUserName(identifier)
-        .then(user => {
-            if (!!user)
+const getUserByFbUid = (fbUid) => {
+    return User.findOne({fbUid}).populate('company').exec();
+};
+
+const getByUserIdentifier = async (identifier) => {
+    const user = await getByUserName(identifier);
+    if (user)
                 return user;
 
             return getByUserUid(identifier, true);
-        });
 };
 
 // Return a promise
@@ -143,4 +146,5 @@ module.exports = {
     , isEmployee
     , isCompanyManager
     , getByUserIdentifier
+    , getUserByFbUid
 };
