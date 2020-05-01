@@ -19,7 +19,7 @@ class Footer extends Component {
                     {/*<div styleName="signature">*/}
                     {/*    <div>נוצר ע"י <a target="_blank" href="https://www.linkedin.com/in/chenop/">חן אופנהיים</a>, טלפון: 052-8421440</div>*/}
                     {/*</div>*/}
-                    <div styleName="term-usage"><a target="_blank" href="https://docs.google.com/document/d/1vGWUvLTo2izTOBTmJBpjkKPwm4bpRkVGV9IsyJSxVzw/edit?usp=sharing">תנאי שימוש</a></div>
+                    <div styleName="term-usage"><a target="_blank" rel="noopener noreferrer" href="https://docs.google.com/document/d/1vGWUvLTo2izTOBTmJBpjkKPwm4bpRkVGV9IsyJSxVzw/edit?usp=sharing">תנאי שימוש</a></div>
                 </div>
             </div>
         );

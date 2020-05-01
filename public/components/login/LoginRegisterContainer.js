@@ -10,7 +10,7 @@ import "../../styles/LoginRegister.scss";
 import LoginRegister from "./LoginRegister";
 
 const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, handleRegister, history}) => {
-    const [isLoginMode, setIsLoginMode] = useState(true); // TODO should be true!
+    const [isLoginMode, setIsLoginMode] = useState(false); // TODO should be true!
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [values, setValues] = useState({});

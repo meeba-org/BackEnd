@@ -24,18 +24,13 @@ router.post('/register',
         body('username', "שדות חסרים").exists(),
         body('email', "שדות חסרים").exists(),
         body('password', "שדות חסרים").exists(),
-        body('retypePassword', "שדות חסרים").exists(),
     ],
     (req, res) => routeWrapper(req, res, async (req, res) => {
         let userData = {
             username: req.body.username,
-            password: req.body.password,
-            email: req.body.email
+            email: req.body.email,
+            password: req.body.password
         };
-        const retypePassword = req.body.retypePassword;
-
-        if (userData.password !== retypePassword)
-            return reject("סיסמאות אינן תואמות", 401);
 
         let user = await UserModel.getByUserName(userData.username);
         if (user)
