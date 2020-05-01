@@ -66,11 +66,10 @@ const LoginRegister = ({
                             placeholder={"אימייל"}
                             type={"email"}
                             name="email"
-                            autoComplete="username"
+                            autoComplete="email"
                             onChange={handleChange}
                             onKeyPress={handleKeyPress}
                             fullWidth
-                            autoFocus
                             inputProps={{"data-hj-whitelist": ""}}
                         />
                     </>
@@ -95,7 +94,6 @@ const LoginRegister = ({
                                         {showPassword ? <VisibilityOff/> : <Visibility/>}
                                     </IconButton>
                                 </InputAdornment>
-
                         }}
                     />
                     {!isLoginMode &&
@@ -106,7 +104,7 @@ const LoginRegister = ({
                         name="retypePassword"
                         onChange={handleChange}
                         onKeyPress={handleKeyPress}
-                        autoComplete="current-password"
+                        autoComplete="new-password"
                         value={"123456"} // TODO remove that!
                         fullWidth
                     />
