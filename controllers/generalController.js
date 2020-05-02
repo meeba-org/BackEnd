@@ -53,15 +53,15 @@ router.post('/register',
 //POST /login user
 router.post('/login',
     [
-        body('uid', "אנא הכנס שם משתמש").not().isEmpty(),
+        body('identifier', "אנא הכנס שם משתמש או אימייל").not().isEmpty(),
     ],
     (req, res) => routeWrapper(req, res, async (req, res) => {
-        let identifier = req.body.uid;
+        let identifier = req.body.identifier;
         let password = req.body.password;
 
         const user = await UserModel.getByUserIdentifier(identifier, true)
         if (!user) {
-            return reject("שם משתמש לא קיים", 401);
+            return reject("שם משתמש או אימייל לא נמצאו", 401);
         }
 
         if (UserModel.isCompanyManager(user)) {

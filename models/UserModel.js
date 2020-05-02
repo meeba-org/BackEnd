@@ -45,16 +45,24 @@ const getByUserName = (username) => {
     return User.findOne({username}).populate('company').exec();
 };
 
+const getByEmail = (email) => {
+    return User.findOne({email}).populate('company').exec();
+};
+
 const getUserByFbUid = (fbUid) => {
     return User.findOne({fbUid}).populate('company').exec();
 };
 
 const getByUserIdentifier = async (identifier) => {
-    const user = await getByUserName(identifier);
+    let user = await getByUserName(identifier);
     if (user)
-                return user;
+        return user;
+    
+    user = await getByEmail(identifier);
+    if (user)
+        return user;
 
-            return getByUserUid(identifier, true);
+    return getByUserUid(identifier, true);
 };
 
 // Return a promise

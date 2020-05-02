@@ -16,6 +16,21 @@ const registerUserSuccess = user => ({
     payload: user
 });
     
+const loginUserSuccess = user => ({
+    type: actionsTypes.LOGIN_SUCCESS,
+    payload: user
+});
+
+export const registerUserFailure = error => ({
+    type: actionsTypes.REGISTER_FAILURE,
+    payload: error
+});
+
+export const loginUserFailure = (error) => ({
+    type: actionsTypes.LOGIN_FAILURE,
+    payload: error
+});
+
 export const handleRegister = (data, onSuccess, onError) => ({
     type: actionsTypes.API,
     payload: {
@@ -23,6 +38,7 @@ export const handleRegister = (data, onSuccess, onError) => ({
         method: "post",
         data,
         success: (result) => dispatch => {
+            // TODO the following happens twice... think about it
             localStorage.setItem('jwtToken', result.token);
             dispatch(registerUserSuccess(result.user));
             if (onSuccess)
@@ -60,30 +76,31 @@ function handleLoginSuccess(response, history, isLoginMode) {
 }
 
 
-export const handleLogin = (values, isLoginMode, history, onSuccess, onError) => dispatch => {
-        let route = isLoginMode ? "login" : "register";
-
-        dispatch(handleLoginStart());
-        return axios.post(`${config.ROOT_URL}/${route}`, values)
-            .then((response) => {
-                if (onSuccess)
-                    onSuccess();
-
-                dispatch(hideLoginRegisterModal());
-                dispatch(handleLoginSuccess(response, history, isLoginMode));
-            })
-            .catch((err) => {
-                let message = 'Unknown Error';
-                if (err) {
-                    if (!!err.response && !! err.response && !!err.response.data && !!err.response.data.message)
-                        message = err.response.data.message;
-                    else if (err.message)
-                        message = err.message;
-                }
-
-                onError(message);
-            });
-    };
+export const handleLogin = (data, onSuccess, onError) => ({
+    type: actionsTypes.API,
+    payload: {
+        url: "/login",
+        method: "post",
+        data,
+        success: (result) => dispatch => {
+            localStorage.setItem('jwtToken', result.token);
+            dispatch(loginUserSuccess(result.user));
+            if (onSuccess)
+                onSuccess();
+        },
+        onError: err => dispatch => {
+            dispatch(loginUserFailure(err));
+            if (onError)
+                onError();
+        }
+    },
+    meta: {
+        shouldAuthenticate: true
+    },
+    ga: {
+        category: GACategory.LOGIN,
+    }
+});
 
 export const handleLogout = history => () => {
     localStorage.removeItem('jwtToken');
@@ -93,10 +110,6 @@ export const handleLogout = history => () => {
 export const navigateHome = history => () => {
     history.push('/');
 };
-
-export const meFromToken = () => ({
-    type: actionsTypes.ME_FROM_TOKEN,
-});
 
 export function meFromTokenSuccess(currentUser) {
     return {
@@ -112,42 +125,25 @@ export function meFromTokenFailure(error) {
     };
 }
 
-export function registerUserFailure(error) {
-    return {
-        type: actionsTypes.REGISTER_FAILURE,
-        payload: error
-    };
-}
-
-export function loadUserFromToken(onFinishLoading) {
-    return function (dispatch) {
-        let token = localStorage.getItem('jwtToken');
-        if (!token || token === '') {//if there is no token, dont bother
-            return;
-        }
-
-        //fetch user from token (if server deems it's valid token)
-        dispatch(meFromToken());
-        return axios({
-            method: 'get',
-            url: `${config.ROOT_URL}/api/authenticate`,
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then(function (response) {
-            let user = response.data.user;
-            if (!!user && !isUserAllowedLogin(user))
-                throw new Error('user is not allowed to login');
-
-            localStorage.setItem('jwtToken', response.data.token);
-            localStorage.setItem('activeUser', JSON.stringify(user));
-            dispatch(meFromTokenSuccess(user));
-        }).catch(function () {
+export const authenticate = (onSuccess, onError) => ({
+    type: actionsTypes.API,
+    payload: {
+        url: '/authenticate',
+        method: 'get',
+        success: result => dispatch => {
+            localStorage.setItem('jwtToken', result.token);
+            dispatch(meFromTokenSuccess(result.user));
+            if (onSuccess)
+                onSuccess();
+        },
+        onError: (err) => dispatch => {
+            dispatch(meFromTokenFailure(err));
             localStorage.removeItem('jwtToken');//remove token from storage
-            dispatch(meFromTokenFailure("Error loading user from token"));
-        }).finally( () => {
-            if (onFinishLoading)
-                onFinishLoading();
-        });
-    };
-}
+            if (onError)
+                onError();
+        }
+    },
+    meta: {
+        shouldAuthenticate: true
+    }
+});

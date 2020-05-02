@@ -2,7 +2,7 @@ import {EModalType} from "../components/modals/EModalType";
 import {ESplashScreenType, hasSeenSplashScreen, setSeenSplashScreen} from "../helpers/SplashScreenHelper";
 import * as actions from "./actionTypes";
 import {showModal} from "./index";
-import {loadUserFromToken} from "./loginLogoutActions";
+import {authenticate} from "./loginLogoutActions";
 import {fetchPendingShifts} from "./shiftsActions";
 
 export const fetchMetaDataSuccess = (payload) => {
@@ -35,7 +35,7 @@ export const displaySplashScreen = () => dispatch => {
 };
 
 export const loadDashboardData = (onFinishLoading) =>  dispatch => {
-    dispatch(loadUserFromToken(onFinishLoading));
+    dispatch(authenticate(onFinishLoading, onFinishLoading));
     dispatch(fetchPendingShifts());
     dispatch(displaySplashScreen());
 };
