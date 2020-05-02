@@ -13,7 +13,7 @@ import Home from "./home/Home";
 import LazyPrivateRoute from "./LazyPrivateRoute";
 import ModalRoot from "./modals/ModalRoot";
 
-const Dashboard = React.lazy(() => import("../components/Dashboard"));
+const DashboardContainer = React.lazy(() => import("../components/dashboard/DashboardContainer"));
 
 class AppContainer extends React.Component {
     componentDidMount() {
@@ -37,7 +37,7 @@ class AppContainer extends React.Component {
                 <BrowserRouter>
                     <Switch>
                         <Route path="/home" component={Home} />
-                        <LazyPrivateRoute path="/dashboard" component={Dashboard} />
+                        <LazyPrivateRoute path="/dashboard" component={DashboardContainer} />
                         <Route path="/faq/:name?" component={FAQContainer} />
                         <Route path="/paymentSuccess" component={PaymentSuccessRedirectContainer} />
                         <Redirect from="/" to="/dashboard" />
