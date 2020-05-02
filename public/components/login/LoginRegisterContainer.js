@@ -5,13 +5,15 @@
 import React, {useState} from 'react';
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
+import {isValidEmail} from "../../../managers/utils";
 import {handleLogin, handleRegister, hideLoginRegisterModal} from "../../actions";
 import "../../styles/LoginRegister.scss";
 import LoginRegister from "./LoginRegister";
 
 const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, handleRegister, history}) => {
     const [isLoginMode, setIsLoginMode] = useState(true);
-    const [error, setError] = useState("");
+    const [backEndError, setBackEndError] = useState("");
+    const [dirty, setDirty] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [values, setValues] = useState({});
     
@@ -29,7 +31,7 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
             {
                 username: values.username,
                 email: values.email,
-                password: "123456" // TODO remove passwd
+                password: values.password
             },
             () => {
                 setIsLoading(false);
@@ -38,8 +40,7 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
             },
             (err) => {
                 setIsLoading(false);
-                // TODO Error handling by err.code auth/email-already-in-use
-                setError(err.message);
+                setBackEndError(err.message);
             }
         );
     };
@@ -57,8 +58,7 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
             },
             (err) => {
                 setIsLoading(false);
-                // TODO Error handling by err.code auth/email-already-in-use
-                setError(err.message);
+                setBackEndError(err.message);
             }
         );
     };
@@ -72,6 +72,27 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
             onRegister(values);
     };
 
+    const calcErrors = () => {
+        const {username, email, password, retypePassword} = values;
+        let errors = {};
+        if (dirty.username && !username) 
+            errors = {username: "שם משתמש חסר"};
+        else if(dirty.email && !email) 
+            errors = {email: "אימייל חסר"};
+        else if (dirty.email && !isValidEmail(email))
+            errors = {email: "אימייל לא תקין"};
+        else if (dirty.password && !password)
+            errors = {password: "סיסמא חסרה"};
+        else if (dirty.password && password.length < 6)
+            errors = {password: "אורך סיסמא לפחות 6 תוים"};
+        else if (dirty.retypePassword && !retypePassword)
+            errors = {retypePassword: "סיסמא חסרה"};
+        else if (password !== retypePassword)
+            errors = {password: "סיסמא לא זהה", retypePassword: "סיסמא לא זהה"};
+        
+        return errors;
+    };
+    
     const handleChange = (event) => {
         const {name, value} = event.target;
         
@@ -79,19 +100,27 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
             ...values,
             [name]: value,
         });
-        setError("");
+        setDirty({
+            ...dirty,
+            [name]: true
+        });
+        setBackEndError("");
     };
-    
+
+    const errors = calcErrors();
+
     return (
         <LoginRegister
             isLoginMode={isLoginMode}
             isLoading={isLoading}
             open={open}
-            error={error}
+            errors={errors}
+            backEndError={backEndError}
             handleChange={handleChange}
             handleSubmit={onSubmit}
             handleClose={handleClose}
             toggleLoginMode={toggleLoginMode}
+            isSubmitDisabled={Object.keys(errors).length > 0 || Object.keys(dirty).length !== 4}
         />
     );
 };

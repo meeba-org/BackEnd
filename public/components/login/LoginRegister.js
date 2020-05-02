@@ -14,8 +14,8 @@ import React, {useState} from 'react';
 import "../../styles/LoginRegister.scss";
 
 const LoginRegister = ({
-                           isLoginMode, isLoading, open, error, handleClose,
-                           handleChange, handleSubmit, toggleLoginMode
+                           isLoginMode, isLoading, open, errors, backEndError, handleClose,
+                           handleChange, handleSubmit, toggleLoginMode, isSubmitDisabled
                        }) => {
     let buttonText = isLoginMode ? "היכנס" : "הירשם";
     let footerTextQuestion = isLoginMode ? "עדיין לא נרשמת?" : "נרשמת כבר?";
@@ -59,6 +59,8 @@ const LoginRegister = ({
                             onKeyPress={handleKeyPress}
                             fullWidth
                             autoFocus
+                            error={errors["username"]}
+                            helperText={errors["username"]}
                             inputProps={{"data-hj-whitelist": ""}}
                         />
                         <TextField
@@ -67,6 +69,8 @@ const LoginRegister = ({
                             type={"email"}
                             name="email"
                             autoComplete="email"
+                            error={errors["email"]}
+                            helperText={errors["email"]}
                             onChange={handleChange}
                             onKeyPress={handleKeyPress}
                             fullWidth
@@ -82,6 +86,8 @@ const LoginRegister = ({
                         autoComplete="current-password"
                         onChange={handleChange}
                         onKeyPress={handleKeyPress}
+                        error={errors["password"]}
+                        helperText={errors["password"]}
                         fullWidth
                         InputProps={{
                             endAdornment:
@@ -104,12 +110,15 @@ const LoginRegister = ({
                         onChange={handleChange}
                         onKeyPress={handleKeyPress}
                         autoComplete="new-password"
+                        error={errors["retypePassword"]}
+                        helperText={errors["retypePassword"]}
                         fullWidth
                     />
                     }
-                    {error && <Typography styleName="error-msg">{error}</Typography>}
+                    {backEndError && <Typography styleName="error-msg">{backEndError}</Typography>}
                     <div styleName="login-register-footer">
                         <Button variant="contained" color="primary" type="submit" styleName="login-button"
+                                disabled={isSubmitDisabled}
                                 onClick={handleSubmit}>
                             <Typography styleName="button-text">{buttonText}</Typography>
                             {isLoading ? <CircularProgress size={15} style={{color: "white"}}/> : <ArrowBackIcon/>}
