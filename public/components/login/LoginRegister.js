@@ -78,7 +78,6 @@ const LoginRegister = ({
                         label="סיסמא"
                         placeholder="סיסמא"
                         type={showPassword ? "text" : "password"}
-                        value={"123456"}
                         name="password"
                         autoComplete="current-password"
                         onChange={handleChange}
@@ -105,7 +104,6 @@ const LoginRegister = ({
                         onChange={handleChange}
                         onKeyPress={handleKeyPress}
                         autoComplete="new-password"
-                        value={"123456"} // TODO remove that!
                         fullWidth
                     />
                     }

@@ -39,7 +39,7 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
             (err) => {
                 setIsLoading(false);
                 // TODO Error handling by err.code auth/email-already-in-use
-                setError(err.toString());
+                setError(err.message);
             }
         );
     };
@@ -48,7 +48,7 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
         return handleLogin(
             {
                 identifier: values.identifier,
-                password: "123456" // TODO remove passwd
+                password: values.password
             },
             () => {
                 setIsLoading(false);
@@ -58,7 +58,7 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
             (err) => {
                 setIsLoading(false);
                 // TODO Error handling by err.code auth/email-already-in-use
-                setError(err.toString());
+                setError(err.message);
             }
         );
     };

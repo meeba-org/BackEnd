@@ -37,7 +37,7 @@ export const handleRegister = (data, onSuccess, onError) => ({
         url: "/register",
         method: "post",
         data,
-        success: (result) => dispatch => {
+        success: result => dispatch => {
             // TODO the following happens twice... think about it
             localStorage.setItem('jwtToken', result.token);
             dispatch(registerUserSuccess(result.user));
@@ -47,7 +47,7 @@ export const handleRegister = (data, onSuccess, onError) => ({
         onError: err => dispatch => {
             dispatch(registerUserFailure(err));
             if (onError)
-                onError();
+                onError(err);
         }
     },
     ga: {
@@ -55,31 +55,13 @@ export const handleRegister = (data, onSuccess, onError) => ({
     }
 });
 
-function handleLoginSuccess(response, history, isLoginMode) {
-    let user = response.data.user;
-    if (!!user && !isUserAllowedLogin(user))
-        throw new Error('אין הרשאות מתאימות');
-
-    localStorage.setItem('jwtToken', response.data.token);
-    localStorage.setItem('activeUser', JSON.stringify(response.data.user));
-
-    history.push('/dashboard');
-    return {
-        type: actionsTypes.HANDLE_LOGIN_SUCCESS,
-        ga: {
-            category: isLoginMode ? GACategory.LOGIN : GACategory.REGISTER,
-        }
-    };
-}
-
-
 export const handleLogin = (data, onSuccess, onError) => ({
     type: actionsTypes.API,
     payload: {
         url: "/login",
         method: "post",
         data,
-        success: (result) => dispatch => {
+        success: result => dispatch => {
             localStorage.setItem('jwtToken', result.token);
             dispatch(loginUserSuccess(result.user));
             if (onSuccess)
@@ -88,7 +70,7 @@ export const handleLogin = (data, onSuccess, onError) => ({
         onError: err => dispatch => {
             dispatch(loginUserFailure(err));
             if (onError)
-                onError();
+                onError(err);
         }
     },
     ga: {

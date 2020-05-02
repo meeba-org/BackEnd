@@ -21,9 +21,9 @@ const registerToFirebase = async userData => {
 //POST /register user
 router.post('/register',
     [
-        body('username', "שדות חסרים").exists(),
-        body('email', "שדות חסרים").exists(),
-        body('password', "שדות חסרים").exists(),
+        body('username', "שם משתמש חסר").not().isEmpty(),
+        body('email', "אימייל חסר").not().isEmpty(),
+        body('password', "סיסמא חסרה").not().isEmpty(),
     ],
     (req, res) => routeWrapper(req, res, async (req, res) => {
         let userData = {
