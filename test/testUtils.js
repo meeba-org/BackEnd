@@ -9,6 +9,7 @@ const ShiftModel = require('../models/ShiftModel');
 const PaymentModel = require('../models/PaymentModel');
 const moment = require('moment');
 const mongoose = require("mongoose");
+const mongooseManager = require("../managers/MongooseManager");
 
 // ensure the NODE_ENV is set to 'test'
 // this is helpful when you would like to change behavior when testing
@@ -19,15 +20,13 @@ const TaskModel = require("../models/TaskModel");
 
 const TIMEOUT = 20000;
 
-beforeEach(function () {
+beforeEach( async () => {
     this.timeout(TIMEOUT);
     if (mongoose.connection.db)
         return clearDB();
 
-    return mongoose.connect(config.dbUrl, {useNewUrlParser: true })
-        .then(function() {
-            return clearDB();
-        })
+    await mongooseManager.connect(config.dbUrl);
+    return clearDB();
 });
 
 function clearDB() {

@@ -26,6 +26,7 @@
     <file url="file://$PROJECT_DIR$/managers/FirebaseManager.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/managers/HolidayAnalyzer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/managers/MichpalManager.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/managers/MongooseManager.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/managers/ShiftAnalyzer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/managers/iCreditManager.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/CompanyModel.js" charset="UTF-8" />

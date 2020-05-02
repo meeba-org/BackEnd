@@ -50,7 +50,8 @@ module.exports = {
                     sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
                 },
             ]
-        })
+        }),
+        new webpack.IgnorePlugin(/\.\/locale$/)
     ],
     module: {
         rules: [

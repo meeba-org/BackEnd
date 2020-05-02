@@ -6,17 +6,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
-const mongoose = require('mongoose');
 const config = require('./config');
 const enforce = require("express-sslify");
+const mongooseManager = require("./managers/MongooseManager");
 const compression = require('compression');
 
 // Connect to mongoose
-mongoose.Promise = global.Promise;
-mongoose.connect(config.dbUrl, {useNewUrlParser: true }, () => {
-    console.log("Connected to DB successfully");
-});
-
+mongooseManager.connect(config.dbUrl);
 // Init App
 const app = express();
 

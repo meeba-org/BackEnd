@@ -1,15 +1,5 @@
-import axios from 'axios';
-import config from "../config";
 import {GACategory} from "../helpers/GAService";
-import {isUserAllowedLogin} from "../helpers/utils";
 import * as actionsTypes from "./actionTypes";
-import {hideLoginRegisterModal} from "./index";
-
-function handleLoginStart() {
-    return {
-        type: actionsTypes.HANDLE_LOGIN_START
-    };
-}
 
 const registerUserSuccess = user => ({
     type: actionsTypes.REGISTER_SUCCESS,
