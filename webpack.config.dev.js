@@ -51,7 +51,7 @@ module.exports = {
                 },
             ]
         }),
-        new webpack.IgnorePlugin(/\.\/locale$/)
+        new webpack.IgnorePlugin(/\.\/locale$/) //https://github.com/moment/moment/issues/2979#issuecomment-287675568
     ],
     module: {
         rules: [
