@@ -39,6 +39,7 @@
     <file url="file://$PROJECT_DIR$/models/TaskModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/UserModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/node_modules/material-ui-pickers/package.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nodemon.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/package-lock.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/package.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/postcss.config.js" charset="UTF-8" />

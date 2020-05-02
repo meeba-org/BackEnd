@@ -32,7 +32,7 @@ router.post('/register',
             password: req.body.password
         };
 
-        let user = await UserModel.getByUserName(userData.username);
+        let user = await UserModel.getByUserName(userData.username); 
         if (user)
             return reject("שם משתמש קיים", 401);
         
