@@ -25,7 +25,9 @@ class Dashboard extends React.PureComponent {
     };
 
     componentDidMount() {
-        this.props.loadDashboardData(() => this.setState({isLoading: false}));
+        const {loadDashboardData, user} = this.props;
+        
+        loadDashboardData(() => this.setState({isLoading: false}), user);
     }
 
     toggleDrawer = () => {
@@ -90,7 +92,8 @@ const mapStateToProps = (state) => {
         userRole: selectors.getUserRole(state),
         isDesktop: selectors.isDesktop(state),
         isTasksFeatureEnable: selectors.isTasksFeatureEnable(state),
-        hasPremium: selectors.hasPremiumFeature(state)
+        hasPremium: selectors.hasPremiumFeature(state),
+        user: selectors.getUser(state)
     };
 };
 

@@ -120,7 +120,7 @@ router.get('/authenticate',
     })
 );
 
-router.get('/api/general/meta',
+router.get('/general/meta',
     (req, res) => routeWrapper(req, res, (req, res) => {
         return Promise.all([
             CompanyModel.companiesCount(),
@@ -136,7 +136,7 @@ router.get('/api/general/meta',
     })
 );
 
-router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
+router.post('/general/ipn', bodyParser.urlencoded({ extended: true }),
     (req, res) => routeWrapper(req, res, async (req, res) => {
         try {
             let data = req.body;

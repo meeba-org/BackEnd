@@ -34,8 +34,9 @@ export const displaySplashScreen = () => dispatch => {
     setSeenSplashScreen(splashScreenType);
 };
 
-export const loadDashboardData = (onFinishLoading) =>  dispatch => {
-    dispatch(authenticate(onFinishLoading, onFinishLoading));
+export const loadDashboardData = (onFinishLoading, user) =>  dispatch => {
+    if (!user)
+        dispatch(authenticate(onFinishLoading, onFinishLoading));
     dispatch(fetchPendingShifts());
     dispatch(displaySplashScreen());
 };

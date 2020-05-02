@@ -17,7 +17,7 @@ export const getCompanyName = (state) => {
 };
 
 export const getUserRole = (state) => {
-    return getUser(state).role ?? COMPANY_MANAGER;
+    return getUser(state)?.role ?? COMPANY_MANAGER;
 };
 
 const getGeneral = state => state.general;

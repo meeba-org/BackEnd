@@ -50,9 +50,6 @@ export const handleRegister = (data, onSuccess, onError) => ({
                 onError();
         }
     },
-    meta: {
-        shouldAuthenticate: true
-    },
     ga: {
         category: GACategory.REGISTER,
     }
@@ -93,9 +90,6 @@ export const handleLogin = (data, onSuccess, onError) => ({
             if (onError)
                 onError();
         }
-    },
-    meta: {
-        shouldAuthenticate: true
     },
     ga: {
         category: GACategory.LOGIN,
