@@ -86,7 +86,7 @@ router.post('/login',
 
 //get current user from token
 router.get('/authenticate',
-    (req, res) => routeWrapper(req, res, (req, res) => {
+    (req, res) => routeWrapper(req, res, async (req, res) => {
 
         // Check header or url parameters or post parameters for token
         var token = jwtService.extractTokenFromRequest(req);
@@ -94,29 +94,24 @@ router.get('/authenticate',
             return reject("[authenticate] - Must pass token", 401);
         }
 
-        // Decode token
-        // TODO move into jwtService
-        return jwt.verify(token, config.secret, async (err, user) => {
-            if (err)
-                return reject(`[authenticate] - Token is not valid, Error: ${err.message}`, 401);
+        try {
+            // Decode token
+            let user = await jwt.verify(token, config.secret);
 
-            //return user using the id from w/in JWTToken
-            try {
-                user = await UserModel.getByUserId(user._id);
-                user = UserModel.getCleanUser(user.toObject()); // Don't pass password and stuff
+            // Return user using the id from w/in JWTToken
+            user = await UserModel.getByUserId(user._id);
+            user = UserModel.getCleanUser(user.toObject()); // Don't pass password and stuff
 
-                //note: you can renew token by creating new token(i.e. refresh it) w/ new expiration time at this point, but I'm passing the old token back.
-                // var token = utils.generateToken(user);
+            //note: you can renew token by creating new token(i.e. refresh it) w/ new expiration time at this point, but I'm passing the old token back.
+            // var token = utils.generateToken(user);
 
-                return await resolve({
-                    user,
-                    token
-                });
-            }
-            catch (err) {
-                return await reject('[authenticate] - User was not found', 401);
-            }
-        });
+            return await resolve({
+                user,
+                token
+            });
+        } catch (err) {
+            return await reject(`[authenticate] - Error occurred ${err}`, 401);
+        }
     })
 );
 

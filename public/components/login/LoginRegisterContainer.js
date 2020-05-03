@@ -5,7 +5,7 @@
 import React, {useState} from 'react';
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {isValidEmail} from "../../../managers/utils";
+import {isEmptyObject, isValidEmail} from "../../../managers/utils";
 import {handleLogin, handleRegister, hideLoginRegisterModal} from "../../actions";
 import "../../styles/LoginRegister.scss";
 import LoginRegister from "./LoginRegister";
@@ -72,12 +72,12 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
             onRegister(values);
     };
 
-    const calcErrors = () => {
+    const calcRegisterErrors = errors => {
         const {username, email, password, retypePassword} = values;
-        let errors = {};
-        if (dirty.username && !username) 
+
+        if (dirty.username && !username)
             errors = {username: "שם משתמש חסר"};
-        else if(dirty.email && !email) 
+        else if (dirty.email && !email)
             errors = {email: "אימייל חסר"};
         else if (dirty.email && !isValidEmail(email))
             errors = {email: "אימייל לא תקין"};
@@ -89,7 +89,27 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
             errors = {retypePassword: "סיסמא חסרה"};
         else if (password !== retypePassword)
             errors = {password: "סיסמא לא זהה", retypePassword: "סיסמא לא זהה"};
-        
+        return errors;
+    };
+
+    const calcLoginErrors = errors => {
+        const {identifier, password} = values;
+
+        if (dirty.identifier && !identifier)
+            errors = {identifier: "שם משתמש או אימייל חסר"};
+        else if (dirty.password && !password)
+            errors = {password: "סיסמא חסרה"};
+        return errors;
+    };
+
+    const calcErrors = () => {
+        let errors = {};
+        if (!isLoginMode) {
+            errors = calcRegisterErrors(errors);
+        }
+        else {
+            errors = calcLoginErrors(errors);
+        }
         return errors;
     };
     
@@ -106,6 +126,13 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
         });
         setBackEndError("");
     };
+    
+    const shouldEnableSubmit = () => {
+        if (!isLoginMode)
+            return isEmptyObject(errors) && Object.keys(dirty).length === 4;
+        else
+            return isEmptyObject(errors) && Object.keys(dirty).length === 2;
+    };
 
     const errors = calcErrors();
 
@@ -120,7 +147,7 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
             handleSubmit={onSubmit}
             handleClose={handleClose}
             toggleLoginMode={toggleLoginMode}
-            isSubmitDisabled={Object.keys(errors).length > 0 || Object.keys(dirty).length !== 4}
+            isSubmitDisabled={!shouldEnableSubmit()}
         />
     );
 };
