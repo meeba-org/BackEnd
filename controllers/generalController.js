@@ -19,7 +19,7 @@ const registerToFirebase = async userData => {
 };
 
 //POST /register user
-router.post('/register',
+router.post('/api/register',
     [
         body('username', "שם משתמש חסר").not().isEmpty(),
         body('email', "אימייל חסר או לא תקין").isEmail(),
@@ -49,9 +49,30 @@ router.post('/register',
     })
 );
 
-// Creating a /login route to acquire a token
-//POST /login user
+// POST /login (used for mobile)
 router.post('/login',
+    [
+        body('uid', "אנא הכנס תעודת זהות").not().isEmpty(),
+    ],
+    (req, res) => routeWrapper(req, res, async (req, res) => {
+        let uid = req.body.uid;
+
+        const user = await UserModel.getByUserUid(uid, true)
+        if (!user) {
+            return reject("תעודת זהות לא נמצאה", 401);
+        }
+
+        // use the jsonwebtoken package to create the token and respond with it
+        let token = jwtService.sign(user);
+        return resolve({
+            user,
+            token
+        });
+    })
+);
+
+// POST /login (used for web)
+router.post('/api/login',
     [
         body('identifier', "אנא הכנס שם משתמש או אימייל").not().isEmpty(),
     ],
@@ -85,7 +106,7 @@ router.post('/login',
 );
 
 //get current user from token
-router.get('/authenticate',
+router.get('/api/authenticate',
     (req, res) => routeWrapper(req, res, async (req, res) => {
 
         // Check header or url parameters or post parameters for token
@@ -115,7 +136,7 @@ router.get('/authenticate',
     })
 );
 
-router.get('/general/meta',
+router.get('/api/general/meta',
     (req, res) => routeWrapper(req, res, (req, res) => {
         return Promise.all([
             CompanyModel.companiesCount(),
@@ -131,7 +152,7 @@ router.get('/general/meta',
     })
 );
 
-router.post('/general/ipn', bodyParser.urlencoded({ extended: true }),
+router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
     (req, res) => routeWrapper(req, res, async (req, res) => {
         try {
             let data = req.body;

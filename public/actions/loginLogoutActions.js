@@ -28,7 +28,6 @@ export const handleRegister = (data, onSuccess, onError) => ({
         method: "post",
         data,
         success: result => dispatch => {
-            // TODO the following happens twice... think about it
             localStorage.setItem('jwtToken', result.token);
             dispatch(registerUserSuccess(result.user));
             if (onSuccess)

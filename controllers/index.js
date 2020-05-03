@@ -12,7 +12,7 @@ const config = require('../config');
 const jwtService = require("./jwtService");
 const UserModel = require('../models/UserModel');
 
-router.use('/api', general);
+router.use('/', general);
 
 router.use('/api', ejwt({secret: config.secret}));
 router.use('/api', extractUserMiddleware);
