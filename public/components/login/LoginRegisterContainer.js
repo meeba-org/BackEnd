@@ -18,10 +18,13 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
     const [values, setValues] = useState({});
     
     const toggleLoginMode = () => {
+        setDirty({});
         setIsLoginMode(!isLoginMode);
     };
 
     const handleClose = () => {
+        setDirty({});
+
         hideLoginRegisterModal();
     };
 
@@ -64,6 +67,7 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
     };
     
     const onSubmit = () => {
+        
         setIsLoading(true);
 
         if (isLoginMode)
@@ -87,7 +91,7 @@ const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, hand
             errors = {password: "אורך סיסמא לפחות 6 תוים"};
         else if (dirty.retypePassword && !retypePassword)
             errors = {retypePassword: "סיסמא חסרה"};
-        else if (password !== retypePassword)
+        else if (dirty.password && dirty.retypePassword && password !== retypePassword)
             errors = {password: "סיסמא לא זהה", retypePassword: "סיסמא לא זהה"};
         return errors;
     };
