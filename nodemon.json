@@ -1,5 +1,11 @@
 {
-    "watch": ["./**/*.js"],
-    "ignore": ["public", "**/*.spec.js", ".git", "node_modules"],
+    "watch": [
+        "./**/*.js"
+    ],
+    "ignore": [
+        "**/*.spec.js",
+        ".git",
+        "node_modules"
+    ],
     "exec": "npm run lint && node server.js"
 }
