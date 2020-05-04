@@ -1,8 +1,8 @@
-import {clearUser} from "../actions";
+import {clearUser,HideLoading, ShowLoading} from "../actions";
 import * as actionTypes from "../actions/actionTypes";
 import config from "../config";
 import axios from "axios";
-import {HideLoading, ShowLoading} from "../actions/index";
+
 import history from "../helpers/historyService";
 
 const apiMiddleware = ({dispatch}) => next => action => {
@@ -37,11 +37,13 @@ const apiMiddleware = ({dispatch}) => next => action => {
     })
     .catch((err) => {
         dispatch(HideLoading());
+        const {response: {data, status}} = err;
+
+        console.error(data?.message);
         if (onError)
-            return dispatch(onError(err.response.data));
+            return dispatch(onError(data?.message));
         else {
-            console.error(`Error: ${err}`);
-            switch (err.code) {
+            switch (status) {
                 case 403:
                     dispatch(clearUser(err));
                     history.push("/home");
