@@ -7,7 +7,7 @@ import apiMiddleware from "../middlewares/apiMiddleware";
 import gaMiddleware from "../middlewares/gaMiddleware";
 import rootReducer from '../reducers';
 
-function configureStoreProd(initialState) {
+function createProdStore(initialState) {
     const middlewares = [
         // Add other middleware on this line...
 
@@ -25,7 +25,7 @@ function configureStoreProd(initialState) {
     );
 }
 
-function configureStoreDev(initialState) {
+function createDevStore(initialState) {
     const middlewares = [
         // Add other middleware on this line...
 
@@ -45,17 +45,20 @@ function configureStoreDev(initialState) {
         )
     );
 
-    if (module.hot) {
+    if(module.hot) {
         // Enable Webpack hot module replacement for reducers
         module.hot.accept('../reducers', () => {
-            const nextReducer = require('../reducers').default; // eslint-disable-line global-require
+            console.log('Updating Redux store');
+            const nextReducer = require('../reducers/index').default;
+
             store.replaceReducer(nextReducer);
         });
     }
-
+    
     return store;
 }
 
-const configureStore = process.env.NODE_ENV === 'production' ? configureStoreProd : configureStoreDev;
+const createMeebaStore = process.env.NODE_ENV === 'production' ? createProdStore : createDevStore;
 
-export default configureStore;
+const store = createMeebaStore();
+export default store;

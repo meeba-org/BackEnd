@@ -7,27 +7,25 @@ import {Feature} from "../../../managers/FeaturesManager";
 import {showCancelPremiumModal, showGoPremiumModal} from "../../actions";
 import {updateCompany} from "../../actions/companyActions";
 import {updateActiveUser} from "../../actions/usersActions";
+import {getUser} from "../../selectors";
 import * as selectors from "../../selectors";
 import User from "./User";
 
 class UserContainer extends React.Component {
 
     render() {
-        const {handleSubmit, updateUser, updateCompany, isCommuteFeatureEnable, hasPremiumFeature, showGoPremiumModal, showCancelPremiumModal, user} = this.props;
+        const {updateUser, updateCompany, isCommuteFeatureEnable, hasPremiumFeature, showGoPremiumModal, showCancelPremiumModal, user} = this.props;
 
         return (
-            <Form onSubmit={handleSubmit(() => {})}>
-                <Field
-                    component={User}
-                    name="user"
-                    onUpdateUser={updateUser}
-                    onUpdateCompany={updateCompany}
-                    isCommuteFeatureEnable={isCommuteFeatureEnable}
-                    hasPremiumFeature={hasPremiumFeature}
-                    onFreePlanClick={showGoPremiumModal}
-                    onPremiumPlanClick={() => showCancelPremiumModal(user.company)}
-                />
-            </Form>
+            <User
+                user={user}
+                onUpdateUser={updateUser}
+                onUpdateCompany={updateCompany}
+                isCommuteFeatureEnable={isCommuteFeatureEnable}
+                hasPremiumFeature={hasPremiumFeature}
+                onFreePlanClick={showGoPremiumModal}
+                onPremiumPlanClick={() => showCancelPremiumModal(user.company)}
+            />
         );
     }
 }
@@ -40,10 +38,7 @@ UserContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    user: state.user,
-    initialValues: {
-        user: state.user
-    },
+    user: getUser(state),
     isCommuteFeatureEnable: selectors.isFeatureEnable(state, Feature.CommuteModule),
     hasPremiumFeature: selectors.hasPremiumFeature(state)
 });

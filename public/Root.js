@@ -6,7 +6,7 @@ import rtl from 'jss-rtl';
 import React from 'react';
 import {Provider} from "react-redux";
 import AppContainer from "./components/AppContainer";
-import createStore from "./store/configureStore";
+import store from "./store/storeService";
 
 const theme = createMuiTheme({
     direction: 'rtl',
@@ -46,10 +46,6 @@ const theme = createMuiTheme({
         secondary: { main: '#F3CBA5' }, //orange,
     },
 });
-
-const store = createStore();
-// const history = syncHistoryWithStore(browserHistory, store);
-//registerServiceWorker();
 
 // Configure JSS
 let jss = create({

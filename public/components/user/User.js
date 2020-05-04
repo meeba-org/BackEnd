@@ -16,51 +16,48 @@ import NoData from "../NoData";
 import StartOfMonthField from "./StartOfMonthField";
 
 class User extends Component {
-    handleUserChange = (field, e) => {
-        const {onUpdateUser, input} = this.props;
+    handleUserChange = (key, e) => {
+        const {onUpdateUser, user} = this.props;
         const value = e.target.value;
 
-        let user = {
-            ...input.value,
-            [field]: value
+        let newUser = {
+            ...user,
+            [key]: value
         };
 
-        input.onChange(user);
-        onUpdateUser(user);
+        onUpdateUser(newUser);
     };
 
     handleCompanyChange = (field, e) => {
-        const {onUpdateCompany, input} = this.props;
+        const {onUpdateCompany} = this.props;
         const value = e.target.value;
 
         let user = {
-            ...input.value,
+            ...user,
         };
 
         user.company = {
-            ...input.value.company,
+            ...user.company,
             [field]: value
         };
 
-        input.onChange(user);
         onUpdateCompany(user.company);
     };
 
     handleCompanySettingsChange = (field, value) => {
-        const {onUpdateCompany, input} = this.props;
+        const {onUpdateCompany} = this.props;
 
         let user = {
-            ...input.value,
+            ...user,
             company: {
-                ...input.value.company,
+                ...user.company,
                 settings: {
-                    ...input.value.company.settings,
+                    ...user.company.settings,
                     [field]: value
                 }
             },
         };
 
-        input.onChange(user);
         onUpdateCompany(user.company);
     };
 
@@ -91,8 +88,7 @@ class User extends Component {
     }
 
     render() {
-        const {input, hasPremiumFeature, onFreePlanClick, onPremiumPlanClick} = this.props;
-        const user = input.value;
+        const {hasPremiumFeature, onFreePlanClick, onPremiumPlanClick, user} = this.props;
 
         if (!user || !user.company)
             return <NoData/>;
@@ -110,6 +106,18 @@ class User extends Component {
                                 onChange={(e) => this.handleUserChange("fullName", e)}
                             />
                         </Grid>
+                        <Grid item sm={12}>
+                            <Tooltip
+                                title="אנחנו מכבדים את הפרטיות שלך - האימייל מאפשר לך לאפס את הסיסמא במידת בצורך">
+                                <TextField
+                                    styleName="long-field"
+                                    id="email"
+                                    label="אימייל"
+                                    value={user.email}
+                                    onChange={(e) => this.handleUserChange("email", e)}
+                                />
+                            </Tooltip>
+                        </Grid>
                     </Grid>
                 </MbCard>
 
@@ -126,7 +134,7 @@ class User extends Component {
                         </Grid>
                         <Grid item sm={12}>
                             <Tooltip
-                                title="אנחנו מכבדים את הפרטיות שלך - ובאופן כללי לא מאמינים במיילים! - תכלס זה פה כי אולי נעשה עם זה משהו בעתיד.">
+                                title="אנחנו מכבדים את הפרטיות שלך - אימייל חברה נועד למטרת שליחת חשבונית במידת הצורך">
                                 <TextField
                                     styleName="long-field"
                                     label="דואר אלקטרוני"
@@ -245,7 +253,7 @@ class User extends Component {
 User.propTypes = {
     onUpdateUser: PropTypes.func.isRequired,
     onUpdateCompany: PropTypes.func.isRequired,
-    input: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
     hasPremiumFeature: PropTypes.bool
 };
 

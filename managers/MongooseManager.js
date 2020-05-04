@@ -2,7 +2,12 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const connect = async (dbUrl) => {
-    await mongoose.connect(dbUrl, {useCreateIndex: true, useUnifiedTopology: true, useNewUrlParser: true,});
+    await mongoose.connect(dbUrl, {
+        useCreateIndex: true, 
+        useUnifiedTopology: true, 
+        useNewUrlParser: true,
+        useFindAndModify: false
+    });
     console.log("Connected to DB successfully");
 };
 
