@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {Suspense} from "react";
 import {connect} from "react-redux";
-import FullScreenLoading from "../FullScreenLoading";
 import LoginRegisterContainer from "../login/LoginRegisterContainer";
 
 import {EModalType} from "./EModalType";
@@ -41,7 +40,7 @@ const ModalRoot = ({ modalType, modalProps }) => {
 
     const SpecificModal = MODAL_COMPONENTS[modalType];
     return (
-        <Suspense fallback={<FullScreenLoading />}>
+        <Suspense fallback={<div>Loading...</div>}>
             <SpecificModal {...modalProps} />
         </Suspense>
     );

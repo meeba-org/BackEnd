@@ -1,6 +1,6 @@
 import React, {Suspense} from 'react';
-import FullScreenLoading from "./FullScreenLoading";
 import PrivateRoute from "./PrivateRoute";
+const FullScreenLoading = (() => import("./FullScreenLoading"));
 
 const LazyPrivateRoute = (props) => {
     return (
