@@ -83,12 +83,10 @@ export function meFromTokenSuccess(currentUser) {
     };
 }
 
-export function meFromTokenFailure(error) {
-    return {
-        type: actionsTypes.ME_FROM_TOKEN_FAILURE,
-        payload: error
-    };
-}
+export const clearUser = error => ({
+    type: actionsTypes.CLEAR_USER,
+    payload: error
+});
 
 export const authenticate = (onSuccess, onError) => ({
     type: actionsTypes.API,
@@ -102,7 +100,7 @@ export const authenticate = (onSuccess, onError) => ({
                 onSuccess();
         },
         onError: (err) => dispatch => {
-            dispatch(meFromTokenFailure(err));
+            dispatch(clearUser(err));
             localStorage.removeItem('jwtToken');//remove token from storage
             if (onError)
                 onError();

@@ -11,7 +11,7 @@ export function UserReducer(state = null, action = null) {
             };
         }
         case types.REGISTER_FAILURE:
-        case types.ME_FROM_TOKEN_FAILURE: {
+        case types.CLEAR_USER: {
             return null; // Empty User
         }
         case types.UPDATE_COMPANY_SUCCESS: {

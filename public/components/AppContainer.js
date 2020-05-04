@@ -3,7 +3,7 @@ import {MuiPickersUtilsProvider} from '@material-ui/pickers';
 import PropTypes from 'prop-types';
 import React from 'react';
 import connect from "react-redux/es/connect/connect";
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import {Router, Redirect, Route, Switch} from "react-router-dom";
 import {handleResize} from "../actions";
 import {fetchMetaData} from "../actions/generalActions";
 import "../styles/App.scss";
@@ -12,6 +12,7 @@ import PaymentSuccessRedirectContainer from "./go-premium/PaymentSuccessRedirect
 import Home from "./home/Home";
 import LazyPrivateRoute from "./LazyPrivateRoute";
 import ModalRoot from "./modals/ModalRoot";
+import history from "../helpers/historyService";
 
 const DashboardContainer = React.lazy(() => import("../components/dashboard/DashboardContainer"));
 
@@ -34,7 +35,7 @@ class AppContainer extends React.Component {
     render() {
         return (
             <MuiPickersUtilsProvider utils={MomentUtils}>
-                <BrowserRouter>
+                <Router history={history}>
                     <Switch>
                         <Route path="/home" component={Home} />
                         <LazyPrivateRoute path="/dashboard" component={DashboardContainer} />
@@ -43,7 +44,7 @@ class AppContainer extends React.Component {
                         <Redirect from="/" to="/dashboard" />
                     </Switch>
                     <ModalRoot />
-                </BrowserRouter>
+                </Router>
             </MuiPickersUtilsProvider>
         );
     }
