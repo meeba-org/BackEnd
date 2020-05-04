@@ -20,7 +20,7 @@ const TaskModel = require("../models/TaskModel");
 
 const TIMEOUT = 20000;
 
-beforeEach( async () => {
+beforeEach( async function () {
     this.timeout(TIMEOUT);
     if (mongoose.connection.db)
         return clearDB();
