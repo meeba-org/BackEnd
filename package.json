@@ -10,7 +10,7 @@
         "stats": "webpack --config ./webpack.config.prod.js --profile --json > stats.json",
         "start-server": "nodemon",
         "start": "node server.js",
-        "dev": "npm-run-all -s start-server open:src",
+        "dev": "npm-run-all -p start-server open:src",
         "open:src": "babel-node tools/srcServer.js",
         "open:dist": "babel-node tools/distServer.js",
         "lint": "eslint --fix webpack.config.* public tools --color",
