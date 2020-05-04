@@ -42,7 +42,7 @@ const apiMiddleware = ({dispatch}) => next => action => {
         // eslint-disable-next-line no-console
         console.error(data?.message);
         if (onError)
-            return dispatch(onError(data?.message));
+            return dispatch(onError(data));
         else {
             switch (status) {
                 case 403:
