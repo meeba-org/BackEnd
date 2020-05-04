@@ -39,6 +39,7 @@ const apiMiddleware = ({dispatch}) => next => action => {
         dispatch(HideLoading());
         const {response: {data, status}} = err;
 
+        // eslint-disable-next-line no-console
         console.error(data?.message);
         if (onError)
             return dispatch(onError(data?.message));

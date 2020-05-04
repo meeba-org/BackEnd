@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
-import {Field, Form} from "redux-form";
 import reduxForm from "redux-form/es/reduxForm";
 import {Feature} from "../../../managers/FeaturesManager";
 import {showCancelPremiumModal, showGoPremiumModal} from "../../actions";
 import {updateCompany} from "../../actions/companyActions";
 import {updateActiveUser} from "../../actions/usersActions";
-import {getUser} from "../../selectors";
 import * as selectors from "../../selectors";
+import {getUser} from "../../selectors";
 import User from "./User";
 
 class UserContainer extends React.Component {

@@ -48,7 +48,6 @@ function createDevStore(initialState) {
     if(module.hot) {
         // Enable Webpack hot module replacement for reducers
         module.hot.accept('../reducers', () => {
-            console.log('Updating Redux store');
             const nextReducer = require('../reducers/index').default;
 
             store.replaceReducer(nextReducer);
