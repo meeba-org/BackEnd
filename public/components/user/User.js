@@ -7,7 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from 'prop-types';
-import React, {Component, Fragment} from 'react';
+import React, {Fragment} from 'react';
 import {Link} from "react-router-dom";
 import '../../styles/User.scss';
 import ExportContainer from "../export/ExportContainer";
