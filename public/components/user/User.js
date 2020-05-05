@@ -70,6 +70,7 @@ const User = ({
                                 id="email"
                                 label="אימייל"
                                 value={user.email}
+                                error={!user.email}
                                 onChange={(e) => onUserChange("email", e.target.value)}
                             />
                         </Tooltip>
