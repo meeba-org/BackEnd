@@ -1,59 +1,70 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import {connect} from 'react-redux';
-import reduxForm from "redux-form/es/reduxForm";
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Feature} from "../../../managers/FeaturesManager";
-import {showCancelPremiumModal, showGoPremiumModal} from "../../actions";
-import {updateCompany} from "../../actions/companyActions";
-import {updateActiveUser} from "../../actions/usersActions";
-import * as selectors from "../../selectors";
-import {getUser} from "../../selectors";
+import {showCancelPremiumModal, showGoPremiumModal, updateActiveUser, updateCompany} from "../../actions";
+import {getUser, hasPremiumFeature, isFeatureEnable} from "../../selectors";
 import User from "./User";
 
-class UserContainer extends React.Component {
+const UserContainer = () => {
+    const userFromState = useSelector(getUser);
+    const isCommuteFeatureEnable = useSelector(state => isFeatureEnable(state, Feature.CommuteModule));
+    const hasPremiumFeat = useSelector(hasPremiumFeature);
+    const dispatch = useDispatch();
 
-    render() {
-        const {updateUser, updateCompany, isCommuteFeatureEnable, hasPremiumFeature, showGoPremiumModal, showCancelPremiumModal, user} = this.props;
+    const [user, setUser] = useState(userFromState);
 
-        return (
-            <User
-                user={user}
-                onUpdateUser={updateUser}
-                onUpdateCompany={updateCompany}
-                isCommuteFeatureEnable={isCommuteFeatureEnable}
-                hasPremiumFeature={hasPremiumFeature}
-                onFreePlanClick={showGoPremiumModal}
-                onPremiumPlanClick={() => showCancelPremiumModal(user.company)}
-            />
-        );
-    }
-}
+    useEffect(() => {
+        setUser(userFromState);
+    }, [userFromState]);
 
-UserContainer.propTypes = {
-    updateUser: PropTypes.func.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    updateCompany: PropTypes.func.isRequired,
-    hasPremiumFeature: PropTypes.bool,
+    const handleUserChange = (key, value) => {
+        let newUser = {
+            ...user,
+            [key]: value
+        };
+
+        setUser(newUser);
+        dispatch(updateActiveUser(newUser));
+    };
+
+    const handleCompanyChange = (key, value) => {
+        const company = {
+            ...user.company,
+            [key]: value
+        };
+
+        let newUser = {
+            ...user,
+            company
+        };
+
+        setUser(newUser);
+        dispatch(updateCompany(company));
+    };
+
+    const handleCompanySettingsChange = (key, value) => {
+        const settings = {
+            ...user.company.settings,
+            [key]: value
+        };
+
+        handleCompanyChange("settings", settings);
+    };
+
+
+    return (
+        <User
+            user={user}
+            onUserChange={handleUserChange}
+            onCompanyChange={handleCompanyChange}
+            isCommuteFeatureEnable={isCommuteFeatureEnable}
+            hasPremiumFeature={hasPremiumFeat}
+            onFreePlanClick={() => dispatch(showGoPremiumModal())}
+            onPremiumPlanClick={() => dispatch(showCancelPremiumModal(user.company))}
+            onCompanySettingsChange={handleCompanySettingsChange}
+        />
+    );
 };
 
-const mapStateToProps = state => ({
-    user: getUser(state),
-    isCommuteFeatureEnable: selectors.isFeatureEnable(state, Feature.CommuteModule),
-    hasPremiumFeature: selectors.hasPremiumFeature(state)
-});
-
-const mapDispatchToProps = {
-    updateUser: (user) => updateActiveUser(user),
-    updateCompany: (user) => updateCompany(user),
-    showGoPremiumModal: () => showGoPremiumModal(),
-    showCancelPremiumModal: (company) => showCancelPremiumModal(company)
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(reduxForm({
-    form: 'userForm',
-    enableReinitialize: true,
-})(UserContainer));
+export default UserContainer;
 
