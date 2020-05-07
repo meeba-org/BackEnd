@@ -37,6 +37,8 @@ export const displaySplashScreen = () => dispatch => {
 export const loadDashboardData = (onFinishLoading, user) =>  dispatch => {
     if (!user)
         dispatch(authenticate(onFinishLoading, onFinishLoading));
+    else
+        onFinishLoading();
     dispatch(fetchPendingShifts());
     dispatch(displaySplashScreen());
 };
