@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+const queryString = require('query-string');
 
 class PaymentSuccessRedirectContainer extends Component {
 
     componentDidMount() {
-        const {location} = this.props;
-        const token = location.query.Token;
+        const params = queryString.parse(this.props.location.search);
+
+        const token = params.Token;
         const msg = {
             token,
             msg: 'user_payed'
