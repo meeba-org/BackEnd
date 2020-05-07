@@ -27,7 +27,7 @@ const routeWrapper = async (req, res, body) => {
     } catch (err) {
         let message = err.message || "Error has been thrown!";
         // eslint-disable-next-line no-console
-        console.error(message);
+        console.log(`[routeWrapper] Error! - ${message}`);
         return res.status(err.status || 500).send({message});
     }
 };

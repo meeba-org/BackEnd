@@ -57,6 +57,8 @@ router.post('/',
         let company = jwtService.getCompanyFromLocals(res);
         let user = jwtService.getUserFromLocals(res);
         let {token} = req.body; // This is the payment 3rd party token
+        console.log(`[GoPremiumController.POST] - token: ${token}`);
+
         if (!company || !user)
             return reject('משתמש לא ידוע - נסה להיכנס מחדש לחשבון');
 
