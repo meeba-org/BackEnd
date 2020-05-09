@@ -9,6 +9,7 @@ const TaskSchema = mongoose.Schema({
     },
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
     parent: { type: mongoose.Schema.Types.ObjectId, ref: 'Task', default: null},
+    type: {type: String, default: ETaskType.REGULAR}
 });
 
 const Task = mongoose.model('Task', TaskSchema);

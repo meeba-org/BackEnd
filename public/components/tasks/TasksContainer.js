@@ -4,6 +4,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import reduxForm from "redux-form/es/reduxForm";
 import {MAX_FREE_TASKS_ALLOWED} from "../../../constants";
+import * as ETaskType from "../../../models/ETaskType";
 import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
 import * as selectors from "../../selectors";
 import "../../styles/EmployeesList.scss";
@@ -96,8 +97,8 @@ function mapStateToProps(state) {
     return {
         tasks: state.tasks,
         company: selectors.getCompany(state),
-        isAddAllowed: selectors.hasPremiumFeature(state) || (state.tasks && state.tasks.filter(t => !t.parent).length < MAX_FREE_TASKS_ALLOWED),
-        isEditAllowed: selectors.hasPremiumFeature(state) || (state.tasks && state.tasks.filter(t => !t.parent).length <= MAX_FREE_TASKS_ALLOWED),
+        isAddAllowed: selectors.hasPremiumFeature(state) || (state.tasks?.filter(t => !t.parent && t.type === ETaskType.REGULAR).length < MAX_FREE_TASKS_ALLOWED),
+        isEditAllowed: selectors.hasPremiumFeature(state) || (state.tasks?.filter(t => !t.parent && t.type === ETaskType.REGULAR).length <= MAX_FREE_TASKS_ALLOWED),
     };
 }
 
