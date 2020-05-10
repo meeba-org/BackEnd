@@ -11,6 +11,7 @@ import '../../styles/User.scss';
 import ExportContainer from "../export/ExportContainer";
 import MbCard from "../MbCard";
 import NoData from "../NoData";
+import AllowedWorkplacesContainer from "./AllowedWorkplacesContainer";
 import SettingSwitch from "./SettingSwitch";
 import StartOfMonthField from "./StartOfMonthField";
 
@@ -76,6 +77,8 @@ const User = ({
                     </Grid>
                 </Grid>
             </MbCard>
+
+            <AllowedWorkplacesContainer/>
 
             <ExportContainer/>
 
