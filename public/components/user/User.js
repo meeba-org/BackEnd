@@ -1,8 +1,6 @@
 import Button from "@material-ui/core/Button";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
@@ -13,33 +11,8 @@ import '../../styles/User.scss';
 import ExportContainer from "../export/ExportContainer";
 import MbCard from "../MbCard";
 import NoData from "../NoData";
+import SettingSwitch from "./SettingSwitch";
 import StartOfMonthField from "./StartOfMonthField";
-
-const SettingSwitch = ({value, fieldValue, text, link, handleCompanySettingsChange}) => {
-    return (
-        <div styleName="row">
-            <FormControlLabel
-                control={
-                    <Switch
-                        style={{height: "initial"}}
-                        checked={value}
-                        onChange={(e) => {
-                            handleCompanySettingsChange(fieldValue, e.target.checked);
-                        }}
-                        value={value}
-                        color="primary"
-                    />
-                }
-                label={<Typography variant={"body2"}>{text}</Typography>}
-            />
-            {link &&
-            <Typography variant={"caption"}>
-                <Link to={link} target="_blank">מה זה?</Link>
-            </Typography>
-            }
-        </div>
-    );
-};
 
 const User = ({
                   hasPremiumFeature, onFreePlanClick, onPremiumPlanClick, user,
