@@ -1,11 +1,14 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {updateUser} from "../../actions";
-import {getUser} from "../../selectors";
+import {updateCompany} from "../../actions";
+import {getCompany} from "../../selectors";
 import AllowedWorkplaces from "./AllowedWorkplaces";
 
 const AllowedWorkplacesContainer = () => {
-    const user = useSelector(getUser());
+    const company = useSelector(getCompany);
+    if (!company)
+        return null;
+
     const dispatch = useDispatch();
 
     const data = [
@@ -21,23 +24,27 @@ const AllowedWorkplacesContainer = () => {
         }
     ];
     const handleAdd = workplace => {
-        user.workplaces.push(workplace);
-        dispatch(updateUser(user));
+        company.workplaces.push({
+            name: "בית2",
+            location: [32.783408, 35.025506],
+            radius: 100
+        });
+        dispatch(updateCompany(company));
     };
 
     const handleDelete = workplace => {
-        user.workplaces = user.workplaces.filter(wp => wp !== workplace._id);
-        dispatch(updateUser(user));
+        company.workplaces = company.workplaces.filter(wp => wp !== workplace._id);
+        dispatch(updateCompany(company));
     };
 
     const handleUpdate = workplace => {
-        user.workplaces = user.workplaces.map(wp => wp._id === workplace._id ? workplace : wp);
-        dispatch(updateUser(user));
+        company.workplaces = company.workplaces.map(wp => wp._id === workplace._id ? workplace : wp);
+        dispatch(updateCompany(company));
     };
 
     return (
         <AllowedWorkplaces
-            workplaces={data}
+            workplaces={company.workplaces}
             onAdd={handleAdd}
             onDelete={handleDelete}
             onUpdate={handleUpdate}
