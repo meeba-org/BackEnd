@@ -3,11 +3,11 @@ import Link from '@material-ui/core/Link';
 import MbCard from "../MbCard";
 import Workplace from "./Workplace";
 
-const AllowedWorkplaces = ({workplaces, onAdd}) => {
+const AllowedWorkplaces = ({workplaces, onAdd, onDelete}) => {
     return (
         <MbCard title="מקומות עבודה">
             <Link onClick={onAdd}>הוסף</Link>
-            {workplaces && workplaces.map(workplace => <Workplace workplace={workplace}/>)}
+            {workplaces && workplaces.map((workplace, index) => <Workplace workplace={workplace} key={index} onDelete={() => onDelete(workplace)}/>)}
         </MbCard>
     );
 };
