@@ -16,6 +16,7 @@ const MovingShiftOutOfMonthModal = React.lazy(() => import("./MovingShiftOutOfMo
 const Survey2019Modal = React.lazy(() => import("./Survey2019Modal"));
 const TaskModal = React.lazy(() => import("./TaskModal"));
 const YesNoModal = React.lazy(() => import("./YesNoModal"));
+const WorkplaceSelectionModal = React.lazy(() => import("./WorkplaceSelectionModal"));
 
 export const MODAL_COMPONENTS = {
     [EModalType.DELETE_ENTITY]: DeleteModal,
@@ -31,6 +32,7 @@ export const MODAL_COMPONENTS = {
     [EModalType.SURVEY_2019]: Survey2019Modal,
     [EModalType.NEW_FEATURE_ABSENCE_DAYS]: AbsenceDaysModal,
     [EModalType.COVID19_DISCOUNT]: Covid19DiscountModal,
+    [EModalType.WORKPLACE_SELECTION]: WorkplaceSelectionModal,
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {

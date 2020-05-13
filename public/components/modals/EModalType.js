@@ -12,4 +12,5 @@ export const EModalType = {
     SURVEY_2019: 11,
     NEW_FEATURE_ABSENCE_DAYS: 12,
     COVID19_DISCOUNT: 13,
+    WORKPLACE_SELECTION: 14,
 };
