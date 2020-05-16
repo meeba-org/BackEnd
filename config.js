@@ -39,6 +39,7 @@ function init() {
         DB_PASS: process.env.DB_PASS,
         PAYMENT_BASE_URL: "testicredit.rivhit.co.il",
         PAYMENT_PCI_BASE_URL: "testpci.rivhit.co.il",
+        GOOGLE_MAP_API_KEY: process.env.GOOGLE_MAP_API_KEY
     };
 
     switch (process.env.NODE_ENV) {
