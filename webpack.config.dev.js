@@ -54,7 +54,7 @@ module.exports = {
     ],
     module: {
         rules: [
-            {test: /\.jsx?$/, exclude: /node_modules/, use: ['babel-loader']},
+            {test: /\.jsx?$/, exclude: /node_modules/, use: ['babel-loader', 'eslint-loader']},
             {test: /\.eot(\?v=\d+.\d+.\d+)?$/, use: ['file-loader']},
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

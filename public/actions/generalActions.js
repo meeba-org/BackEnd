@@ -1,5 +1,4 @@
 import {EModalType} from "../components/modals/EModalType";
-import {ESplashScreenType, hasSeenSplashScreen, setSeenSplashScreen} from "../helpers/SplashScreenHelper";
 import * as actions from "./actionTypes";
 import {showModal} from "./index";
 import {authenticate} from "./loginLogoutActions";

@@ -30,7 +30,7 @@ const useStyles = makeStyles({
    }
 });
 
-const WorkplaceSelectionModal = ({wp = {}, open, onSave, onClose1}) => {
+const WorkplaceSelectionModal = ({wp = {}, open, onSave}) => {
     const isDesktop0 = useSelector(isDesktop);
     const classes = useStyles({isDesktop: isDesktop0});
     const dispatch = useDispatch();

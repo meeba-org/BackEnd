@@ -109,11 +109,11 @@ export default function PlacesAutocompletes() {
                 setValue(newValue);
                 const res = await autocompleteService.geocoder.geocode({'placeId': newValue.id});
 
-                console.log("onChange: ", res);
+                // console.log("onChange: ", res);
             }}
             onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
-                console.log("onInputChange");
+                // console.log("onInputChange");
             }}
             renderInput={(params) => (
                 <TextField {...params} label="Add a location" variant="outlined" fullWidth/>
