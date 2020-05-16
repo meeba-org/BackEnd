@@ -3,6 +3,7 @@
         "./**/*.js"
     ],
     "ignore": [
+        "public",
         "**/*.spec.js",
         ".git",
         "node_modules"
