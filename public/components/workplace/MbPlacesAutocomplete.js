@@ -7,8 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
-
-const geocoder = new window.google.maps.Geocoder;
+import {getLatLngLocation} from "../../helpers/googleMapsService";
 
 function loadScript(src, position, id) {
     if (!position) {
@@ -50,6 +49,7 @@ const MbPlacesAutocomplete = ({location, onSelect}) => {
 
         if (!autocompleteService.current && window.google) {
             autocompleteService.current = new window.google.maps.places.AutocompleteService();
+            autocompleteService.geocoder = new window.google.maps.Geocoder;
         }
         if (!autocompleteService.current) {
             return undefined;
@@ -81,12 +81,6 @@ const MbPlacesAutocomplete = ({location, onSelect}) => {
         };
     }, [value, inputValue, fetch]);
 
-    const getLatLng = placeId => {
-        geocoder.geocode({'placeId': placeId}, function(results, status) {
-            console.log(results);
-        });
-    };
-    
     return (
         <Autocomplete
             id="google-map-demo"
@@ -98,12 +92,12 @@ const MbPlacesAutocomplete = ({location, onSelect}) => {
             includeInputInList
             filterSelectedOptions
             value={value}
-            onChange={(event, newValue) => {
+            onChange={async (event, newValue) => {
                 setOptions(newValue ? [newValue, ...options] : options);
-                debugger;
-                getLatLng(newValue.place_id);
                 setValue(newValue);
-                
+                const location = await getLatLngLocation(newValue.place_id);
+                onSelect(location);
+
             }}
             onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
