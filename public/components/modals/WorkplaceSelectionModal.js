@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {hideModal} from "../../actions";
 import {isDesktop} from "../../selectors";
 import MbGoogleMap2 from "../MbGoogleMap2";
-import PlacesAutocomplete from "../workplace/PlacesAutocomplete";
+import PlacesAutocomplete from "../workplace/MbPlacesAutocomplete";
 import {EModalType} from "./EModalType";
 
 const useStyles = makeStyles({
@@ -50,7 +50,7 @@ const WorkplaceSelectionModal = ({wp = {}, open, onSave}) => {
     return (
         <Dialog onClose={onClose} open={open} classes={{paper: classes.dialogContentRoot}}>
             <DialogContent>
-                <PlacesAutocomplete location={workplace.location} onClick={handleWorkspaceLocationChange}/>
+                <PlacesAutocomplete location={workplace.location} onSelect={handleWorkspaceLocationChange}/>
                 <MbGoogleMap2 location={workplace.location} onClick={handleWorkspaceLocationChange}/>
             </DialogContent>
             <DialogActions classes={{root: classes.dialogActions}}>

@@ -1,6 +1,5 @@
 import {GoogleApiWrapper, Map, Marker} from 'google-maps-react';
 import React from "react";
-import {GOOGLE_MAP_API_KEY} from "../../config";
 
 export class MapContainer extends React.Component {
     state = {
@@ -13,6 +12,7 @@ export class MapContainer extends React.Component {
         }
     }
 
+    // eslint-disable-next-line no-unused-vars
     onMarkerClick = (mark) => {
         // console.log(mark);
     }
@@ -30,7 +30,7 @@ export class MapContainer extends React.Component {
         const {google, location} = this.props;
 
         return (
-            <Map google={google} zoom={14}
+            <Map google={window.google} zoom={14}
                  containerStyle={{height: '400px', width: '400px', position: 'relative'}}
                  center={location}
                  onClick={this.onMapClicked}
@@ -46,6 +46,4 @@ export class MapContainer extends React.Component {
     }
 }
 
-export default GoogleApiWrapper({
-    apiKey: (GOOGLE_MAP_API_KEY)
-})(MapContainer);
+export default MapContainer;

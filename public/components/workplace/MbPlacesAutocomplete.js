@@ -1,12 +1,14 @@
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
+
+const geocoder = new window.google.maps.Geocoder;
 
 function loadScript(src, position, id) {
     if (!position) {
@@ -20,7 +22,7 @@ function loadScript(src, position, id) {
     position.appendChild(script);
 }
 
-const autocompleteService = {current: null};
+const autocompleteService = { current: null };
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -29,25 +31,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function PlacesAutocompletes() {
+const MbPlacesAutocomplete = ({location, onSelect}) => {
     const classes = useStyles();
     const [value, setValue] = React.useState(null);
     const [inputValue, setInputValue] = React.useState('');
     const [options, setOptions] = React.useState([]);
-    // const loaded = React.useRef(false);
 
-    // if (typeof window !== 'undefined' && !loaded.current) {
-    //     if (!document.querySelector('#google-maps')) {
-    //         loadScript(
-    //             'https://maps.googleapis.com/maps/api/js?key=AIzaSyAgOEl4xMnzBoHSR9CQndSMRafzL3_EeEE&libraries=places',
-    //             document.querySelector('head'),
-    //             'google-maps',
-    //         );
-    //     }
-    //
-    //     loaded.current = true;
-    // }
-    let geocoder;
     const fetch = React.useMemo(
         () =>
             throttle((request, callback) => {
@@ -61,7 +50,6 @@ export default function PlacesAutocompletes() {
 
         if (!autocompleteService.current && window.google) {
             autocompleteService.current = new window.google.maps.places.AutocompleteService();
-            autocompleteService.geocoder = new window.google.maps.Geocoder();
         }
         if (!autocompleteService.current) {
             return undefined;
@@ -72,7 +60,7 @@ export default function PlacesAutocompletes() {
             return undefined;
         }
 
-        fetch({input: inputValue}, (results) => {
+        fetch({ input: inputValue }, (results) => {
             if (active) {
                 let newOptions = [];
 
@@ -93,10 +81,16 @@ export default function PlacesAutocompletes() {
         };
     }, [value, inputValue, fetch]);
 
+    const getLatLng = placeId => {
+        geocoder.geocode({'placeId': placeId}, function(results, status) {
+            console.log(results);
+        });
+    };
+    
     return (
         <Autocomplete
             id="google-map-demo"
-            style={{width: 300}}
+            style={{ width: 300 }}
             getOptionLabel={(option) => (typeof option === 'string' ? option : option.description)}
             filterOptions={(x) => x}
             options={options}
@@ -104,19 +98,18 @@ export default function PlacesAutocompletes() {
             includeInputInList
             filterSelectedOptions
             value={value}
-            onChange={async (event, newValue) => {
+            onChange={(event, newValue) => {
                 setOptions(newValue ? [newValue, ...options] : options);
+                debugger;
+                getLatLng(newValue.place_id);
                 setValue(newValue);
-                const res = await autocompleteService.geocoder.geocode({'placeId': newValue.id});
-
-                // console.log("onChange: ", res);
+                
             }}
             onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
-                // console.log("onInputChange");
             }}
             renderInput={(params) => (
-                <TextField {...params} label="Add a location" variant="outlined" fullWidth/>
+                <TextField {...params} label="Add a location" variant="outlined" fullWidth />
             )}
             renderOption={(option) => {
                 const matches = option.structured_formatting.main_text_matched_substrings;
@@ -128,11 +121,11 @@ export default function PlacesAutocompletes() {
                 return (
                     <Grid container alignItems="center">
                         <Grid item>
-                            <LocationOnIcon className={classes.icon}/>
+                            <LocationOnIcon className={classes.icon} />
                         </Grid>
                         <Grid item xs>
                             {parts.map((part, index) => (
-                                <span key={index} style={{fontWeight: part.highlight ? 700 : 400}}>
+                                <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
                   {part.text}
                 </span>
                             ))}
@@ -146,4 +139,5 @@ export default function PlacesAutocompletes() {
             }}
         />
     );
-}
+};
+export default MbPlacesAutocomplete;
