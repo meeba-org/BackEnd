@@ -1,4 +1,5 @@
 import {EModalType} from "../components/modals/EModalType";
+import {ESplashScreenType, hasSeenSplashScreen, setSeenSplashScreen} from "../helpers/SplashScreenHelper";
 import * as actions from "./actionTypes";
 import {showModal} from "./index";
 import {authenticate} from "./loginLogoutActions";
@@ -23,14 +24,14 @@ export const fetchMetaData = () => ({
 });
 
 export const displaySplashScreen = () => dispatch => {
-    // let splashScreenType = ESplashScreenType.COVID19_DISCOUNT;
-    // let hasSeen = hasSeenSplashScreen(splashScreenType);
-    //
-    // if (hasSeen)
-    //     return false;
+    let splashScreenType = ESplashScreenType.COVID19_DISCOUNT;
+    let hasSeen = hasSeenSplashScreen(splashScreenType);
 
-    dispatch(showModal(EModalType.WORKPLACE_SELECTION));
-    // setSeenSplashScreen(splashScreenType);
+    if (hasSeen)
+        return false;
+
+    dispatch(showModal(EModalType.COVID19_DISCOUNT));
+    setSeenSplashScreen(splashScreenType);
 };
 
 export const loadDashboardData = (onFinishLoading, user) =>  dispatch => {

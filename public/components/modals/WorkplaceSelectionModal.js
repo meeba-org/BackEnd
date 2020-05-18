@@ -36,6 +36,11 @@ const WorkplaceSelectionModal = ({open, onSave}) => {
         });
     }, [mapCenter]);
 
+    const onClickSave = workspace => {
+        onSave(workspace);
+        onClose();
+    };
+
     return (
         <Dialog onClose={onClose} open={open}>
             <DialogTitle>הוספת מקום עבודה</DialogTitle>
@@ -45,7 +50,8 @@ const WorkplaceSelectionModal = ({open, onSave}) => {
                 <WorkplaceMap location={workplace.location} onClick={handleMapLocationChange} center={mapCenter}/>
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" onClick={onSave} color="primary" autoFocus>שמור</Button>
+                <Button variant="contained" onClick={() => onClickSave(workplace)} color="primary"
+                        autoFocus>שמור</Button>
                 <Button onClick={onClose} color="primary">סגור</Button>
             </DialogActions>
         </Dialog>

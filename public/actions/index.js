@@ -53,12 +53,13 @@ export const handleResize = () => ({
     type: window.innerWidth > 850 ? DESKTOP : MOBILE
 });
 
-export const showModal = (modalType) => ({
+export const showModal = (modalType, props) => ({
     type: 'SHOW_MODAL',
     payload: {
         modalType,
         modalProps: {
             open: true,
+            ...props
         }
     }
 });

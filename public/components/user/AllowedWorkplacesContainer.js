@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {updateCompany} from "../../actions";
+import {showModal, updateCompany} from "../../actions";
 import {getCompany} from "../../selectors";
+import {EModalType} from "../modals/EModalType";
 import AllowedWorkplaces from "./AllowedWorkplaces";
 
 const AllowedWorkplacesContainer = () => {
@@ -22,19 +23,26 @@ const AllowedWorkplacesContainer = () => {
         dispatch(updateCompany(newCompany));
     };
 
-    const handleAdd = workplace => {
-        workplace = {
-            name: "בית2",
-            location: [32.783408, 35.025506],
-            radius: 100
-        };
-
+    const createWorkspace = workplace => {
         let newWorkplaces = [
             ...company.workplaces,
             workplace
         ];
-        
+
         updateWorkplaces(newWorkplaces);
+    };
+
+    const handleAdd = () => {
+        dispatch(showModal(EModalType.WORKPLACE_SELECTION,
+            {
+                onSave: (newWorkspace) => {
+                    if (!newWorkspace.name)
+                        newWorkspace.name = "שם זמני";
+
+                    createWorkspace(newWorkspace);
+                }
+            }
+        ));
     };
 
     const handleDelete = workplace => {
