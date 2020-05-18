@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const MbPlacesAutocomplete = ({location = {}, onSelect}) => {
+const PlacesAutocomplete = ({location = {}, onSelect}) => {
     const classes = useStyles();
     const [value, setValue] = React.useState('');
     const [inputValue, setInputValue] = React.useState('');
@@ -81,7 +81,7 @@ const MbPlacesAutocomplete = ({location = {}, onSelect}) => {
     return (
         <Autocomplete
             id="google-map-demo"
-            style={{ width: 300 }}
+            style={{width: "100%", marginBottom: 15}}
             getOptionLabel={(option) => (typeof option === 'string' ? option : option.description)}
             filterOptions={(x) => x}
             options={options}
@@ -101,7 +101,7 @@ const MbPlacesAutocomplete = ({location = {}, onSelect}) => {
                 setInputValue(newInputValue);
             }}
             renderInput={(params) => (
-                <TextField {...params} label="Add a location" variant="outlined" fullWidth />
+                <TextField {...params} label="כתובת" variant="outlined" fullWidth/>
             )}
             renderOption={(option) => {
                 const matches = option.structured_formatting.main_text_matched_substrings;
@@ -130,4 +130,4 @@ const MbPlacesAutocomplete = ({location = {}, onSelect}) => {
         />
     );
 };
-export default MbPlacesAutocomplete;
+export default PlacesAutocomplete;

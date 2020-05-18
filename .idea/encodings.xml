@@ -69,7 +69,6 @@
     <file url="file://$PROJECT_DIR$/public/components/MbActionsControls.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/MbCard.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/MbGoogleMap.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/MbGoogleMap2.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/MbSwitch.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/NoData.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/PrivateRoute.js" charset="UTF-8" />
@@ -147,9 +146,11 @@
     <file url="file://$PROJECT_DIR$/public/components/user/UserContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/Workplace.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/withShiftLogic.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/workplace/MbPlacesAutocomplete.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/PlacesAutocomplete.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/PlacesAutocomplete.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/workplace/PlacesAutocomplete.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/workplace/WorkplaceMap.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/workplace/WorkplaceMap.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/config.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/ERoles.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/EShiftStatus.js" charset="UTF-8" />

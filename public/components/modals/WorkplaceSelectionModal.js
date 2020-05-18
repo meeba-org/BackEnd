@@ -1,3 +1,4 @@
+import {DialogTitle} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -8,25 +9,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {hideModal} from "../../actions";
 import {fetchDeviceLocation} from "../../helpers/googleMapsService";
 import {isDesktop} from "../../selectors";
-import MbGoogleMap2 from "../MbGoogleMap2";
-import MbPlacesAutocomplete from "../workplace/MbPlacesAutocomplete";
+import PlacesAutocomplete from "../workplace/PlacesAutocomplete";
+import WorkplaceMap from "../workplace/WorkplaceMap";
 import {EModalType} from "./EModalType";
-
-const useStyles = makeStyles({
-    price: {
-        marginLeft: "5px",
-    },
-    contentRoot: {
-        paddingLeft: props => props.isDesktop ? "100px" : "10px",
-        paddingRight: props => props.isDesktop ? "100px" : "10px",
-    },
-    line: {
-        flexDirection: "row"
-    },
-    root: {
-       paddingTop: "30px"
-   }
-});
 
 const WorkplaceSelectionModal = ({open, onSave}) => {
     const isDesktop0 = useSelector(isDesktop);
@@ -52,17 +37,25 @@ const WorkplaceSelectionModal = ({open, onSave}) => {
     }, [mapCenter]);
 
     return (
-        <Dialog onClose={onClose} open={open} classes={{paper: classes.dialogContentRoot}}>
+        <Dialog onClose={onClose} open={open}>
+            <DialogTitle>הוספת מקום עבודה</DialogTitle>
             <DialogContent>
-                <MbPlacesAutocomplete location={workplace.location} onSelect={handleAddressChange}/>
-                <MbGoogleMap2 location={workplace.location} onClick={handleMapLocationChange} center={mapCenter}/>
+                <PlacesAutocomplete location={workplace.location} onSelect={handleAddressChange}
+                                    style={classes.autocomplete}/>
+                <WorkplaceMap location={workplace.location} onClick={handleMapLocationChange} center={mapCenter}/>
             </DialogContent>
-            <DialogActions classes={{root: classes.dialogActions}}>
+            <DialogActions>
                 <Button variant="contained" onClick={onSave} color="primary" autoFocus>שמור</Button>
                 <Button onClick={onClose} color="primary">סגור</Button>
             </DialogActions>
         </Dialog>
     );
 };
+
+const useStyles = makeStyles({
+    autocomplete: {
+        marginBottom: 10
+    }
+});
 
 export default WorkplaceSelectionModal;
