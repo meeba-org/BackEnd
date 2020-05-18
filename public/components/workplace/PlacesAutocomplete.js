@@ -81,7 +81,7 @@ const PlacesAutocomplete = ({location = {}, onSelect}) => {
     return (
         <Autocomplete
             id="google-map-demo"
-            style={{width: "100%", marginBottom: 15}}
+            style={{maxWidth: 400, marginBottom: 15}}
             getOptionLabel={(option) => (typeof option === 'string' ? option : option.description)}
             filterOptions={(x) => x}
             options={options}
@@ -101,7 +101,7 @@ const PlacesAutocomplete = ({location = {}, onSelect}) => {
                 setInputValue(newInputValue);
             }}
             renderInput={(params) => (
-                <TextField {...params} label="כתובת" variant="outlined" fullWidth/>
+                <TextField {...params} label="כתובת"/>
             )}
             renderOption={(option) => {
                 const matches = option.structured_formatting.main_text_matched_substrings;
