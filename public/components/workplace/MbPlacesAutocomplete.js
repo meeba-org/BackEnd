@@ -1,27 +1,15 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Grid from '@material-ui/core/Grid';
+import {makeStyles} from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
-import {getLatLngLocation} from "../../helpers/googleMapsService";
+import React, {useEffect} from 'react';
+import {getAddress, getLatLngLocation} from "../../helpers/googleMapsService";
 
-function loadScript(src, position, id) {
-    if (!position) {
-        return;
-    }
-
-    const script = document.createElement('script');
-    script.setAttribute('async', '');
-    script.setAttribute('id', id);
-    script.src = src;
-    position.appendChild(script);
-}
-
-const autocompleteService = { current: null };
+const autocompleteService = {current: null};
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -30,9 +18,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const MbPlacesAutocomplete = ({location, onSelect}) => {
+const MbPlacesAutocomplete = ({location = {}, onSelect}) => {
     const classes = useStyles();
-    const [value, setValue] = React.useState(null);
+    const [value, setValue] = React.useState('');
     const [inputValue, setInputValue] = React.useState('');
     const [options, setOptions] = React.useState([]);
 
@@ -44,12 +32,21 @@ const MbPlacesAutocomplete = ({location, onSelect}) => {
         [],
     );
 
-    React.useEffect(() => {
+    const fetchPlace = async () => {
+        const address = await getAddress(location);
+        setValue(address);
+    };
+
+    useEffect(() => {
+        fetchPlace();
+    }, [location]);
+
+    useEffect(() => {
         let active = true;
 
         if (!autocompleteService.current && window.google) {
+            // TODO move to googleMapsService
             autocompleteService.current = new window.google.maps.places.AutocompleteService();
-            autocompleteService.geocoder = new window.google.maps.Geocoder;
         }
         if (!autocompleteService.current) {
             return undefined;
@@ -95,9 +92,10 @@ const MbPlacesAutocomplete = ({location, onSelect}) => {
             onChange={async (event, newValue) => {
                 setOptions(newValue ? [newValue, ...options] : options);
                 setValue(newValue);
-                const location = await getLatLngLocation(newValue.place_id);
-                onSelect(location);
-
+                if (newValue.place_id) {
+                    const location = await getLatLngLocation(newValue.place_id);
+                    onSelect(location);
+                }
             }}
             onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
@@ -119,9 +117,7 @@ const MbPlacesAutocomplete = ({location, onSelect}) => {
                         </Grid>
                         <Grid item xs>
                             {parts.map((part, index) => (
-                                <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
-                  {part.text}
-                </span>
+                                <span key={index} style={{fontWeight: part.highlight ? 700 : 400}}>{part.text}</span>
                             ))}
 
                             <Typography variant="body2" color="textSecondary">

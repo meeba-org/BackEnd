@@ -1,22 +1,7 @@
-import {GoogleApiWrapper, Map, Marker} from 'google-maps-react';
+import {Map, Marker} from 'google-maps-react';
 import React from "react";
 
 export class MapContainer extends React.Component {
-    state = {
-        selectedPlace: {
-            name: "Haifa"
-        },
-        center: {
-            lat: 42.39,
-            lng: -72.52
-        }
-    }
-
-    // eslint-disable-next-line no-unused-vars
-    onMarkerClick = (mark) => {
-        // console.log(mark);
-    }
-
     onMapClicked = (mapProps, map, clickEvent) => {
         const {onClick} = this.props;
 
@@ -27,17 +12,15 @@ export class MapContainer extends React.Component {
     }
 
     render() {
-        const {google, location} = this.props;
+        const {location, center} = this.props;
 
         return (
             <Map google={window.google} zoom={14}
-                 containerStyle={{height: '400px', width: '400px', position: 'relative'}}
-                 center={location}
+                 containerStyle={{height: '400px', width: '550px', position: 'relative'}}
+                 center={center}
                  onClick={this.onMapClicked}
             >
-
                 <Marker
-                    onClick={this.onMarkerClick}
                     name={'Current location'}
                     position={location}
                 />
