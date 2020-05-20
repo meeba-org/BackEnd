@@ -6,10 +6,8 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
-import React, {useEffect} from 'react';
-import {getAddress, getLatLngLocation} from "../../helpers/googleMapsService";
-
-const autocompleteService = {current: null};
+import React, {useEffect, useMemo, useState} from 'react';
+import {getPredictions} from "../../helpers/googleMapsService";
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -18,55 +16,47 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const PlacesAutocomplete = ({location = {}, onSelect}) => {
+const PlacesAutocomplete = ({place, onSelect}) => {
     const classes = useStyles();
-    const [value, setValue] = React.useState('');
-    const [inputValue, setInputValue] = React.useState('');
-    const [options, setOptions] = React.useState([]);
+    const [value, setValue] = useState("");
+    const [inputValue, setInputValue] = useState('');
+    const [options, setOptions] = useState([]);
 
-    const fetch = React.useMemo(
+    const fetch = useMemo(
         () =>
-            throttle((request, callback) => {
-                autocompleteService.current.getPlacePredictions(request, callback);
+            throttle(async (input, callback) => {
+                const predictions = await getPredictions(input);
+                callback(predictions);
             }, 200),
         [],
     );
 
-    const fetchPlace = async () => {
-        const address = await getAddress(location);
-        setValue(address);
+    const initValue = async () => {
+        setValue(place.name);
     };
 
     useEffect(() => {
-        fetchPlace();
-    }, [location]);
+        initValue();
+    }, [place]);
 
     useEffect(() => {
         let active = true;
 
-        if (!autocompleteService.current && window.google) {
-            // TODO move to googleMapsService
-            autocompleteService.current = new window.google.maps.places.AutocompleteService();
-        }
-        if (!autocompleteService.current) {
-            return undefined;
-        }
+        // if (inputValue === '') {
+        //     setOptions(place ? [place] : []);
+        //     return undefined;
+        // }
 
-        if (inputValue === '') {
-            setOptions(value ? [value] : []);
-            return undefined;
-        }
-
-        fetch({ input: inputValue }, (results) => {
+        fetch(inputValue, (autocompletePredictions) => {
             if (active) {
                 let newOptions = [];
 
-                if (value) {
-                    newOptions = [value];
-                }
+                // if (place) {
+                //     newOptions = [place];
+                // }
 
-                if (results) {
-                    newOptions = [...newOptions, ...results];
+                if (autocompletePredictions) {
+                    newOptions = [...newOptions, ...autocompletePredictions];
                 }
 
                 setOptions(newOptions);
@@ -89,13 +79,9 @@ const PlacesAutocomplete = ({location = {}, onSelect}) => {
             includeInputInList
             filterSelectedOptions
             value={value}
-            onChange={async (event, newValue) => {
-                setOptions(newValue ? [newValue, ...options] : options);
-                setValue(newValue);
-                if (newValue.place_id) {
-                    const location = await getLatLngLocation(newValue.place_id);
-                    onSelect(location);
-                }
+            onChange={async (event, prediction) => {
+                setOptions(prediction ? [prediction, ...options] : options);
+                onSelect(prediction);
             }}
             onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
@@ -104,10 +90,10 @@ const PlacesAutocomplete = ({location = {}, onSelect}) => {
                 <TextField {...params} label="כתובת"/>
             )}
             renderOption={(option) => {
-                const matches = option.structured_formatting.main_text_matched_substrings;
+                const matches = option?.structured_formatting?.main_text_matched_substrings;
                 const parts = parse(
-                    option.structured_formatting.main_text,
-                    matches.map((match) => [match.offset, match.offset + match.length]),
+                    option?.structured_formatting?.main_text,
+                    matches?.map((match) => [match.offset, match.offset + match.length]),
                 );
 
                 return (

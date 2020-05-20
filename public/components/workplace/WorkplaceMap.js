@@ -1,7 +1,7 @@
 import {Map, Marker} from 'google-maps-react';
 import React from "react";
 
-const WorkplaceMap = ({onClick, location, center}) => {
+const WorkplaceMap = ({onClick, location, center, initMap}) => {
 
     const onMapClicked = (mapProps, map, clickEvent) => {
         onClick({
@@ -15,6 +15,7 @@ const WorkplaceMap = ({onClick, location, center}) => {
              containerStyle={{height: '400px', width: '550px', position: 'relative'}}
              center={center}
              onClick={onMapClicked}
+             onReady={initMap}
         >
             <Marker
                 position={location}

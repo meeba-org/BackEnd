@@ -4,44 +4,88 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import {makeStyles} from '@material-ui/core/styles';
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {hideModal} from "../../actions";
-import {fetchDeviceLocation} from "../../helpers/googleMapsService";
+import {getPlace} from "../../helpers/googleMapsService";
 import "../../styles/WorkplaceSelectionModal.scss";
 import PlacesAutocomplete from "../workplace/PlacesAutocomplete";
 import WorkplaceMap from "../workplace/WorkplaceMap";
 import {EModalType} from "./EModalType";
 
-const WorkplaceSelectionModal = ({open, onSave}) => {
-    const classes = useStyles();
+const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
+    if (!orgWorkplace)
+        return null;
+
     const dispatch = useDispatch();
     const [workplace, setWorkplace] = useState({});
+    const [place, setPlace] = useState({});
     const [mapCenter, setMapCenter] = useState({});
-    const [name, setName] = useState("");
-    const [radius, setRadius] = useState(100);
+    const [map, setMap] = useState(null);
 
-    const handleAddressChange = location => {
-        setMapCenter(location);
-        handleWorkspaceLocationChange(location);
+    const handleSelection = prediction => {
+        if (!prediction)
+            return;
+
+        handleChange("placeId", prediction.place_id);
     };
 
-    const handleMapLocationChange = location => handleWorkspaceLocationChange(location);
-    const handleWorkspaceLocationChange = (location) => setWorkplace({...workplace, location});
+    const handleChange = (key, value) => {
+        setWorkplace({
+            ...workplace,
+            [key]: value
+        });
+    };
+
+    const handleMapLocationChange = async location => {
+        // const place = await getPlaceByLocation(location);
+        // handleSelection(place);
+    };
+
+    const initMap = (mapProps, map) => {
+        setMap(map);
+    };
+
     const onClose = () => dispatch(hideModal(EModalType.WORKPLACE_SELECTION));
 
-    useEffect(() => {
-        fetchDeviceLocation(deviceLocation => {
-            setMapCenter(deviceLocation);
-            handleWorkspaceLocationChange(deviceLocation);
-        });
-    }, [mapCenter]);
+    // useEffect(() => {
+    //     fetchDeviceLocation(deviceLocation => {
+    //         setMapCenter(deviceLocation);
+    //         handleChange("location", deviceLocation);
+    //     });
+    // }, []);
 
-    const onClickSave = workspace => {
-        onSave(workspace);
+    const fetchPlace = async () => {
+        if (workplace?.placeId) {
+            const place = await getPlace(workplace.placeId, map);
+            setPlace(place);
+            setMapCenter({
+                lng: place?.geometry.location.lng(),
+                lat: place?.geometry.location.lat(),
+            });
+        }
+    };
+
+    useEffect(() => {
+        if (!workplace || !map)
+            return;
+
+        fetchPlace();
+    }, [map, workplace.placeId]);
+
+    useEffect(() => {
+        setWorkplace(orgWorkplace);
+    }, [orgWorkplace]);
+
+    const onClickSave = wp => {
+        onSave(wp);
         onClose();
     };
+
+    const extractLocation = () => ({
+        lat: place?.geometry?.location?.lat(),
+        lng: place?.geometry?.location?.lng()
+    });
 
     return (
         <Dialog onClose={onClose} open={open}>
@@ -51,24 +95,25 @@ const WorkplaceSelectionModal = ({open, onSave}) => {
                     <Box display={"flex"} flexDirection="row" justifyContent={"flex-start"} styleName="row">
                         <TextField
                             label="שם"
-                            value={name}
+                            value={workplace.name}
                             type={"text"}
-                            onChange={e => setName(e.target.value)}
+                            onChange={e => handleChange("name", e.target.value)}
                             styleName="field"
                         />
                         <TextField
                             label="רדיוס (מטרים)"
-                            value={radius}
+                            value={workplace.radius}
                             type={"number"}
-                            onChange={e => setRadius(e.target.value)}
+                            onChange={e => handleChange("radius", e.target.value)}
                             styleName="field"
                         />
                     </Box>
                     <PlacesAutocomplete
-                        location={workplace.location}
-                        onSelect={handleAddressChange}
+                        place={place}
+                        onSelect={handleSelection}
                     />
-                    <WorkplaceMap location={workplace.location} onClick={handleMapLocationChange} center={mapCenter}/>
+                    <WorkplaceMap location={extractLocation()} onClick={handleMapLocationChange} center={mapCenter}
+                                  initMap={initMap}/>
                 </Box>
             </DialogContent>
             <DialogActions>
@@ -79,11 +124,5 @@ const WorkplaceSelectionModal = ({open, onSave}) => {
         </Dialog>
     );
 };
-
-const useStyles = makeStyles({
-    row: {
-        marginBottom: 10
-    }
-});
 
 export default WorkplaceSelectionModal;

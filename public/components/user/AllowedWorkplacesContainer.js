@@ -36,11 +36,9 @@ const AllowedWorkplacesContainer = () => {
         dispatch(showModal(EModalType.WORKPLACE_SELECTION,
             {
                 onSave: (newWorkspace) => {
-                    if (!newWorkspace.name)
-                        newWorkspace.name = "שם זמני";
-
                     createWorkspace(newWorkspace);
-                }
+                },
+                orgWorkplace: {}
             }
         ));
     };
@@ -51,10 +49,17 @@ const AllowedWorkplacesContainer = () => {
         updateWorkplaces(newWorkplaces);
     };
 
-    const handleUpdate = workplace => {
-        let newWorkplaces = company.workplaces.map(wp => wp._id === workplace._id ? workplace : wp);
+    const handleUpdate = (workplace) => {
+        dispatch(showModal(EModalType.WORKPLACE_SELECTION,
+            {
+                onSave: (updatedWorkplace) => {
+                    let newWorkplaces = company.workplaces.map(wp => wp._id === updatedWorkplace._id ? updatedWorkplace : wp);
 
-        updateWorkplaces(newWorkplaces);
+                    updateWorkplaces(newWorkplaces);
+                },
+                orgWorkplace: workplace
+            }
+        ));
     };
 
     return (

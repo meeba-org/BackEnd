@@ -16,7 +16,8 @@ const MovingShiftOutOfMonthModal = React.lazy(() => import("./MovingShiftOutOfMo
 const Survey2019Modal = React.lazy(() => import("./Survey2019Modal"));
 const TaskModal = React.lazy(() => import("./TaskModal"));
 const YesNoModal = React.lazy(() => import("./YesNoModal"));
-const WorkplaceSelectionModal = React.lazy(() => import("./WorkplaceSelectionModal"));
+// const WorkplaceSelectionModal = React.lazy(() => import("./WorkplaceSelectionModal"));
+import WorkplaceSelectionModal from "./WorkplaceSelectionModal";
 
 export const MODAL_COMPONENTS = {
     [EModalType.DELETE_ENTITY]: DeleteModal,

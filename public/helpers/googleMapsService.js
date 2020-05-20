@@ -1,4 +1,6 @@
 const geocoder = new window.google.maps.Geocoder;
+const autocompleteService = new window.google.maps.places.AutocompleteService();
+// const placesService = new window.google.maps.places.PlacesService();
 
 export const getLatLngLocation = placeId => {
     return new Promise(resolve => {
@@ -9,7 +11,22 @@ export const getLatLngLocation = placeId => {
     });
 };
 
-export const getPlace = location => {
+/**
+ *
+ * @param placeId
+ * @return {PlaceResult} https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult
+ */
+export const getPlace = async (placeId, map) => {
+    const service = new window.google.maps.places.PlacesService(map);
+
+    return new Promise(resolve => {
+        service.getDetails({'placeId': placeId}, function (placeResult) {
+            return resolve(placeResult); // We return the first one
+        });
+    });
+};
+
+export const getPlaceByLocation = location => {
     return new Promise(resolve => {
         geocoder.geocode({'location': location}, function (result) {
             const place = result[0];
@@ -18,9 +35,20 @@ export const getPlace = location => {
     });
 };
 
-export const getAddress = async location => {
-    const place = await getPlace(location);
-    return place?.formatted_address;
+/**
+ *
+ * @param text
+ * @return {AutocompletePrediction} https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletePrediction
+ */
+export const getPredictions = text => {
+    if (!text)
+        return;
+
+    return new Promise(resolve => {
+        autocompleteService.getPlacePredictions({input: text}, function (predictions) {
+            return resolve(predictions);
+        });
+    });
 };
 
 export const fetchDeviceLocation = (callback) => {
