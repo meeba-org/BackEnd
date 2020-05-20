@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {hideModal} from "../../actions";
-import {getPlace} from "../../helpers/googleMapsService";
+import {getPlace, getPlaceByLocation} from "../../helpers/googleMapsService";
 import "../../styles/WorkplaceSelectionModal.scss";
 import PlacesAutocomplete from "../workplace/PlacesAutocomplete";
 import WorkplaceMap from "../workplace/WorkplaceMap";
@@ -38,8 +38,9 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
     };
 
     const handleMapLocationChange = async location => {
-        // const place = await getPlaceByLocation(location);
-        // handleSelection(place);
+        const placeByLocation = await getPlaceByLocation(location);
+
+        handleChange("placeId", placeByLocation.place_id);
     };
 
     const initMap = (mapProps, map) => {

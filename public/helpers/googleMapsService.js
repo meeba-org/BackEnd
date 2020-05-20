@@ -27,6 +27,9 @@ export const getPlace = async (placeId, map) => {
 };
 
 export const getPlaceByLocation = location => {
+    if (!location?.lat || !location?.lng)
+        return;
+
     return new Promise(resolve => {
         geocoder.geocode({'location': location}, function (result) {
             const place = result[0];
