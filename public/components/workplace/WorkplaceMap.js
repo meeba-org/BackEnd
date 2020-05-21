@@ -1,7 +1,10 @@
 import {Map, Marker} from 'google-maps-react';
 import React from "react";
+import {useSelector} from "react-redux";
+import {isDesktop} from "../../selectors";
 
 const WorkplaceMap = ({onClick, location, center, initMap}) => {
+    const desktop = useSelector(isDesktop);
 
     const onMapClicked = (mapProps, map, clickEvent) => {
         onClick({
@@ -12,7 +15,7 @@ const WorkplaceMap = ({onClick, location, center, initMap}) => {
 
     return (
         <Map google={window.google} zoom={14}
-             containerStyle={{height: '400px', width: '550px', position: 'relative'}}
+             containerStyle={{height: '400px', width: desktop ? '550px' : '100%', position: 'relative'}}
              center={center}
              onClick={onMapClicked}
              onReady={initMap}
