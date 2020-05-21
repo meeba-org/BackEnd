@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PlacesAutocomplete = ({place, onSelect}) => {
     const classes = useStyles();
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(null);
     const [inputValue, setInputValue] = useState('');
     const [options, setOptions] = useState([]);
 
@@ -32,7 +32,7 @@ const PlacesAutocomplete = ({place, onSelect}) => {
     );
 
     const initValue = async () => {
-        setValue(place.name);
+        setValue(place.name || "");
     };
 
     useEffect(() => {

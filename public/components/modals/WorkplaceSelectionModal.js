@@ -7,18 +7,17 @@ import DialogContent from "@material-ui/core/DialogContent";
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {hideModal} from "../../actions";
-import {getPlace, getPlaceByLocation} from "../../helpers/googleMapsService";
+import {fetchDeviceLocation, getPlace, getPlaceByLocation} from "../../helpers/googleMapsService";
 import "../../styles/WorkplaceSelectionModal.scss";
 import PlacesAutocomplete from "../workplace/PlacesAutocomplete";
 import WorkplaceMap from "../workplace/WorkplaceMap";
 import {EModalType} from "./EModalType";
 
 const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
-    if (!orgWorkplace)
-        return null;
 
+    // TODO default placeId should be calculates somehow...
     const dispatch = useDispatch();
-    const [workplace, setWorkplace] = useState({});
+    const [workplace, setWorkplace] = useState(orgWorkplace);
     const [place, setPlace] = useState({});
     const [mapCenter, setMapCenter] = useState({});
     const [map, setMap] = useState(null);
@@ -51,8 +50,7 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
 
     // useEffect(() => {
     //     fetchDeviceLocation(deviceLocation => {
-    //         setMapCenter(deviceLocation);
-    //         handleChange("location", deviceLocation);
+    //         handleMapLocationChange(deviceLocation);
     //     });
     // }, []);
 
@@ -72,7 +70,7 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
             return;
 
         fetchPlace();
-    }, [map, workplace.placeId]);
+    }, [map, workplace?.placeId]);
 
     useEffect(() => {
         setWorkplace(orgWorkplace);
@@ -87,6 +85,9 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
         lat: place?.geometry?.location?.lat(),
         lng: place?.geometry?.location?.lng()
     });
+
+    if (!workplace)
+        return null;
 
     return (
         <Dialog onClose={onClose} open={open}>
