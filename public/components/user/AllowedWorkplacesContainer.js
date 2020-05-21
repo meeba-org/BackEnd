@@ -38,7 +38,7 @@ const AllowedWorkplacesContainer = () => {
                 onSave: (newWorkspace) => {
                     createWorkspace(newWorkspace);
                 },
-                orgWorkplace: null
+                orgWorkplace: {}
             }
         ));
     };

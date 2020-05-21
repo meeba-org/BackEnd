@@ -15,13 +15,38 @@ import {EModalType} from "./EModalType";
 
 const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
 
-    // TODO default placeId should be calculates somehow...
     const dispatch = useDispatch();
     const [workplace, setWorkplace] = useState(orgWorkplace);
     const [place, setPlace] = useState({});
     const [mapCenter, setMapCenter] = useState({});
     const [map, setMap] = useState(null);
 
+    useEffect(() => {
+        // Setting the workplace so we can have something to edit if needed
+        setWorkplace(orgWorkplace);
+    }, [orgWorkplace]);
+
+    useEffect(() => {
+        // If there is no placeId in workplace getting the device location and translate it to placeId
+        if (!workplace?.placeId) {
+            fetchDeviceLocation(deviceLocation => {
+                handleMapLocationChange(deviceLocation);
+            });
+        }
+    }, [workplace?.placeId]);
+
+    useEffect(() => {
+        if (!workplace?.placeId || !map)
+            return;
+
+        // Once we have placeId and map object we retrieve the google map Place object
+        fetchPlace();
+    }, [map, workplace?.placeId]);
+
+    /**
+     * User select an autocomplete prediction and we saving the placeId in our workplace
+     * @param prediction
+     */
     const handleSelection = prediction => {
         if (!prediction)
             return;
@@ -36,6 +61,11 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
         });
     };
 
+    /**
+     * User change the location
+     * @param location
+     * @return {Promise<void>}
+     */
     const handleMapLocationChange = async location => {
         const placeByLocation = await getPlaceByLocation(location);
 
@@ -48,12 +78,6 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
 
     const onClose = () => dispatch(hideModal(EModalType.WORKPLACE_SELECTION));
 
-    // useEffect(() => {
-    //     fetchDeviceLocation(deviceLocation => {
-    //         handleMapLocationChange(deviceLocation);
-    //     });
-    // }, []);
-
     const fetchPlace = async () => {
         if (workplace?.placeId) {
             const place = await getPlace(workplace.placeId, map);
@@ -64,17 +88,6 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
             });
         }
     };
-
-    useEffect(() => {
-        if (!workplace || !map)
-            return;
-
-        fetchPlace();
-    }, [map, workplace?.placeId]);
-
-    useEffect(() => {
-        setWorkplace(orgWorkplace);
-    }, [orgWorkplace]);
 
     const onClickSave = wp => {
         onSave(wp);
@@ -114,8 +127,12 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
                         place={place}
                         onSelect={handleSelection}
                     />
-                    <WorkplaceMap location={extractLocation()} onClick={handleMapLocationChange} center={mapCenter}
-                                  initMap={initMap}/>
+                    <WorkplaceMap
+                        location={extractLocation()}
+                        onClick={handleMapLocationChange}
+                        center={mapCenter}
+                        initMap={initMap}
+                    />
                 </Box>
             </DialogContent>
             <DialogActions>
