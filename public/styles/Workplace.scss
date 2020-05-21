@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .name {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: 9px;
+    }
+
+    .icon {
+        padding: 0;
+    }
+}
