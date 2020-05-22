@@ -342,7 +342,7 @@ describe('ShiftAnalyzer', function () {
             expect(isInsideWorkplace).to.be.equal(EInsideWorkplace.NOT_RELEVANT);
         });
 
-        it('isClockInFromWorkPlace === EInsideWorkplace.NOT_RELEVANT 1', () => {
+        it('isClockInFromWorkPlace === EInsideWorkplace.NOT_RELEVANT 2', () => {
 
             const isInsideWorkplace = calcClockInInsideWorkplace(undefined, [tolunaWorkplace]);
             expect(isInsideWorkplace).to.be.equal(EInsideWorkplace.NOT_RELEVANT);
