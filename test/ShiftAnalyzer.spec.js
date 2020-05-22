@@ -322,27 +322,27 @@ describe('ShiftAnalyzer', function () {
             expect(distance).to.be.equal(81185);
         });
 
-        it('isClockInFromWorkPlace === EInsideWorkplace.INSIDE', () => {
+        it('isClockInInsideWorkplace === EInsideWorkplace.INSIDE', () => {
             tolunaWorkplace.radius = 200;
 
             const isInsideWorkplace = calcClockInInsideWorkplace(busStop, [tolunaWorkplace]);
             expect(isInsideWorkplace).to.be.equal(EInsideWorkplace.INSIDE);
         });
 
-        it('isClockInFromWorkPlace === EInsideWorkplace.OUTSIDE', () => {
+        it('isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE', () => {
             tolunaWorkplace.radius = 100;
 
             const isInsideWorkplace = calcClockInInsideWorkplace(busStop, [tolunaWorkplace]);
             expect(isInsideWorkplace).to.be.equal(EInsideWorkplace.OUTSIDE);
         });
 
-        it('isClockInFromWorkPlace === EInsideWorkplace.NOT_RELEVANT 1', () => {
+        it('isClockInInsideWorkplace === EInsideWorkplace.NOT_RELEVANT 1', () => {
 
             const isInsideWorkplace = calcClockInInsideWorkplace(busStop, []);
             expect(isInsideWorkplace).to.be.equal(EInsideWorkplace.NOT_RELEVANT);
         });
 
-        it('isClockInFromWorkPlace === EInsideWorkplace.NOT_RELEVANT 2', () => {
+        it('isClockInInsideWorkplace === EInsideWorkplace.NOT_RELEVANT 2', () => {
 
             const isInsideWorkplace = calcClockInInsideWorkplace(undefined, [tolunaWorkplace]);
             expect(isInsideWorkplace).to.be.equal(EInsideWorkplace.NOT_RELEVANT);

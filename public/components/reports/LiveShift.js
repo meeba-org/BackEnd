@@ -59,7 +59,8 @@ const LiveShift = (props) => {
             <Note text={shift.note} onClick={showShiftDialog}/>
             {/*<CarCost data={shift.commuteCost} onClick={showShiftDialog}/>*/}
             <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
-            <Location location={shift.location} onClick={showLocationModal} />
+            <Location location={shift.location} onClick={showLocationModal}
+                      isClockInInsideWorkplace={shift.isClockInInsideWorkplace}/>
             <ExtraPay extraPay={shift.extraPay} onClick={showShiftDialog}/>
             <TaskIndicator task={shift.task} onClick={showShiftDialog}/>
 

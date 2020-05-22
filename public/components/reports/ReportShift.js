@@ -81,7 +81,8 @@ const ReportShift = (props) => {
                     <PendingApprovalIndicator status={shift.status} onClick={showShiftDialog}/>
                     <Note text={shift.note} onClick={showShiftDialog}/>
                     <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
-                    <Location location={shift.location} onClick={showLocationModal} />
+                    <Location location={shift.location} onClick={showLocationModal}
+                              isClockInInsideWorkplace={shift.isClockInInsideWorkplace}/>
                     <ExtraPay extraPay={shift.extraPay} onClick={showShiftDialog}/>
                     <TaskIndicator task={shift.task} onClick={showShiftDialog}/>
                  </Fragment>

@@ -82,10 +82,12 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
         if (workplace?.placeId) {
             const place = await getPlace(workplace.placeId, map);
             setPlace(place);
-            setMapCenter({
+            const newLocation = {
                 lng: place?.geometry.location.lng(),
                 lat: place?.geometry.location.lat(),
-            });
+            };
+            setMapCenter(newLocation);
+            handleChange("location", newLocation);
         }
     };
 
