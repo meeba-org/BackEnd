@@ -3,15 +3,14 @@ import Grid from "@material-ui/core/Grid";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import {Link} from "react-router-dom";
 import '../../styles/User.scss';
 import ExportContainer from "../export/ExportContainer";
 import MbCard from "../MbCard";
 import NoData from "../NoData";
-import AllowedWorkplacesContainer from "./AllowedWorkplacesContainer";
+import WhatIsIt from "../WhatIsIt";
+import AllowedWorkplacesContainer from "../workplace/AllowedWorkplacesContainer";
 import SettingSwitch from "./SettingSwitch";
 import StartOfMonthField from "./StartOfMonthField";
 
@@ -136,9 +135,7 @@ const User = ({
                             onChange={(e) => onCompanySettingsChange("breakLength", e.target.value)}
                         />
 
-                        <Typography variant={"caption"}>
-                            <Link to="/faq/break" target="_blank">מה זה?</Link>
-                        </Typography>
+                        <WhatIsIt link={"/faq/break"}/>
                     </div>
 
                     <div styleName="row">

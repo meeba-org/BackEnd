@@ -1,5 +1,11 @@
-.add {
+.add-container {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding-top: 9px;
-    cursor: pointer;
+
+    .add {
+        display: flex;
+        cursor: pointer;
+    }
 }

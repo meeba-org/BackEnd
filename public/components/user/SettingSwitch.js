@@ -2,8 +2,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import {Link} from "react-router-dom";
 import "../../styles/SettingSwitch.scss";
+import WhatIsIt from "../WhatIsIt";
 
 const SettingSwitch = ({value, fieldValue, text, link, handleCompanySettingsChange}) => {
     return (
@@ -22,11 +22,7 @@ const SettingSwitch = ({value, fieldValue, text, link, handleCompanySettingsChan
                 }
                 label={<Typography variant={"body2"}>{text}</Typography>}
             />
-            {link &&
-            <Typography variant={"caption"}>
-                <Link to={link} target="_blank">מה זה?</Link>
-            </Typography>
-            }
+            <WhatIsIt link={link}/>
         </div>
     );
 };
