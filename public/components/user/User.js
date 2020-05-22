@@ -10,7 +10,7 @@ import ExportContainer from "../export/ExportContainer";
 import MbCard from "../MbCard";
 import NoData from "../NoData";
 import WhatIsIt from "../WhatIsIt";
-import AllowedWorkplacesContainer from "../workplace/AllowedWorkplacesContainer";
+import AllowedWorkplacesContainer from "./AllowedWorkplacesContainer";
 import SettingSwitch from "./SettingSwitch";
 import StartOfMonthField from "./StartOfMonthField";
 

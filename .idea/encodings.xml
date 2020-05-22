@@ -141,6 +141,7 @@
     <file url="file://$PROJECT_DIR$/public/components/tasks/TasksContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/TasksList.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/TasksSelectionContainer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/user/AllowedWorkplacesContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/SettingSwitch.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/StartOfMonthField.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/UserContainer.js" charset="UTF-8" />

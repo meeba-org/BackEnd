@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {showModal, updateCompany} from "../../actions";
 import {getCompany} from "../../selectors";
 import {EModalType} from "../modals/EModalType";
-import AllowedWorkplaces from "./AllowedWorkplaces";
+import AllowedWorkplaces from "../workplace/AllowedWorkplaces";
 
 const AllowedWorkplacesContainer = () => {
     const company = useSelector(getCompany);
