@@ -1,7 +1,8 @@
 let moment = require('moment');
 const SHIFT_125_OVERDUE_LENGTH = require("../managers/ShiftAnalyzer").SHIFT_125_OVERDUE_LENGTH;
 const REGULAR_SHIFT_LENGTH = require("../managers/ShiftAnalyzer").REGULAR_SHIFT_LENGTH;
-const analyzeHours = require("../managers/ShiftAnalyzer").analyzeShiftHours;
+const EInsideWorkplace = require("../models/EInsideWorkplace");
+const {analyzeShiftHours: analyzeHours, getComputeDistanceBetween, calcClockInInsideWorkplace} = require("../managers/ShiftAnalyzer");
 const expect = require('chai').expect;
 
 function createMockedShift(length) {
@@ -261,7 +262,7 @@ describe('ShiftAnalyzer', function () {
             expect(hours.extra125Hours).to.be.equal(2);
             expect(hours.extra150Hours).to.be.equal(2);
         });
-    })
+    });
 
     describe('Independence Day', () => {
         it('Independence Day 1', function () {
@@ -291,5 +292,60 @@ describe('ShiftAnalyzer', function () {
             expect(hours.extra150Hours).to.be.equal(9);
             expect(hours.extra175Hours).to.be.equal(1);
         });
-    })
+    });
+
+    describe('Location calculation', () => {
+        const busStop = {
+            lat: 32.789019,
+            lng: 34.9596217
+        };
+
+        let tolunaWorkplace = {
+            location: {
+                lat: 32.787982,
+                lng: 34.9598711
+            },
+        };
+
+        it('Calculate distance', () => {
+            const telAviv = {
+                lat: 32.085300,
+                lng: 34.781769
+            };
+
+            const haifa = {
+                lat: 32.794044,
+                lng: 34.989571
+            };
+
+            const distance = getComputeDistanceBetween(telAviv, haifa);
+            expect(distance).to.be.equal(81185);
+        });
+
+        it('isClockInFromWorkPlace === EInsideWorkplace.INSIDE', () => {
+            tolunaWorkplace.radius = 200;
+
+            const isInsideWorkplace = calcClockInInsideWorkplace(busStop, [tolunaWorkplace]);
+            expect(isInsideWorkplace).to.be.equal(EInsideWorkplace.INSIDE);
+        });
+
+        it('isClockInFromWorkPlace === EInsideWorkplace.OUTSIDE', () => {
+            tolunaWorkplace.radius = 100;
+
+            const isInsideWorkplace = calcClockInInsideWorkplace(busStop, [tolunaWorkplace]);
+            expect(isInsideWorkplace).to.be.equal(EInsideWorkplace.OUTSIDE);
+        });
+
+        it('isClockInFromWorkPlace === EInsideWorkplace.NOT_RELEVANT 1', () => {
+
+            const isInsideWorkplace = calcClockInInsideWorkplace(busStop, []);
+            expect(isInsideWorkplace).to.be.equal(EInsideWorkplace.NOT_RELEVANT);
+        });
+
+        it('isClockInFromWorkPlace === EInsideWorkplace.NOT_RELEVANT 1', () => {
+
+            const isInsideWorkplace = calcClockInInsideWorkplace(undefined, [tolunaWorkplace]);
+            expect(isInsideWorkplace).to.be.equal(EInsideWorkplace.NOT_RELEVANT);
+        });
+    });
 });

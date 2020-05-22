@@ -89,7 +89,7 @@ const createMonthlyReport = (shifts, year, month, company) => {
     const michpalId = company.settings.michpalSettings.michpalId;
     const yymm = year + month;
 
-    const employeeReports = createEmployeeReports(shifts, company.settings);
+    const employeeReports = createEmployeeReports(shifts, company);
 
     let aggregateData = "";
     for (let employeeReport of employeeReports) {

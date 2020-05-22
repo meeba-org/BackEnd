@@ -1,4 +1,5 @@
 const EDayType = require("../models/EDayType");
+const EInsideWorkplace = require("../models/EInsideWorkplace");
 const analyzeDayType = require("./HolidayAnalyzer").analyzeDayType;
 const moment = require('moment-timezone');
 const ETransportPaymentPer = require("../models/ETransportPaymentPer");
@@ -81,46 +82,46 @@ const mapTasksToShifts = function (shifts) {
     return keys.map((key) => tasksToShiftsMap[key]); // return the users
 };
 
-let createEmployeeAdditionalInfo = function (entity, settings) {
-    let additionalInfo = createAdditionalInfo(entity, settings);
+let createEmployeeAdditionalInfo = function (entity, company) {
+    let additionalInfo = createAdditionalInfo(entity, company);
 
     // Add Employee specific additional info
     additionalInfo.transportation = entity.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : entity.transportation;
-    additionalInfo.monthlyCommuteCost = calcMonthlyCommuteCost(entity, settings);
+    additionalInfo.monthlyCommuteCost = calcMonthlyCommuteCost(entity);
     additionalInfo.monthlyExtraPay = calcMonthlyExtraPay(entity);
     additionalInfo.overallSalary = (additionalInfo.overallHours * entity.hourWage + additionalInfo.monthlyCommuteCost + additionalInfo.monthlyExtraPay).toFixed(2);
 
     return additionalInfo;
 };
 
-function processEmployeeAdditionalInfo(map, settings) {
+function processEmployeeAdditionalInfo(map, company) {
     if (Object.keys(map).length === 0)
         return [];
 
     const additionalInfos = map.map((entity) => {
-        return createEmployeeAdditionalInfo(entity, settings);
+        return createEmployeeAdditionalInfo(entity, company);
     });
 
     return additionalInfos;
 }
 
-let createTaskAdditionalInfo = function (entity, settings) {
-    let additionalInfo = createAdditionalInfo(entity, settings);
+const createTaskAdditionalInfo = (entity, company) => {
+    let additionalInfo = createAdditionalInfo(entity, company);
 
     // Add Task specific additional info
     return additionalInfo;
 };
 
-function processTaskAdditionalInfo(map, settings) {
+const processTaskAdditionalInfo = (map, company) => {
     if (Object.keys(map).length === 0)
         return [];
 
     const additionalInfos = map.map((entity) => {
-        return createTaskAdditionalInfo(entity, settings);
+        return createTaskAdditionalInfo(entity, company);
     });
 
     return additionalInfos;
-}
+};
 
 const analyzeShiftHours = (shift, settings) => {
     let clockOut = moment(shift.clockOutTime);
@@ -358,7 +359,7 @@ function calcExtra50PercentHours(shiftLength, regularHoursInShift) {
 }
 
 
-let calcMonthlyCommuteCost = function (entity) {
+const calcMonthlyCommuteCost = entity => {
     let totalPublicTransportation = 0;
 
     entity.shifts.forEach(shift => {
@@ -391,20 +392,70 @@ function calcMonthlyExtraPay(entity) {
     return monthlyExtraPay;
 }
 
-function createAdditionalInfo(entity, settings) {
+/**
+ * Source: https://stackoverflow.com/a/51720402/1846993
+ * Calculates the haversine distance between point A, and B.
+ * @param {location {lng, lat} point A
+ * @param {location {lng, lat} point B
+ * @param {boolean} isMiles If we are using miles, else km.
+ */
+const getComputeDistanceBetween = (latlngA, latlngB) => {
+    const squared = x => x * x;
+    const toRad = x => (x * Math.PI) / 180;
+    const R = 6371; // Earth’s mean radius in km
+
+    const dLat = toRad(latlngB.lat - latlngA.lat);
+    const dLon = toRad(latlngB.lng - latlngA.lng);
+
+    const dLatSin = squared(Math.sin(dLat / 2));
+    const dLonSin = squared(Math.sin(dLon / 2));
+
+    const a = dLatSin +
+        (Math.cos(toRad(latlngA.lat)) * Math.cos(toRad(latlngB.lat)) * dLonSin);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    let distance = R * c;
+
+    return Math.floor(distance * 1000); // Convert to Meters
+};
+
+const calcClockInInsideWorkplace = (location, workplaces) => {
+    if (!location || !workplaces || workplaces.length === 0)
+        return EInsideWorkplace.NOT_RELEVANT;
+
+    try {
+        for (let workplace of workplaces) {
+            const wpLocation = workplace.location;
+            if (!wpLocation)
+                continue;
+
+            const distance = getComputeDistanceBetween(wpLocation, location);
+            if (distance < workplace.radius)
+                return EInsideWorkplace.INSIDE;
+        }
+        return EInsideWorkplace.OUTSIDE;
+    } catch (e) {
+        return EInsideWorkplace.NOT_RELEVANT;
+    }
+
+
+};
+
+function createAdditionalInfo(entity, company) {
     if (!entity || !entity.shifts)
         return entity;
 
+    const settings = company.settings || EmptySettings;
+
     let info = {
         shiftLength: 0,
-        regularHours : 0,
+        regularHours: 0,
         extra125Hours: 0,
         extra150Hours: 0,
         extra175Hours: 0,
         extra200Hours: 0,
     };
 
-    entity.shifts.forEach((shift) => {
+    for (let shift of entity.shifts) {
         let hoursAnalysis = analyzeShiftHours(shift, settings);
         info.shiftLength += hoursAnalysis.shiftLength;
         info.regularHours += hoursAnalysis.regularHours;
@@ -413,7 +464,8 @@ function createAdditionalInfo(entity, settings) {
         info.extra175Hours += hoursAnalysis.extra175Hours;
         info.extra200Hours += hoursAnalysis.extra200Hours;
         shift.hoursAnalysis = hoursAnalysis;
-    });
+        shift.isClockInInsideWorkplace = calcClockInInsideWorkplace(shift.location, company.workplaces);
+    }
 
     info.shiftsCount = entity.shifts.length;
 
@@ -438,13 +490,12 @@ function sortEmployees(usersArray) {
     });
 }
 
-const createEmployeeReports = (shifts, settings) => {
+const createEmployeeReports = (shifts, company) => {
     if (!shifts)
         return [];
 
-    settings = settings || EmptySettings;
     let map = mapUsersToShifts(shifts);
-    let usersArray = processEmployeeAdditionalInfo(map, settings);
+    let usersArray = processEmployeeAdditionalInfo(map, company);
     sortEmployees(usersArray);
 
     return usersArray;
@@ -481,14 +532,13 @@ function sortTasks(tasksArrayAdditionalInfo) {
     });
 }
 
-const createTasksReport = (shifts, settings, tasks) => {
+const createTasksReport = (shifts, company, tasks) => {
     if (!shifts)
         return [];
 
-    // settings = settings || EmptySettings;
     let map = mapTasksToShifts(shifts);
     generateTasksBreadcrumb(map, tasks);
-    let tasksArrayAdditionalInfo = processTaskAdditionalInfo(map, settings);
+    let tasksArrayAdditionalInfo = processTaskAdditionalInfo(map, company);
     sortTasks(tasksArrayAdditionalInfo);
 
     return tasksArrayAdditionalInfo;
@@ -501,4 +551,6 @@ module.exports = {
     REGULAR_SHIFT_LENGTH,
     SHIFT_125_OVERDUE_LENGTH,
     shouldHaveBreak,
+    getComputeDistanceBetween,
+    calcClockInInsideWorkplace
 };

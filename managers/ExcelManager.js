@@ -504,13 +504,13 @@ const processShiftsForEmployees = function (shifts, company) {
     if (!shifts || shifts.length === 0)
         return [];
 
-    return ShiftAnalyzer.createEmployeeReports(shifts, company.settings);
+    return ShiftAnalyzer.createEmployeeReports(shifts, company);
 };
 
 const processShiftsForTasks = function (shifts, company, tasks) {
     if (!shifts || shifts.length === 0)
         return [];
-    return ShiftAnalyzer.createTasksReport(shifts, company.settings, tasks);
+    return ShiftAnalyzer.createTasksReport(shifts, company, tasks);
 };
 
 const createExcel = (shifts, year, month, company, rawTasks) => {

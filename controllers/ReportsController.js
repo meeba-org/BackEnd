@@ -63,7 +63,7 @@ router.get('/monthly',
         const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
 
         const shifts = await AppManager.getShiftsInMonth(year, month, company, userId);
-        return ShiftAnalyzer.createEmployeeReports(shifts, company.settings);
+        return ShiftAnalyzer.createEmployeeReports(shifts, company);
     })
 );
 
@@ -90,7 +90,7 @@ router.get('/tasks',
                 let shifts = results[0];
                 let tasks = results[1];
 
-                return ShiftAnalyzer.createTasksReport(shifts, company.settings, tasks);
+                return ShiftAnalyzer.createTasksReport(shifts, company, tasks);
             });
     })
 );
