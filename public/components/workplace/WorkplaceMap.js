@@ -26,10 +26,10 @@ const WorkplaceMap = ({onClick, location, center, initMap, radius}) => {
             <Circle
                 radius={radius}
                 center={center}
-                strokeColor='transparent'
+                strokeColor="transparent"
                 strokeOpacity={0}
                 strokeWeight={5}
-                fillColor='green'
+                fillColor="green"
                 fillOpacity={0.2}
             />
         </Map>

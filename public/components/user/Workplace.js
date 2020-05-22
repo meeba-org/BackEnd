@@ -18,7 +18,7 @@ const Workplace = ({workplace, onDelete, onUpdate}) => {
             <Grid item xs={2}>
                 {hover &&
                 <Tooltip title="מחיקה" placement="top">
-                    <IconButton styleName='icon' onClick={onDelete}><Delete fontSize="small"/></IconButton>
+                    <IconButton styleName="icon" onClick={onDelete}><Delete fontSize="small"/></IconButton>
                 </Tooltip>
                 }
             </Grid>
