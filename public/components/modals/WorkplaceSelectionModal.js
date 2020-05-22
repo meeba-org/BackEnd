@@ -119,7 +119,7 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
                             label="רדיוס (מטרים)"
                             value={workplace.radius}
                             type={"number"}
-                            onChange={e => handleChange("radius", e.target.value)}
+                            onChange={e => handleChange("radius", parseInt(e.target.value))}
                             styleName="field"
                         />
                     </Box>
@@ -132,6 +132,7 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
                         onClick={handleMapLocationChange}
                         center={mapCenter}
                         initMap={initMap}
+                        radius={workplace.radius}
                     />
                 </Box>
             </DialogContent>

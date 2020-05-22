@@ -1,9 +1,9 @@
-import {Map, Marker} from 'google-maps-react';
+import {Map, Marker, Circle} from 'google-maps-react';
 import React from "react";
 import {useSelector} from "react-redux";
 import {isDesktop} from "../../selectors";
 
-const WorkplaceMap = ({onClick, location, center, initMap}) => {
+const WorkplaceMap = ({onClick, location, center, initMap, radius}) => {
     const desktop = useSelector(isDesktop);
 
     const onMapClicked = (mapProps, map, clickEvent) => {
@@ -22,6 +22,15 @@ const WorkplaceMap = ({onClick, location, center, initMap}) => {
         >
             <Marker
                 position={location}
+            />
+            <Circle
+                radius={radius}
+                center={center}
+                strokeColor='transparent'
+                strokeOpacity={0}
+                strokeWeight={5}
+                fillColor='green'
+                fillOpacity={0.2}
             />
         </Map>
     );
