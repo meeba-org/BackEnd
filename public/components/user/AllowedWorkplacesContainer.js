@@ -38,7 +38,9 @@ const AllowedWorkplacesContainer = () => {
                 onSave: (newWorkspace) => {
                     createWorkspace(newWorkspace);
                 },
-                orgWorkplace: {}
+                orgWorkplace: {
+                    radius: 500
+                }
             }
         ));
     };

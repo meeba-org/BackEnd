@@ -5,7 +5,7 @@ const {EXCEL} = require('../models/EReportFormat');
 const WorkplaceSchema = new mongoose.Schema({
     name: {type: String},
     placeId: {type: String},
-    radius: {type: Number, default: 100},
+    radius: {type: Number, default: 500},
     location: {
         lat: {type: String},
         lng: {type: String}
