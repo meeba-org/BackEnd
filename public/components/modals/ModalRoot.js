@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import LoginRegisterContainer from "../login/LoginRegisterContainer";
 
 import {EModalType} from "./EModalType";
+import WorkplaceSplashModal from "./WorkplaceSplashModal";
 const Covid19DiscountModal = React.lazy(() => import("./Covid19DiscountModal"));
 const AbsenceDaysModal = React.lazy(() => import("./AbsenceDaysModal"));
 const DeleteModal = React.lazy(() => import("./DeleteModal"));
@@ -16,8 +17,7 @@ const MovingShiftOutOfMonthModal = React.lazy(() => import("./MovingShiftOutOfMo
 const Survey2019Modal = React.lazy(() => import("./Survey2019Modal"));
 const TaskModal = React.lazy(() => import("./TaskModal"));
 const YesNoModal = React.lazy(() => import("./YesNoModal"));
-// const WorkplaceSelectionModal = React.lazy(() => import("./WorkplaceSelectionModal"));
-import WorkplaceSelectionModal from "./WorkplaceSelectionModal";
+const WorkplaceSelectionModal = React.lazy(() => import("./WorkplaceSelectionModal"));
 
 export const MODAL_COMPONENTS = {
     [EModalType.DELETE_ENTITY]: DeleteModal,
@@ -34,6 +34,7 @@ export const MODAL_COMPONENTS = {
     [EModalType.NEW_FEATURE_ABSENCE_DAYS]: AbsenceDaysModal,
     [EModalType.COVID19_DISCOUNT]: Covid19DiscountModal,
     [EModalType.WORKPLACE_SELECTION]: WorkplaceSelectionModal,
+    [EModalType.WORKPLACE_SPLASH]: WorkplaceSplashModal,
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {
