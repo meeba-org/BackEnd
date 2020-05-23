@@ -49,13 +49,13 @@ const WorkplaceSplashModal = ({open}) => {
                     <Box display="flex" flexDirection="column" alignItems="center"
                          fontSize={isDesktop0 ? "h5.fontSize" : "h6.fontSize"}>
                         <Box display="flex" flexDirection="row" justifyContent="space-between" style={{width: "300px"}}>
-                            <IconButton><PlaceIcon htmlColor="red"/>מחוץ</IconButton>
-                            <IconButton><PlaceIcon htmlColor="green"/>בתוך</IconButton>
+                            <IconButton><PlaceIcon htmlColor="green"/>כן</IconButton>
+                            <IconButton><PlaceIcon htmlColor="red"/>לא</IconButton>
                             <IconButton><PlaceIcon htmlColor="gray"/>לא ידוע</IconButton>
                         </Box>
                     </Box>
-                    <Box fontSize="h6.fontSize" textAlign="center">להגדרת מקום העבודה לחץ <Link
-                        to={"/dashboard/settings"} onClick={onClose}>כאן</Link></Box>
+                    <Box fontSize="h6.fontSize" textAlign="center">להגדרת מקום העבודה עבור <Link
+                        to={"/dashboard/settings"} onClick={onClose}>להגדרות</Link></Box>
                 </Typography>
             </DialogContent>
             <DialogActions>
