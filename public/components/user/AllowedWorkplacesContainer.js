@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {showModal, updateCompany} from "../../actions";
 import {getCompany} from "../../selectors";
@@ -12,6 +12,10 @@ const AllowedWorkplacesContainer = () => {
 
     let [workplaces, setWorkplaces] = useState(company.workplaces);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        setWorkplaces(company.workplaces);
+    }, [company.workplaces]);
 
     const updateWorkplaces = newWorkplaces => {
         const newCompany = {
