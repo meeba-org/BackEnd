@@ -15,7 +15,7 @@ function createMockedShift(length) {
 
 const createMockedEveningHolidayShift = (overallLength, regularHoursLength) => {
     // Assuming evening holiday starts at 18
-    let clockInTime = moment().day("Friday").hour(settings.eveningHolidayStartHour - regularHoursLength).startOf('hour');
+    let clockInTime = moment().year(2019).day("Friday").hour(settings.eveningHolidayStartHour - regularHoursLength).startOf('hour');
 
     return {
         clockInTime: clockInTime,
