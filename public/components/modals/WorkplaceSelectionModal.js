@@ -96,6 +96,10 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
         onClose();
     };
 
+    const isSaveEnable = () => {
+        return !!workplace.name && workplace.radius && workplace.placeId && workplace.location;
+    };
+
     const extractLocation = () => ({
         lat: place?.geometry?.location?.lat(),
         lng: place?.geometry?.location?.lng()
@@ -139,8 +143,14 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
                 </Box>
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" onClick={() => onClickSave(workplace)} color="primary"
-                        autoFocus>שמור</Button>
+                <Button
+                    variant="contained"
+                    onClick={() => onClickSave(workplace)}
+                    color="primary"
+                    autoFocus
+                    disabled={!isSaveEnable()}>
+                    שמור
+                </Button>
                 <Button onClick={onClose} color="primary">סגור</Button>
             </DialogActions>
         </Dialog>
