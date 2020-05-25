@@ -161,6 +161,11 @@ const User = ({
                                    handleCompanySettingsChange={onCompanySettingsChange}
                     />
 
+                    <SettingSwitch text={"מצב מדען ראשי"} value={user.company.settings.innovativeAuthorityEnable}
+                                   fieldValue={"enableTasks"} link={"/faq/innovativeAuthority"}
+                                   handleCompanySettingsChange={onCompanySettingsChange}
+                    />
+
                 </div>
             </MbCard>
 
