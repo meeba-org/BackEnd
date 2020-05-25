@@ -108,11 +108,8 @@ export const openTaskModal = (entity) => ({
     payload: {
         modalType: EModalType.TASK_MODAL,
         modalProps: {
-            createTask,
-            updateTask,
-            entity,
+            orgTask: entity,
             open: true,
-            key: entity._id
         }
     }
 });

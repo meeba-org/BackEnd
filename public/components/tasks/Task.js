@@ -5,7 +5,7 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from '@material-ui/icons/Delete';
-import SettingsIcon from '@material-ui/icons/Settings';
+import EditIcon from '@material-ui/icons/Edit';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ETaskType from "../../../models/ETaskType";
@@ -77,7 +77,7 @@ class Task extends Component {
                     <Tooltip title="הגדרות נוספות" placement="top">
                         <IconButton styleName="elem"
                                     disabled={isLimited}
-                                    onClick={(e) => this.onEdit(e, data)}><SettingsIcon/></IconButton>
+                                    onClick={(e) => this.onEdit(e, data)}><EditIcon/></IconButton>
                     </Tooltip>
                     <Tooltip title="מחיקה" placement="top">
                         <IconButton onClick={(e) => this.onDelete(e, data)}><DeleteIcon/></IconButton>

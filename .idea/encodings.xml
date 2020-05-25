@@ -76,6 +76,7 @@
     <file url="file://$PROJECT_DIR$/public/components/Settings.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/SideBar.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/TaskHoursBar.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/TaskModalContent.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/WhatIsIt.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/dashboard/Dashboard.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/dashboard/DashboardContainer.js" charset="UTF-8" />
@@ -147,11 +148,8 @@
     <file url="file://$PROJECT_DIR$/public/components/user/UserContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/withShiftLogic.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/AllowedWorkplaces.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/workplace/AllowedWorkplaces.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/workplace/AllowedWorkplacesContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/AllowedWorkplacesContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/PlacesAutocomplete.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/workplace/Workplace.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/Workplace.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/WorkplaceMap.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/config.js" charset="UTF-8" />
