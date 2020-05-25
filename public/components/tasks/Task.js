@@ -57,17 +57,18 @@ class Task extends Component {
 
         return (
             <Grid container onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                <Grid item xs={9}>
-                <ListItem classes={{root: selectMode ? classes.listItemSelectionMode : classes.listItem}} button
-                          onDoubleClick={() => onDoubleClick(data)}
-                          onClick={() => onClick(data)}
-                          disabled={isLimited}
-                >
-                    <ListItemText primaryTypographyProps={{color: this.isPredefined(data) ? "primary" : "inherit"}} primary={
-                        <Grid container>
-                            <Grid item>
-                                {data.title}
-                            </Grid>
+                <Grid item xs={4}>
+                    <ListItem classes={{root: selectMode ? classes.listItemSelectionMode : classes.listItem}} button
+                              onDoubleClick={() => onDoubleClick(data)}
+                              onClick={() => onClick(data)}
+                              disabled={isLimited}
+                    >
+                        <ListItemText primaryTypographyProps={{color: this.isPredefined(data) ? "primary" : "inherit"}}
+                                      primary={
+                                          <Grid container>
+                                              <Grid item>
+                                                  {data.title}
+                                              </Grid>
                         </Grid>
                     }/>
                 </ListItem>
