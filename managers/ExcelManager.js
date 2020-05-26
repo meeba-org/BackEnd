@@ -2,7 +2,7 @@ const {Feature, isFeatureEnable, isCompanyHasPremium} = require("./FeaturesManag
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 const Excel = require('exceljs');
-const {isTasksEnable, isAbsenceDaysEnable} = require("./FeaturesManager");
+const {isTasksEnable, isAbsenceDaysEnable, isInnovativeAuthorityEnable} = require("./FeaturesManager");
 const {MAX_FREE_EMPLOYEES_ALLOWED} = require("../constants");
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isIndependenceDay = require("./HolidayAnalyzer").isIndependenceDay;
@@ -61,6 +61,12 @@ function createSummaryColumns(sheet, company) {
         {header: 'תוספות', key: 'monthlyExtraPay', width: 11, style: {alignment: {horizontal: 'center'}}},
         {header: 'סה"כ שכר', key: 'overallSalary', width: 11, style: {alignment: {horizontal: 'center'}}},
     ];
+
+    if (isInnovativeAuthorityEnable(company)) {
+        sheet.columns = sheet.columns.concat([
+            {header: 'מדע"ר %', key: 'innovativeAuthority', width: 10, style: {alignment: {horizontal: 'center'}}},
+        ]);
+    }
 
     setSummaryHeaderColor(sheet, company);
 }
@@ -128,6 +134,7 @@ let createSummaryContent = function (sheet, employees) {
             transportation: employee.transportation,
             monthlyCommuteCost: employee.monthlyCommuteCost,
             monthlyExtraPay: employee.monthlyExtraPay,
+            innovativeAuthority: employee.innovativeAuthority,
             overallSalary: employee.overallSalary,
         });
 

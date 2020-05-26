@@ -48,7 +48,9 @@ const getCompanySettings = company => company.settings;
 
 const isAbsenceDaysEnable = company => getCompanySettings(company).enableAbsenceDays;
 
-const isTasksEnable = company =>  getCompanySettings(company).enableTasks;
+const isInnovativeAuthorityEnable = company => getCompanySettings(company).enableInnovativeAuthority;
+
+const isTasksEnable = company => getCompanySettings(company).enableTasks;
 
 module.exports = {
     Feature,
@@ -58,4 +60,5 @@ module.exports = {
     removeFeature,
     isAbsenceDaysEnable,
     isTasksEnable,
+    isInnovativeAuthorityEnable
 };

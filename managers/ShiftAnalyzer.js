@@ -89,6 +89,7 @@ let createEmployeeAdditionalInfo = function (entity, company) {
     additionalInfo.transportation = entity.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : entity.transportation;
     additionalInfo.monthlyCommuteCost = calcMonthlyCommuteCost(entity);
     additionalInfo.monthlyExtraPay = calcMonthlyExtraPay(entity);
+    additionalInfo.innovativeAuthority = calcInnovativeAuthorityPercentage(entity);
     additionalInfo.overallSalary = (additionalInfo.overallHours * entity.hourWage + additionalInfo.monthlyCommuteCost + additionalInfo.monthlyExtraPay).toFixed(2);
 
     return additionalInfo;
@@ -391,6 +392,26 @@ function calcMonthlyExtraPay(entity) {
 
     return monthlyExtraPay;
 }
+
+const isInnovativeTaskRelatedShift = shift => {
+    return shift.task && shift.task.isInnovative;
+};
+
+const calcInnovativeAuthorityPercentage = entity => {
+    let innovativeAuthorityHours = 0;
+    let totalShiftsLength = 0;
+
+    entity.shifts.forEach(shift => {
+        totalShiftsLength += shift.hoursAnalysis.shiftLength;
+        if (isInnovativeTaskRelatedShift(shift))
+            innovativeAuthorityHours += shift.hoursAnalysis.shiftLength;
+    });
+
+    if (totalShiftsLength === 0)
+        return 0;
+
+    return (innovativeAuthorityHours / totalShiftsLength).toFixed(2) * 100;
+};
 
 /**
  * Source: https://stackoverflow.com/a/51720402/1846993
