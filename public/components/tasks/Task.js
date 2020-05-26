@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ETaskType from "../../../models/ETaskType";
 import "../../styles/Task.scss";
+import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
 
 const styles = {
     listItem: {
@@ -57,21 +58,23 @@ class Task extends Component {
 
         return (
             <Grid container onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                     <ListItem classes={{root: selectMode ? classes.listItemSelectionMode : classes.listItem}} button
                               onDoubleClick={() => onDoubleClick(data)}
                               onClick={() => onClick(data)}
                               disabled={isLimited}
                     >
-                        <ListItemText primaryTypographyProps={{color: this.isPredefined(data) ? "primary" : "inherit"}}
-                                      primary={
-                                          <Grid container>
-                                              <Grid item>
-                                                  {data.title}
-                                              </Grid>
-                        </Grid>
-                    }/>
-                </ListItem>
+                        <ListItemText
+                            primaryTypographyProps={{color: this.isPredefined(data) ? "primary" : "inherit"}}
+                            primary={
+                                <div styleName="line">
+                                    <div styleName="name">{data.title}</div>
+                                    {data.isInnovative &&
+                                    <div><EmojiObjectsOutlinedIcon color="secondary"/></div>
+                                    }
+                                </div>
+                            }/>
+                    </ListItem>
                 </Grid>
                 {this.state.hover && enableOptions &&
                 <Grid item xs={3}>
