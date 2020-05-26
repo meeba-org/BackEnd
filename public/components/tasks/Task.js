@@ -70,7 +70,9 @@ class Task extends Component {
                                 <div styleName="line">
                                     <div styleName="name">{data.title}</div>
                                     {data.isInnovative &&
-                                    <div><EmojiObjectsOutlinedIcon color="secondary"/></div>
+                                    <Tooltip title={"המדען הראשי"} placement={"top"}>
+                                        <div><EmojiObjectsOutlinedIcon color="secondary"/></div>
+                                    </Tooltip>
                                     }
                                 </div>
                             }/>
