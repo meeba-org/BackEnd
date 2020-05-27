@@ -5,7 +5,7 @@ import React from "react";
 import "../../styles/SettingSwitch.scss";
 import WhatIsIt from "../WhatIsIt";
 
-const SettingSwitch = ({value, fieldValue, text, link, handleCompanySettingsChange}) => {
+const SettingSwitch = ({value, fieldValue, text, link, handleCompanySettingsChange, disabled}) => {
     return (
         <div styleName="switch">
             <FormControlLabel
@@ -18,6 +18,7 @@ const SettingSwitch = ({value, fieldValue, text, link, handleCompanySettingsChan
                         }}
                         value={value}
                         color="primary"
+                        disabled={disabled}
                     />
                 }
                 label={<Typography variant={"body2"}>{text}</Typography>}

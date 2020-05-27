@@ -19,6 +19,17 @@ const User = ({
                   onCompanyChange, onUserChange, onCompanySettingsChange
               }) => {
 
+    const onInnovativeAuthorityChange = (key, value) => {
+        const settings = {
+            ...user.company.settings,
+            "enableAbsenceDays": value,
+            "enableTasks": value,
+            "enableInnovativeAuthority": value
+        };
+
+        onCompanyChange("settings", settings);
+    };
+
     if (!user || !user.company)
         return <NoData/>;
 
@@ -154,16 +165,18 @@ const User = ({
                                    value={user.company.settings.enableAbsenceDays}
                                    fieldValue={"enableAbsenceDays"} link={"/faq/absenceDays"}
                                    handleCompanySettingsChange={onCompanySettingsChange}
+                                   disabled={user.company.settings.enableInnovativeAuthority}
                     />
 
                     <SettingSwitch text={"משימות"} value={user.company.settings.enableTasks}
                                    fieldValue={"enableTasks"} link={"/faq/tasks"}
                                    handleCompanySettingsChange={onCompanySettingsChange}
+                                   disabled={user.company.settings.enableInnovativeAuthority}
                     />
 
                     <SettingSwitch text={"מצב מדען ראשי"} value={user.company.settings.enableInnovativeAuthority}
                                    fieldValue={"enableInnovativeAuthority"} link={"/faq/innovativeAuthority"}
-                                   handleCompanySettingsChange={onCompanySettingsChange}
+                                   handleCompanySettingsChange={onInnovativeAuthorityChange}
                     />
 
                 </div>
