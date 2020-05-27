@@ -60,27 +60,15 @@ function createSummaryColumns(sheet, company) {
         {header: 'נסיעות יומי', key: 'transportation', width: 11, style: {alignment: {horizontal: 'center'}}},
         {header: 'סה"כ נסיעות', key: 'monthlyCommuteCost', width: 11, style: {alignment: {horizontal: 'center'}}},
         {header: 'תוספות', key: 'monthlyExtraPay', width: 11, style: {alignment: {horizontal: 'center'}}},
-        {header: 'סה"כ שכר', key: 'overallSalary', width: 11, style: {alignment: {horizontal: 'center'}}},
     ];
 
-    if (isInnovativeAuthorityEnable(company)) {
-        const innovativeAuthorityColumns = [
-            {
-                header: 'מדע"ר %',
-                key: 'innovativeAuthorityPercentage',
-                width: 10,
-                style: {alignment: {horizontal: 'center'}}
-            },
-            {
-                header: 'מחוץ לעבודה %',
-                key: 'outOfOfficePercentage',
-                width: 10,
-                style: {alignment: {horizontal: 'center'}}
-            }
-        ];
+    if (isInnovativeAuthorityEnable(company))
+        columns.push({header: 'מדע"ר %', key: 'innovativeAuthorityPercentage', width: 10, style: {alignment: {horizontal: 'center'}}});
 
-        columns.splice(13, 0, ...innovativeAuthorityColumns);
-    }
+    if (hasWorkplaces(company))
+        columns.push({header: 'מחוץ לעבודה %', key: 'outOfOfficePercentage', width: 10, style: {alignment: {horizontal: 'center'}}});
+
+    columns.push({header: 'סה"כ שכר', key: 'overallSalary', width: 11, style: {alignment: {horizontal: 'center'}}});
 
     sheet.columns = columns;
 
@@ -159,6 +147,8 @@ let createSummaryContent = function (sheet, employees) {
     });
 };
 
+const hasWorkplaces = company => company.workplaces && company.workplaces.length > 0;
+
 const createShiftsPerEmployeeColumns = (sheet, company) => {
     let columns = createBasicShiftsColumns(sheet, company);
 
@@ -166,7 +156,7 @@ const createShiftsPerEmployeeColumns = (sheet, company) => {
         columns.push({header: 'משימה', key: 'task', width: 10, style: {alignment: {horizontal: 'center'}}});
     }
 
-    if (isInnovativeAuthorityEnable(company)) {
+    if (hasWorkplaces(company)) {
         columns.push({header: 'מחוץ לעבודה', key: 'oooShift', width: 10, style: {alignment: {horizontal: 'center'}}});
     }
 
