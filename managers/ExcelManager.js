@@ -158,39 +158,41 @@ let createSummaryContent = function (sheet, employees) {
     });
 };
 
-function createShiftsPerEmployeeColumns(sheet, company) {
-    createBasicShiftsColumns(sheet, company);
+const createShiftsPerEmployeeColumns = (sheet, company) => {
+    let columns = createBasicShiftsColumns(sheet, company);
 
     if (isTasksEnable(company) || isAbsenceDaysEnable(company)) {
-        sheet.columns = sheet.columns.concat([
-            {header: 'משימה', key: 'task', width: 10, style: {alignment: {horizontal: 'center'}}},
-        ]);
+        columns.push({header: 'משימה', key: 'task', width: 10, style: {alignment: {horizontal: 'center'}}});
     }
 
-    sheet.columns = sheet.columns.concat([
+    const employeeColumns = [
         {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}},
-    ]);
+    ];
+
+    sheet.columns = columns.concat(employeeColumns);
 
     setEmployeeHeaderColor(sheet);
-}
+};
 
-function createShiftsPerTaskColumns(sheet, company) {
-    createBasicShiftsColumns(sheet, company);
+const createShiftsPerTaskColumns = (sheet, company) => {
+    let columns = createBasicShiftsColumns(sheet, company);
 
-    sheet.columns = sheet.columns.concat([
+    const taskColumns = [
         {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'שם עובד', key: 'userName', width: 20, style: {alignment: {horizontal: 'right'}}},
         {header: 'ת.ז.', key: 'employeeUid', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'שכ"ע לשעה', key: 'hourWage', width: 11, style: {alignment: {horizontal: 'center'}}},
         {header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}},
-    ]);
+    ];
+
+    sheet.columns = columns.concat(taskColumns);
 
     setHeaderColor(sheet);
-}
+};
 
 function createBasicShiftsColumns(sheet, company) {
-    sheet.columns = [
+    let columns = [
         {header: 'תאריך', key: 'date', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'יום', key: 'dayInWeek', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'שעת התחלה', key: 'clockInTime', width: 13, style: {alignment: {horizontal: 'center'}}},
@@ -205,10 +207,15 @@ function createBasicShiftsColumns(sheet, company) {
     ];
 
     if (isFeatureEnable(company, Feature.CommuteModule)) {
-        sheet.columns = sheet.columns.concat([
-            {header: 'החזר נסיעות', key: 'publicTransportation', width: 10, style: {alignment: {horizontal: 'center'}}},
-        ]);
+        columns.push({
+            header: 'החזר נסיעות',
+            key: 'publicTransportation',
+            width: 10,
+            style: {alignment: {horizontal: 'center'}}
+        });
     }
+
+    return columns;
 }
 
 function shouldAddCommuteData(company, shift) {
