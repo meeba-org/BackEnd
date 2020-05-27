@@ -2,6 +2,7 @@ const {Feature, isFeatureEnable, isCompanyHasPremium} = require("./FeaturesManag
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 const Excel = require('exceljs');
+const EInsideWorkplace = require("../models/EInsideWorkplace");
 const {isTasksEnable, isAbsenceDaysEnable, isInnovativeAuthorityEnable} = require("./FeaturesManager");
 const {MAX_FREE_EMPLOYEES_ALLOWED} = require("../constants");
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
@@ -165,6 +166,10 @@ const createShiftsPerEmployeeColumns = (sheet, company) => {
         columns.push({header: 'משימה', key: 'task', width: 10, style: {alignment: {horizontal: 'center'}}});
     }
 
+    if (isInnovativeAuthorityEnable(company)) {
+        columns.push({header: 'מחוץ לעבודה', key: 'oooShift', width: 10, style: {alignment: {horizontal: 'center'}}});
+    }
+
     const employeeColumns = [
         {header: 'תוספות', key: 'monthlyExtraPay', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}},
@@ -259,7 +264,6 @@ const createShiftsPerTasksContent = function (sheet, task, company, year, month 
 
 const createShiftsPerEmployeesContent = function (sheet, employee, company, year, month ) {
     createBasicShiftsContent(sheet, employee, company, year, month );
-
 };
 
 const createBasicShiftsContent = function (sheet, entity, company, year, month ) {
@@ -300,7 +304,8 @@ const createBasicShiftsContent = function (sheet, entity, company, year, month )
                 extra200Hours: hoursAnalysis.extra200Hours || "",
                 monthlyExtraPay: shift.extraPay || "",
                 userName: shift.user.fullName,
-                notes: shift.note
+                notes: shift.note,
+                oooShift: shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE ? "✔" : ""
             };
 
             if (shouldAddCommuteData(company, shift)) {
