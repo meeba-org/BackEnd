@@ -63,12 +63,22 @@ function createSummaryColumns(sheet, company) {
     ];
 
     if (isInnovativeAuthorityEnable(company)) {
-        columns.splice(13, 0, {
-            header: 'מדע"ר %',
-            key: 'innovativeAuthority',
-            width: 10,
-            style: {alignment: {horizontal: 'center'}}
-        });
+        const innovativeAuthorityColumns = [
+            {
+                header: 'מדע"ר %',
+                key: 'innovativeAuthorityPercentage',
+                width: 10,
+                style: {alignment: {horizontal: 'center'}}
+            },
+            {
+                header: 'מחוץ לעבודה %',
+                key: 'outOfOfficePercentage',
+                width: 10,
+                style: {alignment: {horizontal: 'center'}}
+            }
+        ];
+
+        columns.splice(13, 0, ...innovativeAuthorityColumns);
     }
 
     sheet.columns = columns;
@@ -139,7 +149,8 @@ let createSummaryContent = function (sheet, employees) {
             transportation: employee.transportation,
             monthlyCommuteCost: employee.monthlyCommuteCost,
             monthlyExtraPay: employee.monthlyExtraPay,
-            innovativeAuthority: employee.innovativeAuthority,
+            innovativeAuthorityPercentage: employee.innovativeAuthorityPercentage,
+            outOfOfficePercentage: employee.outOfOfficePercentage,
             overallSalary: employee.overallSalary,
         });
 

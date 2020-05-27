@@ -89,7 +89,8 @@ let createEmployeeAdditionalInfo = function (entity, company) {
     additionalInfo.transportation = entity.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : entity.transportation;
     additionalInfo.monthlyCommuteCost = calcMonthlyCommuteCost(entity);
     additionalInfo.monthlyExtraPay = calcMonthlyExtraPay(entity);
-    additionalInfo.innovativeAuthority = calcInnovativeAuthorityPercentage(entity);
+    additionalInfo.innovativeAuthorityPercentage = calcInnovativeAuthorityPercentage(entity);
+    additionalInfo.outOfOfficePercentage = calcOutOfOfficePercentage(entity);
     additionalInfo.overallSalary = (additionalInfo.overallHours * entity.hourWage + additionalInfo.monthlyCommuteCost + additionalInfo.monthlyExtraPay).toFixed(2);
 
     return additionalInfo;
@@ -411,6 +412,22 @@ const calcInnovativeAuthorityPercentage = entity => {
         return 0;
 
     return (innovativeAuthorityHours / totalShiftsLength).toFixed(2) * 100;
+};
+
+const calcOutOfOfficePercentage = (entity) => {
+    let oooHours = 0;
+    let totalShiftsLength = 0;
+
+    entity.shifts.forEach(shift => {
+        totalShiftsLength += shift.hoursAnalysis.shiftLength;
+        if (shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE)
+            oooHours += shift.hoursAnalysis.shiftLength;
+    });
+
+    if (totalShiftsLength === 0)
+        return 0;
+
+    return (oooHours / totalShiftsLength).toFixed(2) * 100;
 };
 
 /**
