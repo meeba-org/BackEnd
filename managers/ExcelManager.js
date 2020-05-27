@@ -45,7 +45,7 @@ let setRowBold = function (row) {
 };
 
 function createSummaryColumns(sheet, company) {
-    sheet.columns = [
+    let columns = [
         {header: 'שם עובד', key: 'employeeName', width: 20, style: {alignment: {horizontal: 'right'}}},
         {header: 'ת.ז.', key: 'employeeUid', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: '100% שעות', key: 'regularHours', width: 11, style: {alignment: {horizontal: 'center'}}},
@@ -63,10 +63,15 @@ function createSummaryColumns(sheet, company) {
     ];
 
     if (isInnovativeAuthorityEnable(company)) {
-        sheet.columns = sheet.columns.concat([
-            {header: 'מדע"ר %', key: 'innovativeAuthority', width: 10, style: {alignment: {horizontal: 'center'}}},
-        ]);
+        columns.splice(13, 0, {
+            header: 'מדע"ר %',
+            key: 'innovativeAuthority',
+            width: 10,
+            style: {alignment: {horizontal: 'center'}}
+        });
     }
+
+    sheet.columns = columns;
 
     setSummaryHeaderColor(sheet, company);
 }
