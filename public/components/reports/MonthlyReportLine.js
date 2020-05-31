@@ -4,7 +4,6 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import PropTypes from 'prop-types';
 import React from 'react';
-import FieldArray from "redux-form/es/FieldArray";
 import {ReportModes} from "../../helpers/utils";
 import "../../styles/MonthlyReportLine.scss";
 import HoursBar from '../HoursBar';

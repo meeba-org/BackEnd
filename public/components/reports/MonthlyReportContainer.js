@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from "react";
 import {connect} from "react-redux";
-import FieldArray from "redux-form/es/FieldArray";
 import reduxForm from "redux-form/es/reduxForm";
 import {exportReport, fetchMonthlyReport} from "../../actions/reportsActions";
 import {createShift, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
@@ -24,7 +23,7 @@ class MonthlyReportContainer extends React.PureComponent {
     }
 
     onDataChange = (month, year) => {
-        this.props.fetchMonthlyReport(month, year);
+        return this.props.fetchMonthlyReport(month, year);
     };
 
     onExportReport(month, year) {
@@ -94,9 +93,4 @@ const mapDispatchToProps = {
     showShiftDialog: showEditShiftModal,
 };
 
-export default connect(
-    mapStateToProps, mapDispatchToProps
-)(reduxForm({
-    form: 'monthlyReportForm',
-    enableReinitialize: true,
-})(MonthlyReportContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(MonthlyReportContainer);
