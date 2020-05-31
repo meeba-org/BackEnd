@@ -24,13 +24,13 @@ export const fetchMetaData = () => ({
 });
 
 export const displaySplashScreen = () => dispatch => {
-    let splashScreenType = ESplashScreenType.COVID19_DISCOUNT;
+    let splashScreenType = ESplashScreenType.NEW_FEATURE_WORKPLACES;
     let hasSeen = hasSeenSplashScreen(splashScreenType);
 
     if (hasSeen)
         return false;
 
-    dispatch(showModal(EModalType.COVID19_DISCOUNT));
+    dispatch(showModal(EModalType.NEW_FEATURE_WORKPLACES));
     setSeenSplashScreen(splashScreenType);
 };
 

@@ -34,7 +34,7 @@ export const MODAL_COMPONENTS = {
     [EModalType.NEW_FEATURE_ABSENCE_DAYS]: AbsenceDaysModal,
     [EModalType.COVID19_DISCOUNT]: Covid19DiscountModal,
     [EModalType.WORKPLACE_SELECTION]: WorkplaceSelectionModal,
-    [EModalType.WORKPLACE_SPLASH]: WorkplaceSplashModal,
+    [EModalType.NEW_FEATURE_WORKPLACES]: WorkplaceSplashModal,
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {

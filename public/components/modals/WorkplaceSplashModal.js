@@ -39,7 +39,7 @@ const WorkplaceSplashModal = ({open}) => {
     const classes = useStyles({isDesktop: isDesktop0});
     const dispatch = useDispatch();
 
-    const onClose = () => dispatch(hideModal(EModalType.WORKPLACE_SPLASH));
+    const onClose = () => dispatch(hideModal(EModalType.NEW_FEATURE_WORKPLACES));
 
     return (
         <Dialog onClose={onClose} open={open} classes={{paper: classes.paperRoot}}>
