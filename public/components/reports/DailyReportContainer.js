@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {createShift, updateShift} from "../../actions";
-import reduxForm from "redux-form/es/reduxForm";
 import PropTypes from 'prop-types';
 import {fetchDailyReport, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {getDailyShifts} from "../../selectors";
@@ -71,10 +70,5 @@ const mapDispatchToProps = {
     showShiftDialog: showEditShiftModal,
 };
 
-export default connect(
-    mapStateToProps, mapDispatchToProps
-)(reduxForm({
-    form: 'dailyReportForm',
-    enableReinitialize: true,
-})(DailyReportContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(DailyReportContainer);
 

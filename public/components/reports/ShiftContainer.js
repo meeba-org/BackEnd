@@ -200,7 +200,6 @@ ShiftContainer.propTypes = {
     onUpdateStartDate: PropTypes.func.isRequired,
     onUpdateStartTime: PropTypes.func.isRequired,
     onUpdateEndTime: PropTypes.func.isRequired,
-    postUpdate: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {

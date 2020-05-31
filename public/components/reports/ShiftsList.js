@@ -76,7 +76,6 @@ ShiftsList.propTypes = {
     showNames: PropTypes.bool,
     shouldDisplayNoData: PropTypes.bool,
     mode: PropTypes.number.isRequired,
-    postUpdate: PropTypes.func.isRequired,
 };
 
 export default ShiftsList;
