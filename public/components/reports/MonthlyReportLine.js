@@ -26,7 +26,7 @@ class MonthlyReportLine extends React.PureComponent {
     };
 
     render() {
-        let {input, isCollapsed, onToggle, onDeleteShift, showShiftDialog, index, postUpdate} = this.props;
+        let {data, isCollapsed, onToggle, onDeleteShift, showShiftDialog, index, postUpdate} = this.props;
         let toggleButton = isCollapsed ?
             <Tooltip title="פרטי משמרות" placement="top"><KeyboardArrowLeft/></Tooltip> :
             <KeyboardArrowDown/>;
@@ -34,24 +34,23 @@ class MonthlyReportLine extends React.PureComponent {
         return (
             <div styleName="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div styleName="monthly-report-header" onClick={() => onToggle(index)}>
-                    <IconButton styleName="toggle-button" color="primary" >{toggleButton}</IconButton>
-                    <div styleName="name">{input.value.fullName}</div>
-                    <HoursBar {...input.value} displayDetails={this.state.hover}/>
+                    <IconButton styleName="toggle-button" color="primary">{toggleButton}</IconButton>
+                    <div styleName="name">{data.fullName}</div>
+                    <HoursBar {...data} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&
                 <div styleName="monthly-report-body">
-                        <HoursSummary data={input.value}/>
+                    <HoursSummary data={data}/>
 
-                        <FieldArray
-                            name={`${input.name}.shifts`}
-                            component={ShiftsList}
-                            onDelete={onDeleteShift}
-                            showShiftDialog={showShiftDialog}
-                            showNames={false}
-                            mode={ReportModes.Report}
-                            shouldDisplayNoData={true}
-                            postUpdate={postUpdate}
-                        />
+                    <ShiftsList
+                        shifts={data.shifts}
+                        onDelete={onDeleteShift}
+                        showShiftDialog={showShiftDialog}
+                        showNames={false}
+                        mode={ReportModes.Report}
+                        shouldDisplayNoData={true}
+                        postUpdate={postUpdate}
+                    />
                 </div>
                 }
             </div>
@@ -60,7 +59,6 @@ class MonthlyReportLine extends React.PureComponent {
 }
 
 MonthlyReportLine.propTypes = {
-    input: PropTypes.object.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     onToggle: PropTypes.func.isRequired,

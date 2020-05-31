@@ -8,16 +8,16 @@ import NoData from "../NoData";
 import ShiftContainer from "./ShiftContainer";
 
 class ShiftsList extends React.PureComponent {
-    onDelete(fields, index) {
-        let entityToDelete = fields.get(index);
+    onDelete(shifts, index) {
+        let entityToDelete = shifts[index];
         this.props.onDelete(entityToDelete);
     }
 
     getIntersectShift = (shift) => {
-        let {fields} = this.props;
+        let {shifts} = this.props;
 
-        for (let i = 0; i < fields.length; i++) {
-            let s = fields.get(i);
+        for (let i = 0; i < shifts.length; i++) {
+            let s = shifts[i];
 
             if (!this.isSameShift(shift, s) && this.isSameUser(shift, s) && this.isShiftsIntersect(shift, s))
                 return s;
@@ -46,24 +46,23 @@ class ShiftsList extends React.PureComponent {
 
     render() {
 
-        let {fields, showNames, mode, shouldDisplayNoData, showShiftDialog, postUpdate} = this.props;
+        let {shifts, showNames, mode, shouldDisplayNoData, showShiftDialog, postUpdate} = this.props;
         return (
             <div styleName="shifts-list">
-                {fields && fields.map((shiftName, index) =>
+                {shifts && shifts.map((shift, index) =>
                     (<Fade key={index} isVisible>
-                            <Field
-                                component={ShiftContainer}
-                                name={shiftName} key={index}
-                                onDelete={() => this.onDelete(fields, index)}
-                                showShiftDialog={showShiftDialog}
-                                showNames={showNames}
-                                mode={mode}
-                                getIntersectShift={this.getIntersectShift}
-                                postUpdate={postUpdate}
-                            />
+                        <ShiftContainer
+                            shift={shift}
+                            onDelete={() => this.onDelete(shifts, index)}
+                            showShiftDialog={showShiftDialog}
+                            showNames={showNames}
+                            mode={mode}
+                            getIntersectShift={this.getIntersectShift}
+                            postUpdate={postUpdate}
+                        />
                     </Fade>)
                 )}
-                {shouldDisplayNoData && (!fields || (fields.length === 0)) &&
+                {shouldDisplayNoData && (!shifts || (shifts.length === 0)) &&
                 <NoData text="לא נמצאו משמרות"/>
                 }
             </div>
@@ -72,7 +71,7 @@ class ShiftsList extends React.PureComponent {
 }
 
 ShiftsList.propTypes = {
-    fields: PropTypes.object.isRequired,
+    shifts: PropTypes.array.isRequired,
     onDelete: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     showNames: PropTypes.bool,

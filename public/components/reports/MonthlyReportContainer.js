@@ -36,27 +36,25 @@ class MonthlyReportContainer extends React.PureComponent {
     }
 
     render() {
-            const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop, startOfMonth, companySettings} = this.props;
+            const {employeeShiftsReports, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop, startOfMonth, companySettings} = this.props;
         return (
-            <form onSubmit={handleSubmit(() => {})}>
-                <FieldArray name="employeeShiftsReports"
-                            component={MonthlyReport}
-                            employees={employees}
-                            onDeleteShift={deleteShift}
-                            showShiftDialog={showShiftDialog}
-                            onCreateShift={createShift}
-                            onMonthChange={this.onDataChange}
-                            onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
-                            onExportReport={(month, year) => this.onExportReport(month, year)}
-                            userRole={userRole}
-                            postUpdate={this.onDataChange}
-                            reportLineComponent={MonthlyReportLine}
-                            title={'דו"ח חודשי'}
+            <MonthlyReport
+                employees={employees}
+                fields={employeeShiftsReports}
+                onDeleteShift={deleteShift}
+                showShiftDialog={showShiftDialog}
+                onCreateShift={createShift}
+                onMonthChange={this.onDataChange}
+                onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
+                onExportReport={(month, year) => this.onExportReport(month, year)}
+                userRole={userRole}
+                postUpdate={this.onDataChange}
+                ReportLineComponent={MonthlyReportLine}
+                title={'דו"ח חודשי'}
                             isDesktop={isDesktop}
                             startOfMonth={startOfMonth}
                             defaultExportFormat={companySettings?.defaultExportFormat}
                 />
-            </form>
         );
     }
 }
@@ -64,7 +62,6 @@ class MonthlyReportContainer extends React.PureComponent {
 MonthlyReportContainer.propTypes = {
     shifts: PropTypes.array,
     employees: PropTypes.array,
-    handleSubmit: PropTypes.func.isRequired,
     fetchMonthlyReport: PropTypes.func.isRequired,
     fetchEmployees: PropTypes.func.isRequired,
     exportReport: PropTypes.func.isRequired,
@@ -80,10 +77,8 @@ function mapStateToProps(state) {
     const employees = state.users;
     return {
         employees,
+        employeeShiftsReports,
         userRole: getUserRole(state),
-        initialValues: {
-            employeeShiftsReports,
-        },
         isDesktop: isDesktop(state),
         startOfMonth: getStartOfMonth(state),
         companySettings: getCompanySettings(state)
