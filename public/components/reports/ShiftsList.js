@@ -1,7 +1,6 @@
 import moment from "moment";
 import PropTypes from 'prop-types';
 import React from "react";
-import Field from "redux-form/es/Field";
 import "../../styles/ShiftsList.scss";
 import Fade from "../Fade";
 import NoData from "../NoData";

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from "react";
 import {connect} from "react-redux";
-import reduxForm from "redux-form/es/reduxForm";
 import {exportReport, fetchMonthlyReport} from "../../actions/reportsActions";
 import {createShift, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
