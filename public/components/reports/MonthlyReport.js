@@ -4,7 +4,6 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from "react";
 import {IfGranted} from "react-authorization";
-import Field from "redux-form/es/Field";
 import {EXCEL} from "../../../models/EReportFormat";
 import * as ERoles from "../../helpers/ERoles";
 import {DATE_FORMAT} from "../../helpers/utils";
@@ -16,7 +15,6 @@ import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import MonthPicker from "../MonthPicker";
 import NoData from "../NoData";
-import MonthlyReportLine from "./MonthlyReportLine";
 
 class MonthlyReport extends React.PureComponent {
     constructor(props) {

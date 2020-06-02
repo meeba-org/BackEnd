@@ -8,14 +8,7 @@ import moment from "moment";
 import PropTypes from 'prop-types';
 import React, {Fragment} from "react";
 import {withRouter} from "react-router-dom";
-import FieldArray from "redux-form/es/FieldArray";
-import {
-    calculateCurrentDay,
-    calculateCurrentTime,
-    createShiftForClockIn,
-    DATE_FORMAT,
-    ReportModes
-} from "../../helpers/utils";
+import {calculateCurrentDay, calculateCurrentTime, createShiftForClockIn, DATE_FORMAT, ReportModes} from "../../helpers/utils";
 import '../../styles/DailyReport.scss';
 import AddShiftsDialog from "../AddShiftsDialog";
 import AutoComplete from "../AutoComplete";

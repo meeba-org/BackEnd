@@ -112,7 +112,7 @@ class ShiftContainer extends React.PureComponent {
     };
 
     onUpdate = (orgShift, updatedShift) => {
-        let {shift, updateShift, postUpdate} = this.props;
+        let {updateShift, postUpdate} = this.props;
 
         let month = moment(orgShift.clockInTime).format('MM');
         let year = moment(orgShift.clockInTime).format('YYYY');
