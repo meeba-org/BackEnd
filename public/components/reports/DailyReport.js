@@ -8,14 +8,7 @@ import moment from "moment";
 import PropTypes from 'prop-types';
 import React, {Fragment} from "react";
 import {withRouter} from "react-router-dom";
-import FieldArray from "redux-form/es/FieldArray";
-import {
-    calculateCurrentDay,
-    calculateCurrentTime,
-    createShiftForClockIn,
-    DATE_FORMAT,
-    ReportModes
-} from "../../helpers/utils";
+import {calculateCurrentDay, calculateCurrentTime, createShiftForClockIn, DATE_FORMAT, ReportModes} from "../../helpers/utils";
 import '../../styles/DailyReport.scss';
 import AddShiftsDialog from "../AddShiftsDialog";
 import AutoComplete from "../AutoComplete";
@@ -86,7 +79,7 @@ class DailyReport extends React.PureComponent {
     };
 
     render() {
-        const {onCreateShift, onDeleteShift, showShiftDialog, employees, mode, isLoading} = this.props;
+        const {shifts, onCreateShift, onDeleteShift, showShiftDialog, employees, mode, isLoading} = this.props;
         let {currentDay} = this.state;
         let {primary, secondary} = this.props.theme.palette.text;
 
@@ -132,9 +125,8 @@ class DailyReport extends React.PureComponent {
                                 />
                             </MbActionsControls>
 
-                            <FieldArray
-                                name="shifts"
-                                component={ShiftsList}
+                            <ShiftsList
+                                shifts={shifts}
                                 onDelete={onDeleteShift}
                                 onUpdate={this.onUpdateShift}
                                 showShiftDialog={showShiftDialog}
@@ -176,9 +168,8 @@ class DailyReport extends React.PureComponent {
                                 }
                             </div>
 
-                            <FieldArray
-                                name="shifts"
-                                component={ShiftsList}
+                            <ShiftsList
+                                shifts={shifts}
                                 onDelete={onDeleteShift}
                                 onUpdate={this.onUpdateShift}
                                 showShiftDialog={showShiftDialog}

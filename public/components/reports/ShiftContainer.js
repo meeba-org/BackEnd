@@ -24,33 +24,33 @@ class ShiftContainer extends React.PureComponent {
     }
 
     onDelete = () => {
-        let {onDelete, input} = this.props;
+        let {onDelete, shift} = this.props;
 
-        onDelete(input.value);
+        onDelete(shift);
     };
 
     showShiftDialog = () => {
-        let {showShiftDialog, input, postUpdate} = this.props;
+        let {showShiftDialog, shift, postUpdate} = this.props;
 
         // TODO 2nd parameter callBack I think is not in used
-        showShiftDialog(input.value, null, postUpdate); //, (editedShift) => input.onChange(editedShift));
+        showShiftDialog(shift, null, postUpdate); //, (editedShift) => shift.onChange(editedShift));
     };
 
     showLocationModal = () => {
-        let {showLocationModal, input, isDesktop, company,showGoPremiumModal} = this.props;
+        let {showLocationModal, shift, isDesktop, company, showGoPremiumModal} = this.props;
 
         if (!isCompanyHasPremium(company)) {
             showGoPremiumModal();
             return;
         }
 
-        if (!input.value.location)
+        if (!shift.location)
             return;
 
         if (isDesktop)
-            showLocationModal(input.value);
+            showLocationModal(shift);
         else
-            this.showMapInBrowser(input.value.location);
+            this.showMapInBrowser(shift.location);
     };
 
     showMapInBrowser = (location) => {
@@ -112,9 +112,7 @@ class ShiftContainer extends React.PureComponent {
     };
 
     onUpdate = (orgShift, updatedShift) => {
-        let {input, updateShift, postUpdate} = this.props;
-
-        input.onChange(updatedShift);
+        let {updateShift, postUpdate} = this.props;
 
         let month = moment(orgShift.clockInTime).format('MM');
         let year = moment(orgShift.clockInTime).format('YYYY');
@@ -124,14 +122,13 @@ class ShiftContainer extends React.PureComponent {
 
     // TODO What the heck is this - duplicated onDelete
     onDelete = () => {
-        let {deleteShift, input} = this.props;
+        let {deleteShift, shift} = this.props;
 
-        deleteShift(input.value);
+        deleteShift(shift);
     };
 
     getErrors = () => {
-        let {input, getIntersectShift, mode} = this.props;
-        let shift = input.value;
+        let {shift, getIntersectShift, mode} = this.props;
         let {clockInTime, clockOutTime} = shift;
         let isShiftTooLong = moment(clockOutTime).diff(moment(clockInTime), 'hours', true) > 12;
         if (isShiftTooLong) {
@@ -151,7 +148,7 @@ class ShiftContainer extends React.PureComponent {
     };
 
     render() {
-        let {showNames, input, mode, isDesktop, onDelete} = this.props;
+        let {shift, showNames, mode, isDesktop, onDelete} = this.props;
         const {focus, hover} = this.state;
         let errors = this.getErrors();
         let classes1 = "shift " + (focus && isDesktop ? "focus" : "");
@@ -162,7 +159,7 @@ class ShiftContainer extends React.PureComponent {
                 {mode === ReportModes.Live &&
                     <LiveShift
                         showNames={showNames}
-                        shift={input.value}
+                        shift={shift}
                         errors={errors}
                         hover={hover}
                         showShiftDialog={this.showShiftDialog}
@@ -177,7 +174,7 @@ class ShiftContainer extends React.PureComponent {
                 {mode === ReportModes.Report &&
                     <ReportShift
                         showNames={showNames}
-                        shift={input.value}
+                        shift={shift}
                         errors={errors}
                         hover={hover}
                         onUpdateStartDate={this.onUpdateStartDate}
@@ -195,7 +192,7 @@ class ShiftContainer extends React.PureComponent {
 }
 
 ShiftContainer.propTypes = {
-    input: PropTypes.object.isRequired,
+    shift: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
@@ -203,7 +200,6 @@ ShiftContainer.propTypes = {
     onUpdateStartDate: PropTypes.func.isRequired,
     onUpdateStartTime: PropTypes.func.isRequired,
     onUpdateEndTime: PropTypes.func.isRequired,
-    postUpdate: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {

@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {createShift, updateShift} from "../../actions";
-import reduxForm from "redux-form/es/reduxForm";
 import PropTypes from 'prop-types';
 import {fetchDailyReport, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {getDailyShifts} from "../../selectors";
@@ -24,11 +23,10 @@ class DailyReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, updateShift, createShift, deleteShift, showShiftDialog, shifts, employees, mode} = this.props;
+        const {updateShift, createShift, deleteShift, showShiftDialog, shifts, employees, mode} = this.props;
         const {isLoading} = this.state;
 
         return (
-            <form onSubmit={handleSubmit(() => {})}>
                 <DailyReport
                     shifts={shifts}
                     mode={mode}
@@ -40,7 +38,6 @@ class DailyReportContainer extends React.PureComponent {
                     onDayChange={(startDayOfMonth) => this.onDayChange(startDayOfMonth)}
                     isLoading={isLoading}
                 />
-            </form>
         );
     }
 }
@@ -49,7 +46,6 @@ DailyReportContainer.propTypes = {
     shifts: PropTypes.array,
     employees: PropTypes.array,
     route: PropTypes.object,
-    handleSubmit: PropTypes.func.isRequired,
     fetchDailyReport: PropTypes.func.isRequired,
     fetchEmployees: PropTypes.func.isRequired,
     createShift: PropTypes.func.isRequired,
@@ -62,9 +58,6 @@ function mapStateToProps(state) {
     return {
         shifts: getDailyShifts(state),
         employees: state.users,
-        initialValues: {
-            shifts: getDailyShifts(state)
-        },
     };
 }
 
@@ -77,10 +70,5 @@ const mapDispatchToProps = {
     showShiftDialog: showEditShiftModal,
 };
 
-export default connect(
-    mapStateToProps, mapDispatchToProps
-)(reduxForm({
-    form: 'dailyReportForm',
-    enableReinitialize: true,
-})(DailyReportContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(DailyReportContainer);
 

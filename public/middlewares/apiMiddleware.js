@@ -33,7 +33,8 @@ const apiMiddleware = ({dispatch}) => next => action => {
         responseType,
     }).then(response => {
         dispatch(HideLoading());
-        return dispatch(success(response.data));
+        const successAction = success(response.data);
+        return successAction ? dispatch(successAction) : null;
     })
     .catch((err) => {
         dispatch(HideLoading());

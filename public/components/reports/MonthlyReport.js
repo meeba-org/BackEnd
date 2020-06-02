@@ -4,7 +4,6 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from "react";
 import {IfGranted} from "react-authorization";
-import Field from "redux-form/es/Field";
 import {EXCEL} from "../../../models/EReportFormat";
 import * as ERoles from "../../helpers/ERoles";
 import {DATE_FORMAT} from "../../helpers/utils";
@@ -100,7 +99,7 @@ class MonthlyReport extends React.PureComponent {
     };
 
     render() {
-        const {fields, employees, userRole, showShiftDialog, reportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat} = this.props;
+        const {fields, employees, userRole, showShiftDialog, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat} = this.props;
         const {selectedYear, selectedMonth} = this.state;
 
         return (
@@ -138,14 +137,14 @@ class MonthlyReport extends React.PureComponent {
 
                 {fields && fields.map((employeeShiftsReport, index) =>
                     (<Fade key={index} isVisible>
-                        <Field component={reportLineComponent}
-                               name={employeeShiftsReport}
-                               isCollapsed={this.isCollapsed(fields, index)}
-                               index={index}
-                               onToggle={(name) => this.onToggle(name)}
-                               onDeleteShift={this.onDeleteShift}
-                               showShiftDialog={showShiftDialog}
-                               postUpdate={postUpdate}
+                        <ReportLineComponent
+                            data={employeeShiftsReport}
+                            isCollapsed={this.isCollapsed(fields, index)}
+                            index={index}
+                            onToggle={(name) => this.onToggle(name)}
+                            onDeleteShift={this.onDeleteShift}
+                            showShiftDialog={showShiftDialog}
+                            postUpdate={postUpdate}
                         />
                     </Fade>)
                 ).filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))}
@@ -158,7 +157,7 @@ class MonthlyReport extends React.PureComponent {
 }
 
 MonthlyReport.propTypes = {
-    fields: PropTypes.object,
+    fields: PropTypes.array,
     employees: PropTypes.array,
     onCreateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
