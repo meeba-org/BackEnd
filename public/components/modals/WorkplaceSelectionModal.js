@@ -120,6 +120,8 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
                             type={"text"}
                             onChange={e => handleChange("name", e.target.value)}
                             styleName="field"
+                            autoFocus
+                            error={!workplace.name}
                         />
                         <TextField
                             label="רדיוס (מטרים)"
@@ -127,6 +129,7 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
                             type={"number"}
                             onChange={e => handleChange("radius", parseInt(e.target.value))}
                             styleName="field"
+                            error={!workplace.radius}
                         />
                     </Box>
                     <PlacesAutocomplete
