@@ -31,7 +31,10 @@ class LocationModal extends Component {
             <Dialog onClose={this.handleClose} open={open} classes={{paper: classes.dialogContentRoot}}>
                 <DialogContent >
                     {entity && entity.location &&
-                        <MbGoogleMap location={entity.location}/>
+                    <MbGoogleMap location={{
+                        lat: entity.location.latitude,
+                        lng: entity.location.longitude
+                    }}/>
                     }
                 </DialogContent>
                 <DialogActions classes={{root: classes.dialogActions}}>

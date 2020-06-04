@@ -11,19 +11,19 @@ const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const {body} = require('express-validator/check');
 const bodyParser = require('body-parser');
-const {createUser} = require('../managers/FirebaseManager');
-
-const registerToFirebase = async userData => {
-    const fbUser = await createUser(userData);
-    userData.fbUid = fbUser.uid;
-};
+// const {createUser} = require('../managers/FirebaseManager');
+//
+// const registerToFirebase = async userData => {
+//     const fbUser = await createUser(userData);
+//     userData.fbUid = fbUser.uid;
+// };
 
 //POST /register user
 router.post('/api/register',
     [
         body('username', "שם משתמש חסר").not().isEmpty(),
         body('email', "אימייל חסר או לא תקין").isEmail(),
-        body('password', "סיסמא חסרה או מתחת ל-6 תוים").isLength({ min: 6 }),
+        body('password', "סיסמא חסרה או מתחת ל-6 תוים").isLength({min: 6}),
     ],
     (req, res) => routeWrapper(req, res, async (req, res) => {
         let userData = {
