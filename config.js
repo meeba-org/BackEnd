@@ -56,6 +56,7 @@ function init() {
         {
             console.log("Development Mode!");
 
+            // module.exports.dbUrl = process.env.MONGOLAB_COPPER_URI; // Debugging production - be careful!
             module.exports.dbUrl = process.env.MONGODB_URI;
             module.exports.PAYMENT_BASE_URL = "icredit.rivhit.co.il"; // TODO GoPremium should be testIcredit
             module.exports.PAYMENT_PCI_BASE_URL = "pci.rivhit.co.il";
