@@ -1,11 +1,14 @@
 'use strict';
 
+import {PENDING_CREATE} from "../public/helpers/EShiftStatus";
+
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 const ShiftModel = require('../models/ShiftModel');
 const jwtService = require("./jwtService");
 const HolidayAnalyzer = require('../managers/HolidayAnalyzer');
+const {PENDING_UPDATE} = require("../public/helpers/EShiftStatus");
 const reject = require("./apiManager").reject;
 const routeWrapper = require("./apiManager").routeWrapper;
 const { body, param } = require('express-validator/check');
@@ -30,6 +33,9 @@ router.post('/',
         let newShift = req.body;
         fillMissingShiftData(res, newShift);
 
+        if (newShift.status === PENDING_CREATE)
+            LogModel.createMessage(newShift);
+
         return ShiftModel.createShift(newShift);
     })
 );
@@ -45,6 +51,8 @@ router.put('/',
         let newShift = req.body;
         fillMissingShiftData(res, newShift);
 
+        if (newShift.status === PENDING_UPDATE) // Also APPROVED
+            LogModel.createMessage(newShift);
         return ShiftModel.updateShift(newShift);
     })
 );
