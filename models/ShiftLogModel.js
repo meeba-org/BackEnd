@@ -1,13 +1,14 @@
 const {NEW} = require("../public/helpers/EShiftStatus");
 const mongoose = require('mongoose');
+const {ShiftSchema} = require('./ShiftModel');
 
 // ShiftLog Schema - probably for shifts
 const ShiftLogSchema = mongoose.Schema({
         company: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
         status: {type: String, default: NEW},
 //        updatedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, // TODO add who did the change
-        oldValue: {},
-        newValue: {}
+        oldValue: ShiftSchema,
+        newValue: ShiftSchema
     },
     {
         timestamps: true // for adding createdAt & updatedAt fields

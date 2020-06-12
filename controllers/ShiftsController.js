@@ -49,8 +49,6 @@ router.put('/',
         let newShift = req.body;
         fillMissingShiftData(res, newShift);
 
-        if (newShift.status === PENDING_UPDATE) // Also APPROVED
-            LogModel.createMessage(newShift);
         return ShiftModel.updateShift(newShift);
     })
 );

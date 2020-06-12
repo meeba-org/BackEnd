@@ -1,10 +1,13 @@
 const {createShiftLog, isNew} = require('../models/ShiftLogModel');
 const {getByShiftId} = require('../models/ShiftModel');
 
-const shouldLog = () => false;
+const shouldLog = (req) => {
+    return (req.method.toLowerCase() === 'put' && req.url === '/shifts');
+};
 
 const fetchOldValue = async shiftId => {
-    return await getByShiftId(shiftId);
+    const shift = await getByShiftId(shiftId);
+    return shift;
 };
 
 const createShiftLogObj = (newValue, oldValue) => ({
@@ -14,21 +17,21 @@ const createShiftLogObj = (newValue, oldValue) => ({
     oldValue
 });
 
-const logShiftChangeMiddleware = (req, res, next) => {
-    if (!shouldLog()) 
+const logShiftChangeMiddleware = async (req, res, next) => {
+    if (!shouldLog(req))
         return next();
 
     let shift = req.body;
     let oldShiftLogValue;
-    
+
     if (!isNew(shift)) {
-        oldShiftLogValue = fetchOldValue(shift._id);
+        oldShiftLogValue = await fetchOldValue(shift._id);
     }
 
     const shiftLog = createShiftLogObj(shift, oldShiftLogValue);
-    
+
     createShiftLog(shiftLog);
-    
+
     return next();
 };
 
