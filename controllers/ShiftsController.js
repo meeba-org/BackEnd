@@ -31,9 +31,6 @@ router.post('/',
         let newShift = req.body;
         fillMissingShiftData(res, newShift);
 
-        if (newShift.status === PENDING_CREATE)
-            LogModel.createMessage(newShift);
-
         return ShiftModel.createShift(newShift);
     })
 );

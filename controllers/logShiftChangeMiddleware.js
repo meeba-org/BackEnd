@@ -1,8 +1,20 @@
+const {getCompanyFromLocals} = require("./jwtService");
 const {createShiftLog, isNew} = require('../models/ShiftLogModel');
 const {getByShiftId} = require('../models/ShiftModel');
+const {getByCompanyId} = require('../models/CompanyModel');
+const {isInnovativeAuthorityEnable} = require('../managers/FeaturesManager');
 
-const shouldLog = (req) => {
-    return (req.method.toLowerCase() === 'put' && req.url === '/shifts');
+const isApiRelevantForLogging = req => 
+    ((req.method.toLowerCase() === 'put' || req.method.toLowerCase() === 'post') && req.url === '/shifts');
+
+const shouldLog = async (req, res) => {
+    if (!isApiRelevantForLogging(req))
+        return false;
+    
+    const companyFromLocals = getCompanyFromLocals(res);
+    const company = await getByCompanyId(companyFromLocals._id);
+
+    return isInnovativeAuthorityEnable(company);
 };
 
 const fetchOldValue = async shiftId => {
@@ -18,7 +30,7 @@ const createShiftLogObj = (newValue, oldValue) => ({
 });
 
 const logShiftChangeMiddleware = async (req, res, next) => {
-    if (!shouldLog(req))
+    if (!await shouldLog(req, res))
         return next();
 
     let shift = req.body;
