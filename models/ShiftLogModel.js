@@ -1,6 +1,6 @@
-import {NEW} from "../public/helpers/EShiftStatus";
-
+const {NEW} = require("../public/helpers/EShiftStatus");
 const mongoose = require('mongoose');
+
 // ShiftLog Schema - probably for shifts
 const ShiftLogSchema = mongoose.Schema({
         company: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},

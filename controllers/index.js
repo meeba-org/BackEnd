@@ -11,7 +11,7 @@ const reports = require('./ReportsController');
 const config = require('../config');
 const jwtService = require("./jwtService");
 const UserModel = require('../models/UserModel');
-const logShiftChangeMiddleware = require('./logShiftChangeMiddleware');
+const {logShiftChangeMiddleware} = require('./logShiftChangeMiddleware');
 router.use('/', general);
 
 router.use('/api', ejwt({secret: config.secret}));
