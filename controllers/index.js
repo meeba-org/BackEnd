@@ -11,11 +11,12 @@ const reports = require('./ReportsController');
 const config = require('../config');
 const jwtService = require("./jwtService");
 const UserModel = require('../models/UserModel');
-
+const logShiftChangeMiddleware = require('./logShiftChangeMiddleware');
 router.use('/', general);
 
 router.use('/api', ejwt({secret: config.secret}));
 router.use('/api', extractUserMiddleware);
+router.use('/api', logShiftChangeMiddleware);
 router.use('/api/shifts', shifts);
 router.use('/api/reports', reports);
 router.use('/api/tasks', tasks);
@@ -44,7 +45,7 @@ function restrictEmployee(req, res, next) {
     }
 
     return next();
-};
+}
 
 function extractUserMiddleware(req, res, next) {
     if (req.method.toLowerCase() === 'options')
@@ -57,6 +58,6 @@ function extractUserMiddleware(req, res, next) {
         return res.status(500).send(err);
     }
     return next();
-};
+}
 
 module.exports = router;

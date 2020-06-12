@@ -1,14 +1,12 @@
 'use strict';
 
-import {PENDING_CREATE} from "../public/helpers/EShiftStatus";
-
 const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 const ShiftModel = require('../models/ShiftModel');
 const jwtService = require("./jwtService");
 const HolidayAnalyzer = require('../managers/HolidayAnalyzer');
-const {PENDING_UPDATE} = require("../public/helpers/EShiftStatus");
+const {PENDING_UPDATE, PENDING_CREATE} = require("../public/helpers/EShiftStatus");
 const reject = require("./apiManager").reject;
 const routeWrapper = require("./apiManager").routeWrapper;
 const { body, param } = require('express-validator/check');
