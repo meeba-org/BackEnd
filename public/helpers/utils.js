@@ -1,6 +1,5 @@
-import moment from "moment";
-import * as ERoles from "./ERoles";
-import EShiftStatus from "./EShiftStatus";
+const moment = require("moment");
+const EShiftStatus = require("./EShiftStatus");
 
 export const DATE_FORMAT = "YYYY-MM-DD";
 export const TIME_FORMAT = "HH:mm";
@@ -75,13 +74,6 @@ export const isWorking = (shift) => {
 };
 
 export const getCurrentTime = () => moment().format(TIME_FORMAT);
-
-export const isUserAllowedLogin = (user) => {
-    if (!user)
-        return false;
-
-    return (user.role === ERoles.COMPANY_MANAGER || user.role === ERoles.SHIFT_MANAGER);
-};
 
 const zeroFill = (number, width) => {
     width -= number.toString().length;

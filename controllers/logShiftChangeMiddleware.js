@@ -1,6 +1,6 @@
 const {getCompanyFromLocals} = require("./jwtService");
 const {createShiftLog, isNew} = require('../models/ShiftLogModel');
-const {getByShiftId} = require('../models/ShiftModel');
+const {getByShiftId} = require('../models/DraftShiftModel');
 const {getByCompanyId} = require('../models/CompanyModel');
 const {isInnovativeAuthorityEnable} = require('../managers/FeaturesManager');
 
@@ -17,11 +17,6 @@ const shouldLog = async (req, res) => {
     return isInnovativeAuthorityEnable(company);
 };
 
-const fetchOldValue = async shiftId => {
-    const shift = await getByShiftId(shiftId);
-    return shift;
-};
-
 const createShiftLogObj = (newValue, oldValue) => ({
     company: newValue.company,
     status: newValue.status,
@@ -34,13 +29,14 @@ const logShiftChangeMiddleware = async (req, res, next) => {
         return next();
 
     let shift = req.body;
-    let oldShiftLogValue;
+    let oldShift = shift;
+    let newShift;
 
     if (!isNew(shift)) {
-        oldShiftLogValue = await fetchOldValue(shift._id);
+        newShift = shift.draftShift;
     }
 
-    const shiftLog = createShiftLogObj(shift, oldShiftLogValue);
+    const shiftLog = createShiftLogObj(newShift, oldShift);
 
     createShiftLog(shiftLog);
 

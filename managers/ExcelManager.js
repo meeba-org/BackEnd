@@ -3,6 +3,7 @@ const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 const Excel = require('exceljs');
 const EInsideWorkplace = require("../models/EInsideWorkplace");
+const ShiftLogModel = require("../models/ShiftLogModel");
 const {isTasksEnable, isAbsenceDaysEnable, isInnovativeAuthorityEnable} = require("./FeaturesManager");
 const {MAX_FREE_EMPLOYEES_ALLOWED} = require("../constants");
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
@@ -22,6 +23,9 @@ const HeaderBorderStyle = {
     right: { style: "medium" }
 };
 const EXCEL_SHEET_NAME_LIMIT = 31;
+const DATE_FORMAT = "YYYY-MM-DD";
+const TIME_FORMAT = "HH:mm";
+
 moment.locale('he');
 
 const createTitleDate = (year, month) => moment().year(year).month(month - 1).format('MM-YYYY');
@@ -149,6 +153,45 @@ let createSummaryContent = function (sheet, employees) {
 
 const hasWorkplaces = company => company.workplaces && company.workplaces.length > 0;
 
+const createBasicShiftsColumns = (sheet, company) => {
+    let columns = [
+        {header: 'תאריך', key: 'date', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'יום', key: 'dayInWeek', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שעת התחלה', key: 'clockInTime', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שעת סיום', key: 'clockOutTime', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'הפסקה', key: 'breakLength', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שעות (עשרוני)', key: 'shiftLength', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: '100%', key: 'regularHours', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: '125%', key: 'extra125Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: '150%', key: 'extra150Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: '175%', key: 'extra175Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: '200%', key: 'extra200Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
+    ];
+
+    if (isFeatureEnable(company, Feature.CommuteModule)) {
+        columns.push({
+            header: 'החזר נסיעות',
+            key: 'publicTransportation',
+            width: 10,
+            style: {alignment: {horizontal: 'center'}}
+        });
+    }
+
+    return columns;
+};
+
+const createShiftChangesLogColumns = (sheet, company) => {
+    let columns = [
+        {header: 'תאריך', key: 'date', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שעה', key: 'hour', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שדה', key: 'field', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'ערך חדש', key: 'newValue', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'ערך ישן', key: 'oldValue', width: 13, style: {alignment: {horizontal: 'center'}}},
+    ];
+
+    return columns;
+};
+
 const createShiftsPerEmployeeColumns = (sheet, company) => {
     let columns = createBasicShiftsColumns(sheet, company);
 
@@ -185,33 +228,6 @@ const createShiftsPerTaskColumns = (sheet, company) => {
 
     setHeaderColor(sheet);
 };
-
-function createBasicShiftsColumns(sheet, company) {
-    let columns = [
-        {header: 'תאריך', key: 'date', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'יום', key: 'dayInWeek', width: 7, style: {alignment: {horizontal: 'center'}}},
-        {header: 'שעת התחלה', key: 'clockInTime', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'שעת סיום', key: 'clockOutTime', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'הפסקה', key: 'breakLength', width: 7, style: {alignment: {horizontal: 'center'}}},
-        {header: 'שעות (עשרוני)', key: 'shiftLength', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: '100%', key: 'regularHours', width: 7, style: {alignment: {horizontal: 'center'}}},
-        {header: '125%', key: 'extra125Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
-        {header: '150%', key: 'extra150Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
-        {header: '175%', key: 'extra175Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
-        {header: '200%', key: 'extra200Hours', width: 7, style: {alignment: {horizontal: 'center'}}},
-    ];
-
-    if (isFeatureEnable(company, Feature.CommuteModule)) {
-        columns.push({
-            header: 'החזר נסיעות',
-            key: 'publicTransportation',
-            width: 10,
-            style: {alignment: {horizontal: 'center'}}
-        });
-    }
-
-    return columns;
-}
 
 function shouldAddCommuteData(company, shift) {
     return isFeatureEnable(company, Feature.CommuteModule) && !!shift.commuteCost;
@@ -256,7 +272,33 @@ const createShiftsPerEmployeesContent = function (sheet, employee, company, year
     createBasicShiftsContent(sheet, employee, company, year, month );
 };
 
-const createBasicShiftsContent = function (sheet, entity, company, year, month ) {
+const calcChanges = (oldValue, newValue) => {
+    // TODO Implement this
+    return {
+        field: 'נסיעות',
+        oldValue: 33,
+        newValue: 55
+    };
+};
+
+const createShiftChangesLogContent = (sheet, entity, company, shiftChangesLog ) => {
+
+    for (let log of shiftChangesLog) {
+        const {field, oldValue, newValue} = calcChanges(log.oldValue, log.newValue);
+
+        let row = {
+            date: moment(log.newValue.clockInTime).format(DATE_FORMAT),
+            hour: moment(log.newValue.clockInTime).format(TIME_FORMAT),
+            field,
+            newValue,
+            oldValue
+        };
+
+        sheet.addRow(row);
+    }
+};
+
+const createBasicShiftsContent =  (sheet, entity, company, year, month ) => {
     if (!entity.shifts || entity.shifts.length === 0)
         return;
 
@@ -475,15 +517,29 @@ let addWorksheet = function (workbook, title, color) {
     });
 };
 
-const addShiftsPerEmployeeSheets = (workbook, company, employees, year, month) => {
-    employees.forEach((employee) => {
+const addShiftsPerEmployeeSheets = async (workbook, company, employees, year, month) => {
+    let shiftChangesLog;
+    if (isInnovativeAuthorityEnable(company))
+        shiftChangesLog = await ShiftLogModel.getByCompanyId(company._id);
+
+    for (const employee of employees) {
         // create a sheet with the first row and column frozen
         let sheet = addWorksheet(workbook, employee.fullName, "54A759");
 
         createShiftsPerEmployeeColumns(sheet, company);
-        createShiftsPerEmployeesContent(sheet, employee, company, year, month );
+        createShiftsPerEmployeesContent(sheet, employee, company, year, month);
         createEmployeesTotalSection(sheet, employee);
-    });
+
+        // TODO preetify code
+        if (isInnovativeAuthorityEnable(company)) {
+            // create a sheet with the first row and column frozen
+            let sheet = addWorksheet(workbook, ` - דוח שינויים${employee.fullName}`, "54A759");
+            const employeeShiftChangesLog = shiftChangesLog.filter(log => log.newValue.user._id === employee._id);
+
+            createShiftChangesLogColumns(sheet, company);
+            createShiftChangesLogContent(sheet, employee, company, employeeShiftChangesLog);
+        }
+    }
 
 };
 
