@@ -10,7 +10,6 @@ const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isIndependenceDay = require("./HolidayAnalyzer").isIndependenceDay;
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
 const isHoliday = require("./HolidayAnalyzer").isHoliday;
-const {deepDiffMapper} = require('../managers/utils');
 const RowBorderStyle = {
     top: { style: "hair" },
     left: { style: "medium" },
@@ -26,7 +25,8 @@ const HeaderBorderStyle = {
 const EXCEL_SHEET_NAME_LIMIT = 31;
 const DATE_FORMAT = "YYYY-MM-DD";
 const TIME_FORMAT = "HH:mm";
-
+const DATE_AND_TIME_FORMAT = DATE_FORMAT + ' ' + TIME_FORMAT;
+ 
 moment.locale('he');
 
 const createTitleDate = (year, month) => moment().year(year).month(month - 1).format('MM-YYYY');
@@ -276,14 +276,34 @@ const createShiftsPerEmployeesContent = function (sheet, employee, company, year
 };
 
 const calcChanges = (oldValue, newValue) => {
-    // TODO So is it good or not?
-    const result = deepDiffMapper.map(oldValue.toObject(), newValue.toObject());
-    
-    // TODO Implement this
+    let field = "לא ידוע";
+    let oldValueStr;
+    let newValueStr;
+    if (moment(oldValue.clockInTime).diff(moment(newValue.clockInTime)) > 0) {
+        field = "זמן כניסה";
+        oldValueStr = moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT);
+        newValueStr = moment(newValue.clockInTime).format(DATE_AND_TIME_FORMAT);
+    }
+    else if (moment(oldValue.clockOutTime).diff(moment(newValue.clockOutTime)) > 0) {
+        field = "זמן יציאה";
+        oldValueStr = moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT);
+        newValueStr = moment(newValue.clockOutTime).format(DATE_AND_TIME_FORMAT);
+    }
+    else if (oldValue.commuteCost.publicTransportation !== newValue.commuteCost.publicTransportation) {
+        field = "נסיעות";
+        oldValueStr = oldValue.commuteCost.publicTransportation;
+        newValueStr = newValue.commuteCost.publicTransportation;
+    }
+    else if (oldValue.extraPay !== newValue.extraPay) {
+        field = "בונוס";
+        oldValueStr = oldValue.extraPay;
+        newValueStr = newValue.extraPay;
+    }
+        
     return {
-        field: 'נסיעות',
-        oldValue: 33,
-        newValue: 55
+        field,
+        oldValue: oldValueStr,
+        newValue: newValueStr
     };
 };
 
