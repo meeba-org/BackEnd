@@ -189,7 +189,9 @@ const createShiftChangesLogColumns = (sheet, company) => {
         {header: 'ערך ישן', key: 'oldValue', width: 13, style: {alignment: {horizontal: 'center'}}},
     ];
 
-    return columns;
+    sheet.columns = columns;
+
+    setHeaderColor(sheet);
 };
 
 const createShiftsPerEmployeeColumns = (sheet, company) => {
@@ -533,8 +535,8 @@ const addShiftsPerEmployeeSheets = async (workbook, company, employees, year, mo
         // TODO preetify code
         if (isInnovativeAuthorityEnable(company)) {
             // create a sheet with the first row and column frozen
-            let sheet = addWorksheet(workbook, ` - דוח שינויים${employee.fullName}`, "54A759");
-            const employeeShiftChangesLog = shiftChangesLog.filter(log => log.newValue.user._id === employee._id);
+            let sheet = addWorksheet(workbook, `${employee.fullName} - דוח שינויים`, "a3d1a6");
+            const employeeShiftChangesLog = shiftChangesLog.filter(log => log.newValue.user._id.toString() === employee._id.toString());
 
             createShiftChangesLogColumns(sheet, company);
             createShiftChangesLogContent(sheet, employee, company, employeeShiftChangesLog);
@@ -594,7 +596,7 @@ const processShiftsForTasks = function (shifts, company, tasks) {
     return ShiftAnalyzer.createTasksReport(shifts, company, tasks);
 };
 
-const createExcel = (shifts, year, month, company, rawTasks) => {
+const createExcel = async (shifts, year, month, company, rawTasks) => {
     const workbook = createWorkbook();
     let employees = processShiftsForEmployees(shifts, company);
 
@@ -606,7 +608,7 @@ const createExcel = (shifts, year, month, company, rawTasks) => {
     let tasks = processShiftsForTasks(shifts, company, rawTasks);
 
     addSummarySheet(workbook, company, employees, limitedReport);
-    addShiftsPerEmployeeSheets(workbook, company, employees, year, month);
+    await addShiftsPerEmployeeSheets(workbook, company, employees, year, month);
     addShiftsPerTaskSheets(workbook, company, tasks, year, month);
 
     return workbook;

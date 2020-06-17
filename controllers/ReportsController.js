@@ -37,7 +37,7 @@ router.get('/download',
         let tasks = results[1];
 
         if (format === EXCEL) {
-            return handleExcelFormat(shifts, year, month, company, tasks, res);
+            return await handleExcelFormat(shifts, year, month, company, tasks, res);
         }
         else if (format === MICHPAL) {
             return handleMichpalFormat(shifts, year, month, company, res);
@@ -95,8 +95,8 @@ router.get('/tasks',
     })
 );
 
-const handleExcelFormat = (shifts, year, month, company, tasks, res) => {
-    let workbook = ExcelManager.createExcel(shifts, year, month, company, tasks);
+const handleExcelFormat = async (shifts, year, month, company, tasks, res) => {
+    let workbook = await ExcelManager.createExcel(shifts, year, month, company, tasks);
 
     let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
