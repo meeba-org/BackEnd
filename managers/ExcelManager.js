@@ -10,6 +10,7 @@ const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isIndependenceDay = require("./HolidayAnalyzer").isIndependenceDay;
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
 const isHoliday = require("./HolidayAnalyzer").isHoliday;
+const {deepDiffMapper} = require('../managers/utils');
 const RowBorderStyle = {
     top: { style: "hair" },
     left: { style: "medium" },
@@ -275,6 +276,9 @@ const createShiftsPerEmployeesContent = function (sheet, employee, company, year
 };
 
 const calcChanges = (oldValue, newValue) => {
+    // TODO So is it good or not?
+    const result = deepDiffMapper.map(oldValue.toObject(), newValue.toObject());
+    
     // TODO Implement this
     return {
         field: 'נסיעות',
@@ -287,7 +291,7 @@ const createShiftChangesLogContent = (sheet, entity, company, shiftChangesLog ) 
 
     for (let log of shiftChangesLog) {
         const {field, oldValue, newValue} = calcChanges(log.oldValue, log.newValue);
-
+        
         let row = {
             date: moment(log.newValue.clockInTime).format(DATE_FORMAT),
             hour: moment(log.newValue.clockInTime).format(TIME_FORMAT),
