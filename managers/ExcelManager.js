@@ -519,6 +519,16 @@ let addWorksheet = function (workbook, title, color) {
     });
 };
 
+const handleEmployeeChangesLog = (workbook, employee, shiftChangesLog, company) => {
+    let sheet = addWorksheet(workbook, `${employee.fullName} - דוח שינויים`, "a3d1a6");
+    
+    // Get the changes relevant for the specific employee
+    const employeeShiftChangesLog = shiftChangesLog.filter(log => log.newValue.user._id.toString() === employee._id.toString());
+
+    createShiftChangesLogColumns(sheet, company);
+    createShiftChangesLogContent(sheet, employee, company, employeeShiftChangesLog);
+};
+
 const addShiftsPerEmployeeSheets = async (workbook, company, employees, year, month) => {
     let shiftChangesLog;
     if (isInnovativeAuthorityEnable(company))
@@ -532,14 +542,8 @@ const addShiftsPerEmployeeSheets = async (workbook, company, employees, year, mo
         createShiftsPerEmployeesContent(sheet, employee, company, year, month);
         createEmployeesTotalSection(sheet, employee);
 
-        // TODO preetify code
         if (isInnovativeAuthorityEnable(company)) {
-            // create a sheet with the first row and column frozen
-            let sheet = addWorksheet(workbook, `${employee.fullName} - דוח שינויים`, "a3d1a6");
-            const employeeShiftChangesLog = shiftChangesLog.filter(log => log.newValue.user._id.toString() === employee._id.toString());
-
-            createShiftChangesLogColumns(sheet, company);
-            createShiftChangesLogContent(sheet, employee, company, employeeShiftChangesLog);
+            handleEmployeeChangesLog(workbook, employee, shiftChangesLog, company);
         }
     }
 
