@@ -19,8 +19,7 @@ const shouldLog = async (req, res) => {
     
     const shift = req.body;
     
-    // TODO Add EShiftStatus.APPROVED
-    return (shift.status === EShiftStatus.PENDING_CREATE || shift.status === EShiftStatus.PENDING_UPDATE);
+    return (shift.status === EShiftStatus.PENDING_CREATE || shift.status === EShiftStatus.PENDING_UPDATE || shift.status === EShiftStatus.APPROVED);
 };
 
 const createShiftLogObj = (newValue, oldValue) => ({
@@ -39,8 +38,13 @@ const logShiftChangeMiddleware = async (req, res, next) => {
         let oldShift;
         let newShift;
 
-        newShift = { ...shift.draftShift};
-        oldShift = { ...shift, draftShift: null};
+        if (shift.status === EShiftStatus.PENDING_UPDATE || shift.status === EShiftStatus.PENDING_CREATE) {
+            newShift = {...shift.draftShift};
+            oldShift = {...shift, draftShift: null};
+        }
+        else if (shift.status === EShiftStatus.APPROVED) {
+            oldShift = {... shift};
+        }
 
         const shiftLog = createShiftLogObj(newShift, oldShift);
 

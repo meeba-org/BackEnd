@@ -10,6 +10,7 @@ const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isIndependenceDay = require("./HolidayAnalyzer").isIndependenceDay;
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
 const isHoliday = require("./HolidayAnalyzer").isHoliday;
+const EShiftStatus = require("../public/helpers/EShiftStatus");
 const RowBorderStyle = {
     top: { style: "hair" },
     left: { style: "medium" },
@@ -23,9 +24,9 @@ const HeaderBorderStyle = {
     right: { style: "medium" }
 };
 const EXCEL_SHEET_NAME_LIMIT = 31;
-const DATE_FORMAT = "YYYY-MM-DD";
+const DATE_FORMAT = "DD/MM/YYYY";
 const TIME_FORMAT = "HH:mm";
-const DATE_AND_TIME_FORMAT = DATE_FORMAT + ' ' + TIME_FORMAT;
+const DATE_AND_TIME_FORMAT = `${TIME_FORMAT} ${DATE_FORMAT}`;
  
 moment.locale('he');
 
@@ -183,11 +184,11 @@ const createBasicShiftsColumns = (sheet, company) => {
 
 const createShiftChangesLogColumns = (sheet, company) => {
     let columns = [
-        {header: 'תאריך', key: 'date', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'שעה', key: 'hour', width: 7, style: {alignment: {horizontal: 'center'}}},
-        {header: 'שינוי', key: 'field', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'ערך ישן', key: 'oldValue', width: 20, style: {alignment: {horizontal: 'center'}}},
-        {header: 'ערך חדש', key: 'newValue', width: 20, style: {alignment: {horizontal: 'center'}}},
+        {header: 'תאריך', key: 'date', width: 13, style: {alignment: {vertical: 'top', horizontal: 'center'}}},
+        {header: 'שעה', key: 'hour', width: 7, style: {alignment: {vertical: 'top', horizontal: 'center'}}},
+        {header: 'שינוי', key: 'field', width: 20, style: {alignment: {vertical: 'top', horizontal: 'center'}}},
+        {header: 'ערך ישן', key: 'oldValue', width: 20, style: {alignment: {wrapText: true, vertical: 'top', horizontal: 'center'}}},
+        {header: 'ערך חדש', key: 'newValue', width: 30, style: {alignment: {wrapText: true, vertical: 'top', horizontal: 'center'}}},
     ];
 
     sheet.columns = columns;
@@ -275,27 +276,35 @@ const createShiftsPerEmployeesContent = function (sheet, employee, company, year
     createBasicShiftsContent(sheet, employee, company, year, month );
 };
 
-const calcChanges = (oldValue, newValue) => {
+const calcChanges = (oldValue, newValue, status) => {
     let field = "לא ידוע";
     let oldValueStr;
     let newValueStr;
-    if (moment(oldValue.clockInTime).diff(moment(newValue.clockInTime), 'minutes') > 0) {
-        field = "זמן כניסה";
+    
+    if (status === EShiftStatus.APPROVED.toString()) {
+        field = "אישור שינוי";
+        oldValueStr = "";
+        newValueStr = `כניסה:${moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
+יציאה: ${oldValue.clockOutTime && moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`; // This should be the whole shift: clockIn, Clockout, commuteCost, extraPay
+    }
+    // Log is about request to update a shift
+    else if (moment(oldValue.clockInTime).diff(moment(newValue.clockInTime), 'minutes') > 0) {
+        field = "בקשה לעדכון כניסה";
         oldValueStr = moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT);
         newValueStr = moment(newValue.clockInTime).format(DATE_AND_TIME_FORMAT);
     }
     else if (moment(oldValue.clockOutTime).diff(moment(newValue.clockOutTime), 'minutes') > 0) {
-        field = "זמן יציאה";
+        field = "בקשה לעדכון יציאה";
         oldValueStr = moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT);
         newValueStr = moment(newValue.clockOutTime).format(DATE_AND_TIME_FORMAT);
     }
     else if (oldValue.commuteCost.publicTransportation !== newValue.commuteCost.publicTransportation) {
-        field = "נסיעות";
+        field = "בקשה לעדכון נסיעות";
         oldValueStr = oldValue.commuteCost.publicTransportation;
         newValueStr = newValue.commuteCost.publicTransportation;
     }
     else if (oldValue.extraPay !== newValue.extraPay) {
-        field = "בונוס";
+        field = "בקשה לעדכון בונוס";
         oldValueStr = oldValue.extraPay;
         newValueStr = newValue.extraPay;
     }
@@ -310,11 +319,11 @@ const calcChanges = (oldValue, newValue) => {
 const createShiftChangesLogContent = (sheet, entity, company, shiftChangesLog ) => {
 
     for (let log of shiftChangesLog) {
-        const {field, oldValue, newValue} = calcChanges(log.oldValue, log.newValue);
+        const {field, oldValue, newValue} = calcChanges(log.oldValue, log.newValue, log.status);
         
         let row = {
-            date: moment(log.newValue.clockInTime).format(DATE_FORMAT),
-            hour: moment(log.newValue.clockInTime).format(TIME_FORMAT),
+            date: moment().format(DATE_FORMAT), // Date & hour of the change
+            hour: moment().format(TIME_FORMAT),
             field,
             newValue,
             oldValue
