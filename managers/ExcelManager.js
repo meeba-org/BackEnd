@@ -284,8 +284,8 @@ const calcChanges = (oldValue, newValue, status) => {
     if (status === EShiftStatus.APPROVED.toString()) {
         field = "אישור שינוי";
         oldValueStr = "";
-        newValueStr = `כניסה:${moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
-יציאה: ${oldValue.clockOutTime && moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`; // This should be the whole shift: clockIn, Clockout, commuteCost, extraPay
+        newValueStr = `--> ${moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
+<-- ${oldValue.clockOutTime && moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`; 
     }
     // Log is about request to update a shift
     else if (moment(oldValue.clockInTime).diff(moment(newValue.clockInTime), 'minutes') > 0) {
@@ -322,8 +322,8 @@ const createShiftChangesLogContent = (sheet, entity, company, shiftChangesLog ) 
         const {field, oldValue, newValue} = calcChanges(log.oldValue, log.newValue, log.status);
         
         let row = {
-            date: moment().format(DATE_FORMAT), // Date & hour of the change
-            hour: moment().format(TIME_FORMAT),
+            date: moment(log.createdAt).format(DATE_FORMAT), // Date & hour of the change
+            hour: moment(log.createdAt).format(TIME_FORMAT),
             field,
             newValue,
             oldValue
