@@ -185,9 +185,9 @@ const createShiftChangesLogColumns = (sheet, company) => {
     let columns = [
         {header: 'תאריך', key: 'date', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'שעה', key: 'hour', width: 7, style: {alignment: {horizontal: 'center'}}},
-        {header: 'שדה', key: 'field', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'ערך חדש', key: 'newValue', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'ערך ישן', key: 'oldValue', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שינוי', key: 'field', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'ערך ישן', key: 'oldValue', width: 20, style: {alignment: {horizontal: 'center'}}},
+        {header: 'ערך חדש', key: 'newValue', width: 20, style: {alignment: {horizontal: 'center'}}},
     ];
 
     sheet.columns = columns;
@@ -279,12 +279,12 @@ const calcChanges = (oldValue, newValue) => {
     let field = "לא ידוע";
     let oldValueStr;
     let newValueStr;
-    if (moment(oldValue.clockInTime).diff(moment(newValue.clockInTime)) > 0) {
+    if (moment(oldValue.clockInTime).diff(moment(newValue.clockInTime), 'minutes') > 0) {
         field = "זמן כניסה";
         oldValueStr = moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT);
         newValueStr = moment(newValue.clockInTime).format(DATE_AND_TIME_FORMAT);
     }
-    else if (moment(oldValue.clockOutTime).diff(moment(newValue.clockOutTime)) > 0) {
+    else if (moment(oldValue.clockOutTime).diff(moment(newValue.clockOutTime), 'minutes') > 0) {
         field = "זמן יציאה";
         oldValueStr = moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT);
         newValueStr = moment(newValue.clockOutTime).format(DATE_AND_TIME_FORMAT);
@@ -547,7 +547,7 @@ const handleEmployeeChangesLog = (workbook, employee, shiftChangesLog, company) 
     let sheet = addWorksheet(workbook, `${employee.fullName} - דוח שינויים`, "a3d1a6");
     
     // Get the changes relevant for the specific employee
-    const employeeShiftChangesLog = shiftChangesLog.filter(log => log.newValue.user._id.toString() === employee._id.toString());
+    const employeeShiftChangesLog = shiftChangesLog.filter(log => log.oldValue.user._id.toString() === employee._id.toString());
 
     createShiftChangesLogColumns(sheet, company);
     createShiftChangesLogContent(sheet, employee, company, employeeShiftChangesLog);
