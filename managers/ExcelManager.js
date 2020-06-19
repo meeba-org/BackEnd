@@ -288,12 +288,12 @@ const calcChanges = (oldValue, newValue, status) => {
 <-- ${oldValue.clockOutTime && moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`; 
     }
     // Log is about request to update a shift
-    else if (moment(oldValue.clockInTime).diff(moment(newValue.clockInTime), 'minutes') > 0) {
+    else if (moment(oldValue.clockInTime).diff(moment(newValue.clockInTime), 'minutes') !== 0) {
         field = "בקשה לעדכון כניסה";
         oldValueStr = moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT);
         newValueStr = moment(newValue.clockInTime).format(DATE_AND_TIME_FORMAT);
     }
-    else if (moment(oldValue.clockOutTime).diff(moment(newValue.clockOutTime), 'minutes') > 0) {
+    else if (moment(oldValue.clockOutTime).diff(moment(newValue.clockOutTime), 'minutes') !== 0) {
         field = "בקשה לעדכון יציאה";
         oldValueStr = moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT);
         newValueStr = moment(newValue.clockOutTime).format(DATE_AND_TIME_FORMAT);
