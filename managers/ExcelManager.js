@@ -308,7 +308,7 @@ const calcChanges = (oldValue, newValue, status) => {
         oldValueStr = oldValue.extraPay;
         newValueStr = newValue.extraPay;
     }
-        
+
     return {
         field,
         oldValue: oldValueStr,
@@ -553,13 +553,18 @@ let addWorksheet = function (workbook, title, color) {
 };
 
 const handleEmployeeChangesLog = (workbook, employee, shiftChangesLog, company) => {
-    let sheet = addWorksheet(workbook, `${employee.fullName} - דוח שינויים`, "a3d1a6");
-    
-    // Get the changes relevant for the specific employee
-    const employeeShiftChangesLog = shiftChangesLog.filter(log => log.oldValue.user._id.toString() === employee._id.toString());
+    try {
+        let sheet = addWorksheet(workbook, `${employee.fullName} - דוח שינויים`, "a3d1a6");
 
-    createShiftChangesLogColumns(sheet, company);
-    createShiftChangesLogContent(sheet, employee, company, employeeShiftChangesLog);
+        // Get the changes relevant for the specific employee
+        const employeeShiftChangesLog = shiftChangesLog.filter(log => log.oldValue.user._id.toString() === employee._id.toString());
+
+        createShiftChangesLogColumns(sheet, company);
+        createShiftChangesLogContent(sheet, employee, company, employeeShiftChangesLog);
+    }
+    catch (e) {
+        console.error(e);
+    }
 };
 
 const addShiftsPerEmployeeSheets = async (workbook, company, employees, year, month) => {
