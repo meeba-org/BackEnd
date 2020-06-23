@@ -33,7 +33,6 @@ class EmployeesContainer extends React.Component {
 
 EmployeesContainer.propTypes = {
     employees: PropTypes.array,
-    handleSubmit: PropTypes.func.isRequired,
     fetchEmployees: PropTypes.func.isRequired,
     createUser: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
