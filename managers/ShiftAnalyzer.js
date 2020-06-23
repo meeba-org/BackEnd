@@ -466,7 +466,7 @@ const calcClockInInsideWorkplace = (location, workplaces) => {
             if (!wpLocation)
                 continue;
 
-            const distance = getComputeDistanceBetween(wpLocation, location);
+            const distance = getComputeDistanceBetween(wpLocation, {lat: location.latitude, lng: location.longitude});
             if (distance < workplace.radius)
                 return EInsideWorkplace.INSIDE;
         }

@@ -287,6 +287,12 @@ const calcChanges = (oldValue, newValue, status) => {
         newValueStr = `--> ${moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
 <-- ${oldValue.clockOutTime && moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`; 
     }
+    else if (status === EShiftStatus.PENDING_CREATE.toString()) {
+        field = "בקשה ליצירת משמרת";
+        oldValueStr = "";
+        newValueStr = `--> ${moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
+<-- ${oldValue.clockOutTime && moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`;
+    }
     // Log is about request to update a shift
     else if (moment(oldValue.clockInTime).diff(moment(newValue.clockInTime), 'minutes') !== 0) {
         field = "בקשה לעדכון כניסה";
