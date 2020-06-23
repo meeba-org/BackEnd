@@ -72,7 +72,7 @@ function createSummaryColumns(sheet, company) {
         columns.push({header: 'מדע"ר %', key: 'innovativeAuthorityPercentage', width: 10, style: {alignment: {horizontal: 'center'}}});
 
     if (hasWorkplaces(company))
-        columns.push({header: 'מחוץ לעבודה %', key: 'outOfOfficePercentage', width: 10, style: {alignment: {horizontal: 'center'}}});
+        columns.push({header: 'מחוץ לעבודה %', key: 'outOfOfficePercentage', width: 15, style: {alignment: {horizontal: 'center'}}});
 
     columns.push({header: 'סה"כ שכר', key: 'overallSalary', width: 11, style: {alignment: {horizontal: 'center'}}});
 
@@ -204,7 +204,7 @@ const createShiftsPerEmployeeColumns = (sheet, company) => {
     }
 
     if (hasWorkplaces(company)) {
-        columns.push({header: 'מחוץ לעבודה', key: 'oooShift', width: 10, style: {alignment: {horizontal: 'center'}}});
+        columns.push({header: 'מחוץ לעבודה', key: 'oooShift', width: 12, style: {alignment: {horizontal: 'center'}}});
     }
 
     const employeeColumns = [
