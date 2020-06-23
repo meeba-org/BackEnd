@@ -4,7 +4,6 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import FieldArray from "redux-form/es/FieldArray";
 import {ReportModes} from "../../helpers/utils";
 import "../../styles/MonthlyReportLine.scss";
 import HoursBar from "../HoursBar";
@@ -44,7 +43,7 @@ class TaskReportLine extends React.PureComponent {
     };
 
     render() {
-        let {input, isCollapsed, onToggle, onUpdateShift, onDeleteShift, showShiftDialog, index, postUpdate} = this.props;
+        let {data, isCollapsed, onToggle, onUpdateShift, onDeleteShift, showShiftDialog, index, postUpdate} = this.props;
         let toggleButton = isCollapsed ?
             <Tooltip title="פרטי משמרות" placement="top"><KeyboardArrowLeft/></Tooltip> :
             <KeyboardArrowDown/>;
@@ -53,16 +52,15 @@ class TaskReportLine extends React.PureComponent {
             <div styleName="monthly-report-block" onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
                 <div styleName="monthly-report-header" onClick={() => onToggle(index)}>
                     <IconButton styleName="toggle-button" color="primary" >{toggleButton}</IconButton>
-                    <TaskBreadCrumb taskBreadCrumb={input.value.taskBreadCrumb} />
-                    <HoursBar {...input.value} displayDetails={this.state.hover}/>
+                    <TaskBreadCrumb taskBreadCrumb={data.taskBreadCrumb} />
+                    <HoursBar {...data} displayDetails={this.state.hover}/>
                 </div>
                 {!isCollapsed &&
                 <div styleName="monthly-report-body">
-                        <HoursSummary data={input.value}/>
+                        <HoursSummary data={data}/>
 
-                        <FieldArray
-                            name={`${input.name}.shifts`}
-                            component={ShiftsList}
+                        <ShiftsList
+                            shifts={data.shifts}
                             onDelete={onDeleteShift}
                             showShiftDialog={showShiftDialog}
                             onUpdate={onUpdateShift}
@@ -79,7 +77,6 @@ class TaskReportLine extends React.PureComponent {
 }
 
 TaskReportLine.propTypes = {
-    input: PropTypes.object.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,

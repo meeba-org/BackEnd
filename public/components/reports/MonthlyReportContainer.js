@@ -49,10 +49,10 @@ class MonthlyReportContainer extends React.PureComponent {
                 postUpdate={this.onDataChange}
                 ReportLineComponent={MonthlyReportLine}
                 title={'דו"ח חודשי'}
-                            isDesktop={isDesktop}
-                            startOfMonth={startOfMonth}
-                            defaultExportFormat={companySettings?.defaultExportFormat}
-                />
+                isDesktop={isDesktop}
+                startOfMonth={startOfMonth}
+                defaultExportFormat={companySettings?.defaultExportFormat}
+            />
         );
     }
 }

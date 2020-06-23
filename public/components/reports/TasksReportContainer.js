@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import React from "react";
 import {connect} from "react-redux";
-import FieldArray from "redux-form/es/FieldArray";
-import reduxForm from "redux-form/es/reduxForm";
 import {createShift} from "../../actions";
 import {exportReport, fetchTasksReport} from "../../actions/reportsActions";
 import {showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
@@ -37,38 +35,33 @@ class TasksReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {handleSubmit, showShiftDialog, createShift, deleteShift, employees, userRole, startOfMonth} = this.props;
+        const {showShiftDialog, createShift, deleteShift, employees, userRole, startOfMonth, tasksReports} = this.props;
         return (
-            <form onSubmit={handleSubmit(() => {})}>
-                <FieldArray name="tasksReports"
-                            component={MonthlyReport}
-                            employees={employees}
-                            onDeleteShift={deleteShift}
-                            showShiftDialog={showShiftDialog}
-                            onCreateShift={createShift}
-                            onMonthChange={this.onDataChange}
-                            onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
-                            onExportReport={(month, year) => this.onExportReport(month, year)}
-                            userRole={userRole}
-                            reportLineComponent={TaskReportLine}
-                            title={'דו"ח משימות'}
-                            postUpdate={this.onDataChange}
-                            startOfMonth={startOfMonth}
-                />
-            </form>
+            <MonthlyReport
+                employees={employees}
+                fields={tasksReports}
+                onDeleteShift={deleteShift}
+                showShiftDialog={showShiftDialog}
+                onCreateShift={createShift}
+                onMonthChange={this.onDataChange}
+                onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
+                onExportReport={(month, year) => this.onExportReport(month, year)}
+                userRole={userRole}
+                ReportLineComponent={TaskReportLine}
+                title={'דו"ח משימות'}
+                postUpdate={this.onDataChange}
+                startOfMonth={startOfMonth}
+            />
         );
     }
 }
 
 TasksReportContainer.propTypes = {
-    shifts: PropTypes.array,
     employees: PropTypes.array,
     route: PropTypes.object,
-    handleSubmit: PropTypes.func.isRequired,
     fetchTasksReport: PropTypes.func.isRequired,
     fetchEmployees: PropTypes.func.isRequired,
     createShift: PropTypes.func.isRequired,
-    updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
@@ -76,9 +69,7 @@ TasksReportContainer.propTypes = {
 
 const mapStateToProps = state => ({
     employees: state.users,
-    initialValues: {
-        tasksReports: state.reports.tasksReports
-    },
+    tasksReports: state.reports.tasksReports,
     userRole: getUserRole(state),
     isLoading: state.loader.isLoading,
     startOfMonth: getStartOfMonth(state),
@@ -94,10 +85,5 @@ const mapDispatchToProps = {
     showShiftDialog: showEditShiftModal,
 };
 
-export default connect(
-    mapStateToProps, mapDispatchToProps
-)(reduxForm({
-    form: 'taskReportForm',
-    enableReinitialize: true,
-})(TasksReportContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(TasksReportContainer);
 

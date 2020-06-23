@@ -2,7 +2,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
 import React from 'react';
 import {connect} from 'react-redux';
-import reduxForm from "redux-form/es/reduxForm";
 import {MAX_FREE_TASKS_ALLOWED} from "../../../constants";
 import * as ETaskType from "../../../models/ETaskType";
 import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
@@ -110,11 +109,5 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(reduxForm({
-    form: 'tasksForm',
-    enableReinitialize: true,
-})(TasksContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(TasksContainer);
 

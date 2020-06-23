@@ -2,7 +2,6 @@ import FormLabel from '@material-ui/core/FormLabel';
 import { withStyles } from '@material-ui/core/styles';
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
-import reduxForm from "redux-form/es/reduxForm";
 import {fetchTasks} from "../../actions/tasksActions";
 import BreadCrumb from "./BreadCrumb";
 import {filterTasks} from "./TaskService";
@@ -87,11 +86,5 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(reduxForm({
-    form: 'tasksSelectionForm',
-    enableReinitialize: true,
-})(withStyles(styles)(TasksSelectionContainer)));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(TasksSelectionContainer));
 

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
-import reduxForm from "redux-form/es/reduxForm";
 import {MAX_FREE_EMPLOYEES_ALLOWED} from "../../../constants";
 import {createUser, fetchUsers, showEditEmployeeModal, showGoPremiumModal, updateUser} from "../../actions";
 import {showDeleteUserModal, showMobileAppModal} from "../../actions/usersActions";
@@ -65,9 +64,6 @@ const mapDispatchToProps = {
 
 export default connect(
     mapStateToProps, mapDispatchToProps
-)(reduxForm({
-    form: 'employeesForm',
-    enableReinitialize: true,
-})(EmployeesContainer));
+)(EmployeesContainer);
 
 

@@ -135,19 +135,23 @@ class MonthlyReport extends React.PureComponent {
                     </IfGranted>
                 </MbActionsControls>
 
-                {fields && fields.map((employeeShiftsReport, index) =>
-                    (<Fade key={index} isVisible>
-                        <ReportLineComponent
-                            data={employeeShiftsReport}
-                            isCollapsed={this.isCollapsed(fields, index)}
-                            index={index}
-                            onToggle={(name) => this.onToggle(name)}
-                            onDeleteShift={this.onDeleteShift}
-                            showShiftDialog={showShiftDialog}
-                            postUpdate={postUpdate}
-                        />
-                    </Fade>)
-                ).filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))}
+                {fields &&
+                fields
+                    .map((employeeShiftsReport, index) =>
+                        (<Fade key={index} isVisible>
+                            <ReportLineComponent
+                                data={employeeShiftsReport}
+                                isCollapsed={this.isCollapsed(fields, index)}
+                                index={index}
+                                onToggle={(name) => this.onToggle(name)}
+                                onDeleteShift={this.onDeleteShift}
+                                showShiftDialog={showShiftDialog}
+                                postUpdate={postUpdate}
+                            />
+                        </Fade>)
+                    )
+                    .filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))
+                }
                 {(!fields || (fields.length === 0)) &&
                 <NoData text="לא נמצאו משמרות"/>
                 }

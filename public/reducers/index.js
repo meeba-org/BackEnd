@@ -7,7 +7,6 @@ import {ModalReducer} from "./ModalReducer";
 import {ReportsReducer} from "./ReportsReducer";
 import {LoaderReducer} from "./LoaderReducer";
 import {GeneralReducer} from "./GeneralReducer";
-import reducer from "redux-form/es/reducer";
 import {TasksReducer} from "./TasksReducer";
 import { PaymentReducer } from './PaymentReducer';
 
@@ -21,7 +20,6 @@ const rootReducer = combineReducers({
     user: UserReducer,
     modal: ModalReducer,
     reports: ReportsReducer,
-    form: reducer,
     general: GeneralReducer,
     payment: PaymentReducer,
 });
