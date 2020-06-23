@@ -43,7 +43,7 @@ class TaskReportLine extends React.PureComponent {
     };
 
     render() {
-        let {data, isCollapsed, onToggle, onUpdateShift, onDeleteShift, showShiftDialog, index, postUpdate} = this.props;
+        let {data, isCollapsed, onToggle, onDeleteShift, showShiftDialog, index, postUpdate} = this.props;
         let toggleButton = isCollapsed ?
             <Tooltip title="פרטי משמרות" placement="top"><KeyboardArrowLeft/></Tooltip> :
             <KeyboardArrowDown/>;
@@ -63,7 +63,6 @@ class TaskReportLine extends React.PureComponent {
                             shifts={data.shifts}
                             onDelete={onDeleteShift}
                             showShiftDialog={showShiftDialog}
-                            onUpdate={onUpdateShift}
                             showNames={true}
                             mode={ReportModes.Report}
                             shouldDisplayNoData={true}
@@ -77,7 +76,6 @@ class TaskReportLine extends React.PureComponent {
 }
 
 TaskReportLine.propTypes = {
-    onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
     showShiftDialog: PropTypes.func.isRequired,
     onToggle: PropTypes.func.isRequired,
