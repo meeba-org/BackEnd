@@ -296,8 +296,8 @@ describe('ShiftAnalyzer', function () {
 
     describe('Location calculation', () => {
         const busStop = {
-            lat: 32.789019,
-            lng: 34.9596217
+            latitude: 32.789019,
+            longitude: 34.9596217
         };
 
         let tolunaWorkplace = {

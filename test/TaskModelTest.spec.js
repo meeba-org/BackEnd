@@ -55,24 +55,16 @@ describe('Tasks', function () {
         });
 
         describe('Delete', function () {
-            it('should delete a task', function () {
+            it('should delete a task', async function () {
                 let task = utils.createMockedTaskPlainObject("Development");
-
-                return TaskModel.createTask(task)
-                    .then(createdTask => {
-                        expect(createdTask).to.not.be.null;
-                        return createdTask;
-                    })
-                    .then(createdTask => {
-                        TaskModel.deleteTask(createdTask.id)
-                        return createdTask;
-                    })
-                    .then((deletedTask) => {
-                        return TaskModel.getByTaskId(deletedTask.id)
-                    })
-                    .then(retrievedTask => {
-                        expect(retrievedTask).to.be.null;
-                    });
+                
+                let createdTask = await TaskModel.createTask(task);
+                expect(createdTask).to.not.be.null;
+                
+                await TaskModel.deleteTask(createdTask.id)
+                
+                let retrievedTask = await TaskModel.getByTaskId(createdTask.id);
+                expect(retrievedTask).to.be.null;
             })
         });
     });
