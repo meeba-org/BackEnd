@@ -15,7 +15,7 @@ const TaskModalContent = ({task, open, isNewTask, onKeyPress, onOk, onCancel, on
 
     return (
         <Dialog onClose={onCancel} open={open}>
-            <DialogTitle>{"משימה חדשה"}</DialogTitle>
+            <DialogTitle>{isNewTask ? "משימה חדשה" : "עדכון משימה"}</DialogTitle>
             <DialogContent>
                 <Box display="flex" flexDirection="column">
                     <TextField type="text" placeholder={"המשימה שלי"}

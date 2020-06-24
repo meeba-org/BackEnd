@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect, useDispatch} from "react-redux";
 import {createTask, hideTaskModal, updateTask} from "../../actions";
 import TaskModalContent from "../TaskModalContent";
@@ -9,6 +9,10 @@ const TaskModal = ({orgTask, open}) => {
     const [task, setTask] = useState(orgTask);
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        setTask(orgTask);
+    }, [orgTask]);
+    
     const handleCreateOrUpdateTask = () => {
 
         if (isNewTask())
