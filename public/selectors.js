@@ -71,6 +71,14 @@ export const isTasksFeatureEnable = (state) => {
     return companySettings.enableTasks || companySettings.enableAbsenceDays;
 };
 
+export const isTasksEnable = (state) => {
+    const companySettings = getCompanySettings(state);
+    if (!companySettings)
+        return false;
+
+    return companySettings.enableTasks;
+};
+
 export const getPlan = state => {
     let company = getCompany(state);
     if (!company)

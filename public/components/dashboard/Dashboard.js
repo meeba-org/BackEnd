@@ -13,7 +13,7 @@ import Settings from "../Settings";
 import SideBarContainer from "../SideBarContainer";
 import "../../styles/Dashboard.scss";
 
-const Dashboard = ({userRole, isDesktop, isTasksFeatureEnable, path, hasPremium, isLoading}) => { 
+const Dashboard = ({userRole, isDesktop, path, hasPremium, isLoading}) => { 
     const [open, setOpen] = useState(isDesktop);
     const toggleOpen = () => setOpen(!open);
     
@@ -30,7 +30,6 @@ const Dashboard = ({userRole, isDesktop, isTasksFeatureEnable, path, hasPremium,
                             isDesktop={!!isDesktop}
                             open={open}
                             toggleSideBar={toggleOpen}
-                            isTasksFeatureEnable={isTasksFeatureEnable}
                         />
                     </Paper>
                     <Paper styleName="main-container">

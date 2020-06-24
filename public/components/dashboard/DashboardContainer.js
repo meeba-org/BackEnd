@@ -26,7 +26,6 @@ class DashboardContainer extends React.PureComponent {
             <Dashboard
                 userRole={userRole}
                 isDesktop={isDesktop}
-                isTasksFeatureEnable={isTasksFeatureEnable}
                 path={path}
                 hasPremium={hasPremium}
                 isLoading={isLoading}
@@ -44,7 +43,6 @@ DashboardContainer.propTypes = {
 const mapStateToProps = (state) => ({
     userRole: selectors.getUserRole(state),
     isDesktop: selectors.isDesktop(state),
-    isTasksFeatureEnable: selectors.isTasksFeatureEnable(state),
     hasPremium: selectors.hasPremiumFeature(state),
     user: selectors.getUser(state)
 });

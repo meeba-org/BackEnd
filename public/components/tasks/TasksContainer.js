@@ -96,7 +96,7 @@ function mapStateToProps(state) {
     return {
         tasks: state.tasks,
         company: selectors.getCompany(state),
-        isAddAllowed: selectors.hasPremiumFeature(state) || (state.tasks?.filter(t => !t.parent && t.type === ETaskType.REGULAR).length < MAX_FREE_TASKS_ALLOWED),
+        isAddAllowed: selectors.isTasksEnable(state) && (selectors.hasPremiumFeature(state) || state.tasks?.filter(t => !t.parent && t.type === ETaskType.REGULAR).length < MAX_FREE_TASKS_ALLOWED),
         isEditAllowed: selectors.hasPremiumFeature(state) || (state.tasks?.filter(t => !t.parent && t.type === ETaskType.REGULAR).length <= MAX_FREE_TASKS_ALLOWED),
     };
 }
