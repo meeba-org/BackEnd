@@ -8,5 +8,5 @@
         ".git",
         "node_modules"
     ],
-    "exec": "npm run lint && node server.js"
+    "exec": "npm run lint && node --inspect=5858 server.js"
 }

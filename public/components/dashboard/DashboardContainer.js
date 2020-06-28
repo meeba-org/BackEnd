@@ -19,7 +19,7 @@ class DashboardContainer extends React.PureComponent {
     }
 
     render() {
-        let {userRole, isDesktop, isTasksFeatureEnable, match: {path}, hasPremium } = this.props;
+        let {userRole, isDesktop, match: {path}, hasPremium } = this.props;
         const {isLoading} = this.state;
 
         return (
