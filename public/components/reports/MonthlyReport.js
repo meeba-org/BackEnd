@@ -2,7 +2,7 @@ import AddIcon from '@material-ui/icons/Add';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {IfGranted} from "react-authorization";
 import {EXCEL} from "../../../models/EReportFormat";
 import * as ERoles from "../../helpers/ERoles";
@@ -16,149 +16,108 @@ import MbCard from "../MbCard";
 import MonthPicker from "../MonthPicker";
 import NoData from "../NoData";
 
-class MonthlyReport extends React.PureComponent {
-    constructor(props) {
-        super(props);
+const MonthlyReport = ({fields, employees, userRole, showShiftDialog, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, onExportReport, onMonthChange, onCreateShift, onDeleteShift}) => {
+    
+    const [collapsedIndex, setCollapsedIndex] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [selectedMonth, setSelectedMonth] = useState(moment().month() + 1);
+    const [selectedYear, setSelectedYear] = useState(moment().year());
+    
+    useEffect(() => {
+        onMonthChange(selectedMonth, selectedYear);
+    }, []);
 
-        this.state = {
-            collapsed: null,
-            startDayOfMonth: moment().startOf('month').format(DATE_FORMAT),
-            selectedMonth: moment().month() + 1,
-            selectedYear: moment().year(),
-            open: false,
-            employeesFilter: ""
-        };
-    }
+    const isCollapsed = (fields, index) => collapsedIndex !== index;
 
-    componentDidMount() {
-        const {selectedMonth, selectedYear} = this.state;
-        const {onMonthChange} = this.props;
+    const onToggle = (index) => {
+        let newCollapsedIndex = collapsedIndex === index ? null : index;
+        setCollapsedIndex(newCollapsedIndex);
+    };
+
+    const handleExportReportClick = () => {
+        onExportReport(selectedMonth, selectedYear);
+    };
+
+    const handleMonthChange = (selectedMonth, selectedYear) => {
+        setSelectedMonth(selectedMonth);
+        setSelectedYear(selectedYear);
 
         onMonthChange(selectedMonth, selectedYear);
-    }
-
-    isCollapsed(fields, index) {
-        return this.state.collapsed !== index;
-    }
-
-    onToggle(index) {
-        let newCollapsedIndex = this.state.collapsed === index ? null : index;
-        this.setState({collapsed: newCollapsedIndex});
-    }
-
-    handleExportReportClick = () => {
-        const {selectedMonth, selectedYear} = this.state;
-
-        this.props.onExportReport(selectedMonth, selectedYear);
     };
 
-    onMonthChange = (selectedMonth, selectedYear) => {
-        this.setState({selectedMonth, selectedYear});
+    const handleOpenAddDialog = () => setOpen(true);
 
-        this.props.onMonthChange(selectedMonth, selectedYear);
+    const handleCloseAddDialog = () => setOpen(false);
+
+    const handleCreateShift = (shift) => {
+        onCreateShift(shift, selectedMonth, selectedYear);
     };
 
-    handleOpenAddDialog = () => {
-        this.setState({open: true});
+    const handleDeleteShift = (shift) => {
+        onDeleteShift(shift, selectedMonth, selectedYear);
     };
+    
+    return (
+        <MbCard title={title} styleName="monthly-report">
+            <MbActionsControls>
+                <AddShiftsDialog
+                    open={open}
+                    onCreate={handleCreateShift}
+                    onCancel={handleCloseAddDialog}
+                    employees={employees}
+                    defaultStartDate={moment().year(selectedYear).month(selectedMonth - 1).startOf('month').format(DATE_FORMAT)}
+                />
+                <MonthPicker
+                    onMonthChange={handleMonthChange}
+                    selectedMonth={selectedMonth}
+                    selectedYear={selectedYear}
+                    isDesktop={isDesktop}
+                    startOfMonth={startOfMonth}
+                />
 
-    handleCloseAddDialog = () => {
-        this.setState({open: false});
-    };
+                <MbActionButton
+                    onClick={handleOpenAddDialog}
+                    iconComponent={AddIcon}
+                    tooltip={"הוספת משמרת"}
+                />
 
-    onCreateShift = (shift) => {
-        const {selectedYear, selectedMonth} = this.state;
-
-        this.props.onCreateShift(shift, selectedMonth, selectedYear);
-    };
-
-    onDeleteShift = (shift) => {
-        const {selectedYear, selectedMonth} = this.state;
-
-        this.props.onDeleteShift(shift, selectedMonth, selectedYear);
-    };
-
-    filterEmployees = (result, index, fields, employeesFilter) => {
-        if (!employeesFilter)
-            return true;
-
-        let entity = fields.get(index);
-
-        if (!entity)
-            return false;
-
-        // In case its an entity entity...
-        if (entity.fullName)
-            return entity.fullName.includes(employeesFilter);
-
-        // In case its an task entity...
-        if (entity.title)
-            return entity.title.includes(employeesFilter);
-
-        return false;
-    };
-
-    render() {
-        const {fields, employees, userRole, showShiftDialog, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat} = this.props;
-        const {selectedYear, selectedMonth} = this.state;
-
-        return (
-            <MbCard title={title} styleName="monthly-report">
-                <MbActionsControls>
-                    <AddShiftsDialog
-                        open={this.state.open}
-                        onCreate={this.onCreateShift}
-                        onCancel={this.handleCloseAddDialog}
-                        employees={employees}
-                        defaultStartDate={moment().year(selectedYear).month(selectedMonth - 1).startOf('month').format(DATE_FORMAT)}
-                    />
-                    <MonthPicker
-                        onMonthChange={this.onMonthChange}
-                        selectedMonth={selectedMonth}
-                        selectedYear={selectedYear}
-                        isDesktop={isDesktop}
-                        startOfMonth={startOfMonth}
-                    />
-
+                <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
                     <MbActionButton
-                        onClick={this.handleOpenAddDialog}
-                        iconComponent={AddIcon}
-                        tooltip={"הוספת משמרת"}
+                        onClick={handleExportReportClick}
+                        iconComponent={SaveAltIcon}
+                        tooltip={`ייצוא דוח חודשי ל${defaultExportFormat === EXCEL ? "אקסל" : "מיכפל"}`}
                     />
+                    <MbActionButton
+                        onClick={handleExportReportClick}
+                        iconComponent={SaveAltIcon}
+                        tooltip={`ייצוא דוח חודשי ל${defaultExportFormat === EXCEL ? "אקסל" : "מיכפל"}`}
+                    />
+                </IfGranted>
+            </MbActionsControls>
 
-                    <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
-                            <MbActionButton
-                                onClick={this.handleExportReportClick}
-                                iconComponent={SaveAltIcon}
-                                tooltip={`ייצוא דוח חודשי ל${defaultExportFormat === EXCEL ? "אקסל" : "מיכפל"}`}
-                            />
-                    </IfGranted>
-                </MbActionsControls>
-
-                {fields &&
-                fields
-                    .map((employeeShiftsReport, index) =>
-                        (<Fade key={index} isVisible>
-                            <ReportLineComponent
-                                data={employeeShiftsReport}
-                                isCollapsed={this.isCollapsed(fields, index)}
-                                index={index}
-                                onToggle={(name) => this.onToggle(name)}
-                                onDeleteShift={this.onDeleteShift}
-                                showShiftDialog={showShiftDialog}
-                                postUpdate={postUpdate}
-                            />
-                        </Fade>)
-                    )
-                    .filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))
-                }
-                {(!fields || (fields.length === 0)) &&
-                <NoData text="לא נמצאו משמרות"/>
-                }
-            </MbCard>
-        );
-    }
-}
+            {fields &&
+            fields
+                .map((employeeShiftsReport, index) =>
+                    (<Fade key={index} isVisible>
+                        <ReportLineComponent
+                            data={employeeShiftsReport}
+                            isCollapsed={isCollapsed(fields, index)}
+                            index={index}
+                            onToggle={(name) => onToggle(name)}
+                            onDeleteShift={handleDeleteShift}
+                            showShiftDialog={showShiftDialog}
+                            postUpdate={postUpdate}
+                        />
+                    </Fade>)
+                )
+                //.filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))
+            }
+            {(!fields || (fields.length === 0)) &&
+            <NoData text="לא נמצאו משמרות"/>
+            }
+        </MbCard>
+    );
+};
 
 MonthlyReport.propTypes = {
     fields: PropTypes.array,
