@@ -27,8 +27,8 @@ const generateFileName = (month, year, companySettings) => {
     }
 };
 
-export const exportReport = (month, year, companySettings) => {
-    const defaultExportFormat = companySettings.defaultExportFormat;
+export const exportReport = (month, year, companySettings, format) => {
+    const defaultExportFormat = format || companySettings.defaultExportFormat;
     const fileName = generateFileName(month, year, companySettings);
 
     return {

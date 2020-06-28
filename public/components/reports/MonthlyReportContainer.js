@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {exportReport, fetchMonthlyReport} from "../../actions/reportsActions";
 import {createShift, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
-import {getCompanySettings, getMonthlyReport, getStartOfMonth, getUserRole, isDesktop} from "../../selectors";
+import {getCompanySettings, getMonthlyReport, getStartOfMonth, getUserRole, isDesktop, isInnovativeAuthorityEnable} from "../../selectors";
 import MonthlyReport from "./MonthlyReport";
 import MonthlyReportLine from "./MonthlyReportLine";
 
@@ -25,16 +25,16 @@ class MonthlyReportContainer extends React.PureComponent {
         return this.props.fetchMonthlyReport(month, year);
     };
 
-    onExportReport(month, year) {
+    onExportReport(month, year, format) {
         const {exportReport, companySettings} = this.props;
         if (!month || !year)
             return;
 
-        exportReport(month, year, companySettings);
+        exportReport(month, year, companySettings, format);
     }
 
     render() {
-            const {employeeShiftsReports, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop, startOfMonth, companySettings} = this.props;
+            const {employeeShiftsReports, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop, startOfMonth, companySettings, isInnovativeAuthorityEnable} = this.props;
         return (
             <MonthlyReport
                 employees={employees}
@@ -52,6 +52,7 @@ class MonthlyReportContainer extends React.PureComponent {
                 isDesktop={isDesktop}
                 startOfMonth={startOfMonth}
                 defaultExportFormat={companySettings?.defaultExportFormat}
+                isInnovativeAuthorityEnable={isInnovativeAuthorityEnable}
             />
         );
     }
@@ -79,7 +80,8 @@ function mapStateToProps(state) {
         userRole: getUserRole(state),
         isDesktop: isDesktop(state),
         startOfMonth: getStartOfMonth(state),
-        companySettings: getCompanySettings(state)
+        companySettings: getCompanySettings(state),
+        isInnovativeAuthorityEnable: isInnovativeAuthorityEnable(state)
     };
 }
 

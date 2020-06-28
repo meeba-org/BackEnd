@@ -1,10 +1,10 @@
 import AddIcon from '@material-ui/icons/Add';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import {SaveAlt, EmojiObjects} from '@material-ui/icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from "react";
 import {IfGranted} from "react-authorization";
-import {EXCEL} from "../../../models/EReportFormat";
+import {EXCEL, INNOVATION_AUTHORITY} from "../../../models/EReportFormat";
 import * as ERoles from "../../helpers/ERoles";
 import {DATE_FORMAT} from "../../helpers/utils";
 import '../../styles/MonthlyReport.scss';
@@ -16,7 +16,10 @@ import MbCard from "../MbCard";
 import MonthPicker from "../MonthPicker";
 import NoData from "../NoData";
 
-const MonthlyReport = ({fields, employees, userRole, showShiftDialog, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, onExportReport, onMonthChange, onCreateShift, onDeleteShift}) => {
+const MonthlyReport = (
+    {
+        fields, employees, userRole, showShiftDialog, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, onExportReport, onMonthChange, onCreateShift, onDeleteShift, isInnovativeAuthorityEnable
+    }) => {
     
     const [collapsedIndex, setCollapsedIndex] = useState(null);
     const [open, setOpen] = useState(false);
@@ -36,6 +39,10 @@ const MonthlyReport = ({fields, employees, userRole, showShiftDialog, ReportLine
 
     const handleExportReportClick = () => {
         onExportReport(selectedMonth, selectedYear);
+    };
+
+    const handleExportInnovationAuthorityReportClick = () => {
+        onExportReport(selectedMonth, selectedYear, INNOVATION_AUTHORITY);
     };
 
     const handleMonthChange = (selectedMonth, selectedYear) => {
@@ -84,14 +91,16 @@ const MonthlyReport = ({fields, employees, userRole, showShiftDialog, ReportLine
                 <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
                     <MbActionButton
                         onClick={handleExportReportClick}
-                        iconComponent={SaveAltIcon}
+                        iconComponent={SaveAlt}
                         tooltip={`ייצוא דוח חודשי ל${defaultExportFormat === EXCEL ? "אקסל" : "מיכפל"}`}
                     />
+                    {isInnovativeAuthorityEnable &&
                     <MbActionButton
-                        onClick={handleExportReportClick}
-                        iconComponent={SaveAltIcon}
-                        tooltip={`ייצוא דוח חודשי ל${defaultExportFormat === EXCEL ? "אקסל" : "מיכפל"}`}
+                        onClick={handleExportInnovationAuthorityReportClick}
+                        iconComponent={EmojiObjects}
+                        tooltip={"ייצוא דוח המדען הראשי"}
                     />
+                    }
                 </IfGranted>
             </MbActionsControls>
 

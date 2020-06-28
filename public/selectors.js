@@ -71,6 +71,14 @@ export const isTasksFeatureEnable = (state) => {
     return companySettings.enableTasks || companySettings.enableAbsenceDays;
 };
 
+export const isInnovativeAuthorityEnable = (state) => {
+    const companySettings = getCompanySettings(state);
+    if (!companySettings)
+        return false;
+
+    return companySettings.enableInnovativeAuthority;
+};
+
 export const isTasksEnable = (state) => {
     const companySettings = getCompanySettings(state);
     if (!companySettings)

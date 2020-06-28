@@ -44,7 +44,7 @@ const isFeatureEnable = (company, feature) => {
     return hasFeature(company, feature);
 };
 
-const getCompanySettings = company => company.settings;
+const getCompanySettings = company => company.settings || {};
 
 const isAbsenceDaysEnable = company => getCompanySettings(company).enableAbsenceDays;
 
