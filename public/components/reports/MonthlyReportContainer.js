@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {exportReport, fetchMonthlyReport} from "../../actions/reportsActions";
 import {createShift, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
-import {getCompanySettings, getMonthlyReport, getStartOfMonth, getUserRole, isDesktop, isInnovativeAuthorityEnable} from "../../selectors";
+import {getCompanySettings, getEmployeesMonthlyReports, getStartOfMonth, getUserRole, isDesktop, isInnovativeAuthorityEnable} from "../../selectors";
 import MonthlyReport from "./MonthlyReport";
 import MonthlyReportLine from "./MonthlyReportLine";
 
@@ -38,7 +38,7 @@ class MonthlyReportContainer extends React.PureComponent {
         return (
             <MonthlyReport
                 employees={employees}
-                fields={employeeShiftsReports}
+                employeeShiftsReports={employeeShiftsReports}
                 onDeleteShift={deleteShift}
                 showShiftDialog={showShiftDialog}
                 onCreateShift={createShift}
@@ -71,19 +71,15 @@ MonthlyReportContainer.propTypes = {
     isDesktop: PropTypes.bool
 };
 
-function mapStateToProps(state) {
-    const employeeShiftsReports = getMonthlyReport(state);
-    const employees = state.users;
-    return {
-        employees,
-        employeeShiftsReports,
-        userRole: getUserRole(state),
-        isDesktop: isDesktop(state),
-        startOfMonth: getStartOfMonth(state),
-        companySettings: getCompanySettings(state),
-        isInnovativeAuthorityEnable: isInnovativeAuthorityEnable(state)
-    };
-}
+const mapStateToProps = state => ({
+    employees: state.users,
+    employeeShiftsReports: getEmployeesMonthlyReports(state),
+    userRole: getUserRole(state),
+    isDesktop: isDesktop(state),
+    startOfMonth: getStartOfMonth(state),
+    companySettings: getCompanySettings(state),
+    isInnovativeAuthorityEnable: isInnovativeAuthorityEnable(state)
+});
 
 const mapDispatchToProps = {
     fetchMonthlyReport,

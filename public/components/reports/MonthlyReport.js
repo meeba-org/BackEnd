@@ -18,7 +18,7 @@ import NoData from "../NoData";
 
 const MonthlyReport = (
     {
-        fields, employees, userRole, showShiftDialog, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, onExportReport, onMonthChange, onCreateShift, onDeleteShift, isInnovativeAuthorityEnable
+        employeeShiftsReports, employees, userRole, showShiftDialog, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, onExportReport, onMonthChange, onCreateShift, onDeleteShift, isInnovativeAuthorityEnable
     }) => {
     
     const [collapsedIndex, setCollapsedIndex] = useState(null);
@@ -104,13 +104,13 @@ const MonthlyReport = (
                 </IfGranted>
             </MbActionsControls>
 
-            {fields &&
-            fields
+            {employeeShiftsReports &&
+            employeeShiftsReports
                 .map((employeeShiftsReport, index) =>
                     (<Fade key={index} isVisible>
                         <ReportLineComponent
                             data={employeeShiftsReport}
-                            isCollapsed={isCollapsed(fields, index)}
+                            isCollapsed={isCollapsed(employeeShiftsReports, index)}
                             index={index}
                             onToggle={(name) => onToggle(name)}
                             onDeleteShift={handleDeleteShift}
@@ -121,7 +121,7 @@ const MonthlyReport = (
                 )
                 //.filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))
             }
-            {(!fields || (fields.length === 0)) &&
+            {(!employeeShiftsReports || (employeeShiftsReports.length === 0)) &&
             <NoData text="לא נמצאו משמרות"/>
             }
         </MbCard>
