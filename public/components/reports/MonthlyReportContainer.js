@@ -25,7 +25,7 @@ class MonthlyReportContainer extends React.PureComponent {
         return this.props.fetchMonthlyReport(month, year);
     };
 
-    onExportReport(month, year, format) {
+    onExportReport = (month, year, format) => {
         const {exportReport, companySettings} = this.props;
         if (!month || !year)
             return;
@@ -44,7 +44,7 @@ class MonthlyReportContainer extends React.PureComponent {
                 onCreateShift={createShift}
                 onMonthChange={this.onDataChange}
                 onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
-                onExportReport={(month, year) => this.onExportReport(month, year)}
+                onExportReport={this.onExportReport}
                 userRole={userRole}
                 postUpdate={this.onDataChange}
                 ReportLineComponent={MonthlyReportLine}

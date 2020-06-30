@@ -4,6 +4,7 @@ const moment = require('moment');
 const Excel = require('exceljs');
 const EInsideWorkplace = require("../models/EInsideWorkplace");
 const ShiftLogModel = require("../models/ShiftLogModel");
+const TaskModel = require("../models/TaskModel");
 const {isTasksEnable, isAbsenceDaysEnable, isInnovativeAuthorityEnable} = require("./FeaturesManager");
 const {MAX_FREE_EMPLOYEES_ALLOWED} = require("../constants");
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
@@ -51,7 +52,7 @@ let setRowBold = function (row) {
     row.font = {bold: true};
 };
 
-function createSummaryColumns(sheet, company) {
+const createSummaryColumns = (sheet, company) => {
     let columns = [
         {header: 'שם עובד', key: 'employeeName', width: 20, style: {alignment: {horizontal: 'right'}}},
         {header: 'ת.ז.', key: 'employeeUid', width: 13, style: {alignment: {horizontal: 'center'}}},
@@ -79,7 +80,74 @@ function createSummaryColumns(sheet, company) {
     sheet.columns = columns;
 
     setSummaryHeaderColor(sheet, company);
-}
+};
+
+const createIASummaryColumns = (sheet, company, tasks) => {
+
+    let columns = [
+        {header: 'תאריך', key: 'date', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'יום', key: 'dayInWeek', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: 'כניסה שוטף', key: 'clockInTime', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'כניסה רטרו', key: 'clockInTimeRetro', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'יציאה שוטף', key: 'clockOutTime', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'יציאה רטרו', key: 'clockOutTimeRetro', width: 13, style: {alignment: {horizontal: 'center'}}},
+    ];
+
+    // Push tasks column
+    for (const task of tasks) {
+        columns.push({header: task.title + ' שוטף', key: task.name + 'shotef', width: 13, style: {alignment: {horizontal: 'center'}}});
+        columns.push({header: task.title + ' רטרו', key: task.name + 'retro', width: 13, style: {alignment: {horizontal: 'center'}}});
+    }
+    
+    // TODO add absence days columns
+    
+    sheet.columns = columns;
+
+    setHeaderColor(sheet);
+};
+
+const createIAContent = (sheet, company, entity, year, month) => {
+    if (!entity.shifts || entity.shifts.length === 0)
+        return;
+
+    let startOfMonth = moment().year(year).month(month - 1).startOf('month');
+    let endOfMonth = moment().year(year).month(month - 1).endOf('month');
+
+    for (let m = moment(startOfMonth); m.isBefore(endOfMonth); m.add(1, 'days')) {
+        let row = {
+            date: m.format("DD/MM/YYYY"),
+            dayInWeek: calcDayInWeek(m),
+        };
+
+        let shifts = getShifts(entity.shifts, m);
+
+        if (!shifts || shifts.length === 0) {
+            addDayRow(sheet, row, m);
+            continue;
+        }
+
+        for (let i = 0; i < shifts.length; i++) {
+            let shift = shifts[i];
+
+            let hoursAnalysis = shift.hoursAnalysis;
+            // TODO continue from here... shit stuff
+            row = {
+                date: i === 0 ? row.date : "",
+                dayInWeek: i === 0 ? row.dayInWeek : "",
+                clockInTime: calcClockInTime(shift),
+                clockInTimeRetro: "",
+                clockOutTime: calcClockOutTime(shift),
+                clockOutTimeRetro: "",
+                shiftLength: hoursAnalysis.shiftLength || "",
+                notes: shift.note,
+                oooShift: shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE ? "✔" : ""
+            };
+
+            addDayRow(sheet, row, shift.clockInTime);
+        }
+    }
+    
+};
 
 const createLimitedContentWarning = sheet => {
     sheet.addRow();
@@ -662,8 +730,28 @@ const createExcel = async (shifts, year, month, company, rawTasks) => {
     return workbook;
 };
 
+const addIAEmployeeSheet = async (workbook, company, employee, year, month) => {
+    // create a sheet with the first row and column frozen
+    let sheet = addWorksheet(workbook, "ראשי");
+
+    let tasks = await TaskModel.getByCompanyId(company.id);
+    createIASummaryColumns(sheet, company, tasks);
+    createIAContent(sheet, company, employee, year, month);
+};
+
+const createInnovationAuthorityExcel = async (shifts, year, month, company, rawTasks) => {
+    const workbook = createWorkbook();
+    let employees = processShiftsForEmployees(shifts, company);
+
+    for (const employee of employees) {
+        await addIAEmployeeSheet(workbook, company, employee, year, month);
+    }
+    return workbook;
+};
+
 module.exports = {
     createExcel,
+    createInnovationAuthorityExcel,
     createTitleDate
 };
 

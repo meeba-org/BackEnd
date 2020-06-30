@@ -10,7 +10,7 @@ const jwtService = require("./jwtService");
 const ShiftAnalyzer = require("../managers/ShiftAnalyzer");
 const TaskModel = require("../models/TaskModel");
 const {param, query } = require('express-validator/check');
-const {EXCEL, MICHPAL} = require('../models/EReportFormat');
+const {EXCEL, MICHPAL, INNOVATION_AUTHORITY} = require('../models/EReportFormat');
 const {reject, routeWrapper} = require("./apiManager");
 
 //GET /reports/download report
@@ -41,6 +41,9 @@ router.get('/download',
         }
         else if (format === MICHPAL) {
             return handleMichpalFormat(shifts, year, month, company, res);
+        }
+        else if (format === INNOVATION_AUTHORITY) {
+            return handleInnovationAuthorityFormat(shifts, year, month, company, tasks, res);
         }
 
         return reject("פורמט לא נתמך", 401);
@@ -97,6 +100,18 @@ router.get('/tasks',
 
 const handleExcelFormat = async (shifts, year, month, company, tasks, res) => {
     let workbook = await ExcelManager.createExcel(shifts, year, month, company, tasks);
+
+    let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
+    return workbook.xlsx.write(res)
+        .then(function () {
+            res.end();
+        });
+};
+
+const handleInnovationAuthorityFormat = async (shifts, year, month, company, tasks, res) => {
+    let workbook = await ExcelManager.createInnovationAuthorityExcel(shifts, year, month, company, tasks);
 
     let fileName = ExcelManager.createTitleDate(year, month) + '.xlsx';
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
