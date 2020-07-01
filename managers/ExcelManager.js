@@ -98,7 +98,8 @@ const createIASummaryColumns = (sheet, company, tasks) => {
         columns.push({header: task.title + ' שוטף', key: task.name + 'shotef', width: 13, style: {alignment: {horizontal: 'center'}}});
         columns.push({header: task.title + ' רטרו', key: task.name + 'retro', width: 13, style: {alignment: {horizontal: 'center'}}});
     }
-    
+
+    columns.push({header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}});
     // TODO add absence days columns
     
     sheet.columns = columns;
@@ -129,7 +130,6 @@ const createIAContent = (sheet, company, entity, year, month) => {
         for (let i = 0; i < shifts.length; i++) {
             let shift = shifts[i];
 
-            let hoursAnalysis = shift.hoursAnalysis;
             // TODO continue from here... shit stuff
             row = {
                 date: i === 0 ? row.date : "",
@@ -138,9 +138,9 @@ const createIAContent = (sheet, company, entity, year, month) => {
                 clockInTimeRetro: "",
                 clockOutTime: calcClockOutTime(shift),
                 clockOutTimeRetro: "",
-                shiftLength: hoursAnalysis.shiftLength || "",
+                // shiftLength: hoursAnalysis.shiftLength || "",
                 notes: shift.note,
-                oooShift: shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE ? "✔" : ""
+                // oooShift: shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE ? "✔" : ""
             };
 
             addDayRow(sheet, row, shift.clockInTime);
@@ -730,21 +730,20 @@ const createExcel = async (shifts, year, month, company, rawTasks) => {
     return workbook;
 };
 
-const addIAEmployeeSheet = async (workbook, company, employee, year, month) => {
+const addIAEmployeeSheet = async (workbook, company, employee, year, month, tasks) => {
     // create a sheet with the first row and column frozen
-    let sheet = addWorksheet(workbook, "ראשי");
+    let sheet = addWorksheet(workbook, employee.fullName);
 
-    let tasks = await TaskModel.getByCompanyId(company.id);
     createIASummaryColumns(sheet, company, tasks);
     createIAContent(sheet, company, employee, year, month);
 };
 
-const createInnovationAuthorityExcel = async (shifts, year, month, company, rawTasks) => {
+const createInnovationAuthorityExcel = async (shifts, year, month, company, tasks) => {
     const workbook = createWorkbook();
     let employees = processShiftsForEmployees(shifts, company);
 
     for (const employee of employees) {
-        await addIAEmployeeSheet(workbook, company, employee, year, month);
+        await addIAEmployeeSheet(workbook, company, employee, year, month, tasks);
     }
     return workbook;
 };
