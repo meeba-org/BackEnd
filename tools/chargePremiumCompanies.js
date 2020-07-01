@@ -6,14 +6,9 @@ process.env.NODE_ENV = 'production';
 const CompanyModel = require("../models/CompanyModel");
 // eslint-disable-next-line no-unused-vars
 const UserModel = require("../models/UserModel");
-const mongoose = require('mongoose');
 const config = require('../config');
 const iCreditManager = require("../managers/iCreditManager");
-
-
-mongoose.connect(config.dbUrl, {useNewUrlParser: true }, () => {
-    console.log("Connected to DB successfully");
-});
+const mongooseManager = require("../managers/MongooseManager");
 
 const chargePremiumCompanies = async () => {
     console.log("Subscription price is:", MONTHLY_SUBSCRIPTION_PRICE);
@@ -27,7 +22,7 @@ const chargePremiumCompanies = async () => {
         try{
             console.log(`${company.name} - Charging company - id: ${company._id}`);
             // For testing comment the following line
-            await iCreditManager.generateImmediatePayment(company._id);
+            // await iCreditManager.generateImmediatePayment(company._id);
             console.log(`${company.name} - Success!`);
         }
         catch (e) {
@@ -37,6 +32,8 @@ const chargePremiumCompanies = async () => {
 };
 
 const run = async () => {
+    await mongooseManager.connect(config.dbUrl);
+
     await chargePremiumCompanies();
     process.exit();
 };
