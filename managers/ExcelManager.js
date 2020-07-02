@@ -88,24 +88,26 @@ function generateTaskKey(task, suffix) {
 
 const createIASummaryColumns = (sheet, company, tasks) => {
 
+    const NUMBER_WIDTH = 9;
+    
     let columns = [
         {header: 'תאריך', key: 'date', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'יום', key: 'dayInWeek', width: 7, style: {alignment: {horizontal: 'center'}}},
-        {header: 'כניסה שוטף', key: 'clockInTime', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'כניסה רטרו', key: 'clockInTimeRetro', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'יציאה שוטף', key: 'clockOutTime', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'יציאה רטרו', key: 'clockOutTimeRetro', width: 13, style: {alignment: {horizontal: 'center'}}},
-        {header: 'שעות (עשרוני)', key: 'shiftLength', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'כניסה שוטף', key: 'clockInTime', width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}},
+        {header: 'כניסה רטרו', key: 'clockInTimeRetro', width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}},
+        {header: 'יציאה שוטף', key: 'clockOutTime', width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}},
+        {header: 'יציאה רטרו', key: 'clockOutTimeRetro', width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}},
+        {header: 'שעות (עשרוני)', key: 'shiftLength', width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}},
     ];
 
     // Push tasks column
     for (const task of tasks) {
-        columns.push({header: task.title + ' שוטף', key: generateTaskKey(task, 'shotef'), width: 13, style: {alignment: {horizontal: 'center'}}});
-        columns.push({header: task.title + ' רטרו', key: generateTaskKey(task, 'retro'), width: 13, style: {alignment: {horizontal: 'center'}}});
+        columns.push({header: task.title + ' שוטף', key: generateTaskKey(task, 'shotef'), width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}});
+        columns.push({header: task.title + ' רטרו', key: generateTaskKey(task, 'retro'), width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}});
     }
-
+    
     if (hasWorkplaces(company)) {
-        columns.push({header: 'מחוץ לעבודה', key: 'oooShift', width: 12, style: {alignment: {horizontal: 'center'}}});
+        columns.push({header: 'מחוץ לעבודה', key: 'oooShift', width: 7, style: {alignment: {horizontal: 'center', wrapText: true}}});
     }
 
     columns.push({header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}});
