@@ -82,6 +82,10 @@ const createSummaryColumns = (sheet, company) => {
     setSummaryHeaderColor(sheet, company);
 };
 
+function generateTaskKey(task, suffix) {
+    return task._id + suffix;
+}
+
 const createIASummaryColumns = (sheet, company, tasks) => {
 
     let columns = [
@@ -91,12 +95,17 @@ const createIASummaryColumns = (sheet, company, tasks) => {
         {header: 'כניסה רטרו', key: 'clockInTimeRetro', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'יציאה שוטף', key: 'clockOutTime', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'יציאה רטרו', key: 'clockOutTimeRetro', width: 13, style: {alignment: {horizontal: 'center'}}},
+        {header: 'שעות (עשרוני)', key: 'shiftLength', width: 13, style: {alignment: {horizontal: 'center'}}},
     ];
 
     // Push tasks column
     for (const task of tasks) {
-        columns.push({header: task.title + ' שוטף', key: task.name + 'shotef', width: 13, style: {alignment: {horizontal: 'center'}}});
-        columns.push({header: task.title + ' רטרו', key: task.name + 'retro', width: 13, style: {alignment: {horizontal: 'center'}}});
+        columns.push({header: task.title + ' שוטף', key: generateTaskKey(task, 'shotef'), width: 13, style: {alignment: {horizontal: 'center'}}});
+        columns.push({header: task.title + ' רטרו', key: generateTaskKey(task, 'retro'), width: 13, style: {alignment: {horizontal: 'center'}}});
+    }
+
+    if (hasWorkplaces(company)) {
+        columns.push({header: 'מחוץ לעבודה', key: 'oooShift', width: 12, style: {alignment: {horizontal: 'center'}}});
     }
 
     columns.push({header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}});
@@ -107,7 +116,7 @@ const createIASummaryColumns = (sheet, company, tasks) => {
     setHeaderColor(sheet);
 };
 
-const createIAContent = (sheet, company, entity, year, month) => {
+const createIAContent = (sheet, company, entity, year, month, tasks) => {
     if (!entity.shifts || entity.shifts.length === 0)
         return;
 
@@ -127,10 +136,11 @@ const createIAContent = (sheet, company, entity, year, month) => {
             continue;
         }
 
+        
         for (let i = 0; i < shifts.length; i++) {
             let shift = shifts[i];
 
-            // TODO continue from here... shit stuff
+            let hoursAnalysis = shift.hoursAnalysis;
             row = {
                 date: i === 0 ? row.date : "",
                 dayInWeek: i === 0 ? row.dayInWeek : "",
@@ -138,10 +148,15 @@ const createIAContent = (sheet, company, entity, year, month) => {
                 clockInTimeRetro: "",
                 clockOutTime: calcClockOutTime(shift),
                 clockOutTimeRetro: "",
-                // shiftLength: hoursAnalysis.shiftLength || "",
+                shiftLength: hoursAnalysis.shiftLength || "",
                 notes: shift.note,
-                // oooShift: shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE ? "✔" : ""
+                oooShift: shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE ? "✔" : ""
             };
+
+            for (const task of tasks) {
+                let value = shift.task && (shift.task._id.toString() === task._id.toString()) ? hoursAnalysis.shiftLength : "";
+                row[generateTaskKey(task, 'shotef')] = value; // TODO should add logic for shotef / retro
+            }
 
             addDayRow(sheet, row, shift.clockInTime);
         }
@@ -735,7 +750,7 @@ const addIAEmployeeSheet = async (workbook, company, employee, year, month, task
     let sheet = addWorksheet(workbook, employee.fullName);
 
     createIASummaryColumns(sheet, company, tasks);
-    createIAContent(sheet, company, employee, year, month);
+    createIAContent(sheet, company, employee, year, month, tasks);
 };
 
 const createInnovationAuthorityExcel = async (shifts, year, month, company, tasks) => {
