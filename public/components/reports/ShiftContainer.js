@@ -116,6 +116,7 @@ class ShiftContainer extends React.PureComponent {
 
         let month = moment(orgShift.clockInTime).format('MM');
         let year = moment(orgShift.clockInTime).format('YYYY');
+        updatedShift.isRetro = true;
 
         updateShift(updatedShift, postUpdate, month, year);
     };

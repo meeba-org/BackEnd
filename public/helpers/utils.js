@@ -12,6 +12,7 @@ export const createShift = (employee, momentStart, momentEnd) => {
         clockInTime: momentStart,
         clockOutTime: momentEnd,
         user: employee,
+        isRetro: true
     };
 };
 

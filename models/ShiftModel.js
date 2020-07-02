@@ -1,4 +1,3 @@
-const moment = require('moment');
 const mongoose = require('mongoose');
 const DraftShiftModel = require("./DraftShiftModel");
 const reject = require("../controllers/apiManager").reject;
@@ -31,7 +30,8 @@ const ShiftSchema = mongoose.Schema({
     task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
     breakLength: {type: Number, default: 0},
     draftShift: { type: mongoose.Schema.Types.ObjectId, ref: 'DraftShift' },
-    status: {type: Number, default: 0},
+    status: {type: Number, default: EShiftStatus.NEW},
+    isRetro: { type: Boolean, default: true}, // Was the shift punched as retro or not
 });
 
 const Shift = mongoose.model('Shift', ShiftSchema);
