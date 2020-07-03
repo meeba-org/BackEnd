@@ -31,7 +31,8 @@ const ShiftSchema = mongoose.Schema({
     breakLength: {type: Number, default: 0},
     draftShift: { type: mongoose.Schema.Types.ObjectId, ref: 'DraftShift' },
     status: {type: Number, default: EShiftStatus.NEW},
-    isRetro: { type: Boolean, default: true}, // Was the shift punched as retro or not
+    isClockInTimeRetro: { type: Boolean, default: true}, // IA - Was the shift punched as retro or not
+    isClockOutTimeRetro: { type: Boolean, default: true}, // IA - Was the shift punched as retro or not
 });
 
 const Shift = mongoose.model('Shift', ShiftSchema);

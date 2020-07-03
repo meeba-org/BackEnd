@@ -82,6 +82,7 @@ class ShiftContainer extends React.PureComponent {
     onUpdateStartDate = (date, shift) => {
         const {onUpdateStartDate} = this.props;
         let updatedShift = onUpdateStartDate(date, shift);
+        updatedShift.isClockInTimeRetro = true;
 
         this.onUpdate(shift, updatedShift);
     };
@@ -89,13 +90,15 @@ class ShiftContainer extends React.PureComponent {
     onUpdateStartTime = (time, shift) => {
         const {onUpdateStartTime} = this.props;
         let updatedShift = onUpdateStartTime(time, shift);
-
+        updatedShift.isClockInTimeRetro = true;
+        
         this.onUpdate(shift, updatedShift);
     };
 
     onUpdateEndTime = (time, shift) => {
         const {onUpdateEndTime} = this.props;
         let updatedShift = onUpdateEndTime(time, shift);
+        updatedShift.isClockOutTimeRetro = true;
 
         this.onUpdate(shift, updatedShift);
     };
@@ -116,7 +119,6 @@ class ShiftContainer extends React.PureComponent {
 
         let month = moment(orgShift.clockInTime).format('MM');
         let year = moment(orgShift.clockInTime).format('YYYY');
-        updatedShift.isRetro = true;
 
         updateShift(updatedShift, postUpdate, month, year);
     };
