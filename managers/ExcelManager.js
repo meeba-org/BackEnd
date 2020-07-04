@@ -146,10 +146,10 @@ const createIAContent = (sheet, company, entity, year, month, tasks) => {
             row = {
                 date: i === 0 ? row.date : "",
                 dayInWeek: i === 0 ? row.dayInWeek : "",
-                clockInTime: calcClockInTime(shift),
-                clockInTimeRetro: "",
-                clockOutTime: calcClockOutTime(shift),
-                clockOutTimeRetro: "",
+                clockInTime: !shift.isClockInTimeRetro ? calcClockInTime(shift) : "",
+                clockInTimeRetro: shift.isClockInTimeRetro ? calcClockInTime(shift) : "",
+                clockOutTime: !shift.isClockOutTimeRetro ? calcClockOutTime(shift) : "",
+                clockOutTimeRetro: shift.isClockOutTimeRetro ? calcClockOutTime(shift) : "",
                 shiftLength: hoursAnalysis.shiftLength || "",
                 notes: shift.note,
                 oooShift: shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE ? "✔" : ""
