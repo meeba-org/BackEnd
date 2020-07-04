@@ -118,12 +118,20 @@ const createIASummaryColumns = (sheet, company, tasks) => {
     setHeaderColor(sheet);
 };
 
-const createIAContent = (sheet, company, entity, year, month, tasks) => {
+const initTaskTotal = tasks => {
+    for (const task of tasks) {
+        task.totalShotef = 0;
+        task.totalRetro = 0;
+    }
+};
+
+const createIADaysContent = (entity, year, month, sheet, tasks) => {
     if (!entity.shifts || entity.shifts.length === 0)
         return;
 
     let startOfMonth = moment().year(year).month(month - 1).startOf('month');
     let endOfMonth = moment().year(year).month(month - 1).endOf('month');
+    initTaskTotal(tasks);
 
     for (let m = moment(startOfMonth); m.isBefore(endOfMonth); m.add(1, 'days')) {
         let row = {
@@ -138,7 +146,7 @@ const createIAContent = (sheet, company, entity, year, month, tasks) => {
             continue;
         }
 
-        
+
         for (let i = 0; i < shifts.length; i++) {
             let shift = shifts[i];
 
@@ -157,13 +165,40 @@ const createIAContent = (sheet, company, entity, year, month, tasks) => {
 
             for (const task of tasks) {
                 let value = shift.task && (shift.task._id.toString() === task._id.toString()) ? hoursAnalysis.shiftLength : "";
-                row[generateTaskKey(task, 'shotef')] = value; // TODO should add logic for shotef / retro
+                
+                if (shift.isClockInTimeRetro || shift.isClockOutTimeRetro) {
+                    row[generateTaskKey(task, 'retro')] = value;
+                    task.totalRetro += value || 0;
+                }
+                else {
+                    row[generateTaskKey(task, 'shotef')] = value;
+                    task.totalShotef += value || 0;
+                }
             }
 
             addDayRow(sheet, row, shift.clockInTime);
         }
     }
+};
+
+const createSummaryRowContent = (entity, year, month, sheet, tasks) => {
+    let row = {
+        shiftLength: entity.shiftLength || "",
+        clockOutTimeRetro: 'סה"כ'
+    };
+
+    for (const task of tasks) {
+        row[generateTaskKey(task, 'shotef')] = task.totalShotef;
+        row[generateTaskKey(task, 'retro')] = task.totalRetro;
+    }
     
+    row = sheet.addRow(row);
+    setRowBold(row);
+};
+
+const createIAContent = (sheet, company, entity, year, month, tasks) => {
+    createIADaysContent(entity, year, month, sheet, tasks);
+    createSummaryRowContent(entity, year, month, sheet, tasks);
 };
 
 const createLimitedContentWarning = sheet => {
