@@ -223,9 +223,15 @@ const calcTotalInHours = (entity, tasks, sheet) => {
     }
 
     row = sheet.addRow(row);
+
+    row.getCell('חופש').border = {left: { style: "medium" }};
+    row.getCell('מילואים').border = {right: { style: "medium" }};
+    row.getCell('notes').border = {right: { style: "medium" }, left: { style: "medium"}};
+    
     sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
     row.getCell(5).value = 'סה"כ שעות';
     row.getCell(5).alignment = {horizontal: 'left'};
+    row.getCell(5).border = {right: { style: "medium" }};
     setRowBold(row);
 };
 
@@ -240,6 +246,10 @@ const calcTotalInPercentage = (entity, tasks, sheet) => {
     
     row = sheet.addRow(row);
 
+    row.getCell('חופש').border = {left: { style: "medium" }};
+    row.getCell('מילואים').border = {right: { style: "medium" }};
+    row.getCell('notes').border = {right: { style: "medium" }, left: { style: "medium"}};
+    
     // Formatting the percantage sign...
     for (const task of companyTasks) {
         let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
@@ -251,6 +261,7 @@ const calcTotalInPercentage = (entity, tasks, sheet) => {
     sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
     row.getCell(5).value = 'תעסוקה במו"פ (%)';
     row.getCell(5).alignment = {horizontal: 'left'};
+    row.getCell(5).border = {right: { style: "medium" }};
     setRowBold(row);
 };
 
@@ -268,6 +279,10 @@ const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
     
     row = sheet.addRow(row);
 
+    row.getCell('חופש').border = {left: { style: "medium" }};
+    row.getCell('מילואים').border = {right: { style: "medium" }};
+    row.getCell('notes').border = {right: { style: "medium" }, left: { style: "medium"}};
+    
     for (const task of companyTasks) {
         let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
         let cellRetro = row.getCell(generateTaskKey(task, 'retro'));
@@ -281,6 +296,7 @@ const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
     sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
     row.getCell(5).value = 'מחוץ לעבודה (%)';
     row.getCell(5).alignment = {horizontal: 'left'};
+    row.getCell(5).border = {right: { style: "medium" }};
 
     setRowBold(row);
 };
@@ -299,6 +315,10 @@ const calcIAOOORow = (entity, tasks, sheet) => {
     
     row = sheet.addRow(row);
 
+    row.getCell('חופש').border = {left: { style: "medium" }};
+    row.getCell('מילואים').border = {right: { style: "medium" }};
+    row.getCell('notes').border = {right: { style: "medium" }, left: { style: "medium"}};
+    
     for (const task of companyTasks) {
         let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
         let cellRetro = row.getCell(generateTaskKey(task, 'retro'));
@@ -308,6 +328,7 @@ const calcIAOOORow = (entity, tasks, sheet) => {
     sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
     row.getCell(5).value = 'מחוץ לעבודה';
     row.getCell(5).alignment = {horizontal: 'left'};
+    row.getCell(5).border = {right: { style: "medium" }};
 
     
     setRowBold(row);
