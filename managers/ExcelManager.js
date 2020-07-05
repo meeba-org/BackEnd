@@ -209,10 +209,20 @@ const calcTotalInPercentage = (entity, tasks, sheet) => {
     // Total in percentage
     let row = {};
     for (const task of tasks) {
-        row[generateTaskKey(task, 'shotef')] = (task.totalShotef / entity.shiftLength).toFixed(2) * 100 + "%";
-        row[generateTaskKey(task, 'retro')] = (task.totalRetro / entity.shiftLength).toFixed(2) * 100 + "%";
+        row[generateTaskKey(task, 'shotef')] = parseInt((task.totalShotef / entity.shiftLength).toFixed(2));
+        row[generateTaskKey(task, 'retro')] = parseInt((task.totalRetro / entity.shiftLength).toFixed(2));
     }
+    
     row = sheet.addRow(row);
+
+    // Formatting the percantage sign...
+    for (const task of tasks) {
+        let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
+        let cellRetro = row.getCell(generateTaskKey(task, 'retro'));
+        cellShotef.style = {numFmt: '0%', alignment: {horizontal: "center"}};
+        cellRetro.style = {numFmt: '0%', alignment: {horizontal: "center"}};
+    }
+    
     sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
     row.getCell(5).value = 'תעסוקה במו"פ (%)';
     row.getCell(5).alignment = {horizontal: 'left'};
@@ -223,7 +233,7 @@ const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
     // Total in percentage
     let row = {};
     for (const task of tasks) {
-        row[generateTaskKey(task, 'shotef')] = (task.totalOOO / entity.shiftLength).toFixed(2) * 100 + "%";
+        row[generateTaskKey(task, 'shotef')] = parseInt((task.totalOOO / entity.shiftLength).toFixed(2));
     }
     
     row = sheet.addRow(row);
@@ -232,6 +242,7 @@ const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
         let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
         let cellRetro = row.getCell(generateTaskKey(task, 'retro'));
         sheet.mergeCells(row._number, cellShotef._column._number, row._number, cellRetro._column._number); // Merging cells
+        cellShotef.style = {numFmt: '0%', alignment: {horizontal: "center"}};
     }
 
     sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
