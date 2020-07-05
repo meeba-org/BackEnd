@@ -414,6 +414,7 @@ const calcInnovativeAuthorityPercentage = entity => {
     return (innovativeAuthorityHours / totalShiftsLength).toFixed(2) * 100;
 };
 
+// TODO should be removed
 const calcOutOfOfficePercentage = (entity) => {
     let oooHours = 0;
     let totalShiftsLength = 0;

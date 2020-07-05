@@ -209,8 +209,8 @@ const calcTotalInPercentage = (entity, tasks, sheet) => {
     // Total in percentage
     let row = {};
     for (const task of tasks) {
-        row[generateTaskKey(task, 'shotef')] = parseInt((task.totalShotef / entity.shiftLength).toFixed(2));
-        row[generateTaskKey(task, 'retro')] = parseInt((task.totalRetro / entity.shiftLength).toFixed(2));
+        row[generateTaskKey(task, 'shotef')] = parseFloat((task.totalShotef / entity.shiftLength).toFixed(2));
+        row[generateTaskKey(task, 'retro')] = parseFloat((task.totalRetro / entity.shiftLength).toFixed(2));
     }
     
     row = sheet.addRow(row);
@@ -231,9 +231,12 @@ const calcTotalInPercentage = (entity, tasks, sheet) => {
 
 const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
     // Total in percentage
-    let row = {};
+    let {oooPercentage} = calcOutOfOffice(entity);
+    let row = {
+        oooShift: oooPercentage
+    };
     for (const task of tasks) {
-        row[generateTaskKey(task, 'shotef')] = parseInt((task.totalOOO / entity.shiftLength).toFixed(2));
+        row[generateTaskKey(task, 'shotef')] = parseFloat((task.totalOOO / entity.shiftLength).toFixed(2));
     }
     
     row = sheet.addRow(row);
@@ -244,6 +247,9 @@ const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
         sheet.mergeCells(row._number, cellShotef._column._number, row._number, cellRetro._column._number); // Merging cells
         cellShotef.style = {numFmt: '0%', alignment: {horizontal: "center"}};
     }
+    
+    let oooCell = row.getCell('oooShift');
+    oooCell.style = {numFmt: '0%', alignment: {horizontal: "center"}};
 
     sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
     row.getCell(5).value = 'מחוץ לעבודה (%)';
@@ -254,7 +260,11 @@ const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
 
 const calcIAOOORow = (entity, tasks, sheet) => {
     // Total in percentage
-    let row = {};
+    let {oooHours} = calcOutOfOffice(entity);
+    let row = {
+        oooShift: oooHours
+    };
+    
     for (const task of tasks) {
         row[generateTaskKey(task, 'shotef')] = task.totalOOO;
     }
@@ -271,7 +281,25 @@ const calcIAOOORow = (entity, tasks, sheet) => {
     row.getCell(5).value = 'מחוץ לעבודה';
     row.getCell(5).alignment = {horizontal: 'left'};
 
+    
     setRowBold(row);
+};
+
+const calcOutOfOffice = (entity) => {
+    let oooHours = 0;
+    let totalShiftsLength = 0;
+
+    entity.shifts.forEach(shift => {
+        totalShiftsLength += shift.hoursAnalysis.shiftLength;
+        if (shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE)
+            oooHours += shift.hoursAnalysis.shiftLength;
+    });
+
+    if (totalShiftsLength === 0)
+        return 0;
+
+    let oooPercentage = parseFloat((oooHours / totalShiftsLength).toFixed(2)) ;
+    return {oooHours, oooPercentage};
 };
 
 const createSummaryRowContent = (entity, year, month, sheet, tasks) => {
