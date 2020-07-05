@@ -8,7 +8,7 @@ const routeWrapper = require("./apiManager").routeWrapper;
 const router = express.Router();
 const { body, param } = require('express-validator/check');
 const jwtService = require("./jwtService");
-const {isAbsenceDaysEnable, isTasksEnable} = require("../managers/FeaturesManager");
+const {getCompanyTasks} = require("../managers/AppManager");
 
 //GET /tasks/{id} task
 router.get('/:id',
@@ -32,9 +32,7 @@ router.get('/',
     (req, res) => routeWrapper(req, res, async (req, res) => {
         let companyFromLocals = jwtService.getCompanyFromLocals(res);
         const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
-        let tasks = isTasksEnable(company) ? await TaskModel.getByCompanyId(company._id) : [];
-        let predefinedTasks = isAbsenceDaysEnable(company) ? await TaskModel.getPredefinedTasks() : [];
-        return [...predefinedTasks, ...tasks];
+        return await getCompanyTasks(company);
     })
 );
 

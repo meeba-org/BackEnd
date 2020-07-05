@@ -4,7 +4,6 @@ const moment = require('moment');
 const Excel = require('exceljs');
 const EInsideWorkplace = require("../models/EInsideWorkplace");
 const ShiftLogModel = require("../models/ShiftLogModel");
-const TaskModel = require("../models/TaskModel");
 const {isTasksEnable, isAbsenceDaysEnable, isInnovativeAuthorityEnable} = require("./FeaturesManager");
 const {MAX_FREE_EMPLOYEES_ALLOWED} = require("../constants");
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
@@ -12,6 +11,7 @@ const isIndependenceDay = require("./HolidayAnalyzer").isIndependenceDay;
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
 const isHoliday = require("./HolidayAnalyzer").isHoliday;
 const EShiftStatus = require("../public/helpers/EShiftStatus");
+const {REGULAR} = require("../models/ETaskType");
 const RowBorderStyle = {
     top: { style: "hair" },
     left: { style: "medium" },
@@ -86,6 +86,10 @@ function generateTaskKey(task, suffix) {
     return task._id + suffix;
 }
 
+function getCompanyTasks(tasks) {
+    return tasks.filter(t => t.type === REGULAR);
+}
+
 const createIASummaryColumns = (sheet, company, tasks) => {
 
     const NUMBER_WIDTH = 9;
@@ -101,7 +105,9 @@ const createIASummaryColumns = (sheet, company, tasks) => {
     ];
 
     // Push tasks column
-    for (const task of tasks) {
+    let companyTasks = getCompanyTasks(tasks);
+    
+    for (const task of companyTasks) {
         columns.push({header: task.title + ' שוטף', key: generateTaskKey(task, 'shotef'), width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}});
         columns.push({header: task.title + ' רטרו', key: generateTaskKey(task, 'retro'), width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}});
     }
@@ -132,7 +138,8 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
 
     let startOfMonth = moment().year(year).month(month - 1).startOf('month');
     let endOfMonth = moment().year(year).month(month - 1).endOf('month');
-    initTaskTotal(tasks);
+    let companyTasks = getCompanyTasks(tasks);
+    initTaskTotal(companyTasks);
 
     for (let m = moment(startOfMonth); m.isBefore(endOfMonth); m.add(1, 'days')) {
         let row = {
@@ -146,8 +153,7 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
             addDayRow(sheet, row, m);
             continue;
         }
-
-
+        
         for (let i = 0; i < shifts.length; i++) {
             let shift = shifts[i];
 
@@ -164,7 +170,7 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
                 oooShift: isOOOShift(shift) ? "✔" : ""
             };
 
-            for (const task of tasks) {
+            for (const task of companyTasks) {
                 let value = shift.task && (shift.task._id.toString() === task._id.toString()) ? hoursAnalysis.shiftLength : "";
                 
                 if (shift.isClockInTimeRetro || shift.isClockOutTimeRetro) {
@@ -208,7 +214,8 @@ const calcTotalInHours = (entity, tasks, sheet) => {
 const calcTotalInPercentage = (entity, tasks, sheet) => {
     // Total in percentage
     let row = {};
-    for (const task of tasks) {
+    let companyTasks = getCompanyTasks(tasks);
+    for (const task of companyTasks) {
         row[generateTaskKey(task, 'shotef')] = parseFloat((task.totalShotef / entity.shiftLength).toFixed(2));
         row[generateTaskKey(task, 'retro')] = parseFloat((task.totalRetro / entity.shiftLength).toFixed(2));
     }
@@ -216,7 +223,7 @@ const calcTotalInPercentage = (entity, tasks, sheet) => {
     row = sheet.addRow(row);
 
     // Formatting the percantage sign...
-    for (const task of tasks) {
+    for (const task of companyTasks) {
         let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
         let cellRetro = row.getCell(generateTaskKey(task, 'retro'));
         cellShotef.style = {numFmt: '0%', alignment: {horizontal: "center"}};
@@ -232,16 +239,18 @@ const calcTotalInPercentage = (entity, tasks, sheet) => {
 const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
     // Total in percentage
     let {oooPercentage} = calcOutOfOffice(entity);
+    let companyTasks = getCompanyTasks(tasks);
     let row = {
         oooShift: oooPercentage
     };
-    for (const task of tasks) {
+    
+    for (const task of companyTasks) {
         row[generateTaskKey(task, 'shotef')] = parseFloat((task.totalOOO / entity.shiftLength).toFixed(2));
     }
     
     row = sheet.addRow(row);
 
-    for (const task of tasks) {
+    for (const task of companyTasks) {
         let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
         let cellRetro = row.getCell(generateTaskKey(task, 'retro'));
         sheet.mergeCells(row._number, cellShotef._column._number, row._number, cellRetro._column._number); // Merging cells
@@ -265,13 +274,14 @@ const calcIAOOORow = (entity, tasks, sheet) => {
         oooShift: oooHours
     };
     
-    for (const task of tasks) {
+    let companyTasks = getCompanyTasks(tasks);
+    for (const task of companyTasks) {
         row[generateTaskKey(task, 'shotef')] = task.totalOOO;
     }
     
     row = sheet.addRow(row);
 
-    for (const task of tasks) {
+    for (const task of companyTasks) {
         let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
         let cellRetro = row.getCell(generateTaskKey(task, 'retro'));
         sheet.mergeCells(row._number, cellShotef._column._number, row._number, cellRetro._column._number); // Merging cells

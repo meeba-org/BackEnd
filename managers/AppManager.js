@@ -1,8 +1,10 @@
 const ShiftModel = require('../models/ShiftModel');
 const UserModel = require('../models/UserModel');
 const CompanyModel = require('../models/CompanyModel');
+const TaskModel = require('../models/TaskModel');
 const ERoles = require ('../models/ERoles');
 const moment = require('moment');
+const {isAbsenceDaysEnable, isTasksEnable} = require("../managers/FeaturesManager");
 
 const addShift = (shift) => {
     const user = shift.user;
@@ -90,6 +92,12 @@ const getShiftsInMonth = (year, month, company, userId) => {
     return ShiftModel.getShiftsBetween(company, startDate, endDate, userId);
 };
 
+const getCompanyTasks = async company => {
+    let tasks = isTasksEnable(company) ? await TaskModel.getByCompanyId(company._id) : [];
+    let predefinedTasks = isAbsenceDaysEnable(company) ? await TaskModel.getPredefinedTasks() : [];
+    return [...predefinedTasks, ...tasks];
+};
+
 module.exports = {
     addUser
     , removeUser
@@ -97,4 +105,5 @@ module.exports = {
     , removeShift
     , registerCompanyManager
     , getShiftsInMonth
+    , getCompanyTasks
 };

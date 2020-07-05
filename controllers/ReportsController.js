@@ -30,7 +30,7 @@ router.get('/download',
 
         const results = await Promise.all([
             AppManager.getShiftsInMonth(year, month, company),
-            TaskModel.getByCompanyId(company._id)
+            AppManager.getCompanyTasks(company)
         ]);
 
         let shifts = results[0];
