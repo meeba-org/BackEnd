@@ -122,6 +122,7 @@ const initTaskTotal = tasks => {
     for (const task of tasks) {
         task.totalShotef = 0;
         task.totalRetro = 0;
+        task.totalOOO = 0;
     }
 };
 
@@ -160,7 +161,7 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
                 clockOutTimeRetro: shift.isClockOutTimeRetro ? calcClockOutTime(shift) : "",
                 shiftLength: hoursAnalysis.shiftLength || "",
                 notes: shift.note,
-                oooShift: shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE ? "✔" : ""
+                oooShift: isOOOShift(shift) ? "✔" : ""
             };
 
             for (const task of tasks) {
@@ -174,6 +175,11 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
                     row[generateTaskKey(task, 'shotef')] = value;
                     task.totalShotef += value || 0;
                 }
+
+                if (isOOOShift(shift)) {
+                    task.totalOOO += value || 0;
+                }
+
             }
 
             addDayRow(sheet, row, shift.clockInTime);
@@ -181,7 +187,7 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
     }
 };
 
-const createSummaryRowContent = (entity, year, month, sheet, tasks) => {
+const calcTotalInHours = (entity, tasks, sheet) => {
     // Total in hours
     let row = {
         shiftLength: entity.shiftLength || "",
@@ -191,24 +197,77 @@ const createSummaryRowContent = (entity, year, month, sheet, tasks) => {
         row[generateTaskKey(task, 'shotef')] = task.totalShotef;
         row[generateTaskKey(task, 'retro')] = task.totalRetro;
     }
-    
+
     row = sheet.addRow(row);
     sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
-    row.getCell(5).value = 'סה"כ';
-    row.getCell(5).alignment = { horizontal: 'left' };
+    row.getCell(5).value = 'סה"כ שעות';
+    row.getCell(5).alignment = {horizontal: 'left'};
     setRowBold(row);
+};
 
+const calcTotalInPercentage = (entity, tasks, sheet) => {
     // Total in percentage
-    let row2 = {};
+    let row = {};
     for (const task of tasks) {
-        row2[generateTaskKey(task, 'shotef')] = (task.totalShotef / entity.shiftLength).toFixed(2) * 100 + "%";
-        row2[generateTaskKey(task, 'retro')] = (task.totalRetro / entity.shiftLength).toFixed(2) * 100 + "%";
+        row[generateTaskKey(task, 'shotef')] = (task.totalShotef / entity.shiftLength).toFixed(2) * 100 + "%";
+        row[generateTaskKey(task, 'retro')] = (task.totalRetro / entity.shiftLength).toFixed(2) * 100 + "%";
     }
-    row2 = sheet.addRow(row2);
-    sheet.mergeCells(row2._number, 6, row2._number, 5); // Merging cells
-    row2.getCell(5).value = 'אחוזה התעסוקה במו"פ';
-    row2.getCell(5).alignment = { horizontal: 'left' };
-    setRowBold(row2);
+    row = sheet.addRow(row);
+    sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
+    row.getCell(5).value = 'תעסוקה במו"פ (%)';
+    row.getCell(5).alignment = {horizontal: 'left'};
+    setRowBold(row);
+};
+
+const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
+    // Total in percentage
+    let row = {};
+    for (const task of tasks) {
+        row[generateTaskKey(task, 'shotef')] = (task.totalOOO / entity.shiftLength).toFixed(2) * 100 + "%";
+    }
+    
+    row = sheet.addRow(row);
+
+    for (const task of tasks) {
+        let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
+        let cellRetro = row.getCell(generateTaskKey(task, 'retro'));
+        sheet.mergeCells(row._number, cellShotef._column._number, row._number, cellRetro._column._number); // Merging cells
+    }
+
+    sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
+    row.getCell(5).value = 'מחוץ לעבודה (%)';
+    row.getCell(5).alignment = {horizontal: 'left'};
+
+    setRowBold(row);
+};
+
+const calcIAOOORow = (entity, tasks, sheet) => {
+    // Total in percentage
+    let row = {};
+    for (const task of tasks) {
+        row[generateTaskKey(task, 'shotef')] = task.totalOOO;
+    }
+    
+    row = sheet.addRow(row);
+
+    for (const task of tasks) {
+        let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
+        let cellRetro = row.getCell(generateTaskKey(task, 'retro'));
+        sheet.mergeCells(row._number, cellShotef._column._number, row._number, cellRetro._column._number); // Merging cells
+    }
+
+    sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
+    row.getCell(5).value = 'מחוץ לעבודה';
+    row.getCell(5).alignment = {horizontal: 'left'};
+
+    setRowBold(row);
+};
+
+const createSummaryRowContent = (entity, year, month, sheet, tasks) => {
+    calcTotalInHours(entity, tasks, sheet);
+    calcTotalInPercentage(entity, tasks, sheet);
+    calcIAOOORow(entity, tasks, sheet);
+    calcIAOOOPercentageRow(entity, tasks, sheet);
 };
 
 const createIAContent = (sheet, company, entity, year, month, tasks) => {
@@ -474,6 +533,8 @@ const createShiftChangesLogContent = (sheet, entity, company, shiftChangesLog ) 
     }
 };
 
+const isOOOShift = shift => shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE;
+
 const createBasicShiftsContent =  (sheet, entity, company, year, month ) => {
     if (!entity.shifts || entity.shifts.length === 0)
         return;
@@ -513,7 +574,7 @@ const createBasicShiftsContent =  (sheet, entity, company, year, month ) => {
                 monthlyExtraPay: shift.extraPay || "",
                 userName: shift.user.fullName,
                 notes: shift.note,
-                oooShift: shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE ? "✔" : ""
+                oooShift: isOOOShift(shift) ? "✔" : ""
             };
 
             if (shouldAddCommuteData(company, shift)) {
