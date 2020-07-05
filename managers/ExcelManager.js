@@ -182,9 +182,9 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
 };
 
 const createSummaryRowContent = (entity, year, month, sheet, tasks) => {
+    // Total in hours
     let row = {
         shiftLength: entity.shiftLength || "",
-        clockOutTimeRetro: 'סה"כ'
     };
 
     for (const task of tasks) {
@@ -193,7 +193,22 @@ const createSummaryRowContent = (entity, year, month, sheet, tasks) => {
     }
     
     row = sheet.addRow(row);
+    sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
+    row.getCell(5).value = 'סה"כ';
+    row.getCell(5).alignment = { horizontal: 'left' };
     setRowBold(row);
+
+    // Total in percentage
+    let row2 = {};
+    for (const task of tasks) {
+        row2[generateTaskKey(task, 'shotef')] = (task.totalShotef / entity.shiftLength).toFixed(2) * 100 + "%";
+        row2[generateTaskKey(task, 'retro')] = (task.totalRetro / entity.shiftLength).toFixed(2) * 100 + "%";
+    }
+    row2 = sheet.addRow(row2);
+    sheet.mergeCells(row2._number, 6, row2._number, 5); // Merging cells
+    row2.getCell(5).value = 'אחוזה התעסוקה במו"פ';
+    row2.getCell(5).alignment = { horizontal: 'left' };
+    setRowBold(row2);
 };
 
 const createIAContent = (sheet, company, entity, year, month, tasks) => {
