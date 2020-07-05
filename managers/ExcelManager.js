@@ -86,9 +86,9 @@ function generateTaskKey(task, suffix) {
     return task._id + suffix;
 }
 
-function getCompanyTasks(tasks) {
-    return tasks.filter(t => t.type === REGULAR);
-}
+const getCompanyTasks = tasks => tasks.filter(t => t.type === REGULAR);
+
+const getAbsenceDaysTasks = tasks => tasks.filter(t => t.type !== REGULAR);
 
 const createIASummaryColumns = (sheet, company, tasks) => {
 
@@ -106,10 +106,14 @@ const createIASummaryColumns = (sheet, company, tasks) => {
 
     // Push tasks column
     let companyTasks = getCompanyTasks(tasks);
-    
     for (const task of companyTasks) {
         columns.push({header: task.title + ' שוטף', key: generateTaskKey(task, 'shotef'), width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}});
         columns.push({header: task.title + ' רטרו', key: generateTaskKey(task, 'retro'), width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}});
+    }
+    
+    let absenceDaysTasks = getAbsenceDaysTasks(tasks);
+    for (const task of absenceDaysTasks) {
+        columns.push({header: task.title, key: task.title, width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}});
     }
     
     if (hasWorkplaces(company)) {
@@ -129,6 +133,10 @@ const initTaskTotal = tasks => {
         task.totalShotef = 0;
         task.totalRetro = 0;
         task.totalOOO = 0;
+        
+        // For absence days
+        if (task.type !== REGULAR)
+            task[`total${task.title}`] = 0;
     }
 };
 
@@ -138,8 +146,7 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
 
     let startOfMonth = moment().year(year).month(month - 1).startOf('month');
     let endOfMonth = moment().year(year).month(month - 1).endOf('month');
-    let companyTasks = getCompanyTasks(tasks);
-    initTaskTotal(companyTasks);
+    initTaskTotal(tasks);
 
     for (let m = moment(startOfMonth); m.isBefore(endOfMonth); m.add(1, 'days')) {
         let row = {
@@ -170,8 +177,14 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
                 oooShift: isOOOShift(shift) ? "✔" : ""
             };
 
-            for (const task of companyTasks) {
+            for (const task of tasks) {
                 let value = shift.task && (shift.task._id.toString() === task._id.toString()) ? hoursAnalysis.shiftLength : "";
+                
+                if (task.type !== REGULAR) {
+                    row[task.title] = value;
+                    task[`total${task.title}`] += value || 0;
+                    continue;
+                }
                 
                 if (shift.isClockInTimeRetro || shift.isClockOutTimeRetro) {
                     row[generateTaskKey(task, 'retro')] = value;
@@ -200,8 +213,13 @@ const calcTotalInHours = (entity, tasks, sheet) => {
     };
 
     for (const task of tasks) {
-        row[generateTaskKey(task, 'shotef')] = task.totalShotef;
-        row[generateTaskKey(task, 'retro')] = task.totalRetro;
+        if (task.type === REGULAR) {
+            row[generateTaskKey(task, 'shotef')] = task.totalShotef;
+            row[generateTaskKey(task, 'retro')] = task.totalRetro;
+        }
+        else {
+            row[task.title] = task[`total${task.title}`];
+        }
     }
 
     row = sheet.addRow(row);
