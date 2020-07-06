@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {showModal, updateCompany} from "../../actions";
-import {getCompany} from "../../selectors";
+import {getCompany, isInnovativeAuthorityEnable} from "../../selectors";
 import {EModalType} from "../modals/EModalType";
-import AllowedWorkplaces from "../workplace/AllowedWorkplaces";
+import Workplaces from "../workplace/Workplaces";
 
-const AllowedWorkplacesContainer = () => {
+const WorkplacesContainer = () => {
     const company = useSelector(getCompany);
     if (!company)
         return null;
@@ -16,7 +16,7 @@ const AllowedWorkplacesContainer = () => {
     useEffect(() => {
         setWorkplaces(company.workplaces);
     }, [company.workplaces]);
-
+    
     const updateWorkplaces = newWorkplaces => {
         const newCompany = {
             ...company,
@@ -68,14 +68,24 @@ const AllowedWorkplacesContainer = () => {
         ));
     };
 
+    const isAddAllowed = () => {
+        let innovativeAuthorityEnable = useSelector(isInnovativeAuthorityEnable);
+
+        if (!innovativeAuthorityEnable)
+            return true;
+        
+        return workplaces.length < 2;
+    };
+
     return (
-        <AllowedWorkplaces
+        <Workplaces
             workplaces={workplaces}
             onAdd={handleAdd}
             onDelete={handleDelete}
             onUpdate={handleUpdate}
+            isAddAllowed={isAddAllowed()}
         />
     );
 };
 
-export default AllowedWorkplacesContainer;
+export default WorkplacesContainer;

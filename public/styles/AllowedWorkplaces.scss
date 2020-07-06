@@ -7,5 +7,7 @@
     .add {
         display: flex;
         cursor: pointer;
+        min-width: 0px;
+        font-size: 16px;
     }
 }

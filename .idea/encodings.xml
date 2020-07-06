@@ -147,16 +147,16 @@
     <file url="file://$PROJECT_DIR$/public/components/tasks/TasksContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/TasksList.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/TasksSelectionContainer.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/user/AllowedWorkplacesContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/SettingSwitch.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/StartOfMonthField.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/UserContainer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/user/WorkplacesContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/withShiftLogic.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/workplace/AllowedWorkplaces.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/AllowedWorkplacesContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/PlacesAutocomplete.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/Workplace.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/WorkplaceMap.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/workplace/Workplaces.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/config.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/ERoles.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/EShiftStatus.js" charset="UTF-8" />

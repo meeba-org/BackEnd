@@ -42,14 +42,12 @@ EmployeesContainer.propTypes = {
     showGoPremiumModal: PropTypes.func.isRequired,
 };
 
-function mapStateToProps(state) {
-    return {
-        employees: state.users,
-        isDesktop: selectors.isDesktop(state),
-        isAddAllowed: selectors.hasPremiumFeature(state) || (state.users && state.users.length < MAX_FREE_EMPLOYEES_ALLOWED),
-        isEditAllowed: selectors.hasPremiumFeature(state) || (state.users && state.users.length <= MAX_FREE_EMPLOYEES_ALLOWED),
-    };
-}
+const mapStateToProps = state => ({
+    employees: state.users,
+    isDesktop: selectors.isDesktop(state),
+    isAddAllowed: selectors.hasPremiumFeature(state) || (state.users && state.users.length < MAX_FREE_EMPLOYEES_ALLOWED),
+    isEditAllowed: selectors.hasPremiumFeature(state) || (state.users && state.users.length <= MAX_FREE_EMPLOYEES_ALLOWED),
+});
 
 const mapDispatchToProps = {
         fetchEmployees: fetchUsers,

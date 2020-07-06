@@ -10,7 +10,7 @@ import ExportContainer from "../export/ExportContainer";
 import MbCard from "../MbCard";
 import NoData from "../NoData";
 import WhatIsIt from "../WhatIsIt";
-import AllowedWorkplacesContainer from "./AllowedWorkplacesContainer";
+import WorkplacesContainer from "./WorkplacesContainer";
 import SettingSwitch from "./SettingSwitch";
 import StartOfMonthField from "./StartOfMonthField";
 
@@ -88,7 +88,7 @@ const User = ({
                 </Grid>
             </MbCard>
 
-            <AllowedWorkplacesContainer/>
+            <WorkplacesContainer/>
 
             <ExportContainer/>
 
