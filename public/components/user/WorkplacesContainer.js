@@ -68,7 +68,7 @@ const WorkplacesContainer = () => {
         ));
     };
 
-    const isAddAllowed = () => {
+    const calcIsAddAllowed = () => {
         let innovativeAuthorityEnable = useSelector(isInnovativeAuthorityEnable);
 
         if (!innovativeAuthorityEnable)
@@ -77,13 +77,15 @@ const WorkplacesContainer = () => {
         return workplaces.length < 2;
     };
 
+    const isAddAllowed = calcIsAddAllowed();
+    
     return (
         <Workplaces
             workplaces={workplaces}
             onAdd={handleAdd}
             onDelete={handleDelete}
             onUpdate={handleUpdate}
-            isAddAllowed={isAddAllowed()}
+            isAddAllowed={isAddAllowed}
         />
     );
 };

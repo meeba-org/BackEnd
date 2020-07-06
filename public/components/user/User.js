@@ -174,7 +174,7 @@ const User = ({
                                    disabled={user.company.settings.enableInnovativeAuthority}
                     />
 
-                    <SettingSwitch text={"מצב מדען ראשי"} value={user.company.settings.enableInnovativeAuthority}
+                    <SettingSwitch text={"מצב הרשות לחדשנות"} value={user.company.settings.enableInnovativeAuthority}
                                    fieldValue={"enableInnovativeAuthority"}
                                    handleCompanySettingsChange={onInnovativeAuthorityChange}
                     />

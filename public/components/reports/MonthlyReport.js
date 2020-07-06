@@ -98,7 +98,7 @@ const MonthlyReport = (
                     <MbActionButton
                         onClick={handleExportInnovationAuthorityReportClick}
                         iconComponent={EmojiObjects}
-                        tooltip={"ייצוא דוח המדען הראשי"}
+                        tooltip={"ייצוא דוח הרשות לחדשנות"}
                     />
                     }
                 </IfGranted>

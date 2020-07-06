@@ -70,7 +70,7 @@ const createSummaryColumns = (sheet, company) => {
     ];
 
     if (isInnovativeAuthorityEnable(company))
-        columns.push({header: 'מדע"ר %', key: 'innovativeAuthorityPercentage', width: 10, style: {alignment: {horizontal: 'center'}}});
+        columns.push({header: 'הרשות לחדשנות %', key: 'innovativeAuthorityPercentage', width: 10, style: {alignment: {horizontal: 'center'}}});
 
     if (hasWorkplaces(company))
         columns.push({header: 'מחוץ לעבודה %', key: 'outOfOfficePercentage', width: 15, style: {alignment: {horizontal: 'center'}}});

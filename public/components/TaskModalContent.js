@@ -25,10 +25,14 @@ const TaskModalContent = ({task, open, isNewTask, onKeyPress, onOk, onCancel, on
                                autoFocus
                     />
                     <FormControlLabel
-                        control={<Checkbox checked={task.isInnovative}
-                                           onChange={e => onChange("isInnovative", e.target.checked)}
-                                           name="משימת מדען ראשי"/>}
-                        label="משימת מדען ראשי"
+                        control={
+                            <Checkbox
+                                checked={task.isInnovative}
+                                onChange={e => onChange("isInnovative", e.target.checked)}
+                                name="משימת הרשות לחדשנות"
+                            />
+                        }
+                        label="משימת הרשות לחדשנות"
                     />
                 </Box>
             </DialogContent>
