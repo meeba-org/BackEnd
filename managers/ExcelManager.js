@@ -69,12 +69,6 @@ const createSummaryColumns = (sheet, company) => {
         {header: 'תוספות', key: 'monthlyExtraPay', width: 11, style: {alignment: {horizontal: 'center'}}},
     ];
 
-    if (isInnovativeAuthorityEnable(company))
-        columns.push({header: 'הרשות לחדשנות %', key: 'innovativeAuthorityPercentage', width: 10, style: {alignment: {horizontal: 'center'}}});
-
-    if (hasWorkplaces(company))
-        columns.push({header: 'מחוץ לעבודה %', key: 'outOfOfficePercentage', width: 15, style: {alignment: {horizontal: 'center'}}});
-
     columns.push({header: 'סה"כ שכר', key: 'overallSalary', width: 11, style: {alignment: {horizontal: 'center'}}});
 
     sheet.columns = columns;
@@ -426,7 +420,6 @@ let createSummaryContent = function (sheet, employees) {
             transportation: employee.transportation,
             monthlyCommuteCost: employee.monthlyCommuteCost,
             monthlyExtraPay: employee.monthlyExtraPay,
-            innovativeAuthorityPercentage: employee.innovativeAuthorityPercentage,
             outOfOfficePercentage: employee.outOfOfficePercentage,
             overallSalary: employee.overallSalary,
         });
@@ -483,10 +476,6 @@ const createShiftsPerEmployeeColumns = (sheet, company) => {
 
     if (isTasksEnable(company) || isAbsenceDaysEnable(company)) {
         columns.push({header: 'משימה', key: 'task', width: 10, style: {alignment: {horizontal: 'center'}}});
-    }
-
-    if (hasWorkplaces(company)) {
-        columns.push({header: 'מחוץ לעבודה', key: 'oooShift', width: 12, style: {alignment: {horizontal: 'center'}}});
     }
 
     const employeeColumns = [
@@ -662,7 +651,6 @@ const createBasicShiftsContent =  (sheet, entity, company, year, month ) => {
                 monthlyExtraPay: shift.extraPay || "",
                 userName: shift.user.fullName,
                 notes: shift.note,
-                oooShift: isOOOShift(shift) ? "✔" : ""
             };
 
             if (shouldAddCommuteData(company, shift)) {
@@ -842,7 +830,7 @@ let addWorksheet = function (workbook, title, color) {
     });
 };
 
-const handleEmployeeChangesLog = (workbook, employee, shiftChangesLog, company) => {
+const addIAEmployeeChangesLogSheet = (workbook, employee, shiftChangesLog, company) => {
     try {
         let sheet = addWorksheet(workbook, `${employee.fullName} - דוח שינויים`, "a3d1a6");
 
@@ -858,9 +846,6 @@ const handleEmployeeChangesLog = (workbook, employee, shiftChangesLog, company) 
 };
 
 const addShiftsPerEmployeeSheets = async (workbook, company, employees, year, month) => {
-    let shiftChangesLog;
-    if (isInnovativeAuthorityEnable(company))
-        shiftChangesLog = await ShiftLogModel.getByCompanyId(company._id);
 
     for (const employee of employees) {
         // create a sheet with the first row and column frozen
@@ -869,12 +854,7 @@ const addShiftsPerEmployeeSheets = async (workbook, company, employees, year, mo
         createShiftsPerEmployeeColumns(sheet, company);
         createShiftsPerEmployeesContent(sheet, employee, company, year, month);
         createEmployeesTotalSection(sheet, employee);
-
-        if (isInnovativeAuthorityEnable(company)) {
-            handleEmployeeChangesLog(workbook, employee, shiftChangesLog, company);
-        }
     }
-
 };
 
 function generateTaskName(task) {
@@ -993,9 +973,12 @@ const createInnovationAuthorityExcel = async (shifts, year, month, company, task
     const workbook = createWorkbook();
     
     let employees = processShiftsForEmployees(shifts, company);
+    let shiftChangesLog = await ShiftLogModel.getByCompanyId(company._id);
 
     for (const employee of employees) {
         await addIAEmployeeSheet(workbook, company, employee, year, month, tasks);
+        
+        addIAEmployeeChangesLogSheet(workbook, employee, shiftChangesLog, company);
     }
     return workbook;
 };
