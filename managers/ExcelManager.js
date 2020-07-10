@@ -942,8 +942,7 @@ const addFooterField = (sheet, row, title, value) => {
     sheet.mergeCells(row._number, 7, row._number, 5); // Merging cells
     if (value)
         row.getCell(5).value = value;
-    else
-        row.getCell(5).border = {bottom: {style: "medium"}};
+    row.getCell(5).border = {bottom: {style: "medium"}};
 };
 
 const createIASheetFooter = sheet => {
