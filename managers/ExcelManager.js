@@ -952,10 +952,46 @@ const addIAEmployeeSheet = async (workbook, company, employee, year, month, task
 
     createIASummaryColumns(sheet, company, tasks);
     createIAContent(sheet, company, employee, year, month, tasks);
+    createIASheetFooter(sheet);
+};
+
+const addFooterField = (sheet, row, title, value) => {
+    sheet.mergeCells(row._number, 4, row._number, 2); // Merging cells
+    row.getCell(2).value = title;
+
+    sheet.mergeCells(row._number, 7, row._number, 5); // Merging cells
+    if (value)
+        row.getCell(5).value = value;
+    else
+        row.getCell(5).border = {bottom: {style: "medium"}};
+};
+
+const createIASheetFooter = sheet => {
+    sheet.addRow();
+    let row = sheet.addRow();
+    let columnsLength = sheet.columns.length;
+
+    console.log(columnsLength);
+    sheet.mergeCells(row._number, columnsLength, row._number, 2); // Merging cells
+    
+    row.getCell(2).value = 'הריני מצהיר כי דו"ח שעות זה משקף את חלוקת שעות עבודתי במשימות השונות, וכי ידוע לי כי דו"ח זה ישמש לתביעת תמיכה כספית שתוגש ע"י החברה, לרשות החדשנות, משרד התעשייה, המסחר והתעסוקה';
+    
+    row = sheet.addRow();
+    row = sheet.addRow();
+    addFooterField(sheet, row, 'אישור עובד וחתימה');
+
+    row = sheet.addRow();
+    row = sheet.addRow();
+    addFooterField(sheet, row, 'אישור מנהל וחתימה');
+
+    row = sheet.addRow();
+    row = sheet.addRow();
+    addFooterField(sheet, row, 'תאריך הפקת הדוח', moment().format(DATE_AND_TIME_FORMAT));
 };
 
 const createInnovationAuthorityExcel = async (shifts, year, month, company, tasks) => {
     const workbook = createWorkbook();
+    
     let employees = processShiftsForEmployees(shifts, company);
 
     for (const employee of employees) {
