@@ -4,7 +4,7 @@ const moment = require('moment');
 const Excel = require('exceljs');
 const EInsideWorkplace = require("../models/EInsideWorkplace");
 const ShiftLogModel = require("../models/ShiftLogModel");
-const {isTasksEnable, isAbsenceDaysEnable, isInnovativeAuthorityEnable} = require("./FeaturesManager");
+const {isTasksEnable, isAbsenceDaysEnable} = require("./FeaturesManager");
 const {MAX_FREE_EMPLOYEES_ALLOWED} = require("../constants");
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
 const isIndependenceDay = require("./HolidayAnalyzer").isIndependenceDay;
@@ -951,7 +951,6 @@ const createIASheetFooter = sheet => {
     let row = sheet.addRow();
     let columnsLength = sheet.columns.length;
 
-    console.log(columnsLength);
     sheet.mergeCells(row._number, columnsLength, row._number, 2); // Merging cells
     
     row.getCell(2).value = 'הריני מצהיר כי דו"ח שעות זה משקף את חלוקת שעות עבודתי במשימות השונות, וכי ידוע לי כי דו"ח זה ישמש לתביעת תמיכה כספית שתוגש ע"י החברה, לרשות החדשנות, משרד התעשייה, המסחר והתעסוקה';
