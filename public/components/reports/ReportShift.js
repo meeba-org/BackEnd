@@ -17,7 +17,7 @@ import TaskIndicator from "./TaskIndicator";
 import Warning from "./Warning";
 
 const ReportShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog, showLocationModal, isDesktop} = props;
+    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog, showLocationModal, isDesktop, isInnovativeAuthorityEnable} = props;
 
     const calcClockInTime = () => {
         if (isShiftPending(shift) && shift.draftShift?.clockInTime)
@@ -78,7 +78,7 @@ const ReportShift = (props) => {
             {isDesktop &&
                 <Fragment>
                     <Warning warning={errors}/>
-                    <PendingApprovalIndicator status={shift.status} onClick={showShiftDialog}/>
+                    <PendingApprovalIndicator shift={shift} onClick={showShiftDialog} isInnovativeAuthorityEnable={isInnovativeAuthorityEnable}/>
                     <Note text={shift.note} onClick={showShiftDialog}/>
                     <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
                     <Location location={shift.location} onClick={showLocationModal}

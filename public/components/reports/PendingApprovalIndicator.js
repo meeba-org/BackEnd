@@ -5,19 +5,35 @@ import React from "react";
 import EShiftStatus from "../../helpers/EShiftStatus";
 import "../../styles/PendingApprovalInicator.scss";
 
-const PendingApprovalIndicator = ({status, onClick}) => {
-    const shouldIndicate = status =>
-        status === EShiftStatus.APPROVED ||
-        status === EShiftStatus.PENDING_UPDATE ||
-        status === EShiftStatus.PENDING_CREATE;
+const PendingApprovalIndicator = ({shift, onClick, isInnovativeAuthorityEnable}) => {
+    const shouldIndicate = shift => {
+        let {status, isClockInTimeRetro, isClockOutTimeRetro} = shift;
+        
+        if (isInnovativeAuthorityEnable && (isClockInTimeRetro || isClockOutTimeRetro))
+            return true;
+        
+        return status === EShiftStatus.APPROVED ||
+            status === EShiftStatus.PENDING_UPDATE ||
+            status === EShiftStatus.PENDING_CREATE;
+    };
 
-    if (!shouldIndicate(status))
+    if (!shouldIndicate(shift))
         return null;
+
+    function isApproved() {
+        let {status, isClockInTimeRetro, isClockOutTimeRetro} = shift;
+
+        if (isInnovativeAuthorityEnable && (isClockInTimeRetro || isClockOutTimeRetro))
+            return true;
+        
+        // Not IA
+        return status === EShiftStatus.APPROVED;
+    }
 
     return (
         <div styleName="icon" onClick={status === EShiftStatus.APPROVED ? null : onClick}>
-            <Tooltip title={status === EShiftStatus.APPROVED ? "משמרת שאושרה" : "משמרת ממתינה לאישור"} placement="top">
-                <EyeIcon styleName={status === EShiftStatus.APPROVED ? "approved" : "pending"} />
+            <Tooltip title={isApproved() ? "משמרת שאושרה רטרואקטיבית" : "משמרת ממתינה לאישור"} placement="top">
+                <EyeIcon styleName={isApproved() ? "approved" : "pending"} />
             </Tooltip>
         </div>
     );

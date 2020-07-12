@@ -151,7 +151,7 @@ class ShiftContainer extends React.PureComponent {
     };
 
     render() {
-        let {shift, showNames, mode, isDesktop, onDelete} = this.props;
+        let {shift, showNames, mode, isDesktop, onDelete, isInnovativeAuthorityEnable} = this.props;
         const {focus, hover} = this.state;
         let errors = this.getErrors();
         let classes1 = "shift " + (focus && isDesktop ? "focus" : "");
@@ -187,6 +187,7 @@ class ShiftContainer extends React.PureComponent {
                         showLocationModal={this.showLocationModal}
                         isDesktop={isDesktop}
                         onDelete={onDelete}
+                        isInnovativeAuthorityEnable={isInnovativeAuthorityEnable}
                     />
                 }
             </div>
@@ -205,12 +206,11 @@ ShiftContainer.propTypes = {
     onUpdateEndTime: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {
-    return {
-        isDesktop: selectors.isDesktop(state),
-        company: selectors.getCompany(state)
-    };
-};
+const mapStateToProps = (state) => ({
+    isDesktop: selectors.isDesktop(state),
+    company: selectors.getCompany(state),
+    isInnovativeAuthorityEnable: selectors.isInnovativeAuthorityEnable(state)
+});
 
 const mapDispatchToProps = {
     createShift,
