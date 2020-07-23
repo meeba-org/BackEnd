@@ -813,7 +813,7 @@ const calcClockOutTime = (shift) => {
     return moment(shift.clockOutTime).format("HH:mm");
 };
 
-let addWorksheet = function (workbook, title, color) {
+let addWorksheet = function (workbook, title, color, header) {
     title = title.replace(/'/g, ""); // Omit name with single quote "'"
     title = title.substring(0, EXCEL_SHEET_NAME_LIMIT);
 
@@ -826,13 +826,22 @@ let addWorksheet = function (workbook, title, color) {
             xSplit: 1,
             ySplit: 1,
             rightToLeft: true
-        }]
+        }],
+        headerFooter: {
+            oddHeader : header // BUG - https://github.com/exceljs/exceljs/issues/1325
+        },
+        pageSetup:{
+            paperSize: 9, // A4
+            orientation:'landscape',
+            fitToPage: true
+        }
     });
 };
 
-const addIAEmployeeChangesLogSheet = (workbook, employee, shiftChangesLog, company) => {
+const addIAEmployeeChangesLogSheet = (workbook, employee, shiftChangesLog, company, month, year) => {
     try {
-        let sheet = addWorksheet(workbook, `${employee.fullName} - דוח שינויים`, "a3d1a6");
+        let header = `מיבא שעון נוכחות - חברת ${company.name} - ${employee.fullName} דוח שינויים - חודש ${month}/${year}`;
+        let sheet = addWorksheet(workbook, `${employee.fullName} - דוח שינויים`, "a3d1a6", header);
 
         // Get the changes relevant for the specific employee
         const employeeShiftChangesLog = shiftChangesLog.filter(log => log.oldValue.user._id.toString() === employee._id.toString());
@@ -927,9 +936,12 @@ const createExcel = async (shifts, year, month, company, rawTasks) => {
 };
 
 const addIAEmployeeSheet = async (workbook, company, employee, year, month, tasks) => {
+    let header = `מיבא שעון נוכחות - חברת ${company.name} - ${employee.fullName} - חודש ${month}/${year}`;
+    
     // create a sheet with the first row and column frozen
-    let sheet = addWorksheet(workbook, employee.fullName);
+    let sheet = addWorksheet(workbook, employee.fullName, null, header);
 
+    
     createIASummaryColumns(sheet, company, tasks);
     createIAContent(sheet, company, employee, year, month, tasks);
     createIASheetFooter(sheet);
@@ -976,7 +988,7 @@ const createInnovationAuthorityExcel = async (shifts, year, month, company, task
     for (const employee of employees) {
         await addIAEmployeeSheet(workbook, company, employee, year, month, tasks);
         
-        addIAEmployeeChangesLogSheet(workbook, employee, shiftChangesLog, company);
+        addIAEmployeeChangesLogSheet(workbook, employee, shiftChangesLog, company, month, year);
     }
     return workbook;
 };
