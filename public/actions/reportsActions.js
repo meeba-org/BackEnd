@@ -23,7 +23,7 @@ const generateFileName = (month, year, companySettings) => {
             return `QVID${monthStr}${yearStr}.${michpalId}`;
         }
         case EXCEL:
-            return `דוח ${month}-${year}.xlsx`;
+            return `דוח-שעות-${month}-${year}.xlsx`;
     }
 };
 
