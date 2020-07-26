@@ -233,10 +233,15 @@ const calcTotalInPercentage = (entity, tasks, sheet) => {
     // Total in percentage
     let row = {};
     let companyTasks = getCompanyTasks(tasks);
+    let totalInPercentage = 0;
+    
     for (const task of companyTasks) {
         row[generateTaskKey(task, 'shotef')] = parseFloat((task.totalShotef / entity.shiftLength).toFixed(2));
         row[generateTaskKey(task, 'retro')] = parseFloat((task.totalRetro / entity.shiftLength).toFixed(2));
+        totalInPercentage += (task.totalShotef + task.totalRetro) / entity.shiftLength;
     }
+    
+    row['shiftLength'] = parseFloat(totalInPercentage.toFixed(2));
     
     row = sheet.addRow(row);
 
@@ -251,7 +256,9 @@ const calcTotalInPercentage = (entity, tasks, sheet) => {
         cellShotef.style = {numFmt: '0%', alignment: {horizontal: "center"}};
         cellRetro.style = {numFmt: '0%', alignment: {horizontal: "center"}};
     }
-    
+    let totalInPercentageCell = row.getCell('shiftLength');
+    totalInPercentageCell.style = {numFmt: '0%', alignment: {horizontal: "center"}};
+
     sheet.mergeCells(row._number, 6, row._number, 5); // Merging cells
     row.getCell(5).value = 'תעסוקה במו"פ (%)';
     row.getCell(5).alignment = {horizontal: 'left'};
