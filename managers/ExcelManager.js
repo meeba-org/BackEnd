@@ -28,7 +28,7 @@ const EXCEL_SHEET_NAME_LIMIT = 31;
 const DATE_FORMAT = "DD/MM/YYYY";
 const TIME_FORMAT = "HH:mm";
 const DATE_AND_TIME_FORMAT = `${TIME_FORMAT} ${DATE_FORMAT}`;
- 
+const DAILY_HOURS_TEKEN = 8.6; // https://www.kolzchut.org.il/he/%D7%99%D7%95%D7%9D_%D7%A2%D7%91%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%91%D7%95%D7%A2_%D7%A2%D7%91%D7%95%D7%93%D7%94
 moment.locale('he');
 
 const createTitleDate = (year, month) => moment().year(year).month(month - 1).format('MM-YYYY');
@@ -91,6 +91,7 @@ const createIASummaryColumns = (sheet, company, tasks) => {
     let columns = [
         {header: 'תאריך', key: 'date', width: 13, style: {alignment: {horizontal: 'center'}}},
         {header: 'יום', key: 'dayInWeek', width: 7, style: {alignment: {horizontal: 'center'}}},
+        {header: 'תקן', key: 'teken', width: 7, style: {alignment: {horizontal: 'center'}}},
         {header: 'כניסה שוטף', key: 'clockInTime', width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}},
         {header: 'כניסה רטרו', key: 'clockInTimeRetro', width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}},
         {header: 'יציאה שוטף', key: 'clockOutTime', width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}},
@@ -146,6 +147,7 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
         let row = {
             date: m.format("DD/MM/YYYY"),
             dayInWeek: calcDayInWeek(m),
+            teken: calcTeken(m)
         };
 
         let shifts = getShifts(entity.shifts, m);
@@ -162,6 +164,7 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
             row = {
                 date: i === 0 ? row.date : "",
                 dayInWeek: i === 0 ? row.dayInWeek : "",
+                teken: i === 0 ? row.teken : "",
                 clockInTime: !shift.isClockInTimeRetro ? calcClockInTime(shift) : "",
                 clockInTimeRetro: shift.isClockInTimeRetro ? calcClockInTime(shift) : "",
                 clockOutTime: !shift.isClockOutTimeRetro ? calcClockOutTime(shift) : "",
@@ -804,6 +807,14 @@ const calcDayInWeek = (m) => {
         return "-";
 
     return moment(m).format("dddd");
+};
+
+const calcTeken = (m) => {
+    if (!m)
+        return "";
+
+    let weekday = moment(m).weekday();
+    return (weekday >= 0 && weekday <= 4) ? DAILY_HOURS_TEKEN : ""; 
 };
 
 const calcClockInTime = (shift) => {
