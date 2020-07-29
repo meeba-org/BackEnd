@@ -163,7 +163,7 @@ router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
             return await resolve();
         }
         catch (err) {
-            console.error(err.message);
+            console.error('[iCreditManager] - ', err.message);
             return await reject(err);
         }
     })
