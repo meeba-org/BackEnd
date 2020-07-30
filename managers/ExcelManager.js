@@ -965,19 +965,26 @@ const addIAEmployeeSheet = async (workbook, company, employee, year, month, task
     createIASheetFooter(sheet);
 };
 
-const addFooterField = (sheet, row, title, value) => {
-    sheet.mergeCells(row._number, 4, row._number, 2); // Merging cells
-    row.getCell(2).value = title;
+const addFooterField = (sheet, row, title, value, shouldAddDate = true) => {
+    var cellIndex = 2;
+    sheet.mergeCells(row._number, cellIndex + 2, row._number, cellIndex); // Merging cells
+    row.getCell(cellIndex).value = title;
 
-    sheet.mergeCells(row._number, 7, row._number, 5); // Merging cells
+    cellIndex += 3;
+    sheet.mergeCells(row._number, cellIndex + 2, row._number, cellIndex); // Merging cells
     if (value)
-        row.getCell(5).value = value;
-    row.getCell(5).border = {bottom: {style: "medium"}};
+        row.getCell(cellIndex + 2).value = value;
+    row.getCell(cellIndex + 2).border = {bottom: {style: "medium"}};
 
-    sheet.mergeCells(row._number, 9, row._number, 8); // Merging cells
-    row.getCell(8).value = "תאריך";
-    sheet.mergeCells(row._number, 12, row._number, 10); // Merging cells
-    row.getCell(10).border = {bottom: {style: "medium"}};
+    if (shouldAddDate) {
+        cellIndex += 3;
+        sheet.mergeCells(row._number, cellIndex + 1, row._number, cellIndex); // Merging cells
+        row.getCell(cellIndex).value = "תאריך";
+
+        cellIndex += 2;
+        sheet.mergeCells(row._number, cellIndex + 2, row._number, cellIndex); // Merging cells
+        row.getCell(cellIndex).border = {bottom: {style: "medium"}};
+    }
 };
 
 const createIASheetFooter = sheet => {
@@ -999,7 +1006,7 @@ const createIASheetFooter = sheet => {
 
     row = sheet.addRow();
     row = sheet.addRow();
-    addFooterField(sheet, row, 'תאריך הפקת הדוח', moment().format(DATE_AND_TIME_FORMAT));
+    addFooterField(sheet, row, 'תאריך הפקת הדוח', moment().format(DATE_AND_TIME_FORMAT), false);
 };
 
 const createInnovationAuthorityExcel = async (shifts, year, month, company, tasks) => {
