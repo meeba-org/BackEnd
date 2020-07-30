@@ -973,6 +973,11 @@ const addFooterField = (sheet, row, title, value) => {
     if (value)
         row.getCell(5).value = value;
     row.getCell(5).border = {bottom: {style: "medium"}};
+
+    sheet.mergeCells(row._number, 9, row._number, 8); // Merging cells
+    row.getCell(8).value = "תאריך";
+    sheet.mergeCells(row._number, 12, row._number, 10); // Merging cells
+    row.getCell(10).border = {bottom: {style: "medium"}};
 };
 
 const createIASheetFooter = sheet => {
