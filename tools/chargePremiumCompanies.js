@@ -18,6 +18,8 @@ const chargePremiumCompanies = async () => {
         return;
     }
 
+    console.log(`Premium Companies: ${companies.length}`);
+    
     for (let company of companies) {
         try{
             console.log(`${company.name} - Charging company - id: ${company._id}`);
