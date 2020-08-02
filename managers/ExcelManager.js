@@ -866,6 +866,7 @@ const addIAEmployeeChangesLogSheet = (workbook, employee, shiftChangesLog, compa
 
         createShiftChangesLogColumns(sheet, company);
         createShiftChangesLogContent(sheet, employee, company, employeeShiftChangesLog);
+        createIASheetFooter(sheet, false);
     }
     catch (e) {
         console.error(e);
@@ -962,13 +963,14 @@ const addIAEmployeeSheet = async (workbook, company, employee, year, month, task
     
     createIASummaryColumns(sheet, company, tasks);
     createIAContent(sheet, company, employee, year, month, tasks);
-    createIASheetFooter(sheet);
+    createIASheetFooter(sheet, true);
 };
 
 const addFooterField = (sheet, row, title, value, shouldAddDate = true) => {
     var cellIndex = 2;
     sheet.mergeCells(row._number, cellIndex + 2, row._number, cellIndex); // Merging cells
     row.getCell(cellIndex).value = title;
+    row.getCell(cellIndex).style = {alignment: {horizontal: 'center'}};
 
     cellIndex += 3;
     sheet.mergeCells(row._number, cellIndex + 2, row._number, cellIndex); // Merging cells
@@ -980,6 +982,7 @@ const addFooterField = (sheet, row, title, value, shouldAddDate = true) => {
         cellIndex += 3;
         sheet.mergeCells(row._number, cellIndex + 1, row._number, cellIndex); // Merging cells
         row.getCell(cellIndex).value = "תאריך";
+        row.getCell(cellIndex).style = {alignment: {horizontal: 'center'}};
 
         cellIndex += 2;
         sheet.mergeCells(row._number, cellIndex + 2, row._number, cellIndex); // Merging cells
@@ -987,14 +990,15 @@ const addFooterField = (sheet, row, title, value, shouldAddDate = true) => {
     }
 };
 
-const createIASheetFooter = sheet => {
+const createIASheetFooter = (sheet, shouldAddStatement) => {
     sheet.addRow();
     let row = sheet.addRow();
     let columnsLength = sheet.columns.length;
 
-    sheet.mergeCells(row._number, columnsLength, row._number, 2); // Merging cells
-    
-    row.getCell(2).value = 'הריני מצהיר כי דו"ח שעות זה משקף את חלוקת שעות עבודתי במשימות השונות, וכי ידוע לי כי דו"ח זה ישמש לתביעת תמיכה כספית שתוגש ע"י החברה, לרשות החדשנות, משרד התעשייה, המסחר והתעסוקה';
+    if (shouldAddStatement) {
+        sheet.mergeCells(row._number, columnsLength, row._number, 2); // Merging cells
+        row.getCell(2).value = 'הריני מצהיר כי דו"ח שעות זה משקף את חלוקת שעות עבודתי במשימות השונות, וכי ידוע לי כי דו"ח זה ישמש לתביעת תמיכה כספית שתוגש ע"י החברה, לרשות החדשנות, משרד התעשייה, המסחר והתעסוקה';
+    }
     
     row = sheet.addRow();
     row = sheet.addRow();
