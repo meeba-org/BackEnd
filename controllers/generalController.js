@@ -156,13 +156,14 @@ router.post('/api/general/ipn', bodyParser.urlencoded({ extended: true }),
     (req, res) => routeWrapper(req, res, async (req, res) => {
         try {
             let data = req.body;
-            console.log("ipn response: " + JSON.stringify(data));
+            console.log("ipn start: " + JSON.stringify(data));
 
             await iCreditManager.handleIPNCall(data);
+            console.log("ipn end");
             return await resolve();
         }
         catch (err) {
-            console.error(err.message);
+            console.error('[iCreditManager] - ', err.message);
             return await reject(err);
         }
     })

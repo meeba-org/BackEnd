@@ -7,7 +7,6 @@ const CompanyModel = require("../models/CompanyModel");
 // eslint-disable-next-line no-unused-vars
 const UserModel = require("../models/UserModel");
 const config = require('../config');
-const iCreditManager = require("../managers/iCreditManager");
 const mongooseManager = require("../managers/MongooseManager");
 
 const chargePremiumCompanies = async () => {
@@ -18,6 +17,8 @@ const chargePremiumCompanies = async () => {
         return;
     }
 
+    console.log(`Premium Companies: ${companies.length}`);
+    
     for (let company of companies) {
         try{
             console.log(`${company.name} - Charging company - id: ${company._id}`);

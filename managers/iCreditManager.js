@@ -95,7 +95,7 @@ const chargeSimple = async creditCardToken => {
 
     const response = await axios.post(CHARGE_SIMPLE, data);
     if (hasICreditError(response))
-        throw new Error(`[ChargeSimple] - Error! response: ${JSON.stringify(response.data)}`);
+        throw new Error(`[iCreditManager][ChargeSimple] - Error! response: ${JSON.stringify(response.data)}`);
 
     let {CustomerTransactionId, AuthNum} = response.data;
 
@@ -113,19 +113,19 @@ const completeSale = async (saleToken, customerTransactionId) => {
 
     const response = await axios.post(COMPLETE_SALE, data);
     if (hasICreditError(response))
-        throw new Error(`[CompleteSale] - Error! response: ${JSON.stringify(response.data)}`);
+        throw new Error(`[iCreditManager][CompleteSale] - Error! response: ${JSON.stringify(response.data)}`);
 
     return true;
 };
 
 const generateWaitingPayment = async (creditCardToken, email = "", companyName = "") => {
-    console.log(`Create Sale email: ${email}, ccToken: ${creditCardToken}`);
+    console.log(`[iCreditManager] - Create Sale email: ${email}, ccToken: ${creditCardToken}`);
     const createSaleResult = await createSale(email, companyName);
-    console.log(`Create Sale Result ${JSON.stringify(createSaleResult)}`);
+    console.log(`[iCreditManager] - Create Sale Result ${JSON.stringify(createSaleResult)}`);
     let {saleToken} = createSaleResult;
 
     const chargeSimpleResult = await chargeSimple(creditCardToken);
-    console.log(`Charge Simple Result: ${JSON.stringify(chargeSimpleResult)}`);
+    console.log(`[iCreditManager] - Charge Simple Result: ${JSON.stringify(chargeSimpleResult)}`);
     let {customerTransactionId, authNum} = chargeSimpleResult;
 
     await completeSale(saleToken, customerTransactionId);
@@ -199,7 +199,7 @@ const generateImmediatePayment0 = async (creditCardToken, authNum, customerTrans
 
 async function generateWaitingPaymentAndSave(creditCardToken, email, companyId, companyName) {
     let waitingPayment = await generateWaitingPayment(creditCardToken, email, companyName);
-    console.log(JSON.stringify(waitingPayment));
+    console.log('[iCreditManager] - ', JSON.stringify(waitingPayment));
     await updateCompanyWithPaymentData(companyId, {
         customerTransactionId: waitingPayment.customerTransactionId,
         authNum: waitingPayment.authNum
@@ -210,7 +210,7 @@ const handleIPNCall = async data => {
     const {Custom1: companyId, SaleId: saleId, TransactionToken: creditCardToken, EmailAddress: email} = data;
 
     if (!creditCardToken)
-        throw new Error (`[handleIPNCall] - no TransactionToken found in data for companyId ${companyId}`);
+        throw new Error (`[iCreditManager][handleIPNCall] - no TransactionToken found in data for companyId ${companyId}`);
 
     let updatedCompany = await updateCompanyWithPaymentData(companyId, {
         creditCardToken,
@@ -225,7 +225,7 @@ const updatePaymentWithSaleId = async (companyId, saleId) => {
     // Update Payment with SaleId
     let payment = await PaymentModel.getLatestByCompanyId(companyId);
     if (!payment)
-        throw new Error("[generalController] - IPN, Could not find payment, companyId: " + companyId);
+        throw new Error("[iCreditManager][generalController] - IPN, Could not find payment, companyId: " + companyId);
 
     payment.saleId = saleId;
     console.log(`[iCreditManager] - Update Payment ${payment._id} with SaleId: ${saleId}`);
