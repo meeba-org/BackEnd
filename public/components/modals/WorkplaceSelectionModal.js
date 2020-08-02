@@ -13,7 +13,7 @@ import PlacesAutocomplete from "../workplace/PlacesAutocomplete";
 import WorkplaceMap from "../workplace/WorkplaceMap";
 import {EModalType} from "./EModalType";
 
-const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
+const WorkplaceSelectionModal = ({open, onSave, orgWorkplace, radiusDisabled}) => {
 
     const dispatch = useDispatch();
     const [workplace, setWorkplace] = useState(orgWorkplace);
@@ -130,6 +130,7 @@ const WorkplaceSelectionModal = ({open, onSave, orgWorkplace}) => {
                             onChange={e => handleChange("radius", parseInt(e.target.value))}
                             styleName="field"
                             error={!workplace.radius}
+                            disabled={radiusDisabled}
                         />
                     </Box>
                     <PlacesAutocomplete

@@ -7,6 +7,8 @@ import Workplaces from "../workplace/Workplaces";
 
 const WorkplacesContainer = () => {
     const company = useSelector(getCompany);
+    let innovativeAuthorityEnable = useSelector(isInnovativeAuthorityEnable);
+
     if (!company)
         return null;
 
@@ -37,14 +39,16 @@ const WorkplacesContainer = () => {
     };
 
     const handleAdd = () => {
+
         dispatch(showModal(EModalType.WORKPLACE_SELECTION,
             {
                 onSave: (newWorkspace) => {
                     createWorkspace(newWorkspace);
                 },
                 orgWorkplace: {
-                    radius: 500
-                }
+                    radius: innovativeAuthorityEnable ? 200 : 500,
+                },
+                radiusDisabled: innovativeAuthorityEnable
             }
         ));
     };
@@ -69,8 +73,6 @@ const WorkplacesContainer = () => {
     };
 
     const calcIsAddAllowed = () => {
-        let innovativeAuthorityEnable = useSelector(isInnovativeAuthorityEnable);
-
         if (!innovativeAuthorityEnable)
             return true;
         
