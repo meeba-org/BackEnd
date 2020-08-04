@@ -219,12 +219,8 @@ const calcTotalInHours = (entity, tasks, sheet) => {
         }
     }
 
-    row = sheet.addRow(row);
-
-    row.getCell('חופש').border = {left: { style: "medium" }};
-    row.getCell('מילואים').border = {right: { style: "medium" }};
-    row.getCell('notes').border = {right: { style: "medium" }, left: { style: "medium"}};
-
+    row = addSummaryRow(sheet, row);
+    
     addSummaryLabel(sheet, row, 'סה"כ שעות');
     setRowBold(row);
 };
@@ -236,6 +232,15 @@ const addSummaryLabel = (sheet, row, value) => {
     row.getCell(cellIndex).alignment = {horizontal: 'left'};
     row.getCell(cellIndex).border = {right: {style: "medium"}};
 };
+
+function addSummaryRow(sheet, row) {
+    row = sheet.addRow(row);
+
+    row.getCell('חופש').border = {left: {style: "medium"}};
+    row.getCell('מילואים').border = {right: {style: "medium"}};
+    row.getCell('notes').border = {right: {style: "medium"}, left: {style: "medium"}};
+    return row;
+}
 
 const calcTotalInPercentage = (entity, tasks, sheet) => {
     // Total in percentage
@@ -250,13 +255,8 @@ const calcTotalInPercentage = (entity, tasks, sheet) => {
     }
     
     row['shiftLength'] = parseFloat(totalInPercentage.toFixed(2));
-    
-    row = sheet.addRow(row);
+    row = addSummaryRow(sheet, row);
 
-    row.getCell('חופש').border = {left: { style: "medium" }};
-    row.getCell('מילואים').border = {right: { style: "medium" }};
-    row.getCell('notes').border = {right: { style: "medium" }, left: { style: "medium"}};
-    
     // Formatting the percentage sign...
     for (const task of companyTasks) {
         let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
@@ -282,12 +282,8 @@ const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
     for (const task of companyTasks) {
         row[generateTaskKey(task, 'shotef')] = parseFloat((task.totalOOO / entity.shiftLength).toFixed(2));
     }
-    
-    row = sheet.addRow(row);
 
-    row.getCell('חופש').border = {left: { style: "medium" }};
-    row.getCell('מילואים').border = {right: { style: "medium" }};
-    row.getCell('notes').border = {right: { style: "medium" }, left: { style: "medium"}};
+    row = addSummaryRow(sheet, row);
     
     for (const task of companyTasks) {
         let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
@@ -314,12 +310,8 @@ const calcIAOOORow = (entity, tasks, sheet) => {
     for (const task of companyTasks) {
         row[generateTaskKey(task, 'shotef')] = task.totalOOO;
     }
-    
-    row = sheet.addRow(row);
 
-    row.getCell('חופש').border = {left: { style: "medium" }};
-    row.getCell('מילואים').border = {right: { style: "medium" }};
-    row.getCell('notes').border = {right: { style: "medium" }, left: { style: "medium"}};
+    row = addSummaryRow(sheet, row);    
     
     for (const task of companyTasks) {
         let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
