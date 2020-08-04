@@ -11,6 +11,7 @@ const isIndependenceDay = require("./HolidayAnalyzer").isIndependenceDay;
 const isHolidayEvening = require("./HolidayAnalyzer").isHolidayEvening;
 const isHoliday = require("./HolidayAnalyzer").isHoliday;
 const EShiftStatus = require("../public/helpers/EShiftStatus");
+const ETaskType = require("../models/ETaskType");
 const {REGULAR} = require("../models/ETaskType");
 const RowBorderStyle = {
     top: { style: "hair" },
@@ -242,19 +243,49 @@ function addSummaryRow(sheet, row) {
     return row;
 }
 
+const parse2DigitsFloat = totalInPercentage => parseFloat(totalInPercentage.toFixed(2));
+
+const calcTaskShotefPercentage = (task, entity) => {
+    let value = task.totalShotef / entity.shiftLength;
+    return parse2DigitsFloat(value);
+};
+
+const calcTaskRetroPercentage = (task, entity) => {
+    let value = task.totalRetro / entity.shiftLength;
+    return parse2DigitsFloat(value);
+};
+
+const calcNumberOfTaskShifts = entity => {
+    return entity.shifts.filter(s => s.task && s.task.type === ETaskType.REGULAR).length;
+};
+
+const calcNumberOfAbsenceDays = entity => {
+    return entity.shifts.filter(s => s.task && s.task.type !== ETaskType.REGULAR).length;
+};
+
+const calcTaskTotalPercentage = (totalTasksHours, entity) => {
+    let taskShifts = calcNumberOfTaskShifts(entity);
+    let absenceDays = calcNumberOfAbsenceDays(entity);
+    let totalTaskTekenHours = taskShifts * DAILY_HOURS_TEKEN;
+    
+    let denominator = Math.max(totalTasksHours + absenceDays * DAILY_HOURS_TEKEN, totalTaskTekenHours);
+
+    return parse2DigitsFloat(totalTasksHours / denominator);
+};
+
 const calcTotalInPercentage = (entity, tasks, sheet) => {
     // Total in percentage
     let row = {};
     let companyTasks = getCompanyTasks(tasks);
-    let totalInPercentage = 0;
+    let totalTasksHours = 0;
     
     for (const task of companyTasks) {
-        row[generateTaskKey(task, 'shotef')] = parseFloat((task.totalShotef / entity.shiftLength).toFixed(2));
-        row[generateTaskKey(task, 'retro')] = parseFloat((task.totalRetro / entity.shiftLength).toFixed(2));
-        totalInPercentage += (task.totalShotef + task.totalRetro) / entity.shiftLength;
+        row[generateTaskKey(task, 'shotef')] = calcTaskShotefPercentage(task, entity);
+        row[generateTaskKey(task, 'retro')] = calcTaskRetroPercentage(task, entity);
+        totalTasksHours += (task.totalShotef + task.totalRetro);
     }
     
-    row['shiftLength'] = parseFloat(totalInPercentage.toFixed(2));
+    row['shiftLength'] = calcTaskTotalPercentage(totalTasksHours, entity);
     row = addSummaryRow(sheet, row);
 
     // Formatting the percentage sign...
