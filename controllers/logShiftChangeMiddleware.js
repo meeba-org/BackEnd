@@ -42,6 +42,7 @@ const logShiftChangeMiddleware = async (req, res, next) => {
             status = oldShift.status;
         }
         else if (shift.status === EShiftStatus.APPROVED || shift.status === EShiftStatus.PENDING_CREATE) {
+            // TODO Updating an approved shift hold two cases - new apporoved and old approved (updating something)... yalla ten gas
             newShift = {...shift};
             status = newShift.status;
         }

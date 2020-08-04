@@ -593,6 +593,28 @@ const fetchTaskTitle = async taskId => {
     return task && task.title;
 };
 
+const calcNewShiftField = async (status, shift) => {
+    let task = await getByTaskId(shift.task);
+    let taskTypeText;
+    switch (task && task.type) {
+        case ETaskType.SICK:
+            taskTypeText = "מחלה";
+            break;
+        case ETaskType.VACATION:
+            taskTypeText = "חופש";
+            break;
+        case ETaskType.RESERVE:
+            taskTypeText = "מילואים";
+            break;
+        case ETaskType.REGULAR:
+        default:
+            taskTypeText = "משמרת";
+            break;
+    }
+    const sentence = `יצירת ${taskTypeText}`;
+    return (status === EShiftStatus.PENDING_CREATE.toString()) ? `בקשה ל${sentence}` : sentence;
+};
+
 const calcChanges = async (oldValue, newValue, status) => {
     let field = "לא ידוע";
     let oldValueStr;
@@ -604,14 +626,8 @@ const calcChanges = async (oldValue, newValue, status) => {
         newValueStr = `--> ${moment(newValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
 <-- ${newValue.clockOutTime && moment(newValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`;
     } 
-//     else if (status === EShiftStatus.PENDING_CREATE.toString()) {
-//         field = "בקשה ליצירת משמרת";
-//         oldValueStr = "";
-//         newValueStr = `--> ${moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
-// <-- ${oldValue.clockOutTime && moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`;
-//     }
     else if (!oldValue && newValue) {
-        field = (status === EShiftStatus.PENDING_CREATE.toString()) ? "בקשה ליצירת משמרת" : "יצירת משמרת";
+        field = await calcNewShiftField(status, newValue);
         oldValueStr = "";
         newValueStr = `--> ${moment(newValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
 <-- ${newValue.clockOutTime && moment(newValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`;
