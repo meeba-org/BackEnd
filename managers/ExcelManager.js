@@ -246,12 +246,12 @@ function addSummaryRow(sheet, row) {
 const parse2DigitsFloat = totalInPercentage => parseFloat(totalInPercentage.toFixed(2));
 
 const calcTaskShotefPercentage = (task, entity) => {
-    let value = task.totalShotef / entity.shiftLength;
+    let value = entity.shiftLength > 0 ? task.totalShotef / entity.shiftLength : 0;
     return parse2DigitsFloat(value);
 };
 
 const calcTaskRetroPercentage = (task, entity) => {
-    let value = task.totalRetro / entity.shiftLength;
+    let value = entity.shiftLength > 0 ? task.totalRetro / entity.shiftLength : 0;
     return parse2DigitsFloat(value);
 };
 
@@ -272,6 +272,9 @@ const calcTaskTotalPercentage = (totalTasksHours, entity) => {
     
     let denominator = Math.max(totalTasksHours + absenceDaysHours, totalTaskTekenHours);
 
+    if (denominator === 0)
+        return 0;
+    
     return parse2DigitsFloat(totalTasksHours / denominator);
 };
 
@@ -312,8 +315,10 @@ const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
         oooShift: oooPercentage
     };
     
-    for (const task of companyTasks) {
-        row[generateTaskKey(task, 'shotef')] = parseFloat((task.totalOOO / entity.shiftLength).toFixed(2));
+    if (entity.shiftLength > 0) {
+        for (const task of companyTasks) {
+            row[generateTaskKey(task, 'shotef')] = parseFloat((task.totalOOO / entity.shiftLength).toFixed(2));
+        }
     }
 
     row = addSummaryRow(sheet, row);
