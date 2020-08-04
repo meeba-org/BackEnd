@@ -22,7 +22,7 @@ const routeWrapper = async (req, res, body) => {
     }
 
     try {
-        const data = await body(req, res)
+        const data = await body(req, res);
         return res.status(200).send(data);
     } catch (err) {
         let message = err.message || "Error has been thrown!";

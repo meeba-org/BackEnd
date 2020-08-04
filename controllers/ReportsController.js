@@ -28,13 +28,8 @@ router.get('/download',
         const company = await CompanyModel.getByCompanyId(companyFromLocals._id);
         const format = req.query.format || company.settings.defaultExportFormat || MICHPAL;
 
-        const results = await Promise.all([
-            AppManager.getShiftsInMonth(year, month, company),
-            AppManager.getCompanyTasks(company)
-        ]);
-
-        let shifts = results[0];
-        let tasks = results[1];
+        let shifts = await AppManager.getShiftsInMonth(year, month, company);
+        let tasks = await AppManager.getCompanyTasks(company);
 
         if (format === EXCEL) {
             return await handleExcelFormat(shifts, year, month, company, tasks, res);
@@ -43,7 +38,7 @@ router.get('/download',
             return handleMichpalFormat(shifts, year, month, company, res);
         }
         else if (format === INNOVATION_AUTHORITY) {
-            return await handleInnovationAuthorityFormat(shifts, year, month, company, tasks, res);
+            return handleInnovationAuthorityFormat(shifts, year, month, company, tasks, res);
         }
 
         return reject("פורמט לא נתמך", 401);
