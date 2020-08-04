@@ -18,9 +18,9 @@ const shouldLog = async (req, res) => {
     return isInnovativeAuthorityEnable(company);
 };
 
-const createShiftLogObj = (newValue, oldValue, company) => ({
+const createShiftLogObj = (newValue, oldValue, status, company) => ({
     company,
-    status: oldValue.status,
+    status,
     newValue,
     oldValue
 });
@@ -33,26 +33,31 @@ const logShiftChangeMiddleware = async (req, res, next) => {
         let shift = req.body;
         let oldShift;
         let newShift;
+        let status;
         let company = getCompanyFromLocals(res)._id;
 
-        if (shift.status === EShiftStatus.PENDING_UPDATE || shift.status === EShiftStatus.PENDING_CREATE) {
+        if (shift.status === EShiftStatus.PENDING_UPDATE) {
             newShift = {...shift.draftShift};
             oldShift = {...shift, draftShift: null};
+            status = oldShift.status;
         }
-        else if (shift.status === EShiftStatus.APPROVED) {
-            oldShift = {... shift};
+        else if (shift.status === EShiftStatus.APPROVED || shift.status === EShiftStatus.PENDING_CREATE) {
+            newShift = {...shift};
+            status = newShift.status;
         }
         else if (req.method.toLowerCase() === 'put') {
             // Updating a shift by the manager
             oldShift = await getByShiftId(shift._id);
             newShift = {...shift};
+            status = oldShift.status;
         }
         else if (req.method.toLowerCase() === 'post') {
             // Creating a shift by the manager
-            oldShift = {...shift};
+            newShift = {...shift};
+            status = newShift.status;
         }
 
-        const shiftLog = createShiftLogObj(newShift, oldShift, company);
+        const shiftLog = createShiftLogObj(newShift, oldShift, status, company);
 
         createShiftLog(shiftLog);
         return next();

@@ -43,7 +43,7 @@ router.get('/download',
             return handleMichpalFormat(shifts, year, month, company, res);
         }
         else if (format === INNOVATION_AUTHORITY) {
-            return handleInnovationAuthorityFormat(shifts, year, month, company, tasks, res);
+            return await handleInnovationAuthorityFormat(shifts, year, month, company, tasks, res);
         }
 
         return reject("פורמט לא נתמך", 401);

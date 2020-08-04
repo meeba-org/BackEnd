@@ -601,13 +601,20 @@ const calcChanges = async (oldValue, newValue, status) => {
     if (status === EShiftStatus.APPROVED.toString()) {
         field = "אישור שינוי";
         oldValueStr = "";
-        newValueStr = `--> ${moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
-<-- ${oldValue.clockOutTime && moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`;
-    } else if (status === EShiftStatus.PENDING_CREATE.toString()) {
-        field = "בקשה ליצירת משמרת";
+        newValueStr = `--> ${moment(newValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
+<-- ${newValue.clockOutTime && moment(newValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`;
+    } 
+//     else if (status === EShiftStatus.PENDING_CREATE.toString()) {
+//         field = "בקשה ליצירת משמרת";
+//         oldValueStr = "";
+//         newValueStr = `--> ${moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
+// <-- ${oldValue.clockOutTime && moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`;
+//     }
+    else if (!oldValue && newValue) {
+        field = (status === EShiftStatus.PENDING_CREATE.toString()) ? "בקשה ליצירת משמרת" : "יצירת משמרת";
         oldValueStr = "";
-        newValueStr = `--> ${moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
-<-- ${oldValue.clockOutTime && moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`;
+        newValueStr = `--> ${moment(newValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
+<-- ${newValue.clockOutTime && moment(newValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`;
     }
     // Log is about request to update a shift
     else if (moment(oldValue.clockInTime).diff(moment(newValue.clockInTime), 'minutes') !== 0) {
@@ -899,7 +906,7 @@ const addIAEmployeeChangesLogSheet = async (workbook, employee, shiftChangesLog,
         let sheet = addWorksheet(workbook, `${employee.fullName} - דוח שינויים`, "a3d1a6", header);
 
         // Get the changes relevant for the specific employee
-        const employeeShiftChangesLog = shiftChangesLog.filter(log => log.oldValue.user._id.toString() === employee._id.toString());
+        const employeeShiftChangesLog = shiftChangesLog.filter(log => log.newValue.user._id.toString() === employee._id.toString());
 
         createShiftChangesLogColumns(sheet, company);
         await createShiftChangesLogContent(sheet, employee, company, employeeShiftChangesLog);
