@@ -259,16 +259,18 @@ const calcNumberOfTaskShifts = entity => {
     return entity.shifts.filter(s => s.task && s.task.type === ETaskType.REGULAR).length;
 };
 
-const calcNumberOfAbsenceDays = entity => {
-    return entity.shifts.filter(s => s.task && s.task.type !== ETaskType.REGULAR).length;
+const calcAbsenceDaysHours = entity => {
+    return entity.shifts
+        .filter(s => s.task && s.task.type !== ETaskType.REGULAR)
+        .reduce((sum, shift) => sum + shift.hoursAnalysis.shiftLength, 0); 
 };
 
 const calcTaskTotalPercentage = (totalTasksHours, entity) => {
     let taskShifts = calcNumberOfTaskShifts(entity);
-    let absenceDays = calcNumberOfAbsenceDays(entity);
+    let absenceDaysHours = calcAbsenceDaysHours(entity);
     let totalTaskTekenHours = taskShifts * DAILY_HOURS_TEKEN;
     
-    let denominator = Math.max(totalTasksHours + absenceDays * DAILY_HOURS_TEKEN, totalTaskTekenHours);
+    let denominator = Math.max(totalTasksHours + absenceDaysHours, totalTaskTekenHours);
 
     return parse2DigitsFloat(totalTasksHours / denominator);
 };
