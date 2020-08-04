@@ -4,6 +4,7 @@ const moment = require('moment');
 const Excel = require('exceljs');
 const EInsideWorkplace = require("../models/EInsideWorkplace");
 const ShiftLogModel = require("../models/ShiftLogModel");
+const {getByTaskId} = require("../models/TaskModel");
 const {isTasksEnable, isAbsenceDaysEnable} = require("./FeaturesManager");
 const {MAX_FREE_EMPLOYEES_ALLOWED} = require("../constants");
 const getHolidayName = require("./HolidayAnalyzer").getHolidayName;
@@ -580,18 +581,29 @@ const createShiftsPerEmployeesContent = function (sheet, employee, company, year
     createBasicShiftsContent(sheet, employee, company, year, month );
 };
 
-const calcChanges = (oldValue, newValue, status) => {
+const buildField= (text, status) => {
+    return status === EShiftStatus.PENDING_UPDATE.toString() ? `בקשה ל${text}` : text;
+};
+
+const fetchTaskTitle = async taskId => {
+    if (!taskId)
+        return "";
+
+    let task = await getByTaskId(taskId);
+    return task && task.title;
+};
+
+const calcChanges = async (oldValue, newValue, status) => {
     let field = "לא ידוע";
     let oldValueStr;
     let newValueStr;
-    
+
     if (status === EShiftStatus.APPROVED.toString()) {
         field = "אישור שינוי";
         oldValueStr = "";
         newValueStr = `--> ${moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
-<-- ${oldValue.clockOutTime && moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`; 
-    }
-    else if (status === EShiftStatus.PENDING_CREATE.toString()) {
+<-- ${oldValue.clockOutTime && moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`;
+    } else if (status === EShiftStatus.PENDING_CREATE.toString()) {
         field = "בקשה ליצירת משמרת";
         oldValueStr = "";
         newValueStr = `--> ${moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
@@ -599,24 +611,26 @@ const calcChanges = (oldValue, newValue, status) => {
     }
     // Log is about request to update a shift
     else if (moment(oldValue.clockInTime).diff(moment(newValue.clockInTime), 'minutes') !== 0) {
-        field = "בקשה לעדכון כניסה";
+        field = buildField("עדכון כניסה", status);
         oldValueStr = moment(oldValue.clockInTime).format(DATE_AND_TIME_FORMAT);
         newValueStr = moment(newValue.clockInTime).format(DATE_AND_TIME_FORMAT);
-    }
-    else if (moment(oldValue.clockOutTime).diff(moment(newValue.clockOutTime), 'minutes') !== 0) {
-        field = "בקשה לעדכון יציאה";
+    } else if (moment(oldValue.clockOutTime).diff(moment(newValue.clockOutTime), 'minutes') !== 0) {
+        field = buildField("עדכון יציאה", status);
         oldValueStr = moment(oldValue.clockOutTime).format(DATE_AND_TIME_FORMAT);
         newValueStr = moment(newValue.clockOutTime).format(DATE_AND_TIME_FORMAT);
-    }
-    else if (oldValue.commuteCost.publicTransportation !== newValue.commuteCost.publicTransportation) {
-        field = "בקשה לעדכון נסיעות";
+    } else if (oldValue.commuteCost.publicTransportation !== newValue.commuteCost.publicTransportation) {
+        field = buildField("עדכון נסיעות", status);
         oldValueStr = oldValue.commuteCost.publicTransportation;
         newValueStr = newValue.commuteCost.publicTransportation;
-    }
-    else if (oldValue.extraPay !== newValue.extraPay) {
-        field = "בקשה לעדכון בונוס";
+    } else if (oldValue.extraPay !== newValue.extraPay) {
+        field = buildField("עדכון בונוס", status);
         oldValueStr = oldValue.extraPay;
         newValueStr = newValue.extraPay;
+    } else if (oldValue.task !== newValue.task) {
+        field = buildField("עדכון משימה", status);
+
+        oldValueStr = await fetchTaskTitle(oldValue.task);
+        newValueStr = await fetchTaskTitle(newValue.task);
     }
 
     return {
@@ -626,11 +640,11 @@ const calcChanges = (oldValue, newValue, status) => {
     };
 };
 
-const createShiftChangesLogContent = (sheet, entity, company, shiftChangesLog ) => {
+const createShiftChangesLogContent = async (sheet, entity, company, shiftChangesLog) => {
 
     for (let log of shiftChangesLog) {
-        const {field, oldValue, newValue} = calcChanges(log.oldValue, log.newValue, log.status);
-        
+        const {field, oldValue, newValue} = await calcChanges(log.oldValue, log.newValue, log.status);
+
         let row = {
             date: moment(log.createdAt).format(DATE_FORMAT), // Date & hour of the change
             hour: moment(log.createdAt).format(TIME_FORMAT),
@@ -879,7 +893,7 @@ let addWorksheet = function (workbook, title, color, header) {
     });
 };
 
-const addIAEmployeeChangesLogSheet = (workbook, employee, shiftChangesLog, company, month, year) => {
+const addIAEmployeeChangesLogSheet = async (workbook, employee, shiftChangesLog, company, month, year) => {
     try {
         let header = `מיבא שעון נוכחות - חברת ${company.name} - ${employee.fullName} דוח שינויים - חודש ${month}/${year}`;
         let sheet = addWorksheet(workbook, `${employee.fullName} - דוח שינויים`, "a3d1a6", header);
@@ -888,10 +902,9 @@ const addIAEmployeeChangesLogSheet = (workbook, employee, shiftChangesLog, compa
         const employeeShiftChangesLog = shiftChangesLog.filter(log => log.oldValue.user._id.toString() === employee._id.toString());
 
         createShiftChangesLogColumns(sheet, company);
-        createShiftChangesLogContent(sheet, employee, company, employeeShiftChangesLog);
+        await createShiftChangesLogContent(sheet, employee, company, employeeShiftChangesLog);
         createIASheetFooter(sheet, false);
-    }
-    catch (e) {
+    } catch (e) {
         console.error(e);
     }
 };
@@ -1045,7 +1058,7 @@ const createInnovationAuthorityExcel = async (shifts, year, month, company, task
     for (const employee of employees) {
         await addIAEmployeeSheet(workbook, company, employee, year, month, tasks);
         
-        addIAEmployeeChangesLogSheet(workbook, employee, shiftChangesLog, company, month, year);
+        await addIAEmployeeChangesLogSheet(workbook, employee, shiftChangesLog, company, month, year);
     }
     return workbook;
 };

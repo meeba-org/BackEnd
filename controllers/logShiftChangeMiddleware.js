@@ -1,6 +1,7 @@
 const {getCompanyFromLocals} = require("./jwtService");
 const {createShiftLog} = require('../models/ShiftLogModel');
 const {getByCompanyId} = require('../models/CompanyModel');
+const {getByShiftId} = require('../models/ShiftModel');
 const {isInnovativeAuthorityEnable} = require('../managers/FeaturesManager');
 const EShiftStatus = require("../public/helpers/EShiftStatus");
 
@@ -14,12 +15,7 @@ const shouldLog = async (req, res) => {
     const companyFromLocals = getCompanyFromLocals(res);
     const company = await getByCompanyId(companyFromLocals._id);
 
-    if (!isInnovativeAuthorityEnable(company))
-        return false;
-    
-    const shift = req.body;
-    
-    return (shift.status === EShiftStatus.PENDING_CREATE || shift.status === EShiftStatus.PENDING_UPDATE || shift.status === EShiftStatus.APPROVED);
+    return isInnovativeAuthorityEnable(company);
 };
 
 const createShiftLogObj = (newValue, oldValue, company) => ({
@@ -45,6 +41,15 @@ const logShiftChangeMiddleware = async (req, res, next) => {
         }
         else if (shift.status === EShiftStatus.APPROVED) {
             oldShift = {... shift};
+        }
+        else if (req.method.toLowerCase() === 'put') {
+            // Updating a shift by the manager
+            oldShift = await getByShiftId(shift._id);
+            newShift = {...shift};
+        }
+        else if (req.method.toLowerCase() === 'post') {
+            // Creating a shift by the manager
+            oldShift = {...shift};
         }
 
         const shiftLog = createShiftLogObj(newShift, oldShift, company);
