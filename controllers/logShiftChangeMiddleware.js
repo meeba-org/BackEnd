@@ -1,4 +1,5 @@
-const {PENDING_CREATE, PENDING_UPDATE} = require("../public/helpers/EShiftStatus");
+const {COMPANY_MANAGER} = require("../models/ERoles");
+const {PENDING_CREATE, PENDING_UPDATE, APPROVED} = require("../public/helpers/EShiftStatus");
 const {getCompanyFromLocals} = require("./jwtService");
 const {createShiftLog} = require('../models/ShiftLogModel');
 const {getByCompanyId} = require('../models/CompanyModel');
@@ -9,14 +10,25 @@ const {getUserFromLocals} = require("./jwtService");
 const isApiRelevantForLogging = req => 
     ((req.method.toLowerCase() === 'put' || req.method.toLowerCase() === 'post') && req.url === '/shifts');
 
+const isManager = user => user.role === COMPANY_MANAGER;
+
 const shouldLog = async (req, res) => {
     if (!isApiRelevantForLogging(req))
         return false;
     
     const companyFromLocals = getCompanyFromLocals(res);
+    let user = getUserFromLocals(res);
     const company = await getByCompanyId(companyFromLocals._id);
 
-    return isInnovativeAuthorityEnable(company);
+    if (!isInnovativeAuthorityEnable(company))
+        return false;
+    
+    if (isManager(user))
+        return true;
+    
+    // Employee
+    const shift = req.body;
+    return (shift.status === PENDING_CREATE || shift.status === PENDING_UPDATE); 
 };
 
 const createShiftLogObj = (newValue, oldValue, status, company, updatedBy) => ({
