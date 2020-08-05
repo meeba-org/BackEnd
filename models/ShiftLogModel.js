@@ -5,8 +5,8 @@ const {ShiftSchema} = require('./ShiftModel');
 // ShiftLog Schema - probably for shifts
 const ShiftLogSchema = mongoose.Schema({
         company: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
-        status: {type: String, default: NEW},
-//        updatedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, // TODO add who did the change
+        status: {type: Number, default: NEW},
+        updatedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, 
         oldValue: ShiftSchema,
         newValue: ShiftSchema
     },
@@ -32,7 +32,7 @@ const getByShiftLogId = (id) => {
 };
 
 const getByCompanyId = (companyId) => {
-    return ShiftLog.find({company: companyId}).exec();
+    return ShiftLog.find({company: companyId}).populate('updatedBy').exec();
 };
 
 const createShiftLog = (shiftLog) => {

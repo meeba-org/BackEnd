@@ -1,9 +1,10 @@
+const {PENDING_CREATE, PENDING_UPDATE} = require("../public/helpers/EShiftStatus");
 const {getCompanyFromLocals} = require("./jwtService");
 const {createShiftLog} = require('../models/ShiftLogModel');
 const {getByCompanyId} = require('../models/CompanyModel');
 const {getByShiftId} = require('../models/ShiftModel');
 const {isInnovativeAuthorityEnable} = require('../managers/FeaturesManager');
-const EShiftStatus = require("../public/helpers/EShiftStatus");
+const {getUserFromLocals} = require("./jwtService");
 
 const isApiRelevantForLogging = req => 
     ((req.method.toLowerCase() === 'put' || req.method.toLowerCase() === 'post') && req.url === '/shifts');
@@ -18,11 +19,12 @@ const shouldLog = async (req, res) => {
     return isInnovativeAuthorityEnable(company);
 };
 
-const createShiftLogObj = (newValue, oldValue, status, company) => ({
+const createShiftLogObj = (newValue, oldValue, status, company, updatedBy) => ({
     company,
     status,
     newValue,
-    oldValue
+    oldValue,
+    updatedBy
 });
 
 const logShiftChangeMiddleware = async (req, res, next) => {
@@ -35,30 +37,28 @@ const logShiftChangeMiddleware = async (req, res, next) => {
         let newShift;
         let status;
         let company = getCompanyFromLocals(res)._id;
-
-        if (shift.status === EShiftStatus.PENDING_UPDATE) {
-            newShift = {...shift.draftShift};
-            oldShift = {...shift, draftShift: null};
+        let updatedBy = getUserFromLocals(res)._id;
+        
+        if (req.method.toLowerCase() === 'put') {
+            if (shift.status === PENDING_UPDATE) {
+                newShift = {...shift, ...shift.draftShift};
+                oldShift = {...shift, draftShift: null};
+            }
+            else {
+                // Updating a shift by the manager
+                oldShift = await getByShiftId(shift._id);
+                newShift = {...shift};
+            }
             status = oldShift.status;
-        }
-        else if (shift.status === EShiftStatus.APPROVED || shift.status === EShiftStatus.PENDING_CREATE) {
-            // TODO Updating an approved shift hold two cases - new apporoved and old approved (updating something)... yalla ten gas
-            newShift = {...shift};
-            status = newShift.status;
-        }
-        else if (req.method.toLowerCase() === 'put') {
-            // Updating a shift by the manager
-            oldShift = await getByShiftId(shift._id);
-            newShift = {...shift};
-            status = oldShift.status;
+            
         }
         else if (req.method.toLowerCase() === 'post') {
             // Creating a shift by the manager
-            newShift = {...shift};
+            newShift = {...shift, draftShift: null};
             status = newShift.status;
         }
 
-        const shiftLog = createShiftLogObj(newShift, oldShift, status, company);
+        const shiftLog = createShiftLogObj(newShift, oldShift, status, company, updatedBy);
 
         createShiftLog(shiftLog);
         return next();

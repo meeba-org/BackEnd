@@ -495,6 +495,7 @@ const createShiftChangesLogColumns = (sheet, company) => {
     let columns = [
         {header: 'תאריך', key: 'date', width: 13, style: {alignment: {vertical: 'top', horizontal: 'center'}}},
         {header: 'שעה', key: 'hour', width: 7, style: {alignment: {vertical: 'top', horizontal: 'center'}}},
+        {header: 'עודכן ע"י', key: 'updatedBy', width: 10, style: {alignment: {vertical: 'top', horizontal: 'center'}}},
         {header: 'שינוי', key: 'field', width: 20, style: {alignment: {vertical: 'top', horizontal: 'center'}}},
         {header: 'ערך ישן', key: 'oldValue', width: 20, style: {alignment: {wrapText: true, vertical: 'top', horizontal: 'center'}}},
         {header: 'ערך חדש', key: 'newValue', width: 30, style: {alignment: {wrapText: true, vertical: 'top', horizontal: 'center'}}},
@@ -582,7 +583,7 @@ const createShiftsPerEmployeesContent = function (sheet, employee, company, year
 };
 
 const buildField= (text, status) => {
-    return status === EShiftStatus.PENDING_UPDATE.toString() ? `בקשה ל${text}` : text;
+    return status === EShiftStatus.PENDING_UPDATE ? `בקשה ל${text}` : text;
 };
 
 const fetchTaskTitle = async taskId => {
@@ -612,7 +613,7 @@ const calcNewShiftField = async (status, shift) => {
             break;
     }
     const sentence = `יצירת ${taskTypeText}`;
-    return (status === EShiftStatus.PENDING_CREATE.toString()) ? `בקשה ל${sentence}` : sentence;
+    return (status === EShiftStatus.PENDING_CREATE) ? `בקשה ל${sentence}` : sentence;
 };
 
 const calcChanges = async (oldValue, newValue, status) => {
@@ -620,14 +621,14 @@ const calcChanges = async (oldValue, newValue, status) => {
     let oldValueStr;
     let newValueStr;
 
-    if (status === EShiftStatus.APPROVED.toString()) {
-        field = "אישור שינוי";
+    if (!oldValue && newValue) {
+        field = await calcNewShiftField(status, newValue);
         oldValueStr = "";
         newValueStr = `--> ${moment(newValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
 <-- ${newValue.clockOutTime && moment(newValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`;
-    } 
-    else if (!oldValue && newValue) {
-        field = await calcNewShiftField(status, newValue);
+    }
+    else if (oldValue.status !== EShiftStatus.APPROVED && newValue.status === EShiftStatus.APPROVED) {
+        field = "אישור שינוי";
         oldValueStr = "";
         newValueStr = `--> ${moment(newValue.clockInTime).format(DATE_AND_TIME_FORMAT)}
 <-- ${newValue.clockOutTime && moment(newValue.clockOutTime).format(DATE_AND_TIME_FORMAT)}`;
@@ -659,7 +660,7 @@ const calcChanges = async (oldValue, newValue, status) => {
     return {
         field,
         oldValue: oldValueStr,
-        newValue: newValueStr
+        newValue: newValueStr,
     };
 };
 
@@ -671,6 +672,7 @@ const createShiftChangesLogContent = async (sheet, entity, company, shiftChanges
         let row = {
             date: moment(log.createdAt).format(DATE_FORMAT), // Date & hour of the change
             hour: moment(log.createdAt).format(TIME_FORMAT),
+            updatedBy: log.updatedBy && log.updatedBy.fullName,
             field,
             newValue,
             oldValue
