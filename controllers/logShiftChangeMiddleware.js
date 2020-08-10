@@ -1,5 +1,5 @@
 const {COMPANY_MANAGER} = require("../models/ERoles");
-const {PENDING_CREATE, PENDING_UPDATE, APPROVED} = require("../public/helpers/EShiftStatus");
+const {PENDING_CREATE, PENDING_UPDATE} = require("../public/helpers/EShiftStatus");
 const {getCompanyFromLocals} = require("./jwtService");
 const {createShiftLog} = require('../models/ShiftLogModel');
 const {getByCompanyId} = require('../models/CompanyModel');
@@ -76,6 +76,7 @@ const logShiftChangeMiddleware = async (req, res, next) => {
         return next();
     }
     catch (e) {
+        // eslint-disable-next-line no-console
         console.error("[logShiftChangeMiddleware] - ", e);
         return next();
     }
