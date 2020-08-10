@@ -76,7 +76,7 @@ const logShiftChangeMiddleware = async (req, res, next) => {
         return next();
     }
     catch (e) {
-        console.error(e);
+        console.error("[logShiftChangeMiddleware] - ", e);
         return next();
     }
 };
