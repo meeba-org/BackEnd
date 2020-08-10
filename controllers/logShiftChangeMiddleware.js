@@ -53,7 +53,7 @@ const logShiftChangeMiddleware = async (req, res, next) => {
         
         if (req.method.toLowerCase() === 'put') {
             if (shift.status === PENDING_UPDATE) {
-                newShift = {...shift, ...shift.draftShift};
+                newShift = {...shift, ...shift.draftShift, draftShift: null};
                 oldShift = {...shift, draftShift: null};
             }
             else {
