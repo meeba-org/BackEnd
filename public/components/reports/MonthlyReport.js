@@ -105,7 +105,7 @@ const MonthlyReport = (
                     }
                 </IfGranted>
 
-                {summary &&
+                {summary && summary.employeesCount > 0 && 
                     <MonthSummary summary={summary}/>
                 }
             </MbActionsControls>
