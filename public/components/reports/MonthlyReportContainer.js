@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import React from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {exportReport, fetchMonthlyReport} from "../../actions/reportsActions";
 import {createShift, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
@@ -8,67 +7,77 @@ import {getCompanySettings, getEmployeesMonthlyReports, getStartOfMonth, getUser
 import MonthlyReport from "./MonthlyReport";
 import MonthlyReportLine from "./MonthlyReportLine";
 
-class MonthlyReportContainer extends React.PureComponent {
+const MonthlyReportContainer = ({employeeShiftsReports, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop, startOfMonth, exportReport, companySettings, 
+                                    isInnovativeAuthorityEnable, fetchEmployees, fetchMonthlyReport}) => {
+    
+    useEffect(() => {
+        fetchEmployees();
+    }, []);
 
-    componentDidMount() {
-        this.props.fetchEmployees();
-    }
-
-    onStartDayOfMonthChange(month, year) {
+    const onStartDayOfMonthChange = (month, year) => {
         if (!month || !year)
             return;
 
-        this.props.fetchMonthlyReport(month, year);
-    }
-
-    onDataChange = (month, year) => {
-        return this.props.fetchMonthlyReport(month, year);
+        fetchMonthlyReport(month, year);
+    };
+    
+    const onDataChange = (month, year) => {
+        return fetchMonthlyReport(month, year);
     };
 
-    onExportReport = (month, year, format) => {
-        const {exportReport, companySettings} = this.props;
+    const onExportReport = (month, year, format) => {
         if (!month || !year)
             return;
 
         exportReport(month, year, companySettings, format);
-    }
+    };
 
-    render() {
-            const {employeeShiftsReports, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop, startOfMonth, companySettings, isInnovativeAuthorityEnable} = this.props;
-        return (
-            <MonthlyReport
-                employees={employees}
-                employeeShiftsReports={employeeShiftsReports}
-                onDeleteShift={deleteShift}
-                showShiftDialog={showShiftDialog}
-                onCreateShift={createShift}
-                onMonthChange={this.onDataChange}
-                onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
-                onExportReport={this.onExportReport}
-                userRole={userRole}
-                postUpdate={this.onDataChange}
-                ReportLineComponent={MonthlyReportLine}
-                title={'דו"ח חודשי'}
-                isDesktop={isDesktop}
-                startOfMonth={startOfMonth}
-                defaultExportFormat={companySettings?.defaultExportFormat}
-                isInnovativeAuthorityEnable={isInnovativeAuthorityEnable}
-            />
-        );
-    }
-}
+    const calcTotalHours = employeeShiftsReports => {
+        if (!employeeShiftsReports)
+            return 0;
+        
+        let totalHours = 0;
+        for (const report of employeeShiftsReports) {
+            const {regularHours, extra125Hours, extra150Hours, extra175Hours, extra200Hours} = report;
+            
+            let total = (parseFloat(regularHours) + parseFloat(extra125Hours) + parseFloat(extra150Hours) + parseFloat(extra175Hours) + parseFloat(extra200Hours));
+            totalHours += total;
+        }
+        
+        return totalHours;
+    };
 
-MonthlyReportContainer.propTypes = {
-    shifts: PropTypes.array,
-    employees: PropTypes.array,
-    fetchMonthlyReport: PropTypes.func.isRequired,
-    fetchEmployees: PropTypes.func.isRequired,
-    exportReport: PropTypes.func.isRequired,
-    createShift: PropTypes.func.isRequired,
-    deleteShift: PropTypes.func.isRequired,
-    showShiftDialog: PropTypes.func.isRequired,
-    userRole: PropTypes.string,
-    isDesktop: PropTypes.bool
+    const calcSummary = () => {
+        const totalHours = calcTotalHours(employeeShiftsReports);
+        return {
+            totalHours,
+            employeesCount: employees.length
+        };
+    };
+
+    const summary = calcSummary();
+    
+    return (
+        <MonthlyReport
+            summary={summary}
+            employees={employees}
+            employeeShiftsReports={employeeShiftsReports}
+            onDeleteShift={deleteShift}
+            showShiftDialog={showShiftDialog}
+            onCreateShift={createShift}
+            onMonthChange={onDataChange}
+            onStartDayOfMonthChange={onStartDayOfMonthChange}
+            onExportReport={onExportReport}
+            userRole={userRole}
+            postUpdate={onDataChange}
+            ReportLineComponent={MonthlyReportLine}
+            title={'דו"ח חודשי'}
+            isDesktop={isDesktop}
+            startOfMonth={startOfMonth}
+            defaultExportFormat={companySettings?.defaultExportFormat}
+            isInnovativeAuthorityEnable={isInnovativeAuthorityEnable}
+        />
+    );
 };
 
 const mapStateToProps = state => ({

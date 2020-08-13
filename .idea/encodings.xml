@@ -128,6 +128,8 @@
     <file url="file://$PROJECT_DIR$/public/components/reports/ExtraPay.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/HoursSummary.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Location.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/MbInfoLabel.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/MonthSummary.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/MonthlyReportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/MonthlyReportLine.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Note.js" charset="UTF-8" />
@@ -214,9 +216,11 @@
     <file url="file://$PROJECT_DIR$/public/styles/LoginRegister.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ManagerFeatureContent.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/MbActionsControls.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/styles/MbInfoLabel.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/MbSwitch.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/MobileAppLinksModal.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/MobileImageContent.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/styles/MonthSummary.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/MonthlyReport.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/MonthlyReportLine.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/MontlyPicker.scss" charset="UTF-8" />

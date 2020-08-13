@@ -1,0 +1,19 @@
+@import "variables";
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+
+    @media (max-width: $mobileWidth) {
+        padding-top: 15px;
+    }
+    .hr {
+        height: 30px;
+        border-left: 1px solid $lightGrey;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}

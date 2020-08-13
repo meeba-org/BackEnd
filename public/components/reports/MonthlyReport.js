@@ -1,5 +1,5 @@
+import {EmojiObjects, SaveAlt} from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
-import {SaveAlt, EmojiObjects} from '@material-ui/icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from "react";
@@ -15,10 +15,12 @@ import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import MonthPicker from "../MonthPicker";
 import NoData from "../NoData";
+import MonthSummary from "./MonthSummary";
 
 const MonthlyReport = (
     {
-        employeeShiftsReports, employees, userRole, showShiftDialog, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, onExportReport, onMonthChange, onCreateShift, onDeleteShift, isInnovativeAuthorityEnable
+        employeeShiftsReports, employees, userRole, showShiftDialog, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, 
+        onExportReport, onMonthChange, onCreateShift, onDeleteShift, isInnovativeAuthorityEnable, summary
     }) => {
     
     const [collapsedIndex, setCollapsedIndex] = useState(null);
@@ -102,6 +104,10 @@ const MonthlyReport = (
                     />
                     }
                 </IfGranted>
+
+                {summary &&
+                    <MonthSummary summary={summary}/>
+                }
             </MbActionsControls>
 
             {employeeShiftsReports &&
