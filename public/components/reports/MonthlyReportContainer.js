@@ -51,7 +51,7 @@ const MonthlyReportContainer = ({employeeShiftsReports, showShiftDialog, createS
         const totalHours = calcTotalHours(employeeShiftsReports);
         return {
             totalHours,
-            employeesCount: employees.length
+            employeesCount: employeeShiftsReports.length
         };
     };
 
