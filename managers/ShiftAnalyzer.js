@@ -383,7 +383,10 @@ const calcMonthlyCommuteCost = entity => {
 
 function calcMonthlyExtraPay(entity) {
     let monthlyExtraPay = 0;
-
+    
+    if (entity.baseSalary)
+        monthlyExtraPay += entity.baseSalary;
+    
     entity.shifts.forEach(shift => {
         if (!shift.extraPay)
             return;
