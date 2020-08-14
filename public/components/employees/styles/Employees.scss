@@ -1,0 +1,42 @@
+@import "../../../styles/variables";
+@import "../../../styles/palette-primary";
+
+.switch-label {
+    color:  material-color('grey', '500');
+}
+
+.odd {
+    background: $palette-primary-50;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 10px
+}
+
+.elem {
+    margin: 0 10px;
+}
+
+.error {
+    color: red;
+    padding-top: 6px;
+
+    @media (max-width: $mobileWidth) {
+        text-align: center;
+    }
+}
+
+.input {
+    display: flex;
+    @media (max-width: $mobileWidth) {
+        margin: 10px;
+    }
+}
+
+.options {
+    display: flex;
+    justify-content: space-evenly;
+}

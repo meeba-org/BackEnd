@@ -10,7 +10,7 @@ import EmployeesList from "./EmployeesList";
 const EmployeesContainer = ({employees, deleteUser, updateUser, createUser, showMobileAppModal, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed, showGoPremiumModal, fetchEmployees}) => {
     useEffect(() => {
         fetchEmployees();
-    });
+    }, []);
     
     return (
         <EmployeesList

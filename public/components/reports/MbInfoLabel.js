@@ -3,7 +3,7 @@ import Box from "@material-ui/core/Box";
 import React from 'react';
 import "../../styles/MbInfoLabel.scss";
 
-const MbInfoLabel = ({label, value, tooltip}) => {
+const MbInfoLabel = ({label, value, tooltip = ""}) => {
     return (
         <Tooltip title={tooltip} placement="top">
             <Box display="flex" flexDirection="row" styleName="container">
