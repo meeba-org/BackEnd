@@ -5,7 +5,7 @@ import "../../styles/MonthSummary.scss";
 const MonthSummary = ({summary}) => {
     return (
         <div styleName="container">
-            <MbInfoLabel label="סך כל השעות:" value={summary.totalHours}/>
+            <MbInfoLabel label="סך כל השעות:" value={summary.totalHours} tooltip="סך כל השעות בתעריפים השונים (100%, 125% וכו')"/>
             <div styleName="hr" />
             <MbInfoLabel label="מספר עובדים:" value={summary.employeesCount}/>
         </div>
