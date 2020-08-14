@@ -1,77 +1,66 @@
 import PropTypes from "prop-types";
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import connect from "react-redux/es/connect/connect";
 import * as selectors from "../../selectors";
 import Employee from "./Employee";
 import EmployeeMobile from "./EmployeeMobile";
 
-class EmployeeContainer extends Component {
+const EmployeeContainer = ({isDesktop, onDelete, onUpdate, order, isLimited, validate, showEditEmployeeModal, employee}) => {
+    const [lsEmployee, setLsEmployee] = useState(employee);
 
-    constructor(props) {
-        super(props);
-        let employee = props.employee || {};
-        this.state = {
-            employee: {...employee }
-        };
-    }
-
-    onUpdate = (e, name) => {
-        let {employee} = this.props;
-
+    useEffect(() => {
+        setLsEmployee(employee);
+    }, [employee]);
+    
+    const handleUpdate = (e, name) => {
         let newEmployee = {
             ...employee,
             [name]: e.target.value,
         };
 
-        this.updateUser(newEmployee);
+        updateUser(newEmployee);
     };
 
-    updateUser = (employee) => {
-        this.setState({employee});
-        this.props.onUpdate(employee);
+    const updateUser = (employee) => {
+        setLsEmployee(employee);
+        onUpdate(employee);
     };
 
-    onBlur = () => {
+    const onBlur = () => {
         let {onUpdate} = this.props;
         const {employee} = this.state;
 
         onUpdate(employee);
     };
 
-    showEmployeeDialog = employee => this.props.showEmployeeDialog(employee, this.updateUser);
+    let error = validate(employee);
 
-    render() {
-        const {isDesktop, onDelete, order, isLimited, validate} = this.props;
-        const {employee} = this.state;
-        let error = validate(employee);
-
-        return isDesktop ?
-            <Employee
-                onUpdate={this.onUpdate}
-                onDelete={onDelete}
-                onBlur={this.onBlur}
-                employee={employee}
-                showEmployeeDialog={this.showEmployeeDialog}
-                isLimited={isLimited}
-                error={error}
-            /> :
-            <EmployeeMobile
-                onUpdate={this.onUpdate}
-                onDelete={onDelete}
-                onBlur={this.onBlur}
-                employee={employee}
-                showEmployeeDialog={this.showEmployeeDialog}
-                order={order}
-                isLimited={isLimited}
-                error={error}
-            />;
-    }
-}
+    return isDesktop ?
+        <Employee
+            onUpdate={handleUpdate}
+            onDelete={onDelete}
+            onBlur={onBlur}
+            employee={lsEmployee}
+            showEditEmployeeModal={() => showEditEmployeeModal(employee, updateUser)}
+            isLimited={isLimited}
+            error={error}
+        /> :
+        <EmployeeMobile
+            onUpdate={handleUpdate}
+            onDelete={onDelete}
+            onBlur={onBlur}
+            employee={lsEmployee}
+            showEditEmployeeModal={() => showEditEmployeeModal(employee, updateUser)}
+            order={order}
+            isLimited={isLimited}
+            error={error}
+        />;
+};
 
 EmployeeContainer.propTypes = {
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
-    showEmployeeDialog: PropTypes.func.isRequired,
+    showEditEmployeeModal: PropTypes.func.isRequired,
     validate: PropTypes.func.isRequired,
 };
 

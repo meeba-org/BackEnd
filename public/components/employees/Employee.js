@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import React, {Fragment, useState} from 'react';
 import "./styles/Employees.scss";
 
-const Employee = ({employee, showEmployeeDialog, onDelete, onBlur, onUpdate, error, isLimited}) => {
+const Employee = ({employee, showEditEmployeeModal, onDelete, onBlur, onUpdate, error, isLimited}) => {
 
     const [hover, setHover] = useState(false);
 
@@ -73,7 +73,7 @@ const Employee = ({employee, showEmployeeDialog, onDelete, onBlur, onUpdate, err
                 <Fragment>
                     {!isLimited &&
                     <Tooltip title="הגדרות נוספות" placement="top">
-                        <IconButton styleName="elem" onClick={() => showEmployeeDialog(employee)}><Settings/></IconButton>
+                        <IconButton styleName="elem" onClick={() => showEditEmployeeModal(employee)}><Settings/></IconButton>
                     </Tooltip>
                     }
                     <Tooltip title="מחיקה" placement="top">
@@ -90,7 +90,7 @@ Employee.propTypes = {
     employee: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
-    showEmployeeDialog: PropTypes.func.isRequired,
+    showEditEmployeeModal: PropTypes.func.isRequired,
     error: PropTypes.string,
     isLimited: PropTypes.bool,
 };

@@ -7,7 +7,7 @@ import {showDeleteUserModal, showMobileAppModal} from "../../actions/usersAction
 import * as selectors from "../../selectors";
 import EmployeesList from "./EmployeesList";
 
-const EmployeesContainer = ({employees, deleteUser, updateUser, createUser, showMobileAppModal, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed, showGoPremiumModal, fetchEmployees}) => {
+const EmployeesContainer = ({employees, deleteUser, updateUser, createUser, showMobileAppModal, showEditEmployeeModal, isDesktop, isEditAllowed, isAddAllowed, showGoPremiumModal, fetchEmployees}) => {
     useEffect(() => {
         fetchEmployees();
     }, []);
@@ -19,7 +19,7 @@ const EmployeesContainer = ({employees, deleteUser, updateUser, createUser, show
             onUpdate={updateUser}
             onCreate={createUser}
             showMobileAppModal={showMobileAppModal}
-            showEmployeeDialog={showEmployeeDialog}
+            showEditEmployeeModal={showEditEmployeeModal}
             showGoPremiumModal={showGoPremiumModal}
             isDesktop={isDesktop}
             isAddAllowed={isAddAllowed}
@@ -35,7 +35,7 @@ EmployeesContainer.propTypes = {
     updateUser: PropTypes.func.isRequired,
     deleteUser: PropTypes.func.isRequired,
     showMobileAppModal: PropTypes.func.isRequired,
-    showEmployeeDialog: PropTypes.func.isRequired,
+    showEditEmployeeModal: PropTypes.func.isRequired,
     showGoPremiumModal: PropTypes.func.isRequired,
 };
 
@@ -52,7 +52,7 @@ const mapDispatchToProps = {
     updateUser,
     deleteUser: showDeleteUserModal,
     showMobileAppModal,
-    showEmployeeDialog: showEditEmployeeModal,
+    showEditEmployeeModal,
     showGoPremiumModal
 };
 

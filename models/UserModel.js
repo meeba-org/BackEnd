@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const ERoles = require("./ERoles");
 const ETransportPaymentPer = require("./ETransportPaymentPer");
 
@@ -18,6 +17,7 @@ const UserSchema = mongoose.Schema({
     shifts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shift' }],
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
     deleted: {type: Boolean, default: false},
+    baseSalary: {type: Number, default: 0 },
 });
 
 function createUserInstance(user) {
@@ -72,7 +72,7 @@ const getUsers = (company, hideDeleted) => {
 
     let conditions = {company: company._id, role: {'$ne':ERoles.COMPANY_MANAGER}};
 
-    if (!!hideDeleted)
+    if (hideDeleted)
         conditions.deleted = false; // get users that are not deleted
 
     return User.find(conditions).exec();
@@ -97,7 +97,7 @@ const deleteUser = (id) => {
     return User.findOneAndUpdate({'_id': id}, {deleted: true}).exec();
 };
 
-const comparePassword = (candidatePassword, password, callback) => {
+const comparePassword = (candidatePassword, password) => {
     return candidatePassword === password;
     // bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
     //     if (err) throw err;

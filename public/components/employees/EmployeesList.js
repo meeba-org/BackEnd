@@ -18,7 +18,7 @@ import MbCard from "../MbCard";
 import NoData from "../NoData";
 import EmployeeContainer from "./EmployeeContainer";
 
-const EmployeesList = ({employees, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed, onCreate, onDelete, onUpdate, showMobileAppModal}) => {
+const EmployeesList = ({employees, showEditEmployeeModal, isDesktop, isEditAllowed, isAddAllowed, onCreate, onDelete, onUpdate, showMobileAppModal}) => {
     
     // eslint-disable-next-line no-unused-vars
     const [employeesFilter, setEmployeesFilter] = useState("");
@@ -114,7 +114,7 @@ const EmployeesList = ({employees, showEmployeeDialog, isDesktop, isEditAllowed,
                         onDelete={() => onDelete(employee)}
                         onUpdate={onUpdate}
                         validate={validateEmployee}
-                        showEmployeeDialog={showEmployeeDialog}
+                        showEditEmployeeModal={showEditEmployeeModal}
                         isLimited={!isEditAllowed}
                     />
                 </Fade>)
@@ -133,7 +133,7 @@ EmployeesList.propTypes = {
     onUpdate: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     showMobileAppModal: PropTypes.func.isRequired,
-    showEmployeeDialog: PropTypes.func.isRequired,
+    showEditEmployeeModal: PropTypes.func.isRequired,
     isDesktop: PropTypes.bool,
     isEditAllowed: PropTypes.bool,
     isAddAllowed: PropTypes.bool,

@@ -4,10 +4,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
-import {withStyles, createStyles}  from '@material-ui/core/styles';
+import {createStyles, withStyles} from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {hideEditEmployeeModal} from "../../actions";
 import MbSwitch from "../MbSwitch";
@@ -23,92 +23,76 @@ const styles = createStyles({
     }
 });
 
-class EditEmployeeModal extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            entity: props.entity
-        };
-    }
-
-    handleClose = () => {
-        let {hideEditEmployeeModal} = this.props;
-
-        hideEditEmployeeModal();
-    };
-
-
-    updateEmployee = (event, fieldName) => {
-        const {entity} = this.state;
-
+const EditEmployeeModal = ({open, classes,  entity, hideEditEmployeeModal, updateUser}) => {
+    const [employee, setEmployee] = useState({});
+    
+    useEffect(() => {
+        setEmployee(entity || {});
+    }, [entity]);
+    
+    const updateEmployee = (event, fieldName) => {
         let updatedEmployee = {
-            ...entity,
+            ...employee,
             [fieldName]: event.target.value,
         };
 
-        this.updateUser(updatedEmployee);
+        handleUpdate(updatedEmployee);
     };
 
-    updateTransportPaymentPer = (event) => {
-        const {entity} = this.state;
-
+    const updateTransportPaymentPer = (event) => {
         let updatedEmployee = {
-            ...entity,
-            transportPaymentPer: event.target.checked ? 0 : 1,
+            ...employee,
+            transportPaymentPer: event.target.checked ? 0 : 1, // TODO use enums
         };
 
-        this.updateUser(updatedEmployee);
+        handleUpdate(updatedEmployee);
     };
 
-    updateUser(updatedEmployee) {
-        this.setState({
-            entity: updatedEmployee
-        });
-
-        let {updateUser} = this.props;
-
+    const handleUpdate = (updatedEmployee) => {
+        setEmployee(updatedEmployee);
         updateUser(updatedEmployee);
-    }
+    };
 
-    render() {
-        let {open, classes} = this.props;
-        let {entity} = this.state;
-
-        return (
-            <Dialog onClose={this.handleClose} open={open}>
-                <DialogTitle>{"עריכת עובד"}</DialogTitle>
-                <DialogContent classes={{root: classes.dialogContentRoot}}>
-                    <Grid container spacing={2} alignItems="flex-end">
-                        <Grid item>
-                            <TextField
-                                id="transportation"
-                                label="נסיעות"
-                                placeholder="נסיעות"
-                                value={entity && entity.transportation}
-                                onChange={(e) => this.updateEmployee(e, "transportation")}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <MbSwitch
-                                firstLabel="חודשי" secondLabel="למשמרת"
-                                onChange={(e) => this.updateTransportPaymentPer(e)}
-                                checked={entity && entity.transportPaymentPer === 0}
-                            />
-                        </Grid>
+    return (
+        <Dialog onClose={hideEditEmployeeModal} open={open}>
+            <DialogTitle>{"הגדרות נוספות לעובד"}</DialogTitle>
+            <DialogContent classes={{root: classes.dialogContentRoot}}>
+                <Grid container spacing={2} alignItems="flex-end">
+                    <Grid item>
+                        <TextField
+                            id="transportation"
+                            label="נסיעות"
+                            placeholder="נסיעות"
+                            value={employee.transportation}
+                            onChange={(e) => updateEmployee(e, "transportation")}
+                        />
                     </Grid>
+                    <Grid item>
+                        <MbSwitch
+                            firstLabel="חודשי" secondLabel="למשמרת"
+                            onChange={(e) => updateTransportPaymentPer(e)}
+                            checked={employee.transportPaymentPer === 0}
+                        />
+                    </Grid>
+                </Grid>
+                <Grid item>
+                    <TextField
+                        label="שכר בסיס"
+                        placeholder="שכר בסיס"
+                        value={employee.baseSalary}
+                        onChange={(e) => updateEmployee(e, "baseSalary")}
+                    />
+                </Grid>
 
-                    <DialogActions classes={{root: classes.dialogActionsRoot}}>
-                        <Button variant="contained" onClick={this.handleClose} autoFocus color="primary">
-                            סגור
-                        </Button>
-                    </DialogActions>
-                </DialogContent>
-            </Dialog>
-        );
-    }
-}
+                <DialogActions classes={{root: classes.dialogActionsRoot}}>
+                    <Button variant="contained" onClick={hideEditEmployeeModal} autoFocus color="primary">
+                        סגור
+                    </Button>
+                </DialogActions>
+            </DialogContent>
+        </Dialog>
+    );
+};
 
 EditEmployeeModal.propTypes = {
     entity: PropTypes.object,

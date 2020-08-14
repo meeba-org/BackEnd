@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import "./styles/Employees.scss";
 
-const EmployeeMobile = ({employee, showEmployeeDialog, onDelete, onBlur, onUpdate, order, error, isLimited}) => {
+const EmployeeMobile = ({employee, showEditEmployeeModal, onDelete, onBlur, onUpdate, order, error, isLimited}) => {
     return (
         <Grid container styleName={(order % 2 === 0) ? "odd" : ""}>
             <Grid item xs={12}>
@@ -51,7 +51,7 @@ const EmployeeMobile = ({employee, showEmployeeDialog, onDelete, onBlur, onUpdat
             </Grid>
             }
             <Grid item xs={12} styleName="buttons-container">
-                <Button color="primary" onClick={() => showEmployeeDialog(employee)} disabled={isLimited}>
+                <Button color="primary" onClick={() => showEditEmployeeModal(employee)} disabled={isLimited}>
                     <SettingsIcon />
                 </Button>
                 <Button color="primary" onClick={onDelete}>
@@ -66,7 +66,7 @@ EmployeeMobile.propTypes = {
     employee: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
-    showEmployeeDialog: PropTypes.func.isRequired,
+    showEditEmployeeModal: PropTypes.func.isRequired,
     error: PropTypes.string,
 };
 
