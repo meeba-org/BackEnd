@@ -68,7 +68,7 @@ const createSummaryColumns = (sheet, company) => {
         {header: 'משמרות', key: 'shiftsCount', width: 11, style: {alignment: {horizontal: 'center'}}},
         {header: 'נסיעות יומי', key: 'transportation', width: 11, style: {alignment: {horizontal: 'center'}}},
         {header: 'סה"כ נסיעות', key: 'monthlyCommuteCost', width: 11, style: {alignment: {horizontal: 'center'}}},
-        {header: 'תוספות', key: 'monthlyExtraPay', width: 11, style: {alignment: {horizontal: 'center'}}},
+        {header: 'בסיס + תוספות', key: 'monthlyExtraPay', width: 11, style: {alignment: {horizontal: 'center'}}},
         {header: 'סה"כ שכר', key: 'overallSalary', width: 11, style: {alignment: {horizontal: 'center'}}}
     ];
 
@@ -749,7 +749,7 @@ function addTotalTransportation(employee, sheet) {
 
 function addTotalExtraPay(employee, sheet) {
     let extraPayData = {
-        clockOutTime: 'תוספות:',
+        clockOutTime: 'בסיס + תוספות:',
         shiftLength: employee.monthlyExtraPay,
     };
 
