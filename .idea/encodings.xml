@@ -87,6 +87,8 @@
     <file url="file://$PROJECT_DIR$/public/components/dashboard/DashboardContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/employees/EmployeeContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/employees/EmployeesContainer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/employees/styles/EmployeesList.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/employees/styles/EmployeesList.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/export/ExportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/export/MichpalSettings.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/faq/FAQContainer.js" charset="UTF-8" />
@@ -95,6 +97,7 @@
     <file url="file://$PROJECT_DIR$/public/components/go-premium/GoPremiumContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/go-premium/GoPremiumPay.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/go-premium/PaymentSuccessRedirectContainer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/go-premium/styles/GoPremiumNotification.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/Feature.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/Home.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/HomeAppBar.js" charset="UTF-8" />
@@ -195,7 +198,6 @@
     <file url="file://$PROJECT_DIR$/public/styles/Dashboard.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/EmployeeFeatureContent.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Employees.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/EmployeesList.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ExportContainer.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/FAQContainer.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/FAQContent.scss" charset="UTF-8" />

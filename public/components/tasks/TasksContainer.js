@@ -6,7 +6,6 @@ import {MAX_FREE_TASKS_ALLOWED} from "../../../constants";
 import * as ETaskType from "../../../models/ETaskType";
 import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
 import * as selectors from "../../selectors";
-import "../../styles/EmployeesList.scss";
 import MbActionButton from "../MbActionButton";
 import GoPremiumNotification from "../go-premium/GoPremiumNotification";
 import MbActionsControls from "../MbActionsControls";

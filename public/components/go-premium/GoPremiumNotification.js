@@ -1,6 +1,6 @@
 import React from 'react';
 import {showGoPremiumModal} from "../../actions";
-import "../../styles/EmployeesList.scss";
+import "./styles/GoPremiumNotification.scss";
 import {connect} from 'react-redux';
 import Button from '@material-ui/core/Button';
 import ArrowIcon from '@material-ui/icons/ArrowBackIos';

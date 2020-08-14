@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {MAX_FREE_EMPLOYEES_ALLOWED} from "../../../constants";
 import {createUser, fetchUsers, showEditEmployeeModal, showGoPremiumModal, updateUser} from "../../actions";
@@ -7,29 +7,26 @@ import {showDeleteUserModal, showMobileAppModal} from "../../actions/usersAction
 import * as selectors from "../../selectors";
 import EmployeesList from "./EmployeesList";
 
-class EmployeesContainer extends React.Component {
-    componentDidMount() {
-        this.props.fetchEmployees();
-    }
-
-    render() {
-        const {employees, deleteUser, updateUser, createUser, showMobileAppModal, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed, showGoPremiumModal} = this.props;
-        return (
-            <EmployeesList
-                employees={employees}
-                onDelete={deleteUser}
-                onUpdate={updateUser}
-                onCreate={createUser}
-                showMobileAppModal={showMobileAppModal}
-                showEmployeeDialog={showEmployeeDialog}
-                showGoPremiumModal={showGoPremiumModal}
-                isDesktop={isDesktop}
-                isAddAllowed={isAddAllowed}
-                isEditAllowed={isEditAllowed}
-            />
-        );
-    }
-}
+const EmployeesContainer = ({employees, deleteUser, updateUser, createUser, showMobileAppModal, showEmployeeDialog, isDesktop, isEditAllowed, isAddAllowed, showGoPremiumModal, fetchEmployees}) => {
+    useEffect(() => {
+        fetchEmployees();
+    });
+    
+    return (
+        <EmployeesList
+            employees={employees}
+            onDelete={deleteUser}
+            onUpdate={updateUser}
+            onCreate={createUser}
+            showMobileAppModal={showMobileAppModal}
+            showEmployeeDialog={showEmployeeDialog}
+            showGoPremiumModal={showGoPremiumModal}
+            isDesktop={isDesktop}
+            isAddAllowed={isAddAllowed}
+            isEditAllowed={isEditAllowed}
+        />
+    );
+};
 
 EmployeesContainer.propTypes = {
     employees: PropTypes.array,
@@ -50,17 +47,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-        fetchEmployees: fetchUsers,
-        createUser,
-        updateUser,
-        deleteUser: showDeleteUserModal,
-        showMobileAppModal,
-        showEmployeeDialog: showEditEmployeeModal,
-        showGoPremiumModal
+    fetchEmployees: fetchUsers,
+    createUser,
+    updateUser,
+    deleteUser: showDeleteUserModal,
+    showMobileAppModal,
+    showEmployeeDialog: showEditEmployeeModal,
+    showGoPremiumModal
 };
 
-export default connect(
-    mapStateToProps, mapDispatchToProps
-)(EmployeesContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeesContainer);
 
 
