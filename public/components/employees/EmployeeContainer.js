@@ -27,9 +27,6 @@ const EmployeeContainer = ({isDesktop, onDelete, onUpdate, order, isLimited, val
     };
 
     const onBlur = () => {
-        let {onUpdate} = this.props;
-        const {employee} = this.state;
-
         onUpdate(employee);
     };
 
