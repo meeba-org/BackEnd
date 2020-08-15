@@ -10,7 +10,7 @@ const config = require('../config');
 const iCreditManager = require("../managers/iCreditManager");
 
 
-mongoose.connect(config.dbUrl, {useNewUrlParser: true }, () => {
+mongoose.connect(config.dbUri, {useNewUrlParser: true }, () => {
     console.log("Connected to DB successfully");
 });
 

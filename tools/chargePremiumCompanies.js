@@ -33,7 +33,7 @@ const chargePremiumCompanies = async () => {
 };
 
 const run = async () => {
-    await mongooseManager.connect(config.dbUrl);
+    await mongooseManager.connect(config.dbUri);
 
     await chargePremiumCompanies();
     process.exit();

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const connect = async (dbUrl) => {
-    await mongoose.connect(dbUrl, {
+const connect = async (dbUri) => {
+    await mongoose.connect(dbUri, {
         useCreateIndex: true, 
         useUnifiedTopology: true, 
         useNewUrlParser: true,

@@ -12,7 +12,7 @@ const mongooseManager = require("./managers/MongooseManager");
 const compression = require('compression');
 
 // Connect to mongoose
-mongooseManager.connect(config.dbUrl);
+mongooseManager.connect(config.dbUri);
 // Init App
 const app = express();
 

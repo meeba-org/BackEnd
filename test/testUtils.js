@@ -25,14 +25,14 @@ beforeEach( async function () {
     if (mongoose.connection.db)
         return clearDB();
 
-    await mongooseManager.connect(config.dbUrl);
+    await mongooseManager.connect(config.dbUri);
     return clearDB();
 });
 
 function clearDB() {
     if (process.env.NODE_ENV !== "test")
         throw new Error("[testUtils.clearDB] - Error! - working on env which is not test environment is not allowed!!!");
-    if (config.dbUrl !== config.TEST_DB)
+    if (!config.dbUri.includes(config.TEST_DB))
         throw new Error("[testUtils.clearDB] - Error! - clear DB which is not test db is not allowed!!!");
 
     return Promise.all([
