@@ -57,13 +57,13 @@ const updateDraftShift = (draftShift) => {
 };
 
 const deleteDraftShift = (id) => {
-    return DraftShift.remove({_id: id}).exec();
+    return DraftShift.deleteOne({_id: id}).exec();
 };
 
 const deleteAllDraftShifts = (conditions) => {
     if (!conditions)
         conditions = {};
-    return DraftShift.remove(conditions).exec();
+    return DraftShift.deleteMany(conditions).exec();
 };
 
 const createOrUpdateDraftShift = (draftShift) => {

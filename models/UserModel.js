@@ -113,7 +113,7 @@ const getCleanUser = (user) => {
 const deleteAllUsers = (conditions) => {
     if (!conditions)
         conditions = {};
-    return User.remove(conditions).exec();
+    return User.deleteMany(conditions).exec();
 };
 
 const addShift = (userId, shift) => {

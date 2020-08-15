@@ -50,13 +50,13 @@ const updateShiftLog = (shiftLog) => {
 };
 
 const deleteShiftLog = (id) => {
-    return ShiftLog.remove({_id: id}).exec();
+    return ShiftLog.deleteOne({_id: id}).exec();
 };
 
 const deleteAllShiftLogs = (conditions) => {
     if (!conditions)
         conditions = {};
-    return ShiftLog.remove(conditions).exec();
+    return ShiftLog.deleteMany(conditions).exec();
 };
 
 const shiftLogsCount = () => ShiftLog.countDocuments().exec();

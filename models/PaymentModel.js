@@ -76,13 +76,13 @@ const updatePayment = (payment) => {
 };
 
 const deletePayment = (id) => {
-    return Payment.remove({_id: id}).exec();
+    return Payment.deleteOne({_id: id}).exec();
 };
 
 const deleteAllPayments = (conditions) => {
     if (!conditions)
         conditions = {};
-    return Payment.remove(conditions).exec();
+    return Payment.deleteMany(conditions).exec();
 };
 
 const paymentsCount = () => Payment.countDocuments().exec();

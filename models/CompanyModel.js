@@ -88,7 +88,7 @@ const updateCompany = (company) => {
 };
 
 const deleteCompany = (id) => {
-    return Company.remove({_id: id}).exec();
+    return Company.deleteOne({_id: id}).exec();
  };
 
  const addUser = (companyId, user) => {
@@ -102,7 +102,7 @@ const removeUser = (companyId, user) => {
 const deleteAllCompanies = (conditions) => {
     if (!conditions)
         conditions = {};
-    return Company.remove(conditions).exec();
+    return Company.deleteMany(conditions).exec();
 };
 
 const companiesCount = () => Company.countDocuments().exec();

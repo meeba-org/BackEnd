@@ -73,8 +73,8 @@ function init() {
              * So I'm exposing credential here but its ok - only test db
              * @type {string}
              */
-            module.exports.dbUrl = "mongodb://admin:admin12@ds135594.mlab.com:35594/heroku_l3mnf6v2";
-            module.exports.TEST_DB = "mongodb://admin:admin12@ds135594.mlab.com:35594/heroku_l3mnf6v2";
+            module.exports.dbUrl = "mongodb+srv://heroku_l3mnf6v2:fEiTtW1JNtbf69Mp@cluster-l3mnf6v2.5gumc.mongodb.net/heroku_l3mnf6v2?retryWrites=true&w=majority";
+            module.exports.TEST_DB = "mongodb+srv://heroku_l3mnf6v2:fEiTtW1JNtbf69Mp@cluster-l3mnf6v2.5gumc.mongodb.net/heroku_l3mnf6v2?retryWrites=true&w=majority";
             break;
         }
         default :

@@ -78,7 +78,7 @@ const updateShift = (shift) => {
 };
 
 const deleteShift = (id) => {
-    return Shift.remove({_id: id}).exec();
+    return Shift.deleteOne({_id: id}).exec();
 };
 
 const getPendingShifts = (company) => {
@@ -110,7 +110,7 @@ const getShiftsBetween = (company, startDate, endDate, userId) => {
 const deleteAllShifts = (conditions) => {
     if (!conditions)
         conditions = {};
-    return Shift.remove(conditions).exec();
+    return Shift.deleteMany(conditions).exec();
 };
 
 const createOrUpdateShift = (shift) => {

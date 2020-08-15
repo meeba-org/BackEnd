@@ -48,13 +48,13 @@ const updateTask = (task) => {
 };
 
 const deleteTask = (id) => {
-    return Task.remove({_id: id}).exec();
+    return Task.deleteOne({_id: id}).exec();
 };
 
 const deleteAllTasks = (conditions) => {
     if (!conditions)
         conditions = {};
-    return Task.remove(conditions).exec();
+    return Task.deleteMany(conditions).exec();
 };
 
 const tasksCount = () => Task.countDocuments().exec();
