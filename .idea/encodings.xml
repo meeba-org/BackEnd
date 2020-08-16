@@ -88,8 +88,6 @@
     <file url="file://$PROJECT_DIR$/public/components/employees/EmployeeContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/employees/EmployeesContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/employees/styles/Employees.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/employees/styles/Employees.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/employees/styles/EmployeesList.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/employees/styles/EmployeesList.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/export/ExportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/export/MichpalSettings.js" charset="UTF-8" />
@@ -148,6 +146,8 @@
     <file url="file://$PROJECT_DIR$/public/components/reports/TasksReportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/TimeMaskCustom.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Warning.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/Shift.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/Shift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/BreadCrumb.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/Task.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/TaskService.js" charset="UTF-8" />
@@ -234,7 +234,6 @@
     <file url="file://$PROJECT_DIR$/public/styles/ReportShift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/SectionTitle.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/SettingSwitch.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/Shift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ShiftIndicator.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ShiftsList.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/SideBar.scss" charset="UTF-8" />

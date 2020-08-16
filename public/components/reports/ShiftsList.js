@@ -53,7 +53,6 @@ class ShiftsList extends React.PureComponent {
                         <ShiftContainer
                             shift={shift}
                             onDelete={() => this.onDelete(shifts, index)}
-                            showShiftDialog={showShiftDialog}
                             showNames={showNames}
                             mode={mode}
                             getIntersectShift={this.getIntersectShift}

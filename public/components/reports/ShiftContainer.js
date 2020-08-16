@@ -2,11 +2,11 @@ import moment from "moment";
 import PropTypes from 'prop-types';
 import React, {useState} from "react";
 import connect from "react-redux/es/connect/connect";
-import {createShift, showDeleteShiftModal, updateShift, showGoPremiumModal, showLocationModal} from "../../actions";
+import {createShift, showDeleteShiftModal, updateShift, showGoPremiumModal, showLocationModal, showEditShiftModal} from "../../actions";
 import {GACategory, sendGaEvent} from "../../helpers/GAService";
 import {ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
-import "../../styles/Shift.scss";
+import "./styles/Shift.scss";
 import withShiftLogic from "../withShiftLogic";
 import LiveShift from "./LiveShift";
 import ReportShift from "./ReportShift";
@@ -176,6 +176,7 @@ const mapDispatchToProps = {
     deleteShift: showDeleteShiftModal,
     showGoPremiumModal,
     showLocationModal,
+    showShiftDialog: showEditShiftModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withShiftLogic(ShiftContainer));
