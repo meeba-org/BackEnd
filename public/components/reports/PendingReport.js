@@ -14,10 +14,12 @@ const PendingReport = ({shifts, onDeleteShift, postUpdate, onRefresh}) => {
             <div styleName="daily-report">
                 <MbActionsControls>
                     <Tooltip title="רענן" placement="top">
-                        <MbActionButton
-                            onClick={onRefresh}
-                            iconComponent={RefreshIcon}
-                        />
+                        <span> {/* Fix this: https://github.com/mbrn/material-table/issues/677#issuecomment-572448876*/}
+                            <MbActionButton
+                                onClick={onRefresh}
+                                iconComponent={RefreshIcon}
+                            />
+                        </span>
                     </Tooltip>
                 </MbActionsControls>
 
