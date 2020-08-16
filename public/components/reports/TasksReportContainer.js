@@ -39,7 +39,7 @@ class TasksReportContainer extends React.PureComponent {
         return (
             <MonthlyReport
                 employees={employees}
-                fields={tasksReports}
+                reports={tasksReports}
                 onDeleteShift={deleteShift}
                 showShiftDialog={showShiftDialog}
                 onCreateShift={createShift}

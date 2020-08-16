@@ -19,7 +19,7 @@ import MonthSummary from "./MonthSummary";
 
 const MonthlyReport = (
     {
-        employeeShiftsReports, employees, userRole, showShiftDialog, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, 
+        reports, employees, userRole, showShiftDialog, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, 
         onExportReport, onMonthChange, onCreateShift, onDeleteShift, isInnovativeAuthorityEnable, summary
     }) => {
     
@@ -110,13 +110,13 @@ const MonthlyReport = (
                 }
             </MbActionsControls>
 
-            {employeeShiftsReports &&
-            employeeShiftsReports
+            {reports &&
+            reports
                 .map((employeeShiftsReport, index) =>
                     (<Fade key={index} isVisible>
                         <ReportLineComponent
                             data={employeeShiftsReport}
-                            isCollapsed={isCollapsed(employeeShiftsReports, index)}
+                            isCollapsed={isCollapsed(reports, index)}
                             index={index}
                             onToggle={(name) => onToggle(name)}
                             onDeleteShift={handleDeleteShift}
@@ -127,7 +127,7 @@ const MonthlyReport = (
                 )
                 //.filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))
             }
-            {(!employeeShiftsReports || (employeeShiftsReports.length === 0)) &&
+            {(!reports || (reports.length === 0)) &&
             <NoData text="לא נמצאו משמרות"/>
             }
         </MbCard>
