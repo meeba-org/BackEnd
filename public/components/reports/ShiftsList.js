@@ -45,7 +45,7 @@ class ShiftsList extends React.PureComponent {
 
     render() {
 
-        let {shifts, showNames, mode, shouldDisplayNoData, showShiftDialog, postUpdate} = this.props;
+        let {shifts, showNames, mode, shouldDisplayNoData, postUpdate} = this.props;
         return (
             <div styleName="shifts-list">
                 {shifts && shifts.map((shift, index) =>
@@ -71,7 +71,6 @@ class ShiftsList extends React.PureComponent {
 ShiftsList.propTypes = {
     shifts: PropTypes.array.isRequired,
     onDelete: PropTypes.func.isRequired,
-    showShiftDialog: PropTypes.func.isRequired,
     showNames: PropTypes.bool,
     shouldDisplayNoData: PropTypes.bool,
     mode: PropTypes.number.isRequired,

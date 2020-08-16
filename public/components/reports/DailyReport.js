@@ -79,7 +79,7 @@ class DailyReport extends React.PureComponent {
     };
 
     render() {
-        const {shifts, onCreateShift, onDeleteShift, showShiftDialog, employees, mode, isLoading} = this.props;
+        const {shifts, onCreateShift, onDeleteShift, employees, mode, isLoading} = this.props;
         let {currentDay} = this.state;
         let {primary, secondary} = this.props.theme.palette.text;
 
@@ -129,7 +129,6 @@ class DailyReport extends React.PureComponent {
                                 shifts={shifts}
                                 onDelete={onDeleteShift}
                                 onUpdate={this.onUpdateShift}
-                                showShiftDialog={showShiftDialog}
                                 showNames={true}
                                 mode={mode}
                                 shouldDisplayNoData={true}
@@ -172,7 +171,6 @@ class DailyReport extends React.PureComponent {
                                 shifts={shifts}
                                 onDelete={onDeleteShift}
                                 onUpdate={this.onUpdateShift}
-                                showShiftDialog={showShiftDialog}
                                 showNames={true}
                                 mode={mode}
                                 shouldDisplayNoData={false}
@@ -194,7 +192,6 @@ DailyReport.propTypes = {
     onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
-    showShiftDialog: PropTypes.func.isRequired,
     onDayChange: PropTypes.func.isRequired,
     mode: PropTypes.number.isRequired,
     theme: PropTypes.object,

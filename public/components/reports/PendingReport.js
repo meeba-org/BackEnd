@@ -8,7 +8,7 @@ import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import ShiftsList from "./ShiftsList";
 
-const PendingReport = ({shifts, showShiftDialog, onDeleteShift, postUpdate, onRefresh}) => {
+const PendingReport = ({shifts, onDeleteShift, postUpdate, onRefresh}) => {
     return (
         <MbCard title={"משמרות ממתינות לאישור"}>
             <div styleName="daily-report">
@@ -24,7 +24,6 @@ const PendingReport = ({shifts, showShiftDialog, onDeleteShift, postUpdate, onRe
                 <ShiftsList
                     shifts={shifts}
                     onDelete={onDeleteShift}
-                    showShiftDialog={showShiftDialog}
                     showNames={true}
                     mode={ReportModes.Report}
                     shouldDisplayNoData={true}

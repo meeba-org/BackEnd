@@ -19,7 +19,7 @@ import MonthSummary from "./MonthSummary";
 
 const MonthlyReport = (
     {
-        reports, employees, userRole, showShiftDialog, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, 
+        reports, employees, userRole, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, 
         onExportReport, onMonthChange, onCreateShift, onDeleteShift, isInnovativeAuthorityEnable, summary
     }) => {
     
@@ -120,7 +120,6 @@ const MonthlyReport = (
                             index={index}
                             onToggle={(name) => onToggle(name)}
                             onDeleteShift={handleDeleteShift}
-                            showShiftDialog={showShiftDialog}
                             postUpdate={postUpdate}
                         />
                     </Fade>)
@@ -139,7 +138,6 @@ MonthlyReport.propTypes = {
     employees: PropTypes.array,
     onCreateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
-    showShiftDialog: PropTypes.func.isRequired,
     onStartDayOfMonthChange: PropTypes.func.isRequired,
     postUpdate: PropTypes.func.isRequired,
     onExportReport: PropTypes.func.isRequired,
