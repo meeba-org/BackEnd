@@ -61,7 +61,7 @@ const MonthlyReportContainer = ({employeeShiftsReports, showShiftDialog, createS
         <MonthlyReport
             summary={summary}
             employees={employees}
-            employeeShiftsReports={employeeShiftsReports}
+            reports={employeeShiftsReports}
             onDeleteShift={deleteShift}
             showShiftDialog={showShiftDialog}
             onCreateShift={createShift}
