@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {createShift, updateShift} from "../../actions";
 import PropTypes from 'prop-types';
-import {fetchDailyReport, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
+import {fetchDailyReport, showDeleteShiftModal} from "../../actions/shiftsActions";
 import {getDailyShifts} from "../../selectors";
 import DailyReport from "./DailyReport";
 import {fetchUsers} from "../../actions/usersActions";

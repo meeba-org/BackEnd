@@ -111,10 +111,12 @@ class DailyReport extends React.PureComponent {
                                 />
 
                                 <Tooltip title="הוספת משמרת" placement="top">
+                                    <span> {/* Fix this: https://github.com/mbrn/material-table/issues/677#issuecomment-572448876*/} 
                                     <MbActionButton
                                         onClick={this.handleClickOpen}
                                         iconComponent={AddIcon}
                                     />
+                                    </span>
                                 </Tooltip>
                                 <AddShiftsDialog
                                     open={this.state.open}

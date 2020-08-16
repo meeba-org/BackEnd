@@ -3,7 +3,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {createShift} from "../../actions";
 import {exportReport, fetchTasksReport} from "../../actions/reportsActions";
-import {showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
+import {showDeleteShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
 import {getCompanySettings, getStartOfMonth, getUserRole} from "../../selectors";
 import MonthlyReport from "./MonthlyReport";

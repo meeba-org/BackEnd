@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {exportReport, fetchMonthlyReport} from "../../actions/reportsActions";
-import {createShift, showDeleteShiftModal, showEditShiftModal} from "../../actions/shiftsActions";
+import {createShift, showDeleteShiftModal} from "../../actions/shiftsActions";
 import {fetchUsers} from "../../actions/usersActions";
 import {getCompanySettings, getEmployeesMonthlyReports, getStartOfMonth, getUserRole, isDesktop, isInnovativeAuthorityEnable} from "../../selectors";
 import MonthlyReport from "./MonthlyReport";
