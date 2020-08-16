@@ -113,10 +113,7 @@ class EditShiftModal extends Component {
     }
 
     handleClose = () => {
-        let {hideEditShiftModal, callBack} = this.props;
-
-        if (callBack)
-            callBack(this.state.entity);
+        let {hideEditShiftModal} = this.props;
 
         hideEditShiftModal();
     };
@@ -525,7 +522,6 @@ EditShiftModal.propTypes = {
     isCommuteFeatureEnable: PropTypes.bool,
     month: PropTypes.string,
     year: PropTypes.string,
-    callBack: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {

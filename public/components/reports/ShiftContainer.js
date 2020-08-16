@@ -18,8 +18,7 @@ const ShiftContainer = ({showShiftDialog, shift, postUpdate, showNames, mode, is
     const [focus, setFocus] = useState(false);
 
     const showShiftDialog0 = () => {
-        // TODO 2nd parameter callBack I think is not in used
-        showShiftDialog(shift, null, postUpdate); //, (editedShift) => shift.onChange(editedShift));
+        showShiftDialog(shift, postUpdate); 
     };
 
     const showLocationModal0 = () => {

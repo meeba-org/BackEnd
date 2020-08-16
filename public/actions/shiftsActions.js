@@ -209,13 +209,12 @@ export const showGoPremiumModal = () => ({
     }
 });
 
-export const showEditShiftModal = (shift, callBack, postUpdate) => ({
+export const showEditShiftModal = (shift, postUpdate) => ({
     type: 'SHOW_MODAL',
     payload: {
         modalType: EModalType.EDIT_SHIFT,
         modalProps: {
             entity: shift,
-            callBack,
             postUpdate,
             open: true,
             key: shift._id
