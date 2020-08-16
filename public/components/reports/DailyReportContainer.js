@@ -23,7 +23,7 @@ class DailyReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {updateShift, createShift, deleteShift, showShiftDialog, shifts, employees, mode} = this.props;
+        const {updateShift, createShift, deleteShift, shifts, employees, mode} = this.props;
         const {isLoading} = this.state;
 
         return (
@@ -34,7 +34,6 @@ class DailyReportContainer extends React.PureComponent {
                     onDeleteShift={deleteShift}
                     onUpdateShift={updateShift}
                     onCreateShift={createShift}
-                    showShiftDialog={showShiftDialog}
                     onDayChange={(startDayOfMonth) => this.onDayChange(startDayOfMonth)}
                     isLoading={isLoading}
                 />
@@ -51,7 +50,6 @@ DailyReportContainer.propTypes = {
     createShift: PropTypes.func.isRequired,
     updateShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
-    showShiftDialog: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -67,7 +65,6 @@ const mapDispatchToProps = {
     updateShift: (shift, month, year) => updateShift(shift, false, month, year),
     createShift,
     deleteShift: showDeleteShiftModal,
-    showShiftDialog: showEditShiftModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DailyReportContainer);

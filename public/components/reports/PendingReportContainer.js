@@ -15,14 +15,13 @@ class PendingReportContainer extends PureComponent {
     };
 
     render() {
-        const {updateShift, deleteShift, showShiftDialog, shifts, isLoading} = this.props;
+        const {updateShift, deleteShift, shifts, isLoading} = this.props;
 
         return (
             <PendingReport
                 shifts={shifts}
                 onDeleteShift={deleteShift}
                 onUpdateShift={updateShift}
-                showShiftDialog={showShiftDialog}
                 isLoading={isLoading}
                 onRefresh={this.fetchPendingShifts}
                 postUpdate={this.fetchPendingShifts}
@@ -46,7 +45,6 @@ const mapDispatchToProps = dispatch => ({
     },
     deleteShift: (shift) => dispatch(showDeleteShiftModal(shift, dispatch)),
     updateShift: (shift, month, year) => dispatch(updateShift(shift, false, month, year)),
-    showShiftDialog: (shift, callBack, postUpdate) => dispatch(showEditShiftModal(shift, callBack, postUpdate)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PendingReportContainer);

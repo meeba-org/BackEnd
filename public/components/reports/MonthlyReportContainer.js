@@ -7,7 +7,7 @@ import {getCompanySettings, getEmployeesMonthlyReports, getStartOfMonth, getUser
 import MonthlyReport from "./MonthlyReport";
 import MonthlyReportLine from "./MonthlyReportLine";
 
-const MonthlyReportContainer = ({employeeShiftsReports, showShiftDialog, createShift, deleteShift, employees, userRole, isDesktop, startOfMonth, exportReport, companySettings, 
+const MonthlyReportContainer = ({employeeShiftsReports, createShift, deleteShift, employees, userRole, isDesktop, startOfMonth, exportReport, companySettings, 
                                     isInnovativeAuthorityEnable, fetchEmployees, fetchMonthlyReport}) => {
     
     useEffect(() => {
@@ -63,7 +63,6 @@ const MonthlyReportContainer = ({employeeShiftsReports, showShiftDialog, createS
             employees={employees}
             reports={employeeShiftsReports}
             onDeleteShift={deleteShift}
-            showShiftDialog={showShiftDialog}
             onCreateShift={createShift}
             onMonthChange={onDataChange}
             onStartDayOfMonthChange={onStartDayOfMonthChange}
@@ -96,7 +95,6 @@ const mapDispatchToProps = {
     exportReport,
     createShift,
     deleteShift: showDeleteShiftModal,
-    showShiftDialog: showEditShiftModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MonthlyReportContainer);
