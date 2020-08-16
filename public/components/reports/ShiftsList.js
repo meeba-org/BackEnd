@@ -5,6 +5,7 @@ import "../../styles/ShiftsList.scss";
 import Fade from "../Fade";
 import NoData from "../NoData";
 import ShiftContainer from "./ShiftContainer";
+import {EWarningType} from "./EWarningType";
 
 class ShiftsList extends React.PureComponent {
     onDelete(shifts, index) {
@@ -12,14 +13,17 @@ class ShiftsList extends React.PureComponent {
         this.props.onDelete(entityToDelete);
     }
 
-    getIntersectShift = (shift) => {
+    calcWarningType = (shift) => {
         let {shifts} = this.props;
 
         for (let i = 0; i < shifts.length; i++) {
             let s = shifts[i];
 
             if (!this.isSameShift(shift, s) && this.isSameUser(shift, s) && this.isShiftsIntersect(shift, s))
-                return s;
+                return EWarningType.ShiftsIntersect;
+
+            if (!this.isSameShift(shift, s) && this.isSameUser(shift, s) && this.isShiftsOnTheSameDay(shift, s))
+                return EWarningType.ShiftsOnSameDays;
         }
 
         return null;
@@ -43,6 +47,13 @@ class ShiftsList extends React.PureComponent {
         return minOfClockOuts.isSameOrAfter(maxOfClockIns);
     }
 
+    isShiftsOnTheSameDay(s1, s2) {
+        if (!s1.clockInTime || !s2.clockInTime)
+            return false;
+
+        return moment(s1.clockInTime).isSame(moment(s2.clockInTime), 'day');
+    }
+
     render() {
 
         let {shifts, showNames, mode, shouldDisplayNoData, postUpdate} = this.props;
@@ -55,7 +66,7 @@ class ShiftsList extends React.PureComponent {
                             onDelete={() => this.onDelete(shifts, index)}
                             showNames={showNames}
                             mode={mode}
-                            getIntersectShift={this.getIntersectShift}
+                            calcWarningType={this.calcWarningType}
                             postUpdate={postUpdate}
                         />
                     </Fade>)

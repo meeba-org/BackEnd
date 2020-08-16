@@ -128,6 +128,7 @@
     <file url="file://$PROJECT_DIR$/public/components/modals/YesNoModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/BusCost.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/DailyReportContainer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/EWarningType.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/ExtraPay.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/HoursSummary.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Location.js" charset="UTF-8" />
@@ -146,7 +147,6 @@
     <file url="file://$PROJECT_DIR$/public/components/reports/TasksReportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/TimeMaskCustom.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Warning.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/reports/styles/Shift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/styles/Shift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/BreadCrumb.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/Task.js" charset="UTF-8" />

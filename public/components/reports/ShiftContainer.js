@@ -8,12 +8,13 @@ import {ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import "./styles/Shift.scss";
 import withShiftLogic from "../withShiftLogic";
+import {EWarningType} from "./EWarningType";
 import LiveShift from "./LiveShift";
 import ReportShift from "./ReportShift";
 import {isCompanyHasPremium} from '../../../managers/FeaturesManager';
 
 const ShiftContainer = ({showShiftDialog, shift, postUpdate, showNames, mode, isDesktop, onDelete, isInnovativeAuthorityEnable, showLocationModal, company, 
-                            showGoPremiumModal, onUpdateStartDate, onUpdateEndTime, onUpdateStartTime, onShiftComplete, updateShift, getIntersectShift}) => {
+                            showGoPremiumModal, onUpdateStartDate, onUpdateEndTime, onUpdateStartTime, onShiftComplete, updateShift, calcWarningType}) => {
     const [hover, setHover] = useState(false);
     const [focus, setFocus] = useState(false);
 
@@ -102,9 +103,12 @@ const ShiftContainer = ({showShiftDialog, shift, postUpdate, showNames, mode, is
         }
 
         if (mode === ReportModes.Report) { // check relevant only for Report mode
-            let intersectedShift = getIntersectShift(shift);
-            if (intersectedShift) {
-                return "קיימת משמרת חופפת";
+            let warningType = calcWarningType(shift);
+            switch (warningType) {
+                case EWarningType.ShiftsIntersect:
+                    return "קיימת משמרת חופפת";
+                case EWarningType.ShiftsOnSameDays:
+                    return "קיימת משמרת באותו היום";
             }
         }
 
