@@ -1,6 +1,6 @@
 import moment from "moment";
 import PropTypes from 'prop-types';
-import React from "react";
+import React, {useState} from "react";
 import connect from "react-redux/es/connect/connect";
 import {createShift, showDeleteShiftModal, updateShift, showGoPremiumModal, showLocationModal} from "../../actions";
 import {GACategory, sendGaEvent} from "../../helpers/GAService";
@@ -12,33 +12,17 @@ import LiveShift from "./LiveShift";
 import ReportShift from "./ReportShift";
 import {isCompanyHasPremium} from '../../../managers/FeaturesManager';
 
-class ShiftContainer extends React.PureComponent {
+const ShiftContainer = ({showShiftDialog, shift, postUpdate, showNames, mode, isDesktop, onDelete, isInnovativeAuthorityEnable, showLocationModal, company, 
+                            showGoPremiumModal, onUpdateStartDate, onUpdateEndTime, onUpdateStartTime, onShiftComplete, updateShift, getIntersectShift}) => {
+    const [hover, setHover] = useState(false);
+    const [focus, setFocus] = useState(false);
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            hover: false,
-            focus: false,
-        };
-    }
-
-    onDelete = () => {
-        let {onDelete, shift} = this.props;
-
-        onDelete(shift);
-    };
-
-    showShiftDialog = () => {
-        let {showShiftDialog, shift, postUpdate} = this.props;
-
+    const showShiftDialog0 = () => {
         // TODO 2nd parameter callBack I think is not in used
         showShiftDialog(shift, null, postUpdate); //, (editedShift) => shift.onChange(editedShift));
     };
 
-    showLocationModal = () => {
-        let {showLocationModal, shift, isDesktop, company, showGoPremiumModal} = this.props;
-
+    const showLocationModal0 = () => {
         if (!isCompanyHasPremium(company)) {
             showGoPremiumModal();
             return;
@@ -50,10 +34,10 @@ class ShiftContainer extends React.PureComponent {
         if (isDesktop)
             showLocationModal(shift);
         else
-            this.showMapInBrowser(shift.location);
+            showMapInBrowser(shift.location);
     };
 
-    showMapInBrowser = (location) => {
+    const showMapInBrowser = (location) => {
         if /* if we're on iOS, open in Apple Maps */
         ((navigator.platform.indexOf("iPhone") !== -1) ||
             (navigator.platform.indexOf("iPad") !== -1) ||
@@ -63,75 +47,53 @@ class ShiftContainer extends React.PureComponent {
             window.open(`https://maps.google.com/maps?q=${location.latitude},${location.longitude}`);
     };
 
-    onMouseEnter = () => {
-        this.setState({hover: true});
-    };
+    const onMouseEnter = () => setHover(true);
 
-    onMouseLeave = () => {
-        this.setState({hover: false});
-    };
+    const onMouseLeave = () => setHover(false);
 
-    onFocus = () => {
-        this.setState({focus: true});
-    };
+    const onFocus = () => setFocus(true);
 
-    onBlur = () => {
-        this.setState({focus: false});
-    };
+    const onBlur = () => setFocus(false);
 
-    onUpdateStartDate = (date, shift) => {
-        const {onUpdateStartDate} = this.props;
+    const onUpdateStartDate0 = (date, shift) => {
         let updatedShift = onUpdateStartDate(date, shift);
         updatedShift.isClockInTimeRetro = true;
 
-        this.onUpdate(shift, updatedShift);
+        onUpdate(shift, updatedShift);
     };
 
-    onUpdateStartTime = (time, shift) => {
-        const {onUpdateStartTime} = this.props;
+    const onUpdateStartTime0 = (time, shift) => {
         let updatedShift = onUpdateStartTime(time, shift);
         updatedShift.isClockInTimeRetro = true;
-        
-        this.onUpdate(shift, updatedShift);
+
+        onUpdate(shift, updatedShift);
     };
 
-    onUpdateEndTime = (time, shift) => {
-        const {onUpdateEndTime} = this.props;
+    const onUpdateEndTime0 = (time, shift) => {
         let updatedShift = onUpdateEndTime(time, shift);
         updatedShift.isClockOutTimeRetro = true;
 
-        this.onUpdate(shift, updatedShift);
+        onUpdate(shift, updatedShift);
     };
 
-    onShiftComplete = (orgShift) => {
-        let {onShiftComplete} = this.props;
+    const onShiftComplete0 = (orgShift) => {
         let updatedShift = onShiftComplete(orgShift);
         sendGaEvent({
             category: GACategory.CLOCK_OUT,
             action: "web"
         });
 
-        this.onUpdate(orgShift, updatedShift);
+        onUpdate(orgShift, updatedShift);
     };
 
-    onUpdate = (orgShift, updatedShift) => {
-        let {updateShift, postUpdate} = this.props;
-
+    const onUpdate = (orgShift, updatedShift) => {
         let month = moment(orgShift.clockInTime).format('MM');
         let year = moment(orgShift.clockInTime).format('YYYY');
 
         updateShift(updatedShift, postUpdate, month, year);
     };
 
-    // TODO What the heck is this - duplicated onDelete
-    onDelete = () => {
-        let {deleteShift, shift} = this.props;
-
-        deleteShift(shift);
-    };
-
-    getErrors = () => {
-        let {shift, getIntersectShift, mode} = this.props;
+    const getErrors = () => {
         let {clockInTime, clockOutTime} = shift;
         let isShiftTooLong = moment(clockOutTime).diff(moment(clockInTime), 'hours', true) > 12;
         if (isShiftTooLong) {
@@ -150,50 +112,46 @@ class ShiftContainer extends React.PureComponent {
         return undefined;
     };
 
-    render() {
-        let {shift, showNames, mode, isDesktop, onDelete, isInnovativeAuthorityEnable} = this.props;
-        const {focus, hover} = this.state;
-        let errors = this.getErrors();
-        let classes1 = "shift " + (focus && isDesktop ? "focus" : "");
+    let errors = getErrors();
+    let classes1 = "shift " + (focus && isDesktop ? "focus" : "");
 
-        return (
-            <div styleName={classes1} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}
-                      onFocus={this.onFocus} onBlur={this.onBlur}>
-                {mode === ReportModes.Live &&
-                    <LiveShift
-                        showNames={showNames}
-                        shift={shift}
-                        errors={errors}
-                        hover={hover}
-                        showShiftDialog={this.showShiftDialog}
-                        showLocationModal={this.showLocationModal}
-                        isDesktop={isDesktop}
-                        onDelete={this.onDelete}
-                        onUpdateStartTime={this.onUpdateStartTime}
-                        onUpdateEndTime={this.onUpdateEndTime}
-                        onShiftComplete={this.onShiftComplete}
-                    />
-                }
-                {mode === ReportModes.Report &&
-                    <ReportShift
-                        showNames={showNames}
-                        shift={shift}
-                        errors={errors}
-                        hover={hover}
-                        onUpdateStartDate={this.onUpdateStartDate}
-                        onUpdateStartTime={this.onUpdateStartTime}
-                        onUpdateEndTime={this.onUpdateEndTime}
-                        showShiftDialog={this.showShiftDialog}
-                        showLocationModal={this.showLocationModal}
-                        isDesktop={isDesktop}
-                        onDelete={onDelete}
-                        isInnovativeAuthorityEnable={isInnovativeAuthorityEnable}
-                    />
-                }
-            </div>
-        );
-    }
-}
+    return (
+        <div styleName={classes1} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}
+             onFocus={onFocus} onBlur={onBlur}>
+            {mode === ReportModes.Live &&
+            <LiveShift
+                showNames={showNames}
+                shift={shift}
+                errors={errors}
+                hover={hover}
+                showShiftDialog={showShiftDialog0}
+                showLocationModal={showLocationModal0}
+                isDesktop={isDesktop}
+                onDelete={onDelete}
+                onUpdateStartTime={onUpdateStartTime0}
+                onUpdateEndTime={onUpdateEndTime0}
+                onShiftComplete={onShiftComplete0}
+            />
+            }
+            {mode === ReportModes.Report &&
+            <ReportShift
+                showNames={showNames}
+                shift={shift}
+                errors={errors}
+                hover={hover}
+                onUpdateStartDate={onUpdateStartDate0}
+                onUpdateStartTime={onUpdateStartTime}
+                onUpdateEndTime={onUpdateEndTime0}
+                showShiftDialog={showShiftDialog0}
+                showLocationModal={showLocationModal0}
+                isDesktop={isDesktop}
+                onDelete={onDelete}
+                isInnovativeAuthorityEnable={isInnovativeAuthorityEnable}
+            />
+            }
+        </div>
+    );
+};
 
 ShiftContainer.propTypes = {
     shift: PropTypes.object.isRequired,

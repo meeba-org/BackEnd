@@ -16,8 +16,7 @@ import PendingApprovalIndicator from "./PendingApprovalIndicator";
 import TaskIndicator from "./TaskIndicator";
 import Warning from "./Warning";
 
-const ReportShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog, showLocationModal, isDesktop, isInnovativeAuthorityEnable} = props;
+const ReportShift = ({showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onUpdateStartDate, onDelete, showShiftDialog, showLocationModal, isDesktop, isInnovativeAuthorityEnable}) => {
 
     const calcClockInTime = () => {
         if (isShiftPending(shift) && shift.draftShift?.clockInTime)
