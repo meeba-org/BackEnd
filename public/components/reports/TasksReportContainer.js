@@ -35,13 +35,12 @@ class TasksReportContainer extends React.PureComponent {
     }
 
     render() {
-        const {showShiftDialog, createShift, deleteShift, employees, userRole, startOfMonth, tasksReports} = this.props;
+        const {createShift, deleteShift, employees, userRole, startOfMonth, tasksReports} = this.props;
         return (
             <MonthlyReport
                 employees={employees}
                 reports={tasksReports}
                 onDeleteShift={deleteShift}
-                showShiftDialog={showShiftDialog}
                 onCreateShift={createShift}
                 onMonthChange={this.onDataChange}
                 onStartDayOfMonthChange={(month, year) => this.onStartDayOfMonthChange(month, year)}
@@ -63,7 +62,6 @@ TasksReportContainer.propTypes = {
     fetchEmployees: PropTypes.func.isRequired,
     createShift: PropTypes.func.isRequired,
     deleteShift: PropTypes.func.isRequired,
-    showShiftDialog: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
 };
 
@@ -82,7 +80,6 @@ const mapDispatchToProps = {
     exportReport,
     createShift,
     deleteShift: showDeleteShiftModal,
-    showShiftDialog: showEditShiftModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TasksReportContainer);
