@@ -8,7 +8,7 @@ const PendingReportContainer = ({updateShift, showDeleteShiftModal, shifts, isLo
 
     useEffect(() => {
         fetchPendingShifts();
-    });
+    }, []);
     
     return (
         <PendingReport

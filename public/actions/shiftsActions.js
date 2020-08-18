@@ -171,7 +171,7 @@ export const updateShift0 = (shift, postUpdate, month, year) => {
             data: shift,
             success: (data) => dispatch => {
                 if (postUpdate && !!month && !!year) {
-                    dispatch(postUpdate(month, year));
+                    postUpdate(month, year);
                 }
                 return dispatch(updateShiftSuccess(data));
             },
