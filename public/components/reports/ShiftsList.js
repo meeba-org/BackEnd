@@ -1,7 +1,7 @@
 import moment from "moment";
 import PropTypes from 'prop-types';
 import React from "react";
-import "../../styles/ShiftsList.scss";
+import "./styles/ShiftsList.scss";
 import Fade from "../Fade";
 import NoData from "../NoData";
 import ShiftContainer from "./ShiftContainer";

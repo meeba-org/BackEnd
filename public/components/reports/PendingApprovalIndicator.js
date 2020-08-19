@@ -3,7 +3,7 @@ import EyeIcon from "@material-ui/icons/RemoveRedEye";
 import PropTypes from "prop-types";
 import React from "react";
 import EShiftStatus from "../../helpers/EShiftStatus";
-import "../../styles/PendingApprovalInicator.scss";
+import "./styles/PendingApprovalInicator.scss";
 
 const PendingApprovalIndicator = ({shift, onClick, isInnovativeAuthorityEnable}) => {
     const shouldIndicate = shift => {

@@ -3,7 +3,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import LabelIcon from "@material-ui/icons/Label";
 import PropTypes from "prop-types";
 import React from "react";
-import "../../styles/ShiftIndicator.scss";
+import "./styles/ShiftIndicator.scss";
 
 const TaskIndicator = ({task, onClick}) => {
     if (!task || !task.title)

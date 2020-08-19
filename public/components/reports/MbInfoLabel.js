@@ -1,7 +1,7 @@
 import {Tooltip} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import React from 'react';
-import "../../styles/MbInfoLabel.scss";
+import "./styles/MbInfoLabel.scss";
 
 const MbInfoLabel = ({label, value, tooltip = ""}) => {
     return (

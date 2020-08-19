@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import '../../styles/HoursSummary.scss';
+import './styles/HoursSummary.scss';
 import {prepareHourToDisplay} from "../../helpers/utils";
 
 class HoursSummary extends Component {

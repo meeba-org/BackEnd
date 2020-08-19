@@ -70,7 +70,6 @@
     <file url="file://$PROJECT_DIR$/public/components/CheckBoxList.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/Fade.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/FullScreenLoading.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/HoursBar.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/LazyPrivateRoute.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/MbActionsControls.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/MbCard.js" charset="UTF-8" />
@@ -80,7 +79,6 @@
     <file url="file://$PROJECT_DIR$/public/components/PrivateRoute.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/Settings.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/SideBar.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/TaskHoursBar.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/TaskModalContent.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/WhatIsIt.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/dashboard/Dashboard.js" charset="UTF-8" />
@@ -130,6 +128,8 @@
     <file url="file://$PROJECT_DIR$/public/components/reports/DailyReportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/EWarningType.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/ExtraPay.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/HoursBar.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/HoursBar.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/HoursSummary.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Location.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/MbInfoLabel.js" charset="UTF-8" />
@@ -142,13 +142,39 @@
     <file url="file://$PROJECT_DIR$/public/components/reports/PendingReportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Report.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/ShiftsList.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/TaskHoursBar.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/TaskHoursBar.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/TaskIndicator.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/TaskReportLine.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/TasksReportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/TimeMaskCustom.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Warning.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/DailyReport.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/DailyReport.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/HoursBar.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/HoursBar.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/HoursSummary.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/HoursSummary.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/styles/LiveShift.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/MbInfoLabel.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/MbInfoLabel.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/MonthSummary.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/MonthSummary.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/MonthlyReport.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/MonthlyReport.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/MonthlyReportLine.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/MonthlyReportLine.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/PendingApprovalInicator.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/PendingApprovalInicator.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/ReportShift.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/ReportShift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/styles/Shift.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/ShiftIndicator.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/ShiftIndicator.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/ShiftsList.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/ShiftsList.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/Warning.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/Warning.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/BreadCrumb.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/Task.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/TaskService.js" charset="UTF-8" />
@@ -197,7 +223,6 @@
     <file url="file://$PROJECT_DIR$/public/styles/App.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/AppBar.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/BreadCrumb.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/DailyReport.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Dashboard.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/EmployeeFeatureContent.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ExportContainer.scss" charset="UTF-8" />
@@ -213,29 +238,19 @@
     <file url="file://$PROJECT_DIR$/public/styles/Header.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Home.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/HomeAppBar.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/HoursBar.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/HoursSummary.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Login.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/LoginRegister.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ManagerFeatureContent.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/MbActionsControls.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/MbInfoLabel.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/MbSwitch.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/MobileAppLinksModal.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/MobileImageContent.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/MonthSummary.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/MonthlyReport.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/MonthlyReportLine.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/MontlyPicker.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Movie.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/NoData.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/PendingApprovalInicator.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ReportFeatureContent.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/ReportShift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/SectionTitle.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/SettingSwitch.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/ShiftIndicator.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/ShiftsList.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/SideBar.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Statistics.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/StatisticsCell.scss" charset="UTF-8" />
@@ -244,7 +259,6 @@
     <file url="file://$PROJECT_DIR$/public/styles/VideoContainer.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Videos.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/VideosSideBar.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/Warning.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Workplace.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/WorkplaceSelectionModal.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/assets/lottie1.json" charset="UTF-8" />

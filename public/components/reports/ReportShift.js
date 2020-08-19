@@ -7,7 +7,7 @@ import {DatePicker, TimePicker} from "@material-ui/pickers";
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 import {isShiftPending, momentToDay} from "../../helpers/utils";
-import "../../styles/ReportShift.scss";
+import "./styles/ReportShift.scss";
 import BusCost from "./BusCost";
 import ExtraPay from "./ExtraPay";
 import Location from "./Location";

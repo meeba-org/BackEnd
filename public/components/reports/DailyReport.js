@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import React, {Fragment} from "react";
 import {withRouter} from "react-router-dom";
 import {calculateCurrentDay, calculateCurrentTime, createShiftForClockIn, DATE_FORMAT, ReportModes} from "../../helpers/utils";
-import '../../styles/DailyReport.scss';
+import './styles/DailyReport.scss';
 import AddShiftsDialog from "../AddShiftsDialog";
 import AutoComplete from "../AutoComplete";
 import MbActionButton from "../MbActionButton";

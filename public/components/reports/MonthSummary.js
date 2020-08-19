@@ -1,6 +1,6 @@
 import React from 'react';
 import MbInfoLabel from "./MbInfoLabel";
-import "../../styles/MonthSummary.scss";
+import "./styles/MonthSummary.scss";
 
 const MonthSummary = ({summary}) => {
     return (

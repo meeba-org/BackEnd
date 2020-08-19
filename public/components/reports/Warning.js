@@ -1,4 +1,4 @@
-import "../../styles/Warning.scss";
+import "./styles/Warning.scss";
 import WarningIcon from "./WarningIcon";
 import React from "react";
 import PropTypes from "prop-types";

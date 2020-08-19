@@ -2,7 +2,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import React from 'react';
 import {ReportModes} from "../../helpers/utils";
-import '../../styles/DailyReport.scss';
+import './styles/DailyReport.scss';
 import MbActionButton from "../MbActionButton";
 import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";

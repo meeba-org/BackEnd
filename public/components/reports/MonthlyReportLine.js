@@ -5,8 +5,8 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {ReportModes} from "../../helpers/utils";
-import "../../styles/MonthlyReportLine.scss";
-import HoursBar from '../HoursBar';
+import "./styles/MonthlyReportLine.scss";
+import HoursBar from './HoursBar';
 import HoursSummary from "./HoursSummary";
 import ShiftsList from "./ShiftsList";
 

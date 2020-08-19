@@ -3,7 +3,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import PlaceIcon from "@material-ui/icons/Place";
 import PropTypes from "prop-types";
 import React from "react";
-import "../../styles/ShiftIndicator.scss";
+import "./styles/ShiftIndicator.scss";
 import {INSIDE, OUTSIDE} from "../../../models/EInsideWorkplace";
 
 const Location = ({location, onClick, isClockInInsideWorkplace}) => {

@@ -3,7 +3,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import ExtraPayIcon from "@material-ui/icons/CardGiftcard";
 import PropTypes from "prop-types";
 import React from "react";
-import "../../styles/ShiftIndicator.scss";
+import "./styles/ShiftIndicator.scss";
 
 const ExtraPay = ({extraPay, onClick}) => {
     if (!extraPay)

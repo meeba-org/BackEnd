@@ -7,7 +7,7 @@ import {IfGranted} from "react-authorization";
 import {EXCEL, INNOVATION_AUTHORITY} from "../../../models/EReportFormat";
 import * as ERoles from "../../helpers/ERoles";
 import {DATE_FORMAT} from "../../helpers/utils";
-import '../../styles/MonthlyReport.scss';
+import './styles/MonthlyReport.scss';
 import AddShiftsDialog from "../AddShiftsDialog";
 import Fade from "../Fade";
 import MbActionButton from "../MbActionButton";
