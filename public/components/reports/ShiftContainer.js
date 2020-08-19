@@ -108,7 +108,7 @@ const ShiftContainer = ({showShiftDialog, shift, postUpdate, showNames, mode, is
                 case EWarningType.ShiftsIntersect:
                     return "קיימת משמרת חופפת";
                 case EWarningType.ShiftsOnSameDays:
-                    return "קיימת משמרת באותו היום";
+                    return "קיימת משמרת נוספת באותו היום";
             }
         }
 
