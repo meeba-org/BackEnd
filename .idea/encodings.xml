@@ -147,6 +147,7 @@
     <file url="file://$PROJECT_DIR$/public/components/reports/TasksReportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/TimeMaskCustom.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/Warning.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/styles/LiveShift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/styles/Shift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/BreadCrumb.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/Task.js" charset="UTF-8" />
@@ -214,7 +215,6 @@
     <file url="file://$PROJECT_DIR$/public/styles/HomeAppBar.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/HoursBar.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/HoursSummary.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/styles/LiveShift.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/Login.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/LoginRegister.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/styles/ManagerFeatureContent.scss" charset="UTF-8" />

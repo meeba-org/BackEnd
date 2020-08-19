@@ -9,7 +9,7 @@ import {TimePicker} from "@material-ui/pickers";
 import PropTypes from 'prop-types';
 import React from 'react';
 import {isWorking} from "../../helpers/utils";
-import "../../styles/LiveShift.scss";
+import "./styles/LiveShift.scss";
 import BusCost from "./BusCost";
 import ExtraPay from "./ExtraPay";
 import Location from "./Location";

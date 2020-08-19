@@ -1,4 +1,4 @@
-@import "variables";
+@import "../../../styles/variables";
 
 .line {
     display: flex;
@@ -47,7 +47,7 @@
         }
 
         .time {
-            width: 50px;
+            width: 40px;
             direction: ltr;
             margin: 0 10px;
 
