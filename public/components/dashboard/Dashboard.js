@@ -34,7 +34,7 @@ const Dashboard = ({userRole, isDesktop, path, hasPremium, isLoading}) => {
                     </Paper>
                     <Paper styleName="main-container">
                         <Switch>
-                            <Route path={`${path}/live`} component={() => <DailyReportContainer mode={ReportModes.Live}/>}/>
+                            <Route path={`${path}/live`} render={() => <DailyReportContainer mode={ReportModes.Live}/>}/>
                             <Route path={`${path}/report`} component={Report}/>
                             <Route path={`${path}/employees`} component={EmployeesContainer}/>
                             <Route path={`${path}/export`} component={ExportContainer}/>

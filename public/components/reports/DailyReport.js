@@ -22,34 +22,8 @@ class DailyReport extends React.PureComponent {
         super(props);
 
         this.state = {
-            currentDay: calculateCurrentDay(),
             open: false,
         };
-    }
-
-    componentDidMount() {
-        this.props.onDayChange(this.state.currentDay);
-    }
-
-    onNextDay = () => {
-        const {currentDay} = this.state;
-
-        const nextDay = moment(currentDay).add(1, 'days');
-        this.handleChange(nextDay);
-    };
-
-    onPrevDay = () => {
-        const {currentDay} = this.state;
-
-        const prevDay = moment(currentDay).subtract(1, 'days');
-        this.handleChange(prevDay);
-    };
-
-    handleChange(date) {
-        let currentDay = date.format(DATE_FORMAT);
-
-        this.setState({currentDay});
-        this.props.onDayChange(currentDay);
     }
 
     handleClickOpen = () => {
@@ -66,7 +40,7 @@ class DailyReport extends React.PureComponent {
     };
 
     onUpdateShift = (shift) => {
-        let value = moment(this.state.currentDay, DATE_FORMAT);
+        let value = moment(this.props.currentDay, DATE_FORMAT);
         this.props.onUpdateShift(shift, value.format('MM'), value.format('YYYY'));
     };
 
@@ -79,8 +53,7 @@ class DailyReport extends React.PureComponent {
     };
 
     render() {
-        const {shifts, onCreateShift, onDeleteShift, employees, mode, isLoading} = this.props;
-        let {currentDay} = this.state;
+        const {shifts, onCreateShift, onDeleteShift, employees, mode, isLoading, onNextDay, onPrevDay, handleChange, currentDay} = this.props;
         let {primary, secondary} = this.props.theme.palette.text;
 
         return (
@@ -91,20 +64,20 @@ class DailyReport extends React.PureComponent {
 
                         <div styleName="daily-report">
                             <MbActionsControls>
-                                <DatePicker autoOk onChange={(date) => this.handleChange(date)} value={currentDay}
+                                <DatePicker autoOk onChange={(date) => handleChange(date)} value={currentDay}
                                             format="DD/MM/YYYY"
                                             styleName="date"
                                             inputProps={{style: {textAlign: "center"}}}
                                 />
 
                                 <MbActionButton
-                                    onClick={this.onPrevDay}
+                                    onClick={onPrevDay}
                                     iconComponent={NavigateNext}
                                     tooltip="יום אחורה"
                                 />
 
                                 <MbActionButton
-                                    onClick={this.onNextDay}
+                                    onClick={onNextDay}
                                     iconComponent={NavigateBefore}
                                     tooltip="יום קדימה"
                                     disabled={moment(currentDay).isSame(new Date(), "day")}
@@ -176,7 +149,7 @@ class DailyReport extends React.PureComponent {
                                 showNames={true}
                                 mode={mode}
                                 shouldDisplayNoData={false}
-                                postUpdate={() => this.props.onDayChange(this.state.currentDay)}
+                                postUpdate={() => handleChange(currentDay)}
                             />
                         </div>
 
@@ -194,7 +167,6 @@ DailyReport.propTypes = {
     onCreateShift: PropTypes.func.isRequired,
     onUpdateShift: PropTypes.func.isRequired,
     onDeleteShift: PropTypes.func.isRequired,
-    onDayChange: PropTypes.func.isRequired,
     mode: PropTypes.number.isRequired,
     theme: PropTypes.object,
     history: PropTypes.object.isRequired,

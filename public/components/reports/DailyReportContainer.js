@@ -1,45 +1,62 @@
-import React from "react";
+import moment from "moment";
+import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {createShift, updateShift} from "../../actions";
 import PropTypes from 'prop-types';
 import {fetchDailyReport, showDeleteShiftModal} from "../../actions/shiftsActions";
+import {calculateCurrentDay, DATE_FORMAT} from "../../helpers/utils";
 import {getDailyShifts} from "../../selectors";
 import DailyReport from "./DailyReport";
 import {fetchUsers} from "../../actions/usersActions";
 
-class DailyReportContainer extends React.PureComponent {
-
-    state = {
-        isLoading: true
-    };
+const DailyReportContainer = ({updateShift, createShift, deleteShift, shifts, employees, mode, fetchDailyReport, fetchEmployees}) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [currentDay, setCurrentDay] = useState(calculateCurrentDay());
     
-    onDayChange(startDateOfMonth) {
-        if (!startDateOfMonth)
+    useEffect(() => {
+        onDayChange(currentDay);
+    }, [currentDay]);
+
+    const onDayChange = (currDay) => {
+        if (!currDay)
             return;
 
-        this.setState({isLoading: true});
-        this.props.fetchDailyReport(startDateOfMonth);
-        this.props.fetchEmployees(() => this.setState({isLoading: false}));
-    }
+        setIsLoading(true);
+        fetchDailyReport(currDay);
+        fetchEmployees(() => setIsLoading(false));
+    };
 
-    render() {
-        const {updateShift, createShift, deleteShift, shifts, employees, mode} = this.props;
-        const {isLoading} = this.state;
+    const onNextDay = () => {
+        const nextDay = moment(currentDay).add(1, 'days');
+        handleChange(nextDay);
+    };
 
-        return (
-                <DailyReport
-                    shifts={shifts}
-                    mode={mode}
-                    employees={employees}
-                    onDeleteShift={deleteShift}
-                    onUpdateShift={updateShift}
-                    onCreateShift={createShift}
-                    onDayChange={(startDayOfMonth) => this.onDayChange(startDayOfMonth)}
-                    isLoading={isLoading}
-                />
-        );
-    }
-}
+    const onPrevDay = () => {
+        const prevDay = moment(currentDay).subtract(1, 'days');
+        handleChange(prevDay);
+    };
+
+    const handleChange = (date) => {
+        let currentDay = date.format(DATE_FORMAT);
+        setCurrentDay(currentDay);
+    };
+    
+    return (
+        <DailyReport
+            shifts={shifts}
+            mode={mode}
+            employees={employees}
+            onDeleteShift={deleteShift}
+            onUpdateShift={updateShift}
+            onCreateShift={createShift}
+            onNextDay={onNextDay}
+            onPrevDay={onPrevDay}
+            onDayChange={onDayChange}
+            currentDay={currentDay}
+            isLoading={isLoading}
+        />
+    );
+};
 
 DailyReportContainer.propTypes = {
     shifts: PropTypes.array,
@@ -52,12 +69,10 @@ DailyReportContainer.propTypes = {
     deleteShift: PropTypes.func.isRequired,
 };
 
-function mapStateToProps(state) {
-    return {
-        shifts: getDailyShifts(state),
-        employees: state.users,
-    };
-}
+const mapStateToProps = state => ({
+    shifts: getDailyShifts(state),
+    employees: state.users,
+});
 
 const mapDispatchToProps = {
     fetchDailyReport,
