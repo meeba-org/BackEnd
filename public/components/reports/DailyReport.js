@@ -5,19 +5,17 @@ import AddIcon from '@material-ui/icons/Add';
 import Warning from "@material-ui/icons/Warning";
 import {DatePicker} from "@material-ui/pickers";
 import moment from "moment";
-import PropTypes from 'prop-types';
 import React, {Fragment, useState} from "react";
-import {withRouter} from "react-router-dom";
 import {calculateCurrentDay, calculateCurrentTime, createShiftForClockIn, DATE_FORMAT, ReportModes} from "../../helpers/utils";
-import './styles/DailyReport.scss';
 import AddShiftsDialog from "../AddShiftsDialog";
 import AutoComplete from "../AutoComplete";
 import MbActionButton from "../MbActionButton";
 import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import ShiftsList from "./ShiftsList";
+import './styles/DailyReport.scss';
 
-const DailyReport = ({shifts, onCreateShift, onUpdateShift, onDeleteShift, employees, mode, isLoading, onNextDay, onPrevDay, handleChange, currentDay, history, theme}) => {
+const DailyReport = ({shifts, onCreateShift, onUpdateShift, onDeleteShift, employees, mode, isLoading, onNextDay, onPrevDay, handleChange, currentDay, navigateToEmployees, theme}) => {
     const [open, setOpen] = useState(false);
 
     const onClockIn = (employee) => {
@@ -32,10 +30,6 @@ const DailyReport = ({shifts, onCreateShift, onUpdateShift, onDeleteShift, emplo
 
     const hasEmployees = (employees) => {
         return employees && employees.length > 0;
-    };
-
-    const navigateToEmployees = () => {
-        history.push('/dashboard/employees');
     };
 
     let {primary, secondary} = theme.palette.text;
@@ -144,17 +138,5 @@ const DailyReport = ({shifts, onCreateShift, onUpdateShift, onDeleteShift, emplo
     );
 };
 
-DailyReport.propTypes = {
-    shifts: PropTypes.array,
-    employees: PropTypes.array,
-    onCreateShift: PropTypes.func.isRequired,
-    onUpdateShift: PropTypes.func.isRequired,
-    onDeleteShift: PropTypes.func.isRequired,
-    mode: PropTypes.number.isRequired,
-    theme: PropTypes.object,
-    history: PropTypes.object.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-};
-
-export default withRouter(withTheme(DailyReport));
+export default withTheme(DailyReport);
 

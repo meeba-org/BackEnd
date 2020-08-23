@@ -1,15 +1,15 @@
 import moment from "moment";
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
 import {createShift, updateShift} from "../../actions";
-import PropTypes from 'prop-types';
 import {fetchDailyReport, showDeleteShiftModal} from "../../actions/shiftsActions";
+import {fetchUsers} from "../../actions/usersActions";
 import {calculateCurrentDay, DATE_FORMAT} from "../../helpers/utils";
 import {getDailyShifts} from "../../selectors";
 import DailyReport from "./DailyReport";
-import {fetchUsers} from "../../actions/usersActions";
 
-const DailyReportContainer = ({updateShift, createShift, deleteShift, shifts, employees, mode, fetchDailyReport, fetchEmployees}) => {
+const DailyReportContainer = ({updateShift, createShift, deleteShift, shifts, employees, mode, fetchDailyReport, fetchEmployees, history}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [currentDay, setCurrentDay] = useState(calculateCurrentDay());
     
@@ -37,10 +37,14 @@ const DailyReportContainer = ({updateShift, createShift, deleteShift, shifts, em
     };
 
     const handleChange = (date) => {
-        let currentDay = date.format(DATE_FORMAT);
+        let currentDay = moment(date).format(DATE_FORMAT);
         setCurrentDay(currentDay);
     };
-    
+
+    const navigateToEmployees = () => {
+        history.push('/dashboard/employees');
+    };
+
     return (
         <DailyReport
             shifts={shifts}
@@ -54,19 +58,10 @@ const DailyReportContainer = ({updateShift, createShift, deleteShift, shifts, em
             onDayChange={onDayChange}
             currentDay={currentDay}
             isLoading={isLoading}
+            handleChange={handleChange}
+            navigateToEmployees={navigateToEmployees}
         />
     );
-};
-
-DailyReportContainer.propTypes = {
-    shifts: PropTypes.array,
-    employees: PropTypes.array,
-    route: PropTypes.object,
-    fetchDailyReport: PropTypes.func.isRequired,
-    fetchEmployees: PropTypes.func.isRequired,
-    createShift: PropTypes.func.isRequired,
-    updateShift: PropTypes.func.isRequired,
-    deleteShift: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -82,5 +77,5 @@ const mapDispatchToProps = {
     deleteShift: showDeleteShiftModal,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DailyReportContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(DailyReportContainer));
 
