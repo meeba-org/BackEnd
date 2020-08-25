@@ -2,7 +2,6 @@ import Grid from "@material-ui/core/Grid/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
-import {withStyles} from '@material-ui/core/styles';
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -11,23 +10,7 @@ import React, {useState} from 'react';
 import ETaskType from "../../../models/ETaskType";
 import "../../styles/Task.scss";
 
-const styles = {
-    listItem: {
-        textAlign: "right",
-        paddingTop: "7px",
-        paddingBottom: "7px",
-    },
-    listItemText: {
-    },
-    listItemSelectionMode: {
-        textAlign: "right",
-        paddingTop: "4px",
-        paddingBottom: "4px",
-    }
-};
-
-
-const Task = ({data, onDoubleClick, onClick, onDelete, onEdit, classes, selectMode, isLimited}) => {
+const Task = ({data, onDoubleClick, onClick, onDelete, onEdit, selectMode, isLimited}) => {
     
     const [hover, setHover] = useState(false);
 
@@ -51,7 +34,9 @@ const Task = ({data, onDoubleClick, onClick, onDelete, onEdit, classes, selectMo
     return (
         <Grid container onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
             <Grid item xs={9}>
-                <ListItem classes={{root: selectMode ? classes.listItemSelectionMode : classes.listItem}} button
+                <ListItem  
+                          styleName={`list-item ${selectMode ? "selected" : ""}`}
+                          button
                           onDoubleClick={() => onDoubleClick(data)}
                           onClick={() => onClick(data)}
                           disabled={isLimited}
@@ -87,5 +72,5 @@ const Task = ({data, onDoubleClick, onClick, onDelete, onEdit, classes, selectMo
     );
 };
 
-export default withStyles(styles)(Task);
+export default Task;
 
