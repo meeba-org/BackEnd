@@ -1,6 +1,6 @@
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {MAX_FREE_TASKS_ALLOWED} from "../../../constants";
 import * as ETaskType from "../../../models/ETaskType";
@@ -14,99 +14,84 @@ import BreadCrumb from "./BreadCrumb";
 import {filterTasks} from "./TaskService";
 import TasksList from "./TasksList";
 
-class TasksContainer extends React.Component {
+const TasksContainer = ({openTaskModal, showDeleteTaskModal, isEditAllowed, isAddAllowed, fetchTasks, tasks, company}) => {
+    const [breadcrumbTasks, setBreadcrumbTasks] = useState([]);
+    const [selectedParent, setSelectedParent] = useState(null);
 
-    state = {
-        breadcrumbTasks: [],
-        selectedParent: null,
-    };
+    useEffect(() => {
+        fetchTasks();
+    }, []); 
 
-    componentDidMount() {
-        this.props.fetchTasks();
-    }
-
-    onCreate = () => {
-        let parent = (!this.state.selectedParent) ? null : this.state.selectedParent._id;
+    const onCreate = () => {
+        let parent = (!selectedParent) ? null : selectedParent._id;
         let newTask = {
-            company: this.props.company,
+            company,
             parent: parent,
             title: ""
         };
-        this.props.openTaskModal(newTask);
+        openTaskModal(newTask);
     };
 
-    onSelectTask = (selectedTask) => {
+    const onSelectTask = (selectedTask) => {
         let breadcrumbTasks = [];
-        const {tasks} = this.props;
-        this.setState({selectedParent: selectedTask});
+        setSelectedParent(selectedTask);
 
         while (selectedTask) {
             breadcrumbTasks.push(selectedTask);
             selectedTask = tasks.find(task=> task._id === selectedTask.parent); // Go up one level
         }
 
-        this.setState({breadcrumbTasks});
+        setBreadcrumbTasks(breadcrumbTasks);
     };
 
-    render() {
-        const {openTaskModal, showDeleteTaskModal, isEditAllowed, isAddAllowed} = this.props;
-        let {breadcrumbTasks, selectedParent} = this.state;
-        let tasks = filterTasks(this.props.tasks, selectedParent);
-        let NOT_ALLOW_TO_ADD_MESSAGE = `במסלול החינמי מספר המשימות המקסימלי הוא ${MAX_FREE_TASKS_ALLOWED}`;
+    let processedtasks = filterTasks(tasks, selectedParent);
+    let NOT_ALLOW_TO_ADD_MESSAGE = `במסלול החינמי מספר המשימות המקסימלי הוא ${MAX_FREE_TASKS_ALLOWED}`;
 
-        return (
-            <MbCard title="משימות / אירועים">
-                <MbActionsControls>
-                    <Tooltip title={isAddAllowed ? "הוספת משימה" : NOT_ALLOW_TO_ADD_MESSAGE} placement="top">
+    return (
+        <MbCard title="משימות / אירועים">
+            <MbActionsControls>
+                <Tooltip title={isAddAllowed ? "הוספת משימה" : NOT_ALLOW_TO_ADD_MESSAGE} placement="top">
                         <span>
                             <MbActionButton
                                 disabled={!isAddAllowed}
-                                onClick={this.onCreate}
+                                onClick={onCreate}
                                 iconComponent={AddIcon}
                             />
                         </span>
-                    </Tooltip>
-                </MbActionsControls>
+                </Tooltip>
+            </MbActionsControls>
 
-                <GoPremiumNotification isVisible={!isAddAllowed} text={NOT_ALLOW_TO_ADD_MESSAGE} />
+            <GoPremiumNotification isVisible={!isAddAllowed} text={NOT_ALLOW_TO_ADD_MESSAGE} />
 
-                <BreadCrumb
-                    data={breadcrumbTasks}
-                    onSelectTask={this.onSelectTask}
-                />
-                {tasks && tasks.length > 0 &&
-                <TasksList
-                    tasks={tasks}
-                    onEdit={openTaskModal}
-                    onDelete={showDeleteTaskModal}
-                    onClick={this.onSelectTask}
-                    isLimited={!isEditAllowed}
-                />
-                }
-            </MbCard>
-        );
-    }
-}
-
-TasksContainer.propTypes = {
+            <BreadCrumb
+                data={breadcrumbTasks}
+                onSelectTask={onSelectTask}
+            />
+            {processedtasks && processedtasks.length > 0 &&
+            <TasksList
+                tasks={processedtasks}
+                onEdit={openTaskModal}
+                onDelete={showDeleteTaskModal}
+                onClick={onSelectTask}
+                isLimited={!isEditAllowed}
+            />
+            }
+        </MbCard>
+    );
 };
 
-function mapStateToProps(state) {
-    return {
-        tasks: state.tasks,
-        company: selectors.getCompany(state),
-        isAddAllowed: selectors.isTasksEnable(state) && (selectors.hasPremiumFeature(state) || state.tasks?.filter(t => !t.parent && t.type === ETaskType.REGULAR).length < MAX_FREE_TASKS_ALLOWED),
-        isEditAllowed: selectors.hasPremiumFeature(state) || (state.tasks?.filter(t => !t.parent && t.type === ETaskType.REGULAR).length <= MAX_FREE_TASKS_ALLOWED),
-    };
-}
+const mapStateToProps = state => ({
+    tasks: state.tasks,
+    company: selectors.getCompany(state),
+    isAddAllowed: selectors.isTasksEnable(state) && (selectors.hasPremiumFeature(state) || state.tasks?.filter(t => !t.parent && t.type === ETaskType.REGULAR).length < MAX_FREE_TASKS_ALLOWED),
+    isEditAllowed: selectors.hasPremiumFeature(state) || (state.tasks?.filter(t => !t.parent && t.type === ETaskType.REGULAR).length <= MAX_FREE_TASKS_ALLOWED),
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchTasks: () => dispatch(fetchTasks()),
-        openTaskModal: (task) => dispatch(openTaskModal(task)),
-        showDeleteTaskModal: (task) => dispatch(showDeleteTaskModal(task)),
-    };
-}
+const mapDispatchToProps = {
+    fetchTasks,
+    openTaskModal,
+    showDeleteTaskModal,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TasksContainer);
 
