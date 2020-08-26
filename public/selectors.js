@@ -103,3 +103,5 @@ export const getPendingShifts = state => state.shifts.pending;
 export const getEmployeesMonthlyReports = state => state.reports.employeesMonthlyReports;
 
 export const getStartOfMonth = state => getCompanySettings(state)?.startOfMonth;
+
+export const getTasks = state => state.tasks;

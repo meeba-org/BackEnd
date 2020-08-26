@@ -8,7 +8,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
 import React, {useState} from 'react';
 import ETaskType from "../../../models/ETaskType";
-import "../../styles/Task.scss";
+import "./styles/Task.scss";
 
 const Task = ({data, onDoubleClick, onClick, onDelete, onEdit, selectMode, isLimited}) => {
     

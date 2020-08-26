@@ -1,8 +1,9 @@
 import FormLabel from '@material-ui/core/FormLabel';
-import { withStyles } from '@material-ui/core/styles';
-import React, {Fragment} from 'react';
+import {withStyles} from '@material-ui/core/styles';
+import React, {Fragment, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {fetchTasks} from "../../actions/tasksActions";
+import {getTasks} from "../../selectors";
 import BreadCrumb from "./BreadCrumb";
 import {filterTasks} from "./TaskService";
 import TasksList from "./TasksList";
@@ -13,25 +14,12 @@ const styles = {
     }
 };
 
-class TasksSelectionContainer extends React.Component {
-
-    state = {
-        breadcrumbTasks: [],
-        selectedParent: null,
-    };
-
-    componentDidMount() {
-        this.props.fetchTasks();
-    }
-
-    onSelectTask = (selectedTask) => {
-        const {onChange} = this.props;
-        this.setState({selectedParent: selectedTask});
-
-        onChange(selectedTask);
-    };
-
-    buildBreadcrumb(task, tasks) {
+const TasksSelectionContainer = ({classes, task, tasks, fetchTasks, onChange}) => {
+    useEffect(() => {
+        fetchTasks();
+    }, []);
+    
+    const buildBreadcrumb = (task, tasks) => {
         let breadcrumbTasks = [];
         let currTask = task ? {...task} : null;
 
@@ -40,33 +28,27 @@ class TasksSelectionContainer extends React.Component {
             currTask = tasks.find(t => t._id === currTask.parent); // Go up one level
         }
         return breadcrumbTasks;
-    }
+    };
 
-    render() {
-        const {classes, task, tasks} = this.props;
-        let currentLevelTasks = filterTasks(this.props.tasks, task);
-        let breadcrumbTasks = this.buildBreadcrumb(task, tasks);
-
-        return (
-            <Fragment>
-                <FormLabel classes={{root: classes.title}}>משימה</FormLabel>
-                <BreadCrumb
-                    data={breadcrumbTasks}
-                    onSelectTask={this.onSelectTask}
-                />
-                {currentLevelTasks && currentLevelTasks.length > 0 &&
-                <TasksList
-                    tasks={currentLevelTasks}
-                    onClick={this.onSelectTask}
-                    selectMode
-                />
-                }
-            </Fragment>
-        );
-    }
-}
-
-TasksSelectionContainer.propTypes = {
+    let currentLevelTasks = filterTasks(tasks, task);
+    let breadcrumbTasks = buildBreadcrumb(task, tasks);
+    
+    return (
+        <Fragment>
+            <FormLabel classes={{root: classes.title}}>משימה</FormLabel>
+            <BreadCrumb
+                data={breadcrumbTasks}
+                onSelectTask={onChange}
+            />
+            {currentLevelTasks && currentLevelTasks.length > 0 &&
+            <TasksList
+                tasks={currentLevelTasks}
+                onClick={onChange}
+                selectMode
+            />
+            }
+        </Fragment>
+    );
 };
 
 TasksSelectionContainer.defaultProps = {
@@ -74,17 +56,13 @@ TasksSelectionContainer.defaultProps = {
     onClick: () => {},
 };
 
-function mapStateToProps(state) {
-    return {
-        tasks: state.tasks,
-    };
-}
+const mapStateToProps = state => ({
+    tasks: getTasks(state),
+});
 
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchTasks: () => dispatch(fetchTasks()),
-    };
-}
+const mapDispatchToProps = {
+    fetchTasks,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(TasksSelectionContainer));
 
