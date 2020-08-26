@@ -17,8 +17,8 @@ import Note from "./Note";
 import TaskIndicator from "./TaskIndicator";
 import Warning from "./Warning";
 
-const LiveShift = (props) => {
-    let {showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete, showShiftDialog, showLocationModal, isDesktop} = props;
+const LiveShift = ({showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete, showShiftDialog, showLocationModal, isDesktop}) => {
+
     let icon = isWorking(shift) ?
         <Tooltip title="בעבודה" placement="right"><Work/></Tooltip> :
         <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
