@@ -543,7 +543,7 @@ function shouldAddCommuteData(company, shift) {
 }
 
 function shouldAddTasksData(company, shift) {
-    return isTasksEnable(company) && !!shift.task;
+    return (isTasksEnable(company) || isAbsenceDaysEnable(company)) && !!shift.task;
 }
 
 function addCommuteData(company, row, shift) {
