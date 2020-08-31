@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../../styles/Footer.scss';
+import './styles/Footer.scss';
 import facebookImage from '../../styles/images/facebook.png';
 import Button from "@material-ui/core/Button";
 
