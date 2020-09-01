@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../../styles/Features.scss';
+import './styles/Features.scss';
 import employeeImage from "../../styles/images/labor.png";
 import managerImage from "../../styles/images/manager.png";
 import accountantImage from "../../styles/images/profits.png";

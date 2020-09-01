@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import * as selectors from "../../selectors";
-import "../../styles/Home.scss";
+import "./styles/Home.scss";
 import Features from "./Features";
 import Footer from "./Footer";
 import Header from "./Header";
