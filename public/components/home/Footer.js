@@ -12,7 +12,7 @@ class Footer extends Component {
                         <Button color="inherit" href="https://m.me/meebaOnFace" target="_blank">
                             <span styleName="weak"> שאלה? בעיה?</span>
                             <span>צור קשר איתנו ב-</span>
-                            <img src={facebookImage}/>
+                            <img src={facebookImage} loading="lazy" />
                             <div className="fb-like" styleName="like" data-href="https://www.facebook.com/meebaOnFace" data-layout="button_count" data-action="like" data-size="large" data-show-faces="false" data-share="false" />
                         </Button>
                     </div>

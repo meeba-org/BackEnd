@@ -1,18 +1,13 @@
-import React, {Component} from 'react';
-import '../../styles/ManagerFeatureContent.scss';
+import React from 'react';
 import browserImage from '../../styles/images/browser.png';
+import './styles/ManagerFeatureContent.scss';
 
-class ManagerFeatureContent extends Component {
-    render() {
-        return (
-            <div styleName="manager-content">
-                <img src={browserImage}/>
-            </div>
-        );
-    }
-}
-
-ManagerFeatureContent.propTypes = {};
-ManagerFeatureContent.defaultProps = {};
+const ManagerFeatureContent = () => {
+    return (
+        <div styleName="manager-content">
+            <img src={browserImage} loading="lazy" />
+        </div>
+    );
+};
 
 export default ManagerFeatureContent;
