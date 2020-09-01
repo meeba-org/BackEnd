@@ -8,6 +8,8 @@ const CompanyModel = require("../models/CompanyModel");
 const UserModel = require("../models/UserModel");
 const config = require('../config');
 const mongooseManager = require("../managers/MongooseManager");
+// eslint-disable-next-line no-unused-vars
+const {generateImmediatePayment} = require("../managers/iCreditManager");
 
 const chargePremiumCompanies = async () => {
     console.log("Subscription price is:", MONTHLY_SUBSCRIPTION_PRICE);
@@ -23,7 +25,7 @@ const chargePremiumCompanies = async () => {
         try{
             console.log(`${company.name} - Charging company - id: ${company._id}`);
             // For testing comment the following line
-            // await iCreditManager.generateImmediatePayment(company._id);
+            //  await generateImmediatePayment(company._id);
             console.log(`${company.name} - Success!`);
         }
         catch (e) {
