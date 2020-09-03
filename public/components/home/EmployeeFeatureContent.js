@@ -10,21 +10,19 @@ class EmployeeFeatureContent extends Component {
             <div styleName="employee-content">
                 <div styleName="employee-content-container">
                     <div styleName="mobile-sc">
-                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src={mobileImage}/>
+                        <img src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src={mobileImage} loading="lazy" />
                     </div>
                     <div styleName="badges">
                         <div styleName="badge">
                             <a target="_blank" rel="noopener noreferrer"
                                href="https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
-                                <img alt=" Google Play כעת ב-"
-                                     src={playStoreImage}/>
+                                <img alt=" Google Play כעת ב-" src={playStoreImage} loading="lazy" />
                             </a>
                         </div>
                         <div styleName="badge">
                             <a target="_blank" rel="noopener noreferrer"
                                href="https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8">
-                                <img alt=" Apple Store כעת ב-"
-                                     src={appStoreImage}/>
+                                <img alt=" Apple Store כעת ב-" src={appStoreImage} loading="lazy" />
                             </a>
                         </div>
                     </div>

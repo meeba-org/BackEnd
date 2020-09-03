@@ -1,18 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
 import excelImage from '../../styles/images/excel.png';
-import '../../styles/ReportFeatureContent.scss';
+import './styles/ReportFeatureContent.scss';
 
-class ReportFeatureContent extends Component {
-    render() {
-        return (
-            <div styleName="report-content">
-                <img src={excelImage}/>
-            </div>
-        );
-    }
-}
-
-ReportFeatureContent.propTypes = {};
-ReportFeatureContent.defaultProps = {};
+const ReportFeatureContent = () => {
+    return (
+        <div styleName="report-content">
+            <img src={excelImage} loading="lazy" />
+        </div>
+    );
+};
 
 export default ReportFeatureContent;

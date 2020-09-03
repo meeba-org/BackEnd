@@ -4,7 +4,7 @@ import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {showLoginRegisterDialog} from "../../actions";
-import "../../styles/Header.scss";
+import "./styles/Header.scss";
 import appStoreImage from '../../styles/images/appStore.svg';
 import playStoreImage from '../../styles/images/playStore.svg';
 import HomeAppBar from './HomeAppBar';
@@ -41,15 +41,13 @@ class Header extends Component {
                                     <div styleName="badge">
                                         <a target="_blank" rel="noopener noreferrer"
                                            href="https://play.google.com/store/apps/details?id=chenop.meeba&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
-                                            <img alt=" Google Play כעת ב-"
-                                                 src={playStoreImage}/>
+                                            <img alt=" Google Play כעת ב-" src={playStoreImage}/>
                                         </a>
                                     </div>
                                     <div styleName="badge">
                                         <a target="_blank" rel="noopener noreferrer"
                                            href="https://itunes.apple.com/il/app/%D7%9E%D7%99%D7%91%D7%90/id1329551700?mt=8">
-                                            <img alt=" Apple Store כעת ב-"
-                                                 src={appStoreImage}/>
+                                            <img alt=" Apple Store כעת ב-" src={appStoreImage}/>
                                         </a>
                                     </div>
                                 </div>

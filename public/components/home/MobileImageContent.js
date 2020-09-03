@@ -1,18 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
 import mobileImage from '../../styles/images/1.png';
-import '../../styles/MobileImageContent.scss';
+import './styles/MobileImageContent.scss';
 
-class MobileImageContent extends Component {
-    render() {
-        return (
-            <div styleName="mobile-image">
-                <img src={mobileImage}/>
-            </div>
-        );
-    }
-}
-
-MobileImageContent.propTypes = {};
-MobileImageContent.defaultProps = {};
+const MobileImageContent = () => {
+    return (
+        <div styleName="mobile-image">
+            <img src={mobileImage} loading="lazy" />
+        </div>
+    );
+};
 
 export default MobileImageContent;
