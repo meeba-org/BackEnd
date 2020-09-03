@@ -133,8 +133,8 @@ class EditShiftModal extends Component {
             entity: updatedShift
         });
 
+        this.handleClose();  
         this.updateShift(entity, updatedShift);
-        this.handleClose();
     };
 
     extractDraftShift(entity) {
