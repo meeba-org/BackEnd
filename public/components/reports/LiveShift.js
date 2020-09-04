@@ -17,21 +17,14 @@ import Note from "./Note";
 import TaskIndicator from "./TaskIndicator";
 import Warning from "./Warning";
 
-const LiveShift = ({showNames, shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete, showShiftDialog, showLocationModal, isDesktop}) => {
-
-    let icon = isWorking(shift) ?
-        <Tooltip title="בעבודה" placement="right"><Work/></Tooltip> :
-        <Tooltip title="בבית" placement="right"><Home/></Tooltip>;
+const LiveShift = ({shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete, showShiftDialog, showLocationModal, isDesktop}) => {
 
     return (
         <div styleName="line">
             <div styleName="name-container">
-                <IconButton styleName="icon">{icon}</IconButton>
-                {showNames &&
                 <Tooltip title={shift?.user?.fullName} placement="top">
                     <div styleName="name">{shift?.user?.fullName}</div>
                 </Tooltip>
-                }
             </div>
 
             <div styleName="shift-members">
@@ -53,6 +46,11 @@ const LiveShift = ({showNames, shift, errors, hover, onUpdateStartTime, onUpdate
                     onChange={(time) => onUpdateEndTime(time, shift)}
                     inputProps={{"data-hj-whitelist": ""}}
                 />
+                }
+                {isWorking(shift) &&
+                    <div styleName="home">
+                        <IconButton styleName="elem" onClick={() => onShiftComplete(shift)}><Home/></IconButton>
+                    </div>
                 }
             </div>
             <Warning warning={errors}/>
@@ -80,10 +78,7 @@ const LiveShift = ({showNames, shift, errors, hover, onUpdateStartTime, onUpdate
             }
             {!isDesktop &&
                 <div styleName="mobile-controls">
-                    {isWorking(shift) &&
-                    <Button variant={"contained"} color="primary" styleName="mobile-button" onClick={() => onShiftComplete(shift)}><Home/></Button>
-                    }
-                    <Button variant={"contained"} styleName={"mobile-button delete"} onClick={onDelete}><Delete/></Button>
+                    <IconButton styleName={"mobile-button delete"} onClick={onDelete}><Delete/></IconButton>
                 </div>
             }
         </div>
@@ -91,7 +86,6 @@ const LiveShift = ({showNames, shift, errors, hover, onUpdateStartTime, onUpdate
 };
 
 LiveShift.propTypes = {
-    showNames: PropTypes.bool.isRequired,
     shift: PropTypes.object.isRequired,
     errors: PropTypes.string,
     hover: PropTypes.bool.isRequired,

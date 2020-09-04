@@ -14,8 +14,7 @@
     .name-container {
         display: flex;
         flex-direction: row;
-        min-width: 120px;
-        max-width: 120px;
+        width: 100px;
         align-items: center;
 
         .icon {
@@ -55,6 +54,16 @@
                 text-align: center
             }
         }
+        
+        .home {
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: rgba(0, 0, 0, 0.42);
+            margin: 0 10px;
+            width: 40px;
+            display: flex;
+            justify-content: center;
+        }
     }
 
     .desktop-controls {
@@ -74,7 +83,7 @@
             padding: 0px;
 
             &.delete {
-                color: $darkGrey;
+                color: $mediumGrey;
             }
         }
     }

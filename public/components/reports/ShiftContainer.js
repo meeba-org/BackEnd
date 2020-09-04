@@ -123,7 +123,6 @@ const ShiftContainer = ({showShiftDialog, shift, postUpdate, showNames, mode, is
              onFocus={onFocus} onBlur={onBlur}>
             {mode === ReportModes.Live &&
             <LiveShift
-                showNames={showNames}
                 shift={shift}
                 errors={errors}
                 hover={hover}
