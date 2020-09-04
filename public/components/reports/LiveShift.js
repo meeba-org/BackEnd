@@ -4,7 +4,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
 import Home from '@material-ui/icons/Home';
-import Work from '@material-ui/icons/Work';
 import {TimePicker} from "@material-ui/pickers";
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -48,9 +47,7 @@ const LiveShift = ({shift, errors, hover, onUpdateStartTime, onUpdateEndTime, on
                 />
                 }
                 {isWorking(shift) &&
-                    <div styleName="home">
-                        <IconButton styleName="elem" onClick={() => onShiftComplete(shift)}><Home/></IconButton>
-                    </div>
+                    <Button variant="outlined" styleName="elem home" onClick={() => onShiftComplete(shift)}><Home/></Button>
                 }
             </div>
             <Warning warning={errors}/>
@@ -63,11 +60,6 @@ const LiveShift = ({shift, errors, hover, onUpdateStartTime, onUpdateEndTime, on
 
             {hover && isDesktop &&
             <div>
-                {isWorking(shift) &&
-                <Tooltip title="סיים משמרת" placement="left">
-                    <IconButton styleName="elem" onClick={() => onShiftComplete(shift)}><Home/></IconButton>
-                </Tooltip>
-                }
                 <Tooltip title="עריכה" placement="left">
                     <IconButton styleName="elem" onClick={showShiftDialog}><Edit/></IconButton>
                 </Tooltip>
