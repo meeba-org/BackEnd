@@ -27,7 +27,7 @@ const EmployeeContainer = ({isDesktop, onDelete, onUpdate, order, isLimited, val
     };
 
     const onBlur = () => {
-        onUpdate(employee);
+        onUpdate(lsEmployee);
     };
 
     let error = validate(employee);
