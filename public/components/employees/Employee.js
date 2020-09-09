@@ -15,7 +15,6 @@ const Employee = ({employee, showEditEmployeeModal, onDelete, onBlur, onUpdate, 
     const [hover, setHover] = useState(false);
 
     const onMouseEnter = () => setHover(true);
-
     const onMouseLeave = () => setHover(false);
 
     return (
