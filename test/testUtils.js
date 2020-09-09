@@ -44,7 +44,7 @@ function clearDB() {
     ])
     .then((responses) => {
         responses.forEach(response => {
-            if (response > 4)
+            if (response > 50)
                 throw new Error("[testUtils.clearDB] - Error! - something suspicious --> clearing db with too much documents (verify you are not on production)");
         });
     }).then(() => {
