@@ -92,7 +92,6 @@ function createMockedShiftPlainObject(clockInTime1, company, user) {
     };
 }
 
-
 const createMockedCompanyPlainObject = name => ({
     name,
 });
