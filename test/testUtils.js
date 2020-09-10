@@ -66,14 +66,6 @@ function getAdminUser() {
     };
 }
 
-function createAdminUser() {
-    const promises = [
-        UserModel.createUser(getAdminUser())
-    ];
-
-    return Promise.all(promises);
-}
-
 function createMockedUserPlainObject(name = 'Chen') {
     return {
         uid: '031667330'
