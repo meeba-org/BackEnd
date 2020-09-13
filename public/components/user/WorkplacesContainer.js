@@ -67,7 +67,8 @@ const WorkplacesContainer = () => {
 
                     updateWorkplaces(newWorkplaces);
                 },
-                orgWorkplace: workplace
+                orgWorkplace: workplace,
+                radiusDisabled: innovativeAuthorityEnable
             }
         ));
     };
