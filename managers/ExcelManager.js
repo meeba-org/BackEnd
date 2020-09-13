@@ -1077,7 +1077,10 @@ const createInnovationAuthorityExcel = async (shifts, year, month, company, task
     const workbook = createWorkbook();
     
     let employees = processShiftsForEmployees(shifts, company);
-    let shiftChangesLog = await ShiftLogModel.getByCompanyId(company._id);
+
+    let startDate = moment().year(year).month(month - 1).startOf('month');
+    let endDate = moment().year(year).month(month).startOf('month');
+    let shiftChangesLog = await ShiftLogModel.getLogsBetween(company, startDate, endDate);
 
     for (const employee of employees) {
         await addIAEmployeeSheet(workbook, company, employee, year, month, tasks);

@@ -63,6 +63,19 @@ const shiftLogsCount = () => ShiftLog.countDocuments().exec();
 
 const isNew = shift => !shift._id;
 
+const getLogsBetween = (company, startDate, endDate) => {
+    let condition = {
+        createdAt: {
+            $gte: startDate,
+            $lt: endDate
+        },
+        company: company._id
+    };
+
+    return ShiftLog.find(condition).lean()
+        .then(logs => logs.sort((l1, l2) => l1.createdAt - l2.createdAt));
+};
+
 module.exports = {
     createShiftLog
     , getByShiftLogId
@@ -73,4 +86,5 @@ module.exports = {
     , deleteAllShiftLogs
     , shiftLogsCount
     , isNew
+    , getLogsBetween
 };
