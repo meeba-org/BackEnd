@@ -221,7 +221,22 @@ const calcTotalInHours = (entity, tasks, sheet) => {
     }
 
     row = addSummaryRow(sheet, row);
-    
+
+    // Add top border to those cells
+    row.getCell("shiftLength").border = {...row.getCell("shiftLength").border, top: {style: "medium"}};
+    for (const task of tasks) {
+        if (task.type === REGULAR) {
+            let shotefKey = generateTaskKey(task, 'shotef');
+            let retroKey = generateTaskKey(task, 'retro');
+
+            row.getCell(shotefKey).border = {...row.getCell(shotefKey).border, top: {style: "medium"}};
+            row.getCell(retroKey).border = {...row.getCell(retroKey).border, top: {style: "medium"}};
+        }
+        else {
+            row.getCell(task.title).border = {...row.getCell(task.title).border, top: {style: "medium"}};
+        }
+    }
+
     addSummaryLabel(sheet, row, 'סה"כ שעות');
     setRowBold(row);
 };
@@ -834,10 +849,12 @@ let markWarnings = function (addedRow) {
     }
 };
 
+const isSpecialDay = day => isHoliday(day) || isHolidayEvening(day) || isIndependenceDay(day);
+
 function addDayRow(sheet, row, day) {
     let addedRow = sheet.addRow(row);
 
-    if (isHoliday(day) || isHolidayEvening(day) || isIndependenceDay(day)) {
+    if (isSpecialDay(day)) {
         let holidayName = getHolidayName(day);
         setHolidayName(addedRow, holidayName);
         markRowAsHoliday(sheet, addedRow);
@@ -874,8 +891,7 @@ const calcTeken = (m) => {
     if (!m)
         return "";
 
-    let weekday = moment(m).weekday();
-    return (weekday >= 0 && weekday <= 4) ? DAILY_HOURS_TEKEN : ""; 
+    return (!isSpecialDay(m)) ? DAILY_HOURS_TEKEN : ""; 
 };
 
 const calcClockInTime = (shift) => {
