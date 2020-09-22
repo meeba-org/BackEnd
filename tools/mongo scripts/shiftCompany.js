@@ -26,6 +26,7 @@ db.shifts.aggregate([
             "clockOutTime": 1,
             "companyName": "$shiftsCompany.name",
             "companyId": "$shiftsCompany._id",
+            "companyEmail": "$shiftsCompany.email",
             "user": 1,
             "location": 1,
         }
@@ -36,14 +37,16 @@ db.shifts.aggregate([
             _id: "$companyId",
             Name: {$first: '$companyName'},
             Employees: {$addToSet: "$user"},
-            ShiftsNumber: {$sum: 1}
+            ShiftsNumber: {$sum: 1},
+            Email: {$first: '$companyEmail'},
         }
     },
     {
         $project: {
             Name: "$Name",
             Employees: {$size: "$Employees"},
-            ShiftsNumber: "$ShiftsNumber"
+            ShiftsNumber: "$ShiftsNumber",
+            Email: "$Email"
         }
     },
     {$sort: {Employees: -1}}
