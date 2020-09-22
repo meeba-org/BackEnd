@@ -21,18 +21,18 @@ exports.config = {
     // process in order to enhance it and build services around it.
 
     // Hook that gets executed before the suite starts
-    beforeSuite: function (suite) {
-        let username = Math.round(Math.random()*100000);
-        let password = "123456";
-        let email = `${username}@email.com`;
-
-        return {
-            overrideTestData: {
-                "Register": {username, password, email },
-                "Employees - Create": {username, password, email },
-                "Employees - Update": {username, password, email },
-                "Employees - Delete": {username, password, email },
-            }
-        };
-    }
+    // beforeSuite: function (suite) {
+    //     let username = Math.round(Math.random()*100000);
+    //     let password = "123456";
+    //     let email = `${username}@email.com`;
+    //
+    //     return {
+    //         overrideTestData: {
+    //             "Register": {username, password, email },
+    //             "Employees - Create": {username, password, email },
+    //             "Employees - Update": {username, password, email },
+    //             "Employees - Delete": {username, password, email },
+    //         }
+    //     };
+    // }
 };
