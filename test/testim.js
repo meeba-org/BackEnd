@@ -9,7 +9,7 @@ exports.config = {
 
     // Your Selenium grid
     grid: "Testim-Grid",
-    suite: "Employees",
+    suite: ["Employees", "Shifts"],
 
     // Override the base URL defined in the test in order to run it again a     // different envinronment
     //baseUrl: 'http://staging.example.com',
