@@ -146,7 +146,6 @@ router.get('/api/general/meta',
             return Promise.resolve({
                 companiesCount: resultArr[0],
                 usersCount: resultArr[1],
-                isDevEnv: process.env.NODE_ENV === 'development'
             });
         });
     })

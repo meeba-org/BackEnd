@@ -34,10 +34,6 @@ export const hasPremiumFeature = (state) => {
     return isFeatureEnable(state, Feature.Premium);
 };
 
-export const isDevEnv = (state) => {
-    return getGeneral(state).isDevEnv;
-};
-
 const getPayment = state => state.payment;
 
 export const getPaymentUrl = state => getPayment(state).paymentUrl;
