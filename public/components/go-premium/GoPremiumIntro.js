@@ -9,13 +9,16 @@ const IntroLine = ({text}) => <div styleName="text"><CheckIcon styleName="check"
 const GoPremiumIntro = ({onNext, onClose}) => {
     return (
         <div styleName="container">
-            <div styleName="price">
-                <div styleName="label">עלות חודשית:</div>
-                <div styleName="inner-price">
-                    <div styleName="number">{MONTHLY_SUBSCRIPTION_PRICE}</div>
-                    <div styleName="symbol">ש"ח</div>
+            <div styleName="price-container">
+                <div styleName="price">
+                    <div styleName="label">עלות חודשית:</div>
+                    <div styleName="inner-price">
+                        <div styleName="number">{MONTHLY_SUBSCRIPTION_PRICE}</div>
+                        <div styleName="symbol">ש"ח</div>
+                    </div>
+                    <div styleName="erased number">6 ש"ח לעובד</div>
                 </div>
-                <div styleName="erased number">6 ש"ח לעובד</div>
+                <div styleName="comment">עוזרים לעסקים הקטנים בתקופת הקורונה 🙏🏻</div>
             </div>
 
             <div styleName="intro-info">
