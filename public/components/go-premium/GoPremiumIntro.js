@@ -11,9 +11,11 @@ const GoPremiumIntro = ({onNext, onClose}) => {
         <div styleName="container">
             <div styleName="price">
                 <div styleName="label">עלות חודשית:</div>
-                <div styleName="erased number">100</div>
-                <div styleName="number">{MONTHLY_SUBSCRIPTION_PRICE}</div>
-                <div styleName="symbol">ש"ח</div>
+                <div styleName="inner-price">
+                    <div styleName="number">{MONTHLY_SUBSCRIPTION_PRICE}</div>
+                    <div styleName="symbol">ש"ח</div>
+                </div>
+                <div styleName="erased number">6 ש"ח לעובד</div>
             </div>
 
             <div styleName="intro-info">

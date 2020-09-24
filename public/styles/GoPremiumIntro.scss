@@ -30,6 +30,13 @@
         justify-content: flex-start;
         align-items: baseline;
 
+        .inner-price {
+            display: flex;
+            padding-left: 10px;
+            flex-direction: row;
+            align-items: baseline;
+        }
+        
         .label {
             padding-right: 30px;
             padding-left: 6px;
@@ -40,13 +47,13 @@
         .number {
             font-size: 30px;
             color: $secondary;
-
-            &.erased {
-                text-decoration: line-through;
-                padding-left: 15px;
-                color: lightgray;
-                font-weight: normal;
-            }
+        }
+        
+        .erased {
+            text-decoration: line-through;
+            padding-left: 15px;
+            color: lightgray;
+            font-weight: normal;
         }
 
         .symbol {
