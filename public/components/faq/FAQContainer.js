@@ -33,7 +33,10 @@ class FAQContainer extends Component {
 - הצגת מיקום העובד בכניסה
 - הגדרת 3 משימות ומעלה
 
-מחיר: ${MONTHLY_SUBSCRIPTION_PRICE} ש"ח חודשי
+מחיר חודשי לתקופת הקורונה: ${MONTHLY_SUBSCRIPTION_PRICE} ש"ח  
+~~מחיר חודשי: 6 ש"ח לעובד~~
+
+ביטול המנוי ניתן בכל עת (אין התחייבות) ויחול בגמר החודש.
 `
                 },
                 {
