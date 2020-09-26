@@ -2,7 +2,7 @@ import {Button} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import Tooltip from "@material-ui/core/Tooltip";
 import React from 'react';
-import "../../styles/AllowedWorkplaces.scss";
+import "./styles/Workplaces.scss";
 import MbCard from "../MbCard";
 import WhatIsIt from "../WhatIsIt";
 import Workplace from "./Workplace";

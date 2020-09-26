@@ -5,7 +5,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import {Edit} from "@material-ui/icons";
 import Delete from "@material-ui/icons/Delete";
 import React, {useState} from 'react';
-import "../../styles/Workplace.scss";
+import "./styles/Workplace.scss";
 
 const Workplace = ({workplace, onDelete, onUpdate}) => {
     const [hover, setHover] = useState(false);
