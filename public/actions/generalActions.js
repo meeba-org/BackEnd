@@ -6,8 +6,6 @@ import {authenticate} from "./loginLogoutActions";
 import {fetchPendingShifts} from "./shiftsActions";
 
 export const fetchMetaDataSuccess = (payload) => {
-    localStorage.setItem('isDevEnv', payload.isDevEnv);
-
     return {
         type: actions.FETCH_META_DATA_SUCCESS,
         payload
