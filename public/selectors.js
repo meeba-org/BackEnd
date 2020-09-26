@@ -20,8 +20,6 @@ export const getUserRole = (state) => {
     return getUser(state)?.role ?? COMPANY_MANAGER;
 };
 
-const getGeneral = state => state.general;
-
 export const getMeta = (state) => {
     return (!state.general.meta) ? null : state.general.meta;
 };
