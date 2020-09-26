@@ -2,7 +2,7 @@ import Paper from "@material-ui/core/Paper";
 import React, {useState} from 'react';
 import {Redirect, Route, Switch} from "react-router-dom";
 import {ReportModes} from "../../helpers/utils";
-import AppBar from "../AppBar";
+import AppBar from "./AppBar";
 import EmployeesContainer from "../employees/EmployeesContainer";
 import ExportContainer from "../export/ExportContainer";
 import Fade from "../Fade";

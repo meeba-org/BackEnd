@@ -1,6 +1,6 @@
 import Button from '@material-ui/core/Button';
 import React from 'react';
-import '../../styles/GoPremiumFinish.scss';
+import './styles/GoPremiumFinish.scss';
 import Icon from '@material-ui/core/Icon';
 
 const GoPremiumFinish = ({onClose, error}) => {

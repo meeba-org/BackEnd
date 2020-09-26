@@ -8,7 +8,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {hideModal} from "../../actions";
 import {fetchDeviceLocation, getPlace, getPlaceByLocation} from "../../helpers/googleMapsService";
-import "../../styles/WorkplaceSelectionModal.scss";
+import "./styles/WorkplaceSelectionModal.scss";
 import PlacesAutocomplete from "../workplace/PlacesAutocomplete";
 import WorkplaceMap from "../workplace/WorkplaceMap";
 import {EModalType} from "./EModalType";

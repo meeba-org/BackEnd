@@ -5,13 +5,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
-import '../styles/AppBar.scss';
+import './styles/AppBar.scss';
 import {connect} from "react-redux";
 import {withRouter, Link} from "react-router-dom";
-import * as selectors from "../selectors";
-import {handleLogout, navigateHome, showGoPremiumModal} from "../actions/index";
+import * as selectors from "../../selectors";
+import {handleLogout, navigateHome, showGoPremiumModal} from "../../actions";
 import PropTypes from 'prop-types';
-import {Logo} from "../styles/Logo";
+import {Logo} from "../../styles/Logo";
 
 class MeebaAppBar extends Component {
     onLogout = () => {

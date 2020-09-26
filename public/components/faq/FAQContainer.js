@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {MONTHLY_SUBSCRIPTION_PRICE} from "../../../constants";
-import "../../styles/FAQContainer.scss";
+import "./styles/FAQContainer.scss";
 import FAQContent from "./FAQContent";
 import FAQHeader from "./FAQHeader";
 
