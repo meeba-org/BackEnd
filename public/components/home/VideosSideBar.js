@@ -1,6 +1,6 @@
 import {Button, Typography} from "@material-ui/core";
 import React from 'react';
-import "../../styles/VideosSideBar.scss";
+import "./styles/VideosSideBar.scss";
 
 const VideosSideBar = ({onSelect, videos, selectedVideo}) => {
     return (

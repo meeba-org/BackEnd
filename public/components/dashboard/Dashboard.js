@@ -9,8 +9,8 @@ import Fade from "../Fade";
 import MbSnackbar from "../MbSnackbar";
 import DailyReportContainer from "../reports/DailyReportContainer";
 import Report from "../reports/Report";
-import Settings from "../Settings";
-import SideBarContainer from "../SideBarContainer";
+import Settings from "./Settings";
+import SideBarContainer from "./SideBarContainer";
 import "../../styles/Dashboard.scss";
 
 const Dashboard = ({userRole, isDesktop, path, hasPremium, isLoading}) => { 

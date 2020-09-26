@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
-import '../../styles/User.scss';
+import './styles/User.scss';
 import ExportContainer from "../export/ExportContainer";
 import MbCard from "../MbCard";
 import NoData from "../NoData";

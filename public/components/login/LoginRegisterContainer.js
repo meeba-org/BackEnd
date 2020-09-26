@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import {isEmptyObject, isValidEmail} from "../../../managers/utils";
 import {handleLogin, handleRegister, hideLoginRegisterModal} from "../../actions";
-import "../../styles/LoginRegister.scss";
+import "./styles/LoginRegister.scss";
 import LoginRegister from "./LoginRegister";
 
 const LoginRegisterContainer = ({open, hideLoginRegisterModal, handleLogin, handleRegister, history}) => {

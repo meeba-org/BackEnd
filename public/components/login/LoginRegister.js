@@ -5,7 +5,7 @@
 import {DialogContent, DialogTitle} from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import React from 'react';
-import "../../styles/LoginRegister.scss";
+import "./styles/LoginRegister.scss";
 import LoginDialogContent from "./LoginDialogContent";
 import RegisterDialogContent from "./RegisterDialogContent";
 

@@ -11,7 +11,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import classNames from 'classnames';
 import React, {Component} from "react";
 import {IfAnyGranted} from "react-authorization";
-import CSSModulesStyles from "../styles/SideBar.scss";
+import CSSModulesStyles from "./styles/SideBar.scss";
 
 const drawerWidth = 200;
 

@@ -8,7 +8,7 @@ import {updateCompany} from "../../actions";
 import {getCompany} from "../../selectors";
 import MbCard from "../MbCard";
 import MichpalSettings from "./MichpalSettings";
-import "../../styles/ExportContainer.scss";
+import "./styles/ExportContainer.scss";
 
 const ExportContainer = () => {
     const company = useSelector(getCompany) || {};

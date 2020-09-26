@@ -3,7 +3,7 @@ import {GACategory, sendGaEvent} from "../../helpers/GAService";
 import SectionTitle from "./SectionTitle";
 import VideoContainer from "./VideoContainer";
 import VideosSideBar from "./VideosSideBar";
-import "../../styles/Videos.scss";
+import "./styles/Videos.scss";
 const videos = [
     {
         url: "../../styles/videos/ShiftStatus.mp4",

@@ -2,7 +2,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import "../../styles/SettingSwitch.scss";
+import "./styles/SettingSwitch.scss";
 import WhatIsIt from "../WhatIsIt";
 
 const SettingSwitch = ({value, fieldValue, text, link, handleCompanySettingsChange, disabled}) => {

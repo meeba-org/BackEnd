@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../styles/VideoContainer.scss";
+import "./styles/VideoContainer.scss";
 import Fade from "../Fade";
 
 const VideoContainer = ({video}) => {

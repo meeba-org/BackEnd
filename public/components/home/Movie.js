@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import "../../styles/Movie.scss";
+import "./styles/Movie.scss";
 import YouTube from "react-youtube";
 
 class Movie extends Component {

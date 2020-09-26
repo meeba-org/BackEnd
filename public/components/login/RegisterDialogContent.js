@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import {Visibility, VisibilityOff} from "@material-ui/icons";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import React, {useState} from 'react';
-import "../../styles/LoginRegister.scss";
+import "./styles/LoginRegister.scss";
 
 const RegisterDialogContent = ({isLoading, errors, backEndError, handleChange, handleSubmit, toggleLoginMode, isSubmitDisabled, handleKeyPress}) => {
     const [showPassword, setShowPassword] = useState(false);

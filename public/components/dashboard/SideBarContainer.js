@@ -5,7 +5,7 @@ import Assessment from '@material-ui/icons/Subject';
 import PropTypes from 'prop-types';
 import React, {Component} from "react";
 import {withRouter} from 'react-router-dom';
-import * as ERoles from "../helpers/ERoles";
+import * as ERoles from "../../helpers/ERoles";
 import SideBar from "./SideBar";
 
 class SideBarContainer extends Component {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../../styles/EmployeeFeatureContent.scss';
+import './styles/EmployeeFeatureContent.scss';
 import mobileImage from '../../styles/images/1.png';
 import appStoreImage from '../../styles/images/appStore.svg';
 import playStoreImage from '../../styles/images/playStore.svg';
