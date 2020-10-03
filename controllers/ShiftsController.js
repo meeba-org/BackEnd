@@ -24,8 +24,8 @@ router.get('/',
 //POST /shifts shift
 router.post('/',
     [
-        body('clockInTime').exists(),
-        body('user').exists(),
+        body('clockInTime').exists().withMessage("clockInTime is mandatory"),
+        body('user').exists().withMessage("user is mandatory"),
     ],
     (req, res) => routeWrapper(req, res, (req, res) => {
         let newShift = req.body;
@@ -38,8 +38,8 @@ router.post('/',
 //PUT /shifts shift
 router.put('/',
     [
-        body('clockInTime').exists(),
-        body('user').exists(),
+        body('clockInTime').exists().withMessage("clockInTime is mandatory"),
+        body('user').exists().withMessage("user is mandatory"),
     ],
     (req, res) => routeWrapper(req, res, (req, res) => {
 
