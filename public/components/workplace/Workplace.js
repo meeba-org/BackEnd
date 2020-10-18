@@ -13,9 +13,9 @@ const Workplace = ({workplace, onDelete, onUpdate}) => {
     return (
         <Grid styleName="container" container spacing={2} onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}>
-            <Grid item xs={5} styleName="name">
+            <div styleName="name">
                 <div onClick={onUpdate}>{workplace.name}</div>
-            </Grid>
+            </div>
             <Grid item xs={2}>
                 {hover &&
                 <Box display="flex" flexDirection="row">
