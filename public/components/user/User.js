@@ -15,7 +15,7 @@ import SettingSwitch from "./SettingSwitch";
 import StartOfMonthField from "./StartOfMonthField";
 
 const User = ({
-                  hasPremiumFeature, onFreePlanClick, onPremiumPlanClick, user,
+                  hasPremiumFeature, onFreePlanClick, onCancelPremiumPlan, user,
                   onCompanyChange, onUserChange, onCompanySettingsChange
               }) => {
 
@@ -188,7 +188,7 @@ const User = ({
                     {hasPremiumFeature &&
                     <Fragment>
                         <div styleName="text">הינך כרגע מנוי בתוכנית פרימיום</div>
-                        <Button onClick={() => onPremiumPlanClick(user.company)} variant="outlined" color="secondary">
+                        <Button onClick={() => onCancelPremiumPlan(user.company)} variant="outlined" color="secondary">
                             סיים מנוי
                         </Button>
                     </Fragment>

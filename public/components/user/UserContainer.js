@@ -60,7 +60,7 @@ const UserContainer = () => {
             isCommuteFeatureEnable={isCommuteFeatureEnable}
             hasPremiumFeature={hasPremiumFeat}
             onFreePlanClick={() => dispatch(showGoPremiumModal())}
-            onPremiumPlanClick={() => dispatch(showCancelPremiumModal(user.company))}
+            onCancelPremiumPlan={() => dispatch(showCancelPremiumModal(user.company))}
             onCompanySettingsChange={handleCompanySettingsChange}
         />
     );

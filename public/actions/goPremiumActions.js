@@ -10,7 +10,7 @@ import {
     PAYMENT_ERROR,
     UPDATE_PAYMENT_STEP
 } from "./actionTypes";
-import {updateCompany} from "./companyActions";
+import {cancelPremiumPlan} from "./companyActions";
 import {updateActiveUserSuccess} from "./usersActions";
 
 export const fetchPaymentTokenSuccess = payload => ({
@@ -85,7 +85,7 @@ const handleCancelPremiumPlan = company => dispatch => {
         plan: EPlanType.Free,
         features: updatedFeatures
     };
-    return dispatch(updateCompany(company));
+    return dispatch(cancelPremiumPlan(company));
 };
 
 export const showCancelPremiumModal = (company) => ({

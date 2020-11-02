@@ -1,3 +1,4 @@
+import {GACategory} from "../helpers/GAService";
 import {API, UPDATE_COMPANY_SUCCESS} from "./actionTypes";
 
 export const updateCompanySuccess = (payload) => ({
@@ -21,3 +22,9 @@ export const updateCompany = (company) => ({
     }
 });
 
+export const cancelPremiumPlan = company => ({
+    ...updateCompany(company),
+    ga: {
+        category: GACategory.USER_CANCEL_PREMIUM
+    }
+});

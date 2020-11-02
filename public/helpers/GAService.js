@@ -9,6 +9,7 @@ export const GACategory = {
     CLOCK_IN: "clock-in",
     CLOCK_OUT: "clock-out",
     USER_WENT_PREMIUM: "user-went-premium",
+    USER_CANCEL_PREMIUM: "user-cancel-premium",
     PROMOTION_VIDEO_SELECTED: "promotion-video-selected",
 };
 
