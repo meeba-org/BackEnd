@@ -908,9 +908,18 @@ const calcClockOutTime = (shift) => {
     return moment(shift.clockOutTime).format("HH:mm");
 };
 
-let addWorksheet = function (workbook, title, color, header) {
-    title = title.replace(/'/g, ""); // Omit name with single quote "'"
+const isWorksheetNameExists = (workbook, title) => workbook._worksheets.find(w => w && w.name === title);
+
+const handleTitle = (title, workbook) => {
+    title = title.replace(/'/g, ""); // Omit name with single quote "'" (bug fix)
     title = title.substring(0, EXCEL_SHEET_NAME_LIMIT);
+    while (isWorksheetNameExists(workbook, title)) // Preventing the same name employee (bug fix)
+        title += '1';
+    return title;
+};
+
+let addWorksheet = function (workbook, title, color, header) {
+    title = handleTitle(title, workbook);
 
     return workbook.addWorksheet(title, {
         properties: {
