@@ -80,7 +80,7 @@ router.post('/api/login',
         let identifier = req.body.identifier;
         let password = req.body.password;
 
-        const user = await UserModel.getByUserIdentifier(identifier, true)
+        const user = await UserModel.getByUserIdentifier(identifier, true);
         if (!user) {
             return reject("שם משתמש או אימייל לא נמצאו", 401);
         }

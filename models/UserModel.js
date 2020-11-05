@@ -29,7 +29,7 @@ function createUserInstance(user) {
 const User = mongoose.model('User', UserSchema);
 
 const getByUserUid = (uid, shouldPopulateCompany) => {
-    let query = User.findOne({uid: uid});
+    let query = User.findOne({uid: uid, deleted: false});
 
     if (shouldPopulateCompany)
         query = query.populate('company');
