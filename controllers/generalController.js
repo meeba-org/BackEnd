@@ -121,6 +121,9 @@ router.get('/api/authenticate',
 
             // Return user using the id from w/in JWTToken
             user = await UserModel.getByUserId(user._id);
+            if (user.deleted)
+                return reject("[authenticate] - User was deleted");
+            
             user = UserModel.getCleanUser(user.toObject()); // Don't pass password and stuff
 
             //note: you can renew token by creating new token(i.e. refresh it) w/ new expiration time at this point, but I'm passing the old token back.
