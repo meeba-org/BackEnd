@@ -52,6 +52,7 @@ class Header extends Component {
                                     </div>
                                 </div>
                             </div>
+                            <a href="../../styles/docs/IA-Approval.pdf" target="_blank"><div styleName="stamp">מורשה הרשות לחדשנות</div></a>
                         </div>
                     </div>
                     <a styleName="bottom-content" href="#features1">
