@@ -146,6 +146,11 @@ class FAQContainer extends Component {
 ### מה קורה בדוח האקסל?
 כל ימי ההעדרות מרוכזים בטאבים הרלוונטים: "חופש", "מחלה" ו"מילואים"
 `
+                },
+                {
+                    q: "מורשת הרשות לחדשנות?",
+                    a: `בהחלט כן, הנה [האישור](https://meeba.co.il/styles/docs/IA-Approval.pdf).
+`
                 }
             ]
         };
