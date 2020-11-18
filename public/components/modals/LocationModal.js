@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
+import {getFirstLocation} from "../../../managers/utils";
 import {hideLocationModal} from "../../actions/index";
 import PropTypes from 'prop-types';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -26,14 +27,16 @@ class LocationModal extends Component {
     };
 
     render() {
-        let {open, entity, classes} = this.props;
+        let {open, shift, classes} = this.props;
+        let location = getFirstLocation(shift);
+        
         return (
             <Dialog onClose={this.handleClose} open={open} classes={{paper: classes.dialogContentRoot}}>
                 <DialogContent >
-                    {entity && entity.location &&
+                    {location &&
                     <MbGoogleMap location={{
-                        lat: entity.location.latitude,
-                        lng: entity.location.longitude
+                        lat: location.latitude,
+                        lng: location.longitude
                     }}/>
                     }
                 </DialogContent>
@@ -48,7 +51,7 @@ class LocationModal extends Component {
 }
 
 LocationModal.propTypes = {
-    entity: PropTypes.object,
+    shift: PropTypes.object,
     dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
 };

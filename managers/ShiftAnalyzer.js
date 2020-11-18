@@ -3,6 +3,7 @@ const EInsideWorkplace = require("../models/EInsideWorkplace");
 const analyzeDayType = require("./HolidayAnalyzer").analyzeDayType;
 const moment = require('moment-timezone');
 const ETransportPaymentPer = require("../models/ETransportPaymentPer");
+const {getFirstLocation} = require("./utils");
 moment.tz.setDefault("Asia/Jerusalem");
 
 const REGULAR_SHIFT_LENGTH = 9;
@@ -506,7 +507,8 @@ function createAdditionalInfo(entity, company) {
         info.extra175Hours += hoursAnalysis.extra175Hours;
         info.extra200Hours += hoursAnalysis.extra200Hours;
         shift.hoursAnalysis = hoursAnalysis;
-        shift.isClockInInsideWorkplace = calcClockInInsideWorkplace(shift.location, company.workplaces);
+        let location = getFirstLocation(shift);
+        shift.isClockInInsideWorkplace = calcClockInInsideWorkplace(location, company.workplaces);
     }
 
     info.shiftsCount = entity.shifts.length;

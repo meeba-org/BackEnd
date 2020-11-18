@@ -6,6 +6,7 @@ import Edit from '@material-ui/icons/Edit';
 import {DatePicker, TimePicker} from "@material-ui/pickers";
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
+import {getFirstLocation} from "../../../managers/utils";
 import {isShiftPending, momentToDay} from "../../helpers/utils";
 import "./styles/ReportShift.scss";
 import BusCost from "./BusCost";
@@ -35,6 +36,7 @@ const ReportShift = ({showNames, shift, errors, hover, onUpdateStartTime, onUpda
     let clockInTime = calcClockInTime();
     let clockOutTime = calcClockOutTime();
     let hebrewDay = momentToDay(clockInTime);
+    let location = getFirstLocation(shift);
 
     return (
         <div styleName="line">
@@ -80,7 +82,7 @@ const ReportShift = ({showNames, shift, errors, hover, onUpdateStartTime, onUpda
                     <PendingApprovalIndicator shift={shift} onClick={showShiftDialog} isInnovativeAuthorityEnable={isInnovativeAuthorityEnable}/>
                     <Note text={shift.note} onClick={showShiftDialog}/>
                     <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
-                    <Location location={shift.location} onClick={showLocationModal} isClockInInsideWorkplace={shift.isClockInInsideWorkplace} />
+                    <Location location={location} onClick={showLocationModal} isClockInInsideWorkplace={shift.isClockInInsideWorkplace} />
                     <ExtraPay extraPay={shift.extraPay} onClick={showShiftDialog}/>
                     <TaskIndicator task={shift.task} onClick={showShiftDialog}/>
                  </Fragment>

@@ -27,6 +27,10 @@ const ShiftSchema = mongoose.Schema({
         latitude: {type: Number},
         longitude: {type: Number}
     },
+    locations: [{
+        latitude: {type: Number},
+        longitude: {type: Number}
+    }],
     task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
     breakLength: {type: Number, default: 0},
     draftShift: { type: mongoose.Schema.Types.ObjectId, ref: 'DraftShift' },

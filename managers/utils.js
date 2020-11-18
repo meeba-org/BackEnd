@@ -10,7 +10,18 @@ const isEmptyObject = val => val != null &&
     typeof val === 'object' &&
     Object.keys(val).length === 0;
 
+const getFirstLocation = shift => {
+    if (!shift)
+        return null;
+    
+    if (shift?.locations?.length > 0)
+        return shift.locations[0];
+    
+    return shift.location;
+};
+
 module.exports = {
     isValidEmail,
-    isEmptyObject
+    isEmptyObject,
+    getFirstLocation
 };
