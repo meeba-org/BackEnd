@@ -14,7 +14,7 @@ const getFirstLocation = shift => {
     if (!shift)
         return null;
     
-    if (shift?.locations?.length > 0)
+    if (shift.locations && shift.locations.length > 0)
         return shift.locations[0];
     
     return shift.location;
