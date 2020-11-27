@@ -28,17 +28,15 @@ class LocationModal extends Component {
 
     render() {
         let {open, shift, classes} = this.props;
-        let location = getFirstLocation(shift);
+
+        if (!shift)
+            return null;
         
+        let {locations} = shift;
         return (
             <Dialog onClose={this.handleClose} open={open} classes={{paper: classes.dialogContentRoot}}>
                 <DialogContent >
-                    {location &&
-                    <MbGoogleMap location={{
-                        lat: location.latitude,
-                        lng: location.longitude
-                    }}/>
-                    }
+                    <MbGoogleMap locations={locations}/>
                 </DialogContent>
                 <DialogActions classes={{root: classes.dialogActions}}>
                     <Button onClick={this.handleClose} color="primary">

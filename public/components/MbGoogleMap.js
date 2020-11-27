@@ -3,29 +3,29 @@ import {Map, Marker} from 'google-maps-react';
 import {useSelector} from "react-redux";
 import {isDesktop} from "../selectors";
 
-const MbGoogleMap = ({location}) => {
+const MbGoogleMap = ({locations = []}) => {
     const desktop = useSelector(isDesktop);
+
+    const convertLocation = location => ({
+        lat: location.latitude,
+        lng: location.longitude
+    });
 
     return (
         <Map google={window.google} zoom={14}
              containerStyle={{height: '400px', width: desktop ? '550px' : '100%', position: 'relative'}}
-             initialCenter={location}
+             initialCenter={convertLocation(locations[0])}
         >
-            <Marker
-                position={location}
-                label={{
-                    text: "10:14",
-                    fontWeight: "bold"
-                    // fontFamily: "Arial",
-                    // fontSize: "10px",
-                }}
-                icon={{
-                    // anchor: new window.google.maps.Point(53,53),
-                    labelOrigin: new window.google.maps.Point(53,15),
-                }}
-            >
-                <div>10:00</div>
-            </Marker>
+            {locations?.map((location, index) =>
+                <Marker
+                    position={convertLocation(location)}
+                    label={{
+                        text: index === 0 ? "יציאה" : "כניסה",
+                        fontWeight: "bold"
+                    }}
+                />
+            )}
+            
         </Map>
     );
 };
