@@ -23,13 +23,14 @@ const ShiftSchema = mongoose.Schema({
         publicTransportation: {type: Number, default: 0, required: true},
     },
     extraPay: {type: Number, default: 0, required: true},
-    location: {
+    location: { // Deprecated for locations
         latitude: {type: Number},
-        longitude: {type: Number}
+        longitude: {type: Number},
     },
     locations: [{
         latitude: {type: Number},
-        longitude: {type: Number}
+        longitude: {type: Number},
+        date: {type: Date}
     }],
     task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
     breakLength: {type: Number, default: 0},
