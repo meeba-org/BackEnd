@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
-import {getFirstLocation} from "../../../managers/utils";
 import {hideLocationModal} from "../../actions/index";
 import PropTypes from 'prop-types';
 import DialogContent from '@material-ui/core/DialogContent';
