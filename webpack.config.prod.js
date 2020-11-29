@@ -82,6 +82,9 @@ module.exports = {
             './public/serviceWorker/site.js',
             {
                 from: './public/styles/videos', to: 'styles/videos'
+            },
+            {
+                from: './public/styles/docs', to: 'styles/docs'
             }
         ]),
         new WebpackPwaManifest({

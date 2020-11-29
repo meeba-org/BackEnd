@@ -195,4 +195,29 @@
             text-decoration: none;
         }
     }
+
+    .stamp {
+        @media (min-width: $mobileWidth) {
+            position: absolute;
+            bottom: 110px;
+            right: 176px;
+        }
+        @media (max-width: $mobileWidth) {
+            position: relative;
+            margin-top: 100px;
+        }
+
+        transform: rotate(-30deg);
+        color: #94585c;
+        font-size: 30px;
+        font-weight: 700;
+        border: 0.25rem solid #94585c;
+        display: inline-block;
+        padding: 0.25rem 1rem;
+        text-transform: uppercase;
+        border-radius: 1rem;
+        font-family: 'Courier';
+        -webkit-mask-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png');
+        -webkit-mask-size: 944px 604px;
+    }
 }
