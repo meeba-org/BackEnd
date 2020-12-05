@@ -2,6 +2,7 @@ import moment from "moment";
 import PropTypes from 'prop-types';
 import React, {useState} from "react";
 import connect from "react-redux/es/connect/connect";
+import {getFirstLocation} from "../../../managers/utils";
 import {createShift, showDeleteShiftModal, updateShift, showGoPremiumModal, showLocationModal, showEditShiftModal} from "../../actions";
 import {GACategory, sendGaEvent} from "../../helpers/GAService";
 import {ReportModes} from "../../helpers/utils";
@@ -28,13 +29,15 @@ const ShiftContainer = ({showShiftDialog, shift, postUpdate, showNames, mode, is
             return;
         }
 
-        if (!shift.location)
+        if (!getFirstLocation(shift))
             return;
 
         if (isDesktop)
             showLocationModal(shift);
-        else
-            showMapInBrowser(shift.location);
+        else {
+            let location = getFirstLocation(shift);
+            showMapInBrowser(location);
+        }
     };
 
     const showMapInBrowser = (location) => {

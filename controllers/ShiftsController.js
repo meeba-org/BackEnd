@@ -6,6 +6,7 @@ const moment = require('moment');
 const ShiftModel = require('../models/ShiftModel');
 const jwtService = require("./jwtService");
 const HolidayAnalyzer = require('../managers/HolidayAnalyzer');
+const {getFirstLocation} = require("../managers/utils");
 const {calcClockInInsideWorkplace} = require("../managers/ShiftAnalyzer");
 const reject = require("./apiManager").reject;
 const routeWrapper = require("./apiManager").routeWrapper;
@@ -98,7 +99,10 @@ const getShiftsBetweenDates = async (req, res) => {
     let shifts = await ShiftModel.getShiftsBetween(company, startDate, endDate, userId);
     
     // Enrich data on shift
-    shifts.map(shift => shift.isClockInInsideWorkplace = calcClockInInsideWorkplace(shift.location, company.workplaces));
+    shifts.map(shift => {
+        let location = getFirstLocation(shift);
+        shift.isClockInInsideWorkplace = calcClockInInsideWorkplace(location, company.workplaces)
+    });
     return shifts;
 };
 

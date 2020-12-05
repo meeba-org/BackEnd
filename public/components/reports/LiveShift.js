@@ -7,6 +7,7 @@ import Home from '@material-ui/icons/Home';
 import {TimePicker} from "@material-ui/pickers";
 import PropTypes from 'prop-types';
 import React from 'react';
+import {getFirstLocation} from "../../../managers/utils";
 import {isWorking} from "../../helpers/utils";
 import "./styles/LiveShift.scss";
 import BusCost from "./BusCost";
@@ -18,6 +19,7 @@ import Warning from "./Warning";
 
 const LiveShift = ({shift, errors, hover, onUpdateStartTime, onUpdateEndTime, onDelete, onShiftComplete, showShiftDialog, showLocationModal, isDesktop}) => {
 
+    let location = getFirstLocation(shift);
     return (
         <div styleName="line">
             <div styleName="name-container">
@@ -56,7 +58,7 @@ const LiveShift = ({shift, errors, hover, onUpdateStartTime, onUpdateEndTime, on
             <Note text={shift.note} onClick={showShiftDialog}/>
             {/*<CarCost data={shift.commuteCost} onClick={showShiftDialog}/>*/}
             <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
-            <Location location={shift.location} onClick={showLocationModal} isClockInInsideWorkplace={shift.isClockInInsideWorkplace} />
+            <Location location={location} onClick={showLocationModal} isClockInInsideWorkplace={shift.isClockInInsideWorkplace} />
             <ExtraPay extraPay={shift.extraPay} onClick={showShiftDialog}/>
             <TaskIndicator task={shift.task} onClick={showShiftDialog}/>
 

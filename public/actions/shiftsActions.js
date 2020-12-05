@@ -227,7 +227,7 @@ export const showLocationModal = (shift) => ({
     payload: {
         modalType: EModalType.LOCATION_MODAL,
         modalProps: {
-            entity: shift,
+            shift,
             open: true,
             key: shift._id
         }

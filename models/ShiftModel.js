@@ -23,10 +23,15 @@ const ShiftSchema = mongoose.Schema({
         publicTransportation: {type: Number, default: 0, required: true},
     },
     extraPay: {type: Number, default: 0, required: true},
-    location: {
+    location: { // Deprecated for locations
         latitude: {type: Number},
-        longitude: {type: Number}
+        longitude: {type: Number},
     },
+    locations: [{
+        latitude: {type: Number},
+        longitude: {type: Number},
+        date: {type: Date}
+    }],
     task: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
     breakLength: {type: Number, default: 0},
     draftShift: { type: mongoose.Schema.Types.ObjectId, ref: 'DraftShift' },
@@ -74,7 +79,7 @@ const updateShift = (shift) => {
 
             newShift = newShift.toObject();
             return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true, setDefaultsOnInsert: true}).populate('user task draftShift').exec();
-        })
+        });
 };
 
 const deleteShift = (id) => {
