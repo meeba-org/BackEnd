@@ -1,3 +1,5 @@
+import {IconButton} from "@material-ui/core";
+import RefreshIcon from "@material-ui/icons/Refresh";
 import Warning from "@material-ui/icons/Warning";
 import React from "react";
 import withTheme from '@material-ui/core/styles/withTheme';
@@ -7,7 +9,7 @@ import MbCard from "../MbCard";
 import ShiftsList from "./ShiftsList";
 import './styles/LiveDailyReport.scss';
 
-const LiveDailyReport = ({theme, employees, hasEmployees, loading, mode, onClick, onDelete, onSelect, onUpdate, postUpdate, shifts}) => {
+const LiveDailyReport = ({theme, employees, hasEmployees, loading, mode, onClick, onDelete, onSelect, onUpdate, postUpdate, shifts, onRefresh}) => {
     let {primary, secondary} = theme.palette.text;
 
     return (
@@ -17,6 +19,9 @@ const LiveDailyReport = ({theme, employees, hasEmployees, loading, mode, onClick
                 <div styleName="live-date" style={{color: secondary}}>{calculateCurrentDay("DD/MM/YYYY")}</div>
 
                 <div styleName="auto-complete">
+                    <IconButton styleName="refresh" color="primary" onClick={onRefresh}>
+                        <RefreshIcon />
+                    </IconButton>
                     <AutoComplete
                         placeholder="הכנס עובד למשמרת"
                         suggestions={employees && employees.map(employee => ({

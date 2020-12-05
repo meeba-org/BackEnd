@@ -25,6 +25,8 @@ const DailyReportContainer = ({updateShift, createShift, deleteShift, shifts, em
         fetchDailyReport(currDay);
         fetchEmployees(() => setIsLoading(false));
     };
+    
+    const onRefresh = () => fetchEmployees(() => setIsLoading(false));
 
     const onNextDay = () => {
         const nextDay = moment(currentDay).add(1, 'days');
@@ -60,6 +62,7 @@ const DailyReportContainer = ({updateShift, createShift, deleteShift, shifts, em
             isLoading={isLoading}
             handleChange={handleChange}
             navigateToEmployees={navigateToEmployees}
+            onRefresh={onRefresh}
         />
     );
 };

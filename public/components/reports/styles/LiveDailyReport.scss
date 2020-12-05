@@ -16,7 +16,14 @@
         margin-bottom: 50px;
         width: 70%;
         max-width: 350px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
 
+        .refresh {
+            margin-left: 10px;
+        }
+        
         .warning {
             .icon {
                 color: orange;

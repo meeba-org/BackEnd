@@ -15,6 +15,7 @@ import withTheme from '@material-ui/core/styles/withTheme';
 
 const styles = theme => createStyles({
     root: {
+        width: "100%"
     },
     input: {
         display: 'flex',

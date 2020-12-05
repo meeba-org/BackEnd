@@ -82,12 +82,8 @@
     <file url="file://$PROJECT_DIR$/public/components/dashboard/Dashboard.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/dashboard/DashboardContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/dashboard/Settings.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/dashboard/Settings.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/dashboard/SideBar.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/dashboard/SideBar.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/dashboard/styles/AppBar.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/dashboard/styles/AppBar.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/dashboard/styles/SideBar.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/dashboard/styles/SideBar.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/employees/EmployeeContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/employees/EmployeesContainer.js" charset="UTF-8" />
@@ -96,23 +92,17 @@
     <file url="file://$PROJECT_DIR$/public/components/export/ExportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/export/MichpalSettings.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/export/styles/ExportContainer.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/export/styles/ExportContainer.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/faq/FAQContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/faq/FAQContent.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/faq/FAQHeader.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/faq/styles/FAQContainer.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/faq/styles/FAQContainer.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/faq/styles/FAQContent.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/faq/styles/FAQContent.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/faq/styles/FAQHeader.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/faq/styles/FAQHeader.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/go-premium/GoPremiumContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/go-premium/GoPremiumPay.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/go-premium/PaymentSuccessRedirectContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/go-premium/styles/GoPremiumContainer.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/go-premium/styles/GoPremiumContainer.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/go-premium/styles/GoPremiumFinish.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/go-premium/styles/GoPremiumIntro.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/go-premium/styles/GoPremiumIntro.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/go-premium/styles/GoPremiumNotification.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/Feature.js" charset="UTF-8" />
@@ -128,7 +118,6 @@
     <file url="file://$PROJECT_DIR$/public/components/home/Videos.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/VideosSideBar.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/EmployeeFeatureContent.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/home/styles/EmployeeFeatureContent.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/Feature.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/Features.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/Footer.scss" charset="UTF-8" />
@@ -137,25 +126,17 @@
     <file url="file://$PROJECT_DIR$/public/components/home/styles/ManagerFeatureContent.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/MobileImageContent.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/Movie.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/home/styles/Movie.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/ReportFeatureContent.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/SectionTitle.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/home/styles/SectionTitle.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/home/styles/Statistics.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/Statistics.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/StatisticsCell.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/home/styles/StatisticsCell.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/home/styles/VideoContainer.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/VideoContainer.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/Videos.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/home/styles/Videos.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/home/styles/VideosSideBar.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/home/styles/VideosSideBar.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/login/LoginDialogContent.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/login/LoginRegister.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/login/LoginRegisterContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/login/RegisterDialogContent.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/login/styles/LoginRegister.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/login/styles/LoginRegister.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/material-ui-wrappers/index.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/AbsenceDaysModal.js" charset="UTF-8" />
@@ -171,12 +152,9 @@
     <file url="file://$PROJECT_DIR$/public/components/modals/TaskModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/YesNoModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/styles/MobileAppLinksModal.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/modals/styles/MobileAppLinksModal.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/modals/styles/MobileAppLinksModal.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/modals/styles/WorkplaceSelectionModal.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/modals/styles/WorkplaceSelectionModal.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/styles/WorkplaceSelectionModal.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/BusCost.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/reports/DailyReport.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/DailyReportContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/EWarningType.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/reports/ExtraPay.js" charset="UTF-8" />
@@ -223,15 +201,12 @@
     <file url="file://$PROJECT_DIR$/public/components/tasks/TasksList.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/TasksSelectionContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/styles/BreadCrumb.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/tasks/styles/BreadCrumb.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/tasks/styles/Task.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/SettingSwitch.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/StartOfMonthField.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/UserContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/WorkplacesContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/styles/SettingSwitch.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/user/styles/SettingSwitch.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/user/styles/User.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/styles/User.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/withShiftLogic.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/AllowedWorkplacesContainer.js" charset="UTF-8" />
@@ -240,8 +215,6 @@
     <file url="file://$PROJECT_DIR$/public/components/workplace/WorkplaceMap.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/Workplaces.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/styles/Workplace.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/workplace/styles/Workplace.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/public/components/workplace/styles/Workplaces.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/workplace/styles/Workplaces.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/config.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/helpers/ERoles.js" charset="UTF-8" />

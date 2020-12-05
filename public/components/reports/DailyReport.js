@@ -4,7 +4,7 @@ import {createShiftForClockIn, DATE_FORMAT, ReportModes} from "../../helpers/uti
 import LiveDailyReport from "./LiveDailyReport";
 import ReportDailyReport from "./ReportDailyReport";
 
-const DailyReport = ({shifts, onCreateShift, onUpdateShift, onDeleteShift, employees, mode, isLoading, onNextDay, onPrevDay, handleChange, currentDay, navigateToEmployees}) => {
+const DailyReport = ({shifts, onCreateShift, onUpdateShift, onDeleteShift, employees, mode, isLoading, onNextDay, onPrevDay, handleChange, currentDay, navigateToEmployees, onRefresh}) => {
     const [open, setOpen] = useState(false);
 
     const onClockIn = (employee) => {
@@ -52,6 +52,7 @@ const DailyReport = ({shifts, onCreateShift, onUpdateShift, onDeleteShift, emplo
                     onUpdate={onUpdateShift} 
                     mode={mode} 
                     postUpdate={() => handleChange(currentDay)}
+                    onRefresh={onRefresh}
                 />
             }
         </Fragment>
