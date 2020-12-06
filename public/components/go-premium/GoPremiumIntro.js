@@ -23,7 +23,7 @@ const GoPremiumIntro = ({onNext, onClose}) => {
 
             <div styleName="intro-info">
                 <IntroLine text={"מספר עובדים ללא הגבלה"}/>
-                <IntroLine text={"הצגת מיקום בכניסה למשמרת"}/>
+                <IntroLine text={"הצגת מיקום בכניסה למשמרת וביציאה ממנה"}/>
                 <IntroLine text={"משימות"}/>
             </div>
 
