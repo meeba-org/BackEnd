@@ -222,14 +222,13 @@ export const showEditShiftModal = (shift, postUpdate) => ({
     }
 });
 
-export const showLocationModal = (shift) => ({
+export const showLocationModal = (locations) => ({
     type: 'SHOW_MODAL',
     payload: {
         modalType: EModalType.LOCATION_MODAL,
         modalProps: {
-            shift,
+            locations,
             open: true,
-            key: shift._id
         }
     }
 });

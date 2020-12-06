@@ -5,7 +5,7 @@ import connect from "react-redux/es/connect/connect";
 import {getFirstLocation} from "../../../managers/utils";
 import {createShift, showDeleteShiftModal, updateShift, showGoPremiumModal, showLocationModal, showEditShiftModal} from "../../actions";
 import {GACategory, sendGaEvent} from "../../helpers/GAService";
-import {ReportModes} from "../../helpers/utils";
+import {processLocationsForDisplay, ReportModes} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import "./styles/Shift.scss";
 import withShiftLogic from "../withShiftLogic";
@@ -32,9 +32,10 @@ const ShiftContainer = ({showShiftDialog, shift, postUpdate, showNames, mode, is
         if (!getFirstLocation(shift))
             return;
 
-        if (isDesktop)
-            showLocationModal(shift);
-        else {
+        if (isDesktop) {
+            let locations = processLocationsForDisplay(shift);
+            showLocationModal(locations);
+        } else {
             let location = getFirstLocation(shift);
             showMapInBrowser(location);
         }

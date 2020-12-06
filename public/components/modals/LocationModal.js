@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
-import {hideLocationModal} from "../../actions/index";
-import PropTypes from 'prop-types';
 import DialogContent from '@material-ui/core/DialogContent';
-import MbGoogleMap from "../MbGoogleMap";
 import {withStyles} from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect, useDispatch} from "react-redux";
+import {hideLocationModal} from "../../actions/index";
+import MbGoogleMap from "../MbGoogleMap";
 
 const styles = {
     dialogContentRoot: {
@@ -19,50 +19,32 @@ const styles = {
     }
 };
 
-class LocationModal extends Component {
+const LocationModal = ({open, locations, classes}) => {
+    let dispatch = useDispatch();
 
-    handleClose = () => {
-        this.props.dispatch(hideLocationModal());
+    const handleClose = () => {
+        dispatch(hideLocationModal());
     };
     
-    getLocations = shift => {
-        if (!shift)
-            return [];
+    if (!locations)
+        return null;
 
-        if (shift.locations && shift.locations.length > 0)
-            return shift.locations;
-
-        if (!shift.location)
-            return [];
-
-        return [shift.location];
-    }
-
-    render() {
-        let {open, shift, classes} = this.props;
-
-        if (!shift)
-            return null;
-        
-        let locations = this.getLocations(shift);
-        
-        return (
-            <Dialog onClose={this.handleClose} open={open} classes={{paper: classes.dialogContentRoot}}>
-                <DialogContent >
-                    <MbGoogleMap locations={locations}/>
-                </DialogContent>
-                <DialogActions classes={{root: classes.dialogActions}}>
-                    <Button onClick={this.handleClose} color="primary">
-                        סגור
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        );
-    }
-}
+    return (
+        <Dialog onClose={handleClose} open={open} classes={{paper: classes.dialogContentRoot}}>
+            <DialogContent >
+                <MbGoogleMap locations={locations}/>
+            </DialogContent>
+            <DialogActions classes={{root: classes.dialogActions}}>
+                <Button onClick={handleClose} color="primary">
+                    סגור
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+};
 
 LocationModal.propTypes = {
-    shift: PropTypes.object,
+    locations: PropTypes.object,
     dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
 };

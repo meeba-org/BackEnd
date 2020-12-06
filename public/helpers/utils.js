@@ -1,3 +1,5 @@
+const {getComputeDistanceBetween2} = require("../../managers/ShiftAnalyzer");
+
 const moment = require("moment");
 const EShiftStatus = require("./EShiftStatus");
 
@@ -6,6 +8,7 @@ export const TIME_FORMAT = "HH:mm";
 export const DATE_AND_TIME_FORMAT = DATE_FORMAT + ' ' + TIME_FORMAT;
 export const calculateCurrentDay = (format) => (!format) ? moment().format(DATE_FORMAT) : moment().format(format);
 export const calculateCurrentTime = () => moment().format(TIME_FORMAT);
+const MINIMUM_DISTANCE = 30;
 
 export const createShift = (employee, momentStart, momentEnd) => {
     return {
@@ -154,3 +157,40 @@ export const parseJson = (json) => {
 };
 
 export const isShiftPending = shift => shift.status === EShiftStatus.PENDING_CREATE || shift.status === EShiftStatus.PENDING_UPDATE;
+
+
+const processLocations = locations => {
+    if (locations.length === 1) {
+        let singleLocation = locations[0];
+        let enrichLocation = enrichLocationData(singleLocation, moment(singleLocation.date).format(TIME_FORMAT));
+        return [enrichLocation];
+    }
+    else if (getComputeDistanceBetween2(locations[0], locations[1]) < MINIMUM_DISTANCE) {
+        let firstLocation = locations[0];
+        firstLocation = enrichLocationData(firstLocation, `${moment(locations[0].date).format(TIME_FORMAT)}, ${moment(locations[1].date).format(TIME_FORMAT)}`);
+        return [firstLocation];
+    }
+    
+    return locations.map(l => enrichLocationData(l, moment(l.date).format(TIME_FORMAT)));
+};
+
+const enrichLocationData = (location, text) => {
+    return {
+        ...location, text
+    };
+};
+
+export const processLocationsForDisplay = shift => {
+    if (!shift)
+        return [];
+
+    if (shift.locations && shift.locations.length > 0)
+        return processLocations(shift.locations);
+
+    let location = shift.location;
+    if (!location)
+        return [];
+
+    let enrichedLocation = enrichLocationData(location, moment(shift.clockInTime).format(TIME_FORMAT));
+    return [enrichedLocation];
+};

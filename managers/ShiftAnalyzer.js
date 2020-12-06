@@ -267,7 +267,7 @@ function calcBreakLength(shift, companyBreakLength) {
         return 0;
 
     let shiftBreakLength = shift.breakLength;
-    let breakLength = !!shiftBreakLength ? shiftBreakLength : companyBreakLength;
+    let breakLength = shiftBreakLength ? shiftBreakLength : companyBreakLength;
     return breakLength / 60;
 }
 
@@ -435,6 +435,21 @@ const calcOutOfOfficePercentage = (entity) => {
     return (oooHours / totalShiftsLength).toFixed(2) * 100;
 };
 
+const getComputeDistanceBetween2 = (location1, location2) => {
+    const latlngA = {
+        ...location1,
+        lat: location1.latitude,
+        lng: location1.longitude
+    }
+    const latlngB = {
+        ...location2,
+        lat: location2.latitude,
+        lng: location2.longitude
+    }
+    
+    return getComputeDistanceBetween(latlngA, latlngB);
+}
+
 /**
  * Source: https://stackoverflow.com/a/51720402/1846993
  * Calculates the haversine distance between point A, and B.
@@ -596,5 +611,6 @@ module.exports = {
     SHIFT_125_OVERDUE_LENGTH,
     shouldHaveBreak,
     getComputeDistanceBetween,
+    getComputeDistanceBetween2,
     calcClockInInsideWorkplace
 };

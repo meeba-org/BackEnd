@@ -28,13 +28,6 @@ const MbGoogleMap = ({locations = []}) => {
         lng: location.longitude
     });
 
-    const formatLabel = location => {
-        if (!location.date)
-            return undefined;
-        
-        return moment(location.date).format(TIME_FORMAT);
-    };
-    
     return (
         <Map google={window.google} zoom={14}
              containerStyle={{height: '400px', width: desktop ? '550px' : '100%', position: 'relative'}}
@@ -46,7 +39,7 @@ const MbGoogleMap = ({locations = []}) => {
                     position={convertLocation(location)}
                     icon={createMarker()}
                     label={{
-                        text: formatLabel(location),
+                        text: location.text,
                         color: "black",
                         fontSize: "14px",
                         fontWeight: "bold"
