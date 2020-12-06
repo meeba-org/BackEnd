@@ -22,7 +22,7 @@
         "build": "webpack --config ./webpack.config.prod.js --progress --colors",
         "open:cover": "npm run test:cover && opn ./coverage/lcov-report/index.html",
         "analyze-bundle": "babel-node ./tools/analyzeBundle.js",
-        "test": "mocha ./test/**/*.spec.js",
+        "test": "mocha ./test/**/*.spec.js --require @babel/register",
         "test:post-deploy": "testim -c ./test/testim.js",
         "generateWaitingPayment": "node tools/generateWaitingPayment.js",
         "generateImmediatePayment": "node tools/generateImmediatePayment.js",
