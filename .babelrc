@@ -47,7 +47,8 @@
                         }
                     }
                 ]
-            ]
+            ],
+            "sourceType": "unambiguous"
         },
         "production": {
             "presets": [

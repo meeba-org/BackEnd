@@ -295,7 +295,7 @@ function calcShiftLength(clockOut, clockIn) {
 }
 
 function getEmptyAdditionalInfo(breakLength) {
-    return Object.assign({}, EmptyAdditionalInfo, {breakLength})
+    return Object.assign({}, EmptyAdditionalInfo, {breakLength});
 }
 
 const analyzeRegularDayShiftHours = (clockIn, clockOut, breakLength, settings, regularHoursInShift) => {
@@ -440,15 +440,15 @@ const getComputeDistanceBetween2 = (location1, location2) => {
         ...location1,
         lat: location1.latitude,
         lng: location1.longitude
-    }
+    };
     const latlngB = {
         ...location2,
         lat: location2.latitude,
         lng: location2.longitude
-    }
+    };
     
     return getComputeDistanceBetween(latlngA, latlngB);
-}
+};
 
 /**
  * Source: https://stackoverflow.com/a/51720402/1846993
@@ -578,7 +578,7 @@ function generateTasksBreadcrumb(map, tasks) {
 
     map.forEach(task => {
         task.taskBreadCrumb = buildBreadcrumb(task, tasks);
-    })
+    });
 }
 
 function sortTasks(tasksArrayAdditionalInfo) {
