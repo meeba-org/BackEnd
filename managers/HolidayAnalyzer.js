@@ -65,7 +65,7 @@ const analyzeDayType = (momentDay) => {
         return EDayType.IndependenceDay;
     else
         return EDayType.Regular;
-}
+};
 
 initHolidays();
 

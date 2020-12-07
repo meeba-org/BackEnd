@@ -1,8 +1,6 @@
 import React from "react";
-import moment from 'moment';
 import {Map, Marker} from 'google-maps-react';
 import {useSelector} from "react-redux";
-import {TIME_FORMAT} from "../helpers/utils";
 import {isDesktop} from "../selectors";
 
 const MbGoogleMap = ({locations = []}) => {
