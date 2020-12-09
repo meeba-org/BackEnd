@@ -30,6 +30,8 @@ const User = ({
         onCompanyChange("settings", settings);
     };
 
+    const isTimeValid = (text) => /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(text);
+    
     if (!user || !user.company)
         return <NoData/>;
 
@@ -145,6 +147,8 @@ const User = ({
                             onChange={(e) => onCompanySettingsChange("defaultClockInTime", e.target.value)}
                             styleName="short-field hour"
                             inputProps={{"style": {textAlign: "center"}}}
+                            error={!isTimeValid(user.company.settings.defaultClockInTime)}
+                            helperText={isTimeValid(user.company.settings.defaultClockInTime) ? "" : "זמן בפורמט XX:XX"}
                         />
 
                         <TextField
@@ -154,6 +158,8 @@ const User = ({
                             onChange={(e) => onCompanySettingsChange("defaultClockOutTime", e.target.value)}
                             styleName="short-field hour"
                             inputProps={{"style": {textAlign: "center"}}}
+                            error={!isTimeValid(user.company.settings.defaultClockOutTime)}
+                            helperText={isTimeValid(user.company.settings.defaultClockOutTime) ? "" : "זמן בפורמט XX:XX"}
                         />
                     </div>
                     <div styleName="row">

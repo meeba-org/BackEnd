@@ -15,12 +15,13 @@
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 5px;
             font-size: 10px;
 
             .short-field {
                 max-width: 88px;
+                padding-bottom: 10px;
             }
 
             .transportation{
