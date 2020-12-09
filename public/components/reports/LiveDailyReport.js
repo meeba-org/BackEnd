@@ -33,15 +33,16 @@ const LiveDailyReport = ({theme, employees, hasEmployees, loading, mode, onClick
                         disabled={!loading && !hasEmployees}
                     />
 
-                    {!loading && !hasEmployees &&
-                    <div styleName="warning">
-                        <Warning styleName="icon"/>
-                        <span>
+                </div>
+
+                {!loading && !hasEmployees &&
+                <div styleName="warning">
+                    <Warning styleName="icon"/>
+                    <span>
                         עדיין לא הזנו עובדים. <a href="#" onClick={onClick}>בוא נעשה זאת עכשיו!</a>
                         </span>
-                    </div>
-                    }
                 </div>
+                }
 
                 <ShiftsList
                     shifts={shifts}

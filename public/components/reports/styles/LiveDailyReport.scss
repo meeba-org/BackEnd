@@ -13,7 +13,6 @@
 
     .auto-complete {
         margin-top: 20px;
-        margin-bottom: 50px;
         width: 70%;
         max-width: 350px;
         display: flex;
@@ -23,15 +22,16 @@
         .refresh {
             margin-left: 10px;
         }
-        
-        .warning {
-            .icon {
-                color: orange;
-                vertical-align: middle;
-                margin-left: 5px;
-            }
-            margin-top: 20px;
-            text-align: center;
+    }
+
+    .warning {
+        .icon {
+            color: orange;
+            vertical-align: middle;
+            margin-left: 5px;
         }
+        margin-top: 20px;
+        margin-bottom: 50px;
+        text-align: center;
     }
 }
