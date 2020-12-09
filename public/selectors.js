@@ -99,3 +99,7 @@ export const getEmployeesMonthlyReports = state => state.reports.employeesMonthl
 export const getStartOfMonth = state => getCompanySettings(state)?.startOfMonth;
 
 export const getTasks = state => state.tasks;
+
+export const getDefaultClockInTime = state => getCompanySettings(state)?.defaultClockInTime;
+
+export const getDefaultClockOutTime = state => getCompanySettings(state)?.defaultClockOutTime;

@@ -137,7 +137,25 @@ const User = ({
                         />
 
                     </div>
+                    <div styleName="row hours">
+                        <TextField
+                            id="default-clockin-time"
+                            label="שעת כניסה"
+                            value={user.company.settings.defaultClockInTime}
+                            onChange={(e) => onCompanySettingsChange("defaultClockInTime", e.target.value)}
+                            styleName="short-field hour"
+                            inputProps={{"style": {textAlign: "center"}}}
+                        />
 
+                        <TextField
+                            id="default-clockout-time"
+                            label="שעת יציאה"
+                            value={user.company.settings.defaultClockOutTime}
+                            onChange={(e) => onCompanySettingsChange("defaultClockOutTime", e.target.value)}
+                            styleName="short-field hour"
+                            inputProps={{"style": {textAlign: "center"}}}
+                        />
+                    </div>
                     <div styleName="row">
                         <TextField
                             id="standard-required"

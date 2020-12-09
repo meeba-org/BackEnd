@@ -40,7 +40,9 @@ const CompanySchema = mongoose.Schema({
             extra175HoursCode: {type: Number},
             extra200HoursCode: {type: Number},
         },
-        enableInnovativeAuthority: {type: Boolean, default: false}
+        enableInnovativeAuthority: {type: Boolean, default: false},
+        defaultClockInTime: {type: String, default: "08:00"},
+        defaultClockOutTime: {type: String, default: "17:00"},
     },
     features: [String],
     plan: {type: Number, default: EPlanType.Free},

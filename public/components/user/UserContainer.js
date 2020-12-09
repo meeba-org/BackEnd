@@ -6,45 +6,45 @@ import {getUser, hasPremiumFeature, isFeatureEnable} from "../../selectors";
 import User from "./User";
 
 const UserContainer = () => {
-    const userFromState = useSelector(getUser);
+    const user = useSelector(getUser);
     const isCommuteFeatureEnable = useSelector(state => isFeatureEnable(state, Feature.CommuteModule));
     const hasPremiumFeat = useSelector(hasPremiumFeature);
     const dispatch = useDispatch();
 
-    const [user, setUser] = useState(userFromState);
+    const [userState, setUserState] = useState(user);
 
     useEffect(() => {
-        setUser(userFromState);
-    }, [userFromState]);
+        setUserState(user);
+    }, [user]);
 
     const handleUserChange = (key, value) => {
-        let newUser = {
-            ...user,
+        let newUserState = {
+            ...userState,
             [key]: value
         };
 
-        setUser(newUser);
-        dispatch(updateActiveUser(newUser));
+        setUserState(newUserState);
+        dispatch(updateActiveUser(newUserState));
     };
 
     const handleCompanyChange = (key, value) => {
         const company = {
-            ...user.company,
+            ...userState.company,
             [key]: value
         };
 
-        let newUser = {
-            ...user,
+        let newUserState = {
+            ...userState,
             company
         };
 
-        setUser(newUser);
+        setUserState(newUserState);
         dispatch(updateCompany(company));
     };
 
     const handleCompanySettingsChange = (key, value) => {
         const settings = {
-            ...user.company.settings,
+            ...userState.company.settings,
             [key]: value
         };
 
@@ -54,13 +54,13 @@ const UserContainer = () => {
 
     return (
         <User
-            user={user}
+            user={userState}
             onUserChange={handleUserChange}
             onCompanyChange={handleCompanyChange}
             isCommuteFeatureEnable={isCommuteFeatureEnable}
             hasPremiumFeature={hasPremiumFeat}
             onFreePlanClick={() => dispatch(showGoPremiumModal())}
-            onPremiumPlanClick={() => dispatch(showCancelPremiumModal(user.company))}
+            onPremiumPlanClick={() => dispatch(showCancelPremiumModal(userState.company))}
             onCompanySettingsChange={handleCompanySettingsChange}
         />
     );

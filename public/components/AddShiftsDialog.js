@@ -6,25 +6,22 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {DatePicker, TimePicker} from "@material-ui/pickers";
 import moment from "moment";
 import PropTypes from 'prop-types';
-import React, {PureComponent} from 'react';
-import {convertTimeStrToMoment2, createShift, DATE_FORMAT} from "../helpers/utils";
-import CheckBoxList from "./CheckBoxList";
+import React, {useState} from 'react';
+import {useSelector} from "react-redux";
+import {convertTimeStrToMoment2, DATE_FORMAT, createShift as createShiftUtil, TIME_FORMAT} from "../helpers/utils";
 import "../styles/AddShiftDialog.scss";
+import {getDefaultClockInTime, getDefaultClockOutTime} from "../selectors";
+import CheckBoxList from "./CheckBoxList";
 
-class AddShiftsDialog extends PureComponent {
+const AddShiftsDialog = ({open, employees, defaultStartDate, onCreate, onCancel}) => {
+    let defaultClockInTime = useSelector(getDefaultClockInTime);
+    let defaultClockOutTime = useSelector(getDefaultClockOutTime);
+    const [employeesToAdd, setEmployeesToAdd] = useState([]);
+    const [startTime, setStartTime] = useState(moment(defaultClockInTime, TIME_FORMAT));
+    const [endTime, setEndTime] = useState(moment(defaultClockOutTime, TIME_FORMAT));
+    const [startDate, setStartDate] = useState(moment(defaultStartDate, DATE_FORMAT));
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            employeesToAdd: [],
-            startDate: null,
-            startTime: moment(8, "HH"),
-            endTime: moment(8, "HH").add(8, 'hours')
-        };
-    }
-
-    toggleEmployee(employee, check) {
-        const { employeesToAdd } = this.state;
+    const toggleEmployee = (employee, check) => {
         const currentIndex = employeesToAdd.indexOf(employee);
         const newEmployeesToAdd = [...employeesToAdd];
 
@@ -34,101 +31,76 @@ class AddShiftsDialog extends PureComponent {
             newEmployeesToAdd.splice(currentIndex, 1);
         }
 
-        this.setState({
-            employeesToAdd: newEmployeesToAdd,
-        });
-    }
+        setEmployeesToAdd(newEmployeesToAdd);
+    };
 
-    onCreate = () => {
-        let {onCreate} = this.props;
-        let {employeesToAdd} = this.state;
-
-
+    const handleCreate = () => {
         for (let employee of employeesToAdd) {
-            let shift = this.createShift(employee);
+            let shift = createShift(employee);
             onCreate(shift);
         }
 
-        this.onCancel();
+        handleCancel();
     };
 
-    onCancel = () => {
-        const {onCancel} = this.props;
-
-        this.setState({employeesToAdd: []});
+    const handleCancel = () => {
+        setEmployeesToAdd([]);
         onCancel();
     };
 
-    onUpdateStartTime(time) {
-        this.setState({startTime: time});
-    }
-
-    onUpdateEndTime(time) {
-        this.setState({endTime: time});
-    }
-
-    onUpdateDateChange(date) {
-        this.setState({startDate: date});
-    }
-
-    createShift(employee) {
+    const createShift = (employee) => {
         let timeObj = {
-            startDate: this.state.startDate || this.props.defaultStartDate,
-            startTime: this.state.startTime,
-            endTime: this.state.endTime,
+            startDate,
+            startTime,
+            endTime,
         };
         let {momentStart, momentEnd} = convertTimeStrToMoment2(timeObj);
-        return createShift(employee, momentStart, momentEnd);
-    }
+        return createShiftUtil(employee, momentStart, momentEnd);
+    };
 
-    render() {
-        let {open, employees, defaultStartDate} = this.props;
-        let {startDate, startTime, endTime, employeesToAdd} = this.state;
-        let defaultStartDateMoment = moment(defaultStartDate, DATE_FORMAT);
-
-        return (
-            <Dialog open={open} onClose={this.onCancel}>
-                <DialogTitle>הוספת משמרת</DialogTitle>
-                <DialogContent>
-                    <div styleName="pickers">
-                        <DatePicker styleName="picker" autoOk onChange={(date) => this.onUpdateDateChange(date)}
-                                    value={startDate || defaultStartDateMoment}
-                                    format="DD/MM/YYYY"
-                        />
-
-                        <TimePicker
-                            styleName="picker"
-                            ampm={false}
-                            autoOk
-                            value={startTime}
-                            onChange={(time) => this.onUpdateStartTime(time)}
-                        />
-
-                        <TimePicker
-                            ampm={false}
-                            autoOk
-                            value={moment(endTime)}
-                            onChange={(time) => this.onUpdateEndTime(time)}
-                        />
-                    </div>
-                    <CheckBoxList
-                        items={employees}
-                        onCheck={(employee, check) => this.toggleEmployee(employee, check)}
+    return (
+        <Dialog open={open} onClose={handleCancel}>
+            <DialogTitle>הוספת משמרת</DialogTitle>
+            <DialogContent>
+                <div styleName="pickers">
+                    <DatePicker styleName="picker" autoOk onChange={(date) => setStartDate(date)}
+                                value={startDate}
+                                format="DD/MM/YYYY"
                     />
 
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={this.onCreate} variant="contained" color="primary" disabled={employeesToAdd.length === 0}>
-                        {employeesToAdd.length > 0 ? `הוסף ל- ` + employeesToAdd.length + ` אנשים` : "הוסף"}
-                    </Button>
-                    <Button onClick={this.onCancel} color="primary">
-                        ביטול
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        );
+                    <TimePicker
+                        styleName="picker"
+                        ampm={false}
+                        autoOk
+                        value={startTime}
+                        onChange={(time) => setStartTime(time)}
+                    />
+
+                    <TimePicker
+                        ampm={false}
+                        autoOk
+                        value={moment(endTime)}
+                        onChange={(time) => setEndTime(time)}
+                    />
+                </div>
+                <CheckBoxList
+                    items={employees}
+                    onCheck={(employee, check) => toggleEmployee(employee, check)}
+                />
+
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleCreate} variant="contained" color="primary" disabled={employeesToAdd.length === 0}>
+                    {employeesToAdd.length > 0 ? `הוסף ל- ` + employeesToAdd.length + ` אנשים` : "הוסף"}
+                </Button>
+                <Button onClick={handleCancel} color="primary">
+                    ביטול
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
     }
-}
+;
 
 AddShiftsDialog.propTypes = {
     open: PropTypes.bool.isRequired,
