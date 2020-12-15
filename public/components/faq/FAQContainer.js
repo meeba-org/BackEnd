@@ -148,7 +148,7 @@ class FAQContainer extends Component {
 `
                 },
                 {
-                    q: "מורשת הרשות לחדשנות?",
+                    q: "מורשה הרשות לחדשנות?",
                     a: `בהחלט כן, הנה [האישור](https://meeba.co.il/styles/docs/IA-Approval.pdf).
 `
                 }
