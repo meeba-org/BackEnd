@@ -17,9 +17,12 @@ const ActionButton = ({disabled, onClick, iconComponent: IconComponent, color = 
 
 const MbActionButton = ({tooltip, ...props}) => {
     if (tooltip)
-        return (<Tooltip title={tooltip} placement="top"><span>
-            <ActionButton {...props} />
-        </span></Tooltip>);
+        return (
+            <Tooltip title={tooltip} placement="top">
+                <span> {/* Fix this: https://github.com/mbrn/material-table/issues/677#issuecomment-572448876*/}
+                    <ActionButton {...props} />
+                </span>
+            </Tooltip>);
     else
         return <ActionButton {...props} />;
 };

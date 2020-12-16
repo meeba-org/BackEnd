@@ -65,21 +65,19 @@ const createShift = (shift) => {
         });
 };
 
-const updateShift = (shift) => {
+const updateShift = async (shift) => {
     if (!shift._id)
         return reject("[ShiftModel.updateShift] - no valid id");
 
-    return DraftShiftModel.createOrUpdateDraftShift(shift.draftShift)
-        .then(draftShift => {
-            if (draftShift)
-                shift.draftShift = draftShift;
+    const draftShift = await DraftShiftModel.createOrUpdateDraftShift(shift.draftShift);
+    if (draftShift)
+        shift.draftShift = draftShift;
 
-            let newShift = createShiftInstance(shift);
-            newShift._id = shift._id;
+    let newShift = createShiftInstance(shift);
+    newShift._id = shift._id;
 
-            newShift = newShift.toObject();
-            return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true, setDefaultsOnInsert: true}).populate('user task draftShift').exec();
-        });
+    newShift = newShift.toObject();
+    return Shift.findOneAndUpdate({'_id': newShift._id}, newShift, {upsert: true, new: true, setDefaultsOnInsert: true}).populate('user task draftShift').exec();
 };
 
 const deleteShift = (id) => {

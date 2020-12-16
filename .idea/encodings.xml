@@ -71,6 +71,7 @@
     <file url="file://$PROJECT_DIR$/public/components/Fade.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/FullScreenLoading.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/LazyPrivateRoute.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/MbActionButton.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/MbActionsControls.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/MbCard.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/MbGoogleMap.js" charset="UTF-8" />

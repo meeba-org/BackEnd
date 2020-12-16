@@ -194,3 +194,28 @@ export const processLocationsForDisplay = shift => {
     let enrichedLocation = enrichLocationData(location, moment(shift.clockInTime).format(TIME_FORMAT));
     return [enrichedLocation];
 };
+
+export const createApprovedShift = (shift) => {
+    let draftShift = extractDraftShift(shift);
+
+    let updatedShift = {
+        ...shift,
+        ...draftShift, // overriding with the draft values
+        status: EShiftStatus.APPROVED,
+        draftShift: null
+    };
+    return updatedShift;
+};
+
+const extractDraftShift = (shift) => {
+    // eslint-disable-next-line no-unused-vars
+    let {_id, ...draftShift} = shift.draftShift || {}; // Excluding the id
+
+    // Deleting null / undefined values
+    for (let key in draftShift) {
+        if (!draftShift[key])
+            delete draftShift[key];
+    }
+
+    return draftShift;
+};

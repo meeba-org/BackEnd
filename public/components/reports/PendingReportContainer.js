@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {connect} from "react-redux";
-import {fetchPendingShifts, showDeleteShiftModal, updateShift} from "../../actions";
+import {approveShifts, fetchPendingShifts, showDeleteShiftModal, updateShift} from "../../actions";
 import {getPendingShifts} from "../../selectors";
 import PendingReport from "./PendingReport";
 
-const PendingReportContainer = ({updateShift, showDeleteShiftModal, shifts, isLoading, fetchPendingShifts}) => {
+const PendingReportContainer = ({updateShift, showDeleteShiftModal, shifts, isLoading, fetchPendingShifts, approveShifts}) => {
 
     useEffect(() => {
         fetchPendingShifts();
@@ -18,6 +18,7 @@ const PendingReportContainer = ({updateShift, showDeleteShiftModal, shifts, isLo
             isLoading={isLoading}
             onRefresh={fetchPendingShifts}
             postUpdate={fetchPendingShifts}
+            onApproveAll={() => approveShifts(shifts)}
         />
     );
 };
@@ -28,6 +29,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     fetchPendingShifts,
+    approveShifts,
     showDeleteShiftModal,
     updateShift,
 };

@@ -1,8 +1,9 @@
 import moment from "moment";
 import {EModalType} from "../components/modals/EModalType";
 import {GACategory} from "../helpers/GAService";
+import {createApprovedShift} from "../helpers/utils";
 import {
-    API,
+    API, APPROVED_ALL_PENDING_SHIFTS_SUCCESS,
     CREATE_SHIFT_SUCCESS, DELETE_SHIFT_SUCCESS,
     FETCH_DAILY_SHIFTS_SUCCESS,
     FETCH_PENDING_SHIFTS_SUCCESS, FETCH_SHIFT_SUCCESS,
@@ -32,6 +33,11 @@ export const fetchDailyShiftsSuccess = (payload) => ({
 
 export const fetchPendingShiftsSuccess = (payload) => ({
     type: FETCH_PENDING_SHIFTS_SUCCESS,
+    payload
+});
+
+export const approvedAllPendingShiftsSuccess = (payload) => ({
+    type: APPROVED_ALL_PENDING_SHIFTS_SUCCESS,
     payload
 });
 
@@ -93,18 +99,6 @@ export const fetchDailyReport = (startDate) => ({
     }
 });
 
-export const hasPendingShifts = () => ({
-    type: API,
-    payload: {
-        url: prepareFetchPendingShiftsUrl(),
-        method: "get",
-        success: hasPendingShiftsSuccess,
-    },
-    meta: {
-        shouldAuthenticate: true,
-    }
-});
-
 export const fetchPendingShifts = () => ({
     type: API,
     payload: {
@@ -116,6 +110,25 @@ export const fetchPendingShifts = () => ({
         shouldAuthenticate: true,
     }
 });
+
+export const approveShifts = (shiftsToApprove) => {
+    let shifts = shiftsToApprove.map(shift => createApprovedShift(shift));
+    
+    return {
+        type: API,
+        payload: {
+            url: "/shifts",
+            method: "patch",
+            success: approvedAllPendingShiftsSuccess,
+            data: {
+                shifts
+            } 
+        },
+        meta: {
+            shouldAuthenticate: true,
+        }
+    };
+};
 
 export const fetchShift = (shiftId) => ({
     type: API,

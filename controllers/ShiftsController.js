@@ -51,6 +51,28 @@ router.put('/',
     })
 );
 
+// PATCH /shifts 
+router.patch('/',
+    [
+        body('shifts').exists().withMessage("shifts is mandatory"),
+    ],
+    (req, res) => routeWrapper(req, res, (req, res) => {
+
+        let {shifts
+        } = req.body;
+        if (!shifts)
+            return reject("Shifts was not found");
+        
+        const promises = [];
+        shifts.forEach(shift => {
+            fillMissingShiftData(res, shift);
+            promises.push(ShiftModel.updateShift(shift));
+        });
+        
+        return Promise.all(promises);
+    })
+);
+
 //DELETE /shifts/{id} shiftUid
 router.delete('/:id',
     [

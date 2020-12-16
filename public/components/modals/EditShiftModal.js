@@ -17,7 +17,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createShift, deleteShift, updateShift, hideEditShiftModal} from "../../actions";
 import EShiftStatus from "../../helpers/EShiftStatus";
-import {isNumber, isShiftPending, TIME_FORMAT} from "../../helpers/utils";
+import {createApprovedShift, isNumber, isShiftPending, TIME_FORMAT} from "../../helpers/utils";
 import * as selectors from "../../selectors";
 import TasksSelectionContainer from "../tasks/TasksSelectionContainer";
 import withShiftLogic from "../withShiftLogic";
@@ -120,14 +120,7 @@ class EditShiftModal extends Component {
 
     onApproval = () => {
         const {entity} = this.state;
-        let draftShift = this.extractDraftShift(entity);
-
-        let updatedShift = {
-            ...entity,
-            ...draftShift, // overriding with the draft values
-            status: EShiftStatus.APPROVED,
-            draftShift: null
-        };
+        let updatedShift = createApprovedShift(entity);
 
         this.setState({
             entity: updatedShift
@@ -136,19 +129,6 @@ class EditShiftModal extends Component {
         this.handleClose();  
         this.updateShift(entity, updatedShift);
     };
-
-    extractDraftShift(entity) {
-        // eslint-disable-next-line no-unused-vars
-        let {_id, ...draftShift} = entity.draftShift || {}; // Excluding the id
-
-        // Deleting null / undefined values
-        for (let key in draftShift) {
-            if (!draftShift[key])
-                delete draftShift[key];
-        }
-
-        return draftShift;
-    }
 
     onDecline = () => {
         const {entity} = this.state;
