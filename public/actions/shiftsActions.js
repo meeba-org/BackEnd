@@ -111,6 +111,18 @@ export const fetchPendingShifts = () => ({
     }
 });
 
+export const showApproveAllShiftsModal = (shiftsToApprove) => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: EModalType.YES_NO_MODAL,
+        modalProps: {
+            open: true,
+            onAction: () => approveShifts(shiftsToApprove),
+            text: "האם אתה בטוח?"
+        }
+    }
+});
+
 export const approveShifts = (shiftsToApprove) => {
     let shifts = shiftsToApprove.map(shift => createApprovedShift(shift));
     

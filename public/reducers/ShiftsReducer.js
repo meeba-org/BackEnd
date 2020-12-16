@@ -8,11 +8,13 @@ export const ShiftsReducer = combineReducers({
 
 function pendingShiftsReducer (state = [], action = null) {
     switch (action.type) {
-        case types.FETCH_PENDING_SHIFTS_SUCCESS: 
-        case types.APPROVED_ALL_PENDING_SHIFTS_SUCCESS: {
+        case types.FETCH_PENDING_SHIFTS_SUCCESS: {
             return [
                 ...action.payload
             ];
+        }
+        case types.APPROVED_ALL_PENDING_SHIFTS_SUCCESS: {
+            return [];
         }
         case types.UPDATE_SHIFT_SUCCESS: {
                 return state.map(shift => shift._id === action.payload._id ? action.payload : shift);

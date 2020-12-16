@@ -3,36 +3,32 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
-import {connect} from "react-redux";
+import React from 'react';
+import {connect, useDispatch} from "react-redux";
 import {hideYesNoModal} from "../../actions/index";
 
-class YesNoModal extends Component {
-
-    onAction = () => {
-        let {dispatch, onAction} = this.props;
-
+const YesNoModal = ({ open, text, onAction, hideYesNoModal }) => {
+   let dispatch = useDispatch();
+   
+    const handleAction = () => {
         dispatch(onAction());
-        dispatch(hideYesNoModal());
+        hideYesNoModal();
     };
 
-    handleCancel = () => {
-        this.props.dispatch(hideYesNoModal());
-    };
+    return (
+        <Dialog onClose={hideYesNoModal} open={open}>
+            <DialogTitle>{text}</DialogTitle>
+            <DialogActions>
+                <Button variant="contained" onClick={handleAction} color="primary" autoFocus>כן</Button>
+                <Button onClick={hideYesNoModal} color="primary">לא</Button>
+            </DialogActions>
+        </Dialog>
+    );
+};
 
-    render() {
-        let {open, text} = this.props;
-        return (
-            <Dialog onClose={this.handleCancel} open={open}>
-                <DialogTitle>{text}</DialogTitle>
-                <DialogActions>
-                    <Button variant="contained" onClick={() => this.onAction()} color="primary" autoFocus>כן</Button>
-                    <Button onClick={this.handleCancel} color="primary">לא</Button>
-                </DialogActions>
-            </Dialog>
-        );
-    }
-}
+const mapDispatchToProps = {
+    hideYesNoModal
+};
 
 YesNoModal.propTypes = {
     handleAction: PropTypes.func,
@@ -43,4 +39,4 @@ YesNoModal.defaultProps = {
     text: ""
 };
 
-export default connect()(YesNoModal);
+export default connect(null, mapDispatchToProps)(YesNoModal);
