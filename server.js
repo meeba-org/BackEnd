@@ -10,6 +10,7 @@ const config = require('./config');
 const enforce = require("express-sslify");
 const mongooseManager = require("./managers/MongooseManager");
 const compression = require('compression');
+var Loadmill = require('express-loadmill');
 
 // Connect to mongoose
 mongooseManager.connect(config.dbUri);
@@ -18,6 +19,9 @@ const app = express();
 
 // Compress all responses
 app.use(compression());
+
+// Loadmill testing 21/12/2020
+app.use(Loadmill({verifyToken: process.env.LOADMILL_VERIFY_TOKEN}));
 
 // redirect http requests to https
 if (process.env.NODE_ENV === 'production')
