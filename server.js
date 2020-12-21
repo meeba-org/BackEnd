@@ -11,6 +11,7 @@ const enforce = require("express-sslify");
 const mongooseManager = require("./managers/MongooseManager");
 const compression = require('compression');
 var Loadmill = require('express-loadmill');
+const { expressRecorder } = require('@loadmill/node-recorder');
 
 // Connect to mongoose
 mongooseManager.connect(config.dbUri);
@@ -21,7 +22,8 @@ const app = express();
 app.use(compression());
 
 // Loadmill testing 21/12/2020
-app.use(Loadmill({verifyToken: process.env.LOADMILL_VERIFY_TOKEN}));
+app.use(Loadmill({verifyToken: process.env.LOADMILL_VERIFY_TOKEN})); // Not sure for this is
+app.use(expressRecorder({ loadmillCode: process.env.LOADMILL_TRACKING_ID }));
 
 // redirect http requests to https
 if (process.env.NODE_ENV === 'production')
