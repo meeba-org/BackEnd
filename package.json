@@ -110,7 +110,6 @@
         "react-redux": "^7.2.0",
         "react-router-dom": "^5.1.2",
         "react-router-redux": "4.0.8",
-        "react-select": "^2.4.4",
         "react-text-mask": "^5.4.3",
         "react-transition-group": "^2.9.0",
         "recompose": "^0.30.0",

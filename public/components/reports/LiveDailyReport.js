@@ -1,16 +1,17 @@
-import {IconButton} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import Warning from "@material-ui/icons/Warning";
-import React from "react";
+import {Autocomplete} from "@material-ui/lab";
+import React, {useState} from "react";
 import withTheme from '@material-ui/core/styles/withTheme';
 import {calculateCurrentDay, calculateCurrentTime} from "../../helpers/utils";
-import AutoComplete from "../AutoComplete";
 import MbCard from "../MbCard";
 import ShiftsList from "./ShiftsList";
 import './styles/LiveDailyReport.scss';
 
 const LiveDailyReport = ({theme, employees, hasEmployees, loading, mode, onClick, onDelete, onSelect, onUpdate, postUpdate, shifts, onRefresh}) => {
     let {primary, secondary} = theme.palette.text;
+    const [keyToClearInput, setKeyToClearInput] = useState(false);
 
     return (
         <MbCard title="מצב משמרת">
@@ -22,17 +23,18 @@ const LiveDailyReport = ({theme, employees, hasEmployees, loading, mode, onClick
                     <IconButton styleName="refresh" color="primary" onClick={onRefresh}>
                         <RefreshIcon />
                     </IconButton>
-                    <AutoComplete
-                        placeholder="הכנס עובד למשמרת"
-                        suggestions={employees && employees.map(employee => ({
-                                ...employee,
-                                label: employee.fullName
-                            })
-                        )}
-                        onSelect={onSelect}
-                        disabled={!loading && !hasEmployees}
+                    <Autocomplete
+                        options={employees}
+                        getOptionLabel={(employee) => employee.fullName}
+                        style={{ width: 300 }}
+                        disableClearable
+                        key={keyToClearInput}
+                        renderInput={(params) => <TextField {...params} label="הכנס עובד למשמרת" />}
+                        onChange={(event, value) => {
+                            onSelect(value);
+                            setKeyToClearInput(!keyToClearInput);
+                        }}
                     />
-
                 </div>
 
                 {!loading && !hasEmployees &&
