@@ -15,7 +15,7 @@ function printSummary(failedCompanies) {
     if (failedCompanies.length === 0) {
         console.log("Great Success! All companies have been charged successfully!!!");
     } else {
-        console.log("Sorry... The following companies hass failed: ");
+        console.log("Sorry... The following companies has failed: ");
         failedCompanies.forEach(company => console.log(`name: ${company.name}, id: ${company.id}`));
     }
 }

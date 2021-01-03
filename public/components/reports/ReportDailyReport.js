@@ -8,10 +8,11 @@ import AddShiftsDialog from "../AddShiftsDialog";
 import MbActionButton from "../MbActionButton";
 import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
+import ReportSummary from "./ReportSummary";
 import ShiftsList from "./ShiftsList";
 import './styles/ReportDailyReport.scss';
 
-const ReportDailyReport = ({employees, mode, onCancel, onChange, onPrevDay, onNextDay, onAddShift, onCreate, onDelete, onUpdate, open, shifts, value}) => (
+const ReportDailyReport = ({employees, mode, onCancel, onChange, onPrevDay, onNextDay, onAddShift, onCreate, onDelete, onUpdate, open, shifts, value, summary}) => (
     <MbCard title="דוח יומי">
         <div styleName="daily-report">
             <MbActionsControls>
@@ -49,6 +50,11 @@ const ReportDailyReport = ({employees, mode, onCancel, onChange, onPrevDay, onNe
                     employees={employees}
                     defaultStartDate={value}
                 />
+
+                {summary && summary.employeesCount > 0 &&
+                <ReportSummary summary={summary}/>
+                }
+
             </MbActionsControls>
 
             <ShiftsList

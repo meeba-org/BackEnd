@@ -47,8 +47,50 @@ const DailyReportContainer = ({updateShift, createShift, deleteShift, shifts, em
         history.push('/dashboard/employees');
     };
 
+    const calcTotalHours = () => {
+        if (!shifts)
+            return 0;
+
+        let totalHours = 0;
+        for (const shift of shifts) {
+            if (!shift.clockOutTime)
+                continue;
+            
+            let start = moment(shift.clockInTime);
+            let end = moment(shift.clockOutTime);
+            const duration = moment.duration(end.diff(start));
+            const hours = duration.asHours();
+
+            totalHours += hours;
+        }
+
+        return totalHours.toFixed(2);
+    };
+
+    const calcDailyEmployees = () => {
+        if (!shifts)
+            return 0;
+        
+        const employeesHash = {};
+        shifts.forEach(s => employeesHash[s.user._id] = true);
+        
+        return Object.keys(employeesHash).length;
+    };
+    
+    const calcSummary = () => {
+        const totalHours = calcTotalHours();
+        let employeesCount = calcDailyEmployees();
+        return {
+            totalHours,
+            employeesCount
+        };
+    };
+
+    const summary = calcSummary();
+
     return (
         <DailyReport
+            summary={summary}
             shifts={shifts}
             mode={mode}
             employees={employees}

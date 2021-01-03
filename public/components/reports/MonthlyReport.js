@@ -15,7 +15,7 @@ import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import MonthPicker from "../MonthPicker";
 import NoData from "../NoData";
-import MonthSummary from "./MonthSummary";
+import ReportSummary from "./ReportSummary";
 
 const MonthlyReport = (
     {
@@ -106,7 +106,7 @@ const MonthlyReport = (
                 </IfGranted>
 
                 {summary && summary.employeesCount > 0 && 
-                    <MonthSummary summary={summary}/>
+                    <ReportSummary summary={summary}/>
                 }
             </MbActionsControls>
 
