@@ -22,15 +22,44 @@ router.get('/',
     })
 );
 
+const calcLatestShift = (shifts) => {
+    if (!shifts || shifts.length === 0)
+        return null;
+
+    let latestShift = shifts[0];
+    shifts.forEach(shift => {
+        let clockInTime = shift.clockInTime;
+        let clockOutTime = shift.clockOutTime;
+
+        if (!clockInTime || !!clockOutTime) // if (clockInTime not exist) || (clockOutTime Exist!) => return
+            return;
+
+        if (moment(clockInTime).isAfter(latestShift.clockInTime))
+            latestShift = shift;
+    });
+
+    return latestShift;
+};
+
+async function getActiveShift(res) {
+    const company = jwtService.getCompanyFromLocals(res);
+    const user = jwtService.getUserFromLocals(res);
+    let shifts = await ShiftModel.getShiftsBetween(company, null, null, user._id);
+    return calcLatestShift(shifts);
+}
+
 //POST /shifts shift
 router.post('/',
     [
         body('clockInTime').exists().withMessage("clockInTime is mandatory"),
         body('user').exists().withMessage("user is mandatory"),
     ],
-    (req, res) => routeWrapper(req, res, (req, res) => {
+    (req, res) => routeWrapper(req, res, async (req, res) => {
         let newShift = req.body;
         fillMissingShiftData(res, newShift);
+        const activeShift = await getActiveShift(res);
+        if (activeShift)
+            reject('קיימת כבר משמרת ללא סיום', 500);
 
         return ShiftModel.createShift(newShift);
     })

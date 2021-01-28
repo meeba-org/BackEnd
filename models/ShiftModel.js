@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const DraftShiftModel = require("./DraftShiftModel");
 const reject = require("../controllers/apiManager").reject;
 const EShiftStatus = require('../public/helpers/EShiftStatus');
+const moment = require('moment');
 
 // Shift Schema
 const ShiftSchema = mongoose.Schema({
@@ -95,6 +96,9 @@ const getPendingShifts = (company) => {
 };
 
 const getShiftsBetween = (company, startDate, endDate, userId) => {
+    startDate = startDate || moment().add(-1, 'days'); // Default is yesterday
+    endDate = endDate || moment(); // Default is now
+    
     let condition = {
         clockInTime: {
             $gte: startDate,
