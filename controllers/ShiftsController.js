@@ -29,9 +29,8 @@ const calcLatestShift = (shifts) => {
     let latestShift = shifts[0];
     shifts.forEach(shift => {
         let clockInTime = shift.clockInTime;
-        let clockOutTime = shift.clockOutTime;
 
-        if (!clockInTime || !!clockOutTime) // if (clockInTime not exist) || (clockOutTime Exist!) => return
+        if (!clockInTime) // if (clockInTime not exist) - should not happen
             return;
 
         if (moment(clockInTime).isAfter(latestShift.clockInTime))
@@ -41,12 +40,13 @@ const calcLatestShift = (shifts) => {
     return latestShift;
 };
 
-async function getActiveShift(res) {
+const hasActiveShift = async res => {
     const company = jwtService.getCompanyFromLocals(res);
     const user = jwtService.getUserFromLocals(res);
     let shifts = await ShiftModel.getShiftsBetween(company, null, null, user._id);
-    return calcLatestShift(shifts);
-}
+    const latestShift = calcLatestShift(shifts);
+    return latestShift && !latestShift.clockOutTime;
+};
 
 //POST /shifts shift
 router.post('/',
@@ -56,10 +56,10 @@ router.post('/',
     ],
     (req, res) => routeWrapper(req, res, async (req, res) => {
         let newShift = req.body;
-        fillMissingShiftData(res, newShift);
-        const activeShift = await getActiveShift(res);
-        if (activeShift)
-            reject('קיימת כבר משמרת ללא סיום', 500);
+        fillMissingShiftData(res, newShift); // Need to create a user with an employee (currently postman is sending the manager)
+        const hasActiveShiftResult = await hasActiveShift(res);
+        if (hasActiveShiftResult) 
+            return reject('קיימת כבר משמרת ללא סיום', 500);
 
         return ShiftModel.createShift(newShift);
     })
