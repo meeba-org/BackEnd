@@ -25,7 +25,7 @@ const LiveDailyReport = ({theme, employees, hasEmployees, loading, mode, onClick
                     </IconButton>
                     <Autocomplete
                         options={employees}
-                        getOptionLabel={(employee) => employee.fullName}
+                        getOptionLabel={(employee) => employee.fullName || ''}
                         style={{ width: 300 }}
                         disableClearable
                         key={keyToClearInput}

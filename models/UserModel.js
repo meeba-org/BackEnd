@@ -6,7 +6,7 @@ const ETransportPaymentPer = require("./ETransportPaymentPer");
 const UserSchema = mongoose.Schema({
     uid: { type: String, index: true },
     // fbUid: { type: String },
-    fullName: { type: String },
+    fullName: { type: String, default: '' },
     username: { type: String },
     email: { type: String },
     password: { type: String },
