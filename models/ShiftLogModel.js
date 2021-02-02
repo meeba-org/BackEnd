@@ -72,7 +72,7 @@ const getLogsBetween = (company, startDate, endDate) => {
         company: company._id
     };
 
-    return ShiftLog.find(condition).lean()
+    return ShiftLog.find(condition).populate('updatedBy').lean()
         .then(logs => logs.sort((l1, l2) => l1.createdAt - l2.createdAt));
 };
 
