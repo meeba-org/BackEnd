@@ -476,6 +476,18 @@ const getComputeDistanceBetween = (latlngA, latlngB) => {
     return Math.floor(distance * 1000); // Convert to Meters
 };
 
+const calcWorkingDaysCount = (shifts) => { 
+    if (!shifts)
+        return 0;
+    
+    const days = {};
+    for (const shift of shifts) {
+        days[moment(shift.clockInTime).format('DD/MM/YYYY')] = true;
+    }
+    
+    return Object.keys(days).length;
+};
+
 const calcClockInInsideWorkplace = (location, workplaces) => {
     if (!location || !workplaces || workplaces.length === 0)
         return EInsideWorkplace.NOT_RELEVANT;
@@ -527,6 +539,7 @@ function createAdditionalInfo(entity, company) {
     }
 
     info.shiftsCount = entity.shifts.length;
+    info.workingDaysCount = calcWorkingDaysCount(entity.shifts);
 
     // Rounding results
     info.overallHours = (info.regularHours + info.extra125Hours * 1.25 + info.extra150Hours * 1.5 + info.extra175Hours * 1.75 + info.extra200Hours * 2).toFixed(2);
