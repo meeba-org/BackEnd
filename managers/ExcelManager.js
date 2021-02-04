@@ -14,6 +14,7 @@ const isHoliday = require("./HolidayAnalyzer").isHoliday;
 const EShiftStatus = require("../public/helpers/EShiftStatus");
 const ETaskType = require("../models/ETaskType");
 const {REGULAR} = require("../models/ETaskType");
+const { parse2DigitsFloat, isInnovativeTaskRelatedShift } = require('./utils');
 const RowBorderStyle = {
     top: { style: "hair" },
     left: { style: "medium" },
@@ -259,16 +260,20 @@ function addSummaryRow(sheet, row) {
     return row;
 }
 
-const parse2DigitsFloat = totalInPercentage => parseFloat(totalInPercentage.toFixed(2));
-
-const calcTaskShotefPercentage = (task, entity) => {
-    let value = entity.shiftLength > 0 ? task.totalShotef / entity.shiftLength : 0;
-    return parse2DigitsFloat(value);
+const calcTaskResearchShotefPercentage = (task, entity) => {
+    const { totalRegularHours } = entity;
+    if (!isInnovativeTaskRelatedShift(task) || totalRegularHours === 0)
+        return 0;
+    
+    return parse2DigitsFloat(task.totalShotef / totalRegularHours);
 };
 
-const calcTaskRetroPercentage = (task, entity) => {
-    let value = entity.shiftLength > 0 ? task.totalRetro / entity.shiftLength : 0;
-    return parse2DigitsFloat(value);
+const calcTaskResearchRetroPercentage = (task, entity) => {
+    const { totalRegularHours } = entity;
+    if (!isInnovativeTaskRelatedShift(task) || totalRegularHours === 0)
+        return 0;
+
+    return parse2DigitsFloat(task.totalRetro / totalRegularHours);
 };
 
 const calcNumberOfTaskShifts = entity => {
@@ -294,19 +299,17 @@ const calcTaskTotalPercentage = (totalTasksHours, entity) => {
     return parse2DigitsFloat(totalTasksHours / denominator);
 };
 
-const calcTotalInPercentage = (entity, tasks, sheet) => {
+const calcResearchPercentage = (entity, tasks, sheet) => {
     // Total in percentage
     let row = {};
     let companyTasks = getCompanyTasks(tasks);
-    let totalTasksHours = 0;
     
     for (const task of companyTasks) {
-        row[generateTaskKey(task, 'shotef')] = calcTaskShotefPercentage(task, entity);
-        row[generateTaskKey(task, 'retro')] = calcTaskRetroPercentage(task, entity);
-        totalTasksHours += (task.totalShotef + task.totalRetro);
+        row[generateTaskKey(task, 'shotef')] = calcTaskResearchShotefPercentage(task, entity);
+        row[generateTaskKey(task, 'retro')] = calcTaskResearchRetroPercentage(task, entity);
     }
     
-    row['shiftLength'] = calcTaskTotalPercentage(totalTasksHours, entity);
+    row['shiftLength'] = entity.innovativeAuthorityPercentage;
     row = addSummaryRow(sheet, row);
 
     // Formatting the percentage sign...
@@ -394,16 +397,16 @@ const calcOutOfOffice = (entity) => {
     return {oooHours, oooPercentage};
 };
 
-const createSummaryRowContent = (entity, year, month, sheet, tasks) => {
+const createIASummaryRowContent = (entity, year, month, sheet, tasks) => {
     calcTotalInHours(entity, tasks, sheet);
-    calcTotalInPercentage(entity, tasks, sheet);
+    calcResearchPercentage(entity, tasks, sheet);
     calcIAOOORow(entity, tasks, sheet);
     calcIAOOOPercentageRow(entity, tasks, sheet);
 };
 
 const createIAContent = (sheet, company, entity, year, month, tasks) => {
     createIADaysContent(entity, year, month, sheet, tasks);
-    createSummaryRowContent(entity, year, month, sheet, tasks);
+    createIASummaryRowContent(entity, year, month, sheet, tasks);
 };
 
 const createLimitedContentWarning = sheet => {
@@ -1046,7 +1049,6 @@ const addIAEmployeeSheet = async (workbook, company, employee, year, month, task
     
     // create a sheet with the first row and column frozen
     let sheet = addWorksheet(workbook, employee.fullName, null, header);
-
     
     createIASummaryColumns(sheet, company, tasks);
     createIAContent(sheet, company, employee, year, month, tasks);

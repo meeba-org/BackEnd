@@ -3,7 +3,7 @@ const EInsideWorkplace = require("../models/EInsideWorkplace");
 const analyzeDayType = require("./HolidayAnalyzer").analyzeDayType;
 const moment = require('moment-timezone');
 const ETransportPaymentPer = require("../models/ETransportPaymentPer");
-const {getFirstLocation} = require("./utils");
+const {isInnovativeTaskRelatedShift, isRegularShift, parse2DigitsFloat, getFirstLocation} = require("./utils");
 moment.tz.setDefault("Asia/Jerusalem");
 
 const REGULAR_SHIFT_LENGTH = 9;
@@ -90,7 +90,12 @@ let createEmployeeAdditionalInfo = function (entity, company) {
     additionalInfo.transportation = entity.transportPaymentPer === ETransportPaymentPer.MONTHLY ? "-" : entity.transportation;
     additionalInfo.monthlyCommuteCost = calcMonthlyCommuteCost(entity);
     additionalInfo.monthlyExtraPay = calcMonthlyExtraPay(entity);
-    additionalInfo.innovativeAuthorityPercentage = calcInnovativeAuthorityPercentage(entity);
+    
+    const totalRegularHours = calcTotalRegularHours(entity);
+    const innovativeAuthorityHours = calcInnovativeAuthorityHours(entity);
+    additionalInfo.totalRegularHours = totalRegularHours;
+    additionalInfo.innovativeAuthorityHours = innovativeAuthorityHours;
+    additionalInfo.innovativeAuthorityPercentage = parse2DigitsFloat(innovativeAuthorityHours / totalRegularHours);
     additionalInfo.outOfOfficePercentage = calcOutOfOfficePercentage(entity);
     additionalInfo.overallSalary = (additionalInfo.overallHours * entity.hourWage + additionalInfo.monthlyCommuteCost + additionalInfo.monthlyExtraPay).toFixed(2);
 
@@ -398,24 +403,31 @@ function calcMonthlyExtraPay(entity) {
     return monthlyExtraPay;
 }
 
-const isInnovativeTaskRelatedShift = shift => {
-    return shift.task && shift.task.isInnovative;
-};
-
-const calcInnovativeAuthorityPercentage = entity => {
+const calcInnovativeAuthorityHours = entity => {
     let innovativeAuthorityHours = 0;
-    let totalShiftsLength = 0;
 
     entity.shifts.forEach(shift => {
-        totalShiftsLength += shift.hoursAnalysis.shiftLength;
-        if (isInnovativeTaskRelatedShift(shift))
+        if (isInnovativeTaskRelatedShift(shift.task))
             innovativeAuthorityHours += shift.hoursAnalysis.shiftLength;
     });
 
-    if (totalShiftsLength === 0)
+    return innovativeAuthorityHours;
+};
+
+// Calculate regular hours excluding absence days
+const calcTotalRegularHours = entity => {
+    let totalRegularHours = 0;
+
+    entity.shifts.forEach(shift => {
+        if (isRegularShift(shift.task)) {
+            totalRegularHours += shift.hoursAnalysis.shiftLength;
+        }
+    });
+
+    if (totalRegularHours === 0)
         return 0;
 
-    return (innovativeAuthorityHours / totalShiftsLength).toFixed(2) * 100;
+    return totalRegularHours;
 };
 
 // TODO should be removed

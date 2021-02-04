@@ -1,3 +1,4 @@
+const {REGULAR} = require("../models/ETaskType");
 const isValidEmail = email => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
@@ -20,8 +21,22 @@ const getFirstLocation = shift => {
     return shift.location;
 };
 
+const parse2DigitsFloat = floatNum => parseFloat(floatNum.toFixed(2));
+
+// Shift which is not related to task or related to task of type REFULAR
+const isRegularShift = task => {
+    return !task || task && task.type === REGULAR;
+};
+
+const isInnovativeTaskRelatedShift = task => {
+    return task && task.isInnovative;
+};
+
 module.exports = {
     isValidEmail,
     isEmptyObject,
-    getFirstLocation
+    getFirstLocation,
+    parse2DigitsFloat,  
+    isRegularShift,
+    isInnovativeTaskRelatedShift,
 };
