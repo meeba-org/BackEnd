@@ -150,9 +150,9 @@ const getShiftsBetweenDates = async (req, res) => {
     let shifts = await ShiftModel.getShiftsBetween(company, startDate, endDate, userId);
     
     // Enrich data on shift
-    shifts.map(shift => {
+    shifts.forEach(shift => {
         let location = getFirstLocation(shift);
-        shift.isClockInInsideWorkplace = calcClockInInsideWorkplace(location, company.workplaces)
+        shift.isClockInInsideWorkplace = calcClockInInsideWorkplace(location, company.workplaces);
     });
     return shifts;
 };

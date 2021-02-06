@@ -115,7 +115,7 @@ const createIASummaryColumns = (sheet, company, tasks) => {
     }
     
     if (hasWorkplaces(company)) {
-        columns.push({header: 'מחוץ לעבודה', key: 'oooShift', width: 7, style: {alignment: {horizontal: 'center', wrapText: true}}});
+        columns.push({header: 'מיקום', key: 'location', width: 7, style: {alignment: {horizontal: 'center', wrapText: true}}});
     }
 
     columns.push({header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}});
@@ -174,7 +174,7 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
                 clockOutTimeRetro: shift.isClockOutTimeRetro ? calcClockOutTime(shift) : "",
                 shiftLength: hoursAnalysis.shiftLength || "",
                 notes: shift.note,
-                oooShift: isOOOShift(shift) ? "✔" : ""
+                location: calcLocation(shift)
             };
 
             for (const task of tasks) {
@@ -195,7 +195,7 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
                     task.totalShotef += value || 0;
                 }
 
-                if (isOOOShift(shift)) {
+                if (calcLocation(shift)) {
                     task.totalOOO += value || 0;
                 }
 
@@ -701,7 +701,16 @@ const createShiftChangesLogContent = async (sheet, entity, company, shiftChanges
     }
 };
 
-const isOOOShift = shift => shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE;
+const calcLocation = shift => {
+    if (shift.wfh)
+        return "בית";
+    else if (shift.isClockInInsideWorkplace === EInsideWorkplace.INSIDE)
+        return "משרד";
+    else if (shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE)
+        return "חוץ";
+    else 
+        return "לא ידוע";
+};
 
 const createBasicShiftsContent =  (sheet, entity, company, year, month ) => {
     if (!entity.shifts || entity.shifts.length === 0)

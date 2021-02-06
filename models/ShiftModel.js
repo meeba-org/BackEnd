@@ -39,6 +39,7 @@ const ShiftSchema = mongoose.Schema({
     status: {type: Number, default: EShiftStatus.NEW},
     isClockInTimeRetro: { type: Boolean, default: true}, // IA - Was the shift punched as retro or not
     isClockOutTimeRetro: { type: Boolean, default: true}, // IA - Was the shift punched as retro or not
+    wfh: { type: Boolean, default: false}, // IA - Working from home
 });
 
 const Shift = mongoose.model('Shift', ShiftSchema);
