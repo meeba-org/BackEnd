@@ -253,11 +253,10 @@ const addSummaryLabel = (sheet, row, value) => {
     row.getCell(cellIndex).border = {right: {style: "medium"}};
 };
 
-function addSummaryRow(sheet, row) {
+const addSummaryRow = (sheet, row) => {
     row = sheet.addRow(row);
 
-    row.getCell('חופש').border = {left: {style: "medium"}};
-    row.getCell('מילואים').border = {right: {style: "medium"}};
+    row.getCell('חופש').border = {right: {style: "medium"}};
     row.getCell('notes').border = {right: {style: "medium"}, left: {style: "medium"}};
     return row;
 }
