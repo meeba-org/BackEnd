@@ -58,7 +58,7 @@ const LiveShift = ({shift, errors, hover, onUpdateStartTime, onUpdateEndTime, on
             <Note text={shift.note} onClick={showShiftDialog}/>
             {/*<CarCost data={shift.commuteCost} onClick={showShiftDialog}/>*/}
             <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
-            <Location location={location} onClick={showLocationModal} isClockInInsideWorkplace={shift.isClockInInsideWorkplace} />
+            <Location location={location} onClick={showLocationModal} workplaceType={shift.workplaceType} />
             <ExtraPay extraPay={shift.extraPay} onClick={showShiftDialog}/>
             <TaskIndicator task={shift.task} onClick={showShiftDialog}/>
 

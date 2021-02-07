@@ -1,5 +1,5 @@
 const EDayType = require("../models/EDayType");
-const EInsideWorkplace = require("../models/EInsideWorkplace");
+const EWorkplaceType = require("../models/EWorkplaceType");
 const analyzeDayType = require("./HolidayAnalyzer").analyzeDayType;
 const moment = require('moment-timezone');
 const ETransportPaymentPer = require("../models/ETransportPaymentPer");
@@ -437,7 +437,7 @@ const calcOutOfOfficePercentage = (entity) => {
 
     entity.shifts.forEach(shift => {
         totalShiftsLength += shift.hoursAnalysis.shiftLength;
-        if (shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE)
+        if (shift.workplaceType === EWorkplaceType.OUTSIDE)
             oooHours += shift.hoursAnalysis.shiftLength;
     });
 
@@ -500,9 +500,14 @@ const calcWorkingDaysCount = (shifts) => {
     return Object.keys(days).length;
 };
 
-const calcClockInInsideWorkplace = (location, workplaces) => {
+const calcWorkplaceType = (shift, workplaces) => {
+    if (shift.wfh)
+        return EWorkplaceType.HOME;
+
+    let location = getFirstLocation(shift);
+
     if (!location || !workplaces || workplaces.length === 0)
-        return EInsideWorkplace.NOT_RELEVANT;
+        return EWorkplaceType.UNKNOWN;
 
     try {
         for (let workplace of workplaces) {
@@ -512,11 +517,11 @@ const calcClockInInsideWorkplace = (location, workplaces) => {
 
             const distance = getComputeDistanceBetween(wpLocation, {lat: location.latitude, lng: location.longitude});
             if (distance < workplace.radius)
-                return EInsideWorkplace.INSIDE;
+                return EWorkplaceType.OFFICE;
         }
-        return EInsideWorkplace.OUTSIDE;
+        return EWorkplaceType.OUTSIDE;
     } catch (e) {
-        return EInsideWorkplace.NOT_RELEVANT;
+        return EWorkplaceType.UNKNOWN;
     }
 
 
@@ -546,8 +551,7 @@ function createAdditionalInfo(entity, company) {
         info.extra175Hours += hoursAnalysis.extra175Hours;
         info.extra200Hours += hoursAnalysis.extra200Hours;
         shift.hoursAnalysis = hoursAnalysis;
-        let location = getFirstLocation(shift);
-        shift.isClockInInsideWorkplace = calcClockInInsideWorkplace(location, company.workplaces);
+        shift.workplaceType = calcWorkplaceType(shift, company.workplaces);
     }
 
     info.shiftsCount = entity.shifts.length;
@@ -637,5 +641,5 @@ module.exports = {
     shouldHaveBreak,
     getComputeDistanceBetween,
     getComputeDistanceBetween2,
-    calcClockInInsideWorkplace
+    calcWorkplaceType
 };

@@ -35,12 +35,12 @@
     <file url="file://$PROJECT_DIR$/models/CompanyModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/DraftShiftModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/ECrudTyp.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/models/EInsideWorkplace.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/EPlanType.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/EReportFormat.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/ERoles.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/ETaskType.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/ETransportPaymentPer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/models/EWorkplaceType.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/PaymentModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/ShiftLogModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/ShiftModel.js" charset="UTF-8" />

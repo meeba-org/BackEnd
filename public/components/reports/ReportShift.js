@@ -82,7 +82,7 @@ const ReportShift = ({showNames, shift, errors, hover, onUpdateStartTime, onUpda
                     <PendingApprovalIndicator shift={shift} onClick={showShiftDialog} isInnovativeAuthorityEnable={isInnovativeAuthorityEnable}/>
                     <Note text={shift.note} onClick={showShiftDialog}/>
                     <BusCost data={shift.commuteCost} onClick={showShiftDialog}/>
-                    <Location location={location} onClick={showLocationModal} isClockInInsideWorkplace={shift.isClockInInsideWorkplace} />
+                    <Location location={location} onClick={showLocationModal} workplaceType={shift.workplaceType} />
                     <ExtraPay extraPay={shift.extraPay} onClick={showShiftDialog}/>
                     <TaskIndicator task={shift.task} onClick={showShiftDialog}/>
                  </Fragment>

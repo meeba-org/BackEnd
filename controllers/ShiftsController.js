@@ -7,7 +7,7 @@ const ShiftModel = require('../models/ShiftModel');
 const jwtService = require("./jwtService");
 const HolidayAnalyzer = require('../managers/HolidayAnalyzer');
 const {getFirstLocation} = require("../managers/utils");
-const {calcClockInInsideWorkplace} = require("../managers/ShiftAnalyzer");
+const {calcWorkplaceType} = require("../managers/ShiftAnalyzer");
 const reject = require("./apiManager").reject;
 const routeWrapper = require("./apiManager").routeWrapper;
 const { body, param } = require('express-validator/check');
@@ -152,7 +152,7 @@ const getShiftsBetweenDates = async (req, res) => {
     // Enrich data on shift
     shifts.forEach(shift => {
         let location = getFirstLocation(shift);
-        shift.isClockInInsideWorkplace = calcClockInInsideWorkplace(location, company.workplaces);
+        shift.workplaceType = calcWorkplaceType(location, company.workplaces);
     });
     return shifts;
 };

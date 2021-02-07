@@ -4,13 +4,13 @@ import PlaceIcon from "@material-ui/icons/Place";
 import PropTypes from "prop-types";
 import React from "react";
 import "./styles/ShiftIndicator.scss";
-import {INSIDE, OUTSIDE} from "../../../models/EInsideWorkplace";
+import {OFFICE, OUTSIDE} from "../../../models/EWorkplaceType";
 
-const Location = ({location, onClick, isClockInInsideWorkplace}) => {
+const Location = ({location, onClick, workplaceType}) => {
     const calcWorkplaceClass = () => {
-        if (isClockInInsideWorkplace === OUTSIDE)
+        if (workplaceType === OUTSIDE)
             return "outside";
-        else if (isClockInInsideWorkplace === INSIDE)
+        else if (workplaceType === OFFICE)
             return "inside";
         else
             return "";

@@ -2,7 +2,7 @@ const {Feature, isFeatureEnable, isCompanyHasPremium} = require("./FeaturesManag
 const ShiftAnalyzer = require("./ShiftAnalyzer");
 const moment = require('moment');
 const Excel = require('exceljs');
-const EInsideWorkplace = require("../models/EInsideWorkplace");
+const EWorkplaceType = require("../models/EWorkplaceType");
 const ShiftLogModel = require("../models/ShiftLogModel");
 const {getByTaskId} = require("../models/TaskModel");
 const {isTasksEnable, isAbsenceDaysEnable} = require("./FeaturesManager");
@@ -115,7 +115,7 @@ const createIASummaryColumns = (sheet, company, tasks) => {
     }
     
     if (hasWorkplaces(company)) {
-        columns.push({header: 'מיקום', key: 'location', width: 7, style: {alignment: {horizontal: 'center', wrapText: true}}});
+        columns.push({header: 'מיקום', key: 'workplaceType', width: 7, style: {alignment: {horizontal: 'center', wrapText: true}}});
     }
 
     columns.push({header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}});
@@ -130,7 +130,12 @@ const initTaskTotal = tasks => {
     for (const task of tasks) {
         task.totalShotef = 0;
         task.totalRetro = 0;
-        task.totalOOO = 0;
+        task.totalByWorkPlaceType = {
+            [EWorkplaceType.OUTSIDE]: 0,
+            [EWorkplaceType.OFFICE]: 0,
+            [EWorkplaceType.HOME]: 0,
+            [EWorkplaceType.UNKNOWN]: 0,
+        };
         
         // For absence days
         if (task.type !== REGULAR)
@@ -174,7 +179,7 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
                 clockOutTimeRetro: shift.isClockOutTimeRetro ? calcClockOutTime(shift) : "",
                 shiftLength: hoursAnalysis.shiftLength || "",
                 notes: shift.note,
-                location: calcLocation(shift)
+                workplaceType: calcWorkplaceTypeName(shift.workplaceType)
             };
 
             for (const task of tasks) {
@@ -195,10 +200,7 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
                     task.totalShotef += value || 0;
                 }
 
-                if (calcLocation(shift)) {
-                    task.totalOOO += value || 0;
-                }
-
+                task.totalByWorkPlaceType[shift.workplaceType] += value || 0;
             }
 
             addDayRow(sheet, row, shift.clockInTime);
@@ -326,17 +328,15 @@ const calcResearchPercentage = (entity, tasks, sheet) => {
     setRowBold(row);
 };
 
-const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
-    // Total in percentage
-    let {oooPercentage} = calcOutOfOffice(entity);
+const calcWorkplaceTypePercentageRow = (percentage, entity, tasks, sheet, workplaceType) => {
     let companyTasks = getCompanyTasks(tasks);
     let row = {
-        oooShift: oooPercentage
+        workplaceType: percentage
     };
     
     if (entity.shiftLength > 0) {
         for (const task of companyTasks) {
-            row[generateTaskKey(task, 'shotef')] = parseFloat((task.totalOOO / entity.shiftLength).toFixed(2));
+            row[generateTaskKey(task, 'shotef')] = parse2DigitsFloat(task.totalByWorkPlaceType[workplaceType] / entity.shiftLength);
         }
     }
 
@@ -349,23 +349,23 @@ const calcIAOOOPercentageRow = (entity, tasks, sheet) => {
         cellShotef.style = {numFmt: '0%', alignment: {horizontal: "center"}};
     }
     
-    let oooCell = row.getCell('oooShift');
-    oooCell.style = {numFmt: '0%', alignment: {horizontal: "center"}};
+    let workplaceTypeCell = row.getCell('workplaceType');
+    workplaceTypeCell.style = {numFmt: '0%', alignment: {horizontal: "center"}};
 
-    addSummaryLabel(sheet, row, 'מחוץ לעבודה (%)');
+    const workplaceTypeName = calcWorkplaceTypeName(workplaceType);
+    addSummaryLabel(sheet, row, '(%) ' + workplaceTypeName);
     setRowBold(row);
 };
 
-const calcIAOOORow = (entity, tasks, sheet) => {
-    // Total in percentage
-    let {oooHours} = calcOutOfOffice(entity);
+const calcWorkplaceTypeHoursRow = (hours, tasks, sheet, workplaceType) => {
+    // Total in hours
     let row = {
-        oooShift: oooHours
+        workplaceType: hours
     };
     
     let companyTasks = getCompanyTasks(tasks);
     for (const task of companyTasks) {
-        row[generateTaskKey(task, 'shotef')] = task.totalOOO;
+        row[generateTaskKey(task, 'shotef')] = task.totalByWorkPlaceType[workplaceType];
     }
 
     row = addSummaryRow(sheet, row);    
@@ -376,32 +376,38 @@ const calcIAOOORow = (entity, tasks, sheet) => {
         sheet.mergeCells(row._number, cellShotef._column._number, row._number, cellRetro._column._number); // Merging cells
     }
 
-    addSummaryLabel(sheet, row, 'מחוץ לעבודה');
+    const workplaceTypeName = calcWorkplaceTypeName(workplaceType);
+    addSummaryLabel(sheet, row, workplaceTypeName);
     setRowBold(row);
 };
 
-const calcOutOfOffice = (entity) => {
-    let oooHours = 0;
+const calcWorkplaceTypeHours = (entity, workplaceType) => {
+    let hours = 0;
     let totalShiftsLength = 0;
 
     entity.shifts.forEach(shift => {
         totalShiftsLength += shift.hoursAnalysis.shiftLength;
-        if (shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE)
-            oooHours += shift.hoursAnalysis.shiftLength;
+        if (shift.workplaceType === workplaceType)
+            hours += shift.hoursAnalysis.shiftLength;
     });
 
     if (totalShiftsLength === 0)
         return 0;
 
-    let oooPercentage = parseFloat((oooHours / totalShiftsLength).toFixed(2)) ;
-    return {oooHours, oooPercentage};
+    let percentage = parse2DigitsFloat(hours / totalShiftsLength);
+    return {hours, percentage};
 };
 
 const createIASummaryRowContent = (entity, year, month, sheet, tasks) => {
     calcTotalInHours(entity, tasks, sheet);
     calcResearchPercentage(entity, tasks, sheet);
-    calcIAOOORow(entity, tasks, sheet);
-    calcIAOOOPercentageRow(entity, tasks, sheet);
+    
+    for (let workplaceType of [EWorkplaceType.OFFICE, EWorkplaceType.HOME, EWorkplaceType.OUTSIDE, EWorkplaceType.UNKNOWN]) {
+        let {hours, percentage} = calcWorkplaceTypeHours(entity, workplaceType);
+
+        calcWorkplaceTypeHoursRow(hours, tasks, sheet, workplaceType);
+        calcWorkplaceTypePercentageRow(percentage, entity, tasks, sheet, workplaceType);
+    }
 };
 
 const createIAContent = (sheet, company, entity, year, month, tasks) => {
@@ -701,15 +707,18 @@ const createShiftChangesLogContent = async (sheet, entity, company, shiftChanges
     }
 };
 
-const calcLocation = shift => {
-    if (shift.wfh)
-        return "בית";
-    else if (shift.isClockInInsideWorkplace === EInsideWorkplace.INSIDE)
-        return "משרד";
-    else if (shift.isClockInInsideWorkplace === EInsideWorkplace.OUTSIDE)
-        return "חוץ";
-    else 
-        return "לא ידוע";
+const calcWorkplaceTypeName = workplaceType => {
+    switch (workplaceType) {
+        case EWorkplaceType.OUTSIDE:
+            return "חוץ";
+        case EWorkplaceType.OFFICE:
+            return "משרד";
+        case EWorkplaceType.HOME:
+            return "בית";
+        case EWorkplaceType.UNKNOWN:
+        default:
+            return "לא ידוע";
+    }
 };
 
 const createBasicShiftsContent =  (sheet, entity, company, year, month ) => {
