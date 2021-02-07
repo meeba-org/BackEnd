@@ -335,7 +335,7 @@ const calcWorkplaceTypePercentageRow = (percentage, entity, tasks, sheet, workpl
     
     if (entity.shiftLength > 0) {
         for (const task of companyTasks) {
-            row[generateTaskKey(task, 'shotef')] = parse2DigitsFloat(task.totalByWorkPlaceType[workplaceType] / entity.shiftLength);
+            row[generateTaskKey(task, 'shotef')] = parse2DigitsFloat(task.totalByWorkPlaceType[workplaceType] / entity.totalRegularHours);
         }
     }
 
@@ -382,18 +382,19 @@ const calcWorkplaceTypeHoursRow = (hours, tasks, sheet, workplaceType) => {
 
 const calcWorkplaceTypeHours = (entity, workplaceType) => {
     let hours = 0;
-    let totalShiftsLength = 0;
 
     entity.shifts.forEach(shift => {
-        totalShiftsLength += shift.hoursAnalysis.shiftLength;
+        if (!shift.task || shift.task.type !== ETaskType.REGULAR)
+            return; // In IA mode we ignore shifts that does not belong to a Regular task - actually this should not happens! every shift should be related to a regular task
+        
         if (shift.workplaceType === workplaceType)
             hours += shift.hoursAnalysis.shiftLength;
     });
 
-    if (totalShiftsLength === 0)
+    if (entity.totalRegularHours === 0)
         return 0;
 
-    let percentage = parse2DigitsFloat(hours / totalShiftsLength);
+    let percentage = parse2DigitsFloat(hours / entity.totalRegularHours);
     return {hours, percentage};
 };
 
