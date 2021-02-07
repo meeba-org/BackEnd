@@ -211,9 +211,9 @@ const createIADaysContent = (entity, year, month, sheet, tasks) => {
 const calcTotalInHours = (entity, tasks, sheet) => {
     // Total in hours
     let row = {
-        shiftLength: entity.shiftLength || "",
+        shiftLength: entity.totalRegularHours || "", // Total hours excluding absence days
     };
-
+    
     for (const task of tasks) {
         if (task.type === REGULAR) {
             row[generateTaskKey(task, 'shotef')] = task.totalShotef;
