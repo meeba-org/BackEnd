@@ -299,6 +299,8 @@ describe('ShiftAnalyzer', function () {
             latitude: 32.789019,
             longitude: 34.9596217
         };
+        
+        const busStopShift = { locations: [busStop]}
 
         let tolunaWorkplace = {
             location: {
@@ -325,20 +327,20 @@ describe('ShiftAnalyzer', function () {
         it('workplaceType === EWorkplaceType.INSIDE', () => {
             tolunaWorkplace.radius = 200;
 
-            const workplaceType = calcWorkplaceType(busStop, [tolunaWorkplace]);
+            const workplaceType = calcWorkplaceType(busStopShift, [tolunaWorkplace]);
             expect(workplaceType).to.be.equal(EWorkplaceType.OFFICE);
         });
 
         it('workplaceType === EWorkplaceType.OUTSIDE', () => {
             tolunaWorkplace.radius = 100;
 
-            const workplaceType = calcWorkplaceType(busStop, [tolunaWorkplace]);
+            const workplaceType = calcWorkplaceType(busStopShift, [tolunaWorkplace]);
             expect(workplaceType).to.be.equal(EWorkplaceType.OUTSIDE);
         });
 
         it('workplaceType === EWorkplaceType.NOT_RELEVANT 1', () => {
 
-            const workplaceType = calcWorkplaceType(busStop, []);
+            const workplaceType = calcWorkplaceType(busStopShift, []);
             expect(workplaceType).to.be.equal(EWorkplaceType.UNKNOWN);
         });
 

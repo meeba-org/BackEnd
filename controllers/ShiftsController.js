@@ -151,8 +151,7 @@ const getShiftsBetweenDates = async (req, res) => {
     
     // Enrich data on shift
     shifts.forEach(shift => {
-        let location = getFirstLocation(shift);
-        shift.workplaceType = calcWorkplaceType(location, company.workplaces);
+        shift.workplaceType = calcWorkplaceType(shift, company.workplaces);
     });
     return shifts;
 };
