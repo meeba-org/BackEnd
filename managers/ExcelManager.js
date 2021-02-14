@@ -31,6 +31,8 @@ const DATE_FORMAT = "DD/MM/YYYY";
 const TIME_FORMAT = "HH:mm";
 const DATE_AND_TIME_FORMAT = `${TIME_FORMAT} ${DATE_FORMAT}`;
 const DAILY_HOURS_TEKEN = 8.6; // https://www.kolzchut.org.il/he/%D7%99%D7%95%D7%9D_%D7%A2%D7%91%D7%95%D7%93%D7%94_%D7%95%D7%A9%D7%91%D7%95%D7%A2_%D7%A2%D7%91%D7%95%D7%93%D7%94
+const FORZEN_ROWS_NUM = 3;
+
 moment.locale('he');
 
 const createTitleDate = (year, month) => moment().year(year).month(month - 1).format('MM-YYYY');
@@ -40,11 +42,11 @@ const setSummaryHeaderColor = sheet => {
 };
 
 const setEmployeeHeaderColor = sheet => {
-    setHeaderColor(sheet);
+    setHeaderColor(sheet, FORZEN_ROWS_NUM);
 };
 
-let setHeaderColor = function (sheet) {
-    let headerRow = sheet.getRow(1);
+let setHeaderColor = function (sheet, headerRowStart = 1) {
+    let headerRow = sheet.getRow(headerRowStart);
 
     setRowBold(headerRow);
     markBorders(sheet, headerRow, HeaderBorderStyle);
@@ -522,7 +524,16 @@ const createShiftChangesLogColumns = (sheet, company) => {
     setHeaderColor(sheet);
 };
 
-const createShiftsPerEmployeeColumns = (sheet, company) => {
+const setHeaderRows = (sheet, startCell, endCell, text) => {
+    sheet.mergeCells(startCell, endCell);
+    sheet.getCell('C1').value = text;
+    const headerRow = sheet.getRow(1);
+    headerRow.font = {bold: true, size: 18};
+    headerRow.alignment = {vertical: 'middle', horizontal: 'center'};
+};
+
+const createShiftsPerEmployeeColumns = (sheet, company, employee) => {
+    setHeaderRows(sheet, 'B1', 'O2', `${employee.fullName} - ${employee.uid}`);
     let columns = createBasicShiftsColumns(sheet, company);
 
     if (isTasksEnable(company) || isAbsenceDaysEnable(company)) {
@@ -534,12 +545,26 @@ const createShiftsPerEmployeeColumns = (sheet, company) => {
         {header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}},
     ];
 
-    sheet.columns = columns.concat(employeeColumns);
+    columns = columns.concat(employeeColumns);
+
+    // Header names
+    sheet.getRow(FORZEN_ROWS_NUM).values = columns.map(c => c.header);
+    
+    const processedColumns = columns.map(c => {
+        let columnWithoutHeader = {...c};
+        delete columnWithoutHeader.header;
+        return columnWithoutHeader;
+    });
+
+    // We pass the columns without the 'header' key in order to have rows in the begining of the sheet that will function as a header
+    // https://github.com/exceljs/exceljs/issues/433#issuecomment-343955264
+    sheet.columns = processedColumns; 
 
     setEmployeeHeaderColor(sheet);
 };
 
-const createShiftsPerTaskColumns = (sheet, company) => {
+const createShiftsPerTaskColumns = (sheet, company, task) => {
+    setHeaderRows(sheet, 'B1', 'Q2', task.title);
     let columns = createBasicShiftsColumns(sheet, company);
 
     const taskColumns = [
@@ -550,9 +575,21 @@ const createShiftsPerTaskColumns = (sheet, company) => {
         {header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}},
     ];
 
-    sheet.columns = columns.concat(taskColumns);
+    columns = columns.concat(taskColumns);
+    // Header names
+    sheet.getRow(FORZEN_ROWS_NUM).values = columns.map(c => c.header);
 
-    setHeaderColor(sheet);
+    const processedColumns = columns.map(c => {
+        let columnWithoutHeader = {...c};
+        delete columnWithoutHeader.header;
+        return columnWithoutHeader;
+    });
+
+    // We pass the columns without the 'header' key in order to have rows in the begining of the sheet that will function as a header
+    // https://github.com/exceljs/exceljs/issues/433#issuecomment-343955264
+    sheet.columns = processedColumns;
+
+    setHeaderColor(sheet, FORZEN_ROWS_NUM);
 };
 
 function shouldAddCommuteData(company, shift) {
@@ -591,7 +628,6 @@ function formatTask(task) {
 
 const createShiftsPerTasksContent = function (sheet, task, company, year, month ) {
     createBasicShiftsContent(sheet, task, company, year, month );
-
 };
 
 const createShiftsPerEmployeesContent = function (sheet, employee, company, year, month ) {
@@ -920,7 +956,7 @@ const handleTitle = (title, workbook) => {
     return title;
 };
 
-let addWorksheet = function (workbook, title, color, header) {
+const addWorksheet = (workbook, title, color, header, frozenRows = 1) => {
     title = handleTitle(title, workbook);
 
     return workbook.addWorksheet(title, {
@@ -930,7 +966,7 @@ let addWorksheet = function (workbook, title, color, header) {
         views: [{
             state: 'frozen',
             xSplit: 1,
-            ySplit: 1,
+            ySplit: frozenRows,
             rightToLeft: true
         }],
         headerFooter: {
@@ -961,12 +997,11 @@ const addIAEmployeeChangesLogSheet = async (workbook, employee, shiftChangesLog,
 };
 
 const addShiftsPerEmployeeSheets = async (workbook, company, employees, year, month) => {
-
     for (const employee of employees) {
         // create a sheet with the first row and column frozen
-        let sheet = addWorksheet(workbook, employee.fullName, "54A759");
+        let sheet = addWorksheet(workbook, employee.fullName, "54A759", undefined, FORZEN_ROWS_NUM);
 
-        createShiftsPerEmployeeColumns(sheet, company);
+        createShiftsPerEmployeeColumns(sheet, company, employee);
         createShiftsPerEmployeesContent(sheet, employee, company, year, month);
         createEmployeesTotalSection(sheet, employee);
     }
@@ -990,9 +1025,9 @@ function generateTaskName(task) {
 const addShiftsPerTaskSheets = (workbook, company, tasks, year, month) => {
     tasks.forEach((task) => {
         // create a sheet with the first row and column frozen
-        let sheet = addWorksheet(workbook, generateTaskName(task), "D49B6A");
+        let sheet = addWorksheet(workbook, generateTaskName(task), "D49B6A", undefined, FORZEN_ROWS_NUM);
 
-        createShiftsPerTaskColumns(sheet, company);
+        createShiftsPerTaskColumns(sheet, company, task);
         createShiftsPerTasksContent(sheet, task, company, year, month );
         createTasksTotalSection(sheet, task);
     });

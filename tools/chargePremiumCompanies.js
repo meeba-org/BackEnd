@@ -37,7 +37,7 @@ const chargePremiumCompanies = async () => {
         try{
             console.log(`${company.name} - Charging company - id: ${company._id}`);
             // For testing comment the following line
-             await generateImmediatePayment(company._id);
+            //  await generateImmediatePayment(company._id);
             console.log(`${company.name} - Success!`);
         }
         catch (e) {
