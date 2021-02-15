@@ -1,3 +1,4 @@
+import {Checkbox, FormControlLabel} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -37,6 +38,10 @@ const styles = {
     dialogContentRoot: {
         display: "flex",
         flexDirection: "column",
+    },
+    wfhCheckBox: {
+        color: 'grey',
+        paddingTop: '10px'
     }
 };
 
@@ -378,13 +383,13 @@ class EditShiftModal extends Component {
     }
 
     render() {
-        let {open, classes, isCommuteFeatureEnable, isTasksFeatureEnable} = this.props;
+        let {open, classes, isCommuteFeatureEnable, isTasksFeatureEnable, isInnovativeAuthorityEnable} = this.props;
         let shift = this.state.entity;
 
         if (!shift)
             return null;
 
-        let {note, extraPay, breakLength, task} = shift || {};
+        let {note, extraPay, breakLength, task, wfh} = shift || {};
         let date = this.calcDate(shift);
         let dateHelperText = this.calcDateHelperText(shift);
         let clockInTime = this.calcClockInTime(shift);
@@ -436,6 +441,14 @@ class EditShiftModal extends Component {
                         label={"הערות"}
                         />
 
+                    {isInnovativeAuthorityEnable &&
+                    <FormControlLabel
+                        classes={{root: classes.wfhCheckBox}}
+                        control={<Checkbox checked={wfh} onChange={e => this.handleShiftChange('wfh', e.target.checked)} style={{color: "grey"}}/>}
+                        label="עבודה מהבית"
+                    />
+                    }
+                    
                     <ESMTextInput
                         onChange={(e) => this.handleShiftChange("extraPay", e.target.value)}
                         value={extraPay}
@@ -508,6 +521,7 @@ const mapStateToProps = (state) => {
     return {
         isCommuteFeatureEnable: selectors.isCommuteFeatureEnable(state),
         isTasksFeatureEnable: selectors.isTasksFeatureEnable(state),
+        isInnovativeAuthorityEnable: selectors.isInnovativeAuthorityEnable(state),
     };
 };
 
