@@ -115,12 +115,8 @@ const createIASummaryColumns = (sheet, company, tasks) => {
         columns.push({header: task.title, key: task.title, width: NUMBER_WIDTH, style: {alignment: {horizontal: 'center', wrapText: true}}});
     }
     
-    if (hasWorkplaces(company)) {
-        columns.push({header: 'מחוץ לעבודה', key: 'oooShift', width: 7, style: {alignment: {horizontal: 'center', wrapText: true}}});
-    }
-
+    columns.push({header: 'מחוץ לעבודה', key: 'oooShift', width: 7, style: {alignment: {horizontal: 'center', wrapText: true}}});
     columns.push({header: 'הערות', key: 'notes', width: 30, style: {alignment: {horizontal: 'right'}}});
-    // TODO add absence days columns
     
     sheet.columns = columns;
 
