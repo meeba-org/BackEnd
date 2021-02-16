@@ -233,8 +233,8 @@ const calcTotalInHours = (entity, tasks, sheet) => {
             let shotefKey = generateTaskKey(task, 'shotef');
             let retroKey = generateTaskKey(task, 'retro');
 
-            row.getCell(shotefKey).border = {...row.getCell(shotefKey).border, top: {style: "medium"}};
-            row.getCell(retroKey).border = {...row.getCell(retroKey).border, top: {style: "medium"}};
+            row.getCell(shotefKey).border = {...row.getCell(shotefKey).border, top: {style: "medium"}, left: {style: "thin"}};
+            row.getCell(retroKey).border = {...row.getCell(retroKey).border, top: {style: "medium"}, right: {style: "thin"}};
         }
         else {
             row.getCell(task.title).border = {...row.getCell(task.title).border, top: {style: "medium"}};
@@ -318,7 +318,9 @@ const calcResearchPercentage = (entity, tasks, sheet) => {
         let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
         let cellRetro = row.getCell(generateTaskKey(task, 'retro'));
         cellShotef.style = {numFmt: '0%', alignment: {horizontal: "center"}};
+        cellShotef.border = {left: {style: "thin"}};
         cellRetro.style = {numFmt: '0%', alignment: {horizontal: "center"}};
+        cellRetro.border = {right: {style: "thin"}};
     }
     let totalInPercentageCell = row.getCell('shiftLength');
     totalInPercentageCell.style = {numFmt: '0%', alignment: {horizontal: "center"}};
@@ -335,7 +337,8 @@ const calcWorkplaceTypePercentageRow = (percentage, entity, tasks, sheet, workpl
     
     if (entity.shiftLength > 0) {
         for (const task of companyTasks) {
-            row[generateTaskKey(task, 'shotef')] = parse2DigitsFloat(task.totalByWorkPlaceType[workplaceType] / entity.totalRegularHours);
+            const taskTotal = task.totalShotef + task.totalRetro;
+            row[generateTaskKey(task, 'shotef')] = taskTotal === 0 ? 0 : parse2DigitsFloat(task.totalByWorkPlaceType[workplaceType] / taskTotal);
         }
     }
 
@@ -346,6 +349,8 @@ const calcWorkplaceTypePercentageRow = (percentage, entity, tasks, sheet, workpl
         let cellRetro = row.getCell(generateTaskKey(task, 'retro'));
         sheet.mergeCells(row._number, cellShotef._column._number, row._number, cellRetro._column._number); // Merging cells
         cellShotef.style = {numFmt: '0%', alignment: {horizontal: "center"}};
+        cellShotef.border = {left: {style: "thin"}};
+        cellRetro.border = {right: {style: "thin"}};
     }
     
     let workplaceTypeCell = row.getCell('workplaceType');
@@ -373,6 +378,7 @@ const calcWorkplaceTypeHoursRow = (hours, tasks, sheet, workplaceType) => {
         let cellShotef = row.getCell(generateTaskKey(task, 'shotef'));
         let cellRetro = row.getCell(generateTaskKey(task, 'retro'));
         sheet.mergeCells(row._number, cellShotef._column._number, row._number, cellRetro._column._number); // Merging cells
+        cellShotef.border = {right: {style: "thin"}, left: {style: "thin"}};
     }
 
     const workplaceTypeName = calcWorkplaceTypeName(workplaceType);
