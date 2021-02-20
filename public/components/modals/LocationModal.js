@@ -44,7 +44,7 @@ const LocationModal = ({open, locations, classes}) => {
 };
 
 LocationModal.propTypes = {
-    locations: PropTypes.object,
+    locations: PropTypes.array,
     dispatch: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
 };
