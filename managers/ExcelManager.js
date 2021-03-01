@@ -134,6 +134,7 @@ const initTaskTotal = tasks => {
             [EWorkplaceType.OUTSIDE]: 0,
             [EWorkplaceType.OFFICE]: 0,
             [EWorkplaceType.HOME]: 0,
+            [EWorkplaceType.HOT_SPOT]: 0,
             [EWorkplaceType.UNKNOWN]: 0,
         };
         
@@ -408,7 +409,7 @@ const createIASummaryRowContent = (entity, year, month, sheet, tasks) => {
     calcTotalInHours(entity, tasks, sheet);
     calcResearchPercentage(entity, tasks, sheet);
     
-    for (let workplaceType of [EWorkplaceType.OFFICE, EWorkplaceType.HOME, EWorkplaceType.OUTSIDE, EWorkplaceType.UNKNOWN]) {
+    for (let workplaceType of [EWorkplaceType.OFFICE, EWorkplaceType.HOME, EWorkplaceType.OUTSIDE, EWorkplaceType.HOT_SPOT, EWorkplaceType.UNKNOWN]) {
         let {hours, percentage} = calcWorkplaceTypeHours(entity, workplaceType);
 
         calcWorkplaceTypeHoursRow(hours, tasks, sheet, workplaceType);
@@ -721,6 +722,8 @@ const calcWorkplaceTypeName = workplaceType => {
             return "משרד";
         case EWorkplaceType.HOME:
             return "בית";
+        case EWorkplaceType.HOT_SPOT: // Not in used added because IA wanted
+            return "נקודה חמה";
         case EWorkplaceType.UNKNOWN:
         default:
             return "לא ידוע";
@@ -1110,7 +1113,7 @@ const createIASheetFooter = (sheet, shouldAddStatement) => {
 
     if (shouldAddStatement) {
         sheet.mergeCells(row._number, columnsLength, row._number, 2); // Merging cells
-        row.getCell(2).value = 'הריני מצהיר כי דו"ח שעות זה משקף את חלוקת שעות עבודתי במשימות השונות, וכי ידוע לי כי דו"ח זה ישמש לתביעת תמיכה כספית שתוגש ע"י החברה, לרשות החדשנות, משרד התעשייה, המסחר והתעסוקה';
+        row.getCell(2).value = 'הריני מצהיר כי דו"ח שעות זה משקף את חלוקת שעות עבודתי במשימות השונות, וכי ידוע לי כי דו"ח זה ישמש לתביעת תמיכה כספית שתוגש ע"י החברה, לרשות החדשנות, משרד הכלכלה';
     }
     
     row = sheet.addRow();
