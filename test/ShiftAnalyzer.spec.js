@@ -300,7 +300,7 @@ describe('ShiftAnalyzer', function () {
             longitude: 34.9596217
         };
         
-        const busStopShift = { locations: [busStop]}
+        const busStopShift = { locations: [busStop]};
 
         let tolunaWorkplace = {
             location: {
@@ -346,7 +346,7 @@ describe('ShiftAnalyzer', function () {
 
         it('workplaceType === EWorkplaceType.NOT_RELEVANT 2', () => {
 
-            const workplaceType = calcWorkplaceType(undefined, [tolunaWorkplace]);
+            const workplaceType = calcWorkplaceType({}, [tolunaWorkplace]);
             expect(workplaceType).to.be.equal(EWorkplaceType.UNKNOWN);
         });
     });
