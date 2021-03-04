@@ -1,3 +1,4 @@
+import {Box} from "@material-ui/core";
 import {EmojiObjects, SaveAlt} from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import moment from 'moment';
@@ -15,11 +16,12 @@ import MbActionsControls from "../MbActionsControls";
 import MbCard from "../MbCard";
 import MonthPicker from "../MonthPicker";
 import NoData from "../NoData";
+import SearchBar from "../SearchBar";
 import ReportSummary from "./ReportSummary";
 
 const MonthlyReport = (
     {
-        reports, employees, userRole, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, 
+        reports: orgReports, employees, userRole, ReportLineComponent, title, postUpdate, isDesktop, startOfMonth, defaultExportFormat, 
         onExportReport, onMonthChange, onCreateShift, onDeleteShift, isInnovativeAuthorityEnable, summary
     }) => {
     
@@ -27,6 +29,31 @@ const MonthlyReport = (
     const [open, setOpen] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(moment().month() + 1);
     const [selectedYear, setSelectedYear] = useState(moment().year());
+    const [search, setSearch] = useState("");
+    const [reports, setReports] = useState([]);
+    
+    useEffect(() => {
+        if (!orgReports)
+            return;
+
+        let newReports;
+        if (!search) {
+            newReports = orgReports;
+        } else {
+            newReports = orgReports.filter(r => {
+                // In case its a employee...
+                if (r.fullName)
+                    return r.fullName.includes(search);
+
+                // In case its a task...
+                if (r.title)
+                    return r.title.includes(search);
+            });
+        }
+        
+        setReports(newReports);
+    }, [orgReports, search]);
+    
     
     useEffect(() => {
         onMonthChange(selectedMonth, selectedYear);
@@ -68,45 +95,53 @@ const MonthlyReport = (
     
     return (
         <MbCard title={title} styleName="monthly-report">
-            <MbActionsControls>
-                <AddShiftsDialog
-                    open={open}
-                    onCreate={handleCreateShift}
-                    onCancel={handleCloseAddDialog}
-                    employees={employees}
-                    defaultStartDate={moment().year(selectedYear).month(selectedMonth - 1).startOf('month').format(DATE_FORMAT)}
-                />
-                <MonthPicker
-                    onMonthChange={handleMonthChange}
-                    selectedMonth={selectedMonth}
-                    selectedYear={selectedYear}
-                    isDesktop={isDesktop}
-                    startOfMonth={startOfMonth}
-                />
-
-                <MbActionButton
-                    onClick={handleOpenAddDialog}
-                    iconComponent={AddIcon}
-                    tooltip={"הוספת משמרת"}
-                />
-
-                <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
-                    <MbActionButton
-                        onClick={handleExportReportClick}
-                        iconComponent={SaveAlt}
-                        tooltip={`ייצוא דוח חודשי ל${defaultExportFormat === EXCEL ? "אקסל" : "מיכפל"}`}
+            <MbActionsControls direction="column">
+                <Box display="flex" flexDirection="row">
+                    <AddShiftsDialog
+                        open={open}
+                        onCreate={handleCreateShift}
+                        onCancel={handleCloseAddDialog}
+                        employees={employees}
+                        defaultStartDate={moment().year(selectedYear).month(selectedMonth - 1).startOf('month').format(DATE_FORMAT)}
                     />
-                    {isInnovativeAuthorityEnable &&
-                    <MbActionButton
-                        onClick={handleExportInnovationAuthorityReportClick}
-                        iconComponent={EmojiObjects}
-                        tooltip={"ייצוא דוח הרשות לחדשנות"}
+                    <MonthPicker
+                        onMonthChange={handleMonthChange}
+                        selectedMonth={selectedMonth}
+                        selectedYear={selectedYear}
+                        isDesktop={isDesktop}
+                        startOfMonth={startOfMonth}
                     />
-                    }
-                </IfGranted>
 
-                {summary && summary.employeesCount > 0 && 
+                    <MbActionButton
+                        onClick={handleOpenAddDialog}
+                        iconComponent={AddIcon}
+                        tooltip={"הוספת משמרת"}
+                    />
+
+                    <IfGranted expected={ERoles.COMPANY_MANAGER} actual={[userRole]}>
+                        <MbActionButton
+                            onClick={handleExportReportClick}
+                            iconComponent={SaveAlt}
+                            tooltip={`ייצוא דוח חודשי ל${defaultExportFormat === EXCEL ? "אקסל" : "מיכפל"}`}
+                        />
+                        {isInnovativeAuthorityEnable &&
+                        <MbActionButton
+                            onClick={handleExportInnovationAuthorityReportClick}
+                            iconComponent={EmojiObjects}
+                            tooltip={"ייצוא דוח הרשות לחדשנות"}
+                        />
+                        }
+                    </IfGranted>
+
+                    {summary && summary.employeesCount > 0 &&
                     <ReportSummary summary={summary}/>
+                    }
+                </Box>
+
+                {employees?.length > 20 &&
+                <div style={{paddingTop: "20px"}}>
+                    <SearchBar onChange={setSearch}/>
+                </div>
                 }
             </MbActionsControls>
 
@@ -124,7 +159,6 @@ const MonthlyReport = (
                         />
                     </Fade>)
                 )
-                //.filter((obj, index) => this.filterEmployees(obj, index, fields, this.state.employeesFilter))
             }
             {(!reports || (reports.length === 0)) &&
             <NoData text="לא נמצאו משמרות"/>
