@@ -1,4 +1,5 @@
 import {EModalType} from "../components/modals/EModalType";
+import {DEFAULT_IA_TASK_TITLE, DEFAULT_NON_IA_TASK_TITLE} from "../components/user/constants";
 import {
     API,
     CREATE_USER_SUCCESS,
@@ -7,6 +8,8 @@ import {
     FETCH_USERS_SUCCESS, UPDATE_ACTIVE_USER_SUCCESS,
     UPDATE_USER_SUCCESS
 } from "./actionTypes";
+import {approveShifts} from "./shiftsActions";
+import {createTask} from "./tasksActions";
 
 export const fetchUserSuccess = (payload) => ({
     type: FETCH_USER_SUCCESS,
@@ -169,3 +172,49 @@ export const deleteUser = (user) => ({
         shouldAuthenticate: true,
     }
 });
+
+export const showAddDefaultIATasksModal = (tasks, companyId) => ({
+    type: 'SHOW_MODAL',
+    payload: {
+        modalType: EModalType.YES_NO_MODAL,
+        modalProps: {
+            open: true,
+            onAction: () => addDefaultIATasks(tasks, companyId),
+            text: "תרצה להוסיף את המשימות הבאות: 'מחקר ופיתוח' ו-'אחר'?"
+        }
+    }
+});
+
+export const handleInnovativeAuthorityChange = companyId => ({
+    type: API,
+    payload: {
+        url: `/company/${companyId}/enableIA`,
+        method: "post",
+        data: {},
+        success: deleteUserSuccess,
+    },
+    meta: {
+        shouldAuthenticate: true,
+    }
+});
+
+const addDefaultIATasks = (tasks, companyId) => dispatch => {
+    const shouldAddDefaultIATask = !(tasks.find(t => t.title === DEFAULT_IA_TASK_TITLE));
+    const shouldAddNoneIaTask = !(tasks.find(t => t.title === DEFAULT_NON_IA_TASK_TITLE));
+    
+    if (shouldAddDefaultIATask) {
+        // dispatch(createTask({
+        //     title: DEFAULT_IA_TASK_TITLE,
+        //     isInnovative: true,
+        //     company: companyId
+        // }));
+    }
+    
+    if (shouldAddNoneIaTask) {
+        // dispatch(createTask({
+        //     title: DEFAULT_NON_IA_TASK_TITLE,
+        //     isInnovative: false,
+        //     company: companyId
+        // }));
+    }
+};

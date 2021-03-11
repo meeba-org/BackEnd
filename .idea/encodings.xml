@@ -141,6 +141,7 @@
     <file url="file://$PROJECT_DIR$/public/components/login/styles/LoginRegister.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/material-ui-wrappers/index.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/AbsenceDaysModal.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/modals/AddDefaultIATasks.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/Covid19Discount.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/DeleteModal.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/modals/EModalType.js" charset="UTF-8" />
@@ -207,6 +208,7 @@
     <file url="file://$PROJECT_DIR$/public/components/user/StartOfMonthField.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/UserContainer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/WorkplacesContainer.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/components/user/constants.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/styles/SettingSwitch.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/user/styles/User.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/public/components/withShiftLogic.js" charset="UTF-8" />

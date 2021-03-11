@@ -1,10 +1,10 @@
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {MAX_FREE_TASKS_ALLOWED} from "../../../constants";
 import * as ETaskType from "../../../models/ETaskType";
-import {fetchTasks, openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
+import {openTaskModal, showDeleteTaskModal} from "../../actions/tasksActions";
 import * as selectors from "../../selectors";
 import MbActionButton from "../MbActionButton";
 import GoPremiumNotification from "../go-premium/GoPremiumNotification";
@@ -14,13 +14,9 @@ import BreadCrumb from "./BreadCrumb";
 import {filterTasks} from "./TaskService";
 import TasksList from "./TasksList";
 
-const TasksContainer = ({openTaskModal, showDeleteTaskModal, isEditAllowed, isAddAllowed, fetchTasks, tasks, company}) => {
+const TasksContainer = ({openTaskModal, showDeleteTaskModal, isEditAllowed, isAddAllowed, tasks, company}) => {
     const [breadcrumbTasks, setBreadcrumbTasks] = useState([]);
     const [selectedParent, setSelectedParent] = useState(null);
-
-    useEffect(() => {
-        fetchTasks();
-    }, []); 
 
     const onCreate = () => {
         let parent = (!selectedParent) ? null : selectedParent._id;
@@ -81,14 +77,13 @@ const TasksContainer = ({openTaskModal, showDeleteTaskModal, isEditAllowed, isAd
 };
 
 const mapStateToProps = state => ({
-    tasks: state.tasks,
+    tasks: selectors.getTasks(state),
     company: selectors.getCompany(state),
     isAddAllowed: selectors.isTasksEnable(state) && (selectors.hasPremiumFeature(state) || state.tasks?.filter(t => !t.parent && t.type === ETaskType.REGULAR).length < MAX_FREE_TASKS_ALLOWED),
     isEditAllowed: selectors.hasPremiumFeature(state) || (state.tasks?.filter(t => !t.parent && t.type === ETaskType.REGULAR).length <= MAX_FREE_TASKS_ALLOWED),
 });
 
 const mapDispatchToProps = {
-    fetchTasks,
     openTaskModal,
     showDeleteTaskModal,
 };

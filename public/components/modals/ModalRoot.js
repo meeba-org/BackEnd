@@ -18,6 +18,7 @@ const Survey2019Modal = React.lazy(() => import("./Survey2019Modal"));
 const TaskModal = React.lazy(() => import("./TaskModal"));
 const YesNoModal = React.lazy(() => import("./YesNoModal"));
 const WorkplaceSelectionModal = React.lazy(() => import("./WorkplaceSelectionModal"));
+const AddDefaultIATasks = React.lazy(() => import("./AddDefaultIATasks"));
 
 export const MODAL_COMPONENTS = {
     [EModalType.DELETE_ENTITY]: DeleteModal,
@@ -35,6 +36,7 @@ export const MODAL_COMPONENTS = {
     [EModalType.COVID19_DISCOUNT]: Covid19DiscountModal,
     [EModalType.WORKPLACE_SELECTION]: WorkplaceSelectionModal,
     [EModalType.NEW_FEATURE_WORKPLACES]: WorkplaceSplashModal,
+    [EModalType.ADD_DEFAULT_IA_TASKS]: AddDefaultIATasks,
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {
