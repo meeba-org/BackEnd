@@ -16,23 +16,8 @@ import StartOfMonthField from "./StartOfMonthField";
 
 const User = ({
                   hasPremiumFeature, onFreePlanClick, onPremiumPlanClick, user,
-                  onCompanyChange, onUserChange, onCompanySettingsChange, onInnovativeAuthorityChange
+                  onCompanyChange, onUserChange, onCompanySettingsChange, handleInnovativeAuthorityToggle
               }) => {
-
-    // const onInnovativeAuthorityChange = (key, value) => {
-    //     const settings = {
-    //         ...user.company.settings,
-    //         "enableAbsenceDays": value,
-    //         "enableTasks": value,
-    //         "enableInnovativeAuthority": value
-    //     };
-    //
-    //     onCompanyChange("settings", settings);
-    //    
-    //     if (value) {
-    //         onInnovativeAuthorityChange();
-    //     }
-    // };
 
     const isTimeValid = (text) => /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(text);
     
@@ -204,7 +189,7 @@ const User = ({
 
                     <SettingSwitch text={"מצב הרשות לחדשנות"} value={user.company.settings.enableInnovativeAuthority}
                                    fieldValue={"enableInnovativeAuthority"}
-                                   handleCompanySettingsChange={onInnovativeAuthorityChange}
+                                   handleCompanySettingsChange={(key, value) => handleInnovativeAuthorityToggle(value)}
                     />
 
                 </div>
@@ -235,7 +220,7 @@ const User = ({
 User.propTypes = {
     onUserChange: PropTypes.func.isRequired,
     onCompanyChange: PropTypes.func.isRequired,
-    onInnovativeAuthorityChange: PropTypes.func.isRequired,
+    handleInnovativeAuthorityToggle: PropTypes.func.isRequired,
     user: PropTypes.object,
     hasPremiumFeature: PropTypes.bool
 };

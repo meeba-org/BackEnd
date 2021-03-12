@@ -8,7 +8,6 @@ import {
     FETCH_USERS_SUCCESS, UPDATE_ACTIVE_USER_SUCCESS,
     UPDATE_USER_SUCCESS
 } from "./actionTypes";
-import {approveShifts} from "./shiftsActions";
 import {createTask} from "./tasksActions";
 
 export const fetchUserSuccess = (payload) => ({
@@ -203,18 +202,18 @@ const addDefaultIATasks = (tasks, companyId) => dispatch => {
     const shouldAddNoneIaTask = !(tasks.find(t => t.title === DEFAULT_NON_IA_TASK_TITLE));
     
     if (shouldAddDefaultIATask) {
-        // dispatch(createTask({
-        //     title: DEFAULT_IA_TASK_TITLE,
-        //     isInnovative: true,
-        //     company: companyId
-        // }));
+        dispatch(createTask({
+            title: DEFAULT_IA_TASK_TITLE,
+            isInnovative: true,
+            company: companyId
+        }));
     }
     
     if (shouldAddNoneIaTask) {
-        // dispatch(createTask({
-        //     title: DEFAULT_NON_IA_TASK_TITLE,
-        //     isInnovative: false,
-        //     company: companyId
-        // }));
+        dispatch(createTask({
+            title: DEFAULT_NON_IA_TASK_TITLE,
+            isInnovative: false,
+            company: companyId
+        }));
     }
 };

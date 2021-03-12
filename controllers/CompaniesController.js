@@ -1,6 +1,7 @@
 'use strict';
 const CompanyModel = require('../models/CompanyModel');
 const express = require('express');
+const TaskModel = require("../models/TaskModel");
 const {reject, resolve} = require("./apiManager");
 const routeWrapper = require("./apiManager").routeWrapper;
 const router = express.Router();
@@ -63,6 +64,33 @@ router.delete('/:id',
 
         return CompanyModel.deleteCompany(id)
             .then(() => id);
+    })
+);
+
+//PUT /companies company
+router.put('/toggleIA',
+    [
+        body('company').exists(),
+        body('enable').isBoolean().exists(),
+    ],
+    (req, res) => routeWrapper(req, res, async (req, res) => {
+        let { company, enable } = req.body;
+
+        const settings = {
+            ...company.settings,
+            "enableAbsenceDays": enable,
+            "enableTasks": enable,
+            "enableInnovativeAuthority": enable
+        };
+        company.settings = settings;
+        
+        const updatedCompany = await CompanyModel.updateCompany(company);
+        const tasks = await TaskModel.getByCompanyId(company._id);
+        
+        return {
+            company: updatedCompany,
+            tasks
+        };
     })
 );
 

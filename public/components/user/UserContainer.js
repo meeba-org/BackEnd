@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Feature} from "../../../managers/FeaturesManager";
-import {showAddDefaultIATasksModal, showCancelPremiumModal, showGoPremiumModal, updateActiveUser, updateCompany} from "../../actions";
-import {getTasks, getUser, hasPremiumFeature, isFeatureEnable} from "../../selectors";
-import {DEFAULT_IA_TASK_TITLE, DEFAULT_NON_IA_TASK_TITLE} from "./constants";
+import {handleInnovativeAuthorityToggle, showCancelPremiumModal, showGoPremiumModal, updateActiveUser, updateCompany} from "../../actions";
+import {getUser, hasPremiumFeature, isFeatureEnable} from "../../selectors";
 import User from "./User";
 
 const UserContainer = () => {
     const user = useSelector(getUser);
     const isCommuteFeatureEnable = useSelector(state => isFeatureEnable(state, Feature.CommuteModule));
     const hasPremiumFeat = useSelector(hasPremiumFeature);
-    const tasks = useSelector(getTasks);
     const dispatch = useDispatch();
 
     const [userState, setUserState] = useState(user);
@@ -52,7 +50,7 @@ const UserContainer = () => {
 
         handleCompanyChange("settings", settings);
     };
-
+    
     // const handleEnablingInnovationAuthority = () => {
     //     // TODO enableTask is false... no tasks while IA is off - will think on it...
     //     // TODO Ok I'm thinking companies/enableIA should  do the switch on stuff and return a company (with the right settings) and tasks - both should be placed in store, 
@@ -77,7 +75,7 @@ const UserContainer = () => {
             onFreePlanClick={() => dispatch(showGoPremiumModal())}
             onPremiumPlanClick={() => dispatch(showCancelPremiumModal(userState.company))}
             onCompanySettingsChange={handleCompanySettingsChange}
-            onInnovativeAuthorityChange={handleInnovativeAuthorityChange}
+            handleInnovativeAuthorityToggle={enable => dispatch(handleInnovativeAuthorityToggle(userState.company, enable))}
         />
     );
 };
