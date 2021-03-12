@@ -51,20 +51,6 @@ const UserContainer = () => {
         handleCompanyChange("settings", settings);
     };
     
-    // const handleEnablingInnovationAuthority = () => {
-    //     // TODO enableTask is false... no tasks while IA is off - will think on it...
-    //     // TODO Ok I'm thinking companies/enableIA should  do the switch on stuff and return a company (with the right settings) and tasks - both should be placed in store, 
-    //     // then onSuccess we will determine with tasks if we should display modal suggesting to add defaults IA tasks 
-    //    
-    //     if (tasks) {
-    //         const shouldAddDefaultIATask = !(tasks.find(t => t.title === DEFAULT_IA_TASK_TITLE));
-    //         const shouldAddNoneIaTask = !(tasks.find(t => t.title === DEFAULT_NON_IA_TASK_TITLE));
-    //        
-    //         if (shouldAddNoneIaTask || shouldAddDefaultIATask)
-    //             dispatch(showAddDefaultIATasksModal(tasks, user.company._id));
-    //     }
-    // };
-    
     return (
         <User
             user={userState}
