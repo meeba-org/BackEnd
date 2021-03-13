@@ -50,6 +50,28 @@ const UserContainer = () => {
 
         handleCompanyChange("settings", settings);
     };
+
+    const onInnovativeAuthorityToggle = enable => {
+        const settings = {
+            ...userState.company.settings,
+            "enableAbsenceDays": enable,
+            "enableTasks": enable,
+            "enableInnovativeAuthority": enable
+        };
+        
+        const company = {
+            ...userState.company,
+            settings
+        };
+
+        let newUserState = {
+            ...userState,
+            company
+        };
+
+        setUserState(newUserState);
+        dispatch(handleInnovativeAuthorityToggle(newUserState.company, enable));
+    };
     
     return (
         <User
@@ -61,7 +83,7 @@ const UserContainer = () => {
             onFreePlanClick={() => dispatch(showGoPremiumModal())}
             onPremiumPlanClick={() => dispatch(showCancelPremiumModal(userState.company))}
             onCompanySettingsChange={handleCompanySettingsChange}
-            handleInnovativeAuthorityToggle={enable => dispatch(handleInnovativeAuthorityToggle(userState.company, enable))}
+            handleInnovativeAuthorityToggle={onInnovativeAuthorityToggle}
         />
     );
 };

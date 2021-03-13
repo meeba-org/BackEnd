@@ -67,22 +67,13 @@ router.delete('/:id',
     })
 );
 
-//PUT /companies company
+//PUT /companies/toggleIA used to toggleIA, similar to update company but it returns also the tasks
 router.put('/toggleIA',
     [
         body('company').exists(),
-        body('enable').isBoolean().exists(),
     ],
     (req, res) => routeWrapper(req, res, async (req, res) => {
-        let { company, enable } = req.body;
-
-        const settings = {
-            ...company.settings,
-            "enableAbsenceDays": enable,
-            "enableTasks": enable,
-            "enableInnovativeAuthority": enable
-        };
-        company.settings = settings;
+        let { company } = req.body;
         
         const updatedCompany = await CompanyModel.updateCompany(company);
         const tasks = await TaskModel.getByCompanyId(company._id);

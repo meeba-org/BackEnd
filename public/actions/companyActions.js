@@ -31,7 +31,6 @@ export const handleInnovativeAuthorityToggle = (company, enable) => ({
         method: "put",
         data: {
             company,
-            enable
         },
         success: (payload) => innovationAuthorityToggleSuccess(payload, enable),
     },
