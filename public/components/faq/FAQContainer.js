@@ -149,7 +149,7 @@ class FAQContainer extends Component {
                 },
                 {
                     q: "מורשה הרשות לחדשנות?",
-                    a: `בהחלט כן, הנה [האישור](https://meeba.co.il/styles/docs/IA-Approval.pdf).
+                    a: `בהחלט כן, הנה [האישור](https://innovationisrael.org.il/sites/default/files/%D7%A8%D7%A9%D7%99%D7%9E%D7%AA%20%D7%9E%D7%A2%D7%A8%D7%9B%D7%95%D7%AA%20%D7%9E%D7%90%D7%95%D7%A9%D7%A8%D7%95%D7%AA%20%D7%9C%D7%93%D7%99%D7%95%D7%95%D7%97%20%D7%A9%D7%A2%D7%95%D7%AA%20%D7%95%D7%9E%D7%A9%D7%99%D7%9E%D7%95%D7%AA.pdf).
 `
                 }
             ]
