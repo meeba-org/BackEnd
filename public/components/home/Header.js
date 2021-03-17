@@ -52,7 +52,7 @@ class Header extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <a href="../../styles/docs/IA-Approval.pdf" target="_blank"><div styleName="stamp">מורשה הרשות לחדשנות</div></a>
+                            <a rel="noreferrer" href="https://innovationisrael.org.il/sites/default/files/%D7%A8%D7%A9%D7%99%D7%9E%D7%AA%20%D7%9E%D7%A2%D7%A8%D7%9B%D7%95%D7%AA%20%D7%9E%D7%90%D7%95%D7%A9%D7%A8%D7%95%D7%AA%20%D7%9C%D7%93%D7%99%D7%95%D7%95%D7%97%20%D7%A9%D7%A2%D7%95%D7%AA%20%D7%95%D7%9E%D7%A9%D7%99%D7%9E%D7%95%D7%AA.pdf" target="_blank"><div styleName="stamp">מורשה הרשות לחדשנות</div></a>
                         </div>
                     </div>
                     <a styleName="bottom-content" href="#features1">
